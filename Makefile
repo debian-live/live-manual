@@ -1,20 +1,26 @@
 name    := debian-live-manual
 version := 0.1
 date    := $(shell date)
+out     := out/
 
-all: clean build-html build-pdf build-text
+all: autobuild
+
+autobuild: distclean build-html build-text build-pdf build-ps clean
+	sed -e 's/NAME/$(name)/g' -e 's/UPDATED/$(date)/' index.html.in > $(out)/index.html
 
 clean:
-	rm -rf $(name).html
-	rm -f $(name).pdf $(name).wiki $(name).txt
-	rm -f $(name).tpt version.ent
+	rm -f $(out)/version.ent
+	rm -f $(out)/$(name).tpt
 
-version.ent:
-	rm -f $@
+distclean:
+	rm -rf $(out)
+
+out/version.ent:
+	mkdir -p $(out)
 	echo "<!entity version \"$(version)\">" >> $@
 	echo "<!entity date \"$(date)\">" >> $@
 
-build-%: version.ent
-	debiandoc2$* $(name).sgml
+build-%: out/version.ent
+	cd $(out) && debiandoc2$* ../$(name).sgml
 
-.PHONY: all clean
+.PHONY: all clean distclean autobuild

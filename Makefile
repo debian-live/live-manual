@@ -10,6 +10,8 @@ autobuild: distclean build-html build-text build-pdf build-ps clean
 
 clean:
 	rm -f $(out)/version.ent
+	rm -f $(out)/head.tmp
+	rm -f $(out)/body.tmp
 	rm -f $(out)/$(name).tpt
 
 distclean:

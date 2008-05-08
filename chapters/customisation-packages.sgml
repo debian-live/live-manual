@@ -1,0 +1,159 @@
+<chapt id="packages">
+<heading>Customising package installation</heading>
+
+<p>This chapter discusses the customisation of package installation. This involves:
+
+<list>
+<item>Selecting additional packages to be installed</item>
+<item>Installing modified packages</item>
+</list></p>
+
+<sect id="package-sources">
+<heading>Package sources</heading>
+<p>FIXME</p>
+</sect>
+
+<sect id="package-installation">
+<heading>Package installation</heading>
+<p>FIXME (apt vs. aptitude)</p>
+</sect>
+
+<sect>
+<heading>Installing additional packages</heading>
+
+<p><tt>live-helper</tt> has a number of mechanisms for indicating that additional packages should be installed, including:
+
+<list>
+<item>The <tt>LH_PACKAGES</tt> variable</item>
+<item>Package lists</item>
+<item>Local packages (<tt>chroot_local-packages/</tt>)</item>
+<item>Tasks</item>
+</list></p>
+
+<sect1 id="lh-packages">
+<heading>The <tt>LH_PACKAGES</tt> variable</heading>
+<p>FIXME</p>
+<p>If you need to specify a large number of packages to be installed, you should probably be using package lists. See <ref id="package-lists"> for more information.
+</sect1>
+
+<sect1 id="package-lists">
+<heading>Package lists</heading>
+<p>Package lists are a powerful way of expressing which packages to be installed. <tt>live-helper</tt> ships with a number of predefined package lists which provide sensible default package selections for the GNOME and KDE desktop environments, as well as standard systems.
+
+<p>You may supplement the supplied lists using local package lists stored in <tt>config/chroot_local-packageslists</tt>.</p>
+
+<sect2>
+<heading>Extending a provided package list using includes</heading>
+<p>FIXME
+
+<example>
+#include &lt;gnome&gt;
+iceweasel
+</example>
+
+<p>The package lists that are included with <tt>live-helper</tt> make extensive use of includes. They are available to view in the <tt>/usr/share/live-helper/lists</tt> directory.</p>
+</sect2>
+
+<sect2>
+<heading>Using conditionals inside packages lists</heading>
+<p>FIXME
+
+<example>
+#if ARCHITECTURE amd64
+ia32-libs
+#endif
+</example>
+
+or if <tt>LH_ARCHITECTURE</tt> is set to <tt>i386</tt> or <tt>amd64</tt>:
+
+<example>
+#if ARCHITECTURE i386 amd64
+memtest86+
+#endif
+</example>
+
+or if <tt>LH_SECTIONS</tt> contains either <tt>contrib</tt> or <tt>non-free</tt>:
+
+<example>
+#if SECTIONS contrib non-free
+vrms
+#endif
+</example>
+
+A conditional may surround an <tt>#include</tt> directive:
+
+<example>
+#if ARCHITECTURE amd64
+#include &lt;gnome-full&gt;
+#endif
+</example>
+
+<p>Any <tt>live-helper</tt> configuration variable that begins with <tt>LH_</tt> can be tested in this way.</p>
+<p>The nesting of conditionals is not supported.</p>
+
+</sect2>
+
+</sect1>
+
+<sect1 id="tasks">
+<heading>Tasks</heading>
+<p>FIXME</p>
+</sect1>
+
+</sect>
+
+<sect id="custom-packages">
+<heading>Installing modified or third-party packages</heading>
+
+<p>Whilst it is against the philosophy of Debian Live, it may sometimes be necessary to build a Live system with modified versions of packages that are in the Debian repository. This may be to modify or support additional features, languages and branding, or even to remove elements of existing packages that are undesirable. Similarly, "third-party" packages may be used to add bespoke and/or proprietary functionality.</p>
+
+<p>This section does not cover advice regarding building or maintaining modified packages. Joachim Breitner's <url id="http://www.joachim-breitner.de/blog/archives/282-How-to-fork-privately.html" name="'How to fork privately'"> may be of interest, however. The creation of bespoke packages is covered in the <url id="http://www.debian.org/doc/maint-guide/" name="Debian New Maintainers' Guide"> and elsewhere.</p>
+
+<p>There are two ways of installing modified custom packages:
+<list>
+<item><tt>chroot_local-packages</tt></item>
+<item>Using a custom APT repository</item>
+</list>
+</p>
+
+<p>The <tt>chroot_local-packages</tt> is simpler to achieve and useful for "one-off" customisations but has a number of drawbacks, whilst using a custom APT repository is more time-consuming to setup.</p>
+
+<sect1 id="local-packages">
+<heading>Using <tt>chroot_local-packages</tt> to install custom packages</heading>
+<p>To install a custom package, simply copy it to the <tt>config/chroot_local-packages</tt> directory. Packages that are inside this directory will be automatically installed into the live system during build - you do not need to specify them elsewhere.</p>
+
+<p>Packages <strong>must</strong> be named in the prescribed way. One simple way to is to use <tt>dpkg-name</tt>. FIXME</p>
+
+<p>Using <tt>chroot_local-packages</tt> for installation of custom packages has two disadvantages:
+<list>
+<item>It is not possible to use secure APT</item>
+<item>You must install all appropriate packages in the <tt>config/chroot_local-packages</tt> directory</item>
+<item>Does not lend itself to storing Debian Live configurations in revision control</item>
+</list>
+</sect1>
+
+<sect1 id="custom-apt-repo">
+<heading>Using an APT repository to install custom packages</heading>
+<p>FIXME</p>
+<p>Unlike You must ensure that you specify the package elsewhere, see (FIXME)</p>
+<p>Whilst it may seem unnecessary effort to create an APT repository to install custom packages, the infrastructure can be easily re-used at a later date to offer updates of the modified package.</p>
+</sect1>
+
+<sect1 id="custom-packages-apt">
+<heading>Custom packages and APT</heading>
+<p><tt>live-helper</tt> uses APT to install all packages into the live system so will therefore inherit behaviours from this program. One relevant example is that (assuming a default configuration) given a package is available in two different repositories, APT will elect to install the package with a higher version number over one with the lower.</p>
+
+<p>Because of this. you may wish to increment the version number in your custom packages' <tt>debian/changelog</tt> files to ensure that your modified version is installed over one in the official Debian repositories. This may also be achieved by altering the live system's APT pinning preferences - see <ref id="apt-preferences"> for more information.</p>
+
+</sect1>
+
+<sect1 id="apt-preferences">
+<heading>Altering APT preferences during Live system</heading>
+<p>FIXME</p>
+<p>Whilst it may seem unnecessary effort to create an APT repository to install custom packages, the infrastructure can be easily re-used at a later date to offer updates of the modified package.</p>
+</sect1>
+
+</sect>
+
+
+</chapt>

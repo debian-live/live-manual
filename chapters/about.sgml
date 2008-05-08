@@ -1,0 +1,104 @@
+<chapt id="about">
+<heading>About the Debian Live Project</heading>
+
+<sect id="motivation">
+<heading>Motivation</heading>
+
+<sect1>
+<heading>What is wrong with current live systems</heading>
+
+<p>There are already several Debian-based live systems and they are doing a great job. But, from the Debian perspective, most of them have one or more of the following disadvantages:
+
+<list>
+<item>They are unofficial projects, developed outside of Debian.</item>
+<item>They mix different distributions, e.g. testing and unstable.</item>
+<item>They support i386 only.</item>
+<item>They change package's behavior and/or appearance by stripping them down to save space.</item>
+<item>They include unofficial packages.</item>
+<item>They ship custom kernels with additional patches not part of Debian.</item>
+<item>They are large and slow due to their sheer size and thus not suitable for rescue issues.</item>
+<item>They are not available in different flavours, e.g. CDs, DVDs, USB-stick and netboot images </item>
+</list>
+</sect1>
+
+<sect1>
+<heading>Why create our own live system?</heading>
+
+<p>Debian is the Universal Operating System: Debian should have an official live system for showing around and to officially represent the true, one and only Debian system with the following main advantages:
+
+<list>
+<item>It would be an official Debian subproject.</item>
+<item>It reflects the (current) state of one distribution.</item>
+<item>It runs on as many architectures as possible.</item>
+<item>It consists of unchanged Debian packages only.</item>
+<item>It does not contain any unofficial packages.</item>
+<item>It uses an unaltered Debian kernel-image with no additional patches.</item>
+</list>
+
+</sect>
+
+<sect id="philosophy">
+<heading>Philosophy</heading>
+
+<sect1>
+<heading>Only unchanged, official packages</heading>
+<p>We will only use official packages from the Debian repository, section main or maybe contrib (the use of contrib is not decided yet). The non-free section is not part of Debian and therefore not used at all for the live system.</p>
+
+<p>We will not change any packages. Whenever we need to change something, we will do that in coordination with its package maintainer in Debian.</p>
+
+<p>Exception: temporarly, our own packages like live-helper or live-initramfs may be used from our own repository for development reasons (e.g. to create development snapshots). They will be synced into Debian on a regular basis.</p>
+</sect1>
+
+<sect1>
+<heading>No configuration of the live system</heading>
+<p>In this phase we will not ship or install sample or alternative configurations. All packages are used in their default configuration as they are after a regular installation of Debian.</p>
+
+<p>Whenever we need a different default configuration, we will do that in coordination with its package maintainer in Debian.</p>
+
+<p>A system for configuring packages is provided using debconf in lh_config (use --preseed FILE) allowing custom configured packages to be installed in your custom produced Debian Live images, but for official live images only default configuration will be used.</p>
+
+<p>Exception: There are a few essential changes needed to be make a live system alive (e.g. configuring pam to allow empty passwords). These essential changes have to be kept as minimal as possible and, should be merged within the Debian repository if possible.</p>
+</sect1>
+
+<sect1>
+<heading>No live system to hardisk installer</heading>
+<p>[ this is no longer valid after etch release, we will work on an installer for lenny ]</p>
+
+<p>For the moment we will not ship a installer to copy the live system to a partition on the hardisk. Although we keep the changes in the live system as drastically minimal as possible compared to a regular Debian installation, the live system does differ in a few essential points (see exceptions, guideline 2).</p>
+
+<p>Therefore, we will ship a copy of the regular DebianInstaller (resp. Debian Installer, Graphical Installer) instead, to allow users to perform a regular Debian installation (and, of course, cdebootstrap and debootstrap are on the system too).</p>
+</sect1>
+
+</sect>
+
+<sect id="contact">
+<heading>Contact</heading>
+<p>
+<taglist>
+
+<tag>Mailing list</tag>
+<item>
+The primary contact for the project is the <url id="http://lists.alioth.debian.org/mailman/listinfo/debian-live-devel" name="mailing list">. You can email the list directly by addressing your mail to <email>debian-live-devel@lists.alioth.debian.org</email>. The <url id="http://lists.alioth.debian.org/pipermail/debian-live-devel/" name="list archives"> are also available.
+</item>
+
+<tag>IRC</tag>
+<item>
+A number of users and developers are present in the <url id="irc://irc.debian.org/#debian-live" name="#debian-live"> channel on <url id="http://oftc.net" name="OFTC">. When asking a question on IRC, please be patient for an answer. If no answer is forthcoming, please email the mailing list.
+</item>
+
+<tag>BTS</tag>
+<item>
+The Debian Bug Tracking System (BTS) contains details of bugs reported by ysers and developers. Each bug is given a number, and is kept on file until it is marked as having been dealt with. For more information, please see <ref id="bugs">.
+</item>
+
+<tag>Wiki</tag>
+<item>
+FIXME. <url id="http://wiki.debian.org/DebianLive" name="our entry on the Debian wiki">.
+</item>
+
+</taglist>
+</p>
+
+</sect>
+
+</chapt>

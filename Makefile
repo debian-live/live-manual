@@ -6,6 +6,7 @@ out     := out/
 all: autobuild
 
 autobuild: distclean build-html build-text build-pdf build-ps clean
+	mv $(out)/$(name).html/ $(out)/html
 	sed -e 's/NAME/$(name)/g' -e 's/UPDATED/$(date)/' index.html.in > $(out)/index.html
 
 clean:

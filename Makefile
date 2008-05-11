@@ -1,29 +1,46 @@
-name    := debian-live-manual
-version := 0.1
-date    := $(shell date)
-out     := out/
+PROJECT		:= live-manual
+FORMATS		:= html txt pdf
 
-all: autobuild
+AUTOBUILD	:= autobuild
+VERSION		:=
+PUBDATE		:=
 
-autobuild: distclean build-html build-text build-pdf build-ps clean
-	mv $(out)/$(name).html/ $(out)/html
-	sed -e 's/NAME/$(name)/g' -e 's/UPDATED/$(date)/' index.html.in > $(out)/index.html
+TARGETS		:= $(foreach fmt,$(FORMATS),$(PROJECT).$(fmt))
+SOURCES		:= $(wildcard *.xml) ent/version.ent ent/common.ent
+
+XP		:= xsltproc --nonet --novalid --xinclude
+XL		:= xmllint --nonet --noout --postvalid --xinclude
+DBLATEX		:= dblatex --style=db2latex
+
+all: $(TARGETS)
+
+validate: $(SOURCES)
+	$(XL) index.xml
+
+autobuild: clean all
+	set -e; for FORMAT in $(FORMATS); do \
+		mkdir -p $(AUTOBUILD)/$$FORMAT; \
+		cp *.$$FORMAT $(AUTOBUILD)/$$FORMAT; \
+	done
+	sed 's/UPDATED/$(shell LC_ALL=C date)/' index.html.in > $(AUTOBUILD)/index.html
+
+index.html: $(SOURCES)
+	$(XP) xsl/html.xsl index.xml
+
+$(PROJECT).html: index.html
+
+$(PROJECT).txt: $(SOURCES)
+	$(XP) xsl/txt.xsl index.xml | w3m -cols 65 -dump -T text/html > $@
+
+$(PROJECT).pdf: $(SOURCES)
+	$(DBLATEX) index.xml -o $@ 
+
+ent/version.ent:
+	echo '<!ENTITY version "$(VERSION)">' >  $@
+	echo '<!ENTITY pubdate "$(PUBDATE)">' >> $@
 
 clean:
-	rm -f $(out)/version.ent
-	rm -f $(out)/head.tmp
-	rm -f $(out)/body.tmp
-	rm -f $(out)/$(name).tpt
+	rm -f *.html *.pdf *.txt
+	rm -f ent/version.ent
 
-distclean:
-	rm -rf $(out)
-
-out/version.ent:
-	mkdir -p $(out)
-	echo "<!entity version \"$(version)\">" >> $@
-	echo "<!entity date \"$(date)\">" >> $@
-
-build-%: out/version.ent
-	cd $(out) && debiandoc2$* ../$(name).sgml
-
-.PHONY: all clean distclean autobuild
+.PHONY: all clean validate $(PROJECT).html

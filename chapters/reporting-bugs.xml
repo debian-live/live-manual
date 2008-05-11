@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" [
+  <!ENTITY % commondata SYSTEM "../ent/common.ent" > %commondata;
+]>
+<chapter id="bugs">
+<title>Reporting bugs</title>
+
+<para>Debian Live is far from being perfect, but we want to make it as close as possible to perfect - with your help. Do not hesitate to report a bug: it is better to fill a report twice than never. However, here are some recommendations how to file good bug reports:</para>
+
+<section id="up-to-date">
+<title>Use up-to-date packages</title>
+<para>This means</para>
+
+<para>Using outdated packages can cause significant problems when trying to reproduce (and ultimately fix) your problem. If a relevant package is not available in Debian anymore, please recognize that the resources of the Debian kernel team are limited and will be unlikely to be able to fix the problem.</para>
+</section>
+
+
+<section id="collect-information">
+<title>Collect information</title>
+
+<para>Please provide enough information with your report. At a minimum, it should contain the exact version of live-helper version where the bug is encountered, and steps to reproduce it. Please use common sense and include other relevant information if you think that it might help in solving the problem.</para>
+</section>
+
+<section id="correct-package">
+<title>Use the correct package to report the bug against</title>
+
+<para>Where does the bug appear?</para>
+
+<para>
+<variablelist>
+
+<varlistentry><term>At build time whilst bootstrapping</term>
+
+<listitem><para>
+<para><filename>live-helper</filename> first bootstraps a basic Debian system with <computeroutput>debootstrap</computeroutput> or <computeroutput>cdebootstrap</computeroutput>. Depending on the bootstrapping tool used and the Debian distribution it is bootstrapping, it may fail. If a bug appears here, check if the error is related to a specific Debian package (most likely), or if it is related to cdebootstrap itself.</para>
+
+<para>In both cases, this is not a bug in Debian Live, but rather in Debian itself which we can not fix this directly. Please report such a bug against <computeroutput>debootstrap</computeroutput>, <computeroutput>cdebootstrap</computeroutput> or the failing package.</para>
+</para></listitem>
+</varlistentry>
+
+<varlistentry><term>At build time whilst installing packages</term>
+
+<listitem><para><filename>live-helper</filename> installs additional packages from the Debian archive and depending on the Debian distribution used and the daily archive state, it can fail. If a bug appears here, check if the error is also reproducible on a normal system.</para>
+
+<para>If this is the case, this is not a bug in Debian Live, but rather in Debian. Report it against the failing package.</para></listitem>
+</varlistentry>
+
+<varlistentry><term>At run-time</term>
+
+<listitem><para>If a package was successfully installed, but fails while actually running the Live system, this is probably a bug in Debian Live. However, </para></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</section>
+
+<section id="research">
+<title>Do the research</title>
+<para>Before filing the bug, please search the web for the particular error message or symptom you are getting. As it is highly unlikely that you are the only person experiencing a particular problem, there is always a chance that it has been discussed elsewhere, and a possible solution, patch, or workaround has been proposed.</para>
+
+<para>You should pay particular attention to the Debian Live mailing list, as well as the homepage, as these are likely to contain the most up-to-date information. If such information exists, always include the references to it in your bug report.</para>
+
+<para>In addition, you should check the <ulink url="http://bugs.debian.org/cgi-bin/pkgreport.cgi?src=live-helper">current bug list for live-helper</ulink> and the <ulink url="http://bugs.debian.org/cgi-bin/pkgreport.cgi?src=live-initramfs">current bug list for live-initramfs</ulink> to see whether something similar has been reported already.</para>
+</section>
+
+<section id="where">
+<title>Where to report bugs</title>
+
+<para>The Debian Live project keeps track of all bugs in the Debian Bug Tracking System (BTS). For information on how to use the system, please see <ulink url="http://bugs.debian.org">http://bugs.debian.org</ulink>. You can also submit the bugs by using the <computeroutput>reportbug</computeroutput> command from the package with the same name.</para>
+
+<para>In general, you should report build time errors against the <ulink url="http://bugs.debian.org/cgi-bin/pkgreport.cgi?src=live-helper">live-helper</ulink> package and run time errors against <ulink url="http://bugs.debian.org/cgi-bin/pkgreport.cgi?src=live-helper">live-initramfs</ulink>. If you are unsure of which package is appropriate or need more help before submitting a bug report, please send a message to the mailing list and we will help you to figure it out.</para>
+
+<para>Please note that bugs found in distributions derived from Debian (such as Ubuntu, Knoppix, Xandros, etc.) should <emphasis>not</emphasis> be reported to the Debian BTS unless they can be also reproduced on a Debian system using official Debian packages.</para>
+
+</section>
+
+</chapter>

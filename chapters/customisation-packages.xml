@@ -44,7 +44,7 @@
 <section>
 <title>Installing additional packages</title>
 
-<para><filename>live-helper</filename> has a number of mechanisms for indicating that additional packages should be installed, including:</para>
+<para>&live-helper; has a number of mechanisms for indicating that additional packages should be installed, including:</para>
 
 <orderedlist>
 <listitem><para>The <computeroutput>LH_PACKAGES</computeroutput> variable</para></listitem>
@@ -67,14 +67,14 @@ LH_PACKAGES="package1 package2 package3 ... "
 % lh_config --packages "package1 package2 package3"
 </screen>
 
-<para>The behaviour of <filename>live-helper</filename> when specifying a package that does not exist is determined by your choice of APT utility. See <xref linkend="package-installation"/> for more details.</para>
+<para>The behaviour of &live-helper; when specifying a package that does not exist is determined by your choice of APT utility. See <xref linkend="package-installation"/> for more details.</para>
 
 <para>If you need to specify a large number of packages to be installed or you need flexibility regarding which packages to install, you should probably be using package lists. See <xref linkend="package-lists"/> for more information.</para>
 </sect1>
 
 <sect1 id="package-lists">
 <title>Package lists</title>
-<para>Package lists are a powerful way of expressing which packages should be installed. <filename>live-helper</filename> ships with a number of predefined package lists which provide sensible default package selections for the GNOME and KDE desktop environments, as well as standard systems.</para>
+<para>Package lists are a powerful way of expressing which packages should be installed. &live-helper; ships with a number of predefined package lists which provide sensible default package selections for the GNOME and KDE desktop environments, as well as standard systems.</para>
 
 <para>To specify a package list, add the name of the list to the <computeroutput>LH_PACKAGES_LISTS</computeroutput> variable in <filename>config/chroot</filename>. For example:</para>
 
@@ -82,12 +82,12 @@ LH_PACKAGES="package1 package2 package3 ... "
 LH_PACKAGES_LISTS="gnome"
 </screen>
 
-<para>Packages lists that a distributed with <filename>live-helper</filename> reside in view in the <computeroutput>/usr/share/live-helper/lists</computeroutput> directory.</para>
+<para>Packages lists that a distributed with &live-helper; reside in view in the <computeroutput>/usr/share/live-helper/lists</computeroutput> directory.</para>
 
 <sect2>
 <title>Local packages lists</title>
 <para>You may supplement the supplied lists using local package lists stored in <computeroutput>config/chroot_local-packageslists</computeroutput>.</para>
-<para>Package lists that exist in this directory always override package lists distributed with <filename>live-helper</filename>. This can cause undesired effects when..</para>
+<para>Package lists that exist in this directory always override package lists distributed with &live-helper;. This can cause undesired effects when..</para>
 
 </sect2>
 
@@ -100,7 +100,7 @@ LH_PACKAGES_LISTS="gnome"
 iceweasel
 </screen>
 
-<para>The package lists that are included with <filename>live-helper</filename> make extensive use of includes. They are available to view in the <computeroutput>/usr/share/live-helper/lists</computeroutput> directory.</para>
+<para>The package lists that are included with &live-helper; make extensive use of includes. They are available to view in the <computeroutput>/usr/share/live-helper/lists</computeroutput> directory.</para>
 </sect2>
 
 <sect2>
@@ -137,7 +137,7 @@ vrms
 #endif
 </screen>
 
-<para>Any <filename>live-helper</filename> configuration variable that begins with <computeroutput>LH_</computeroutput> can be tested in this way.</para>
+<para>Any &live-helper; configuration variable that begins with <computeroutput>LH_</computeroutput> can be tested in this way.</para>
 <para>The nesting of conditionals is not supported.</para>
 
 </sect2>
@@ -189,7 +189,7 @@ vrms
 
 <sect1 id="custom-packages-apt">
 <title>Custom packages and APT</title>
-<para><filename>live-helper</filename> uses APT to install all packages into the live system so will therefore inherit behaviours from this program. One relevant example is that (assuming a default configuration) given a package is available in two different repositories, APT will elect to install the package with a higher version number over one with the lower.</para>
+<para>&live-helper; uses APT to install all packages into the live system so will therefore inherit behaviours from this program. One relevant example is that (assuming a default configuration) given a package is available in two different repositories, APT will elect to install the package with a higher version number over one with the lower.</para>
 
 <para>Because of this. you may wish to increment the version number in your custom packages' <computeroutput>debian/changelog</computeroutput> files to ensure that your modified version is installed over one in the official Debian repositories. This may also be achieved by altering the live system's APT pinning preferences - see <xref linkend="apt-preferences"/> for more information.</para>
 

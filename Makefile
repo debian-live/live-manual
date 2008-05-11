@@ -6,7 +6,7 @@ VERSION		:=
 PUBDATE		:=
 
 TARGETS		:= $(foreach fmt,$(FORMATS),$(PROJECT).$(fmt))
-SOURCES		:= $(wildcard *.xml) ent/version.ent ent/common.ent
+SOURCES		:= $(wildcard chapters/*.xml) $(wildcard appendices/*.xml) ent/version.ent ent/common.ent
 
 XP		:= xsltproc --nonet --novalid --xinclude
 XL		:= xmllint --nonet --noout --postvalid --xinclude

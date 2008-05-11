@@ -15,7 +15,23 @@
 
 <sect id="package-installation">
 <heading>Package installation</heading>
-<p>FIXME (apt vs. aptitude)</p>
+<p>You can elect to use either <tt>apt</tt> or <tt>aptitude</tt> when installing packages. Which utility is used is governed by the <tt>LH_APT</tt> varaible in <file>config/chroot</file> or by the <tt>--apt</tt> argument to <tt>lh_config</tt>:
+
+<taglist>
+<tag><tt>apt</tt></tag>
+<item>
+<p>Specifying a missing package causes package installation to fail, which may not be the desired behaviour.</p>
+<p>This is the default setting for building images for Lenny or later.</p>
+</item>
+
+<tag><tt>aptitude</tt></tag>
+<item>
+<p>Specifying a missing package causes package installation to succeed, which may not be the desired behaviour.</p>
+<p>This is the default setting for building images for Etch.</p>
+</item>
+</taglist>
+</p>
+
 </sect>
 
 <sect>
@@ -32,19 +48,44 @@
 
 <sect1 id="lh-packages">
 <heading>The <tt>LH_PACKAGES</tt> variable</heading>
-<p>FIXME</p>
-<p>If you need to specify a large number of packages to be installed, you should probably be using package lists. See <ref id="package-lists"> for more information.
+<p>To install additional packages, simply add them to the <tt>LH_PACKAGES</tt> variable in <file>config/chroot</file>. For example:
+
+<example>
+LH_PACKAGES="package1 package2 package3 ... "
+</example>
+
+You can also specify an initial values on the command line:
+
+<example>
+% lh_config --packages "package1 package2 package3"
+</example>
+</p>
+
+<p>The behaviour of <tt>live-helper</tt> when specifying a package that does not exist is determined by your choice of APT utility. See <ref id="package-installation"> for more details.</p>
+
+<p>If you need to specify a large number of packages to be installed or you need flexibility regarding which packages to install, you should probably be using package lists. See <ref id="package-lists"> for more information.
 </sect1>
 
 <sect1 id="package-lists">
 <heading>Package lists</heading>
-<p>Package lists are a powerful way of expressing which packages to be installed. <tt>live-helper</tt> ships with a number of predefined package lists which provide sensible default package selections for the GNOME and KDE desktop environments, as well as standard systems.
+<p>Package lists are a powerful way of expressing which packages should be installed. <tt>live-helper</tt> ships with a number of predefined package lists which provide sensible default package selections for the GNOME and KDE desktop environments, as well as standard systems.</p>
 
+<p>To specify a package list, add the name of the list to the <tt>LH_PACKAGES_LISTS</tt> variable in <file>config/chroot</file>. For example:
+
+<example>
+LH_PACKAGES_LISTS="gnome"
+</example>
+
+<p>Packages lists that a distributed with <tt>live-helper</tt> reside in view in the <tt>/usr/share/live-helper/lists</tt> directory.</p>
+
+<sect2>
+<heading>Local packages lists</heading>
 <p>You may supplement the supplied lists using local package lists stored in <tt>config/chroot_local-packageslists</tt>.</p>
+<p>Package lists that exist in this directory always override package lists distributed with <tt>live-helper</tt>. This can cause undesired effects when
 
 <sect2>
 <heading>Extending a provided package list using includes</heading>
-<p>FIXME
+<p>FIXME.
 
 <example>
 #include &lt;gnome&gt;

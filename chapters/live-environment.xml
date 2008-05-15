@@ -18,7 +18,17 @@
 
 <section id="live-user">
 <title>The Live user</title>
-<para>FIXME</para>
+<para>Username FIXME.</para>
+<para>One important consideration is that the live user is created by &live-initramfs; during bootup, it is not created by &live-helper; when building the image.</para>
+
+ <para>You can specify additional groups that the live user will belong to by preseeding the <computeroutput>passwd/user-default-groups</computeroutput> debconf value. For example, to add the live user to the <computeroutput>fuse</computeroutput> group, add the following to a file in the <filename class="directory">config/chroot_local-preseed</filename> directory:</para>
+
+<screen>
+ debconf passwd/user-default-groups string dialout cdrom floppy audio video fuse
+</screen>
+
+ <para>For more information about debconf preseeding, please see <xref linkend="debconf-preseed"/>.</para>
+
 </section>
 
 <section id="language">

@@ -48,7 +48,36 @@
 </sect1>
 
 <sect1>
-<title>From source</title>
+ <title>From source</title>
+
+ <para>&live-helper; is developed using the Git revision control system. On Debian systems, this is provided by the <computeroutput>git-core</computeroutput> package. To check out the latest code, execute:</para>
+
+<screen>
+ % git clone git://git.debian.net/git/live-helper.git
+</screen>
+
+ <para>You can build and install your own Debian package by executing:</para>
+
+<screen>
+ % cd live-helper
+ % dpkg-buildpackage -uc -us -rfakeroot
+ % cd ..
+ $ dpkg -i live-helper*.deb
+</screen>
+
+ <para>Since &live-helper; version 1.0~a38-1, you can use local version of &live-helper; without installation:</para>
+
+<screen>
+ % live-helper/helpers/lh_local
+</screen>
+
+ <para>Subsequent calls to <filename>lh_</filename>-prefixed helpers in that shell environment will then use the version located in the directory you executed <filename>lh_local</filename> from.</para>
+
+ <para>You can also install &live-helper; directly to your system by executing:</para>
+
+<screen>
+ $ make install
+</screen>
 </sect1>
 
 <sect1>

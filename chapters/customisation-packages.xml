@@ -53,7 +53,7 @@
 <listitem><para>Tasks</para></listitem>
 </orderedlist>
 
-<sect1 id="lh-packages">
+<section id="lh-packages">
 <title>The <computeroutput>LH_PACKAGES</computeroutput> variable</title>
 <para>To install additional packages, simply add them to the <computeroutput>LH_PACKAGES</computeroutput> variable in <filename>config/chroot</filename>. For example:</para>
 
@@ -70,9 +70,9 @@ LH_PACKAGES="package1 package2 package3 ... "
 <para>The behaviour of &live-helper; when specifying a package that does not exist is determined by your choice of APT utility. See <xref linkend="package-installation"/> for more details.</para>
 
 <para>If you need to specify a large number of packages to be installed or you need flexibility regarding which packages to install, you should probably be using package lists. See <xref linkend="package-lists"/> for more information.</para>
-</sect1>
+</section>
 
-<sect1 id="package-lists">
+<section id="package-lists">
 <title>Package lists</title>
 <para>Package lists are a powerful way of expressing which packages should be installed. &live-helper; ships with a number of predefined package lists which provide sensible default package selections for the GNOME and KDE desktop environments, as well as standard systems.</para>
 
@@ -84,14 +84,14 @@ LH_PACKAGES_LISTS="gnome"
 
 <para>Packages lists that a distributed with &live-helper; reside in view in the <computeroutput>/usr/share/live-helper/lists</computeroutput> directory.</para>
 
-<sect2>
+<section>
 <title>Local packages lists</title>
 <para>You may supplement the supplied lists using local package lists stored in <computeroutput>config/chroot_local-packageslists</computeroutput>.</para>
 <para>Package lists that exist in this directory always override package lists distributed with &live-helper;. This can cause undesired effects when..</para>
 
-</sect2>
+</section>
 
-<sect2>
+<section>
 <title>Extending a provided package list using includes</title>
 <para>FIXME.</para>
 
@@ -101,9 +101,9 @@ iceweasel
 </screen>
 
 <para>The package lists that are included with &live-helper; make extensive use of includes. They are available to view in the <computeroutput>/usr/share/live-helper/lists</computeroutput> directory.</para>
-</sect2>
+</section>
 
-<sect2>
+<section>
 <title>Using conditionals inside packages lists</title>
 <para>FIXME</para>
 
@@ -140,14 +140,14 @@ vrms
 <para>Any &live-helper; configuration variable that begins with <computeroutput>LH_</computeroutput> can be tested in this way.</para>
 <para>The nesting of conditionals is not supported.</para>
 
-</sect2>
+</section>
 
-</sect1>
+</section>
 
-<sect1 id="tasks">
+<section id="tasks">
 <title>Tasks</title>
 <para>FIXME</para>
-</sect1>
+</section>
 
 </section>
 
@@ -166,7 +166,7 @@ vrms
 
 <para>The <filename>chroot_local-packages</filename> is simpler to achieve and useful for "one-off" customisations but has a number of drawbacks, whilst using a custom APT repository is more time-consuming to setup.</para>
 
-<sect1 id="local-packages">
+<section id="local-packages">
 <title>Using <filename>chroot_local-packages</filename> to install custom packages</title>
 <para>To install a custom package, simply copy it to the <computeroutput>config/chroot_local-packages</computeroutput> directory. Packages that are inside this directory will be automatically installed into the live system during build - you do not need to specify them elsewhere.</para>
 
@@ -178,28 +178,28 @@ vrms
 <listitem><para>You must install all appropriate packages in the <computeroutput>config/chroot_local-packages</computeroutput> directory</para></listitem>
 <listitem><para>Does not lend itself to storing Debian Live configurations in revision control</para></listitem>
 </orderedlist>
-</sect1>
+</section>
 
-<sect1 id="custom-apt-repo">
+<section id="custom-apt-repo">
 <title>Using an APT repository to install custom packages</title>
 <para>FIXME</para>
 <para>Unlike You must ensure that you specify the package elsewhere, see (FIXME)</para>
 <para>Whilst it may seem unnecessary effort to create an APT repository to install custom packages, the infrastructure can be easily re-used at a later date to offer updates of the modified package.</para>
-</sect1>
+</section>
 
-<sect1 id="custom-packages-apt">
+<section id="custom-packages-apt">
 <title>Custom packages and APT</title>
 <para>&live-helper; uses APT to install all packages into the live system so will therefore inherit behaviours from this program. One relevant example is that (assuming a default configuration) given a package is available in two different repositories, APT will elect to install the package with a higher version number over one with the lower.</para>
 
 <para>Because of this. you may wish to increment the version number in your custom packages' <computeroutput>debian/changelog</computeroutput> files to ensure that your modified version is installed over one in the official Debian repositories. This may also be achieved by altering the live system's APT pinning preferences - see <xref linkend="apt-preferences"/> for more information.</para>
 
-</sect1>
+</section>
 
-<sect1 id="apt-preferences">
+<section id="apt-preferences">
 <title>Altering APT preferences during Live system</title>
 <para>FIXME</para>
 <para>Whilst it may seem unnecessary effort to create an APT repository to install custom packages, the infrastructure can be easily re-used at a later date to offer updates of the modified package.</para>
-</sect1>
+</section>
 
 </section>
 

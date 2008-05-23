@@ -9,17 +9,97 @@
 <para>This chapter discusses further customisation of the live system.</para>
 
 <section>
-<title>Includes</title>
+ <title>Includes</title>
 
-<sect1 id="chroot-includes">
-<title>Live/chroot includes</title>
-<para>FIXME.</para>
+ <para>Using includes, it is possible to add (or replace) arbitrary files in your Debian Live image. &live-helper; provides three mechanisms for using them:</para>
+
+ <variablelist>
+  <varlistentry>
+   <term>
+    Chroot local includes
+   </term>
+   <listitem>
+    <para>
+     These allow you to add or replace files to the chroot/Live filesystem. Please see <xref linkend="chroot-local-includes"/> for more information.
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>
+    Binary local includes
+   </term>
+   <listitem>
+    <para>
+     These allow you to add or replace files in the binary image. Please see <xref linkend="binary-local-includes"/> for more information.
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>
+    Binary includes
+   </term>
+   <listitem>
+    <para>
+     These allow you to add or replace Debian specific files in the binary image, such as the templates and tools directories. Please see <xref linkend="binary-includes"/> for more information.
+    </para>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+
+ <para>
+  Please see <xref linkend="terms"/> for more information about the distinction between the "Live" and "binary" images.
+ </para>
+
+<sect1 id="chroot-local-includes">
+ <title>Live/chroot local includes</title>
+ <para>
+  Chroot local includes can be used to add or replace files in the chroot/Live filesystem so that they are visible when the Live system is booted. Typical uses for them are to populate the skeleton user directory (<filename class="directory">/etc/skel</filename>) or adding configuration files where additional processing is not required.
+ </para>
+
+ <para>
+  To include files, simply add them to your <filename class="directory">config/chroot_local-includes</filename> directory. This directory corresponds to the root directory (<filename class="directory">/</filename>) of the live system. For example, to add a file <filename>/var/www/index.html</filename> in the live system, use:
+ </para>
+
+ <screen>
+  % mkdir -p config/lh_chroot_local-includes/var/www
+  % cp /path/to/my/index.html config/lh_chroot_local-includes/var/www
+ </screen>
+
+ <para>
+  Your configuration will then have the following layout:
+ </para>
+
+ <screen>
+-- config
+   [...]
+    |-- includes
+    |-- lh_chroot_local-includes
+    |   `-- var
+    |       `-- www
+    |           `-- index.html
+   [...]
+    `-- templates
+ </screen>
+
+ <para>
+  Chroot local includes are installed after package installation so that files installed by packages are overwritten.
+ </para>
+</sect1>
+
+<sect1 id="binary-local-includes">
+<title>Binary local includes</title>
+ <para>
+  FIXME.
+ </para>
 </sect1>
 
 <sect1 id="binary-includes">
 <title>Binary includes</title>
-<para>FIXME.</para>
+ <para>
+  FIXME.
+ </para>
 </sect1>
+
 </section>
 
 <section id="hooks">

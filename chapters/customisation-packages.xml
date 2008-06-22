@@ -6,7 +6,9 @@
 <chapter id="packages">
 <title>Customising package installation</title>
 
-<para>This chapter discusses the customisation of package installation. This involves:</para>
+<para>
+ This chapter discusses the customisation of package installation. This involves:
+</para>
 
 <orderedlist>
 <listitem><para>Selecting additional packages to be installed</para></listitem>
@@ -15,26 +17,38 @@
 
 <section id="package-sources">
 <title>Package sources</title>
-<para>FIXME</para>
+<para>
+ FIXME
+</para>
 </section>
 
 <section id="package-installation">
 <title>Package installation</title>
-<para>You can elect to use either <computeroutput>apt</computeroutput> or <computeroutput>aptitude</computeroutput> when installing packages. Which utility is used is governed by the <computeroutput>LH_APT</computeroutput> variable in <filename>config/chroot</filename> or by the <computeroutput>--apt</computeroutput> argument to <filename>lh_config</filename>:</para>
+<para>
+ You can elect to use either <computeroutput>apt</computeroutput> or <computeroutput>aptitude</computeroutput> when installing packages. Which utility is used is governed by the <computeroutput>LH_APT</computeroutput> variable in <filename>config/chroot</filename> or by the <computeroutput>--apt</computeroutput> argument to <filename>lh_config</filename>:
+</para>
 
 <variablelist>
 
 <varlistentry><term><computeroutput>apt</computeroutput></term>
 <listitem>
-<para>Specifying a missing package causes package installation to fail, which may not be the desired behaviour.</para>
-<para>This is the default setting for building images for Lenny or later.</para>
+<para>
+ Specifying a missing package causes package installation to fail, which may not be the desired behaviour.
+</para>
+<para>
+ This is the default setting for building images for Lenny or later.
+</para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term><computeroutput>aptitude</computeroutput></term>
 <listitem>
-<para>Specifying a missing package causes package installation to succeed, which may not be the desired behaviour.</para>
-<para>This is the default setting for building images for Etch.</para>
+<para>
+ Specifying a missing package causes package installation to succeed, which may not be the desired behaviour.
+</para>
+<para>
+ This is the default setting for building images for Etch.
+</para>
 </listitem>
 </varlistentry>
 </variablelist>
@@ -44,7 +58,9 @@
 <section>
 <title>Installing additional packages</title>
 
-<para>&live-helper; has a number of mechanisms for indicating that additional packages should be installed, including:</para>
+<para>
+ &live-helper; has a number of mechanisms for indicating that additional packages should be installed, including:
+</para>
 
 <orderedlist>
 <listitem><para>The <computeroutput>LH_PACKAGES</computeroutput> variable</para></listitem>
@@ -55,13 +71,17 @@
 
 <section id="lh-packages">
 <title>The <computeroutput>LH_PACKAGES</computeroutput> variable</title>
-<para>To install additional packages, simply add them to the <computeroutput>LH_PACKAGES</computeroutput> variable in <filename>config/chroot</filename>. For example:</para>
+<para>
+ To install additional packages, simply add them to the <computeroutput>LH_PACKAGES</computeroutput> variable in <filename>config/chroot</filename>. For example:
+</para>
 
 <screen>
 LH_PACKAGES="package1 package2 package3 ... "
 </screen>
 
-<para>You can also specify an initial values on the command line:</para>
+<para>
+ You can also specify an initial values on the command line:
+</para>
 
 <screen>
 % lh_config --packages "package1 package2 package3"
@@ -69,12 +89,16 @@ LH_PACKAGES="package1 package2 package3 ... "
 
 <para>The behaviour of &live-helper; when specifying a package that does not exist is determined by your choice of APT utility. See <xref linkend="package-installation"/> for more details.</para>
 
-<para>If you need to specify a large number of packages to be installed or you need flexibility regarding which packages to install, you should probably be using package lists. See <xref linkend="package-lists"/> for more information.</para>
+<para>
+ If you need to specify a large number of packages to be installed or you need flexibility regarding which packages to install, you should probably be using package lists. See <xref linkend="package-lists"/> for more information.
+</para>
 </section>
 
 <section id="package-lists">
 <title>Package lists</title>
-<para>Package lists are a powerful way of expressing which packages should be installed. &live-helper; ships with a number of predefined package lists which provide sensible default package selections for the GNOME and KDE desktop environments, as well as standard systems.</para>
+<para>
+ Package lists are a powerful way of expressing which packages should be installed. &live-helper; ships with a number of predefined package lists which provide sensible default package selections for the GNOME and KDE desktop environments, as well as standard systems.
+</para>
 
 <para>To specify a package list, add the name of the list to the <computeroutput>LH_PACKAGES_LISTS</computeroutput> variable in <filename>config/chroot</filename>. For example:</para>
 
@@ -86,8 +110,12 @@ LH_PACKAGES_LISTS="gnome"
 
 <section>
 <title>Local packages lists</title>
-<para>You may supplement the supplied lists using local package lists stored in <computeroutput>config/chroot_local-packageslists</computeroutput>.</para>
-<para>Package lists that exist in this directory always override package lists distributed with &live-helper;. This can cause undesired effects when..</para>
+<para>
+ You may supplement the supplied lists using local package lists stored in <computeroutput>config/chroot_local-packageslists</computeroutput>.
+</para>
+<para>
+ Package lists that exist in this directory always override package lists distributed with &live-helper;. This can cause undesired effects when..
+</para>
 
 </section>
 
@@ -100,7 +128,9 @@ LH_PACKAGES_LISTS="gnome"
 iceweasel
 </screen>
 
-<para>The package lists that are included with &live-helper; make extensive use of includes. They are available to view in the <computeroutput>/usr/share/live-helper/lists</computeroutput> directory.</para>
+<para>
+ The package lists that are included with &live-helper; make extensive use of includes. They are available to view in the <computeroutput>/usr/share/live-helper/lists</computeroutput> directory.
+</para>
 </section>
 
 <section>
@@ -137,8 +167,12 @@ vrms
 #endif
 </screen>
 
-<para>Any &live-helper; configuration variable that begins with <computeroutput>LH_</computeroutput> can be tested in this way.</para>
-<para>The nesting of conditionals is not supported.</para>
+<para>
+ Any &live-helper; configuration variable that begins with <computeroutput>LH_</computeroutput> can be tested in this way.
+</para>
+<para>
+ The nesting of conditionals is not supported.
+</para>
 
 </section>
 
@@ -182,23 +216,37 @@ vrms
 
 <section id="custom-apt-repo">
 <title>Using an APT repository to install custom packages</title>
-<para>FIXME</para>
-<para>Unlike You must ensure that you specify the package elsewhere, see (FIXME)</para>
-<para>Whilst it may seem unnecessary effort to create an APT repository to install custom packages, the infrastructure can be easily re-used at a later date to offer updates of the modified package.</para>
+<para>
+ FIXME
+</para>
+<para>
+ Unlike You must ensure that you specify the package elsewhere, see (FIXME)
+</para>
+<para>
+ Whilst it may seem unnecessary effort to create an APT repository to install custom packages, the infrastructure can be easily re-used at a later date to offer updates of the modified package.
+</para>
 </section>
 
 <section id="custom-packages-apt">
 <title>Custom packages and APT</title>
-<para>&live-helper; uses APT to install all packages into the live system so will therefore inherit behaviours from this program. One relevant example is that (assuming a default configuration) given a package is available in two different repositories, APT will elect to install the package with a higher version number over one with the lower.</para>
+<para>
+ &live-helper; uses APT to install all packages into the live system so will therefore inherit behaviours from this program. One relevant example is that (assuming a default configuration) given a package is available in two different repositories, APT will elect to install the package with a higher version number over one with the lower.
+</para>
 
-<para>Because of this. you may wish to increment the version number in your custom packages' <computeroutput>debian/changelog</computeroutput> files to ensure that your modified version is installed over one in the official Debian repositories. This may also be achieved by altering the live system's APT pinning preferences - see <xref linkend="apt-preferences"/> for more information.</para>
+<para>
+ Because of this. you may wish to increment the version number in your custom packages' <computeroutput>debian/changelog</computeroutput> files to ensure that your modified version is installed over one in the official Debian repositories. This may also be achieved by altering the live system's APT pinning preferences - see <xref linkend="apt-preferences"/> for more information.
+</para>
 
 </section>
 
 <section id="apt-preferences">
 <title>Altering APT preferences during Live system</title>
-<para>FIXME</para>
-<para>Whilst it may seem unnecessary effort to create an APT repository to install custom packages, the infrastructure can be easily re-used at a later date to offer updates of the modified package.</para>
+<para>
+ FIXME
+</para>
+<para>
+ Whilst it may seem unnecessary effort to create an APT repository to install custom packages, the infrastructure can be easily re-used at a later date to offer updates of the modified package.
+</para>
 </section>
 
 </section>

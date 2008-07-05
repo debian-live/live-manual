@@ -8,9 +8,67 @@
 
 <section id="debian-installer">
 <title>The Debian Installer</title>
-<para>
- FIXME.
-</para>
+ <para>
+  Although Debian Live is mostly concerned with avoiding permanent nstallation, integrating some form of installer to your image is possible. There are number of different "types" of installation, varying in what and how the install the image.
+ </para>
+ <note>
+  <title>
+   The "Debian Installer"
+  </title>
+  <para>
+   Please note the careful use of capital letters when referring to the "Debian Installer" in this section - when used like this we refer explicitly to the official installer for the Debian system, not anything else. It is often seen abbreviated to "d-i".
+  </para>
+ </note>
+ <para>
+  The three main types of installer are:
+ </para>
+ <variablelist>
+  <varlistentry>
+   <term>
+    "Normal" Debian Installer
+   </term>
+   <listitem>
+    <para>
+     This is a normal Debian Live image with a seperate kernel and initrd which (when selected from the appropriate bootloader) launches into a standard Debian Installer  instance, just as if you had downloaded a CD image of Debian and booted it.
+    </para>
+    <para>
+     This means that Debian is installed by fetching and installing <computeroutput>.deb</computeroutput> packages using <filename>debootstrap</filename> or <filename>cdebootstrap</filename>, from the local media or some network-base network, resulting in a standard Debian system being installed to the hard disk.
+    </para>
+    <para>
+     This whole process can be preseeded and customised in a number of ways; see the relevant "DebianInstaller" wiki page and installation guide for more. This is operational now withing &live-helper;.
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>
+    "Live" Debian Installer
+   </term>
+   <listitem>
+    <para>
+     This is a Debian Live image with a seperate kernel and initrd which (when selected from the appropriate bootloader) launches into an instance of the Debian Installer.
+    </para>
+    <para>
+     Installation will proceed in an identical fashion to the "Normal" installation described above, but at the actual package installation stage, instead of using <filename>debootstrap</filename> to fetch and install packages, the "live" filesystem image is copied to the target. After this stage, the Debian Installer continues as normal, installing and configuring items such as bootloaders and local users, etc.
+    </para>
+    <para>
+     This is working now.
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>
+    "Ubuntu"-style installer
+   </term>
+   <listitem>
+    <para>
+     This is where you boot into a graphical Debian Live system and run a wizard-based program which installs and configures the live system, all the time remaining inside the live graphical environment.
+    </para>
+    <para>
+     This is currently NOT possible with Debian Live.
+    </para>
+   </listitem>
+  </varlistentry>
+ </variablelist>
 </section>
 
 </chapter>

@@ -22,7 +22,7 @@
 <para>In <computeroutput>debhelper</computeroutput>, this is the <filename class="directory">debian</filename> subdirectory of a package tree. For example, <computeroutput>dh_install</computeroutput> will look for file called <filename>debian/&lt;packagename&gt;.install</filename> to determine which files should exist in a particular binary package. In much the same way, &live-helper; stores its configuration entirely under a <filename class="directory">config/</filename> subdirectory.</para>
 </listitem>
 
-<listitem><para>The scripts are indepodent - that is to say, it is always safe to run each command.</para></listitem>
+<listitem><para>The scripts are independent - that is to say, it is always safe to run each command.</para></listitem>
 
 </orderedlist>
 
@@ -62,11 +62,11 @@
 
 <para>Issuing <filename>lh_config</filename> without any arguments creates a <computeroutput>config</computeroutput> subdirectory which it populates with some default settings:</para>
 <screen>
-% lh_config
-% ls -l
+$ lh_config
+$ ls -l
 total 4.1k
 drwxr-xr-x 19 user group 4.1k 2008-05-09 21:37 config
-% ls -l config/
+$ ls -l config/
 total 91k
 -rw-r--r-- 1 user group 4.0k 2008-05-09 21:37 binary
 drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 binary_debian-installer
@@ -97,13 +97,13 @@ drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 templates
 <para>You can ask <filename>lh_config</filename> to generate <filename class="directory">config/</filename> directory "preseeded" with various options. This might be suitable if you do not require the default settings but do not need to change a large number of options. For example:</para>
 
 <screen>
-% lh_config -p gnome
+$ lh_config -p gnome
 </screen>
 
 <para>will build a <filename class="directory">config/</filename> directory configured to include the '<computeroutput>gnome</computeroutput>' package list. It is possible to specify many options:</para>
 
 <screen>
-% lh_config --apt aptitude --binary-images net --hostname live-machine --username live-user ...
+$ lh_config --apt aptitude --binary-images net --hostname live-machine --username live-user ...
 </screen>
 
 <para>A full list of options is available FIXME. Most options have a parallel with an "<computeroutput>LH_</computeroutput>" prefixed variable.</para>

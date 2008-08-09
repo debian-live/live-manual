@@ -14,7 +14,7 @@ autobuild: clean translations all
 			mkdir -p $(AUTOBUILD)/$$FORMAT/$$LANGUAGE; \
 			cp $$LANGUAGE/*.$$FORMAT $(AUTOBUILD)/$$FORMAT/$$LANGUAGE; \
 		done; \
-	sed "{s/__UPDATED__/$(shell LC_ALL=C date)/;s/__LANG__/$$LANGUAGE/;}" $$LANGUAGE/index.html.in > $(AUTOBUILD)/index.$$LANGUAGE.html; \
+		sed "{s/__UPDATED__/$(shell LC_ALL=C date)/;s/__LANG__/$$LANGUAGE/;}" $$LANGUAGE/index.html.in > $(AUTOBUILD)/index.$$LANGUAGE.html; \
 	done
 
 po4a:

@@ -8,7 +8,7 @@ autobuild: clean translations all
 		mkdir -p $(AUTOBUILD)/$$FORMAT; \
 		cp *.$$FORMAT $(AUTOBUILD)/$$FORMAT; \
 	done
-	sed '{s/__UPDATED__/$(shell LC_ALL=C date)/;s%/__LANG__%%;}' autobuild-index.html.in > $(AUTOBUILD)/index.html
+	sed '{s/__UPDATED__/$(shell LC_ALL=C date)/;s%/__LANG__%%;}' autobuild-index.html.in > $(AUTOBUILD)/index.html.en
 	set -e; for LANGUAGE in $(LANGUAGES); do \
 		for FORMAT in $(FORMATS); do \
 			mkdir -p $(AUTOBUILD)/$$FORMAT/$$LANGUAGE; \

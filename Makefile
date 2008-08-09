@@ -8,13 +8,13 @@ autobuild: clean translations all
 		mkdir -p $(AUTOBUILD)/$$FORMAT; \
 		cp *.$$FORMAT $(AUTOBUILD)/$$FORMAT; \
 	done
-	sed '{s/__UPDATED__/$(shell LC_ALL=C date)/;s%/__LANG__%%;}' index.html.in > $(AUTOBUILD)/index.html
+	sed '{s/__UPDATED__/$(shell LC_ALL=C date)/;s%/__LANG__%%;}' autobuild-index.html.in > $(AUTOBUILD)/index.html
 	set -e; for LANGUAGE in $(LANGUAGES); do \
 		for FORMAT in $(FORMATS); do \
 			mkdir -p $(AUTOBUILD)/$$FORMAT/$$LANGUAGE; \
 			cp $$LANGUAGE/*.$$FORMAT $(AUTOBUILD)/$$FORMAT/$$LANGUAGE; \
 		done; \
-		sed "{s/__UPDATED__/$(shell LC_ALL=C date)/;s/__LANG__/$$LANGUAGE/;}" $$LANGUAGE/index.html.in > $(AUTOBUILD)/index.$$LANGUAGE.html; \
+		sed "{s/__UPDATED__/$(shell LC_ALL=C date)/;s/__LANG__/$$LANGUAGE/;}" $$LANGUAGE/autobuild-index.html.in > $(AUTOBUILD)/index.$$LANGUAGE.html; \
 	done
 
 po4a:

@@ -1,46 +1,37 @@
-PROJECT		:= live-manual
-FORMATS		:= html txt pdf
-
 AUTOBUILD	:= autobuild
-VERSION		:=
-PUBDATE		:=
+LANGUAGES       := de fr
 
-TARGETS		:= $(foreach fmt,$(FORMATS),$(PROJECT).$(fmt))
-SOURCES		:= $(wildcard chapters/*.xml) $(wildcard appendices/*.xml) ent/version.ent ent/common.ent
+include Makefile.common
 
-XP		:= xsltproc --nonet --novalid --xinclude
-XL		:= xmllint --nonet --noout --postvalid --xinclude
-DBLATEX		:= dblatex --style=db2latex
-
-all: $(TARGETS)
-
-validate: $(SOURCES)
-	$(XL) index.xml
-
-autobuild: clean all
+autobuild: clean translations all
 	set -e; for FORMAT in $(FORMATS); do \
 		mkdir -p $(AUTOBUILD)/$$FORMAT; \
 		cp *.$$FORMAT $(AUTOBUILD)/$$FORMAT; \
 	done
-	sed 's/UPDATED/$(shell LC_ALL=C date)/' index.html.in > $(AUTOBUILD)/index.html
+	sed '{s/__UPDATED__/$(shell LC_ALL=C date)/;s%/__LANG__%%;}' index.html.in > $(AUTOBUILD)/index.html
+	set -e; for LANGUAGE in $(LANGUAGES); do \
+		for FORMAT in $(FORMATS); do \
+			mkdir -p $(AUTOBUILD)/$$FORMAT/$$LANGUAGE; \
+			cp $$LANGUAGE/*.$$FORMAT $(AUTOBUILD)/$$FORMAT/$$LANGUAGE; \
+		done; \
+	sed "{s/__UPDATED__/$(shell LC_ALL=C date)/;s/__LANG__/$$LANGUAGE/;}" $$LANGUAGE/index.html.in > $(AUTOBUILD)/index.$$LANGUAGE.html; \
+	done
 
-index.html: $(SOURCES)
-	$(XP) xsl/html.xsl index.xml
+po4a:
+	po4a -k 0 po4a/live-manual.cfg;
 
-$(PROJECT).html: index.html
-
-$(PROJECT).txt: $(SOURCES)
-	$(XP) xsl/txt.xsl index.xml | w3m -cols 65 -dump -T text/html > $@
-
-$(PROJECT).pdf: $(SOURCES)
-	$(DBLATEX) index.xml -o $@ 
-
-ent/version.ent:
-	echo '<!ENTITY version "$(VERSION)">' >  $@
-	echo '<!ENTITY pubdate "$(PUBDATE)">' >> $@
+translations: po4a
+	set -e; for LANGUAGE in $(LANGUAGES); do \
+		mkdir -p $$LANGUAGE; \
+		cp -r ent/ $$LANGUAGE; \
+		cp -r xsl/ $$LANGUAGE; \
+		cp Makefile.common $$LANGUAGE/Makefile; \
+		$(MAKE) -C $$LANGUAGE; \
+	done
 
 clean:
+	-rm -rf $(LANGUAGES)
 	rm -f *.html *.pdf *.txt
 	rm -f ent/version.ent
 
-.PHONY: all clean validate $(PROJECT).html
+.PHONY: clean po4a translations

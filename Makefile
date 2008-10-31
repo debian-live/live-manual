@@ -37,4 +37,7 @@ clean:
 	rm -f *.html *.pdf *.txt
 	rm -f ent/version.ent
 
+purge: clean
+	rm -rf autobuild
+
 .PHONY: clean po4a translations

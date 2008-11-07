@@ -33,7 +33,30 @@
 
 <section id="language">
 <title>Language</title>
-<para>FIXME</para>
+<para>When the live system boots there are three process which concerns language: the locale generation, setting the keyboard layout for the console and setting the keyboard layout for X. To define the locale that should be generated, use the <computeroutput>locale<computeroutput> parameter to the <computeroutput>--bootappend-live<computeroutput> option of <filename>lh_config</filename>, e.g.:
+
+<screen>lh_config --bootappend-live "locale=sv_SE.utf8"</screen>
+
+Both the console and X keyboard configuration depends on the <computeroutput>keyb</computeroutput> parameter of the <computeroutput>--bootappend-live</computeroutput>option. Valid options for X keyboard layouts can be found in <filename>/etc/X11/xkb/base.xml</filename>. To find the value (the two characters) corresponding to a language try searching for the english name of the nation where the language is spoken, e.g:
+
+<screen>$ grep -i sweden -C3 /etc/X11/xkb/base.xml | grep name
+        \<name\>se\<\/name\>
+</screen>
+
+To get the locale files for swedish generated and a swedish keyboard layout in X use:
+
+<screen>lh_config --bootappend-live "locale=sv_SE.utf8 keyb=se"</screen>
+
+</para>
+<para>
+A list of the valid values of the keyboards for the console can be figured with the following command:
+<screen>for i in `find /usr/share/keymaps/ -iname "*kmap.gz"`; do basename $i | head -c -9; echo; done | sort | less </screen>
+
+To make the console keyboard use a swedish layout use
+
+<screen>lh_config --bootappend-live "locale=sv_SE.utf8 keyb=se-latin1"</screen>
+
+</para>
 </section>
 
 <section id="persistence">

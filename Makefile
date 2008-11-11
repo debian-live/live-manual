@@ -1,3 +1,5 @@
+# Needs: po4a make dblatex docbook-xml docbook-xsl w3m
+
 AUTOBUILD	:= autobuild
 LANGUAGES       := de fr
 

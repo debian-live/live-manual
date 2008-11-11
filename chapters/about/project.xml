@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" [
+  <!ENTITY % commondata SYSTEM "../../ent/common.ent" > %commondata;
+]>
+<sect1 id="about">
+<title>About the Debian Live Project</title>
+
+<sect2 id="motivation">
+<title>Motivation</title>
+
+<sect3>
+<title>What is wrong with current live systems</title>
+
+<para>There are already several Debian-based live systems and they are doing a great job. But, from the Debian perspective, most of them have one or more of the following disadvantages:</para>
+
+<orderedlist>
+<listitem><para>They are unofficial projects, developed outside of Debian.</para></listitem>
+<listitem><para>They mix different distributions, e.g. testing and unstable.</para></listitem>
+<listitem><para>They support i386 only.</para></listitem>
+<listitem><para>They change package's behavior and/or appearance by stripping them down to save space.</para></listitem>
+<listitem><para>They include unofficial packages.</para></listitem>
+<listitem><para>They ship custom kernels with additional patches not part of Debian.</para></listitem>
+<listitem><para>They are large and slow due to their sheer size and thus not suitable for rescue issues.</para></listitem>
+<listitem><para>They are not available in different flavours, e.g. CDs, DVDs, USB-stick and netboot images </para></listitem>
+</orderedlist>
+</sect3>
+
+<sect3>
+<title>Why create our own live system?</title>
+
+<para>Debian is the Universal Operating System: Debian should have an official live system for showing around and to officially represent the true, one and only Debian system with the following main advantages:</para>
+
+<orderedlist>
+<listitem><para>It would be an official Debian subproject.</para></listitem>
+<listitem><para>It reflects the (current) state of one distribution.</para></listitem>
+<listitem><para>It runs on as many architectures as possible.</para></listitem>
+<listitem><para>It consists of unchanged Debian packages only.</para></listitem>
+<listitem><para>It does not contain any unofficial packages.</para></listitem>
+<listitem><para>It uses an unaltered Debian kernel-image with no additional patches.</para></listitem>
+</orderedlist>
+
+</sect3>
+
+</sect2>
+
+<sect2 id="philosophy">
+<title>Philosophy</title>
+
+<sect3>
+<title>Only unchanged, official packages</title>
+<para>
+ We will only use official packages from the Debian repository, section main or maybe contrib (the use of contrib is not decided yet). The non-free section is not part of Debian and therefore not used at all for the live system.
+</para>
+
+<para>
+ We will not change any packages. Whenever we need to change something, we will do that in coordination with its package maintainer in Debian.
+</para>
+
+<para>
+ Exception: temporarily, our own packages like live-helper or live-initramfs may be used from our own repository for development reasons (e.g. to create development snapshots). They will be synced into Debian on a regular basis.
+</para>
+</sect3>
+
+<sect3>
+<title>No configuration of the live system</title>
+<para>
+ In this phase we will not ship or install sample or alternative configurations. All packages are used in their default configuration as they are after a regular installation of Debian.
+</para>
+
+<para>
+ Whenever we need a different default configuration, we will do that in coordination with its package maintainer in Debian.
+</para>
+
+<para>
+ A system for configuring packages is provided using debconf in lh_config (use --preseed FILE) allowing custom configured packages to be installed in your custom produced Debian Live images, but for official live images only default configuration will be used.
+</para>
+
+<para>
+ Exception: There are a few essential changes needed to be make a live system alive (e.g. configuring pam to allow empty passwords). These essential changes have to be kept as minimal as possible and, should be merged within the Debian repository if possible.
+</para>
+</sect3>
+
+<sect3>
+<title>No live system to hard disk installer</title>
+<para>
+ [ this is no longer valid after etch release, we will work on an installer for lenny ]
+</para>
+
+<para>
+ For the moment we will not ship an installer to copy the live system to a partition on the hard disk. Although we keep the changes in the live system as drastically minimal as possible compared to a regular Debian installation, the live system does differ in a few essential points (see exceptions, guideline 2).
+</para>
+
+<para>
+ Therefore, we will ship a copy of the regular DebianInstaller (resp. Debian Installer, Graphical Installer) instead, to allow users to perform a regular Debian installation (and, of course, cdebootstrap and debootstrap are on the system too).
+</para>
+</sect3>
+
+</sect2>
+
+<sect2 id="contact">
+<title>Contact</title>
+
+<variablelist>
+ <varlistentry><term>Mailing list</term>
+ <listitem><para>The primary contact for the project is the <ulink url="http://lists.debian.org/debian-live/">mailing list</ulink>. You can email the list directly by addressing your mail to <email>debian-live@lists.debian.org</email>. The <ulink url="http://lists.debian.org/debian-live/">list archives</ulink> are also available.</para></listitem>
+</varlistentry>
+
+<varlistentry><term>IRC</term>
+<listitem><para>
+A number of users and developers are present in the <ulink url="irc://irc.debian.org/#debian-live">#debian-live</ulink> channel on <ulink url="http://oftc.net">OFTC</ulink>. When asking a question on IRC, please be patient for an answer. If no answer is forthcoming, please email the mailing list.
+</para></listitem>
+</varlistentry>
+
+<varlistentry><term>BTS</term>
+<listitem><para>
+The Debian Bug Tracking System (BTS) contains details of bugs reported by users and developers. Each bug is given a number, and is kept on file until it is marked as having been dealt with. For more information, please see <xref linkend="bugs"/>.
+</para></listitem>
+</varlistentry>
+
+<varlistentry><term>Wiki</term>
+<listitem><para>
+FIXME. <ulink url="http://wiki.debian.org/DebianLive">our entry on the Debian wiki</ulink>.
+</para></listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+</sect1>

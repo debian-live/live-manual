@@ -5,7 +5,7 @@ VERSION		:=
 PUBDATE		:=
 
 TARGETS		:= $(foreach fmt,$(FORMATS),$(PROJECT).$(fmt))
-SOURCES		:= $(wildcard chapters/*.xml) $(wildcard appendices/*.xml) ent/version.ent ent/common.ent
+SOURCES		:= $(wildcard xml/chapters/*.xml) $(wildcard xml/appendices/*.xml) xml/entities/version.ent xml/entities/common.ent
 
 XP		:= xsltproc --nonet --novalid --xinclude
 XL		:= xmllint --nonet --noout --postvalid --xinclude
@@ -14,20 +14,20 @@ DBLATEX		:= dblatex --style=db2latex
 all: $(TARGETS)
 
 validate: $(SOURCES)
-	$(XL) index.xml
+	$(XL) xml/index.xml
 
 index.html: $(SOURCES)
-	$(XP) xsl/html.xsl index.xml
+	$(XP) xsl/html.xsl xml/index.xml
 
 $(PROJECT).html: index.html
 
 $(PROJECT).txt: $(SOURCES)
-	$(XP) xsl/txt.xsl index.xml | w3m -cols 65 -dump -T text/html > $@
+	$(XP) xsl/txt.xsl xml/index.xml | w3m -cols 65 -dump -T text/html > $@
 
 $(PROJECT).pdf: $(SOURCES)
-	$(DBLATEX) index.xml -o $@ 
+	$(DBLATEX) xml/index.xml -o $@ 
 
-ent/version.ent:
+xml/entities/version.ent:
 	echo '<!ENTITY version "$(VERSION)">' >  $@
 	echo '<!ENTITY pubdate "$(PUBDATE)">' >> $@
 

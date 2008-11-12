@@ -26,7 +26,7 @@ po4a:
 translations: po4a
 	set -e; for LANGUAGE in $(LANGUAGES); do \
 		mkdir -p $$LANGUAGE; \
-		cp -r ent/ $$LANGUAGE; \
+		cp -r xml/entities/ $$LANGUAGE; \
 		cp -r xsl/ $$LANGUAGE; \
 		cp Makefile.common $$LANGUAGE/Makefile; \
 		$(MAKE) -C $$LANGUAGE; \
@@ -35,7 +35,7 @@ translations: po4a
 clean:
 	-rm -rf $(LANGUAGES)
 	rm -f *.html *.pdf *.txt
-	rm -f ent/version.ent
+	rm -f xml/entities/version.ent
 
 purge: clean
 	rm -rf autobuild

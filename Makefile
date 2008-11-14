@@ -1,20 +1,20 @@
-AUTOBUILD	:= autobuild
+AUTOBUILD	:= build
 LANGUAGES       := de fr
 
 include Makefile.common
 
-autobuild: clean translations all
+build: clean translations all
 	set -e; for FORMAT in $(FORMATS); do \
 		mkdir -p $(AUTOBUILD)/$$FORMAT; \
 		cp *.$$FORMAT $(AUTOBUILD)/$$FORMAT; \
 	done
-	sed '{s/__UPDATED__/$(shell LC_ALL=C date -R)/;s%/__LANG__%%;}' autobuild-index.html.in > $(AUTOBUILD)/index.html.en
+	sed '{s/__UPDATED__/$(shell LC_ALL=C date -R)/;s%/__LANG__%%;}' build-index.html.in > $(AUTOBUILD)/index.html.en
 	set -e; for LANGUAGE in $(LANGUAGES); do \
 		for FORMAT in $(FORMATS); do \
 			mkdir -p $(AUTOBUILD)/$$FORMAT/$$LANGUAGE; \
 			cp $$LANGUAGE/*.$$FORMAT $(AUTOBUILD)/$$FORMAT/$$LANGUAGE; \
 		done; \
-		sed "{s/__UPDATED__/$(shell LC_ALL=C date -R)/;s/__LANG__/$$LANGUAGE/;}" $$LANGUAGE/autobuild-index.html.in > $(AUTOBUILD)/index.html.$$LANGUAGE; \
+		sed "{s/__UPDATED__/$(shell LC_ALL=C date -R)/;s/__LANG__/$$LANGUAGE/;}" $$LANGUAGE/build-index.html.in > $(AUTOBUILD)/index.html.$$LANGUAGE; \
 	done
 
 update:
@@ -38,6 +38,6 @@ clean:
 	rm -f xml/entities/version.ent
 
 purge: clean
-	rm -rf autobuild
+	rm -rf build
 
 .PHONY: clean po4a translations

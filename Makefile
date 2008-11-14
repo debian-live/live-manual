@@ -17,9 +17,6 @@ build: clean translations all
 		sed "{s/__UPDATED__/$(shell LC_ALL=C date -R)/;s/__LANG__/$$LANGUAGE/;}" $$LANGUAGE/build-index.html.in > $(AUTOBUILD)/index.html.$$LANGUAGE; \
 	done
 
-update:
-	git pull
-
 po4a:
 	po4a -k 0 po4a/live-manual.cfg;
 

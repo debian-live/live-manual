@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Debconf 8\n"
-"POT-Creation-Date: 2008-08-09 16:50+0300\n"
+"POT-Creation-Date: 2008-11-12 22:29+0100\n"
 "PO-Revision-Date: 2008-08-09 16:50+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,50 +16,55 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 # type: Content of: <chapter><section><para>
-#: chapters/basics.xml:151 chapters/basics.xml:182
-#: chapters/customisation-bootup.xml:11 chapters/customisation-bootup.xml:20
-#: chapters/customisation-bootup.xml:26 chapters/customisation-bootup.xml:38
-#: chapters/customisation-bootup.xml:46 chapters/customisation-bootup.xml:53
-#: chapters/customisation-bootup.xml:60 chapters/customisation-bootup.xml:67
-#: chapters/customisation-packages.xml:21
-#: chapters/customisation-packages.xml:138
-#: chapters/customisation-packages.xml:183
-#: chapters/customisation-packages.xml:220
-#: chapters/customisation-packages.xml:245 chapters/live-environment.xml:11
-#: chapters/live-environment.xml:16 chapters/live-environment.xml:36
-#: chapters/live-environment.xml:41 chapters/meta.xml:47 chapters/meta.xml:51
-#: chapters/meta.xml:55 chapters/meta.xml:59 chapters/meta.xml:63
-#: chapters/meta.xml:67 chapters/overview.xml:115 chapters/resources.xml:11
+#: xml/chapters/about/manual.xml:47 xml/chapters/about/manual.xml:51
+#: xml/chapters/about/manual.xml:55 xml/chapters/about/manual.xml:59
+#: xml/chapters/about/manual.xml:63 xml/chapters/about/manual.xml:67
+#: xml/chapters/basics.xml:151 xml/chapters/basics.xml:182
+#: xml/chapters/customization/bootup.xml:11
+#: xml/chapters/customization/bootup.xml:20
+#: xml/chapters/customization/bootup.xml:26
+#: xml/chapters/customization/bootup.xml:38
+#: xml/chapters/customization/bootup.xml:46
+#: xml/chapters/customization/bootup.xml:53
+#: xml/chapters/customization/bootup.xml:60
+#: xml/chapters/customization/bootup.xml:67
+#: xml/chapters/customization/packages.xml:21
+#: xml/chapters/customization/packages.xml:138
+#: xml/chapters/customization/packages.xml:183
+#: xml/chapters/customization/packages.xml:220
+#: xml/chapters/customization/packages.xml:245
+#: xml/chapters/live-environment.xml:11 xml/chapters/live-environment.xml:16
+#: xml/chapters/overview.xml:115 xml/chapters/resources.xml:11
 msgid "FIXME"
 msgstr ""
 
 # type: Content of: <chapter><title>
-#: chapters/live-environment.xml:7
+#: xml/chapters/live-environment.xml:7
 msgid "The Live environment"
 msgstr ""
 
 # type: Content of: <chapter><section><title>
-#: chapters/live-environment.xml:10
+#: xml/chapters/live-environment.xml:10
 msgid "Swap space"
 msgstr ""
 
 # type: Content of: <chapter><section><title>
-#: chapters/live-environment.xml:15
+#: xml/chapters/live-environment.xml:15
 msgid "Hostname"
 msgstr ""
 
 # type: Content of: <chapter><section><title>
-#: chapters/live-environment.xml:20
+#: xml/chapters/live-environment.xml:20
 msgid "The Live user"
 msgstr ""
 
 # type: Content of: <chapter><section><para>
-#: chapters/live-environment.xml:21
+#: xml/chapters/live-environment.xml:21
 msgid "Username FIXME."
 msgstr ""
 
 # type: Content of: <chapter><section><para>
-#: chapters/live-environment.xml:22
+#: xml/chapters/live-environment.xml:22
 msgid ""
 "One important consideration is that the live user is created by &live-"
 "initramfs; during bootup, it is not created by &live-helper; when building "
@@ -67,7 +72,7 @@ msgid ""
 msgstr ""
 
 # type: Content of: <chapter><section><para>
-#: chapters/live-environment.xml:24
+#: xml/chapters/live-environment.xml:24
 msgid ""
 "You can specify additional groups that the live user will belong to by "
 "preseeding the <computeroutput>passwd/user-default-groups</computeroutput> "
@@ -78,26 +83,257 @@ msgid ""
 msgstr ""
 
 # type: Content of: <chapter><section><screen>
-#: chapters/live-environment.xml:26
+#: xml/chapters/live-environment.xml:26
 #, no-wrap
 msgid ""
 "\n"
-" debconf passwd/user-default-groups string dialout cdrom floppy audio video fuse\n"
+" debconf passwd/user-default-groups string audio cdrom dialout floppy video plugdev netdev powerdev fuse\n"
 msgstr ""
 
 # type: Content of: <chapter><section><para>
-#: chapters/live-environment.xml:30
+#: xml/chapters/live-environment.xml:30
 msgid ""
 "For more information about debconf preseeding, please see <xref linkend="
 "\"debconf-preseed\"/>."
 msgstr ""
 
 # type: Content of: <chapter><section><title>
-#: chapters/live-environment.xml:35
+#: xml/chapters/live-environment.xml:35
 msgid "Language"
 msgstr ""
 
+# type: Content of: <chapter><section><para>
+#: xml/chapters/live-environment.xml:36
+msgid ""
+"When the live system boots there are three process which concerns language: "
+"the locale generation, setting the keyboard layout for the console and "
+"setting the keyboard layout for X. To define the locale that should be "
+"generated, use the <computeroutput>locale</computeroutput> parameter to the "
+"<computeroutput>--bootappend-live</computeroutput> option of "
+"<filename>lh_config</filename>, e.g.:"
+msgstr ""
+
+# type: Content of: <chapter><section><para><screen>
+#: xml/chapters/live-environment.xml:38
+#, no-wrap
+msgid "lh_config --bootappend-live \"locale=sv_SE.utf8\""
+msgstr ""
+
+# type: Content of: <chapter><section><para>
+#: xml/chapters/live-environment.xml:40
+msgid ""
+"Both the console and X keyboard configuration depends on the "
+"<computeroutput>keyb</computeroutput> parameter of the <computeroutput>--"
+"bootappend-live</computeroutput>option. Valid options for X keyboard layouts "
+"can be found in <filename>/etc/X11/xkb/base.xml</filename>. To find the "
+"value (the two characters) corresponding to a language try searching for the "
+"english name of the nation where the language is spoken, e.g:"
+msgstr ""
+
+# type: Content of: <chapter><section><para><screen>
+#: xml/chapters/live-environment.xml:42
+#, no-wrap
+msgid ""
+"$ grep -i sweden -C3 /etc/X11/xkb/base.xml | grep name\n"
+"\t&lt;name&gt;se&lt;name&gt;\n"
+msgstr ""
+
+# type: Content of: <chapter><section><para>
+#: xml/chapters/live-environment.xml:46
+msgid ""
+"To get the locale files for swedish generated and a swedish keyboard layout "
+"in X use:"
+msgstr ""
+
+# type: Content of: <chapter><section><para><screen>
+#: xml/chapters/live-environment.xml:48
+#, no-wrap
+msgid "lh_config --bootappend-live \"locale=sv_SE.utf8 keyb=se\""
+msgstr ""
+
+# type: Content of: <chapter><section><para>
+#: xml/chapters/live-environment.xml:52
+msgid ""
+"A list of the valid values of the keyboards for the console can be figured "
+"with the following command:"
+msgstr ""
+
+# type: Content of: <chapter><section><para><screen>
+#: xml/chapters/live-environment.xml:53
+#, no-wrap
+msgid "for i in `find /usr/share/keymaps/ -iname \"*kmap.gz\"`; do basename $i | head -c -9; echo; done | sort | less "
+msgstr ""
+
+# type: Content of: <chapter><section><para>
+#: xml/chapters/live-environment.xml:55
+msgid "To make the console keyboard use a swedish layout use"
+msgstr ""
+
+# type: Content of: <chapter><section><para><screen>
+#: xml/chapters/live-environment.xml:57
+#, no-wrap
+msgid "lh_config --bootappend-live \"locale=sv_SE.utf8 keyb=se-latin1\""
+msgstr ""
+
 # type: Content of: <chapter><section><title>
-#: chapters/live-environment.xml:40
+#: xml/chapters/live-environment.xml:63
 msgid "Persistence"
+msgstr ""
+
+# type: Content of: <chapter><section><para>
+#: xml/chapters/live-environment.xml:64
+msgid ""
+"A live cd paradigm is a preinstalled system which runs from a read-only "
+"media, like a cdrom, were writes and modifications does not survive reboots "
+"of the host hardware which runs it."
+msgstr ""
+
+# type: Content of: <chapter><section><para>
+#: xml/chapters/live-environment.xml:65
+msgid ""
+"A Debian Live system is a generalization of this paradigm and thus supports "
+"more media, and not only cds; but stills, in its default behaviour, it "
+"should be considered read only and all the runtime evolutions of the system "
+"are lost with a shutdown."
+msgstr ""
+
+# type: Content of: <chapter><section><para>
+#: xml/chapters/live-environment.xml:67
+msgid ""
+"Persistence is a common name for different kinds of solutions for saving "
+"across reboots some or all of this runtime evolution of the system; to "
+"undestand how it could work it could be handy to know that even if the "
+"system is booted and runt from a read only media, modification to the files "
+"and directories are wrote on a writable media , tipically a ram disk (tmpfs) "
+"and ram disk's data do not survive reboots."
+msgstr ""
+
+# type: Content of: <chapter><section><para>
+#: xml/chapters/live-environment.xml:68
+msgid ""
+"The data stored on this ramdisk should be saved in a writable persistent "
+"media like on an Hard Disk, a USB key, a network \"share\" or even a session "
+"of a multisession (re)writable CD/DVD. All this cited media are supported in "
+"Debian Live in different ways, all but latest one requires a special boot "
+"parameter to be specified at boot: <computeroutput>persistent</"
+"computeroutput>."
+msgstr ""
+
+# type: Content of: <chapter><section><section><title>
+#: xml/chapters/live-environment.xml:70
+msgid "Full persistence"
+msgstr ""
+
+# type: Content of: <chapter><section><section><para>
+#: xml/chapters/live-environment.xml:71
+msgid ""
+"With \"full persistence\" it is meant that instead of using a tmpfs for "
+"storing modifications to the read-only media (with the copy-on-write, COW, "
+"system) a writable partition is used. In order to use this feature a "
+"partition with a clean writable supported filesystem on it labeled \"live-rw"
+"\" must be attached on the system at bootime and the system must be started "
+"with \"persistent\" boot parameter; this partition could be an ext2 "
+"partition on the hard disk or on a usb key created with, e.g.:"
+msgstr ""
+
+# type: Content of: <chapter><section><section><screen>
+#: xml/chapters/live-environment.xml:73
+#, no-wrap
+msgid ""
+"\n"
+"# mkfs.ext2 -L live-rw /dev/sdb1\n"
+msgstr ""
+
+# type: Content of: <chapter><section><section><para>
+#: xml/chapters/live-environment.xml:77
+msgid ""
+"But since live system users, not always can use an hard drive partition, "
+"maybe because they aren't allowed or they wan't to repartition a drive, and "
+"considering that most USB keys have laughables write speeds, \"full\" "
+"persistence could be also used with just image files, so you could create a "
+"file representing a partition and put this image file even on a NTFS "
+"partition of a foreign OS, with something like:"
+msgstr ""
+
+# type: Content of: <chapter><section><section><screen>
+#: xml/chapters/live-environment.xml:79
+#, no-wrap
+msgid ""
+"\n"
+"$ dd if=/dev/zero of=live-rw bs=1024k count=1 seek=1k # for a 1G image file\n"
+"# mkfs.ext2 -F live-rw\n"
+msgstr ""
+
+# type: Content of: <chapter><section><section><para>
+#: xml/chapters/live-environment.xml:84
+msgid ""
+"Then copy the <computeroutput>live-rw</computeroutput> file in a writable "
+"partition and reboot with \"persistent\" boot parameter."
+msgstr ""
+
+# type: Content of: <chapter><section><section><title>
+#: xml/chapters/live-environment.xml:87
+msgid "Home automounting"
+msgstr ""
+
+# type: Content of: <chapter><section><section><para>
+#: xml/chapters/live-environment.xml:88
+msgid ""
+"If during the boot a partition (filesystem) image file or a partition "
+"labeled <computeroutput>home-rw</computeroutput> will be discovered, this "
+"filesystem will be directly mounted as <computeroutput>/home</"
+"computeroutput>, thus permitting persistence of files that belong to the e."
+"g. default user. It can be combined with full persistence."
+msgstr ""
+
+# type: Content of: <chapter><section><section><title>
+#: xml/chapters/live-environment.xml:91
+msgid "Snapshots"
+msgstr ""
+
+# type: Content of: <chapter><section><section><para>
+#: xml/chapters/live-environment.xml:92
+msgid ""
+"Snapshots are collection of files and directories which are not mounted "
+"while running but which are copied from a persistent device to the system "
+"(tmpfs) at boot and which are resynced at reboot/shutdown of the system. The "
+"content of a snapshot could reside on a partition or an image file (like the "
+"above mentioned types) labeled <computeroutput>live-sn</computeroutput>, but "
+"it defaults as a simple cpio archive named <computeroutput>live-sn.cpio.gz</"
+"computeroutput>. As above at boot time, the block devices connected to the "
+"system are traversed to see it a suche named partition or file could be "
+"found. A power interruption during runtime could mean data lost hence a tool "
+"invoked <computeroutput>live-snapshot --refresh</computeroutput> could be "
+"called to sync important changes. This type of persistence since no not "
+"write continuosly to the persistent media is the most flash-based device "
+"friendly and the fastest of all the persistence systems."
+msgstr ""
+
+# type: Content of: <chapter><section><section><para>
+#: xml/chapters/live-environment.xml:93
+msgid ""
+"A /home version of snapshot exists too and its label is <computeroutput>home-"
+"sn.*</computeroutput>; it works the same as the main snapshot but it is only "
+"applied to /home."
+msgstr ""
+
+# type: Content of: <chapter><section><section><para>
+#: xml/chapters/live-environment.xml:94
+msgid ""
+"All kind of snapshots cannot currently handle file deleting while full "
+"persistence and obviously home automounting could."
+msgstr ""
+
+# type: Content of: <chapter><section><section><title>
+#: xml/chapters/live-environment.xml:97
+msgid "Partial remasterings"
+msgstr ""
+
+# type: Content of: <chapter><section><section><para>
+#: xml/chapters/live-environment.xml:98
+msgid ""
+"The runtime modification of the tmpfs could be collected usign live-snapshot "
+"in a squashfs and added to the cd by remastering the iso in case of cd-r or "
+"adding a session to multisession cd/dvd(rw); live-initramfs mounts all /live "
+"filesystem in order or with the module bootparameter."
 msgstr ""

@@ -13,7 +13,7 @@ DBLATEX		:= dblatex --style=db2latex
 
 all: $(TARGETS)
 
-validate: $(SOURCES)
+test: $(SOURCES)
 	$(XL) xml/index.xml
 
 index.html: $(SOURCES)
@@ -31,4 +31,4 @@ xml/entities/version.ent:
 	echo '<!ENTITY version "$(VERSION)">' >  $@
 	echo '<!ENTITY pubdate "$(PUBDATE)">' >> $@
 
-.PHONY: all validate $(PROJECT).html
+.PHONY: all test $(PROJECT).html

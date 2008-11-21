@@ -25,12 +25,12 @@
 <sect2 id="package-installation">
 <title>Package installation</title>
 <para>
- You can elect to use either <computeroutput>apt</computeroutput> or <computeroutput>aptitude</computeroutput> when installing packages. Which utility is used is governed by the <computeroutput>LH_APT</computeroutput> variable in <filename>config/chroot</filename> or by the <computeroutput>--apt</computeroutput> argument to <filename>lh_config</filename>:
+ You can elect to use either <command>apt</command> or <command>aptitude</command> when installing packages. Which utility is used is governed by the <command>LH_APT</command> variable in <filename>config/chroot</filename> or by the <command>--apt</command> argument to <filename>lh_config</filename>:
 </para>
 
 <variablelist>
 
-<varlistentry><term><computeroutput>apt</computeroutput></term>
+<varlistentry><term><command>apt</command></term>
 <listitem>
 <para>
  Specifying a missing package causes package installation to fail, which may not be the desired behaviour.
@@ -41,7 +41,7 @@
 </listitem>
 </varlistentry>
 
-<varlistentry><term><computeroutput>aptitude</computeroutput></term>
+<varlistentry><term><command>aptitude</command></term>
 <listitem>
 <para>
  Specifying a missing package causes package installation to succeed, which may not be the desired behaviour.
@@ -63,16 +63,16 @@
 </para>
 
 <orderedlist>
-<listitem><para>The <computeroutput>LH_PACKAGES</computeroutput> variable</para></listitem>
+<listitem><para>The <command>LH_PACKAGES</command> variable</para></listitem>
 <listitem><para>Package lists</para></listitem>
 <listitem><para>Local packages (<filename>chroot_local-packages/</filename>)</para></listitem>
 <listitem><para>Tasks</para></listitem>
 </orderedlist>
 
 <sect3 id="lh-packages">
-<title>The <computeroutput>LH_PACKAGES</computeroutput> variable</title>
+<title>The <command>LH_PACKAGES</command> variable</title>
 <para>
- To install additional packages, simply add them to the <computeroutput>LH_PACKAGES</computeroutput> variable in <filename>config/chroot</filename>. For example:
+ To install additional packages, simply add them to the <command>LH_PACKAGES</command> variable in <filename>config/chroot</filename>. For example:
 </para>
 
 <screen>
@@ -100,18 +100,18 @@ $ lh_config --packages "package1 package2 package3"
  Package lists are a powerful way of expressing which packages should be installed. &live-helper; ships with a number of predefined package lists which provide sensible default package selections for the GNOME and KDE desktop environments, as well as standard systems.
 </para>
 
-<para>To specify a package list, add the name of the list to the <computeroutput>LH_PACKAGES_LISTS</computeroutput> variable in <filename>config/chroot</filename>. For example:</para>
+<para>To specify a package list, add the name of the list to the <command>LH_PACKAGES_LISTS</command> variable in <filename>config/chroot</filename>. For example:</para>
 
 <screen>
 LH_PACKAGES_LISTS="gnome"
 </screen>
 
-<para>Packages lists that a distributed with &live-helper; reside in view in the <computeroutput>/usr/share/live-helper/lists</computeroutput> directory.</para>
+<para>Packages lists that a distributed with &live-helper; reside in view in the <command>/usr/share/live-helper/lists</command> directory.</para>
 
 <sect4>
 <title>Local packages lists</title>
 <para>
- You may supplement the supplied lists using local package lists stored in <computeroutput>config/chroot_local-packageslists</computeroutput>.
+ You may supplement the supplied lists using local package lists stored in <command>config/chroot_local-packageslists</command>.
 </para>
 <para>
  Package lists that exist in this directory always override package lists distributed with &live-helper;. This can cause undesired effects when..
@@ -129,7 +129,7 @@ iceweasel
 </screen>
 
 <para>
- The package lists that are included with &live-helper; make extensive use of includes. They are available to view in the <computeroutput>/usr/share/live-helper/lists</computeroutput> directory.
+ The package lists that are included with &live-helper; make extensive use of includes. They are available to view in the <command>/usr/share/live-helper/lists</command> directory.
 </para>
 </sect4>
 
@@ -143,7 +143,7 @@ ia32-libs
 #endif
 </screen>
 
-<para>or if <computeroutput>LH_ARCHITECTURE</computeroutput> is set to <computeroutput>i386</computeroutput> or <computeroutput>amd64</computeroutput>:</para>
+<para>or if <command>LH_ARCHITECTURE</command> is set to <command>i386</command> or <command>amd64</command>:</para>
 
 <screen>
 #if ARCHITECTURE i386 amd64
@@ -151,7 +151,7 @@ memtest86+
 #endif
 </screen>
 
-<para>or if <computeroutput>LH_SECTIONS</computeroutput> contains either <computeroutput>contrib</computeroutput> or <computeroutput>non-free</computeroutput>:</para>
+<para>or if <command>LH_SECTIONS</command> contains either <command>contrib</command> or <command>non-free</command>:</para>
 
 <screen>
 #if SECTIONS contrib non-free
@@ -159,7 +159,7 @@ vrms
 #endif
 </screen>
 
-<para>A conditional may surround an <computeroutput>#include</computeroutput> directive:</para>
+<para>A conditional may surround an <command>#include</command> directive:</para>
 
 <screen>
 #if ARCHITECTURE amd64
@@ -168,7 +168,7 @@ vrms
 </screen>
 
 <para>
- Any &live-helper; configuration variable that begins with <computeroutput>LH_</computeroutput> can be tested in this way.
+ Any &live-helper; configuration variable that begins with <command>LH_</command> can be tested in this way.
 </para>
 <para>
  The nesting of conditionals is not supported.
@@ -202,14 +202,14 @@ vrms
 
 <sect3 id="local-packages">
 <title>Using <filename>chroot_local-packages</filename> to install custom packages</title>
-<para>To install a custom package, simply copy it to the <computeroutput>config/chroot_local-packages</computeroutput> directory. Packages that are inside this directory will be automatically installed into the live system during build - you do not need to specify them elsewhere.</para>
+<para>To install a custom package, simply copy it to the <command>config/chroot_local-packages</command> directory. Packages that are inside this directory will be automatically installed into the live system during build - you do not need to specify them elsewhere.</para>
 
-<para>Packages <emphasis>must</emphasis> be named in the prescribed way. One simple way to is to use <computeroutput>dpkg-name</computeroutput>. FIXME</para>
+<para>Packages <emphasis>must</emphasis> be named in the prescribed way. One simple way to is to use <command>dpkg-name</command>. FIXME</para>
 
 <para>Using <filename>chroot_local-packages</filename> for installation of custom packages has two disadvantages:</para>
 <orderedlist>
 <listitem><para>It is not possible to use secure APT</para></listitem>
-<listitem><para>You must install all appropriate packages in the <computeroutput>config/chroot_local-packages</computeroutput> directory</para></listitem>
+<listitem><para>You must install all appropriate packages in the <command>config/chroot_local-packages</command> directory</para></listitem>
 <listitem><para>Does not lend itself to storing Debian Live configurations in revision control</para></listitem>
 </orderedlist>
 </sect3>
@@ -234,7 +234,7 @@ vrms
 </para>
 
 <para>
- Because of this. you may wish to increment the version number in your custom packages' <computeroutput>debian/changelog</computeroutput> files to ensure that your modified version is installed over one in the official Debian repositories. This may also be achieved by altering the live system's APT pinning preferences - see <xref linkend="apt-preferences"/> for more information.
+ Because of this. you may wish to increment the version number in your custom packages' <command>debian/changelog</command> files to ensure that your modified version is installed over one in the official Debian repositories. This may also be achieved by altering the live system's APT pinning preferences - see <xref linkend="apt-preferences"/> for more information.
 </para>
 
 </sect3>

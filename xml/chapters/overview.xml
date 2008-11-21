@@ -14,29 +14,29 @@
 
 <para>The idea behind live-helper is a framework that uses a configuration directory to completely automate and customize all aspects of building a Live image.</para>
 
-<para>Many concepts are similar with the <computeroutput>debhelper</computeroutput> Debian package tools written by Joey Hess:</para>
+<para>Many concepts are similar with the <command>debhelper</command> Debian package tools written by Joey Hess:</para>
 
 <orderedlist>
 <listitem>
 <para>The scripts have a central location for configuring their operation.</para>
-<para>In <computeroutput>debhelper</computeroutput>, this is the <filename class="directory">debian</filename> subdirectory of a package tree. For example, <computeroutput>dh_install</computeroutput> will look for file called <filename>debian/&lt;packagename&gt;.install</filename> to determine which files should exist in a particular binary package. In much the same way, &live-helper; stores its configuration entirely under a <filename class="directory">config/</filename> subdirectory.</para>
+<para>In <command>debhelper</command>, this is the <filename class="directory">debian</filename> subdirectory of a package tree. For example, <command>dh_install</command> will look for file called <filename>debian/&lt;packagename&gt;.install</filename> to determine which files should exist in a particular binary package. In much the same way, &live-helper; stores its configuration entirely under a <filename class="directory">config/</filename> subdirectory.</para>
 </listitem>
 
 <listitem><para>The scripts are independent - that is to say, it is always safe to run each command.</para></listitem>
 
 </orderedlist>
 
-<para>Unlike <computeroutput>debhelper</computeroutput>, &live-helper; contains a tool to generate a skeleton configuration directory, <filename>lh_config</filename>. This could be considered to be similar to tools such as <computeroutput>dh-make</computeroutput>. For more information about <filename>lh_config</filename>, please see <xref linkend="lh_config"/>.</para>
+<para>Unlike <command>debhelper</command>, &live-helper; contains a tool to generate a skeleton configuration directory, <filename>lh_config</filename>. This could be considered to be similar to tools such as <command>dh-make</command>. For more information about <filename>lh_config</filename>, please see <xref linkend="lh_config"/>.</para>
 
-<para>Besides the common <filename>config/common</filename>, which is used by all &live-helper; commands, some additional files can be used to configure the behavior of specific helpers. These files are typically named <computeroutput>config/foo</computeroutput> or <computeroutput>config/stage</computeroutput> (where "stage", of course, is replaced with the name of the stage that they belong to, and "helper" with the name of the helper).</para>
+<para>Besides the common <filename>config/common</filename>, which is used by all &live-helper; commands, some additional files can be used to configure the behavior of specific helpers. These files are typically named <command>config/foo</command> or <command>config/stage</command> (where "stage", of course, is replaced with the name of the stage that they belong to, and "helper" with the name of the helper).</para>
 
-<para>For example, <computeroutput>lh_bootstrap_debootstrap</computeroutput> uses files named <filename>config/bootstrap</filename> and <filename>config/bootstrap_debootstrap</filename> to read the options it will use. Generally, these files contain variables with values assigned, one variable per line. Some programs in &live-helper; use pairs of values or slightly more complicated variable assignments.</para>
+<para>For example, <command>lh_bootstrap_debootstrap</command> uses files named <filename>config/bootstrap</filename> and <filename>config/bootstrap_debootstrap</filename> to read the options it will use. Generally, these files contain variables with values assigned, one variable per line. Some programs in &live-helper; use pairs of values or slightly more complicated variable assignments.</para>
 
 <para>&live-helper; respects environment variables which are present in the context of the shell it is running. If variables can be read from config files, then they override environment variables, and if command line options are used, they override values from config files. If no value for a given variable can be found (and is thus unset), &live-helper; will automatically set it to a default value.</para>
 
 <para>All config files are shell scripts which are sourced by a live-helper program. That means they have to follow the normal shell syntax. You can also put comments in these files; lines beginning with "#" are ignored.</para>
 
-<para>In some rare cases, you may want to have different versions of these files for different architectures or distributions. If files named <computeroutput>config/stage.arch</computeroutput> or <computeroutput>config/stage_helper.arch</computeroutput>, and <computeroutput>config/stage.dist</computeroutput> or <computeroutput>config/stage_helper.dist</computeroutput> exist (where "arch" is the same as the output of <computeroutput>dpkg --print-architecture</computeroutput> and "dist" is the same as the codename of the target distribution), then they will be used in preference to the other, more general files.</para>
+<para>In some rare cases, you may want to have different versions of these files for different architectures or distributions. If files named <command>config/stage.arch</command> or <command>config/stage_helper.arch</command>, and <command>config/stage.dist</command> or <command>config/stage_helper.dist</command> exist (where "arch" is the same as the output of <command>dpkg --print-architecture</command> and "dist" is the same as the codename of the target distribution), then they will be used in preference to the other, more general files.</para>
 
 <para>Please see <xref linkend="installation"/> for information on how to install &live-helper;.
 
@@ -58,9 +58,9 @@
 
 <section id="lh_config">
 <title>The <filename>lh_config</filename> helper</title>
-<para>As discussed in <xref linkend="live-helper"/>, the scripts that make up &live-helper; source their configuration from a single directory named <computeroutput>config/</computeroutput>. As constructing this directory by hand would be time-consuming and error-prone, the <filename>lh_config</filename> helper can be used to create skeleton configuration folders.</para>
+<para>As discussed in <xref linkend="live-helper"/>, the scripts that make up &live-helper; source their configuration from a single directory named <command>config/</command>. As constructing this directory by hand would be time-consuming and error-prone, the <filename>lh_config</filename> helper can be used to create skeleton configuration folders.</para>
 
-<para>Issuing <filename>lh_config</filename> without any arguments creates a <computeroutput>config</computeroutput> subdirectory which it populates with some default settings:</para>
+<para>Issuing <filename>lh_config</filename> without any arguments creates a <command>config</command> subdirectory which it populates with some default settings:</para>
 <screen>
 $ lh_config
 $ ls -l
@@ -100,13 +100,13 @@ drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 templates
 $ lh_config -p gnome
 </screen>
 
-<para>will build a <filename class="directory">config/</filename> directory configured to include the '<computeroutput>gnome</computeroutput>' package list. It is possible to specify many options:</para>
+<para>will build a <filename class="directory">config/</filename> directory configured to include the '<command>gnome</command>' package list. It is possible to specify many options:</para>
 
 <screen>
 $ lh_config --apt aptitude --binary-images net --hostname live-machine --username live-user ...
 </screen>
 
-<para>A full list of options is available FIXME. Most options have a parallel with an "<computeroutput>LH_</computeroutput>" prefixed variable.</para>
+<para>A full list of options is available FIXME. Most options have a parallel with an "<command>LH_</command>" prefixed variable.</para>
 
 </section>
 

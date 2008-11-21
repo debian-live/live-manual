@@ -21,7 +21,7 @@
 <para>Username FIXME.</para>
 <para>One important consideration is that the live user is created by &live-initramfs; during bootup, it is not created by &live-helper; when building the image.</para>
 
- <para>You can specify additional groups that the live user will belong to by preseeding the <computeroutput>passwd/user-default-groups</computeroutput> debconf value. For example, to add the live user to the <computeroutput>fuse</computeroutput> group, add the following to a file in the <filename class="directory">config/chroot_local-preseed</filename> directory:</para>
+ <para>You can specify additional groups that the live user will belong to by preseeding the <command>passwd/user-default-groups</command> debconf value. For example, to add the live user to the <command>fuse</command> group, add the following to a file in the <filename class="directory">config/chroot_local-preseed</filename> directory:</para>
 
 <screen>
  debconf passwd/user-default-groups string audio cdrom dialout floppy video plugdev netdev powerdev fuse
@@ -33,11 +33,11 @@
 
 <section id="language">
 <title>Language</title>
-<para>When the live system boots there are three process which concerns language: the locale generation, setting the keyboard layout for the console and setting the keyboard layout for X. To define the locale that should be generated, use the <computeroutput>locale</computeroutput> parameter to the <computeroutput>--bootappend-live</computeroutput> option of <filename>lh_config</filename>, e.g.:
+<para>When the live system boots there are three process which concerns language: the locale generation, setting the keyboard layout for the console and setting the keyboard layout for X. To define the locale that should be generated, use the <command>locale</command> parameter to the <command>--bootappend-live</command> option of <filename>lh_config</filename>, e.g.:
 
 <screen>lh_config --bootappend-live "locale=sv_SE.utf8"</screen>
 
-Both the console and X keyboard configuration depends on the <computeroutput>keyb</computeroutput> parameter of the <computeroutput>--bootappend-live</computeroutput>option. Valid options for X keyboard layouts can be found in <filename>/etc/X11/xkb/base.xml</filename>. To find the value (the two characters) corresponding to a language try searching for the english name of the nation where the language is spoken, e.g:
+Both the console and X keyboard configuration depends on the <command>keyb</command> parameter of the <command>--bootappend-live</command>option. Valid options for X keyboard layouts can be found in <filename>/etc/X11/xkb/base.xml</filename>. To find the value (the two characters) corresponding to a language try searching for the english name of the nation where the language is spoken, e.g:
 
 <screen>$ grep -i sweden -C3 /etc/X11/xkb/base.xml | grep name
 	&lt;name&gt;se&lt;name&gt;
@@ -65,7 +65,7 @@ To make the console keyboard use a swedish layout use
 <para>A Debian Live system is a generalization of this paradigm and thus supports more media, and not only cds; but stills, in its default behaviour, it should be considered read only and all the runtime evolutions of the system are lost with a shutdown.</para>
 
 <para>Persistence is a common name for different kinds of solutions for saving across reboots some or all of this runtime evolution of the system; to undestand how it could work it could be handy to know that even if the system is booted and runt from a read only media, modification to the files and directories are wrote on a writable media , tipically a ram disk (tmpfs) and ram disk's data do not survive reboots.</para>
-<para>The data stored on this ramdisk should be saved in a writable persistent media like on an Hard Disk, a USB key, a network "share" or even a session of a multisession (re)writable CD/DVD. All this cited media are supported in Debian Live in different ways, all but latest one requires a special boot parameter to be specified at boot: <computeroutput>persistent</computeroutput>.</para>
+<para>The data stored on this ramdisk should be saved in a writable persistent media like on an Hard Disk, a USB key, a network "share" or even a session of a multisession (re)writable CD/DVD. All this cited media are supported in Debian Live in different ways, all but latest one requires a special boot parameter to be specified at boot: <command>persistent</command>.</para>
 
 <section><title>Full persistence</title>
 <para>With "full persistence" it is meant that instead of using a tmpfs for storing modifications to the read-only media (with the copy-on-write, COW, system) a writable partition is used. In order to use this feature a partition with a clean writable supported filesystem on it labeled "live-rw" must be attached on the system at bootime and the system must be started with "persistent" boot parameter; this partition could be an ext2 partition on the hard disk or on a usb key created with, e.g.:</para>
@@ -81,16 +81,16 @@ $ dd if=/dev/zero of=live-rw bs=1024k count=1 seek=1k # for a 1G image file
 # mkfs.ext2 -F live-rw
 </screen>
 
-<para>Then copy the <computeroutput>live-rw</computeroutput> file in a writable partition and reboot with "persistent" boot parameter.</para>
+<para>Then copy the <command>live-rw</command> file in a writable partition and reboot with "persistent" boot parameter.</para>
 </section>
 
 <section><title>Home automounting</title>
-<para>If during the boot a partition (filesystem) image file or a partition labeled  <computeroutput>home-rw</computeroutput> will be discovered, this filesystem will be directly mounted as <computeroutput>/home</computeroutput>, thus permitting persistence of files that belong to the e.g. default user. It can be combined with full persistence.</para>
+<para>If during the boot a partition (filesystem) image file or a partition labeled  <command>home-rw</command> will be discovered, this filesystem will be directly mounted as <command>/home</command>, thus permitting persistence of files that belong to the e.g. default user. It can be combined with full persistence.</para>
 </section>
 
 <section><title>Snapshots</title>
-<para>Snapshots are collection of files and directories which are not mounted while running but which are copied from a persistent device to the system (tmpfs) at boot and which are resynced at reboot/shutdown of the system. The content of a snapshot could reside on a partition or an image file (like the above mentioned types) labeled <computeroutput>live-sn</computeroutput>, but it defaults as a  simple cpio archive named <computeroutput>live-sn.cpio.gz</computeroutput>. As above at boot time, the block devices connected to the system are traversed to see it a suche named partition or file could be found. A power interruption during runtime could mean data lost hence a tool invoked  <computeroutput>live-snapshot --refresh</computeroutput> could be called to sync important changes. This type of persistence since no not write continuosly to the persistent media is the most flash-based device friendly and the fastest of all the persistence systems.</para>
-<para> A /home version of snapshot exists too and its label is <computeroutput>home-sn.*</computeroutput>; it works the same as the main snapshot but it is only applied to /home.</para>
+<para>Snapshots are collection of files and directories which are not mounted while running but which are copied from a persistent device to the system (tmpfs) at boot and which are resynced at reboot/shutdown of the system. The content of a snapshot could reside on a partition or an image file (like the above mentioned types) labeled <command>live-sn</command>, but it defaults as a  simple cpio archive named <command>live-sn.cpio.gz</command>. As above at boot time, the block devices connected to the system are traversed to see it a suche named partition or file could be found. A power interruption during runtime could mean data lost hence a tool invoked  <command>live-snapshot --refresh</command> could be called to sync important changes. This type of persistence since no not write continuosly to the persistent media is the most flash-based device friendly and the fastest of all the persistence systems.</para>
+<para> A /home version of snapshot exists too and its label is <command>home-sn.*</command>; it works the same as the main snapshot but it is only applied to /home.</para>
 <para> All kind of snapshots cannot currently handle file deleting while full persistence and obviously home automounting could.</para>
 </section>
 

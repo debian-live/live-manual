@@ -190,11 +190,11 @@ $ git clone git://git.debian.net/git/debian-live/live-initramfs.git
 
 <listitem>
 <para>Build a &live-initramfs; <computeroutput>.deb</computeroutput></para>
-<para>You must build either on your target distribution or in a chroot containing your target platform: this means if your target is lenny then you should build against lenny. You can use a personal builder such <computeroutput>pbuilder</computeroutput> to automate building packages in chroot. To build directly on the target platform, use <computeroutput>debuild</computeroutput> (provided by the <computeroutput>devscripts</computeroutput> package):</para>
+<para>You must build either on your target distribution or in a chroot containing your target platform: this means if your target is lenny then you should build against lenny. You can use a personal builder such as <computeroutput>pbuilder</computeroutput> to automate building packages in chroot. To build directly on the target platform, use <computeroutput>dpkg-buildpackage</computeroutput> (provided by the <computeroutput>dpkg-dev</computeroutput> package):</para>
 
 <screen>
 $ cd live-initramfs
-$ debuild -us -uc -b
+$ dpkg-buildpackage -b -uc -us
 </screen>
 </listitem>
 

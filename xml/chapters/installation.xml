@@ -65,7 +65,7 @@
  <title>From source</title>
 
 <para>
- &live-helper; is developed using the Git revision control system. On Debian systems, this is provided by the <command>git-core</command> package. To check out the latest code, execute:
+ &live-helper; is developed using the Git version control system. On Debian systems, this is provided by the <command>git-core</command> package. To check out the latest code, execute:
 </para>
 
 <screen>
@@ -78,12 +78,12 @@
 
 <screen>
  $ cd live-helper
- $ dpkg-buildpackage -uc -us -rfakeroot
+ $ dpkg-buildpackage -rfakeroot -b -uc -us
  $ cd ..
  # dpkg -i live-helper*.deb
 </screen>
 
- <para>Since &live-helper; version 1.0~a38-1, you can use local version of &live-helper; without installation:</para>
+ <para>You can also use a local version of &live-helper; without installation:</para>
 
 <screen>
  # live-helper/helpers/lh_local
@@ -102,21 +102,21 @@
 
 <section>
 <title>From 'snapshots'</title>
-<para>If you do not wish to build or install &live-helper; from source, you can use snapshots. These are built automatically from the latest version in Git.</para>
+<para>If you do not wish to build or install &live-helper; from source, you can use snapshots. These are built automatically from the latest version in Git and are available on <ulink url="http://live.debian.net/debian/">http://live.debian.net/debian</ulink>.</para>
 </section>
 
 <section>
 <title>From Backports.org</title>
 
- <para>Whilst &live-helper; and friends are currently not a part of Debian stable relase, they will work on &etch; as well. You will need the following programs:</para>
+ <para>Whilst &live-helper; and friends are not a part of Debian etch relase, they will work on &etch; as well. You will need the following programs:</para>
 
 <orderedlist>
-<listitem><para>An <emphasis>etch</emphasis> backport of <command>cdebootstrap</command> from backports.org</para></listitem>
+<listitem><para>An <emphasis>etch</emphasis> backport of either <command>debootstrap</command> or <command>cdebootstrap</command> from backports.org</para></listitem>
 <listitem><para>The <emphasis>lenny</emphasis> or <emphasis>sid</emphasis> version of &live-helper;</para></listitem>
 </orderedlist>
 
 <section>
-<title>Installing cdebootstrap from backports.org</title>
+<title>Installing debootstrap or cdebootstrap from backports.org</title>
 <orderedlist>
 
 <listitem><para>Put this in your /etc/apt/sources.list:</para>
@@ -131,7 +131,13 @@ deb http://www.backports.org/debian etch-backports main
 apt-get update
 </screen></listitem>
 
-<listitem><para>Install <command>cdebootstrap</command>:</para>
+<listitem><para>Either install <command>debootstrap</command>:</para>
+
+<screen>
+apt-get install -t etch-backports debootstrap
+</screen>
+
+<para>or install <command>cdebootstrap</command>:</para>
 
 <screen>
 apt-get install -t etch-backports cdebootstrap
@@ -148,13 +154,9 @@ apt-get install -t etch-backports cdebootstrap
 The live-helper package from Lenny or Sid can be installed on Etch (without upgrading other packages, such as libc6; it's just shell scripts).</para>
 
 <orderedlist>
-<listitem><para>install cdebootstrap from backports.org (as indicated above)</para>
+<listitem><para>Install debootstrap or cdebootstrap from backports.org (as indicated above).</para></listitem>
 
-<screen>
-# apt-get install -t etch-backports cdebootstrap
-</screen></listitem>
-
-<listitem><para>install live-helper from testing or unstable</para>
+<listitem><para>Install live-helper from testing or unstable</para>
 
 <screen>
 # apt-get install -t unstable live-helper
@@ -194,7 +196,7 @@ $ git clone git://git.debian.net/git/debian-live/live-initramfs.git
 
 <screen>
 $ cd live-initramfs
-$ dpkg-buildpackage -b -uc -us
+$ dpkg-buildpackage -rfakeroot -b -uc -us
 </screen>
 </listitem>
 
@@ -203,6 +205,39 @@ $ dpkg-buildpackage -b -uc -us
 
 <para>As &live-initramfs; is installed by the build system, installing the package in the host system is not sufficient: you should treat the generated <command>.deb</command> like another custom package. Please see <xref linkend="custom-packages"/> for more information. You should pay particular attention to <xref linkend="custom-packages-apt"/>.</para>
 </listitem>
+
+</orderedlist>
+</section>
+
+<section>
+<title>Using a &live-initramfs; snapshots</title>
+
+<para>You can let &live-helper; automatically use the latest snapshot of &live-initramfs; by configuring a third-party repository in your live-system configuration. Assumed you have already created a configuration tree with <command>lh_config</command></para>
+
+<orderedlist>
+
+<listitem><para>Create a sources.list entry for the chroot stage:</para>
+
+<screen>
+echo "deb http://live.debian.net/debian/ ./" > config/chroot_sources/live-snapshots.chroot
+</screen>
+
+</listitem>
+
+<listitem><para>Create a sources.list entry fro the binary stage:</para>
+
+<screen>
+cp config/chroot_sources/live-snapshots.chroot config/chroot_sources/live-snapshots.binary
+</screen>
+
+</listitem>
+
+<listitem><para>Fetcht the archive signing key:</para>
+
+<screen>
+wget http://live.debian.net/debian/archive.gpg -O config/chroot_sources/live-snapshots.chroot.gpg
+cp config/chroot_sources/live-snapshots.chroot.gpg config/chroot_sources/live-snapshots.binary.gpg
+</screen></listitem>
 
 </orderedlist>
 </section>

@@ -99,22 +99,21 @@ $ lh_config -b usb-hdd
 <title>Copying USB/HDD image to a USB stick</title>
 
 The generated binary image contains a <acronym>VFAT</acronym>
-partition and a <command>syslinux</command> bootloader,
-ready to be directly written on a USB stick. Plug a USB stick with a
-size larger than <filename>binary.img</filename>'s one, and type :
+partition and the <command>syslinux</command> bootloader,
+ready to be directly written on an USB stick. Plug in an USB stick with a
+size larger than <filename>binary.img</filename>'s one, and type:
 
 <screen>
-$ dd if=binary.img of=$USBDRV
+$ dd if=binary.img of=${USBSTICK}
 </screen>
 
-where <replaceable>$USBDRV</replaceable> is the device file of your key,
-like <filename>/dev/sda</filename>
-(not a partition like <filename>/dev/sda1</filename> !) ; you can find
-the right device name by looking in <command>dmesg</command>'s output
-after plugging the stick, for example).
+where <replaceable>${USBSTICK}</replaceable> is the device file of your key,
+like <filename>/dev/sda</filename> (not a partition like
+<filename>/dev/sda1</filename>!); you can find the right device name by looking
+in <command>dmesg</command>'s output after plugging the stick, for example).
 
-<important>This will definitely overwrite any previous contents on
-  your stick !</important>
+<important>This will definitely overwrite any previous contents on your
+stick!</important>
 </section>
 
 <section>
@@ -138,9 +137,9 @@ $ lh_config -b net --net-root-path "/srv/debian-live" --net-root-server "192.168
 </screen>
 
 <para>
- In contrast with the ISO and USB/HDD image types, netbooting does not
- support serving a filesystem image with the client so we must serve
- the files via NFS. The <replaceable>net-root-path</replaceable>
+ In contrast with the ISO and USB hdd images, netbooting does not
+ support serving a filesystem image with the client so the files must be
+ served via NFS. The <replaceable>net-root-path</replaceable>
  and <replaceable>net-root-server</replaceable> options specify the
  location and server respectfully of the NFS server where the filesytem
  image will be located at boot-time.
@@ -161,14 +160,14 @@ $ lh_config -b net --net-root-path "/srv/debian-live" --net-root-server "192.168
  <abbrev>IP</abbrev> address and also information about what to do
  next : usually getting (through <abbrev>TFTP</abbrev> protocol) a
  higher level boot software like <application>Grub</application>
- or <application>PxeLinux</application>, or directly an operating
+ or <application>PXLINUX</application>, or directly an operating
  system like <application>Linux</application>.
 </para>
 
 <para>
  For example, you can extract the generated
  <filename>binary-net.tar.gz</filename> archive
- in the <filename>/srv/debian-live</filename> directory ; you'll get
+ in the <filename>/srv/debian-live</filename> directory; you'll get
  the filesystem image
  in <filename>live/filesystem.squashfs</filename>, the kernel,
  initrd and PXE Linux bootloader
@@ -176,7 +175,7 @@ $ lh_config -b net --net-root-path "/srv/debian-live" --net-root-server "192.168
 </para>
 
 <para>
- We must now configure three services on the server :
+ We must now configure three services on the server:
 </para>
 
 <variablelist>
@@ -184,7 +183,7 @@ $ lh_config -b net --net-root-path "/srv/debian-live" --net-root-server "192.168
 <listitem>
 <para>
  We must configure our network's DHCP server to be sure to give a
- <abbrev>IP</abbrev> address to the computer net booting, and to
+ <abbrev>IP</abbrev> address to the computer netbooting, and to
  advertise the location of the PXE bootloader.
 </para>
 
@@ -196,7 +195,7 @@ $ lh_config -b net --net-root-path "/srv/debian-live" --net-root-server "192.168
 
 <screen>
 
-# Options DHCP spécifiques à Pxelinux :
+# Options DHCP spécifiques à Pxelinux:
 option space pxelinux;
 option pxelinux.magic      code 208 = string;
 option pxelinux.configfile code 209 = text;

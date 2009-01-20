@@ -1,9 +1,10 @@
 AUTOBUILD	:= build
-LANGUAGES       := de fr
+#LANGUAGES       := de fr
 
 include Makefile.common
 
-build: clean translations all
+#build: clean translations all
+build: clean all
 	set -e; for FORMAT in $(FORMATS); do \
 		mkdir -p $(AUTOBUILD)/$$FORMAT; \
 		cp *.$$FORMAT $(AUTOBUILD)/$$FORMAT; \

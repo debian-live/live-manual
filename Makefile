@@ -10,17 +10,17 @@ build: clean all
 		cp *.$$FORMAT $(AUTOBUILD)/$$FORMAT; \
 	done
 
-	sed '{s/@DATE@/$(shell LC_ALL=C date -R)/;s%/@LANG@%%;}' build-index.html.in > $(AUTOBUILD)/index.html.en
+	sed '{s/@DATE@/$(shell LC_ALL=C date -R)/;s%/@LANG@%%;}' html/index.html.in > $(AUTOBUILD)/index.html.en
 
 	set -e; for LANGUAGE in $(LANGUAGES); do \
 		for FORMAT in $(FORMATS); do \
 			mkdir -p $(AUTOBUILD)/$$FORMAT/$$LANGUAGE; \
 			cp $$LANGUAGE/*.$$FORMAT $(AUTOBUILD)/$$FORMAT/$$LANGUAGE; \
 		done; \
-		sed "{s/@DATE@/$(shell LC_ALL=C date -R)/;s/@LANG@/$$LANGUAGE/;}" $$LANGUAGE/build-index.html.in > $(AUTOBUILD)/index.html.$$LANGUAGE; \
+		sed "{s/@DATE@/$(shell LC_ALL=C date -R)/;s/@LANG@/$$LANGUAGE/;}" $$LANGUAGE/html/index.html.in > $(AUTOBUILD)/index.html.$$LANGUAGE; \
 	done
 
-	cp css/* $(AUTOBUILD)
+	cp html/* $(AUTOBUILD)
 
 po4a:
 	po4a -k 0 po4a/live-manual.cfg;

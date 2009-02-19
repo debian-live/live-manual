@@ -45,10 +45,10 @@
 <title>First steps: building an ISO image</title>
 
 <para>The following sequence of helper commands, provided by &live-helper;, will create a basic ISO image containing just the Debian standard system without X.org. It is suitable for burning to CD or DVD media.</para>
-<para>First, we run the <filename>lh_config</filename> helper which will create a <filename>"config/"</filename> hierarchy in the current directory for use by other helper commands:</para>
+<para>First, we run the <filename>lh_config</filename> helper command which will create a <filename>"config/"</filename> hierarchy in the current directory for use by other helper commands:</para>
 <screen>$ lh_config</screen>
 <para>By passing no parameters to <filename>lh_config</filename>, we indicated that we wish to use the defaults, which will create an image of type binary (see <xref linkend="lh_config"/>).</para>
-<para>Now that we have a <filename>"config/"</filename> hierarchy, we may build the image with <filename>lh_build</filename> helper:</para>
+<para>Now that we have a <filename>"config/"</filename> hierarchy, we may build the image with <filename>lh_build</filename> helper command:</para>
 <screen># lh_build</screen>
 <para>This process can take a while, depending on the speed of your network connection (see <xref linkend="lh_build"/>).</para>
 
@@ -77,11 +77,11 @@ $ wodim binary.iso
 <title>Building an USB/HDD image</title>
 
 <para>The following sequence of helper commands will create a basic USB/HDD image containing just the Debian standard system without X.org. It is suitable for booting from USB sticks, USB hard drives, and various other portable storage devices.</para>
-<para>Note if you created an iso image with the previous example, you will need to clean up your working directory with the <filename>lh_clean</filename> helper (see <xref linkend="lh_clean"/>):</para>
+<para>Note if you created an iso image with the previous example, you will need to clean up your working directory with the <filename>lh_clean</filename> helper command (see <xref linkend="lh_clean"/>):</para>
 <screen>$ lh_clean --binary</screen>
-<para>Run the <filename>lh_config</filename> helper with the parameters to configure the <filename>"config/"</filename> hierarchy to create a USD/HDD image type:</para>
+<para>Run the <filename>lh_config</filename> helper command with the parameters to configure the <filename>"config/"</filename> hierarchy to create a USD/HDD image type:</para>
 <screen>$ lh_config -b usb-hdd</screen>
-<para>Now build the image with <filename>lh_build</filename> helper:</para>
+<para>Now build the image with <filename>lh_build</filename> helper command:</para>
 <screen># lh_build</screen>
 
 <section>
@@ -106,12 +106,12 @@ $ qemu -hda binary.img
 <title>Building a netboot image</title>
 
 <para>The following sequence of helper commands will create a basic netboot image containing the Debian standard system without X.org. It is suitable for booting over the network.</para>
-<para>Note if you performed any previous examples, you will need to clean up your working directory with the <filename>lh_clean</filename> helper:</para>
+<para>Note if you performed any previous examples, you will need to clean up your working directory with the <filename>lh_clean</filename> helper command:</para>
 <screen>$ lh_clean --binary</screen>
-<para>Run the <filename>lh_config</filename> helper with the parameters to configure the <filename>"config/"</filename> hierarchy to create our netboot image:</para>
+<para>Run the <filename>lh_config</filename> helper command with the parameters to configure the <filename>"config/"</filename> hierarchy to create our netboot image:</para>
 <screen>$ lh_config -b net --net-root-path "/srv/debian-live" --net-root-server "192.168.0.1"</screen>
 <para>In contrast with the ISO and USB hdd images, netbooting does not support serving a filesystem image with the client so the files must be served via NFS. The <replaceable>net-root-path</replaceable> and <replaceable>net-root-server</replaceable> options specify the location and server respectfully of the NFS server where the filesytem image will be located at boot-time.</para>
-<para>Now build the image with <filename>lh_build</filename> helper:</para>
+<para>Now build the image with <filename>lh_build</filename> helper command:</para>
 <screen># lh_build</screen>
 <para>In a network boot, the client runs a small piece of software, usually on the <acronym>EEPROM</acronym> of the Ethernet card, which sends a <abbrev>DHCP</abbrev> request  to get an <abbrev>IP</abbrev> address and also information about what to do next; such as getting (through <abbrev>TFTP</abbrev> protocol) a higher level boot software like <application>Grub</application> or <application>PXLINUX</application>, or directly to an operating system like <application>Linux</application>.</para>
 <para>For example, you can extract the generated <filename>binary-net.tar.gz</filename> archive in the <filename>/srv/debian-live</filename> directory; you'll get the filesystem image in <filename>live/filesystem.squashfs</filename>, the kernel, initrd and PXE Linux bootloader in <filename>tftpboot/debian-live/i386</filename>.</para>

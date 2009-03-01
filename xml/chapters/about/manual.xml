@@ -112,11 +112,7 @@
 
 <sect3 id="commiting">
 <title>Applying patches</title>
-<para>Directly commiting to the repository is possibly by anyone. However, we ask you to send bigger changes to the mailinglist for discussing them before you push them.</para>
-
-<para>Make sure that all commits you do have a proper name and email address, use <screen>git config --global user.name</screen> and <screen>git config --global user.email</screen> to set them. Also use full sentences for commit messages.</para>
-
-<para>In order to push to the repository, the following steps are required.</para>
+<para>Directly commiting to the repository is possibly by anyone. However, we ask you to send bigger changes to the mailinglist before commiting them. In order to push to the repository, the following steps are required.</para>
 
 <itemizedlist>
 <listitem><para>Fetch the public commit key:</para>
@@ -131,10 +127,18 @@ Host git.debian.net
 	Hostname git.debian.net
 	User gitosis
 	IdentityFile ~/.ssh/identity.d/live-manual@debian-live
-EOF</screen></listitem>
+EOF
+</screen></listitem>
 
-<listitem><para>Checkout the manual through ssh:</para>
+<listitem><para>Get a recent clone of the manual through ssh:</para>
 <screen>$ git clone gitosis@git.debian.net:debian-live/live-manual.git</screen></listitem>
+<listitem><para>commit the file after editing. Write comments, that consist of full sefull sentences, 
+starting with a capital letter, ending with a full stop.  Usually starting with the form 'Fixing/Adding/Removing/Correcting/':</para>
+<screen>$ git commit mychangedfile</screen></listitem>
+<listitem><para>push the changes to the server:</para>
+<screen>$ git push gitosis@git.debian.net:debian-live/live-manual.git</screen></listitem>
+
+
 </itemizedlist>
 
 </sect3>

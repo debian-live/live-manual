@@ -110,6 +110,29 @@
 
 <screen>$ make build</screen>
 
+<sect3 id="commiting">
+<title>Applying patches</title>
+<para>Directly commiting to the repository is possibly by anyone. Fetch the public openssh key:</para>
+
+<screen>$ mkdir -p ~/.ssh/identity.d
+wget http://live.debian.net/other/openssh/repository-public-commit-key-current/live-manual@debian-live -O ~/.ssh/identity.d/live-manual@debian-live
+wget http://live.debian.net/other/openssh/repository-public-commit-key-current/live-manual@debian-live.pub -O ~/.ssh/identity.d/live-manual@debian-live.pub</screen>
+
+<para>And add the following section your openssh-client config in ~/.ssh/config:</para>
+
+<screen>
+Host git.debian.net
+	Hostname git.debian.net
+	User gitosis
+	IdentityFile ~/.ssh/identity.d/live-manual@debian-live
+</screen>
+
+<para>Remember that in order to commit, you need to checkout through ssh with:</para>
+
+<screen>$ git clone gitosis@git.debian.net:debian-live/live-manual.git</screen>
+
+</sect3>
+
 </sect2>
 
 </sect1>

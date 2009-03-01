@@ -112,24 +112,26 @@
 
 <sect3 id="commiting">
 <title>Applying patches</title>
-<para>Directly commiting to the repository is possibly by anyone. Fetch the public openssh key:</para>
+<para>Directly commiting to the repository is possibly by anyone. However, we ask you to send bigger changes to the mailinglist before commiting them. In order to push to the repository, the following steps are required.</para>
 
-<screen>$ mkdir -p ~/.ssh/identity.d
-wget http://live.debian.net/other/openssh/repository-public-commit-key-current/live-manual@debian-live -O ~/.ssh/identity.d/live-manual@debian-live
-wget http://live.debian.net/other/openssh/repository-public-commit-key-current/live-manual@debian-live.pub -O ~/.ssh/identity.d/live-manual@debian-live.pub</screen>
+<itemizedlist>
+ <listitem><para>Fetch the public commit key:</para>
+ <screen>$ mkdir -p ~/.ssh/identity.d
+ $ wget http://live.debian.net/other/openssh/repository-public-commit-key-current/live-manual@debian-live -O ~/.ssh/identity.d/live-manual@debian-live
+ $ wget http://live.debian.net/other/openssh/repository-public-commit-key-current/live-manual@debian-live.pub -O ~/.ssh/identity.d/live-manual@debian-live.pub
+ chmod 0600 ~/.ssh/identity.d/live-manual@debian-live*</screen></listitem>
 
-<para>And add the following section your openssh-client config in ~/.ssh/config:</para>
-
-<screen>
-Host git.debian.net
+ <listitem><para>Add the following section your openssh-client config:</para>
+ <screen> $ cat &gt;&gt; ~/.ssh/config &lt;&lt; EOF
+ Host git.debian.net
 	Hostname git.debian.net
 	User gitosis
 	IdentityFile ~/.ssh/identity.d/live-manual@debian-live
-</screen>
+ EOF</screen></listitem>
 
-<para>Remember that in order to commit, you need to checkout through ssh with:</para>
-
-<screen>$ git clone gitosis@git.debian.net:debian-live/live-manual.git</screen>
+ <listitem><para>Checkout the manual through ssh:</para>
+ <screen>$ git clone gitosis@git.debian.net:debian-live/live-manual.git</screen></listitem>
+</itemizedlist>
 
 </sect3>
 

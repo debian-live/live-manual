@@ -201,4 +201,74 @@ and reload the super server with <command>/etc/init.d/openbsd-inetd reload</comm
 
 <para>Setting all these services is quite error prone, you'll need some patience to let all of them working together.</para>
 </section>
+
+<section>
+<title> Netboot testing HowTo </title>
+
+
+<para>Netboot images creation is made easy with live-helper magic, but testing the images on physical machines can be really time consuming.
+To make our life easier, we can use virtualization. There are two solutions:
+</para>
+
+
+<variablelist>
+<varlistentry><term>VMWare Player</term>
+<listitem>
+<para> Install VMWare Player ("free as in beer" edition)</para>
+<para> Create a PXETester directory, and create a text file called pxe.vwx inside</para>
+<para> Paste this text inside: </para>
+<screen>
+#!/usr/bin/vmware
+config.version = "8"
+virtualHW.version = "4"
+memsize = "512"
+MemAllowAutoScaleDown = "FALSE"
+
+ide0:0.present = "FALSE"
+ide1:0.present = "FALSE"
+floppy0.present = "FALSE"
+sound.present = "FALSE"
+tools.remindInstall = "FALSE"
+
+ethernet0.present = "TRUE"
+ethernet0.addressType = "generated"
+
+displayName = "Test Boot PXE"
+guestOS = "other"
+
+ethernet0.generatedAddress = "00:0c:29:8d:71:3b"
+uuid.location = "56 4d 83 72 5c c4 de 3f-ae 9e 07 91 1d 8d 71 3b"
+uuid.bios = "56 4d 83 72 5c c4 de 3f-ae 9e 07 91 1d 8d 71 3b"
+ethernet0.generatedAddressOffset = "0"
+</screen>
+<para>You can play with this configuration file (i.e. change memory limit to 256)</para>
+<para>Double click on this file (or run VMWare player and selecet this file).</para>
+<para>When running just press space if that strange question comes up... </para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+
+<variablelist>
+<varlistentry><term>Qemu</term>
+<listitem>
+<para>Install qemu, bridge-utils, sudo.</para>
+<para>Edit <filename>/etc/qemu-ifup</filename>:</para>
+<screen>
+#!/bin/sh
+sudo -p "Password for $0:" /sbin/ifconfig $1 172.20.0.1
+echo "Executing /etc/qemu-ifup"
+echo "Bringing up $1 for bridged mode..."
+sudo /sbin/ifconfig $1 0.0.0.0 promisc up
+echo "Adding $1 to br0..."
+sudo /usr/sbin/brctl addif br0 $1
+sleep 2
+</screen>
+<para>Get, or build a grub-floppy-netboot (in the svn).</para>
+<para>Launch qemu with "-net nic,vlan=0 -net tap,vlan=0,ifname=tun0" </para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+</section>
 </chapter>

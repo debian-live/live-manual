@@ -100,6 +100,43 @@ where <replaceable>${USBSTICK}</replaceable> is the device file of your key, lik
 $ qemu -hda binary.img
 </screen>
 </section>
+
+<section>
+<title>Using the space left on a USB stick</title>
+
+<para>
+If you want to use the remaining free space after you have installed the <filename>binary.img</filename>, you can use a partitioning tool such as gparted or parted to create a new partition on the stick. The first partition will be used by the Debian Live system.
+</para>
+
+<screen>
+# gparted ${USBSTICK}
+</screen>
+
+<para>
+After the creation of the partition you have to create a filsystem on it. One possible choice would be ext2 (ext3 isn't recommended because the journaling causes too much writes to the stick).
+</para>
+
+<screen>
+# mkfs.ext2 ${USBSTICK}
+</screen>
+
+<para>
+If you want to use this data partition with Windows, use FAT32
+</para>
+
+<screen>
+# mkfs.vfat -F 32
+</screen>
+
+<important>Remember: Every time you install a new binary.img on the stick, all your data will be lost because the image includes a complete
+partition table.
+</important>
+
+<para>
+FIXME:
+Describe installing Debian Live to a partition (e.g. /dev/sdc1) AND using a bootloader to boot this.
+</para>
+</section>
 </section>
 
 <section>

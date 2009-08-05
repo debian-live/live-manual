@@ -61,7 +61,7 @@ To make the console keyboard use a swedish layout use
 
 <section id="persistence">
 <title>Persistence</title>
-<para>A live cd paradigm is a preinstalled system which runs from a read-only media, like a cdrom, where writes and modifications do not survive reboots of the host hardware which runs it.</para>
+<para>A live cd paradigm is a preinstalled system which runs from read-only media, like a cdrom, where writes and modifications do not survive reboots of the host hardware which runs it.</para>
 <para>A Debian Live system is a generalization of this paradigm and thus supports other media in addition to CDs; but still, in its default behaviour, it should be considered read-only and all the runtime evolutions of the system are lost at shutdown.</para>
 
 <para>Persistence is a common name for different kinds of solutions for saving across reboots some, or all, of this runtime evolution of the system. To understand how it could work it could be handy to know that even if the system is booted and run from read-only media, modification to the files and directories are written on writable media, typically a ram disk (tmpfs) and ram disks' data do not survive reboots.</para>
@@ -89,12 +89,12 @@ $ /sbin/mkfs.ext2 -F live-rw
 </section>
 
 <section><title>Snapshots</title>
-<para>Snapshots are collection of files and directories which are not mounted while running but which are copied from a persistent device to the system (tmpfs) at boot and which are resynced at reboot/shutdown of the system. The content of a snapshot could reside on a partition or an image file (like the above mentioned types) labeled <command>live-sn</command>, but it defaults to a simple cpio archive named <command>live-sn.cpio.gz</command>. As above, at boot time, the block devices connected to the system are traversed to see if a partition or a file named like that could be found. A power interruption during runtime could lead to data loss, hence a tool invoked  <command>live-snapshot --refresh</command> could be called to sync important changes. This type of persistence, since it does not write continuously to the persistent media, is the most flash-based device friendly and the fastest of all the persistence systems.</para>
+<para>Snapshots are collections of files and directories which are not mounted while running but which are copied from a persistent device to the system (tmpfs) at boot and which are resynced at reboot/shutdown of the system. The content of a snapshot could reside on a partition or an image file (like the above mentioned types) labeled <command>live-sn</command>, but it defaults to a simple cpio archive named <command>live-sn.cpio.gz</command>. As above, at boot time, the block devices connected to the system are traversed to see if a partition or a file named like that could be found. A power interruption during runtime could lead to data loss, hence a tool invoked  <command>live-snapshot --refresh</command> could be called to sync important changes. This type of persistence, since it does not write continuously to the persistent media, is the most flash-based device friendly and the fastest of all the persistence systems.</para>
 <para> A /home version of snapshot exists too and its label is <command>home-sn.*</command>; it works the same as the main snapshot but it is only applied to /home.</para>
-<para> All kind of snapshots cannot currently handle file deleting while full persistence and obviously home automounting could.</para>
+<para>Snapshots cannot currently handle file deletion but full persistence and home automounting can.</para>
 </section>
 
-<section><title>Partial remasterings</title>
+<section><title>Partial remastering</title>
 <para>The runtime modification of the tmpfs could be collected using live-snapshot in a squashfs and added to the cd by remastering the iso in the case of cd-r or adding a session to multisession cd/dvd(rw); live-initramfs mounts all /live filesystem in order or with the module bootparameter.</para>
 </section>
 

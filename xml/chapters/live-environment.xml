@@ -94,6 +94,10 @@ $ /sbin/mkfs.ext2 -F live-rw
 <para>Snapshots cannot currently handle file deletion but full persistence and home automounting can.</para>
 </section>
 
+<section><title>Persistent SubText</title>
+<para>If a user would need multiple persistent storage of the same type for different locations or testing, such as <command>live-rw-nonwork</command> and <command>live-rw-work</command>, the boot parameter <command>persistent-subtext</command> used in conjuntion with the boot parameter <command>persistent</command> will allow for multiple but unique persistent media. An example would be if a user wanted to use a persistent partition labeled <command>live-sn-subText</command> they would use the boot parameters of: <command>persistent</command> <command>persistent-subtext=subText</command>.</para>
+</section>
+
 <section><title>Partial remastering</title>
 <para>The runtime modification of the tmpfs could be collected using live-snapshot in a squashfs and added to the cd by remastering the iso in the case of cd-r or adding a session to multisession cd/dvd(rw); live-initramfs mounts all /live filesystem in order or with the module bootparameter.</para>
 </section>

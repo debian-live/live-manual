@@ -92,6 +92,13 @@ Note that on old versions of <literal>console-setup</literal> (i.e. Lenny's one)
 # mkfs.ext2 -L live-rw /dev/sdb1
 </screen>
 
+<para>If you already have a partition on your device, you could just change the label with one of the following:</para>
+
+<screen>
+# tune2fs -L live-rw /dev/sdb1 # for ext2,3,4 filesystems
+# dosfslabel /dev/sdb1 live-rw # for a fat filesystem
+</screen>
+
 <para>But since live system users cannot always use a hard drive partition, and considering that most USB keys have poor write speeds, 'full' persistence could be also used with just image files, so you could create a file representing a partition and put this image file even on a NTFS partition of a foreign OS, with something like:</para>
 
 <screen>

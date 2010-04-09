@@ -11,7 +11,7 @@
 <section>
 <title>What is a live system?</title>
 
-<para>A live system usually means an OS booted on a computer from a removable support (as CD-ROM, USB stick, or network), ready to use without any installation on the usual drive(s), with an auto-configuration done at runtime (see <xref linkend="terms"/>).</para>
+<para>A live system usually means an OS booted on a computer from a removable medium (such as CD-ROM, USB stick, or network), ready to use without any installation on the usual drive(s), with an auto-configuration done at runtime (see <xref linkend="terms"/>).</para>
 
 <para>With Debian Live, it's a Debian GNU/Linux OS, built for one of the supported architectures (currently amd64, i386, powerpc and sparc). It is made from following parts:</para>
 
@@ -28,17 +28,17 @@
 
 <varlistentry>
 <term>System image</term>
-<listitem><para>The O.S. image. Debian Live uses a SquashFS image, a compressed filesystem, to minimize its size. Note that it's read-only, so during boot, the Debian Live system will uses RAM disk and 'union' mechanism to be able to write files on the system, but all modifications will be lost when shutdown, until using optional persistence partition(s) (see <xref linkend="persistence"/>).</para></listitem>
+<listitem><para>The OS filesystem image. Debian Live uses SquashFS, a compressed filesystem, to minimize its image size. Note that it's read-only. So, during boot the Debian Live system will use a RAM disk and 'union' mechanism to enable writing files within the running system. However, all modifications will be lost upon shutdown unless optional persistence partition(s) are used. (See <xref linkend="persistence"/>.)</para></listitem>
 </varlistentry>
 
 <varlistentry>
 <term>Bootloader</term>
-<listitem><para>A small piece of code, crafted to boot up from the chosen media, possibly proposing a prompt or menu to let select options/configuration, then loading the Linux kernel and its initrd to let it run with associated filesystem image. Different solutions can be proposed depending of the target media and format of filesystem containing the previous components: Isolinux to boot from a CD or DVD in ISO9660 format, syslinux for HDD or USB drive boot from a VFAT partition, GRUB for ext2/3 partition, pxelinux for PXE netboot...</para></listitem>
+<listitem><para>A small piece of code, crafted to boot up from the chosen media, possibly presenting a prompt or menu to allow selection of options/configuration. It then loads the Linux kernel and its initrd to run with an associated filesystem image. Different solutions can be used depending on the target media and format of the filesystem containing the previous components: Isolinux to boot from a CD or DVD in ISO9660 format, syslinux for HDD or USB drive booting from a VFAT partition, GRUB for ext2/3 partition, pxelinux for PXE netboot, etc.</para></listitem>
 </varlistentry>
 
 </variablelist>
 
-<para>The Debian Live tools will build the system image from your specifications, setup a Linux kernel and its initrd, a bootloader to run them, all in one media-dependant format(ISO9660 image, disk image, ...).</para>
+<para>The Debian Live tools will build the system image from your specifications, setup a Linux kernel and its initrd, a bootloader to run them, all in one media-dependant format(ISO9660 image, disk image, etc.)</para>
 </section>
 
 <section>

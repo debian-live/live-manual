@@ -49,7 +49,7 @@
 <screen>$ lh config</screen>
 <para>By passing no parameters to <filename>lh config</filename> we indicated that we wish to use the defaults. This will create an image of type binary (see <xref linkend="lh-config"/>).</para>
 <para>Now that we have a <filename>"config/"</filename> hierarchy, we may build the image with the <filename>lh build</filename> helper command:</para>
-<screen># lh_build</screen>
+<screen># lh build</screen>
 <para>This process can take a while, depending on the speed of your network connection (see <xref linkend="lh-build"/>).</para>
 
 <section>
@@ -143,22 +143,22 @@ Describe installing Debian Live to a partition (e.g. /dev/sdc1) AND using a boot
 <title>Building a netboot image</title>
 
 <para>The following sequence of helper commands will create a basic netboot image containing the Debian standard system without X.org. It is suitable for booting over the network.</para>
-<para>Note if you performed any previous examples, you will need to clean up your working directory with the <filename>lh_clean</filename> helper command:</para>
-<screen>$ lh_clean --binary</screen>
-<para>Run the <filename>lh_config</filename> helper command with the parameters to configure the <filename>"config/"</filename> hierarchy to create our netboot image:</para>
-<screen>$ lh_config -b net --net-root-path "/srv/debian-live" --net-root-server "192.168.0.1"</screen>
-<para>In contrast with the ISO and USB hdd images, netbooting does not support serving a filesystem image with the client so the files must be served via NFS. The <replaceable>net-root-path</replaceable> and <replaceable>net-root-server</replaceable> options specify the location and server respectfully of the NFS server where the filesytem image will be located at boot-time.</para>
-<para>Now build the image with <filename>lh_build</filename> helper command:</para>
-<screen># lh_build</screen>
-<para>In a network boot, the client runs a small piece of software, usually on the <acronym>EEPROM</acronym> of the Ethernet card, which sends a <abbrev>DHCP</abbrev> request  to get an <abbrev>IP</abbrev> address and also information about what to do next; such as getting (through <abbrev>TFTP</abbrev> protocol) a higher level boot software like <application>Grub</application> or <application>PXLINUX</application>, or directly to an operating system like <application>Linux</application>.</para>
-<para>For example, you can extract the generated <filename>binary-net.tar.gz</filename> archive in the <filename>/srv/debian-live</filename> directory; you'll get the filesystem image in <filename>live/filesystem.squashfs</filename>, the kernel, initrd and PXE Linux bootloader in <filename>tftpboot/debian-live/i386</filename>.</para>
-<para>We must now configure three services on the server:</para>
+<para>Note if you performed any previous examples, you will need to clean up your working directory with the <filename>lh clean</filename> helper command:</para>
+<screen>$ lh clean --binary</screen>
+<para>Run the <filename>lh config</filename> helper command with the parameters to configure the <filename>"config/"</filename> hierarchy to create our netboot image:</para>
+<screen>$ lh config -b net --net-root-path "/srv/debian-live" --net-root-server "192.168.0.1"</screen>
+<para>In contrast with the ISO and USB hdd images, netbooting does not support serving a filesystem image with the client so the files must be served via NFS. The <replaceable>net-root-path</replaceable> and <replaceable>net-root-server</replaceable> options specify the location and server, respectively, of the NFS server where the filesytem image will be located at boot-time.</para>
+<para>Now build the image with the <filename>lh build</filename> helper command:</para>
+<screen># lh build</screen>
+<para>In a network boot the client runs a small piece of software, which usually resides on the <acronym>EEPROM</acronym> of the Ethernet card. This program sends a <abbrev>DHCP</abbrev> request to get an <abbrev>IP</abbrev> address and information about what to do next. Typically the next step is getting a higher level boot loader via the <abbrev>TFTP</abbrev> protocol. That could be <application>Grub</application>, <application>PXELINUX</application>, or even boot directly to an operating system like <application>Linux</application>.</para>
+<para>For example, if you unpack the generated <filename>binary-net.tar.gz</filename> archive in the <filename>/srv/debian-live</filename> directory, you'll find the filesystem image in <filename>live/filesystem.squashfs</filename> and the kernel, initrd and PXE Linux bootloader in <filename>tftpboot/debian-live/i386</filename>.</para>
+<para>We must now configure three services on the server to enable netboot:</para>
 
 <variablelist>
 <varlistentry>
 <term>DHCP server</term>
 <listitem>
-<para>We must configure our network's DHCP server to be sure to give a <abbrev>IP</abbrev> address to the computer netbooting, and to advertise the location of the PXE bootloader.</para>
+<para>We must configure our network's DHCP server to be sure to give an <abbrev>IP</abbrev> address to the computer netbooting, and to advertise the location of the PXE bootloader.</para>
 <para>Here is an example for inspiration, written for the ISC DHCP server (package <literal>dhcp3-server</literal>) in the <filename>/etc/dhcp3/dhcpd.conf</filename> configuration file :</para>
 <screen>
 # Options DHCP spécifiques à Pxelinux:
@@ -216,7 +216,7 @@ subnet 192.168.1.0 netmask 255.255.255.0 {   # 192.168.1.0/24
 <term>TFTPd server</term>
 <listitem>
 <para>This serves the kernel and initial ramdisk to the system at run-time.</para>
-<para>You should install the <command>tftpd-hpa</command> package. It can serve all files contained inside a root directory, usually <filename>/var/lib/tftpboot/</filename>, as defined with its <option>-s</option> option. To let it serves files inside <filename>/srv/debian-live/tftpboot</filename>, modify its start definition in <filename>/etc/inetd.conf</filename> with:
+<para>You should install the <command>tftpd-hpa</command> package. It can serve all files contained inside a root directory, usually <filename>/var/lib/tftpboot/</filename>, as defined with its <option>-s</option> option. To let it serve files inside <filename>/srv/debian-live/tftpboot</filename>, modify its start definition in <filename>/etc/inetd.conf</filename> with:
 <screen>tftp           dgram   udp     wait    root  /usr/sbin/in.tftpd /usr/sbin/in.tftpd -s /srv/debian-live/tftpboot -r blksize -v -v</screen>
 and reload the super server with <command>/etc/init.d/openbsd-inetd reload</command>.
 </para>
@@ -225,18 +225,18 @@ and reload the super server with <command>/etc/init.d/openbsd-inetd reload</comm
 
 <varlistentry><term>NFS server</term>
 <listitem>
-<para>Once the guest computer will have downloaded and booted a Linux kernel and its initrd, it will try to mount the Live filesystem image through a NFS server.</para>
-<para>You should install the <command>nfs-kernel-server</command> server package -- <command>nfs-user-server</command> does not function correctly with netboot.</para>
-<para>Then, declare that the directory of the filesystem image is available through NFS, by writing in <filename>/etc/exports</filename> :</para>
+<para>Once the guest computer has downloaded and booted a Linux kernel and loaded its initrd, it will try to mount the Live filesystem image through a NFS server.</para>
+<para>You should install the <command>nfs-kernel-server</command> package -- <command>nfs-user-server</command> does not function correctly with netboot.</para>
+<para>Then, make the filesystem image available through NFS by adding a line like the following to <filename>/etc/exports</filename> :</para>
 <screen>/srv/debian-live *(ro,async,subtree_check,no_root_squash)</screen>
-<para>and let the NFS server knowing it typing following command :</para>
+<para>and tell the NFS server about this new export with the following command:</para>
 <screen># exportfs -rv</screen>
 </listitem>
 </varlistentry>
 
 </variablelist>
 
-<para>Setting all these services is quite error prone, you'll need some patience to let all of them working together.</para>
+<para>Setting up these three services can be a little tricky. You might need some patience to get all of them working together. The DebianInstaller Manual's <ulink url="http://d-i.alioth.debian.org/manual/en.i386/ch04s05.html">TFTP Net Booting</ulink> section might help as that process is very similar.</para>
 </section>
 
 <section>

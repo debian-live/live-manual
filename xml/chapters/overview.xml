@@ -28,8 +28,8 @@
 </para>
 
 <para>
-	Many concepts are similar with the <command>debhelper</command> Debian package
-	tools written by Joey Hess:
+	Many concepts are similar to those in the <command>debhelper</command>
+	Debian package tools written by Joey Hess:
 </para>
 
 <orderedlist>
@@ -42,7 +42,7 @@
 <para>
 	In <command>debhelper</command>, this is the <filename
 	class="directory">debian</filename> subdirectory of a package tree. For
-	example, <command>dh_install</command> will look for file called
+	example, <command>dh_install</command> will look for a file called
 	<filename>debian/&lt;packagename&gt;.install</filename> to determine which
 	files should exist in a particular binary package. In much the same way,
 	&live-helper; stores its configuration entirely under a <filename
@@ -61,23 +61,23 @@
 
 <para>
 	Unlike <command>debhelper</command>, &live-helper; contains a tool to generate
-	a skeleton configuration directory, <filename>lh_config</filename>. This could
+	a skeleton configuration directory, <filename>lh config</filename>. This could
 	be considered to be similar to tools such as <command>dh-make</command>. For
-	more information about <filename>lh_config</filename>, please see 
-	<xref linkend="lh_config"/>.
+	more information about <filename>lh config</filename>, please see 
+	<xref linkend="lh-config"/>.
 </para>
 
 <para>
 	Besides the common <filename>config/common</filename>, which is used by all
 	&live-helper; helper commands, some additional files can be used to configure
 	the behavior of specific helper commands. These files are typically named
-	<command>config/foo</command> or <command>config/stage</command> (where
+	<command>config/helper</command> or <command>config/stage</command> (where
 	"stage", of course, is replaced with the name of the stage that they belong to,
 	and "helper" with the name of the helper).
 </para>
 
 <para>
-	For example, the <command>lh_bootstrap_debootstrap</command> helper command
+	For example, the <command>lh bootstrap debootstrap</command> helper command
 	uses files named <filename>config/bootstrap</filename> and
 	<filename>config/bootstrap_debootstrap</filename> to read the options it will
 	use. Generally, these files contain variables with values assigned, one
@@ -101,7 +101,7 @@
 </para>
 
 <para>
-	In some rare cases, you may want to have different versions of these files for
+	In some rare cases you may want to have different versions of these files for
 	different architectures or distributions. If files named
 	<command>config/stage.arch</command> or
 	<command>config/stage_helper.arch</command>, and
@@ -124,34 +124,34 @@
 <variablelist>
 
 <varlistentry>
-<term><filename>lh_config</filename></term>
+<term><filename>lh config</filename></term>
 
 <listitem>
 <para>
 	Responsible for initialising a Live system configuration directory. See <xref
-	linkend="lh_config"/> for more information.
+	linkend="lh-config"/> for more information.
 </para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
-<term><filename>lh_build</filename></term>
+<term><filename>lh build</filename></term>
 
 <listitem>
 <para>
-	Responsible for starting a Live system build. See <xref linkend="lh_build"/>
+	Responsible for starting a Live system build. See <xref linkend="lh-build"/>
 	for more information.
 </para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
-<term><filename>lh_clean</filename></term>
+<term><filename>lh clean</filename></term>
 
 <listitem>
 <para>
 	Responsible for removing parts of a Live system build. 
-	<xref linkend="lh_clean"/> for more information.
+	See <xref linkend="lh-clean"/> for more information.
 </para>
 </listitem>
 </varlistentry>
@@ -159,24 +159,24 @@
 
 
 <section id="lh-config">
-<title>The <filename>lh_config</filename> helper</title>
+<title>The <filename>lh config</filename> helper</title>
 
 <para>
 	As discussed in <xref linkend="live-helper"/>, the scripts that make up
 	&live-helper; source their configuration from a single directory named
 	<command>config/</command>. As constructing this directory by hand would be
-	time-consuming and error-prone, the <filename>lh_config</filename> helper can
+	time-consuming and error-prone, the <filename>lh config</filename> helper can
 	be used to create skeleton configuration folders.
 </para>
 
 <para>
-	Issuing <filename>lh_config</filename> without any arguments creates a
+	Issuing <filename>lh config</filename> without any arguments creates a
 	<command>config</command> subdirectory which it populates with some default
 	settings:
 </para>
 
 <screen>
-$ lh_config
+$ lh config
 $ ls -l
 total 4.1k
 drwxr-xr-x 19 user group 4.1k 2008-05-09 21:37 config
@@ -207,20 +207,20 @@ drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 templates
 </screen>
 
 <para>
-	Using <filename>lh_config</filename> without any arguments would be suitable
+	Using <filename>lh config</filename> without any arguments would be suitable
 	for users who are either happy editing the generated files, or are simply happy
 	with the defaults it creates.
 </para>
 
 <para>
-	You can ask <filename>lh_config</filename> to generate <filename
+	You can ask <filename>lh config</filename> to generate a <filename
 	class="directory">config/</filename> directory "preseeded" with various
 	options. This might be suitable if you do not require the default settings but
 	do not need to change a large number of options. For example:
 </para>
 
 <screen>
-$ lh_config -p gnome
+$ lh config -p gnome
 </screen>
 
 <para>
@@ -230,18 +230,19 @@ $ lh_config -p gnome
 </para>
 
 <screen>
-$ lh_config --apt aptitude --binary-images net --hostname live-machine --username live-user ...
+$ lh config --apt aptitude --binary-images net --hostname live-machine --username live-user ...
 </screen>
 
 <para>
-	A full list of options is available FIXME. Most options have a parallel with an
-	"<command>LH_</command>" prefixed variable.
+	A full list of options is available in the <command>lh config</command> man
+	page. Most options have a parallel with an "<command>LH_</command>" prefixed
+	variable.
 </para>
 
 </section>
 
 <section id="lh-build">
-<title>The <filename>lh_build</filename> helper</title>
+<title>The <filename>lh build</filename> helper</title>
 
 <para>
 	FIXME
@@ -249,10 +250,10 @@ $ lh_config --apt aptitude --binary-images net --hostname live-machine --usernam
 </section>
 
 <section id="lh-clean">
-<title>The <filename>lh_clean</filename> helper</title>
+<title>The <filename>lh clean</filename> helper</title>
 
 <para>
-	It is the job of the <filename>lh_clean</filename> helper to remove various
+	It is the job of the <filename>lh clean</filename> helper to remove various
 	parts of a Live helper build.
 </para>
 </section>

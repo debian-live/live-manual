@@ -46,17 +46,17 @@
 	To set a local mirror (used to ''build'' the live-cd)
 </para>
 
-<screen>
-$ lh config --mirror-bootstrap "http://local.intra.net/debian/" --mirror-chroot "http://local.intra.net/debian/"
-</screen>
+<para>
+	<screen>$ lh config --mirror-bootstrap "http://local.intra.net/debian/" --mirror-chroot "http://local.intra.net/debian/"</screen>
+</para>
 
 <para>
 	The generic mirror is added to the live-system's /etc/apt/sources.list.
 </para>
 
-<screen>
-$ lh config --mirror-binary "http://ftp.debian.org/debian/"
-</screen>
+<para>
+	<screen>$ lh config --mirror-binary "http://ftp.debian.org/debian/"</screen>
+</para>
 
 <para>
 	Note: It is ''not'' used for building the live-cd but to install new
@@ -67,19 +67,19 @@ $ lh config --mirror-binary "http://ftp.debian.org/debian/"
 	It can be disabled by setting binary indices parameter to disabled
 </para>
 
-<screen>
-$ lh config --binary-indices disabled
-</screen>
-
 <para>
-	Note: the same applies for mirror chroot security and mirror binary security
+	<screen>$ lh config --binary-indices disabled</screen>
 </para>
 
-<screen>
-$ lh config --mirror-chroot-security {URL}
-$ lh config --mirror-binary-security {URL}
-</screen>
+<para>
+	Note: the same applies for mirror chroot security and mirror binary
+	security
+</para>
 
+<para>
+	<screen>$ lh config --mirror-chroot-security {URL}
+$ lh config --mirror-binary-security {URL}</screen>
+</para>
 </listitem>
 </varlistentry>
 
@@ -88,8 +88,8 @@ $ lh config --mirror-binary-security {URL}
 
 <listitem>
 <para>
-	To add more repositories (e.g. backports, experimental packages,
-	etc...), create
+	To add more repositories (e.g. backports, experimental packages, etc.),
+	create
 	<filename>config/chroot_sources/your-cdd-repo.{chroot,binary}</filename>
 	file.
 </para>
@@ -100,9 +100,9 @@ $ lh config --mirror-binary-security {URL}
 	build time (you have to add the packages in your package list):
 </para>
 
-<screen>
-deb http://live.debian.net/ sid-snapshots main contrib non-free
-</screen>
+<para>
+	<screen>deb http://live.debian.net/ sid-snapshots main contrib non-free</screen>
+</para>
 
 <para>
 	If you add the line to
@@ -123,7 +123,6 @@ deb http://live.debian.net/ sid-snapshots main contrib non-free
 </varlistentry>
 
 </variablelist>
-
 
 </sect2>
 
@@ -183,10 +182,31 @@ deb http://live.debian.net/ sid-snapshots main contrib non-free
 </para>
 
 <orderedlist>
-<listitem><para>The <command>LH_PACKAGES</command> variable</para></listitem>
-<listitem><para>Package lists</para></listitem>
-<listitem><para>Local packages (<filename>chroot_local-packages/</filename>)</para></listitem>
-<listitem><para>Tasks</para></listitem>
+
+<listitem>
+<para>
+	The <command>LH_PACKAGES</command> variable
+</para>
+</listitem>
+
+<listitem>
+<para>
+	Package lists
+</para>
+</listitem>
+
+<listitem>
+<para>
+	Local packages (<filename>chroot_local-packages/</filename>)
+</para>
+</listitem>
+
+<listitem>
+<para>
+	Tasks
+</para>
+</listitem>
+
 </orderedlist>
 
 <sect3 id="lh-packages">
@@ -198,17 +218,17 @@ deb http://live.debian.net/ sid-snapshots main contrib non-free
 	<filename>config/chroot</filename>. For example:
 </para>
 
-<screen>
-LH_PACKAGES="package1 package2 package3 ... "
-</screen>
+<para>
+	<screen>LH_PACKAGES="package1 package2 package3 ... "</screen>
+</para>
 
 <para>
 	You can also specify initial values on the command line:
 </para>
 
-<screen>
-$ lh config --packages "package1 package2 package3"
-</screen>
+<para>
+	<screen>$ lh config --packages "package1 package2 package3"</screen>
+</para>
 
 <para>
 	The behaviour of &live-helper; when specifying a package that does not
@@ -241,9 +261,9 @@ $ lh config --packages "package1 package2 package3"
 	<filename>config/chroot</filename>. For example:
 </para>
 
-<screen>
-LH_PACKAGES_LISTS="gnome"
-</screen>
+<para>
+	<screen>LH_PACKAGES_LISTS="gnome"</screen>
+</para>
 
 <para>
 	Packages lists that are distributed with &live-helper; reside in view
@@ -261,11 +281,11 @@ LH_PACKAGES_LISTS="gnome"
 <para>
 	Package lists that exist in this directory always override package
 	lists distributed with &live-helper;. This can cause undesired effects
-	when..
+	when.
 </para>
 
 <note>
- <title>&live-helper; 2.x change</title>
+<title>&live-helper; 2.x change</title>
 
 <para>
 	Any file with <command>.list</command> suffix in
@@ -282,12 +302,14 @@ LH_PACKAGES_LISTS="gnome"
 <sect4>
 <title>Extending a provided package list using includes</title>
 
-<para>FIXME.</para>
+<para>
+	FIXME
+</para>
 
-<screen>
-#include &lt;gnome&gt;
-iceweasel
-</screen>
+<para>
+	<screen>#include &lt;gnome&gt;
+iceweasel</screen>
+</para>
 
 <para>
 	The package lists that are included with &live-helper; make extensive
@@ -300,45 +322,47 @@ iceweasel
 <sect4>
 <title>Using conditionals inside packages lists</title>
 
-<para>FIXME</para>
+<para>
+	FIXME
+</para>
 
-<screen>
-#if ARCHITECTURE amd64
+<para>
+	<screen>#if ARCHITECTURE amd64
 ia32-libs
-#endif
-</screen>
+#endif</screen>
+</para>
 
 <para>
 	or if <command>LH_ARCHITECTURE</command> is set to
 	<command>i386</command> or <command>amd64</command>:
 </para>
 
-<screen>
-#if ARCHITECTURE i386 amd64
+<para>
+	<screen>#if ARCHITECTURE i386 amd64
 memtest86+
-#endif
-</screen>
+#endif</screen>
+</para>
 
 <para>
 	or if <command>LH_SECTIONS</command> contains either
 	<command>contrib</command> or <command>non-free</command>:
 </para>
 
-<screen>
-#if SECTIONS contrib non-free
+<para>
+	<screen>#if SECTIONS contrib non-free
 vrms
-#endif
-</screen>
+#endif</screen>
+</para>
 
 <para>
 	A conditional may surround an <command>#include</command> directive:
 </para>
 
-<screen>
-#if ARCHITECTURE amd64
+<para>
+	<screen>#if ARCHITECTURE amd64
 #include &lt;gnome-full&gt;
-#endif
-</screen>
+#endif</screen>
+</para>
 
 <para>
 	Any &live-helper; configuration variable that begins with
@@ -356,7 +380,9 @@ vrms
 <sect3 id="tasks">
 <title>Tasks</title>
 
-<para>FIXME</para>
+<para>
+	FIXME
+</para>
 
 </sect3>
 
@@ -377,9 +403,9 @@ vrms
 <para>
 	This section does not cover advice regarding building or maintaining
 	modified packages. Joachim Breitner's <ulink
-	url="http://www.joachim-breitner.de/blog/archives/282-How-to-fork-privately.html">'How
-	to fork privately'</ulink> may be of interest, however. The creation of
-	bespoke packages is covered in the <ulink
+	url="http://www.joachim-breitner.de/blog/archives/282-How-to-fork-privately.html"
+	>'How to fork privately'</ulink> may be of interest, however. The
+	creation of bespoke packages is covered in the <ulink
 	url="http://www.debian.org/doc/maint-guide/">Debian New Maintainers'
 	Guide</ulink> and elsewhere.
 </para>
@@ -389,8 +415,19 @@ vrms
 </para>
 
 <orderedlist>
-<listitem><para><filename>chroot_local-packages</filename></para></listitem>
-<listitem><para>Using a custom APT repository</para></listitem>
+
+<listitem>
+<para>
+	<filename>chroot_local-packages</filename>
+</para>
+</listitem>
+
+<listitem>
+<para>
+	Using a custom APT repository
+</para>
+</listitem>
+
 </orderedlist>
 
 <para>
@@ -423,17 +460,36 @@ vrms
 </para>
 
 <orderedlist>
-<listitem><para>It is not possible to use secure APT</para></listitem>
-<listitem><para>You must install all appropriate packages in the <command>config/chroot_local-packages</command> directory</para></listitem>
-<listitem><para>It does not lend itself to storing Debian Live configurations in revision control</para></listitem>
+
+<listitem>
+<para>
+	It is not possible to use secure APT
+</para>
+</listitem>
+
+<listitem>
+<para>
+	You must install all appropriate packages in the
+	<command>config/chroot_local-packages</command> directory
+</para>
+</listitem>
+
+<listitem>
+<para>
+	It does not lend itself to storing Debian Live configurations in
+	revision control
+</para>
+</listitem>
+
 </orderedlist>
+
 </sect3>
 
 <sect3 id="custom-apt-repo">
 <title>Using an APT repository to install custom packages</title>
 
 <para>
- FIXME
+	FIXME
 </para>
 
 <para>
@@ -446,6 +502,7 @@ vrms
 	install custom packages, the infrastructure can be easily re-used at a
 	later date to offer updates of the modified package.
 </para>
+
 </sect3>
 
 <sect3 id="custom-packages-apt">
@@ -474,7 +531,7 @@ vrms
 <title>Altering APT preferences during Live system</title>
 
 <para>
- FIXME
+	FIXME
 </para>
 
 <para>
@@ -482,6 +539,7 @@ vrms
 	install custom packages, the infrastructure can be easily re-used at a
 	later date to offer updates of the modified package.
 </para>
+
 </sect3>
 
 </sect2>

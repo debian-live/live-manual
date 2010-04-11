@@ -277,11 +277,32 @@ drwxr-xr-x 2 user group 4096 2010-04-11 12:16 templates
 <title>The &live-initramfs; package</title>
 
 <para>
-	&live-initramfs; is a collection of scripts.
+	&live-initramfs; is a collection of scripts providing hooks for the
+	<command>initramfs-tools</command>, used to generate an initramfs
+	capable of booting live systems, such as those created by
+	<command>live-helper</command>. This includes the Debian Live isos,
+	netboot tarballs, and usb stick images.
 </para>
 
 <para>
-	FIXME link to Kernel Handbook
+	At boot time it will look for read-only media containing a "/live"
+	directory where a root filesystem (often a compressed filesystem image
+	like squashfs) is stored. If found, it will create a writable
+	environment, using aufs or unionfs, for Debian like systems to boot
+	from.
+</para>
+
+<para>
+	&live-initramfs; is a fork of
+	<ulink url="http://packages.ubuntu.com/casper">casper</ulink>.
+</para>
+
+<para>
+	More information on initial ramfs in Debian can be found in the
+	<ulink url="http://kernel-handbook.alioth.debian.org/">
+	Debian Linux Kernel Handbook</ulink>'s chapter on 
+	<ulink url="http://kernel-handbook.alioth.debian.org/ch-initramfs.html">
+	initramfs</ulink>.
 </para>
 
 </section>

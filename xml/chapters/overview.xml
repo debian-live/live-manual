@@ -183,29 +183,33 @@ $ ls -l
 total 4.1k
 drwxr-xr-x 19 user group 4.1k 2008-05-09 21:37 config
 $ ls -l config/
-total 91k
--rw-r--r-- 1 user group 4.0k 2008-05-09 21:37 binary
-drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 binary_debian-installer
-drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 binary_grub
-drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 binary_local-debs
-drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 binary_local-hooks
-drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 binary_local-includes
-drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 binary_local-packageslists
-drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 binary_local-udebs
-drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 binary_rootfs
-drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 binary_syslinux
--rw-r--r-- 1 user group 1.7k 2008-05-09 21:37 bootstrap
--rw-r--r-- 1 user group 1.5k 2008-05-09 21:37 chroot
-drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 chroot_apt
-drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 chroot_local-hooks
-drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 chroot_local-includes
-drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 chroot_local-packages
-drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 chroot_local-packageslists
-drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 chroot_sources
--rw-r--r-- 1 user group 2.9k 2008-05-09 21:37 common
-drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 includes
--rw-r--r-- 1 user group  212 2008-05-09 21:37 source
-drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 templates</screen>
+total 104
+-rw-r--r-- 1 user group 4175 2010-04-11 12:16 binary
+drwxr-xr-x 2 user group 4096 2010-04-11 12:16 binary_debian-installer
+drwxr-xr-x 2 user group 4096 2010-04-11 12:16 binary_debian-installer-includes
+drwxr-xr-x 2 user group 4096 2010-04-11 12:16 binary_grub
+drwxr-xr-x 2 user group 4096 2010-04-11 12:16 binary_local-debs
+drwxr-xr-x 2 user group 4096 2010-04-11 12:16 binary_local-hooks
+drwxr-xr-x 2 user group 4096 2010-04-11 12:16 binary_local-includes
+drwxr-xr-x 2 user group 4096 2010-04-11 12:16 binary_local-packageslists
+drwxr-xr-x 2 user group 4096 2010-04-11 12:16 binary_local-udebs
+drwxr-xr-x 2 user group 4096 2010-04-11 12:16 binary_rootfs
+drwxr-xr-x 2 user group 4096 2010-04-11 12:16 binary_syslinux
+-rw-r--r-- 1 user group 2205 2010-04-11 12:16 bootstrap
+-rw-r--r-- 1 user group 1599 2010-04-11 12:16 chroot
+drwxr-xr-x 2 user group 4096 2010-04-11 12:16 chroot_apt
+drwxr-xr-x 2 user group 4096 2010-04-11 12:16 chroot_local-hooks
+drwxr-xr-x 2 user group 4096 2010-04-11 12:16 chroot_local-includes
+drwxr-xr-x 2 user group 4096 2010-04-11 12:16 chroot_local-packages
+drwxr-xr-x 2 user group 4096 2010-04-11 12:16 chroot_local-packageslists
+drwxr-xr-x 2 user group 4096 2010-04-11 12:16 chroot_local-patches
+drwxr-xr-x 2 user group 4096 2010-04-11 12:16 chroot_local-preseed
+drwxr-xr-x 2 user group 4096 2010-04-11 12:16 chroot_sources
+-rw-r--r-- 1 user group 2938 2010-04-11 12:16 common
+drwxr-xr-x 2 user group 4096 2010-04-11 12:16 includes
+-rw-r--r-- 1 user group  206 2010-04-11 12:16 source
+drwxr-xr-x 2 user group 4096 2010-04-11 12:16 templates
+</screen>
 </para>
 
 <para>
@@ -237,7 +241,7 @@ drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 templates</screen>
 </para>
 
 <para>
-	A full list of options is available in the <command>lh config</command>
+	A full list of options is available in the <command>lh_config</command>
 	man page. Most options have a parallel with an "<command>LH_</command>"
 	prefixed variable.
 </para>
@@ -248,7 +252,10 @@ drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 templates</screen>
 <title>The <filename>lh build</filename> helper</title>
 
 <para>
-	FIXME
+	The <filename>lh build</filename> helper reads in your configuration
+	from the <filename class="directory">config/</filename> directory. It
+	then runs the lower lower level commands needed to build your Live
+	system.
 </para>
 
 </section>
@@ -258,7 +265,8 @@ drwxr-xr-x 2 user group 4.1k 2008-05-09 21:37 templates</screen>
 
 <para>
 	It is the job of the <filename>lh clean</filename> helper to remove
-	various parts of a Live helper build.
+	various parts of a Live helper build so subsequent builds can start
+	from a clean state.
 </para>
 
 </section>

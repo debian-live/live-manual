@@ -31,7 +31,7 @@ To set a local mirror (used to ''build'' the live-cd)
 </para>
 
 <screen>
-$ lh_config --mirror-bootstrap "http://local.intra.net/debian/" --mirror-chroot "http://local.intra.net/debian/"
+$ lh config --mirror-bootstrap "http://local.intra.net/debian/" --mirror-chroot "http://local.intra.net/debian/"
 </screen>
 
 <para>
@@ -39,7 +39,7 @@ The generic mirror is added to the live-system's /etc/apt/sources.list.
 </para>
 
 <screen>
-$ lh_config --mirror-binary "http://ftp.debian.org/debian/"
+$ lh config --mirror-binary "http://ftp.debian.org/debian/"
 </screen>
 
 <para>
@@ -51,7 +51,7 @@ It can be disabled by setting binary indices parameter to disabled
 </para>
 
 <screen>
-$ lh_config --binary-indices disabled
+$ lh config --binary-indices disabled
 </screen>
 
 <para>
@@ -59,8 +59,8 @@ Note: the same applies for mirror chroot security and mirror binary security
 </para>
 
 <screen>
-$ lh_config --mirror-chroot-security {URL}
-$ lh_config --mirror-binary-security {URL}
+$ lh config --mirror-chroot-security {URL}
+$ lh config --mirror-binary-security {URL}
 </screen>
 </listitem>
 </varlistentry>
@@ -104,7 +104,7 @@ You can also put the gpg-key used to sign the repository into config/chroot_sour
 <sect2 id="package-installation">
 <title>Package installation</title>
 <para>
- You can elect to use either <command>apt</command> or <command>aptitude</command> when installing packages. Which utility is used is governed by the <command>LH_APT</command> variable in <filename>config/chroot</filename> or by the <command>--apt</command> argument to <filename>lh_config</filename>:
+ You can elect to use either <command>apt</command> or <command>aptitude</command> when installing packages. Which utility is used is governed by the <command>LH_APT</command> variable in <filename>config/chroot</filename> or by the <command>--apt</command> argument to <filename>lh config</filename>:
 </para>
 
 <variablelist>
@@ -163,7 +163,7 @@ LH_PACKAGES="package1 package2 package3 ... "
 </para>
 
 <screen>
-$ lh_config --packages "package1 package2 package3"
+$ lh config --packages "package1 package2 package3"
 </screen>
 
 <para>The behaviour of &live-helper; when specifying a package that does not exist is determined by your choice of APT utility. See <xref linkend="package-installation"/> for more details.</para>

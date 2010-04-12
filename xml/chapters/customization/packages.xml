@@ -266,8 +266,8 @@ $ lh config --mirror-binary-security {URL}</screen>
 </para>
 
 <para>
-	Packages lists that are distributed with &live-helper; reside in view
-	in the <command>/usr/share/live-helper/lists</command> directory.
+	Package lists that are distributed with &live-helper; reside in the
+	<command>/usr/share/live-helper/lists</command> directory.
 </para>
 
 <sect4>
@@ -290,7 +290,7 @@ $ lh config --mirror-binary-security {URL}</screen>
 <para>
 	Any file with <command>.list</command> suffix in
 	<command>config/chroot_local-packageslists</command> is automatically
-	enabled, the variable LH_PACKAES_LISTS should only be used referencing
+	enabled, the variable LH_PACKAGES_LISTS should only be used referencing
 	packages lists included in live-helper (at
 	<command>/usr/share/live-helper/lists/</command>.
 </para>
@@ -451,7 +451,7 @@ vrms
 
 <para>
 	Packages <emphasis>must</emphasis> be named in the prescribed way. One
-	simple way to is to use <command>dpkg-name</command>. FIXME
+	simple way to do this is to use <command>dpkg-name</command>. FIXME
 </para>
 
 <para>
@@ -493,14 +493,15 @@ vrms
 </para>
 
 <para>
-	Unlike You must ensure that you specify the package elsewhere, see
-	(FIXME)
+	Unlike using <filename>chroot_local-packages</filename>, when using a
+	custom APT repository you must ensure that you specify the packages
+	elsewhere. See <xref linkend="lh-packages"/> for details.
 </para>
 
 <para>
 	Whilst it may seem unnecessary effort to create an APT repository to
 	install custom packages, the infrastructure can be easily re-used at a
-	later date to offer updates of the modified package.
+	later date to offer updates of the modified packages.
 </para>
 
 </sect3>
@@ -511,13 +512,13 @@ vrms
 <para>
 	&live-helper; uses APT to install all packages into the live system so
 	will therefore inherit behaviours from this program. One relevant
-	example is that (assuming a default configuration) given a package is
-	available in two different repositories, APT will elect to install the
-	package with a higher version number over one with the lower.
+	example is that (assuming a default configuration) given a package
+	available in two different repositories with different version numbers,
+	APT will elect to install the package with the higher version number.
 </para>
 
 <para>
-	Because of this. you may wish to increment the version number in your
+	Because of this, you may wish to increment the version number in your
 	custom packages' <command>debian/changelog</command> files to ensure
 	that your modified version is installed over one in the official Debian
 	repositories. This may also be achieved by altering the live system's

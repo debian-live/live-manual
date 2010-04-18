@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" [
+  <!ENTITY % commondata SYSTEM "../entities/common.ent" > %commondata;
+]>
+<chapter id="basics">
+<title>The basics</title>
+
+<para>
+ This chapter contains a brief overview of the build process as well as containing instructions on how to boot the various binary image types.
+</para>
+
+<section>
+<title>First steps: building an ISO image</title>
+
+<para>
+ The following sequence of commands will create a basic ISO image containing just the Debian standard system without X.org. It is suitable for burning to CD or DVD media.
+</para>
+
+<para>
+ First, we must configure our Live system:
+</para>
+
+<screen>
+$ lh_config
+</screen>
+
+<para>
+ Passing no parameters indicated that we wish to use the default binary image type. You will see that &live-helper; created a <filename>"config/"</filename> hierarchy in your current directory - this is used by the rest of &live-helper; to build your live image.
+</para>
+
+<para>
+ We can then build the image with <filename>lh_build</filename> as root:
+</para>
+
+<screen>
+# lh_build
+</screen>
+
+<para>
+ This process can take a while, depending on the speed of your network connection.
+</para>
+
+<section>
+<title>Testing an ISO image with Qemu</title>
+<para>
+ Testing an ISO is simple:
+</para>
+
+<screen>
+# apt-get install qemu
+$ qemu -cdrom binary.iso
+</screen>
+</section>
+
+<section>
+<title>Burning an ISO image to physical medium</title>
+<para>Burning an ISO image is easy:</para>
+
+<screen>
+# apt-get install wodim
+$ wodim binary.iso
+</screen>
+</section>
+
+</section>
+
+<section>
+<title>Building an USB/HDD image</title>
+<para>
+ The following sequence of commands will create a basic USB/HDD image containing just the Debian standard system without X.org. It is suitable for booting from USB sticks, hard drives and various other portable storage devices.
+</para>
+
+<para>
+ Note if an iso image had been previously built, you will need to clean live-helper:
+</para>
+
+<screen>
+$ lh_clean --binary
+</screen>
+
+<para>
+ First, we must configure &live-helper; to create a USD/HDD image type:
+</para>
+
+<screen>
+$ lh_config -b usb-hdd
+</screen>
+
+<para>
+ We can then build the image with <filename>lh_build</filename> as root:
+</para>
+
+<screen>
+# lh_build
+</screen>
+
+<section>
+<title>Copying USB/HDD image to a USB stick</title>
+
+The generated binary image contains a <acronym>VFAT</acronym>
+partition and the <command>syslinux</command> bootloader,
+ready to be directly written on an USB stick. Plug in an USB stick with a
+size larger than <filename>binary.img</filename>'s one, and type:
+
+<screen>
+$ dd if=binary.img of=${USBSTICK}
+</screen>
+
+where <replaceable>${USBSTICK}</replaceable> is the device file of your key,
+like <filename>/dev/sda</filename> (not a partition like
+<filename>/dev/sda1</filename>!); you can find the right device name by looking
+in <command>dmesg</command>'s output after plugging the stick, for example).
+
+<important>This will definitely overwrite any previous contents on your
+stick!</important>
+</section>
+
+<section>
+<title>Testing a USB/HDD image with Qemu</title>
+<screen>
+# apt-get install qemu
+$ qemu -hda binary.img
+</screen>
+</section>
+</section>
+
+<section>
+<title>Building a netboot image</title>
+
+<para>
+ First, we configure our Live system:
+</para>
+
+<screen>
+$ lh_config -b net --net-root-path "/srv/debian-live" --net-root-server "192.168.0.1"
+</screen>
+
+<para>
+ In contrast with the ISO and USB hdd images, netbooting does not
+ support serving a filesystem image with the client so the files must be
+ served via NFS. The <replaceable>net-root-path</replaceable>
+ and <replaceable>net-root-server</replaceable> options specify the
+ location and server respectfully of the NFS server where the filesytem
+ image will be located at boot-time.
+</para>
+
+<para>
+ We can then build the image with <filename>lh_build</filename> as root:
+</para>
+
+<screen>
+# lh_build
+</screen>
+
+<para>
+ In a net boot, a client runs a small piece of software, usually on
+ the <acronym>EEPROM</acronym> of the Ethernet card, which send
+ a <abbrev>DHCP</abbrev> request  to get an
+ <abbrev>IP</abbrev> address and also information about what to do
+ next : usually getting (through <abbrev>TFTP</abbrev> protocol) a
+ higher level boot software like <application>Grub</application>
+ or <application>PXLINUX</application>, or directly an operating
+ system like <application>Linux</application>.
+</para>
+
+<para>
+ For example, you can extract the generated
+ <filename>binary-net.tar.gz</filename> archive
+ in the <filename>/srv/debian-live</filename> directory; you'll get
+ the filesystem image
+ in <filename>live/filesystem.squashfs</filename>, the kernel,
+ initrd and PXE Linux bootloader
+ in <filename>tftpboot/debian-live/i386</filename>.
+</para>
+
+<para>
+ We must now configure three services on the server:
+</para>
+
+<variablelist>
+<varlistentry><term>DHCP server</term>
+<listitem>
+<para>
+ We must configure our network's DHCP server to be sure to give a
+ <abbrev>IP</abbrev> address to the computer netbooting, and to
+ advertise the location of the PXE bootloader.
+</para>
+
+<para>
+ Here is an example for inspiration, written for the ISC DHCP server
+ (package <literal>dhcp3-server</literal>)
+ in the <filename>/etc/dhcp3/dhcpd.conf</filename> configuration file :
+</para>
+
+<screen>
+
+# Options DHCP spécifiques à Pxelinux:
+option space pxelinux;
+option pxelinux.magic      code 208 = string;
+option pxelinux.configfile code 209 = text;
+option pxelinux.pathprefix code 210 = text;
+option pxelinux.reboottime code 211 = unsigned integer 32;
+
+
+subnet 192.168.1.0 netmask 255.255.255.0 {   # 192.168.1.0/24
+
+  # IP addresses available for guests
+  range 192.168.1.100 192.168.1.149;
+
+  # allow booting from the net
+  allow bootp;
+
+  # for net booting, server where the first file to be loaded (by TFTP
+  # protocol) ("filename" following definition) lies : so the TFTP
+  # server's name.
+  next-server myserver;
+
+  # net boot configuration for guests with a PXE client :
+  if substring (option vendor-class-identifier, 0, 9) = "PXEClient" {
+    # Note : all files for PXE are relatives to the TFTP server's root
+    # path, as usually defined in /etc/inetd.conf.
+
+    # PXE boot loader (first program to be loaded, by TFTP)
+    filename "pxelinux.0";
+
+    # describe some specific pxelinux's options through DHCP options :
+    site-option-space "pxelinux";
+    option pxelinux.magic f1:00:74:7e;
+    if exists dhcp-parameter-request-list {
+      # Always send the PXELINUX options (specified in hexadecimal)
+      option dhcp-parameter-request-list = concat(option dhcp-parameter-request-list,d0,d1,d2,d3);
+    }
+
+    # For a PXE boot menu, different versions are available : simple
+    # text, text with curses, graphic (VESA)
+    #option pxelinux.configfile "pxelinux/config_simple";
+    #option pxelinux.configfile "pxelinux/config_curses";
+    option pxelinux.configfile "pxelinux/config_vesa";
+
+    # automatically reboot after 10 minutes of no activity
+    option pxelinux.reboottime 600;
+  }
+}
+</screen>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>TFTPd server</term>
+<listitem>
+<para>
+ This serves the kernel and initial ramdisk to the system at run-time.
+</para>
+<para>
+ You should install the <command>tftpd-hpa</command> package. It can
+ serve all files contained inside a root directory,
+ usually <filename>/var/lib/tftpboot/</filename>, as defined with its
+ <option>-s</option> option. To let it serves files
+ inside <filename>/srv/debian-live/tftpboot</filename>, modify its
+ start definition in <filename>/etc/inetd.conf</filename> with :
+
+<screen>
+tftp           dgram   udp     wait    root  /usr/sbin/in.tftpd /usr/sbin/in.tftpd -s /srv/debian-live/tftpboot -r blksize -v -v
+</screen>
+and reload the super server with
+<command>/etc/init.d/openbsd-inetd reload</command>.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>NFS server</term>
+<listitem>
+<para>
+ Once the guest computer will have downloaded and booted a Linux
+ kernel and its initrd, it will try to mount the Live filesystem image
+ through a NFS server.
+</para>
+
+<para>
+ You should install the <command>nfs-kernel-server</command> server package -- <command>nfs-user-server</command> does not function correctly with netboot.
+</para>
+
+<para>Then, declare that the directory of the filesystem image is
+  available through NFS, by writing
+  in <filename>/etc/exports</filename> :</para>
+<screen>
+/srv/debian-live *(ro,async,subtree_check,no_root_squash)
+</screen>
+
+<para>and let the NFS server knowing it typing following command :</para>
+<screen>
+# exportfs -rv
+</screen>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+<para>Setting all these services is quite error prone, you'll need
+  some patience to let all of them working together.</para>
+
+</section>
+
+</chapter>

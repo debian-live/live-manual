@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" [
+  <!ENTITY % commondata SYSTEM "../../entities/common.ent" > %commondata;
+]>
+<sect1 id="contents">
+<title>Customising contents</title>
+
+<para>This chapter discusses further customisation of the live system.</para>
+
+<sect2>
+ <title>Includes</title>
+
+ <para>Using includes, it is possible to add (or replace) arbitrary files in your Debian Live image. &live-helper; provides three mechanisms for using them:</para>
+
+ <variablelist>
+  <varlistentry>
+   <term>
+    Chroot local includes
+   </term>
+   <listitem>
+    <para>
+     These allow you to add or replace files to the chroot/Live filesystem. Please see <xref linkend="chroot-local-includes"/> for more information.
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>
+    Binary local includes
+   </term>
+   <listitem>
+    <para>
+     These allow you to add or replace files in the binary image. Please see <xref linkend="binary-local-includes"/> for more information.
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>
+    Binary includes
+   </term>
+   <listitem>
+    <para>
+     These allow you to add or replace Debian specific files in the binary image, such as the templates and tools directories. Please see <xref linkend="binary-includes"/> for more information.
+    </para>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+
+ <para>
+  Please see <xref linkend="terms"/> for more information about the distinction between the "Live" and "binary" images.
+ </para>
+
+<sect3 id="chroot-local-includes">
+ <title>Live/chroot local includes</title>
+ <para>
+  Chroot local includes can be used to add or replace files in the chroot/Live filesystem so that they are visible when the Live system is booted. Typical uses for them are to populate the skeleton user directory (<filename class="directory">/etc/skel</filename>) or adding configuration files where additional processing is not required.
+ </para>
+
+ <para>
+  To include files, simply add them to your <filename class="directory">config/chroot_local-includes</filename> directory. This directory corresponds to the root directory (<filename class="directory">/</filename>) of the live system. For example, to add a file <filename>/var/www/index.html</filename> in the live system, use:
+ </para>
+
+ <screen>
+  $ mkdir -p config/chroot_local-includes/var/www
+  $ cp /path/to/my/index.html config/chroot_local-includes/var/www
+ </screen>
+
+ <para>
+  Your configuration will then have the following layout:
+ </para>
+
+ <screen>
+-- config
+   [...]
+    |-- chroot_local-includes
+    |   `-- var
+    |       `-- www
+    |           `-- index.html
+   [...]
+    `-- templates
+ </screen>
+
+ <para>
+  Chroot local includes are installed after package installation so that files installed by packages are overwritten.
+ </para>
+</sect3>
+
+<sect3 id="binary-local-includes">
+<title>Binary local includes</title>
+ <para>
+  FIXME.
+ </para>
+</sect3>
+
+<sect3 id="binary-includes">
+<title>Binary includes</title>
+ <para>
+  FIXME.
+ </para>
+</sect3>
+
+</sect2>
+
+<sect2 id="hooks">
+<title>Hooks</title>
+
+<para>FIXME.</para>
+<para>Enabling hooks</para>
+
+<sect3 id="chroot-local-hooks">
+<title>Live/chroot local hooks</title>
+<para>FIXME.</para>
+</sect3>
+
+<sect3 id="binary-local-hooks">
+<title>Binary local hooks</title>
+<para>FIXME.</para>
+</sect3>
+
+</sect2>
+
+<sect2 id="debconf-preseed">
+ <title>Preseeding Debconf questions</title>
+
+ <para>Files in the <filename class="directory">config/chroot_local-preseed</filename> directory are considered to be debconf preseed files and are installed by &live-helper; using <filename>debconf-set-selections</filename>.</para>
+
+ <para>For more information about debconf, please see debconf(7) in the <command>debconf</command> package.</para>
+</sect2>
+
+<sect2 id="symlinks">
+<title>Symlink conversion</title>
+<para>FIXME. (This is probably in the wrong section)</para>
+</sect2>
+
+</sect1>

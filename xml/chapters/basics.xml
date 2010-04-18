@@ -23,7 +23,7 @@
 
 <varlistentry>
 <term>Initial RAM disk image (initrd)</term>
-<listitem><para>RAM disk setup for the Linux boot, containing modules possibly need to mount the filesystem's image and some scripts to do it.</para></listitem>
+<listitem><para>RAM disk setup for the Linux boot, containing modules possibly needed to mount the filesystem's image and some scripts to do it.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -33,7 +33,7 @@
 
 <varlistentry>
 <term>Bootloader</term>
-<listitem><para>A small piece of code, crafted to boot up from the chosen media, possibly proposing a prompt or menu to let select options/configuration, then loading the Linux kernel and its initrd to let it run with associated filesystem image. Different solutions can be proposed depending of the target media and fornat of filesystem containing the previous components: Isolinux to boot from a CD or DVD in ISO9660 format, syslinux for HDD or USB drive boot from a VFAT partition, GRUB for ext2/3 partition, pxelinux for PXE netboot...</para></listitem>
+<listitem><para>A small piece of code, crafted to boot up from the chosen media, possibly proposing a prompt or menu to let select options/configuration, then loading the Linux kernel and its initrd to let it run with associated filesystem image. Different solutions can be proposed depending of the target media and format of filesystem containing the previous components: Isolinux to boot from a CD or DVD in ISO9660 format, syslinux for HDD or USB drive boot from a VFAT partition, GRUB for ext2/3 partition, pxelinux for PXE netboot...</para></listitem>
 </varlistentry>
 
 </variablelist>
@@ -99,6 +99,43 @@ where <replaceable>${USBSTICK}</replaceable> is the device file of your key, lik
 # apt-get install qemu
 $ qemu -hda binary.img
 </screen>
+</section>
+
+<section>
+<title>Using the space left on a USB stick</title>
+
+<para>
+If you want to use the remaining free space after you have installed the <filename>binary.img</filename>, you can use a partitioning tool such as gparted or parted to create a new partition on the stick. The first partition will be used by the Debian Live system.
+</para>
+
+<screen>
+# gparted ${USBSTICK}
+</screen>
+
+<para>
+After the creation of the partition you have to create a filsystem on it. One possible choice would be ext2 (ext3 isn't recommended because the journaling causes too much writes to the stick).
+</para>
+
+<screen>
+# mkfs.ext2 ${USBSTICK}
+</screen>
+
+<para>
+If you want to use this data partition with Windows, use FAT32
+</para>
+
+<screen>
+# mkfs.vfat -F 32
+</screen>
+
+<important>Remember: Every time you install a new binary.img on the stick, all your data will be lost because the image includes a complete
+partition table.
+</important>
+
+<para>
+FIXME:
+Describe installing Debian Live to a partition (e.g. /dev/sdc1) AND using a bootloader to boot this.
+</para>
 </section>
 </section>
 
@@ -200,5 +237,75 @@ and reload the super server with <command>/etc/init.d/openbsd-inetd reload</comm
 </variablelist>
 
 <para>Setting all these services is quite error prone, you'll need some patience to let all of them working together.</para>
+</section>
+
+<section>
+<title> Netboot testing HowTo </title>
+
+
+<para>Netboot images creation is made easy with live-helper magic, but testing the images on physical machines can be really time consuming.
+To make our life easier, we can use virtualization. There are two solutions:
+</para>
+
+
+<variablelist>
+<varlistentry><term>VMWare Player</term>
+<listitem>
+<para> Install VMWare Player ("free as in beer" edition)</para>
+<para> Create a PXETester directory, and create a text file called pxe.vwx inside</para>
+<para> Paste this text inside: </para>
+<screen>
+#!/usr/bin/vmware
+config.version = "8"
+virtualHW.version = "4"
+memsize = "512"
+MemAllowAutoScaleDown = "FALSE"
+
+ide0:0.present = "FALSE"
+ide1:0.present = "FALSE"
+floppy0.present = "FALSE"
+sound.present = "FALSE"
+tools.remindInstall = "FALSE"
+
+ethernet0.present = "TRUE"
+ethernet0.addressType = "generated"
+
+displayName = "Test Boot PXE"
+guestOS = "other"
+
+ethernet0.generatedAddress = "00:0c:29:8d:71:3b"
+uuid.location = "56 4d 83 72 5c c4 de 3f-ae 9e 07 91 1d 8d 71 3b"
+uuid.bios = "56 4d 83 72 5c c4 de 3f-ae 9e 07 91 1d 8d 71 3b"
+ethernet0.generatedAddressOffset = "0"
+</screen>
+<para>You can play with this configuration file (i.e. change memory limit to 256)</para>
+<para>Double click on this file (or run VMWare player and selecet this file).</para>
+<para>When running just press space if that strange question comes up... </para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+
+<variablelist>
+<varlistentry><term>Qemu</term>
+<listitem>
+<para>Install qemu, bridge-utils, sudo.</para>
+<para>Edit <filename>/etc/qemu-ifup</filename>:</para>
+<screen>
+#!/bin/sh
+sudo -p "Password for $0:" /sbin/ifconfig $1 172.20.0.1
+echo "Executing /etc/qemu-ifup"
+echo "Bringing up $1 for bridged mode..."
+sudo /sbin/ifconfig $1 0.0.0.0 promisc up
+echo "Adding $1 to br0..."
+sudo /usr/sbin/brctl addif br0 $1
+sleep 2
+</screen>
+<para>Get, or build a grub-floppy-netboot (in the svn).</para>
+<para>Launch qemu with "-net nic,vlan=0 -net tap,vlan=0,ifname=tun0" </para>
+</listitem>
+</varlistentry>
+</variablelist>
+
 </section>
 </chapter>

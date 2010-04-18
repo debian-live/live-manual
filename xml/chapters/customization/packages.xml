@@ -20,6 +20,85 @@
 <para>
  FIXME
 </para>
+<para>
+<variablelist>
+
+<varlistentry><term>Debian repositories</term>
+<listitem>
+
+<para>
+To set a local mirror (used to ''build'' the live-cd)
+</para>
+
+<screen>
+$ lh_config --mirror-bootstrap "http://local.intra.net/debian/" --mirror-chroot "http://local.intra.net/debian/"
+</screen>
+
+<para>
+The generic mirror is added to the live-system's /etc/apt/sources.list.
+</para>
+
+<screen>
+$ lh_config --mirror-binary "http://ftp.debian.org/debian/"
+</screen>
+
+<para>
+Note: It is ''not'' used for building the live-cd but to install new software while using the live-cd.
+</para>
+
+<para>
+It can be disabled by setting binary indices parameter to disabled
+</para>
+
+<screen>
+$ lh_config --binary-indices disabled
+</screen>
+
+<para>
+Note: same applies for mirror chroot security and mirror binary security
+</para>
+
+<screen>
+$ lh_config --mirror-chroot-security {URL}
+$ lh_config --mirror-binary-security {URL}
+</screen>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Own repository</term>
+<listitem>
+
+<para>
+To add more repositories (e.g. backports, experimental packages, etc...),
+create <filename>config/chroot_sources/your-cdd-repo.{chroot,binary}</filename> file.
+</para>
+
+<para>
+e.g. <filename>config/chroot_sources/live.chroot</filename> allows to install packages from the debian live snapshot repository at live-cd build time (you have to add the packages in your package list):
+</para>
+
+<screen>
+deb http://live.debian.net/debian/ ./
+</screen>
+
+<para>
+If you add the line to <filename>config/chroot_sources/live.binary</filename> the repository will be added to your live-system's <filename>/etc/apt/sources.list</filename>.
+</para>
+
+<para>
+If such files exist, they will be picked up automatically.
+</para>
+
+<para>
+You can also put the gpg-key used to sign the repository into config/chroot_sources/foo.{binary,chroot}.gpg
+</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+
 </sect2>
 
 <sect2 id="package-installation">

@@ -82,6 +82,7 @@
  <listitem><para>Chris Lamb</para></listitem>
  <listitem><para>Daniel Baumann</para></listitem>
  <listitem><para>Franklin Piat</para></listitem>
+ <listitem><para>Jonas Stein</para></listitem>
  <listitem><para>Kai Hendry</para></listitem>
  <listitem><para>Marco Amadori</para></listitem>
  <listitem><para>Mathieu Geli</para></listitem>
@@ -109,6 +110,39 @@
 <para>You may build the live-manual from the top level directory of your git checkout by executing:</para>
 
 <screen>$ make build</screen>
+
+<sect3 id="commiting">
+<title>Applying patches</title>
+<para>Directly commiting to the repository is possible by anyone. However, we ask you to send bigger changes to the mailinglist to discuss them first. In order to push to the repository, the following steps are required.</para>
+
+<itemizedlist>
+<listitem><para>Fetch the public commit key:</para>
+<screen>$ mkdir -p ~/.ssh/identity.d
+$ wget http://live.debian.net/other/openssh/repository-public-commit-key-current/live-manual@debian-live -O ~/.ssh/identity.d/live-manual@debian-live
+$ wget http://live.debian.net/other/openssh/repository-public-commit-key-current/live-manual@debian-live.pub -O ~/.ssh/identity.d/live-manual@debian-live.pub
+$ chmod 0600 ~/.ssh/identity.d/live-manual@debian-live*</screen></listitem>
+
+<listitem><para>Add the following section your openssh-client config:</para>
+<screen> $ cat &gt;&gt; ~/.ssh/config &lt;&lt; EOF
+Host git.debian.net
+	Hostname git.debian.net
+	User gitosis
+	IdentityFile ~/.ssh/identity.d/live-manual@debian-live
+EOF
+</screen></listitem>
+
+<listitem><para>Checkout a clone of the manual through ssh:</para>
+<screen>$ git clone gitosis@git.debian.net:debian-live/live-manual.git</screen></listitem>
+
+<listitem><para>Commit the file after editing. Write commit messages, that consist of full useful sentences, starting with a capital letter and ending with a full stop. Usually starting with the form 'Fixing/Adding/Removing/Correcting/':</para>
+<screen>$ git commit -a</screen></listitem>
+
+<listitem><para>Push the commit to the server:</para>
+<screen>$ git push</screen></listitem>
+
+</itemizedlist>
+
+</sect3>
 
 </sect2>
 

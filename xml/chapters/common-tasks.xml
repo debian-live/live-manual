@@ -9,8 +9,9 @@
 <section id="debian-installer">
 <title>The Debian Installer</title>
  <para>
-  Although Debian Live is mostly concerned with avoiding permanent installation, integrating some form of installer to your image is possible. There are number of different "types" of installation, varying in what and how to install the image.
+  Although Debian Live is mostly concerned with avoiding permanent installation, integrating some form of installer to your image is possible. There are number of different "types" of installation, varying in what and how to install the image. 
  </para>
+ 
  <note>
   <title>
    The "Debian Installer"
@@ -69,8 +70,33 @@
    </listitem>
   </varlistentry>
  </variablelist>
+
+
+  <para>
+ By default, no installar will be included in the Debian Live image. You can enable it by using <filename>lh_config</filename> :
+ <screen>
+$ lh_config --help
+  ...
+  [--debian-installer enabled|cdrom|netinst|netboot|businesscard|live|disabled]
+  [--debian-installer-distribution CODENAME|daily]
+  [--debian-installer-preseedfile FILE|URL]
+  ...
+ </screen>
+You can also use the appropriate variables in the <filename>config/binary</filename> file:
+ <screen>
+$ cat config/binary | grep DEBIAN_INTALLER
+set debian-installer
+LH_DEBIAN_INSTALLER="disabled"
+# $LH_DEBIAN_INSTALLER_DISTRIBUTION: set debian-installer suite
+LH_DEBIAN_INSTALLER_DISTRIBUTION="lenny"
+# $LH_DEBIAN_INSTALLER_PRESEEDFILE: set debian-installer preseed filename/url
+LH_DEBIAN_INSTALLER_PRESEEDFILE=""
+ </screen>
+ </para>
+
+
  <para>
-  The values "Normal", "Live" and "Ubuntu" are not valid values for <term>LH_BINARY_DEBIAN_INSTALLER</term>.
+  The values "Normal", "Live" and "Ubuntu" are not valid values for <term>LH_BINARY_DEBIAN_INSTALLER</term>. Refer to the output of <filename>lh_config</filename> cited above to choose the appropriate values.
  </para>
 </section>
 

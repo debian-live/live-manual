@@ -6,15 +6,15 @@
 <chapter id="coding-style">
 <title>Coding Style</title>
 
-<para>This chapter documents the coding style used in live-helper.</para>
+<para>This chapter documents the coding style used in &live-helper; and (ideally) in &live-initramfs;.</para>
 
 <sect1 id="compatibilty">
 <title>Compatibility</title>
 
 <itemizedlist>
-	<listitem>Don't use bashisms, e.g. no arrays.</listitem>
-	<listitem>Only use posix subset, e.g. use $(foo) rather than `foo`.</listitem>
-	<listitem>Do check your scripts with 'sh -n' and 'checkbasishm'.</listitem>
+	<listitem>Don't use syntax or semantics that are unique to the Bash shell. For example, the use of array constructs.</listitem>
+	<listitem>Only use the POSIX subset - for example, use $(foo) over `foo`.</listitem>
+	<listitem>You can check your scripts with 'sh -n' and 'checkbashisms'</listitem>
 </itemizedlist>
 </sect1>
 
@@ -22,7 +22,7 @@
 <title>Indenting</title>
 
 <itemizedlist>
-	<listitem>Always use tabs and not spaces.</listitem>
+	<listitem>Always use tabs over spaces.</listitem>
 </itemizedlist>
 
 </sect1>
@@ -33,9 +33,9 @@
 <itemizedlist>
 	<listitem>Generally, lines are 80 chars at maximum.</listitem>
 
-	<listitem>Use the linux like line breaks:
+	<listitem>Use the "Linux style" of line breaks:
 
-	Bad:
+	<para>Bad:
 
 <screen>
 if foo; then
@@ -43,7 +43,8 @@ if foo; then
 fi
 </screen>
 
-	Good:
+	</para>
+	<para>Good:
 
 <screen>
 if foo
@@ -51,20 +52,19 @@ then
 	bar
 fi
 </screen>
+	</para></listitem>
 
-	</listitem>
+	<listitem>The same holds for functions:
 
-	<listitem>Same for functions:
-
-	Bad:
+	<para>Bad:
 
 <screen>
 foo () {
 	bar
 }
 </screen>
-
-	Good:
+	</para>
+	<para>Good:
 
 <screen>
 foo ()
@@ -72,8 +72,7 @@ foo ()
 	bar
 }
 </screen>
-
-	</listitem>
+	</para></listitem>
 </itemizedlist>
 
 </sect1>
@@ -84,28 +83,29 @@ foo ()
 <itemizedlist>
 	<listitem>Variables are always in capital letters.</listitem>
 	<listitem>Variables that used in config always start with LH_ prefix.</listitem>
-	<listitem>Internal, live-helper controlling variables start with _LH_ prefix.</listitem>
+	<listitem>Internal temporary variables should start with the _LH_ prefix.</listitem>
 	<listitem>Local variables start with __LH_ prefix.</listitem>
-	<listitem>Put curly brackets arround them, write ${FOO} not $FOO.</listitem>
-	<listitem>Always protect variables wrt/ potential whitespaces, write "${FOO}" not ${FOO}.</listitem>
+	<listitem>Use braces around variables; eg. write ${FOO} instead of $FOO.</listitem>
+	<listitem>Always protect variables with respect to potential whitespaces, write "${FOO}" not ${FOO}.</listitem>
 	<listitem>For consistency reasons, always use quotes when assigning values to variables:
 
-	Bad:
+	<para>Bad:
 
 <screen>
 FOO=bar
 </screen>
-
-	Good:
+	</para>
+	<para>Good:
 
 <screen>
 FOO="bar"
 </screen>
-	</listitem>
+
+	</para></listitem>
 
 	<listitem>If multiple variables are used, quote the full expression:
 
-	Bad:
+	<para>Bad:
 
 <screen>
 if [ -f "${FOO}"/foo/"${BAR}"/bar ]
@@ -113,8 +113,8 @@ then
 	foobar
 fi
 </screen>
-
-	Good:
+	</para>
+	<para>Good:
 
 <screen>
 if [ -f "${FOO}/foo/${BAR}/bar" ]
@@ -122,8 +122,7 @@ then
 	foobar
 fi
 </screen>
-
-	</listitem>
+	</para></listitem>
 </itemizedlist>
 
 </sect1>
@@ -132,8 +131,8 @@ fi
 <title>Miscellaneous</title>
 
 <itemizedlist>
-	<listitem>Use "|" (without "") as a seperator in sed calls, e.g. "sed -e 's|foo|bar|'" (without "").</listitem>
-	<listitem>Don't use test for comparisons or tests, use "[" "]" (without ""), e.g. "if [ -x /bin/foo ]; ..." and not "if test -x /bin/foo; ...".</listitem>
+	<listitem>Use "|" (without the surround quotes) as a seperator in calls to sed, e.g. "sed -e 's|foo|bar|'" (without "").</listitem>
+	<listitem>Don't use the test command for comparisons or tests, use "[" "]" (without ""), e.g. "if [ -x /bin/foo ]; ..." and not "if test -x /bin/foo; ...".</listitem>
 
 </itemizedlist>
 

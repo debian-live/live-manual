@@ -6,17 +6,16 @@
 <sect1 id="meta">
 <title>About this manual</title>
 
-<para>
-The main goal of this manual is to serve as a single access point to all documentation related to the Debian Live project. It does not include end-user documentation for using a Debian Live system.</para>
+<para>The main goal of this manual is to serve as a single access point to all documentation related to the Debian Live project. It does not include end-user documentation for using a Debian Live system.</para>
 
-<para>Some of the commands mentioned in the text must be executed with superuser privileges, either by becoming the root user or by using <filename>sudo</filename>. To distinguish between commands which may be executed by an unprivileged user and those requiring superuser privileges, commands are prepended by <command>$</command> or <command>#</command> respectively. This symbol is not a part of the command.</para>
+<para>Some of the commands mentioned in the text must be executed with superuser privileges which can be obtained by becoming the root user via <filename>su</filename> or by using <filename>sudo</filename>. To distinguish between commands which may be executed by an unprivileged user and those requiring superuser privileges, commands are prepended by <command>$</command> or <command>#</command> respectively. This symbol is not a part of the command.</para>
 
 <sect2 id="terms">
 <title>Terms</title>
 
 <variablelist>
 <varlistentry><term>Live system</term>
-<listitem><para>An operating system that can boot without installation to a hard drive. Live systems does not alter operating systems or files already installed on the computer hard drive unless instructed to do so. Live systems are typically booted from CD or DVD media as well as USB sticks and via netboot.</para></listitem>
+<listitem><para>An operating system that can boot without installation to a hard drive. Live systems do not alter local operating system(s) or file(s) already installed on the computer hard drive unless instructed to do so. Live systems are typically booted from media such as CDs or DVDs, some may also boot with USB sticks or over the network (via netboot images).</para></listitem>
 </varlistentry>
 
 <varlistentry><term>Debian Live</term>
@@ -24,7 +23,7 @@ The main goal of this manual is to serve as a single access point to all documen
 </varlistentry>
 
 <varlistentry><term>Debian Live system</term>
-<listitem><para>A Debian Live system is a live system that uses software from the Debian operating system.</para></listitem>
+<listitem><para>A live system that uses software from the Debian operating system that may be booted from CDs, DVDs, USB sticks, over the network (via netboot images), and over the internet (via boot parameter fetch=URL)</para></listitem>
 </varlistentry>
 
 <varlistentry><term>Build system / host system</term>
@@ -40,7 +39,7 @@ The main goal of this manual is to serve as a single access point to all documen
 </varlistentry>
 
 <varlistentry><term><filename>live-package</filename></term>
-<listitem><para>The former name of &live-initramfs;.</para></listitem>
+<listitem><para>The former name of &live-helper;.</para></listitem>
 </varlistentry>
 
 <varlistentry><term>Debian Installer / (d-i)</term>
@@ -52,19 +51,21 @@ The main goal of this manual is to serve as a single access point to all documen
 </varlistentry>
 
 <varlistentry><term>chroot</term>
-<listitem><para>FIXME</para></listitem>
+<listitem><para>The chroot program, chroot(8), enables us to run different instances of the GNU/Linux environment on a single system simultaneously without rebooting.</para></listitem>
 </varlistentry>
 
 <varlistentry><term>binary image</term>
-<listitem><para>FIXME</para></listitem>
+<listitem><para>On a live system, binary image refers to the binary filesystem and the respective extension, such as binary.iso or binary.img.</para></listitem>
 </varlistentry>
 
 <varlistentry><term>Target distribution</term>
 <listitem><para>FIXME</para></listitem>
 </varlistentry>
 
-<varlistentry><term>etch/lenny/sid stable/testing/unstable</term>
-<listitem><para>FIXME</para></listitem>
+<varlistentry><term>&lenny;/&squeeze;/&sid; stable/testing/unstable</term>
+<listitem><para>The "stable" distribution contains the latest officially released distribution of Debian. The "testing" distribution is the staging area for the next stable release a - the main advantage of using this distribution is that it has more recent versions of software relative to the "stable" release.. The "unstable" distribution is where active development of Debian occurs. Generally, this distribution is run by developers and those who like to live on the edge.</para>
+<para>At the time of writing, &lenny; is the current "stable" release and &squeeze; is the current "testing" release. &sid; will always be a synonym for the "unstable" release.</para>
+</listitem>
 </varlistentry>
 
 </variablelist>
@@ -85,6 +86,7 @@ The main goal of this manual is to serve as a single access point to all documen
  <listitem><para>Marco Amadori</para></listitem>
  <listitem><para>Mathieu Geli</para></listitem>
  <listitem><para>Matthias Kirschner</para></listitem>
+ <listitem><para>Richard Nelson</para></listitem>
  <listitem><para>Trent W. Buck</para></listitem>
 </itemizedlist>
 
@@ -98,9 +100,15 @@ The main goal of this manual is to serve as a single access point to all documen
 
 <para>The sources for this manual are maintained using the Git version control system. You can checkout the latest copy by executing:</para>
 
-<screen>
-$ git clone git://git.debian.org/git/debian-live/live-manual.git
-</screen>
+<screen>$ git clone git://git.debian.net/git/debian-live/live-manual.git</screen>
+
+<para>Prior to submission of your contribution, please preview your work. To preview the live-manual, ensure the packages needed for building are installed by executing:</para>
+
+<screen># apt-get install dblatex docbook-xml docbook-xsl make po4a w3m</screen>
+
+<para>You may build the live-manual from the top level directory of your git checkout by executing:</para>
+
+<screen>$ make build</screen>
 
 </sect2>
 

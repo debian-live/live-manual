@@ -10,9 +10,9 @@
 
 <section id="live-helper">
 <title>&live-helper;</title>
-<para>&live-helper; is a collection of scripts that build Debian Live systems.</para>
+<para>&live-helper; is a collection of scripts to build Debian Live systems. These scripts are also referred to as "helpers".</para>
 
-<para>The idea behind live-helper is a framework that uses a configuration directory to completely automate and customize all aspects of building a Live image.</para>
+<para>The idea behind &live-helper; is to be a framework that uses a configuration directory to completely automate and customize all aspects of building a Live image.</para>
 
 <para>Many concepts are similar with the <command>debhelper</command> Debian package tools written by Joey Hess:</para>
 
@@ -28,13 +28,13 @@
 
 <para>Unlike <command>debhelper</command>, &live-helper; contains a tool to generate a skeleton configuration directory, <filename>lh_config</filename>. This could be considered to be similar to tools such as <command>dh-make</command>. For more information about <filename>lh_config</filename>, please see <xref linkend="lh_config"/>.</para>
 
-<para>Besides the common <filename>config/common</filename>, which is used by all &live-helper; commands, some additional files can be used to configure the behavior of specific helpers. These files are typically named <command>config/foo</command> or <command>config/stage</command> (where "stage", of course, is replaced with the name of the stage that they belong to, and "helper" with the name of the helper).</para>
+<para>Besides the common <filename>config/common</filename>, which is used by all &live-helper; helper commands, some additional files can be used to configure the behavior of specific helper commands. These files are typically named <command>config/foo</command> or <command>config/stage</command> (where "stage", of course, is replaced with the name of the stage that they belong to, and "helper" with the name of the helper).</para>
 
-<para>For example, <command>lh_bootstrap_debootstrap</command> uses files named <filename>config/bootstrap</filename> and <filename>config/bootstrap_debootstrap</filename> to read the options it will use. Generally, these files contain variables with values assigned, one variable per line. Some programs in &live-helper; use pairs of values or slightly more complicated variable assignments.</para>
+<para>For example, the <command>lh_bootstrap_debootstrap</command> helper command uses files named <filename>config/bootstrap</filename> and <filename>config/bootstrap_debootstrap</filename> to read the options it will use. Generally, these files contain variables with values assigned, one variable per line. Some programs in &live-helper; use pairs of values or slightly more complicated variable assignments.</para>
 
 <para>&live-helper; respects environment variables which are present in the context of the shell it is running. If variables can be read from config files, then they override environment variables, and if command line options are used, they override values from config files. If no value for a given variable can be found (and is thus unset), &live-helper; will automatically set it to a default value.</para>
 
-<para>All config files are shell scripts which are sourced by a live-helper program. That means they have to follow the normal shell syntax. You can also put comments in these files; lines beginning with "#" are ignored.</para>
+<para>All config files are shell scripts which are sourced by a &live-helper; program. That means they have to follow the normal shell syntax. You can also put comments in these files; lines beginning with "#" are ignored.</para>
 
 <para>In some rare cases, you may want to have different versions of these files for different architectures or distributions. If files named <command>config/stage.arch</command> or <command>config/stage_helper.arch</command>, and <command>config/stage.dist</command> or <command>config/stage_helper.dist</command> exist (where "arch" is the same as the output of <command>dpkg --print-architecture</command> and "dist" is the same as the codename of the target distribution), then they will be used in preference to the other, more general files.</para>
 

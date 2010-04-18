@@ -1,21 +1,26 @@
 AUTOBUILD	:= build
-LANGUAGES       := de fr
+#LANGUAGES       := de fr
 
 include Makefile.common
 
-build: clean translations all
+#build: clean translations all
+build: clean all
 	set -e; for FORMAT in $(FORMATS); do \
 		mkdir -p $(AUTOBUILD)/$$FORMAT; \
 		cp *.$$FORMAT $(AUTOBUILD)/$$FORMAT; \
 	done
-	sed '{s/__UPDATED__/$(shell LC_ALL=C date -R)/;s%/__LANG__%%;}' build-index.html.in > $(AUTOBUILD)/index.html.en
+
+	sed '{s/@DATE@/$(shell LC_ALL=C date -R)/;s%/@LANG@%%;}' html/index.html.in > $(AUTOBUILD)/index.html.en
+
 	set -e; for LANGUAGE in $(LANGUAGES); do \
 		for FORMAT in $(FORMATS); do \
 			mkdir -p $(AUTOBUILD)/$$FORMAT/$$LANGUAGE; \
 			cp $$LANGUAGE/*.$$FORMAT $(AUTOBUILD)/$$FORMAT/$$LANGUAGE; \
 		done; \
-		sed "{s/__UPDATED__/$(shell LC_ALL=C date -R)/;s/__LANG__/$$LANGUAGE/;}" $$LANGUAGE/build-index.html.in > $(AUTOBUILD)/index.html.$$LANGUAGE; \
+		sed "{s/@DATE@/$(shell LC_ALL=C date -R)/;s/@LANG@/$$LANGUAGE/;}" $$LANGUAGE/html/index.html.in > $(AUTOBUILD)/index.html.$$LANGUAGE; \
 	done
+
+	cp html/* $(AUTOBUILD)
 
 po4a:
 	po4a -k 0 po4a/live-manual.cfg;

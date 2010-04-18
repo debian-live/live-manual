@@ -51,7 +51,7 @@
 <title>From source</title>
 
 <para>&live-helper; is developed using the Git version control system. On Debian systems, this is provided by the <command>git-core</command> package. To check out the latest code, execute:</para>
-<screen>$ git clone git://git.debian.net/git/debian-live/live-helper.git</screen>
+<screen>$ git clone git://live.debian.net/git/live-helper.git</screen>
 <para>You can build and install your own Debian package by executing:</para>
 <screen>
  $ cd live-helper
@@ -131,7 +131,7 @@
 <orderedlist>
 <listitem>
 <para>Checkout the &live-initramfs; source</para>
-<screen>$ git clone git://git.debian.net/git/debian-live/live-initramfs.git</screen>
+<screen>$ git clone git://live.debian.net/git/live-initramfs.git</screen>
 </listitem>
 <listitem>
 <para>Make changes to your local copy</para>
@@ -160,17 +160,17 @@ $ dpkg-buildpackage -rfakeroot -b -uc -us
 <orderedlist>
 <listitem>
 <para>Create a sources.list entry for the chroot stage:</para>
-<screen>echo "deb http://live.debian.net/debian/ ./" > config/chroot_sources/live-snapshots.chroot</screen>
+<screen>echo "deb http://live.debian.net/ sid/snapshots main contrib non-free" > config/chroot_sources/debian-live_sid-snapshots.chroot</screen>
 </listitem>
 <listitem>
 <para>Create a sources.list entry fro the binary stage:</para>
-<screen>cp config/chroot_sources/live-snapshots.chroot config/chroot_sources/live-snapshots.binary</screen>
+<screen>cp config/chroot_sources/debian-live_sid-snapshots.chroot config/chroot_sources/debian-live_sid-snapshots.binary</screen>
 </listitem>
 <listitem>
 <para>Fetch the archive signing key:</para>
 <screen>
-wget http://live.debian.net/debian/archive-key.asc -O config/chroot_sources/live-snapshots.chroot.gpg
-cp config/chroot_sources/live-snapshots.chroot.gpg config/chroot_sources/live-snapshots.binary.gpg
+wget http://live.debian.net/debian/project/openpgp/archive-key.asc -O config/chroot_sources/debian-live_sid-snapshots.chroot.gpg
+cp config/chroot_sources/debian-live_sid-snapshots.chroot.gpg config/chroot_sources/debian-live_sid-snapshots.binary.gpg
 </screen>
 </listitem>
 </orderedlist>

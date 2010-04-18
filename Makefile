@@ -39,7 +39,7 @@ clean:
 	rm -f *.html *.pdf *.txt
 	rm -f xml/entities/version.ent
 
-purge: clean
+distclean: clean
 	rm -rf build
 
 .PHONY: clean po4a translations

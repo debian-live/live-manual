@@ -61,41 +61,41 @@ To make the console keyboard use a swedish layout use
 
 <section id="persistence">
 <title>Persistence</title>
-<para>A live cd paradigm is a preinstalled system which runs from a read-only media, like a cdrom, were writes and modifications does not survive reboots of the host hardware which runs it.</para>
-<para>A Debian Live system is a generalization of this paradigm and thus supports more media, and not only cds; but stills, in its default behaviour, it should be considered read only and all the runtime evolutions of the system are lost with a shutdown.</para>
+<para>A live cd paradigm is a preinstalled system which runs from read-only media, like a cdrom, where writes and modifications do not survive reboots of the host hardware which runs it.</para>
+<para>A Debian Live system is a generalization of this paradigm and thus supports other media in addition to CDs; but still, in its default behaviour, it should be considered read-only and all the runtime evolutions of the system are lost at shutdown.</para>
 
-<para>Persistence is a common name for different kinds of solutions for saving across reboots some or all of this runtime evolution of the system; to undestand how it could work it could be handy to know that even if the system is booted and runt from a read only media, modification to the files and directories are wrote on a writable media, typically a ram disk (tmpfs) and ram disk's data do not survive reboots.</para>
-<para>The data stored on this ramdisk should be saved in a writable persistent media like on an Hard Disk, a USB key, a network "share" or even a session of a multisession (re)writable CD/DVD. All this cited media are supported in Debian Live in different ways, all but latest one requires a special boot parameter to be specified at boot: <command>persistent</command>.</para>
+<para>Persistence is a common name for different kinds of solutions for saving across reboots some, or all, of this runtime evolution of the system. To understand how it could work it could be handy to know that even if the system is booted and run from read-only media, modification to the files and directories are written on writable media, typically a ram disk (tmpfs) and ram disks' data do not survive reboots.</para>
+<para>The data stored on this ramdisk should be saved on a writable persistent medium like a Hard Disk, a USB key, a network share or even a session of a multisession (re)writable CD/DVD. All these media are supported in Debian Live in different ways, and all but the last one require a special boot parameter to be specified at boot time: <command>persistent</command>.</para>
 
 <section><title>Full persistence</title>
-<para>With "full persistence" it is meant that instead of using a tmpfs for storing modifications to the read-only media (with the copy-on-write, COW, system) a writable partition is used. In order to use this feature a partition with a clean writable supported filesystem on it labeled "live-rw" must be attached on the system at bootime and the system must be started with "persistent" boot parameter; this partition could be an ext2 partition on the hard disk or on a usb key created with, e.g.:</para>
+<para>By 'full persistence' it is meant that instead of using a tmpfs for storing modifications to the read-only media (with the copy-on-write, COW, system) a writable partition is used. In order to use this feature a partition with a clean writable supported filesystem on it labeled "live-rw" must be attached on the system at bootime and the system must be started with the boot parameter 'persistent'. This partition could be an ext2 partition on the hard disk or on a usb key created with, e.g.:</para>
 
 <screen>
 # mkfs.ext2 -L live-rw /dev/sdb1
 </screen>
 
-<para>But since live system users, not always can use an hard drive partition, maybe because they aren't allowed or they wan't to repartition a drive, and considering that most USB keys have laughables write speeds, "full" persistence could be also used with just image files, so you could create a file representing a partition and put this image file even on a NTFS partition of a foreign OS, with something like:</para>
+<para>But since live system users cannot always use a hard drive partition, and considering that most USB keys have poor write speeds, 'full' persistence could be also used with just image files, so you could create a file representing a partition and put this image file even on a NTFS partition of a foreign OS, with something like:</para>
 
 <screen>
 $ dd if=/dev/null of=live-rw bs=1G seek=1	# for a 1GB sized image file
 $ /sbin/mkfs.ext2 -F live-rw
 </screen>
 
-<para>Then copy the <command>live-rw</command> file in a writable partition and reboot with "persistent" boot parameter.</para>
+<para>Then copy the <command>live-rw</command> file to a writable partition and reboot with the boot parameter 'persistent'.</para>
 </section>
 
 <section><title>Home automounting</title>
-<para>If during the boot a partition (filesystem) image file or a partition labeled  <command>home-rw</command> will be discovered, this filesystem will be directly mounted as <command>/home</command>, thus permitting persistence of files that belong to the e.g. default user. It can be combined with full persistence.</para>
+<para>If during the boot a partition (filesystem) image file or a partition labeled  <command>home-rw</command> is discovered, this filesystem will be directly mounted as <command>/home</command>, thus permitting persistence of files that belong to e.g. the default user. It can be combined with full persistence.</para>
 </section>
 
 <section><title>Snapshots</title>
-<para>Snapshots are collection of files and directories which are not mounted while running but which are copied from a persistent device to the system (tmpfs) at boot and which are resynced at reboot/shutdown of the system. The content of a snapshot could reside on a partition or an image file (like the above mentioned types) labeled <command>live-sn</command>, but it defaults to a simple cpio archive named <command>live-sn.cpio.gz</command>. As above at boot time, the block devices connected to the system are traversed to see if a partition or a file named like that could be found. A power interruption during runtime could lead to data lost hence a tool invoked  <command>live-snapshot --refresh</command> could be called to sync important changes. This type of persistence since it does not write continuosly to the persistent media is the most flash-based device friendly and the fastest of all the persistence systems.</para>
+<para>Snapshots are collections of files and directories which are not mounted while running but which are copied from a persistent device to the system (tmpfs) at boot and which are resynced at reboot/shutdown of the system. The content of a snapshot could reside on a partition or an image file (like the above mentioned types) labeled <command>live-sn</command>, but it defaults to a simple cpio archive named <command>live-sn.cpio.gz</command>. As above, at boot time, the block devices connected to the system are traversed to see if a partition or a file named like that could be found. A power interruption during runtime could lead to data loss, hence a tool invoked  <command>live-snapshot --refresh</command> could be called to sync important changes. This type of persistence, since it does not write continuously to the persistent media, is the most flash-based device friendly and the fastest of all the persistence systems.</para>
 <para> A /home version of snapshot exists too and its label is <command>home-sn.*</command>; it works the same as the main snapshot but it is only applied to /home.</para>
-<para> All kind of snapshots cannot currently handle file deleting while full persistence and obviously home automounting could.</para>
+<para>Snapshots cannot currently handle file deletion but full persistence and home automounting can.</para>
 </section>
 
-<section><title>Partial remasterings</title>
-<para>The runtime modification of the tmpfs could be collected usign live-snapshot in a squashfs and added to the cd by remastering the iso in case of cd-r or adding a session to multisession cd/dvd(rw); live-initramfs mounts all /live filesystem in order or with the module bootparameter.</para>
+<section><title>Partial remastering</title>
+<para>The runtime modification of the tmpfs could be collected using live-snapshot in a squashfs and added to the cd by remastering the iso in the case of cd-r or adding a session to multisession cd/dvd(rw); live-initramfs mounts all /live filesystem in order or with the module bootparameter.</para>
 </section>
 
 </section>

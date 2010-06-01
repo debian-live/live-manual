@@ -97,6 +97,65 @@ $ lh_config --username myusername</screen>
 	<para>Q: How do I customize bash-config permanently (aliases, bash-completion etc.)?</para>
 	<para>A: Add your own .bashrc config/chroot_local-includes/etc/skel/.bashrc</para>
 </listitem>
+
+<listitem>
+	<para>Q: How do I disable services permanently? (Be careful!)</para>
+	<para> A:  Add a chroot local hook script to disable a service each time you build an image:	</para>
+	<para>e.g. config/chroot_local-hooks/01-disable_service.sh
+	<screen>#!/bin/sh
+echo "I: disable service"
+update-rc.d -f   &#9001;service name &#9002; remove </screen>
+<screen> $ chmod +x config/chroot_local-hooks/01-disable_service.sh </screen>
+</para>
+</listitem>
+
+<listitem>
+	<para>Q: How do I enable | disable the md5checksum at the ISO building?
+	<screen>lh_config --checksums enabled|disabled </screen>
+	Or change the LH_CHECKSUMS value. 
+</para>
+</listitem>
+
+<listitem>
+	<para>Q: How to disable the generation of the .tar.gz file?
+	<screen>lh_config --net-tarball none|gzip </screen>
+	Or change the LH_NET_TARBALL value. (only available in snapsshot version at the moment 2008/Feb/28) 
+</para>
+</listitem>
+
+<listitem>
+	<para>Q: How do I "build a new image" ?</para>
+	<para> A:  Run commands: 
+	<screen>$ sudo lh_clean --binary
+$ sudo lh_build </screen>
+<emphasis>Hint:</emphasis>  If the configuration had changed you should leave "--binary" out. This will clean your chroot directory too. 
+</para>
+</listitem>
+
+<listitem>
+	<para>Q: How do I use Fluxbox ?
+	<para>A: Add a new lists file with the fluxbox packages you want. </para>
+	<para>Create /home/$USERNAME/.dmrc file (default username is "user").</para>
+	<screen>$ cat .dmrc
+[Desktop]
+Session=fluxbox</screen>
+	<note>.dmrc is owned by $USERNAME:$USERNAME. </note>
+	<para>See also <ulink url="http://wiki.debian.org/Fluxbox/">http://wiki.debian.org/Fluxbox</ulink></para>
+	<para> A short HOWTO can be found here:
+	 <ulink url=" http://wiki.debian.org/MichaelAblassmeier/CustomLiveCD"> http://wiki.debian.org/MichaelAblassmeier/CustomLiveCD</ulink></para>
+</para>
+</listitem>
+
+<listitem>
+	<para>Q: How do I use custom repositories?</para>
+	<para>A: <ulink url="http://wiki.debian.org/DebianLive/Configuration">See DebianLive/Configuration.</ulink></para>
+</listitem>
+
+<listitem>
+	<para>Q: How do I customize the artwork for the live CD (grub or syslinux boot splash, usplash, etc.)?</para>
+	<para>A: <ulink url="http://wiki.debian.org/DebianLive/Howto/Custom_Artwork"> See DebianLive/Howto/Custom_Artwork. </ulink></para>
+</listitem>
+
 </itemizedlist>
 
 </chapter>

@@ -1,7 +1,41 @@
 AUTOBUILD	:= build
 #LANGUAGES       := de fr
 
-include Makefile.common
+PROJECT		:= live-manual
+FORMATS		:= html txt pdf
+
+VERSION		:= Unreleased Snapshot
+PUBDATE		:= $(shell date -R)
+
+TARGETS		:= $(foreach fmt,$(FORMATS),$(PROJECT).$(fmt))
+SOURCES		:= $(wildcard xml/chapters/*.xml) $(wildcard xml/appendices/*.xml) xml/entities/version.ent xml/entities/common.ent
+
+XP		:= xsltproc --nonet --novalid --xinclude
+XL		:= xmllint --nonet --noout --postvalid --xinclude
+DBLATEX		:= dblatex --style=db2latex
+
+all: $(TARGETS)
+
+update:
+	git pull
+
+test: $(SOURCES)
+	$(XL) xml/index.xml
+
+index.html: $(SOURCES)
+	$(XP) xsl/html.xsl xml/index.xml
+
+$(PROJECT).html: index.html
+
+$(PROJECT).txt: $(SOURCES)
+	$(XP) xsl/txt.xsl xml/index.xml | w3m -cols 65 -dump -T text/html > $@
+
+$(PROJECT).pdf: $(SOURCES)
+	$(DBLATEX) xml/index.xml -o $@
+
+xml/entities/version.ent:
+	echo '<!ENTITY version "$(VERSION)">' >  $@
+	echo '<!ENTITY pubdate "$(PUBDATE)">' >> $@
 
 #build: clean translations all
 build: clean all
@@ -42,4 +76,4 @@ clean:
 distclean: clean
 	rm -rf build
 
-.PHONY: clean po4a translations
+.PHONY: all clean po4a translations test $(PROJECT).html

@@ -1,79 +1,63 @@
-AUTOBUILD	:= build
-#LANGUAGES       := de fr
+# Makefile
 
-PROJECT		:= live-manual
-FORMATS		:= html txt pdf
+SHELL := sh -e
 
-VERSION		:= Unreleased Snapshot
-PUBDATE		:= $(shell date -R)
+LANGUAGES = en de fr
 
-TARGETS		:= $(foreach fmt,$(FORMATS),$(PROJECT).$(fmt))
-SOURCES		:= $(wildcard xml/chapters/*.xml) $(wildcard xml/appendices/*.xml) xml/entities/version.ent xml/entities/common.ent
+all: test build
 
-XP		:= xsltproc --nonet --novalid --xinclude
-XL		:= xmllint --nonet --noout --postvalid --xinclude
-DBLATEX		:= dblatex --style=db2latex
+test:
+	@echo "Checking for syntax errors... [not implemented yet - FIXME]"
+	#@xmllint --nonet --noout --postvalid --xinclude en/index.xml || true
 
-all: $(TARGETS)
+	@echo "Checking for spelling errors... [not implemented yet - FIXME]"
 
-update:
-	git pull
+build:
+	mkdir -p build
 
-test: $(SOURCES)
-	$(XL) xml/index.xml
-
-index.html: $(SOURCES)
-	$(XP) xsl/html.xsl xml/index.xml
-
-$(PROJECT).html: index.html
-
-$(PROJECT).txt: $(SOURCES)
-	$(XP) xsl/txt.xsl xml/index.xml | w3m -cols 65 -dump -T text/html > $@
-
-$(PROJECT).pdf: $(SOURCES)
-	$(DBLATEX) xml/index.xml -o $@
-
-xml/entities/version.ent:
-	echo '<!ENTITY version "$(VERSION)">' >  $@
-	echo '<!ENTITY pubdate "$(PUBDATE)">' >> $@
-
-#build: clean translations all
-build: clean all
-	set -e; for FORMAT in $(FORMATS); do \
-		mkdir -p $(AUTOBUILD)/$$FORMAT; \
-		cp *.$$FORMAT $(AUTOBUILD)/$$FORMAT; \
+	for LANGUAGE in $(LANGUAGES); \
+	do \
+		cp -a $(CURDIR)/manual/$${LANGUAGE} $(CURDIR)/build; \
+		cp -a $(CURDIR)/xml/*.ent $(CURDIR)/build/$${LANGUAGE}; \
+		mkdir -p $(CURDIR)/build/$${LANGUAGE}/html; \
+		cd $(CURDIR)/build/$${LANGUAGE}/html; \
+		xsltproc --nonet --novalid --xinclude $(CURDIR)/xsl/html.xsl ../index.xml; \
+		mkdir -p $(CURDIR)/build/$${LANGUAGE}/txt; \
+		cd $(CURDIR)/build/$${LANGUAGE}/txt; \
+		xsltproc --nonet --novalid --xinclude $(CURDIR)/xsl/txt.xsl ../index.xml | w3m -cols 65 -dump -T text/html > live-manual.txt; \
+		mkdir -p $(CURDIR)/build/$${LANGUAGE}/pdf; \
+		cd $(CURDIR)/build/$${LANGUAGE}/pdf; \
+		dblatex --style=db2latex ../index.xml -o live-manual.pdf; \
 	done
 
-	sed '{s/@DATE@/$(shell LC_ALL=C date -R)/;s%/@LANG@%%;}' html/index.html.in > $(AUTOBUILD)/index.html.en
+autobuild: clean build
+	rm -f build/*/*.xml build/*/*.ent
 
-	set -e; for LANGUAGE in $(LANGUAGES); do \
-		for FORMAT in $(FORMATS); do \
-			mkdir -p $(AUTOBUILD)/$$FORMAT/$$LANGUAGE; \
-			cp $$LANGUAGE/*.$$FORMAT $(AUTOBUILD)/$$FORMAT/$$LANGUAGE; \
-		done; \
-		sed "{s/@DATE@/$(shell LC_ALL=C date -R)/;s/@LANG@/$$LANGUAGE/;}" $$LANGUAGE/html/index.html.in > $(AUTOBUILD)/index.html.$$LANGUAGE; \
+	for LANGUAGE in $(LANGUAGES); \
+	do \
+		sed "{s/@DATE@/$(shell LC_ALL=C date -R)/;s/@LANG@/$${LANGUAGE}/;}" build/$${LANGUAGE}/index.html.in > build/$${LANGUAGE}/index.html; \
 	done
 
-	cp html/* $(AUTOBUILD)
+install:
 
-po4a:
-	po4a -k 0 po4a/live-manual.cfg;
-
-translations: po4a
-	set -e; for LANGUAGE in $(LANGUAGES); do \
-		mkdir -p $$LANGUAGE; \
-		cp -r xml/entities/ $$LANGUAGE; \
-		cp -r xsl/ $$LANGUAGE; \
-		cp Makefile.common $$LANGUAGE/Makefile; \
-		$(MAKE) -C $$LANGUAGE; \
+	for LANGUAGE in $(LANGUAGES); \
+	do \
+		mkdir -p $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}; \
+		cp -a build/$${LANGUAGE}/html build/$${LANGUAGE}/pdf/* build/$${LANGUAGE}/txt/* $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}; \
 	done
+
+	ln -s en/html $(DESTDIR)/usr/share/doc/live-manual/html
+	ln -s en/live-manual.pdf.gz $(DESTDIR)/usr/share/doc/live-manual/live-manual.pdf.gz
+	ln -s en/live-manual.txt.gz $(DESTDIR)/usr/share/doc/live-manual/live-manual.txt.gz
+
+uninstall:
+	rm -rf $(DESTDIR)/usr/share/doc/live-manual
 
 clean:
-	-rm -rf $(LANGUAGES)
-	rm -f *.html *.pdf *.txt
-	rm -f xml/entities/version.ent
-
-distclean: clean
 	rm -rf build
 
-.PHONY: all clean po4a translations test $(PROJECT).html
+distclean: clean
+
+rebuild: distclean build
+
+.PHONY: build

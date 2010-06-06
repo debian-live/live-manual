@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" [
+  <!ENTITY % commondata SYSTEM "common.ent" > %commondata;
+]>
+<chapter id="common-tasks">
+<title>Tâche communes</title>
+
+<section id="debian-installer">
+<title>L'installeur Debian</title>
+ <para>
+  Bien que l'intérêt du système live soit qu'il permet d'éviter une
+installation permanente, il est possible d'intégrer un installeur dans
+l'image. Il existe différents types d'installation, selon les images et
+comment les installer.
+ </para>
+
+ <note>
+  <title>
+   L'Installeur Debian
+  </title>
+  <para>
+   Notez l'utilisation de majuscules en référence à l'Installeur Debian dans
+cette section. Nous désignons ainsi explicitement l'installeur officiel pour
+le système Debian, et rien d'autre. On le trouve souvent abrégé en "d-i".
+  </para>
+ </note>
+ <para>
+  Les trois principaux types d'installeurs sont :
+ </para>
+ <variablelist>
+  <varlistentry>
+   <term>
+    L'Installeur Debian "normal"
+   </term>
+   <listitem>
+    <para>
+     C'est une image Debian live classique, pourvue d'un noyau et d'initrd
+séparés, qui, si vous sélectionnez le bootloader approprié, lance une
+instance standard de l'Installeur Debian, comme si vous démarriez d'un live
+cd Debian.
+    </para>
+    <para>
+     Cela signifie que Debian s'installe en récupérant et en installant des
+paquets <command>.deb</command> et en utilisant
+<filename>debootstrap</filename> ou <filename>cdebootstrap</filename>,
+depuis le réseau ou un média local, de sorte qu'un système Debian standard
+soit installé sur le disque dur.
+    </para>
+    <para>
+     Tout ce procédé est configurable de diverses façons, via les fichiers
+preseed. Pour plus d'informations, référez-vous à la page appropriée du wiki
+de l'Installeur Debian, ainsi qu'au guide d'installation. Ceci est désormais
+opérationnel dans &live-helper;.
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>
+    L'Installeur "Live" Debian
+   </term>
+   <listitem>
+    <para>
+     C'est une image Debian Live, pourvue d'un noyau et d'initrd séparés, qui, si
+vous sélectionnez le bootloader approprié, lance une instance de
+l'Installeur Debian.
+    </para>
+    <para>
+     L'installation se déroule de la même façon que l'installation "normale"
+décrite plus haut, mais au moment d'installer réellement les paquets, au
+lieu d'utiliser <filename>debootstrap</filename> pour récupérer et installer
+les paquets, l'image du système de fichiers "live" est copiée sur la
+cible. Passé ce stade, l'Installeur Debian continue normalement à installer
+et configurer des éléments tels que le chargeur de boot, les utilisateurs
+locaux, etc.
+    </para>
+    <para>
+     Ceci fonctionne désormais.
+    </para>
+   </listitem>
+  </varlistentry>
+  <varlistentry>
+   <term>
+    Installeur - style "Ubuntu"
+   </term>
+   <listitem>
+    <para>
+     Cela consiste à démarrer un sytème Debian Live graphique et de lancer un
+"wizard" qui installe et configure le système live, tout en restant à
+l'intérieur de l'environnement graphique.
+    </para>
+    <para>
+     Ceci n'est pour l'instant PAS possible dans Debian Live.
+    </para>
+   </listitem>
+  </varlistentry>
+ </variablelist>
+
+
+  <para>
+ By default, no installer will be included in the Debian Live image. You can
+enable it by using <filename>lh_config</filename> : <screen>
+$ lh_config --help
+  ...
+  [--debian-installer enabled|cdrom|netinst|netboot|businesscard|live|disabled]
+  [--debian-installer-distribution CODENAME|daily]
+  [--debian-installer-preseedfile FILE|URL]
+  ...
+ </screen>
+ </para>
+
+
+ <para>
+  Les valeurs "Normal", "Live" et "Ubuntu" ne sont pas valides pour <term>LH_BINARY_DEBIAN_INSTALLER</term>. Refer to the output of <filename>lh_config</filename> cited above to
+choose the appropriate values.
+ </para>
+</section>
+
+<section id="wifi-connection">
+<title>WiFi Connection</title>
+ <para>
+  Depending on the Debian Live image you are using and the given tools
+configured with your Debian Live image you may need to only attach to an
+available access point. If you encounter difficulty a good place to start is
+at the Debian Wiki entry for <ulink
+url="http://wiki.debian.org/WiFi">WiFi</ulink>.
+ </para>
+</section>
+
+</chapter>

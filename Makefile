@@ -22,6 +22,10 @@ build:
 		mkdir -p $(CURDIR)/build/$${LANGUAGE}/html; \
 		cd $(CURDIR)/build/$${LANGUAGE}/html; \
 		xsltproc --nonet --novalid --xinclude $(CURDIR)/xsl/html.xsl ../index.xml; \
+		mkdir -p $(CURDIR)/build/$${LANGUAGE}/html-single; \
+		cd $(CURDIR)/build/$${LANGUAGE}/html-single; \
+		xsltproc --nonet --novalid --xinclude $(CURDIR)/xsl/html-single.xsl ../index.xml; \
+		mv $(CURDIR)/build/$${LANGUAGE}/html-single/index.html $(CURDIR)/build/$${LANGUAGE}/html-single/live-manual.html; \
 		mkdir -p $(CURDIR)/build/$${LANGUAGE}/txt; \
 		cd $(CURDIR)/build/$${LANGUAGE}/txt; \
 		xsltproc --nonet --novalid --xinclude $(CURDIR)/xsl/txt.xsl ../index.xml | w3m -cols 65 -dump -T text/html > live-manual.txt; \
@@ -45,10 +49,11 @@ install:
 	for LANGUAGE in $(LANGUAGES); \
 	do \
 		mkdir -p $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}; \
-		cp -a build/$${LANGUAGE}/html build/$${LANGUAGE}/pdf/* build/$${LANGUAGE}/txt/* $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}; \
+		cp -a build/$${LANGUAGE}/html build/$${LANGUAGE}/html-single/* build/$${LANGUAGE}/pdf/* build/$${LANGUAGE}/txt/* $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}; \
 	done
 
 	ln -s en/html $(DESTDIR)/usr/share/doc/live-manual/html
+	ln -s en/live-manual.html $(DESTDIR)/usr/share/doc/live-manual/live-manual.html
 	ln -s en/live-manual.pdf.gz $(DESTDIR)/usr/share/doc/live-manual/live-manual.pdf.gz
 	ln -s en/live-manual.txt.gz $(DESTDIR)/usr/share/doc/live-manual/live-manual.txt.gz
 

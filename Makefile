@@ -12,6 +12,15 @@ test:
 
 	@echo "Checking for spelling errors... [not implemented yet - FIXME]"
 
+tidy:
+	for FILE in manual/en/*.xml xsl/*.xsl; \
+	do \
+		sed -i -e 's|^[ \t]*||' -e 's|[ \t]*$$||' $${FILE}; \
+		echo `cat $${FILE}` > $${FILE}.tmp; \
+		xmllint --format --noblanks --output $${FILE} $${FILE}.tmp; \
+		rm -f $${FILE}.tmp; \
+	done
+
 build:
 	mkdir -p build
 

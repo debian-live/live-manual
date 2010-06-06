@@ -32,10 +32,12 @@ build:
 
 autobuild: clean build
 	rm -f build/*/*.xml build/*/*.ent
+	cp html/* build
 
 	for LANGUAGE in $(LANGUAGES); \
 	do \
 		sed "{s/@DATE@/$(shell LC_ALL=C date -R)/;s/@LANG@/$${LANGUAGE}/;}" build/$${LANGUAGE}/index.html.in > build/$${LANGUAGE}/index.html; \
+		cp html/* build/$${LANGUAGE}; \
 	done
 
 install:

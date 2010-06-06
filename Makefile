@@ -50,7 +50,9 @@ autobuild: clean build
 	for LANGUAGE in $(LANGUAGES); \
 	do \
 		cp html/* build/$${LANGUAGE}; \
-		sed "{s/@DATE@/$(shell LC_ALL=C date -R)/;s/@LANG@/$${LANGUAGE}/;}" build/$${LANGUAGE}/index.html.in > build/$${LANGUAGE}/index.html; \
+		sed -e "s|@DATE_BUILD@|$(shell LC_ALL=C date -R)|" \
+		    -e "s|@DATE_CHANGE@|$(shell LC_ALL=C git log | grep -m1 Date | awk -FDate: '{ print $2 }' | sed -e 's|^ *||g')|" \
+		build/$${LANGUAGE}/index.html.in > build/$${LANGUAGE}/index.html; \
 	done
 
 install:

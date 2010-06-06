@@ -1,0 +1,833 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# This file is distributed under the same license as the live-manual package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: live-manual VERSION\n"
+"POT-Creation-Date: 2010-06-06 12:16+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: ENCODING"
+
+#. type: Content of: <chapter><section><section><para>
+#: en/about_manual.xml:298 en/about_manual.xml:308 en/about_manual.xml:318
+#: en/about_manual.xml:338 en/about_manual.xml:351 en/about_manual.xml:366
+#: en/about_manual.xml:379 en/about_manual.xml:389 en/basics.xml:113
+#: en/basics.xml:128 en/basics.xml:144 en/basics.xml:158 en/basics.xml:194
+#: en/basics.xml:220 en/basics.xml:230 en/basics.xml:239 en/basics.xml:253
+#: en/basics.xml:275 en/basics.xml:302 en/basics.xml:312 en/basics.xml:320
+#: en/basics.xml:354 en/basics.xml:364 en/basics.xml:382 en/basics.xml:429
+#: en/basics.xml:498 en/basics.xml:530 en/basics.xml:539 en/basics.xml:590
+#: en/basics.xml:646 en/customization_packages.xml:50
+#: en/customization_packages.xml:58 en/customization_packages.xml:71
+#: en/customization_packages.xml:80 en/customization_packages.xml:104
+#: en/customization_packages.xml:222 en/customization_packages.xml:230
+#: en/customization_packages.xml:265 en/customization_packages.xml:310
+#: en/customization_packages.xml:330 en/customization_packages.xml:341
+#: en/customization_packages.xml:352 en/customization_packages.xml:362
+#: en/faq.xml:64 en/faq.xml:241 en/faq.xml:244 en/faq.xml:252 en/faq.xml:256
+#: en/faq.xml:264 en/faq.xml:279 en/faq.xml:287 en/faq.xml:334 en/faq.xml:424
+#: en/faq.xml:430 en/faq.xml:481 en/faq.xml:483 en/faq.xml:487 en/faq.xml:491
+#: en/overview.xml:181 en/overview.xml:230 en/overview.xml:240
+msgid "<placeholder type=\"screen\" id=\"0\"/>"
+msgstr ""
+
+#. type: Content of: <chapter><title>
+#: en/basics.xml:9
+msgid "The basics"
+msgstr ""
+
+#. type: Content of: <chapter><para>
+#: en/basics.xml:12
+msgid ""
+"This chapter contains a brief overview of the build process as well as "
+"containing instructions on how to boot the various binary image types."
+msgstr ""
+
+#. type: Content of: <chapter><section><title>
+#: en/basics.xml:17
+msgid "What is a live system?"
+msgstr ""
+
+#. type: Content of: <chapter><section><para>
+#: en/basics.xml:20
+msgid ""
+"A live system usually means an OS booted on a computer from a removable "
+"medium (such as CD-ROM, USB stick, or network), ready to use without any "
+"installation on the usual drive(s), with an auto-configuration done at "
+"runtime (see <xref linkend=\"terms\" />)."
+msgstr ""
+
+#. type: Content of: <chapter><section><para>
+#: en/basics.xml:27
+msgid ""
+"With Debian Live, it's a Debian GNU/Linux OS, built for one of the supported "
+"architectures (currently amd64, i386, powerpc and sparc). It is made from "
+"following parts:"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><term>
+#: en/basics.xml:35
+msgid "Linux kernel"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:39
+msgid "The Linux image, usually named <filename>vmlinuz*</filename>."
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><term>
+#: en/basics.xml:45
+msgid "Initial RAM disk image (initrd)"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:49
+msgid ""
+"RAM disk setup for the Linux boot, containing modules possibly needed to "
+"mount the filesystem's image and some scripts to do it."
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><term>
+#: en/basics.xml:56
+msgid "System image"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:60
+msgid ""
+"The OS filesystem image. Debian Live uses SquashFS, a compressed filesystem, "
+"to minimize its image size. Note that it's read-only. So, during boot the "
+"Debian Live system will use a RAM disk and 'union' mechanism to enable "
+"writing files within the running system. However, all modifications will be "
+"lost upon shutdown unless optional persistence partition(s) are used. (See "
+"<xref linkend=\"persistence\" />.)"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><term>
+#: en/basics.xml:71
+msgid "Bootloader"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:75
+msgid ""
+"A small piece of code, crafted to boot up from the chosen media, possibly "
+"presenting a prompt or menu to allow selection of options/configuration. It "
+"then loads the Linux kernel and its initrd to run with an associated "
+"filesystem image. Different solutions can be used depending on the target "
+"media and format of the filesystem containing the previous components: "
+"Isolinux to boot from a CD or DVD in ISO9660 format, syslinux for HDD or USB "
+"drive booting from a VFAT partition, GRUB for ext2/3 partition, pxelinux for "
+"PXE netboot, etc."
+msgstr ""
+
+#. type: Content of: <chapter><section><para>
+#: en/basics.xml:90
+msgid ""
+"The Debian Live tools will build the system image from your specifications, "
+"setup a Linux kernel and its initrd, a bootloader to run them, all in one "
+"media-dependant format(ISO9660 image, disk image, etc.)"
+msgstr ""
+
+#. type: Content of: <chapter><section><title>
+#: en/basics.xml:98
+msgid "First steps: building an ISO image"
+msgstr ""
+
+#. type: Content of: <chapter><section><para>
+#: en/basics.xml:101
+msgid ""
+"The following sequence of helper commands, provided by &live-helper;, will "
+"create a basic ISO image containing just the Debian standard system without "
+"X.org. It is suitable for burning to CD or DVD media."
+msgstr ""
+
+#. type: Content of: <chapter><section><para>
+#: en/basics.xml:107
+msgid ""
+"First, we run the <filename>lh config</filename> helper command which will "
+"create a <filename>\"config/\"</filename> hierarchy in the current directory "
+"for use by other helper commands:"
+msgstr ""
+
+#. type: Content of: <chapter><section><para><screen>
+#: en/basics.xml:113
+#, no-wrap
+msgid "$ lh config"
+msgstr ""
+
+#. type: Content of: <chapter><section><para>
+#: en/basics.xml:117
+msgid ""
+"By passing no parameters to <filename>lh config</filename> we indicated that "
+"we wish to use the defaults. This will create an image of type binary (see "
+"<xref linkend=\"lh-config\" />)."
+msgstr ""
+
+#. type: Content of: <chapter><section><para>
+#: en/basics.xml:123
+msgid ""
+"Now that we have a <filename>\"config/\"</filename> hierarchy, we may build "
+"the image with the <filename>lh build</filename> helper command:"
+msgstr ""
+
+#. type: Content of: <chapter><sect1><itemizedlist><listitem><para><screen>
+#: en/basics.xml:128 en/basics.xml:239 en/basics.xml:382 en/use-cases.xml:59
+#, no-wrap
+msgid "# lh build"
+msgstr ""
+
+#. type: Content of: <chapter><section><para>
+#: en/basics.xml:132
+msgid ""
+"This process can take a while, depending on the speed of your network "
+"connection (see <xref linkend=\"lh-build\" />)."
+msgstr ""
+
+#. type: Content of: <chapter><section><section><title>
+#: en/basics.xml:137
+msgid "Testing an ISO image with Qemu"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para>
+#: en/basics.xml:140
+msgid "Testing an ISO is simple:"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para><screen>
+#: en/basics.xml:144
+#, no-wrap
+msgid ""
+"# apt-get install qemu\n"
+"$ qemu -cdrom binary.iso"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><title>
+#: en/basics.xml:151
+msgid "Testing an ISO image with virtualbox-ose"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para>
+#: en/basics.xml:154
+msgid "In order to test the ISO with virtualbox-ose:"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para><screen>
+#: en/basics.xml:158
+#, no-wrap
+msgid "# apt-get install virtualbox-ose"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><itemizedlist><listitem><para>
+#: en/basics.xml:162
+msgid ""
+"the modules package for a stock kernel eg virtualbox-ose-"
+"modules-2.6.26-1-486 or"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><itemizedlist><listitem><para>
+#: en/basics.xml:163
+msgid ""
+"the modules package compiled for your kernel using module-assistant from the "
+"package virtualbox-ose-source"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para>
+#: en/basics.xml:165
+msgid "Run Virtualbox:"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para>
+#: en/basics.xml:167
+msgid "{{{Applications -> System Tools -> VirtualBox OSE }}}"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para>
+#: en/basics.xml:169
+msgid "Create a virtual machine from your Live ISO"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para>
+#: en/basics.xml:171
+msgid ""
+"To create a virtual machine \"mylive\" from A CDROM ISO \"binary.iso\" in "
+"VirtualBox:"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para>
+#: en/basics.xml:172
+msgid "{{{Machine -> New }}}"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para>
+#: en/basics.xml:173
+msgid "In the Wizard: FIXME"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><title>
+#: en/basics.xml:177
+msgid "Testing an ISO image with VMware Workstation"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para>
+#: en/basics.xml:179
+msgid "In order to test the ISO with VMware Workstation:"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para>
+#: en/basics.xml:181 en/basics.xml:287
+msgid "Run VMware Workstation:"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para>
+#: en/basics.xml:182
+msgid "Click on Edit virtual machine settings in the VM summary page."
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para>
+#: en/basics.xml:183
+msgid ""
+"Then, click on the CD-ROM device and select Use ISO image. Remeber to "
+"connect the CD-ROM device at power on and remeber to adjust the boot order "
+"in the bios."
+msgstr ""
+
+#. type: Content of: <chapter><section><section><title>
+#: en/basics.xml:187
+msgid "Burning an ISO image to a physical medium"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para>
+#: en/basics.xml:190
+msgid "Burning an ISO image is easy:"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para><screen>
+#: en/basics.xml:194
+#, no-wrap
+msgid ""
+"# apt-get install wodim\n"
+"$ wodim binary.iso"
+msgstr ""
+
+#. type: Content of: <chapter><section><title>
+#: en/basics.xml:203
+msgid "Building an USB/HDD image"
+msgstr ""
+
+#. type: Content of: <chapter><section><para>
+#: en/basics.xml:206
+msgid ""
+"The following sequence of helper commands will create a basic USB/HDD image "
+"containing just the Debian standard system without X.org. It is suitable for "
+"booting from USB sticks, USB hard drives, and various other portable storage "
+"devices."
+msgstr ""
+
+#. type: Content of: <chapter><section><para>
+#: en/basics.xml:213
+msgid ""
+"Note if you created an iso image with the previous example, you will need to "
+"clean up your working directory with the <filename>lh clean</filename> "
+"helper command (see <xref linkend=\"lh-clean\" />):"
+msgstr ""
+
+#. type: Content of: <chapter><section><para><screen>
+#: en/basics.xml:220 en/basics.xml:354
+#, no-wrap
+msgid "$ lh clean --binary"
+msgstr ""
+
+#. type: Content of: <chapter><section><para>
+#: en/basics.xml:224
+msgid ""
+"Run the <filename>lh config</filename> helper command with the parameters to "
+"configure the <filename>\"config/\"</filename> hierarchy to create a USB/HDD "
+"image type:"
+msgstr ""
+
+#. type: Content of: <chapter><section><para><screen>
+#: en/basics.xml:230
+#, no-wrap
+msgid "$ lh config -b usb-hdd"
+msgstr ""
+
+#. type: Content of: <chapter><section><para>
+#: en/basics.xml:234 en/basics.xml:377
+msgid ""
+"Now build the image with the <filename>lh build</filename> helper command:"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><title>
+#: en/basics.xml:243
+msgid "Copying USB/HDD image to a USB stick"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para>
+#: en/basics.xml:246
+msgid ""
+"The generated binary image contains a <acronym>VFAT</acronym> partition and "
+"the <command>syslinux</command> bootloader, ready to be directly written on "
+"an USB stick. Plug in an USB stick with a size larger than that of "
+"<filename>binary.img</filename> and type:"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para><screen>
+#: en/basics.xml:253
+#, no-wrap
+msgid "$ dd if=binary.img of=${USBSTICK}"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para>
+#: en/basics.xml:257
+msgid ""
+"where <replaceable>${USBSTICK}</replaceable> is the device file of your key, "
+"like <filename>/dev/sdb</filename> (not a partition like <filename>/dev/"
+"sdb1</filename>!); you can find the right device name by looking in "
+"<command>dmesg</command>'s output after plugging in the stick, for example."
+msgstr ""
+
+#. type: Content of: <chapter><section><section><title>
+#: en/basics.xml:272
+msgid "Testing a USB/HDD image with Qemu"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para><screen>
+#: en/basics.xml:275
+#, no-wrap
+msgid ""
+"# apt-get install qemu\n"
+"$ qemu -hda binary.img"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><title>
+#: en/basics.xml:281
+msgid "Testing an USB/HDD image with VMware Workstation"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para>
+#: en/basics.xml:284
+msgid "In order to test the USB/HDD image with VMware Workstation:"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para>
+#: en/basics.xml:288
+msgid ""
+"Write the image to an usb stick. In VMware, click on Edit virtual machine "
+"settings in VM summary page. Then, add a new physical harddisk device and "
+"enter the device node of your usb stick."
+msgstr ""
+
+#. type: Content of: <chapter><section><section><title>
+#: en/basics.xml:292
+msgid "Using the space left on a USB stick"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para>
+#: en/basics.xml:295
+msgid ""
+"If you want to use the remaining free space after you have installed the "
+"<filename>binary.img</filename>, you can use a partitioning tool such as "
+"gparted or parted to create a new partition on the stick. The first "
+"partition will be used by the Debian Live system."
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para><screen>
+#: en/basics.xml:302
+#, no-wrap
+msgid "# gparted ${USBSTICK}"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para>
+#: en/basics.xml:306
+msgid ""
+"After the creation of the partition you have to create a filsystem on it. "
+"One possible choice would be ext2 (ext3 isn't recommended because the "
+"journaling causes too many writes to the stick)."
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para><screen>
+#: en/basics.xml:312
+#, no-wrap
+msgid "# mkfs.ext2 ${USBSTICK}"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para>
+#: en/basics.xml:316
+msgid "If you want to use this data partition with Windows, use FAT32."
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para><screen>
+#: en/basics.xml:320
+#, no-wrap
+msgid "# mkfs.vfat -F 32"
+msgstr ""
+
+#. type: Content of: <chapter><section><section><para>
+#: en/basics.xml:330
+msgid ""
+"FIXME: Describe installing Debian Live to a partition (e.g. /dev/sdc1)  AND "
+"using a bootloader to boot this."
+msgstr ""
+
+#. type: Content of: <chapter><section><title>
+#: en/basics.xml:339
+msgid "Building a netboot image"
+msgstr ""
+
+#. type: Content of: <chapter><section><para>
+#: en/basics.xml:342
+msgid ""
+"The following sequence of helper commands will create a basic netboot image "
+"containing the Debian standard system without X.org. It is suitable for "
+"booting over the network."
+msgstr ""
+
+#. type: Content of: <chapter><section><para>
+#: en/basics.xml:348
+msgid ""
+"Note if you performed any previous examples, you will need to clean up your "
+"working directory with the <filename>lh clean</filename> helper command:"
+msgstr ""
+
+#. type: Content of: <chapter><section><para>
+#: en/basics.xml:358
+msgid ""
+"Run the <filename>lh config</filename> helper command with the parameters to "
+"configure the <filename>\"config/\"</filename> hierarchy to create our "
+"netboot image:"
+msgstr ""
+
+#. type: Content of: <chapter><section><para><screen>
+#: en/basics.xml:364
+#, no-wrap
+msgid "$ lh config -b net --net-root-path \"/srv/debian-live\" --net-root-server \"192.168.0.1\""
+msgstr ""
+
+#. type: Content of: <chapter><section><para>
+#: en/basics.xml:368
+msgid ""
+"In contrast with the ISO and USB hdd images, netbooting does not support "
+"serving a filesystem image with the client so the files must be served via "
+"NFS. The <replaceable>net-root-path</replaceable> and <replaceable>net-root-"
+"server</replaceable> options specify the location and server, respectively, "
+"of the NFS server where the filesytem image will be located at boot-time."
+msgstr ""
+
+#. type: Content of: <chapter><section><para>
+#: en/basics.xml:386
+msgid ""
+"In a network boot the client runs a small piece of software, which usually "
+"resides on the <acronym>EEPROM</acronym> of the Ethernet card.  This program "
+"sends a <abbrev>DHCP</abbrev> request to get an <abbrev>IP</abbrev> address "
+"and information about what to do next.  Typically the next step is getting a "
+"higher level boot loader via the <abbrev>TFTP</abbrev> protocol. That could "
+"be <application>Grub</application>, <application>PXELINUX</application>, or "
+"even boot directly to an operating system like <application>Linux</"
+"application>."
+msgstr ""
+
+#. type: Content of: <chapter><section><para>
+#: en/basics.xml:398
+msgid ""
+"For example, if you unpack the generated <filename>binary-net.tar.gz</"
+"filename> archive in the <filename>/srv/debian-live</filename> directory, "
+"you'll find the filesystem image in <filename>live/filesystem.squashfs</"
+"filename> and the kernel, initrd and PXE Linux bootloader in "
+"<filename>tftpboot/debian-live/i386</filename>."
+msgstr ""
+
+#. type: Content of: <chapter><section><para>
+#: en/basics.xml:407
+msgid "We must now configure three services on the server to enable netboot:"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><term>
+#: en/basics.xml:413
+msgid "DHCP server"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:417
+msgid ""
+"We must configure our network's DHCP server to be sure to give an "
+"<abbrev>IP</abbrev> address to the computer netbooting, and to advertise the "
+"location of the PXE bootloader."
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:423
+msgid ""
+"Here is an example for inspiration, written for the ISC DHCP server (package "
+"<literal>dhcp3-server</literal>) in the <filename>/etc/dhcp3/dhcpd.conf</"
+"filename> configuration file:"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para><screen>
+#: en/basics.xml:429
+#, no-wrap
+msgid ""
+"# Options DHCP spécifiques à Pxelinux:\n"
+"option space pxelinux;\n"
+"option pxelinux.magic      code 208 = string;\n"
+"option pxelinux.configfile code 209 = text;\n"
+"option pxelinux.pathprefix code 210 = text;\n"
+"option pxelinux.reboottime code 211 = unsigned integer 32;\n"
+"\n"
+"\n"
+"subnet 192.168.1.0 netmask 255.255.255.0 {   # 192.168.1.0/24\n"
+"\n"
+"  # IP addresses available for guests\n"
+"  range 192.168.1.100 192.168.1.149;\n"
+"\n"
+"  # allow booting from the net\n"
+"  allow bootp;\n"
+"\n"
+"  # for net booting, server where the first file to be loaded (by TFTP\n"
+"  # protocol) (\"filename\" following definition) lies : so the TFTP\n"
+"  # server's name.\n"
+"  next-server myserver;\n"
+"\n"
+"  # net boot configuration for guests with a PXE client :\n"
+"  if substring (option vendor-class-identifier, 0, 9) = \"PXEClient\" {\n"
+"    # Note : all files for PXE are relatives to the TFTP server's root\n"
+"    # path, as usually defined in /etc/inetd.conf.\n"
+"\n"
+"    # PXE boot loader (first program to be loaded, by TFTP)\n"
+"    filename \"pxelinux.0\";\n"
+"\n"
+"    # describe some specific pxelinux's options through DHCP options :\n"
+"    site-option-space \"pxelinux\";\n"
+"    option pxelinux.magic f1:00:74:7e;\n"
+"    if exists dhcp-parameter-request-list {\n"
+"      # Always send the PXELINUX options (specified in hexadecimal)\n"
+"      option dhcp-parameter-request-list = concat(option dhcp-parameter-request-list,d0,d1,d2,d3);\n"
+"    }\n"
+"\n"
+"    # For a PXE boot menu, different versions are available : simple\n"
+"    # text, text with curses, graphic (VESA)\n"
+"    #option pxelinux.configfile \"pxelinux/config_simple\";\n"
+"    #option pxelinux.configfile \"pxelinux/config_curses\";\n"
+"    option pxelinux.configfile \"pxelinux/config_vesa\";\n"
+"\n"
+"    # automatically reboot after 10 minutes of no activity\n"
+"    option pxelinux.reboottime 600;\n"
+"  }\n"
+"}"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><term>
+#: en/basics.xml:481
+msgid "TFTPd server"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:485
+msgid "This serves the kernel and initial ramdisk to the system at run-time."
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:489
+msgid ""
+"You should install the <command>tftpd-hpa</command> package. It can serve "
+"all files contained inside a root directory, usually <filename>/var/lib/"
+"tftpboot/</filename>, as defined with its <option>-s</option> option. To let "
+"it serve files inside <filename>/srv/debian-live/tftpboot</filename>, modify "
+"its start definition in <filename>/etc/inetd.conf</filename> with:"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para><screen>
+#: en/basics.xml:498
+#, no-wrap
+msgid "tftp           dgram   udp     wait    root  /usr/sbin/in.tftpd /usr/sbin/in.tftpd -s /srv/debian-live/tftpboot -r blksize -v -v"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:502
+msgid ""
+"and reload the super server with <command>/etc/init.d/openbsd-inetd reload</"
+"command>."
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><term>
+#: en/basics.xml:509
+msgid "NFS server"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:513
+msgid ""
+"Once the guest computer has downloaded and booted a Linux kernel and loaded "
+"its initrd, it will try to mount the Live filesystem image through a NFS "
+"server."
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:519
+msgid ""
+"You should install the <command>nfs-kernel-server</command> package -- "
+"<command>nfs-user-server</command> does not function correctly with netboot."
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:525
+msgid ""
+"Then, make the filesystem image available through NFS by adding a line like "
+"the following to <filename>/etc/exports</filename>:"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para><screen>
+#: en/basics.xml:530
+#, no-wrap
+msgid "/srv/debian-live *(ro,async,subtree_check,no_root_squash)"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:534
+msgid ""
+"and tell the NFS server about this new export with the following command:"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para><screen>
+#: en/basics.xml:539
+#, no-wrap
+msgid "# exportfs -rv"
+msgstr ""
+
+#. type: Content of: <chapter><section><para>
+#: en/basics.xml:547
+msgid ""
+"Setting up these three services can be a little tricky. You might need some "
+"patience to get all of them working together. The Debian Installer Manual's "
+"<ulink url=\"http://d-i.alioth.debian.org/manual/en.i386/ch04s05.html\" "
+">TFTP Net Booting</ulink> section might help as that process is very similar."
+msgstr ""
+
+#. type: Content of: <chapter><section><title>
+#: en/basics.xml:558
+msgid "Netboot testing HowTo"
+msgstr ""
+
+#. type: Content of: <chapter><section><para>
+#: en/basics.xml:561
+msgid ""
+"Netboot image creation is made easy with live-helper magic, but testing the "
+"images on physical machines can be really time consuming."
+msgstr ""
+
+#. type: Content of: <chapter><section><para>
+#: en/basics.xml:566
+msgid ""
+"To make our life easier, we can use virtualization. There are two solutions:"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><term>
+#: en/basics.xml:573
+msgid "VMWare Player"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:577
+msgid "Install VMWare Player (\"free as in beer\" edition)"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:581
+msgid ""
+"Create a PXETester directory, and create a text file called pxe.vwx inside"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:586
+msgid "Paste this text inside:"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para><screen>
+#: en/basics.xml:590
+#, no-wrap
+msgid ""
+"#!/usr/bin/vmware\n"
+"config.version = \"8\"\n"
+"virtualHW.version = \"4\"\n"
+"memsize = \"512\"\n"
+"MemAllowAutoScaleDown = \"FALSE\"\n"
+"\n"
+"ide0:0.present = \"FALSE\"\n"
+"ide1:0.present = \"FALSE\"\n"
+"floppy0.present = \"FALSE\"\n"
+"sound.present = \"FALSE\"\n"
+"tools.remindInstall = \"FALSE\"\n"
+"\n"
+"ethernet0.present = \"TRUE\"\n"
+"ethernet0.addressType = \"generated\"\n"
+"\n"
+"displayName = \"Test Boot PXE\"\n"
+"guestOS = \"other\"\n"
+"\n"
+"ethernet0.generatedAddress = \"00:0c:29:8d:71:3b\"\n"
+"uuid.location = \"56 4d 83 72 5c c4 de 3f-ae 9e 07 91 1d 8d 71 3b\"\n"
+"uuid.bios = \"56 4d 83 72 5c c4 de 3f-ae 9e 07 91 1d 8d 71 3b\"\n"
+"ethernet0.generatedAddressOffset = \"0\""
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:615
+msgid ""
+"You can play with this configuration file (i.e. change memory limit to 256)"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:620
+msgid "Double click on this file (or run VMWare player and selecet this file)."
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:624
+msgid "When running just press space if that strange question comes up..."
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><term>
+#: en/basics.xml:634
+msgid "Qemu"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:638
+msgid "Install qemu, bridge-utils, sudo."
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:642
+msgid "Edit <filename>/etc/qemu-ifup</filename>:"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para><screen>
+#: en/basics.xml:646
+#, no-wrap
+msgid ""
+"#!/bin/sh\n"
+"sudo -p \"Password for $0:\" /sbin/ifconfig $1 172.20.0.1\n"
+"echo \"Executing /etc/qemu-ifup\"\n"
+"echo \"Bringing up $1 for bridged mode...\"\n"
+"sudo /sbin/ifconfig $1 0.0.0.0 promisc up\n"
+"echo \"Adding $1 to br0...\"\n"
+"sudo /usr/sbin/brctl addif br0 $1\n"
+"sleep 2"
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:657
+msgid "Get, or build a grub-floppy-netboot (in the svn)."
+msgstr ""
+
+#. type: Content of: <chapter><section><variablelist><varlistentry><listitem><para>
+#: en/basics.xml:661
+msgid "Launch qemu with \"-net nic,vlan=0 -net tap,vlan=0,ifname=tun0\""
+msgstr ""

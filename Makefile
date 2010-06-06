@@ -36,8 +36,8 @@ autobuild: clean build
 
 	for LANGUAGE in $(LANGUAGES); \
 	do \
-		sed "{s/@DATE@/$(shell LC_ALL=C date -R)/;s/@LANG@/$${LANGUAGE}/;}" build/$${LANGUAGE}/index.html.in > build/$${LANGUAGE}/index.html; \
 		cp html/* build/$${LANGUAGE}; \
+		sed "{s/@DATE@/$(shell LC_ALL=C date -R)/;s/@LANG@/$${LANGUAGE}/;}" build/$${LANGUAGE}/index.html.in > build/$${LANGUAGE}/index.html; \
 	done
 
 install:

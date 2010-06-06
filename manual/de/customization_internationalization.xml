@@ -1,47 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
-    "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" [
-  <!ENTITY % commondata SYSTEM "common.ent" > %commondata;
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" [
+<!ENTITY % commondata SYSTEM "common.ent">
 ]>
 <sect1 id="internalization">
-<title>Customising Locale And Language</title>
-<para>This chapter discusses customisation for language specific parameters.</para>
-
-<sect2 id="locale">
-<title>Default locale and keyboard</title>
-
-<para>
-The default locale when building a live cd is "locale=en_US.UTF-8".  To set
-the locale for the UK (locale=en_GB.UTF-8)  <screen>
-$ lh_config --bootappend-live "locale=en_GB.UTF-8"
-</screen> The entry for a British keyboard would be <screen>
-$ lh_config --bootappend-live "keyb=uk"
-</screen> To configure both the locale and the keyboard for the
-UK the entry would be <screen>
-$ lh_config --bootappend-live "locale=en_GB.UTF-8 keyb=uk"
-</screen> or <screen>
-$ lh_config --bootappend-live "locale=uk"
-</screen>
-</para>
-<note>
- You can find a list of options in the manpage for live-initramfs. Only UTF8 locales are supported by live-initramfs.
-</note>
-</sect2>
-<sect2 id="default_language">
-<title>l10n Packages</title>
-
-<para>
-lh build can automatically check for each package, for which it's know that
+  <title>Customising Locale And Language</title>
+  <para>This chapter discusses customisation for language specific parameters.</para>
+  <sect2 id="locale">
+    <title>Default locale and keyboard</title>
+    <para> The default locale when building a live cd is "locale=en_US.UTF-8". To set
+the locale for the UK (locale=en_GB.UTF-8) <screen> $ lh_config --bootappend-live "locale=en_GB.UTF-8" </screen> The entry for a British keyboard would be <screen> $ lh_config --bootappend-live "keyb=uk" </screen> To configure both the locale and the keyboard for the
+UK the entry would be <screen> $ lh_config --bootappend-live "locale=en_GB.UTF-8 keyb=uk" </screen> or <screen> $ lh_config --bootappend-live "locale=uk" </screen> </para>
+    <note> You can find a list of options in the manpage for live-initramfs. Only UTF8 locales are supported by live-initramfs. </note>
+  </sect2>
+  <sect2 id="default_language">
+    <title>l10n Packages</title>
+    <para> lh build can automatically check for each package, for which it's know that
 there are -l10n packages available and install them. To add Swedish packages
-the entry would be <screen>
-$ lh_config --language "se"
-</screen> This will also change
-the default syslinux language if <screen>
-  config/templates/syslinux/se
-</screen> is
-available. Check syslinux configuration FIXME
-</para>
-
-</sect2>
-
+the entry would be <screen> $ lh_config --language "se" </screen> This will also change
+the default syslinux language if <screen> config/templates/syslinux/se </screen> is
+available. Check syslinux configuration FIXME </para>
+  </sect2>
 </sect1>

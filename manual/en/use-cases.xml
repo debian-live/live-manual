@@ -1,67 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
-    "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" [
-  <!ENTITY % commondata SYSTEM "common.ent" > %commondata;
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" [
+<!ENTITY % commondata SYSTEM "common.ent">
 ]>
 <chapter id="use-cases">
-<title>Use Cases</title>
-
-<para>This chapter is for users to document their use cases with Debian Live.</para>
-
-<sect1 id="vnc-kiosk-client">
-<title>VNC Kiosk Client</title>
-<para>Create an image with &live-helper; to boot directly to a VNC server.</para>
-<itemizedlist>
-
-<listitem>
-	<para>Make a build directory:
-		<screen>$ mkdir vncBuild</screen>
-	</para>
-</listitem>
-
-<listitem>
-	<para>Move to the build directory:
-		<screen>$ cd vncBuild</screen>
-	</para>
-</listitem>
-
-<listitem>
-	<para>Example to config the build directory to include gdm metacity xtightvncviewer:
-		<screen>$ lh config --packages "gdm metacity xtightvncviewer"</screen>
-	</para>
-</listitem>
-
-<listitem>
-	<para>Create a folder /etc/skel folder for a custom .xsession for the default user:
-		<screen>$ mkdir -p config/chroot_local-includes/etc/skel</screen>
-	</para>
-</listitem>
-
-<listitem>
-	<para>Create the .xsession for the default user:
-		<screen>$ touch config/chroot_local-includes/etc/skel/.xsession</screen>
-	</para>
-</listitem>
-
-<listitem>
-	<para>Edit the .xsession file to launch metacity and start xvncviewer with something similar to the below:
-	<screen>
-	#!/bin/sh
-	/usr/bin/metacity &amp;
-	/usr/bin/vncviewer xxx.xxx.xxx.xxx:PORT
-	exit
-	</screen>
-	</para>
-</listitem>
-
-<listitem>
-	<para>Build the image:
-		<screen># lh build</screen>
-	</para>
-</listitem>
-
-</itemizedlist>
-
-</sect1>
-
+  <title>Use Cases</title>
+  <para>This chapter is for users to document their use cases with Debian Live.</para>
+  <sect1 id="vnc-kiosk-client">
+    <title>VNC Kiosk Client</title>
+    <para>Create an image with &live-helper; to boot directly to a VNC server.</para>
+    <itemizedlist>
+      <listitem>
+        <para>Make a build directory: <screen>$ mkdir vncBuild</screen> </para>
+      </listitem>
+      <listitem>
+        <para>Move to the build directory: <screen>$ cd vncBuild</screen> </para>
+      </listitem>
+      <listitem>
+        <para>Example to config the build directory to include gdm metacity xtightvncviewer: <screen>$ lh config --packages "gdm metacity xtightvncviewer"</screen> </para>
+      </listitem>
+      <listitem>
+        <para>Create a folder /etc/skel folder for a custom .xsession for the default user: <screen>$ mkdir -p config/chroot_local-includes/etc/skel</screen> </para>
+      </listitem>
+      <listitem>
+        <para>Create the .xsession for the default user: <screen>$ touch config/chroot_local-includes/etc/skel/.xsession</screen> </para>
+      </listitem>
+      <listitem>
+        <para>Edit the .xsession file to launch metacity and start xvncviewer with something similar to the below: <screen> #!/bin/sh /usr/bin/metacity &amp; /usr/bin/vncviewer xxx.xxx.xxx.xxx:PORT exit </screen> </para>
+      </listitem>
+      <listitem>
+        <para>Build the image: <screen># lh build</screen> </para>
+      </listitem>
+    </itemizedlist>
+  </sect1>
 </chapter>

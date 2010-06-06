@@ -2,7 +2,7 @@
 
 SHELL := sh -e
 
-LANGUAGES = en de fr
+LANGUAGES = en de
 
 all: test build
 

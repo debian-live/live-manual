@@ -55,6 +55,22 @@ autobuild: clean build
 		build/$${LANGUAGE}/index.html.in > build/$${LANGUAGE}/index.html; \
 	done
 
+commit: tidy test
+	$(MAKE) -C manual rebuild
+
+	@if grep -qs fuzzy manual/po/*/*; \
+	then \
+		echo "Please fix fuzzy in manual/po/* first."; \
+		exit 1; \
+	fi
+
+	@echo
+	@echo "Successful... please do:"
+	@echo
+	@echo "  * git add ."
+	@echo "  * git commit -a -m \"Your commit message.\""
+	@echo "  * git push"
+
 install:
 
 	for LANGUAGE in $(LANGUAGES); \

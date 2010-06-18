@@ -6,7 +6,7 @@
     <title>Motivation</title>
     <sect3>
       <title>What is wrong with current live systems</title>
-      <para> There are already several Debian-based live systems and they are doing a great job. But, from the Debian perspective most of them have one or more of the following disadvantages: </para>
+      <para> When Debian Live was initiated, there were already several Debian based live systems available and they are doing a great job. From the Debian perspective most of them have one or more of the following disadvantages: </para>
       <orderedlist>
         <listitem>
           <para> They are unofficial projects, developed outside of Debian. </para>
@@ -36,7 +36,7 @@
     </sect3>
     <sect3>
       <title>Why create our own live system?</title>
-      <para> Debian is the Universal Operating System: Debian should have an official live system for showing around and to officially represent the true, one and only Debian system with the following main advantages: </para>
+      <para> Debian is the Universal Operating System: Debian has an official live system for showing around and to officially represent the true, one and only Debian system with the following main advantages: </para>
       <orderedlist>
         <listitem>
           <para> It would be an official Debian subproject. </para>
@@ -54,7 +54,7 @@
           <para> It does not contain any unofficial packages. </para>
         </listitem>
         <listitem>
-          <para> It uses an unaltered Debian kernel-image with no additional patches. </para>
+          <para> It uses an unaltered Debian kernel with no additional patches. </para>
         </listitem>
       </orderedlist>
     </sect3>
@@ -63,9 +63,9 @@
     <title>Philosophy</title>
     <sect3>
       <title>Only unchanged, official packages</title>
-      <para> We will only use official packages from the Debian repository in the "main" section (possibly contrib, although not decided yet). The non-free section is not part of Debian and therefore cannot be used at all for live systems. </para>
+      <para> We will only use official packages from the Debian repository in the "main" section. The non-free section is not part of Debian and therefore cannot be used at all for official live system images. </para>
       <para> We will not change any packages. Whenever we need to change something, we will do that in coordination with its package maintainer in Debian. </para>
-      <para> As an exception, our own packages such as <filename>live-helper</filename> or <filename>live-initramfs</filename> may temporarily be used from our own repository for development reasons (e.g. to create development snapshots). They will be uploaded to Debian on a regular basis. </para>
+      <para> As an exception, our own packages such as <filename>live-helper</filename>, <filename>live-boot</filename> or <filename>live-config</filename> may temporarily be used from our own repository for development reasons (e.g. to create development snapshots). They will be uploaded to Debian on a regular basis. </para>
     </sect3>
     <sect3>
       <title>No package configuration of the live system</title>
@@ -73,11 +73,6 @@
       <para> Whenever we need a different default configuration, we will do that in coordination with its package maintainer in Debian. </para>
       <para> A system for configuring packages is provided using debconf in <command>lh config</command> (use --preseed FILE) allowing custom configured packages to be installed in your custom produced Debian Live images, but for official live images only default configuration will be used. For more information, please see <xref linkend="customization"/>. </para>
       <para> Exception: There are a few essential changes needed to bring a live system to life (e.g. configuring pam to allow empty passwords). These essential changes have to be kept as minimal as possible and should be merged within the Debian repository if possible. </para>
-    </sect3>
-    <sect3>
-      <title>Live system to hard disk installer</title>
-      <para> For the moment we will not ship an installer to copy the live system to a partition on the hard disk. Although we keep the changes in the live system as drastically minimal as possible compared to a regular Debian installation, the live system does differ in a few essential points (see exceptions, guideline 2). </para>
-      <para> Therefore, we will ship a copy of the regular DebianInstaller (resp. Debian Installer, Graphical Installer) instead, to allow users to perform a regular Debian installation (and, of course, cdebootstrap and debootstrap are on the system too). </para>
     </sect3>
   </sect2>
   <sect2 id="contact">

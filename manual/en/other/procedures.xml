@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<chapter id="procedures">
+  <title>Procedures</title>
+  <para>This chapter documents the procedures within the Debian Live project for various tasks that need cooperation with other teams in Debian.</para>
+  <sect1 id="udeb-uploads">
+    <title>Udeb Uploads</title>
+    <para>Before commiting releases of a udeb in d-i svn, one has to call:</para>
+    <screen>
+      <command>../../scripts/l10n/output-l10n-changes . -d</command>
+    </screen>
+  </sect1>
+  <sect1 id="major-releases">
+    <title>Major Releases</title>
+    <para>Releasing a new stable major version of Debian includes a lot of different teams working together to make it happen. At some point, the Live team comes in and builds live system images. The requirements to do this are:</para>
+    <itemizedlist>
+      <listitem>The local debian mirror (debian, debian-security, debian-volatile) of the debian-live buildd needs to be synced against a mirror that contains the released version.</listitem>
+      <listitem>The names of the image need to be known (e.g. debian-live-VERSION-ARCH-FLAVOUR.iso).</listitem>
+      <listitem>The data from debian-cd needs to be synced (udeb exclude lists).</listitem>
+      <listitem>The includes from debian-cd needs to be synced (README.*, doc/*, etc.).</listitem>
+      <listitem>Images are built and mirrored on cdimage.debian.org.</listitem>
+    </itemizedlist>
+  </sect1>
+  <sect1 id="point-releases">
+    <title>Point Releases</title>
+    <itemizedlist>
+      <listitem>Again, we need updated mirror of both debian and debian-security.</listitem>
+      <listitem>Before actual images can be built, the sizes of the gnome-desktop and kde-desktop CD images need to be checked that they are not too big.</listitem>
+      <listitem>Images are built and mirrored on cdimage.debian.org.</listitem>
+      <listitem>Send announcement mail.</listitem>
+    </itemizedlist>
+    <sect2 id="point-release-announce-template">
+      <title>Point release announcement template</title>
+      <para>An annoucement mail for point releases can be generated using the template below and the following command:</para>
+      <screen> $ sed \ -e 's|%major%|5.0|g' \ -e 's|%minor%|5.0.2|g' \ -e 's|%codename%|lenny|g' \ -e 's|%release_mail%|2009/msg00007.html|g' </screen>
+      <para>Please check the mail carefully before sending and pass it to others for proof-reading.</para>
+      <screen> Debian Live images for Debian GNU/Linux %major% updated The Debian Live project is pleased to announce the availability of updated Live images for its stable distribution Debian GNU/Linux %major% (codename "%codename%"). The images are available for download at: &lt;http://cdimage.debian.org/cdimage/release/current-live/&gt; This update incorporates the changes made in the %minor% point release, which adds corrections for security problems to the stable release along with a few adjustments for serious problems. A full list of the changes may be viewed at: &lt;http://lists.debian.org/debian-announce/%release_mail%&gt; It also includes the following Live-specific changes: COPYING debian html Makefile manual VERSION xml xsl [INSERT LIVE-SPECIFIC CHANGE HERE] COPYING debian html Makefile manual VERSION xml xsl [INSERT LIVE-SPECIFIC CHANGE HERE] COPYING debian html Makefile manual VERSION xml xsl [LARGER ISSUES MAY DESERVE THEIR OWN SECTION] URLs ---- Download location of updated images: &lt;http://cdimage.debian.org/cdimage/release/current-live/&gt; Debian Live project homepage: &lt;http://live.debian.net/&gt; The current stable distribution: &lt;http://ftp.debian.org/debian/dists/stable&gt; stable distribution information (release notes, errata etc.): &lt;http://www.debian.org/releases/stable/&gt; Security announcements and information: &lt;http://www.debian.org/security/&gt; About Debian ------------- The Debian Project is an association of Free Software developers who volunteer their time and effort in order to produce the completely free operating system Debian GNU/Linux. About Debian Live ----------------- Debian Live is an official sub-project of Debian which produces Debian systems that do not require a classical installer. Images are available for CD/DVD discs, USB sticks and PXE netbooting as well as a bare filesystem images for booting directly from the internet. Contact Information ------------------- For further information, please visit the Debian Live web pages at &lt;http://live.debian.net/&gt; or alternatively send mail to &lt;debian-live@lists.debian.org&gt;. </screen>
+    </sect2>
+  </sect1>
+</chapter>

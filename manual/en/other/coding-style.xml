@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<chapter id="coding-style">
+  <title>Coding Style</title>
+  <para>This chapter documents the coding style used in <filename>live-helper</filename> and (ideally) in <filename>live-initramfs</filename>.</para>
+  <sect1 id="compatibilty">
+    <title>Compatibility</title>
+    <itemizedlist>
+      <listitem>Don't use syntax or semantics that are unique to the Bash shell. For example, the use of array constructs.</listitem>
+      <listitem>Only use the POSIX subset - for example, use $(foo) over `foo`.</listitem>
+      <listitem>You can check your scripts with 'sh -n' and 'checkbashisms'</listitem>
+    </itemizedlist>
+  </sect1>
+  <sect1 id="indenting">
+    <title>Indenting</title>
+    <itemizedlist>
+      <listitem>Always use tabs over spaces.</listitem>
+    </itemizedlist>
+  </sect1>
+  <sect1 id="wrapping">
+    <title>Wrapping</title>
+    <itemizedlist>
+      <listitem>Generally, lines are 80 chars at maximum.</listitem>
+      <listitem>Use the "Linux style" of line breaks: <para>Bad: <screen> if foo; then bar fi </screen> </para> <para>Good: <screen> if foo then bar fi </screen> </para></listitem>
+      <listitem>The same holds for functions: <para>Bad: <screen> foo () { bar } </screen> </para> <para>Good: <screen> foo () { bar } </screen> </para></listitem>
+    </itemizedlist>
+  </sect1>
+  <sect1 id="variables">
+    <title>Variables</title>
+    <itemizedlist>
+      <listitem>Variables are always in capital letters.</listitem>
+      <listitem>Variables that used in config always start with LH_ prefix.</listitem>
+      <listitem>Internal temporary variables should start with the _LH_ prefix.</listitem>
+      <listitem>Local variables start with __LH_ prefix.</listitem>
+      <listitem>Use braces around variables; eg. write ${FOO} instead of $FOO.</listitem>
+      <listitem>Always protect variables with respect to potential whitespaces, write "${FOO}" not ${FOO}.</listitem>
+      <listitem>For consistency reasons, always use quotes when assigning values to variables: <para>Bad: <screen> FOO=bar </screen> </para> <para>Good: <screen> FOO="bar" </screen> </para></listitem>
+      <listitem>If multiple variables are used, quote the full expression: <para>Bad: <screen> if [ -f "${FOO}"/foo/"${BAR}"/bar ] then foobar fi </screen> </para> <para>Good: <screen> if [ -f "${FOO}/foo/${BAR}/bar" ] then foobar fi </screen> </para></listitem>
+    </itemizedlist>
+  </sect1>
+  <sect1 id="misc">
+    <title>Miscellaneous</title>
+    <itemizedlist>
+      <listitem>Use "|" (without the surround quotes) as a seperator in calls to sed, e.g. "sed -e 's|foo|bar|'" (without "").</listitem>
+      <listitem>Don't use the test command for comparisons or tests, use "[" "]" (without ""), e.g. "if [ -x /bin/foo ]; ..." and not "if test -x /bin/foo; ...".</listitem>
+    </itemizedlist>
+  </sect1>
+</chapter>

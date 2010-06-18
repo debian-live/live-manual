@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<sect1 id="bootup">
+  <title>Customising the bootup process</title>
+  <para>This chapter discusses customisation of bootup process of a live system,
+including kernel options, modifications to the bootloader, "splash" screens
+and startup scripts.</para>
+  <para>FIXME</para>
+  <sect2 id="kernel">
+    <title>Kernel</title>
+  </sect2>
+  <sect2 id="bootloaders">
+    <title>Bootloaders</title>
+    <para> FIXME </para>
+    <sect3>
+      <title>Choosing a bootloader</title>
+      <para> FIXME </para>
+    </sect3>
+    <sect3 id="syslinux">
+      <title>Syslinux</title>
+      <para>In the default configuration, Syslinux will pause indefinitely at its splash
+screen. To adjust this, modify the <command>LH_SYSLINUX_TIMEOUT</command>
+value or pass <command>--syslinux-timeout
+<replaceable>TIMEOUT</replaceable></command> to
+<filename>lh_config</filename>. The value is specified in units of 1/10s and
+the maximum possible timeout is 35996. A timeout of 0 (zero) disables the
+timeout completely. For more information please see syslinux(1).</para>
+    </sect3>
+    <sect3>
+      <title>Bootloader templates</title>
+      <para> FIXME </para>
+    </sect3>
+    <sect3>
+      <title>Booting a Debian Live USB/HDD system from a USB stick with Grub</title>
+      <para> Suppose you've built your Debian Live USB/HDD image, but want to install it
+on an already used USB stick with ext2/3 partition and Grub bootloader: </para>
+      <para>First, copy live components in a directory on your key: the Linux kernel
+(<filename>vmlinuz*</filename>), its Initial RAM disk
+(<filename>initrd*</filename>) and the system
+(<filename>filesystem.squashfs</filename>): <screen> # mkdir /media/myUsb/boot/live/ # cp binary/vmlinuz1 binary/initrd1.img binary/live/filesystem.squashfs /media/myUsb/boot/live/ </screen> </para>
+      <para>Then, add a stanza in Grub's menu definition to boot up this system:
+<screen> echo &gt;&gt;/media/myUsb/boot/grub/menu.lst &lt;&lt;EOF title my Debian Live root (hd0,1) # my Ext2 partition is the second on this stick kernel /boot/live/vmlinuz1 boot=live vga=791 persistent union=aufs live-media-path=boot/live initrd /boot/live/initrd1.img EOF </screen> The important kernel command line option
+to add here is <variablename>live-media-path</variablename>, which tells to Live initrd's script in which subdirectory to look for the
+SquashFS image. </para>
+      <para>Next, umount your USB stick and reboot on it. That's all!</para>
+    </sect3>
+  </sect2>
+  <sect2 id="splash">
+    <title>Splash screens</title>
+    <para> FIXME </para>
+  </sect2>
+  <sect2 id="memtest">
+    <title>Memtest</title>
+    <para> FIXME </para>
+  </sect2>
+  <sect2 id="startup-scripts">
+    <title>Startup scripts</title>
+    <para> FIXME </para>
+  </sect2>
+  <sect2 id="cheat-codes">
+    <title>Cheat codes</title>
+    <para> FIXME </para>
+    <para> Checksums. </para>
+  </sect2>
+</sect1>

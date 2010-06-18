@@ -2,15 +2,24 @@
 
 SHELL := sh -e
 
-LANGUAGES = en de fr
+LANGUAGES = en de
 
 all: test build
 
 test:
 	@echo "Checking for syntax errors... [not implemented yet - FIXME]"
-	#@xmllint --nonet --noout --postvalid --xinclude en/index.xml || true
+	@#xmllint --nonet --noout --postvalid --xinclude manual/en/index.xml || true
 
 	@echo "Checking for spelling errors... [not implemented yet - FIXME]"
+
+tidy:
+	for FILE in manual/en/*.xml manual/en/*/*.xml xsl/*.xsl; \
+	do \
+		sed -i -e 's|^[ \t]*||' -e 's|[ \t]*$$||' $${FILE}; \
+		echo `cat $${FILE}` > $${FILE}.tmp; \
+		xmllint --format --noblanks --output $${FILE} $${FILE}.tmp; \
+		rm -f $${FILE}.tmp; \
+	done
 
 build:
 	mkdir -p build
@@ -18,7 +27,6 @@ build:
 	for LANGUAGE in $(LANGUAGES); \
 	do \
 		cp -a $(CURDIR)/manual/$${LANGUAGE} $(CURDIR)/build; \
-		cp -a $(CURDIR)/xml/*.ent $(CURDIR)/build/$${LANGUAGE}; \
 		mkdir -p $(CURDIR)/build/$${LANGUAGE}/html; \
 		cd $(CURDIR)/build/$${LANGUAGE}/html; \
 		xsltproc --nonet --novalid --xinclude $(CURDIR)/xsl/html.xsl ../index.xml; \
@@ -35,14 +43,32 @@ build:
 	done
 
 autobuild: clean build
-	rm -f build/*/*.xml build/*/*.ent
+	rm -f build/*/*.xml
 	cp html/* build
 
 	for LANGUAGE in $(LANGUAGES); \
 	do \
 		cp html/* build/$${LANGUAGE}; \
-		sed "{s/@DATE@/$(shell LC_ALL=C date -R)/;s/@LANG@/$${LANGUAGE}/;}" build/$${LANGUAGE}/index.html.in > build/$${LANGUAGE}/index.html; \
+		sed -e "s|@DATE_BUILD@|$(shell LC_ALL=C date -R)|" \
+		    -e "s|@DATE_CHANGE@|$(shell LC_ALL=C git log | grep -m1 Date | awk -FDate: '{ print $2 }' | sed -e 's|^ *||g')|" \
+		build/$${LANGUAGE}/index.html.in > build/$${LANGUAGE}/index.html; \
 	done
+
+commit: tidy test
+	$(MAKE) -C manual rebuild
+
+	@if grep -qs fuzzy manual/po/*/*; \
+	then \
+		echo "Please fix fuzzy in manual/po/* first."; \
+		exit 1; \
+	fi
+
+	@echo
+	@echo "Successful... please do:"
+	@echo
+	@echo "  * git add ."
+	@echo "  * git commit -a -m \"Your commit message.\""
+	@echo "  * git push"
 
 install:
 

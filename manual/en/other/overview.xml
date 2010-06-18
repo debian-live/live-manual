@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<chapter id="overview">
+  <title>Overview of tools</title>
+  <para> This chapter contains an overview of the two main tools used in building Debian Live systems. </para>
+  <section id="live-helper">
+    <title>
+      <filename>live-helper</filename>
+    </title>
+    <para><filename>live-helper</filename> is a collection of scripts to build Debian Live systems. These scripts are also referred to as "helpers". </para>
+    <para> The idea behind <filename>live-helper</filename> is to be a framework that uses a configuration directory to completely automate and customize all aspects of building a Live image. </para>
+    <para> Many concepts are similar to those in the <command>debhelper</command> Debian package tools written by Joey Hess: </para>
+    <orderedlist>
+      <listitem>
+        <para> The scripts have a central location for configuring their operation. </para>
+        <para> In <command>debhelper</command>, this is the <filename class="directory">debian</filename> subdirectory of a package tree. For example, <command>dh_install</command> will look for a file called <filename>debian/&lt;packagename&gt;.install</filename> to determine which files should exist in a particular binary package. In much the same way, <filename>live-helper</filename> stores its configuration entirely under a <filename class="directory">config/</filename> subdirectory. </para>
+      </listitem>
+      <listitem>
+        <para> The scripts are independent - that is to say, it is always safe to run each command. </para>
+      </listitem>
+    </orderedlist>
+    <para> Unlike <command>debhelper</command>, <filename>live-helper</filename> contains a tool to generate a skeleton configuration directory, <filename>lh config</filename>. This could be considered to be similar to tools such as <command>dh-make</command>. For more information about <filename>lh config</filename>, please see <xref linkend="lh-config"/>. </para>
+    <para> Besides the common <filename>config/common</filename>, which is used by all <filename>live-helper</filename> helper commands, some additional files can be used to configure the behavior of specific helper commands. These files are typically named <command>config/helper</command> or <command>config/stage</command> (where "stage", of course, is replaced with the name of the stage that they belong to, and "helper" with the name of the helper). </para>
+    <para> For example, the <command>lh bootstrap debootstrap</command> helper command uses files named <filename>config/bootstrap</filename> and <filename>config/bootstrap_debootstrap</filename> to read the options it will use. Generally, these files contain variables with values assigned, one variable per line. Some programs in <filename>live-helper</filename> use pairs of values or slightly more complicated variable assignments. </para>
+    <para><filename>live-helper</filename> respects environment variables which are present in the context of the shell it is running. If variables can be read from config files, then they override environment variables, and if command line options are used, they override values from config files. If no value for a given variable can be found (and is thus unset), <filename>live-helper</filename> will automatically set it to a default value. </para>
+    <para> All config files are shell scripts which are sourced by a <filename>live-helper</filename> program. That means they have to follow the normal shell syntax. You can also put comments in these files; lines beginning with "#" are ignored. </para>
+    <para> In some rare cases you may want to have different versions of these files for different architectures or distributions. If files named <command>config/stage.arch</command> or <command>config/stage_helper.arch</command>, and <command>config/stage.dist</command> or <command>config/stage_helper.dist</command> exist (where "arch" is the same as the output of <command>dpkg --print-architecture</command> and "dist" is the same as the codename of the target distribution), then they will be used in preference to the other, more general files. </para>
+    <para> Please see <xref linkend="installation"/> for information on how to install <filename>live-helper</filename>. </para>
+    <para> The remainder of this section discusses the three most important helpers: </para>
+    <variablelist>
+      <varlistentry>
+        <term>
+          <filename>lh config</filename>
+        </term>
+        <listitem>
+          <para> Responsible for initialising a Live system configuration directory. See <xref linkend="lh-config"/> for more information. </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          <filename>lh build</filename>
+        </term>
+        <listitem>
+          <para> Responsible for starting a Live system build. See <xref linkend="lh-build"/> for more information. </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          <filename>lh clean</filename>
+        </term>
+        <listitem>
+          <para> Responsible for removing parts of a Live system build. See <xref linkend="lh-clean"/> for more information. </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <section id="lh-config">
+      <title>The <filename>lh config</filename> helper</title>
+      <para> As discussed in <xref linkend="live-helper"/>, the scripts that make up <filename>live-helper</filename> source their configuration from a single directory named <command>config/</command>. As constructing this directory by hand would be time-consuming and error-prone, the <filename>lh config</filename> helper can be used to create skeleton configuration folders. </para>
+      <para> Issuing <filename>lh config</filename> without any arguments creates a <command>config</command> subdirectory which it populates with some default settings: </para>
+      <para>
+        <screen>$ lh config $ ls -l total 4.1k drwxr-xr-x 19 user group 4.1k 2008-05-09 21:37 config $ ls -l config/ total 104 -rw-r--r-- 1 user group 4175 2010-04-11 12:16 binary drwxr-xr-x 2 user group 4096 2010-04-11 12:16 binary_debian-installer drwxr-xr-x 2 user group 4096 2010-04-11 12:16 binary_debian-installer-includes drwxr-xr-x 2 user group 4096 2010-04-11 12:16 binary_grub drwxr-xr-x 2 user group 4096 2010-04-11 12:16 binary_local-debs drwxr-xr-x 2 user group 4096 2010-04-11 12:16 binary_local-hooks drwxr-xr-x 2 user group 4096 2010-04-11 12:16 binary_local-includes drwxr-xr-x 2 user group 4096 2010-04-11 12:16 binary_local-packageslists drwxr-xr-x 2 user group 4096 2010-04-11 12:16 binary_local-udebs drwxr-xr-x 2 user group 4096 2010-04-11 12:16 binary_rootfs drwxr-xr-x 2 user group 4096 2010-04-11 12:16 binary_syslinux -rw-r--r-- 1 user group 2205 2010-04-11 12:16 bootstrap -rw-r--r-- 1 user group 1599 2010-04-11 12:16 chroot drwxr-xr-x 2 user group 4096 2010-04-11 12:16 chroot_apt drwxr-xr-x 2 user group 4096 2010-04-11 12:16 chroot_local-hooks drwxr-xr-x 2 user group 4096 2010-04-11 12:16 chroot_local-includes drwxr-xr-x 2 user group 4096 2010-04-11 12:16 chroot_local-packages drwxr-xr-x 2 user group 4096 2010-04-11 12:16 chroot_local-packageslists drwxr-xr-x 2 user group 4096 2010-04-11 12:16 chroot_local-patches drwxr-xr-x 2 user group 4096 2010-04-11 12:16 chroot_local-preseed drwxr-xr-x 2 user group 4096 2010-04-11 12:16 chroot_sources -rw-r--r-- 1 user group 2938 2010-04-11 12:16 common drwxr-xr-x 2 user group 4096 2010-04-11 12:16 includes -rw-r--r-- 1 user group 206 2010-04-11 12:16 source drwxr-xr-x 2 user group 4096 2010-04-11 12:16 templates </screen>
+      </para>
+      <para> Using <filename>lh config</filename> without any arguments would be suitable for users who are either happy editing the generated files, or are simply happy with the defaults it creates. </para>
+      <para> You can ask <filename>lh config</filename> to generate a <filename class="directory">config/</filename> directory "preseeded" with various options. This might be suitable if you do not require the default settings but do not need to change a large number of options. For example: </para>
+      <para>
+        <screen>$ lh config -p gnome</screen>
+      </para>
+      <para> will build a <filename class="directory">config/</filename> directory configured to include the '<command>gnome</command>' package list. It is possible to specify many options: </para>
+      <para>
+        <screen>$ lh config --apt aptitude --binary-images net --hostname live-machine --username live-user ...</screen>
+      </para>
+      <para> A full list of options is available in the <command>lh_config</command> man page. Most options have a parallel with an "<command>LH_</command>" prefixed variable. </para>
+    </section>
+    <section id="lh-build">
+      <title>The <filename>lh build</filename> helper</title>
+      <para> The <filename>lh build</filename> helper reads in your configuration from the <filename class="directory">config/</filename> directory. It then runs the lower lower level commands needed to build your Live system. </para>
+    </section>
+    <section id="lh-clean">
+      <title>The <filename>lh clean</filename> helper</title>
+      <para> It is the job of the <filename>lh clean</filename> helper to remove various parts of a Live helper build so subsequent builds can start from a clean state. </para>
+    </section>
+  </section>
+  <section id="live-initramfs">
+    <title>The <filename>live-initramfs</filename> package</title>
+    <para><filename>live-initramfs</filename> is a collection of scripts providing hooks for the <command>initramfs-tools</command>, used to generate an initramfs capable of booting live systems, such as those created by <command>live-helper</command>. This includes the Debian Live isos, netboot tarballs, and usb stick images. </para>
+    <para> At boot time it will look for read-only media containing a "/live" directory where a root filesystem (often a compressed filesystem image like squashfs) is stored. If found, it will create a writable environment, using aufs or unionfs, for Debian like systems to boot from. </para>
+    <para><filename>live-initramfs</filename> is a fork of <ulink url="http://packages.ubuntu.com/casper">casper</ulink>. </para>
+    <para> More information on initial ramfs in Debian can be found in the <ulink url="http://kernel-handbook.alioth.debian.org/"> Debian Linux Kernel Handbook</ulink>'s chapter on <ulink url="http://kernel-handbook.alioth.debian.org/ch-initramfs.html"> initramfs</ulink>. </para>
+  </section>
+</chapter>

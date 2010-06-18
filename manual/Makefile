@@ -15,6 +15,11 @@ po4a.cfg:
 		echo "[type: docbook] $${FILE} \$$lang:\$$lang/$$(basename $${FILE})" >> po4a.cfg; \
 	done
 
+	for FILE in en/*/*.xml; \
+	do \
+		echo "[type: docbook] $${FILE} \$$lang:\$$lang/$$(basename $$(dirname $${FILE}))/$$(basename $${FILE})" >> po4a.cfg; \
+	done
+
 	echo "[type: xhtml] en/index.html.in \$$lang:\$$lang/index.html.in" >> po4a.cfg
 
 update:

@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" [
-<!ENTITY % commondata SYSTEM "common.ent">
-]>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
 <chapter id="overview">
   <title>Overview of tools</title>
   <para> This chapter contains an overview of the two main tools used in building
 Debian Live systems. </para>
   <section id="live-helper">
-    <title>&live-helper;</title>
-    <para> &live-helper; is a collection of scripts to build Debian Live systems. These
-scripts are also referred to as "helpers". </para>
-    <para> The idea behind &live-helper; is to be a framework that uses a configuration
-directory to completely automate and customize all aspects of building a
-Live image. </para>
+    <title><filename>live-helper</filename></title>
+    <para> <filename>live-helper</filename> is a collection of scripts to build Debian
+Live systems. These scripts are also referred to as "helpers". </para>
+    <para> The idea behind <filename>live-helper</filename> is to be a framework that
+uses a configuration directory to completely automate and customize all
+aspects of building a Live image. </para>
     <para> Many concepts are similar to those in the <command>debhelper</command>
 Debian package tools written by Joey Hess: </para>
     <orderedlist>
@@ -23,23 +21,23 @@ class="directory">debian</filename> subdirectory of a package tree. For
 example, <command>dh_install</command> will look for a file called
 <filename>debian/&lt;packagename&gt;.install</filename> to determine which
 files should exist in a particular binary package. In much the same way,
-&live-helper; stores its configuration entirely under a <filename
-class="directory">config/</filename> subdirectory. </para>
+<filename>live-helper</filename> stores its configuration entirely under a
+<filename class="directory">config/</filename> subdirectory. </para>
       </listitem>
       <listitem>
         <para> The scripts are independent - that is to say, it is always safe to run each
 command. </para>
       </listitem>
     </orderedlist>
-    <para> Unlike <command>debhelper</command>, &live-helper; contains a tool to
-generate a skeleton configuration directory, <filename>lh
+    <para> Unlike <command>debhelper</command>, <filename>live-helper</filename>
+contains a tool to generate a skeleton configuration directory, <filename>lh
 config</filename>. This could be considered to be similar to tools such as
 <command>dh-make</command>. For more information about <filename>lh
 config</filename>, please see <xref linkend="lh-config"/>. </para>
     <para> Besides the common <filename>config/common</filename>, which is used by all
-&live-helper; helper commands, some additional files can be used to
-configure the behavior of specific helper commands. These files are
-typically named <command>config/helper</command> or
+<filename>live-helper</filename> helper commands, some additional files can
+be used to configure the behavior of specific helper commands. These files
+are typically named <command>config/helper</command> or
 <command>config/stage</command> (where "stage", of course, is replaced with
 the name of the stage that they belong to, and "helper" with the name of the
 helper). </para>
@@ -47,17 +45,19 @@ helper). </para>
 uses files named <filename>config/bootstrap</filename> and
 <filename>config/bootstrap_debootstrap</filename> to read the options it
 will use. Generally, these files contain variables with values assigned, one
-variable per line. Some programs in &live-helper; use pairs of values or
-slightly more complicated variable assignments. </para>
-    <para> &live-helper; respects environment variables which are present in the
-context of the shell it is running. If variables can be read from config
-files, then they override environment variables, and if command line options
-are used, they override values from config files. If no value for a given
-variable can be found (and is thus unset), &live-helper; will automatically
-set it to a default value. </para>
-    <para> All config files are shell scripts which are sourced by a &live-helper;
-program. That means they have to follow the normal shell syntax. You can
-also put comments in these files; lines beginning with "#" are ignored. </para>
+variable per line. Some programs in <filename>live-helper</filename> use
+pairs of values or slightly more complicated variable assignments. </para>
+    <para> <filename>live-helper</filename> respects environment variables which are
+present in the context of the shell it is running. If variables can be read
+from config files, then they override environment variables, and if command
+line options are used, they override values from config files. If no value
+for a given variable can be found (and is thus unset),
+<filename>live-helper</filename> will automatically set it to a default
+value. </para>
+    <para> All config files are shell scripts which are sourced by a
+<filename>live-helper</filename> program. That means they have to follow the
+normal shell syntax. You can also put comments in these files; lines
+beginning with "#" are ignored. </para>
     <para> In some rare cases you may want to have different versions of these files
 for different architectures or distributions. If files named
 <command>config/stage.arch</command> or
@@ -68,7 +68,7 @@ as the output of <command>dpkg --print-architecture</command> and "dist" is
 the same as the codename of the target distribution), then they will be used
 in preference to the other, more general files. </para>
     <para> Please see <xref linkend="installation"/> for information on how to install
-&live-helper;. </para>
+<filename>live-helper</filename>. </para>
     <para> The remainder of this section discusses the three most important helpers: </para>
     <variablelist>
       <varlistentry>
@@ -102,10 +102,11 @@ linkend="lh-clean"/> for more information. </para>
     <section id="lh-config">
       <title>The <filename>lh config</filename> helper</title>
       <para> As discussed in <xref linkend="live-helper"/>, the scripts that make up
-&live-helper; source their configuration from a single directory named
-<command>config/</command>. As constructing this directory by hand would be
-time-consuming and error-prone, the <filename>lh config</filename> helper
-can be used to create skeleton configuration folders. </para>
+<filename>live-helper</filename> source their configuration from a single
+directory named <command>config/</command>. As constructing this directory
+by hand would be time-consuming and error-prone, the <filename>lh
+config</filename> helper can be used to create skeleton configuration
+folders. </para>
       <para> Issuing <filename>lh config</filename> without any arguments creates a
 <command>config</command> subdirectory which it populates with some default
 settings: </para>
@@ -146,17 +147,17 @@ state. </para>
     </section>
   </section>
   <section id="live-initramfs">
-    <title>The &live-initramfs; package</title>
-    <para> &live-initramfs; is a collection of scripts providing hooks for the
-<command>initramfs-tools</command>, used to generate an initramfs capable of
-booting live systems, such as those created by
+    <title>The <filename>live-initramfs</filename> package</title>
+    <para> <filename>live-initramfs</filename> is a collection of scripts providing
+hooks for the <command>initramfs-tools</command>, used to generate an
+initramfs capable of booting live systems, such as those created by
 <command>live-helper</command>. This includes the Debian Live isos, netboot
 tarballs, and usb stick images. </para>
     <para> At boot time it will look for read-only media containing a "/live" directory
 where a root filesystem (often a compressed filesystem image like squashfs)
 is stored. If found, it will create a writable environment, using aufs or
 unionfs, for Debian like systems to boot from. </para>
-    <para> &live-initramfs; is a fork of <ulink
+    <para> <filename>live-initramfs</filename> is a fork of <ulink
 url="http://packages.ubuntu.com/casper">casper</ulink>. </para>
     <para> More information on initial ramfs in Debian can be found in the <ulink
 url="http://kernel-handbook.alioth.debian.org/"> Debian Linux Kernel

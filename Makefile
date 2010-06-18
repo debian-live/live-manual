@@ -27,7 +27,6 @@ build:
 	for LANGUAGE in $(LANGUAGES); \
 	do \
 		cp -a $(CURDIR)/manual/$${LANGUAGE} $(CURDIR)/build; \
-		cp -a $(CURDIR)/xml/*.ent $(CURDIR)/build/$${LANGUAGE}; \
 		mkdir -p $(CURDIR)/build/$${LANGUAGE}/html; \
 		cd $(CURDIR)/build/$${LANGUAGE}/html; \
 		xsltproc --nonet --novalid --xinclude $(CURDIR)/xsl/html.xsl ../index.xml; \
@@ -44,7 +43,7 @@ build:
 	done
 
 autobuild: clean build
-	rm -f build/*/*.xml build/*/*.ent
+	rm -f build/*/*.xml
 	cp html/* build
 
 	for LANGUAGE in $(LANGUAGES); \

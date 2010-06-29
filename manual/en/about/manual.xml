@@ -159,13 +159,21 @@
         <listitem>
           <para> Fetch the public commit key: </para>
           <para>
-            <screen>$ mkdir -p ~/.ssh/identity.d $ wget http://live.debian.net/other/openssh/repository-public-commit-key-current/live-manual@debian-live -O ~/.ssh/identity.d/live-manual@debian-live $ wget http://live.debian.net/other/openssh/repository-public-commit-key-current/live-manual@debian-live.pub -O ~/.ssh/identity.d/live-manual@debian-live.pub $ chmod 0600 ~/.ssh/identity.d/live-manual@debian-live*</screen>
+            <screen>$ mkdir -p ~/.ssh/identity.d</screen>
+            <screen>$ wget http://live.debian.net/other/openssh/repository-public-commit-key-current/live-manual@debian-live -O ~/.ssh/identity.d/live-manual@debian-live</screen>
+            <screen>$ wget http://live.debian.net/other/openssh/repository-public-commit-key-current/live-manual@debian-live.pub -O ~/.ssh/identity.d/live-manual@debian-live.pub</screen>
+            <screen>$ chmod 0600 ~/.ssh/identity.d/live-manual@debian-live*</screen>
           </para>
         </listitem>
         <listitem>
           <para> Add the following section to your openssh-client config: </para>
           <para>
-            <screen> $ cat &gt;&gt; ~/.ssh/config &lt;&lt; EOF Host live.debian.net Hostname live.debian.net User gitosis IdentityFile ~/.ssh/identity.d/live-manual@debian-live EOF</screen>
+            <screen> $ cat &gt;&gt; ~/.ssh/config &lt;&lt; EOF</screen>
+            <screen>Host live.debian.net</screen>
+            <screen>Hostname live.debian.net</screen>
+            <screen>User gitosis</screen>
+            <screen>IdentityFile ~/.ssh/identity.d/live-manual@debian-live</screen>
+            <screen>EOF</screen>
           </para>
         </listitem>
         <listitem>
@@ -175,7 +183,13 @@
           </para>
         </listitem>
         <listitem>
-          <para> Commit the file after editing. Write commit messages, that consist of full useful sentences, starting with a capital letter and ending with a full stop. Usually starting with the form 'Fixing/Adding/Removing/Correcting/': </para>
+          <para> After editing the files in manual/en/, please call the 'commit' target in the toplevel directory to sanitize the files and update the translation files:</para>
+          <para>
+            <screen>$ make commit</screen>
+          </para>
+        </listitem>
+        <listitem>
+          <para> After sanitizing commit the changes. Write commit messages, that consist of full useful sentences, starting with a capital letter and ending with a full stop. Usually starting with the form 'Fixing/Adding/Removing/Correcting/': </para>
           <para>
             <screen>$ git commit -a</screen>
           </para>

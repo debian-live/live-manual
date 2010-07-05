@@ -34,12 +34,12 @@ build:
 		cd $(CURDIR)/build/$${LANGUAGE}/html-single; \
 		xsltproc --nonet --novalid --xinclude $(CURDIR)/xsl/html-single.xsl ../index.xml; \
 		mv $(CURDIR)/build/$${LANGUAGE}/html-single/index.html $(CURDIR)/build/$${LANGUAGE}/html-single/live-manual.html; \
-		mkdir -p $(CURDIR)/build/$${LANGUAGE}/txt; \
-		cd $(CURDIR)/build/$${LANGUAGE}/txt; \
-		xsltproc --nonet --novalid --xinclude $(CURDIR)/xsl/txt.xsl ../index.xml | w3m -cols 65 -dump -T text/html > live-manual.txt; \
 		mkdir -p $(CURDIR)/build/$${LANGUAGE}/pdf; \
 		cd $(CURDIR)/build/$${LANGUAGE}/pdf; \
 		dblatex --style=db2latex ../index.xml -o live-manual.pdf; \
+		mkdir -p $(CURDIR)/build/$${LANGUAGE}/txt; \
+		cd $(CURDIR)/build/$${LANGUAGE}/txt; \
+		xsltproc --nonet --novalid --xinclude $(CURDIR)/xsl/txt.xsl ../index.xml | w3m -cols 65 -dump -T text/html > live-manual.txt; \
 	done
 
 autobuild: clean build

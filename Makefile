@@ -77,7 +77,7 @@ install:
 	for LANGUAGE in $(LANGUAGES); \
 	do \
 		mkdir -p $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}; \
-		cp -a build/$${LANGUAGE}/html build/$${LANGUAGE}/html-single/* build/$${LANGUAGE}/pdf/* build/$${LANGUAGE}/txt/* $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}; \
+		cp -a build/$${LANGUAGE}/html build/$${LANGUAGE}/html-single/* build/$${LANGUAGE}/pdf/* build/$${LANGUAGE}/txt/* build/$${LANGUAGE}/xml/* $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}; \
 	done
 
 	ln -s en/html $(DESTDIR)/usr/share/doc/live-manual/html

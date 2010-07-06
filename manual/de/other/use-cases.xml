@@ -3,7 +3,7 @@
 <chapter id="use-cases">
   <title>Use Cases</title>
   <para>This chapter is for users to document their use cases with Debian Live.</para>
-  <sect1 id="vnc-kiosk-client">
+  <sect1 id="vnc-kiosk">
     <title>VNC Kiosk Client</title>
     <para>Create an image with <filename>live-helper</filename> to boot directly to a
 VNC server.</para>
@@ -31,6 +31,105 @@ something similar to the below: <screen> #!/bin/sh /usr/bin/metacity &amp; /usr/
       </listitem>
       <listitem>
         <para>Build the image: <screen># lh build</screen> </para>
+      </listitem>
+      <listitem>
+        <para>Enjoy.</para>
+      </listitem>
+    </itemizedlist>
+  </sect1>
+  <sect1 id="vmware-player">
+    <title>VMWare-Player Sessions</title>
+    <para>Create an image with <filename>live-helper</filename> to boot directly to a
+specifiv VMWare session.</para>
+    <itemizedlist>
+      <listitem>
+        <para>Make a build directory: <screen>$ mkdir VMWare-Player</screen> </para>
+      </listitem>
+      <listitem>
+        <para>Move to the build directory: <screen>$ cd VMWare-Player</screen> </para>
+      </listitem>
+      <listitem>
+        <para>Example to config the build directory to include gdm metacity
+xtightvncviewer: <screen>$ lh config --apt apt \
+	--apt-recommends disabled \
+	--archive-areas "main" \
+	--binary-images iso \
+	--binary-indices none \
+	--syslinux-menu vesamenu \
+	--bootappend-live "persistent quickreboot" \
+	--bootappend-install "-- plainroot persistent video=vesa:ywrap,mtrr vga=788 quickreboot quiet live-config" \
+	--debian-installer live \
+	--distribution lenny \
+	--hostname vmare-player-firmware \
+	--includes none \
+	--linux-flavours 686 \
+	--packages-lists "gnome-core" \
+	--packages "gcc gparted linux-headers-2.6-\${LH_LINUX_FLAVOURS} live-config-staging make metacity rsync wireless-tools" \
+	--repositories live.debian.net \
+	--win32-loader disabled
+          </screen>
+        </para>
+      </listitem>
+      <listitem>
+        <para>Create the 01-vmware-player hook: <screen>$ touch config/chroot_local-hooks/01-vmware-player.sh</screen> </para>
+      </listitem>
+     <listitem>
+        <para>Edit the 01-vmware-player hook to launch the VMWare-Player. The hook should
+look something like the below: <screen>
+#!/bin/sh
+_URL="http://archive.debian-maintainers.org/vmware/other/vmware-player/"
+_VMPLAYER_VERSION="VMware-Player.i386.bundle"
+echo "I: Starting script for install of VMWare Player."
+cd /root
+echo "I: Beginning download of ${_VMPLAYER_VERSION} from ${_URL} ."
+wget ${_URL}${_VMPLAYER_VERSION}
+echo "I: Starting install of VMWare Player."
+sh /root/${_VMPLAYER_VERSION}
+echo "I: Cleaning up the VMWare Player download."
+rm /root/${_VMPLAYER_VERSION}
+#echo "I: Starting interactive shell."
+#bash
+
+          </screen>
+        </para>
+      </listitem>
+      <listitem>
+        <para>Build the image (note that during the build the VMWare-Player will prompt
+you to install or cancel): <screen># lh build</screen> </para>
+      </listitem>
+      <listitem>
+        <para>After the build you will have an image you can boot live or install as
+firmware. The package live-config-staging is the package that installs the
+ability to utilize the VMWare-Player by calling live-config.vmware-player as
+a boot parameter in the following form: <screen>live-config.vmware-player=ACTION:IMAGEPATH:VMXNAME</screen>
+Notes from the 900-vmware-player file are as follows: <screen># The script tests for boot parameter of
+# live-config.vmware-player=ACTION:IMAGEPATH:VMXNAME
+#
+# ACTION: The operation to perform on the workstation (none|scratch)
+# IMAGEPATH: The folder path to the VMware image you want to run.
+# VMXNAME: The name of the VMware image you want to run.
+#
+# Notes:To use this file with WMWare images you will need to have a few things
+# setup:
+#
+# 1. The VMware Player needs to be installed in the image.
+# 2. This script uses (s|h)da1 for writing image data, and is used as a scratch
+#    space. This scratch space should be a file system with linux permissions
+#    such as ext2.
+# 3. VMware image(s) should be in a mounted folder and setup as follows:
+#    - Image(s) set to snapshot mode.
+#    - For each image, the image folder needs to have a file called
+#      image-release with a variable CRELEASE. An example: CRELEASE="1.0.0"
+#
+# The image-release file is used by the image maintainer and this script to tell
+# workstation(s) using a given image, to erase locally stored vmware image files
+# and setup with the newly configure image. The operation of erasing locally
+# stored vmare image files, is referred to as a scratch.
+          </screen>
+        </para>
+      </listitem>
+      <listitem>
+        <para>Enjoy.</para>
       </listitem>
     </itemizedlist>
   </sect1>

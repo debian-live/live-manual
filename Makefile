@@ -26,20 +26,22 @@ build:
 
 	for LANGUAGE in $(LANGUAGES); \
 	do \
-		cp -a $(CURDIR)/manual/$${LANGUAGE} $(CURDIR)/build; \
+		mkdir -p $(CURDIR)/build/$${LANGUAGE}/xml; \
+		cd $(CURDIR)/manual/$${LANGUAGE}; \
+		xsltproc --output $(CURDIR)/build/$${LANGUAGE}/xml/live-manual.xml --nonet --novalid --xinclude $(CURDIR)/xsl/identity.xsl index.xml; \
 		mkdir -p $(CURDIR)/build/$${LANGUAGE}/html; \
 		cd $(CURDIR)/build/$${LANGUAGE}/html; \
-		xsltproc --nonet --novalid --xinclude $(CURDIR)/xsl/html.xsl ../index.xml; \
+		xsltproc --nonet --novalid --xinclude $(CURDIR)/xsl/html.xsl ../xml/live-manual.xml; \
 		mkdir -p $(CURDIR)/build/$${LANGUAGE}/html-single; \
 		cd $(CURDIR)/build/$${LANGUAGE}/html-single; \
-		xsltproc --nonet --novalid --xinclude $(CURDIR)/xsl/html-single.xsl ../index.xml; \
+		xsltproc --nonet --novalid --xinclude $(CURDIR)/xsl/html-single.xsl ../xml/live-manual.xml; \
 		mv $(CURDIR)/build/$${LANGUAGE}/html-single/index.html $(CURDIR)/build/$${LANGUAGE}/html-single/live-manual.html; \
-		mkdir -p $(CURDIR)/build/$${LANGUAGE}/txt; \
-		cd $(CURDIR)/build/$${LANGUAGE}/txt; \
-		xsltproc --nonet --novalid --xinclude $(CURDIR)/xsl/txt.xsl ../index.xml | w3m -cols 65 -dump -T text/html > live-manual.txt; \
 		mkdir -p $(CURDIR)/build/$${LANGUAGE}/pdf; \
 		cd $(CURDIR)/build/$${LANGUAGE}/pdf; \
-		dblatex --style=db2latex ../index.xml -o live-manual.pdf; \
+		dblatex --style=db2latex ../xml/live-manual.xml -o live-manual.pdf; \
+		mkdir -p $(CURDIR)/build/$${LANGUAGE}/txt; \
+		cd $(CURDIR)/build/$${LANGUAGE}/txt; \
+		xsltproc --nonet --novalid --xinclude $(CURDIR)/xsl/txt.xsl ../xml/live-manual.xml | w3m -cols 65 -dump -T text/html > live-manual.txt; \
 	done
 
 autobuild: clean build
@@ -75,7 +77,7 @@ install:
 	for LANGUAGE in $(LANGUAGES); \
 	do \
 		mkdir -p $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}; \
-		cp -a build/$${LANGUAGE}/html build/$${LANGUAGE}/html-single/* build/$${LANGUAGE}/pdf/* build/$${LANGUAGE}/txt/* $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}; \
+		cp -a build/$${LANGUAGE}/html build/$${LANGUAGE}/html-single/* build/$${LANGUAGE}/pdf/* build/$${LANGUAGE}/txt/* build/$${LANGUAGE}/xml/* $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}; \
 	done
 
 	ln -s en/html $(DESTDIR)/usr/share/doc/live-manual/html

@@ -47,15 +47,15 @@
   </sect2>
   <sect2 id="hooks">
     <title>Hooks</title>
-    <para>FIXME.</para>
+    <para>Hooks allow commands to be performed in the chroot and binary stages of the build in order to customize the image.
     <para>Enabling hooks</para>
     <sect3 id="chroot-local-hooks">
       <title>Live/chroot local hooks</title>
-      <para>FIXME.</para>
+      <para>To run commands in the chroot stage, create a hook script containing the commands in the <filename>config/chroot_local-hooks</filename> directory. The hook will run in the chroot after the rest of your chroot configuration has been applied, so remember to ensure your configuration includes all packages and files your hook needs in order to run. See the example chroot hook scripts for various common chroot customization tasks provided in <filename>/usr/share/live-helper/examples/hooks</filename> which you can copy or symlink to use them in your own configuration.</para>
     </sect3>
     <sect3 id="binary-local-hooks">
       <title>Binary local hooks</title>
-      <para>FIXME.</para>
+      <para>To run commands in the binary stage, create a hook script containing the commands in the <filename>config/binary_local-hooks</directory>. The hook will run after all other binary helpers are run, but before binary_checksums, the very last binary helper.  The commands in your hook do not run in the chroot, so take care to not modify any files outside of the build tree, or you may damage your build system!  See the example binary hook scripts for various common binary customization tasks provided in <filename>/usr/share/live-helper/examples/hooks</filename> which you can copy or symlink to use them in your own configuration.</para>
     </sect3>
   </sect2>
   <sect2 id="debconf-preseed">

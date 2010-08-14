@@ -1,0 +1,86 @@
+B~ Howtos
+
+1~ Howtos
+
+2~ ISO
+
+Generating a Debian Live CD is very simple. You need to have live-helper (package available in Debian sid and lenny), and Debootstrap (or cdebootstrap) from etch or newer.
+
+3~ Install live-helper
+
+#{apt-get install live-helper}#
+
+3~ Configure the current working directory with lh_config
+
+code{
+
+lh_config -b iso -a $ARCH
+
+}code
+
+where #{$ARCH}# is the intended architecture (i.e. - i386 or amd64).
+
+#{-b}# flag is used to be sure to obtain image in ISO format.
+
+3~ Build the image with lh_build:
+
+Execute lh_build as root: #{lh_build}#
+
+The command above will create the basic image, containing just the Debian standard system (with no X at all).
+
+If you want to have any of the Desktop environments on your livecd, #{ls /usr/share/live-helper/lists}# will show a number of available package Lists to choose from, e.g. #{lh_config -p gnome-desktop}#
+
+More examples are listed at DebianLive/Examples.
+
+See packages for help configuring a local Debian Mirror and other aspects of the live system.
+% FIXME: <xref linkend="packages"/>
+
+3~ Test the image
+
+If you have qemu installed, you can boot the image with:
+
+code{
+
+qemu -cdrom binary.iso
+
+}code
+
+If you have also kqemu installed, you can add #{-kernel-kqemu}#
+
+2~ ISO_(multiarch)
+
+Multiple machine boot CDs can be created with the following manual procedure. This procedure has been successfully used to create a single CD which is bootable on alpha, i386, pmax, and sparc. It should be possible to also make the CD bootable on macppc, vax and on sun2, sun3 and sun3x.
+
+To create a CD which is bootable by multiple architectures, use the following steps in this order. Please note that the order is critical.
+
+Make sure you have all the required files including the various kernels and boot programs listed in the individual machine sections.
+
+Include a directory somewhere in the cdsources directory called mdec.pmax and include the pmax bootxx_cd9660 file there. For example, /cdsources/usr/mdec.pmax/bootxx_cd9660.
+
+Include a directory somewhere in the cdsources directory called mdec.vax and include the vax xxboot file there. For example, #{cdsources/usr/mdec.vax/xxboot.}#
+
+Include the macppc ofwboot.xcf bootloader in /cdsources.
+
+Create an i386 bootable image. #{sh mkisofs -v -v -o output.iso -b i386/installation/floppy/boot-big.fs \ -c boot.catalog -l -J -r -L /cdsources 2>&1 | tee /tmp/mkisofs.log exit}#
+
+Note: The appearance of the -v flag twice is required. If you are making a bootable CD for an Open Firmware 3 macppc model, make sure to include -hfs -part in the parameters for mkisofs.
+
+Run mksunbootcd on a NetBSD/sparc machine to install sparc and sun2/sun3 bootblocks. Alternatively, install the sysutils/mksunbootcd package on your favorite NetBSD machine. #{mksunbootcd output.iso boot-sun4.fs boot-sun4c.fs boot-sun4m.fs boot-sun3.fs}#
+
+Run the installboot(8) program targeted for NetBSD/pmax to install the pmax bootblocks. Note that in order to coexist with other NetBSD boot blocks, the pmax boot block is appended to the end of the ISO file system.
+
+#{installboot -m pmax -v -o append,sunsum output.iso /tmp/mdec.pmax/bootxx_cd9660}#
+
+The -o append,sunsum option appends the first stage boot block to the end of the ISO file system, and restores the checksum used when booting on a sun.
+
+Run the installboot(8) program targeted for NetBSD/vax to install the vax bootblocks. Note that in order to coexist with other NetBSD boot blocks, the vax boot block is appended to the end of the ISO file system.
+
+installboot -m vax -v -o append,sunsum output.iso /tmp/mdec.vax/xxboot
+
+(See the pmax entry above for an explanation of the flags).
+
+Run the installboot(8) program targeted for NetBSD/alpha to install the alpha bootblocks.
+
+#{installboot -m alpha -v -o append,sunsum output.iso /tmp/mdec.alpha/bootxx_cd9660}#
+
+Note: The alpha installboot must occur after the others, because currently it's the only machine dependent back-end for installboot(8) that can calculate the alpha checksum. (See the pmax entry above for an explanation of the flags).

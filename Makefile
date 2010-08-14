@@ -2,50 +2,36 @@
 
 SHELL := sh -e
 
-LANGUAGES = en de
+LANGUAGES = en
 
 all: test build
 
 test:
 	@echo "Checking for syntax errors... [not implemented yet - FIXME]"
-	@#xmllint --nonet --noout --postvalid --xinclude manual/en/index.xml || true
-
 	@echo "Checking for spelling errors... [not implemented yet - FIXME]"
 
 tidy:
-	for FILE in manual/en/*.xml manual/en/*/*.xml xsl/*.xsl; \
+	# Removing useless whitespaces at EOL
+	for FILE in manual/en/*.ssm manual/en/*.ssi; \
 	do \
-		sed -i -e 's|^[ \t]*||' -e 's|[ \t]*$$||' $${FILE}; \
-		echo `cat $${FILE}` > $${FILE}.tmp; \
-		xmllint --format --noblanks --output $${FILE} $${FILE}.tmp; \
-		rm -f $${FILE}.tmp; \
+		sed -i -e 's|[ \t]*$$||' $${FILE}; \
 	done
 
 build:
-	mkdir -p build
-
+	# FIXME: sisu-concordance sisu-pg sisu-sqlite
 	for LANGUAGE in $(LANGUAGES); \
 	do \
-		mkdir -p $(CURDIR)/build/$${LANGUAGE}/xml; \
 		cd $(CURDIR)/manual/$${LANGUAGE}; \
-		xsltproc --output $(CURDIR)/build/$${LANGUAGE}/xml/live-manual.xml --nonet --novalid --xinclude $(CURDIR)/xsl/identity.xsl index.xml; \
-		mkdir -p $(CURDIR)/build/$${LANGUAGE}/html; \
-		cd $(CURDIR)/build/$${LANGUAGE}/html; \
-		xsltproc --nonet --novalid --xinclude $(CURDIR)/xsl/html.xsl ../xml/live-manual.xml; \
-		mkdir -p $(CURDIR)/build/$${LANGUAGE}/html-single; \
-		cd $(CURDIR)/build/$${LANGUAGE}/html-single; \
-		xsltproc --nonet --novalid --xinclude $(CURDIR)/xsl/html-single.xsl ../xml/live-manual.xml; \
-		mv $(CURDIR)/build/$${LANGUAGE}/html-single/index.html $(CURDIR)/build/$${LANGUAGE}/html-single/live-manual.html; \
-		mkdir -p $(CURDIR)/build/$${LANGUAGE}/pdf; \
-		cd $(CURDIR)/build/$${LANGUAGE}/pdf; \
-		dblatex --style=db2latex ../xml/live-manual.xml -o live-manual.pdf; \
-		mkdir -p $(CURDIR)/build/$${LANGUAGE}/txt; \
-		cd $(CURDIR)/build/$${LANGUAGE}/txt; \
-		xsltproc --nonet --novalid --xinclude $(CURDIR)/xsl/txt.xsl ../xml/live-manual.xml | w3m -cols 65 -dump -T text/html > live-manual.txt; \
+		sisu-epub live-manual.ssm; \
+		sisu-html live-manual.ssm; \
+		sisu-odf live-manual.ssm; \
+		sisu-pdf live-manual.ssm; \
+		sisu-txt live-manual.ssm; \
 	done
 
 autobuild: clean build
-	rm -f build/*/*.xml
+	rm -f build
+
 	cp html/* build
 
 	for LANGUAGE in $(LANGUAGES); \
@@ -76,23 +62,24 @@ install:
 
 	for LANGUAGE in $(LANGUAGES); \
 	do \
-		mkdir -p $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}; \
-		cp -a build/$${LANGUAGE}/html build/$${LANGUAGE}/html-single/* build/$${LANGUAGE}/pdf/* build/$${LANGUAGE}/txt/* build/$${LANGUAGE}/xml/* $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}; \
+		mkdir -p $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}/html; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/epub/live-manual.epub $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/[0-9]*.html manual/$${LANGUAGE}/build/$${LANGUAGE}/index.html $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}/html; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/opendocument.odt $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}/live-manual.odt; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/doc.html $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}/live-manual.html; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/plain.txt $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}/live-manual.txt; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/landscape.a4.pdf $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}/live-manual.landscape-a4.pdf; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/portrait.a4.pdf $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}/live-manual.portrait-a4.pdf; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/landscape.letter.pdf $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}/live-manual.landscape-letter.pdf; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/portrait.letter.pdf $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}/live-manual.portrait-letter.pdf; \
 	done
-
-	ln -s en/html $(DESTDIR)/usr/share/doc/live-manual/html
-	ln -s en/live-manual.html $(DESTDIR)/usr/share/doc/live-manual/live-manual.html
-	ln -s en/live-manual.pdf.gz $(DESTDIR)/usr/share/doc/live-manual/live-manual.pdf.gz
-	ln -s en/live-manual.txt.gz $(DESTDIR)/usr/share/doc/live-manual/live-manual.txt.gz
 
 uninstall:
 	rm -rf $(DESTDIR)/usr/share/doc/live-manual
 
 clean:
-	rm -rf build
+	rm -rf manual/*/build
 
 distclean: clean
 
 rebuild: distclean build
-
-.PHONY: build

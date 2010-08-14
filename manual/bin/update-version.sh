@@ -8,7 +8,6 @@ YEAR="$(LC_ALL=C date +%Y)"
 
 echo "Updating version information..."
 
-sed -i  -e "s|<!ENTITY pubdate.*$|<!ENTITY pubdate \"${DATE}\">|" \
-	-e "s|<!ENTITY releaseinfo.*$|<!ENTITY releaseinfo \"${VERSION}\">|" \
-	-e "s|<!ENTITY year.*$|<!ENTITY year \"${YEAR}\">|" \
-en/index.xml
+sed -i  -e "s|^ :published:.*$| :published: ${DATE}|" \
+	-e "s|(C) 2006-.*|(C) 2006-${YEAR} Debian Live Project|" \
+en/live-manual.ssm

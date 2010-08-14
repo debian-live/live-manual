@@ -1,0 +1,400 @@
+:B~ The basics
+
+1~ The basics
+
+This chapter contains a brief overview of the build process as well as containing instructions on how to boot the various binary image types.
+
+2~ What is a live system?
+
+A live system usually means an OS booted on a computer from a removable medium (such as CD-ROM, USB stick, or network), ready to use without any installation on the usual drive(s), with an auto-configuration done at runtime (see terms).
+% FIXME: <xref linkend="terms"/>
+
+With Debian Live, it's a Debian GNU/Linux OS, built for one of the supported architectures (currently amd64, i386, powerpc and sparc). It is made from following parts:
+
+_* Linux kernel
+
+_* The Linux image, usually named #{vmlinuz*}#
+
+_* *{Initial RAM disk image (initrd)}*: RAM disk setup for the Linux boot, containing modules possibly needed to mount the filesystem's image and some scripts to do it.
+
+_* *{System image}*: The OS filesystem image. Debian Live uses SquashFS, a compressed filesystem, to minimize its image size. Note that it's read-only. So, during boot the Debian Live system will use a RAM disk and 'union' mechanism to enable writing files within the running system. However, all modifications will be lost upon shutdown unless optional persistence partition(s) are used. (See persistence.)
+% FIXME: <xref linkend="persistence"/>
+
+_* *{Bootloader}*: A small piece of code, crafted to boot up from the chosen media, possibly presenting a prompt or menu to allow selection of options/configuration. It then loads the Linux kernel and its initrd to run with an associated filesystem image. Different solutions can be used depending on the target media and format of the filesystem containing the previous components: Isolinux to boot from a CD or DVD in ISO9660 format, syslinux for HDD or USB drive booting from a VFAT partition, GRUB for ext2/3 partition, pxelinux for PXE netboot, etc.
+
+_* The Debian Live tools will build the system image from your specifications, setup a Linux kernel and its initrd, a bootloader to run them, all in one media-dependant format(ISO9660 image, disk image, etc.)
+
+2~ First steps: building an ISO image
+
+The following sequence of helper commands, provided by live-helper, will create a basic ISO image containing just the Debian standard system without X.org. It is suitable for burning to CD or DVD media.
+
+First, we run the lh config helper command which will create a "config/" hierarchy in the current directory for use by other helper commands:
+
+code{
+
+$ lh config
+
+}code
+
+By passing no parameters to lh config we indicated that we wish to use the defaults. This will create an image of type binary (see lh-config).
+% FIXME: <xref linkend="lh-config"/>
+
+Now that we have a "config/" hierarchy, we may build the image with the lh build helper command:
+
+code{
+
+# lh build
+
+}code
+
+This process can take a while, depending on the speed of your network connection (see lh-build).
+% FIXME: <xref linkend="lh-build"/>
+
+3~ Testing an ISO image with Qemu
+
+Testing an ISO is simple:
+
+code{
+
+# apt-get install qemu $ qemu -cdrom binary.iso
+
+}code
+
+3~ Testing an ISO image with virtualbox-ose
+
+In order to test the ISO with virtualbox-ose:
+
+code{
+
+# apt-get install virtualbox-ose
+
+}code
+
+and either install
+
+_* the modules package for a stock kernel eg virtualbox-ose-modules-2.6.26-1-486 or
+
+_* the modules package compiled for your kernel using module-assistant from the package virtualbox-ose-source
+
+Run Virtualbox:
+
+For example, in Gnome Applications -> System Tools -> VirtualBox OSE
+
+Create a virtual machine from your Live ISO
+
+To create a virtual machine "mylive" from A CDROM ISO "binary.iso" in VirtualBox:
+
+Machine -> New
+
+In the Wizard: FIXME
+
+3~ Testing an ISO image with VMware Workstation
+
+In order to test the ISO with VMware Workstation:
+
+Run VMware Workstation:
+
+Click on Edit virtual machine settings in the VM summary page
+
+Then, click on the CD-ROM device and select Use ISO image. Remeber to connect the CD-ROM device at power on and remeber to adjust the boot order in the bios.
+
+3~ Burning an ISO image to a physical medium
+
+Burning an ISO image is easy:
+
+code{
+
+# apt-get install wodim
+$ wodim binary.iso
+
+}code
+
+2~ Building an USB/HDD image
+
+The following sequence of helper commands will create a basic USB/HDD image containing just the Debian standard system without X.org. It is suitable for booting from USB sticks, USB hard drives, and various other portable storage devices.
+
+Note if you created an iso image with the previous example, you will need to clean up your working directory with the lh clean helper command (see lh-clean):
+% FIXME: <xref linkend="lh-clean"/>
+
+code{
+
+$ lh clean --binary
+
+}code
+
+Run the lh config helper command with the parameters to configure the "config/" hierarchy to create a USB/HDD image type:
+
+code{
+
+$ lh config -b usb-hdd
+
+}code
+
+Now build the image with the lh build helper command:
+
+code{
+
+# lh build
+
+}code
+
+3~ Copying USB/HDD image to a USB stick
+
+The generated binary image contains a VFAT partition and the syslinux bootloader, ready to be directly written on an USB stick. Plug in an USB stick with a size larger than that of binary.img and type:
+
+code{
+
+$ dd if=binary.img of=${USBSTICK}
+
+}code
+
+where #{${USBSTICK}}# is the device file of your key, like #{/dev/sdb}# (not a partition like #{/dev/sdb1}#!); you can find the right device name by looking in #{dmesg}#'s output after plugging in the stick, for example.
+
+*{This will definitely overwrite any previous contents on your stick!}*
+
+3~ Testing a USB/HDD image with Qemu
+
+code{
+
+# apt-get install qemu $ qemu -hda binary.img
+
+}code
+
+3~ Testing an USB/HDD image with VMware Workstation
+
+In order to test the USB/HDD image with VMware Workstation:
+
+Run VMware Workstation:
+
+Write the image to an usb stick. In VMware, click on Edit virtual machine settings in VM summary page. Then, add a new physical harddisk device and enter the device node of your usb stick.
+
+3~ Using the space left on a USB stick
+
+If you want to use the remaining free space after you have installed the binary.img, you can use a partitioning tool such as gparted or parted to create a new partition on the stick. The first partition will be used by the Debian Live system.
+
+code{
+
+# gparted ${USBSTICK}
+
+}code
+
+Ater the creation of the partition you have to create a filsystem on it. One possible choice would be ext2 (ext3 isn't recommended because the journaling causes too many writes to the stick).
+
+code{
+
+# mkfs.ext2 ${USBSTICK}
+
+}code
+
+If you want to use this data partition with Windows, use FAT32.
+
+code{
+
+# mkfs.vfat -F 32
+
+}code
+
+*{Remember: Every time you install a new binary.img on the stick, all your data will be lost because the image includes a complete partition table.}*
+
+FIXME: Describe installing Debian Live to a partition (e.g. /dev/sdc1) AND using a bootloader to boot this.
+
+2~ Building a netboot image
+
+The following sequence of helper commands will create a basic netboot image containing the Debian standard system without X.org. It is suitable for booting over the network.
+
+Note if you performed any previous examples, you will need to clean up your working directory with the lh clean helper command:
+
+code{
+
+$ lh clean --binary
+
+}code
+
+Run the lh config helper command with the parameters to configure the "config/" hierarchy to create our netboot image:
+
+code{
+
+$ lh config -b net --net-root-path "/srv/debian-live" --net-root-server "192.168.0.1"
+
+}code
+
+In contrast with the ISO and USB hdd images, netbooting does not support serving a filesystem image with the client so the files must be served via NFS. The net-root-path and net-root-server options specify the location and server, respectively, of the NFS server where the filesytem image will be located at boot-time.
+
+Now build the image with the lh build helper command:
+
+code{
+
+# lh build
+
+}code
+
+In a network boot the client runs a small piece of software, which usually resides on the EPROM of the Ethernet card. This program sends a DHCP request to get an IP address and information about what to do next. Typically the next step is getting a higher level boot loader via the TFTP protocol. That could be Grub, PXELINUX, or even boot directly to an operating system like Linux.
+
+For example, if you unpack the generated binary-net.tar.gz archive in the /srv/debian-live directory, you'll find the filesystem image in live/filesystem.squashfs and the kernel, initrd and PXEÂ Linux bootloader in tftpboot/debian-live/i386.
+
+We must now configure three services on the server to enable netboot:
+
+3~ DHCP server
+
+We must configure our network's DHCP server to be sure to give an IP address to the computer netbooting, and to advertise the location of the PXE bootloader.
+
+Here is an example for inspiration, written for the ISC DHCP server (package dhcp3-server) in the /etc/dhcp3/dhcpd.conf configuration file;
+
+code{
+# Options DHCP spécifiques à Pxelinux:
+option space pxelinux;
+option pxelinux.magic      code 208 = string;
+option pxelinux.configfile code 209 = text;
+option pxelinux.pathprefix code 210 = text;
+option pxelinux.reboottime code 211 = unsigned integer 32;
+
+
+subnet 192.168.1.0 netmask 255.255.255.0 {   # 192.168.1.0/24
+
+  # IP addresses available for guests
+  range 192.168.1.100 192.168.1.149;
+
+  # allow booting from the net
+  allow bootp;
+
+  # for net booting, server where the first file to be loaded (by TFTP
+  # protocol) ("filename" following definition) lies : so the TFTP
+  # server's name.
+  next-server myserver;
+
+  # net boot configuration for guests with a PXE client :
+  if substring (option vendor-class-identifier, 0, 9) = "PXEClient" {
+    # Note : all files for PXE are relatives to the TFTP server's root
+    # path, as usually defined in /etc/inetd.conf.
+
+    # PXE boot loader (first program to be loaded, by TFTP)
+    filename "pxelinux.0";
+
+    # describe some specific pxelinux's options through DHCP options :
+    site-option-space "pxelinux";
+    option pxelinux.magic f1:00:74:7e;
+    if exists dhcp-parameter-request-list {
+      # Always send the PXELINUX options (specified in hexadecimal)
+      option dhcp-parameter-request-list = concat(option dhcp-parameter-request-list,d0,d1,d2,d3);
+    }
+
+    # For a PXE boot menu, different versions are available : simple
+    # text, text with curses, graphic (VESA)
+    #option pxelinux.configfile "pxelinux/config_simple";
+    #option pxelinux.configfile "pxelinux/config_curses";
+    option pxelinux.configfile "pxelinux/config_vesa";
+
+    # automatically reboot after 10 minutes of no activity
+    option pxelinux.reboottime 600;
+  }
+}
+
+}code
+
+3~ TFTPd server
+
+This serves the kernel and initial ramdisk to the system at run-time.
+
+You should install the tftpd-hpa package. It can serve all files contained inside a root directory, usually /var/lib/tftpboot/, as defined with its -s option. To let it serve files inside /srv/debian-live/tftpboot, modify its start definition in /etc/inetd.conf with:
+
+code{
+
+tftp dgram udp wait root /usr/sbin/in.tftpd /usr/sbin/in.tftpd -s /srv/debian-live/tftpboot -r blksize -v -v
+
+}code
+
+and reload the super server with /etc/init.d/openbsd-inetd reload.
+
+3~ NFS server
+
+Once the guest computer has downloaded and booted a Linux kernel and loaded its initrd, it will try to mount the Live filesystem image through a NFS server.
+
+You should install the nfs-kernel-server package -- nfs-user-server does not function correctly with netboot.
+
+Then, make the filesystem image available through NFS by adding a line like the following to /etc/exports:
+
+code{
+
+/srv/debian-live *(ro,async,subtree_check,no_root_squash)
+
+}code
+
+and tell the NFS server about this new export with the following command:
+
+code{
+
+# exportfs -rv
+
+}code
+
+Setting up these three services can be a little tricky. You might need some patience to get all of them working together. The Debian Installer Manual's TFTP Net Booting section at http://d-i.alioth.debian.org/manual/en.i386/ch04s05.html might help as that process is very similar.
+
+3~ Netboot testing HowTo
+
+Netboot image creation is made easy with live-helper magic, but testing the images on physical machines can be really time consuming.
+
+To make our life easier, we can use virtualization. There are two solutions.
+
+3~ VMWare Player
+
+_* Install VMWare Player ("free as in beer" edition)
+
+_* Create a PXETester directory, and create a text file called pxe.vwx inside
+
+_* Paste this text inside:
+
+code{
+
+#!/usr/bin/vmware
+config.version = "8"
+virtualHW.version = "4"
+memsize = "512"
+MemAllowAutoScaleDown = "FALSE"
+
+ide0:0.present = "FALSE"
+ide1:0.present = "FALSE"
+floppy0.present = "FALSE"
+sound.present = "FALSE"
+tools.remindInstall = "FALSE"
+
+ethernet0.present = "TRUE"
+ethernet0.addressType = "generated"
+
+displayName = "Test Boot PXE"
+guestOS = "other"
+
+ethernet0.generatedAddress = "00:0c:29:8d:71:3b"
+uuid.location = "56 4d 83 72 5c c4 de 3f-ae 9e 07 91 1d 8d 71 3b"
+uuid.bios = "56 4d 83 72 5c c4 de 3f-ae 9e 07 91 1d 8d 71 3b"
+ethernet0.generatedAddressOffset = "0"
+
+}code
+
+_* You can play with this configuration file (i.e. change memory limit to 256)
+
+_* Double click on this file (or run VMWare player and selecet this file).
+
+_* When running just press space if that strange question comes up...
+
+3~ Qemu
+
+_* Install qemu, bridge-utils, sudo.
+
+Edit /etc/qemu-ifup:
+
+code{
+
+#!/bin/sh
+sudo -p "Password for $0:" /sbin/ifconfig $1 172.20.0.1
+echo "Executing /etc/qemu-ifup"
+echo "Bringing up $1 for bridged mode..."
+sudo /sbin/ifconfig $1 0.0.0.0 promisc up
+echo "Adding $1 to br0..."
+sudo /usr/sbin/brctl addif br0 $1
+sleep 2
+
+}code
+
+Get, or build a grub-floppy-netboot (in the svn).
+
+Launch qemu with "-net nic,vlan=0 -net tap,vlan=0,ifname=tun0"

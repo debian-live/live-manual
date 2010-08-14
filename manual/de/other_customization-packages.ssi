@@ -1,0 +1,289 @@
+:B~ Customising package installation
+
+1~ Customising package installation
+
+_* Selecting additional packages to be installed
+
+_* Installing modified packages
+
+2~ Package sources
+
+3~ Debian repositories
+
+To set a local mirror (used to ''build'' the live-cd)
+
+code{
+
+$ lh config --mirror-bootstrap "http://local.intra.net/debian/"
+--mirror-chroot "http://local.intra.net/debian/"
+
+}code
+
+The generic mirror is added to the live-system's /etc/apt/sources.list.
+
+code{
+
+$ lh config --mirror-binary "http://ftp.debian.org/debian/"
+
+}code
+
+Note: It is not used for building the live-cd but to install new software
+while using the live-cd.
+
+It can be disabled by setting binary indices parameter to disabled
+
+code{
+
+$ lh config --binary-indices disabled
+
+}code
+
+Note: the same applies for mirror chroot security and mirror binary security
+
+code{
+
+$ lh config --mirror-chroot-security {URL} $ lh config
+--mirror-binary-security {URL}
+
+}code
+
+3~ Own repository
+
+To add more repositories (e.g. backports, experimental packages, etc.),
+create #{config/chroot_sources/your-cdd-repo.{chroot,binary}}# file.
+
+e.g. #{config/chroot_sources/live.chroot}# allows you to install packages
+from the debian live snapshot repository at live-cd build time (you have to
+add the packages in your package list):
+
+code{
+
+deb http://live.debian.net/ sid-snapshots main contrib non-free
+
+}code
+
+If you add the line to #{config/chroot_sources/live.binary}# the repository
+will be added to your live-system's #{/etc/apt/sources.list}#.
+
+If such files exist, they will be picked up automatically.
+
+You can also put the gpg-key used to sign the repository into
+config/chroot_sources/foo.{binary,chroot}.gpg
+
+3~ Package installation
+
+You can elect to use either #{apt}# or #{aptitude}# when installing
+packages. Which utility is used is governed by the #{LH_APT}# variable in
+#{config/chroot}# or by the #{--apt}# argument to #{lh config}#:
+
+_* #{apt}#: Specifying a missing package causes package installation to
+fail, which may not be the desired behaviour. This is the default setting
+for building images for Lenny or later.
+
+_* #{aptitude}#: Specifying a missing package causes package installation to
+succeed, which may not be the desired behaviour. This is the default setting
+for building images for Etch.
+
+2~ Installing additional packages
+
+live-helper has a number of mechanisms for indicating that additional
+packages should be installed, including:
+
+_* The #{LH_PACKAGES}# variable
+
+_* Package lists
+
+_* Local packages (#{chroot_local-packages/}#)
+
+_* Tasks
+
+3~ The #{LH_PACKAGES}# variable
+
+To install additional packages, simply add them to the #{LH_PACKAGES}#
+variable in #{config/chroot}#. For example:
+
+code{
+
+LH_PACKAGES="package1 package2 package3 ... "
+
+}code
+
+You can also specify initial values on the command line:
+
+code{
+
+$ lh config --packages "package1 package2 package3"
+
+}code
+
+The behaviour of live-helper when specifying a package that does not exist
+is determined by your choice of APT utility. See package-installation for
+more details.  % FIXME: <xref linkend="package-installation"/>
+
+If you need to specify a large number of packages to be installed or you
+need flexibility regarding which packages to install, you should probably be
+using package lists. See package-lists for more information.  % FIXME: <xref
+linkend="package-lists"/>
+
+3~ Package lists
+
+Package lists are a powerful way of expressing which packages should be
+installed. live-helper ships with a number of predefined package lists which
+provide sensible default package selections for the GNOME and KDE desktop
+environments, as well as standard systems.
+
+To specify a package list, add the name of the list to the
+#{LH_PACKAGES_LISTS}# variable in #{config/chroot}#. For example:
+
+_* #{LH_PACKAGES_LISTS="gnome"}#: Package lists that are distributed with
+live-helper reside in the #{/usr/share/live-helper/lists}# directory.
+
+*{Local packages lists}*
+
+You may supplement the supplied lists using local package lists stored in
+#{config/chroot_local-packageslists}#.
+
+Package lists that exist in this directory always override package lists
+distributed with live-helper. This can cause undesired effects when.
+
+Note: live-helper 2.x change
+
+Any file with #{.list}# suffix in #{config/chroot_local-packageslists}# is
+automatically enabled, the variable LH_PACKAGES_LISTS should only be used
+referencing packages lists included in live-helper (at
+#{/usr/share/live-helper/lists/}#.
+
+*{Extending a provided package list using includes}*
+
+FIXME
+
+% code{ % % #include <gnome> % iceweasel % % }code
+
+The package lists that are included with live-helper make extensive use of
+includes. They are available to view in the #{/usr/share/live-helper/lists}#
+directory.
+
+*{Using conditionals inside packages lists}*
+
+FIXME
+
+code{
+
+#if ARCHITECTURE amd64 ia32-libs #endif
+
+}code
+
+or if #{LH_ARCHITECTURE}# is set to #{i386}# or #{amd64}#:
+
+code{
+
+#if ARCHITECTURE i386 amd64 memtest86+ #endif
+
+}code
+
+or if #{LH_SECTIONS}# contains either #{contrib}# or #{non-free}#:
+
+code{
+
+#if SECTIONS contrib non-free vrms #endif
+
+}code
+
+A conditional may surround an #{#include}# directive:
+
+code{
+
+#if ARCHITECTURE amd64 #include <gnome-full> #endif
+
+}code
+
+Any live-helper configuration variable that begins with #{LH_}# can be
+tested in this way.
+
+The nesting of conditionals is not supported.
+
+3~ Tasks
+
+FIXME
+
+2~ Installing modified or third-party packages
+
+Whilst it is against the philosophy of Debian Live, it may sometimes be
+necessary to build a Live system with modified versions of packages that are
+in the Debian repository. This may be to modify or support additional
+features, languages and branding, or even to remove elements of existing
+packages that are undesirable. Similarly, "third-party" packages may be used
+to add bespoke and/or proprietary functionality.
+
+This section does not cover advice regarding building or maintaining
+modified packages. Joachim Breitner's 'How to fork privately' method from
+http://www.joachim-breitner.de/blog/archives/282-How-to-fork-privately.html
+may be of interest, however. The creation of bespoke packages is covered in
+the Debian New Maintainers' Guide at http://www.debian.org/doc/maint-guide/
+and elsewhere.
+
+There are two ways of installing modified custom packages:
+
+_* #{chroot_local-packages}#
+
+_* Using a custom APT repository
+
+The #{chroot_local-packages}# is simpler to achieve and useful for "one-off"
+customisations but has a number of drawbacks, whilst using a custom APT
+repository is more time-consuming to set up.
+
+3~ Using #{chroot_local-packages}# to install custom packages
+
+To install a custom package, simply copy it to the
+#{config/chroot_local-packages}# directory. Packages that are inside this
+directory will be automatically installed into the live system during build
+- you do not need to specify them elsewhere.
+
+Packages *{must}* be named in the prescribed way. One simple way to do this
+is to use #{dpkg-name}#. FIXME
+
+Using #{chroot_local-packages}# for installation of custom packages has
+disadvantages:
+
+_* It is not possible to use secure APT
+
+_* You must install all appropriate packages in the
+#{config/chroot_local-packages}# directory
+
+_* It does not lend itself to storing Debian Live configurations in revision
+control
+
+3~ Using an APT repository to install custom packages
+
+FIXME
+
+Unlike using #{chroot_local-packages}#, when using a custom APT repository
+you must ensure that you specify the packages elsewhere. See lh-packages for
+details.  % FIXME: <xref linkend="lh-packages"/>
+
+Whilst it may seem unnecessary effort to create an APT repository to install
+custom packages, the infrastructure can be easily re-used at a later date to
+offer updates of the modified packages.
+
+3~ Custom packages and APT
+
+live-helper uses APT to install all packages into the live system so will
+therefore inherit behaviours from this program. One relevant example is that
+(assuming a default configuration) given a package available in two
+different repositories with different version numbers, APT will elect to
+install the package with the higher version number.
+
+Because of this, you may wish to increment the version number in your custom
+packages' #{debian/changelog}# files to ensure that your modified version is
+installed over one in the official Debian repositories. This may also be
+achieved by altering the live system's APT pinning preferences - see
+apt-preferences for more information.  % FIXME: <xref
+linkend="apt-preferences"/>
+
+3~ Altering APT preferences during Live system
+
+FIXME
+
+Whilst it may seem unnecessary effort to create an APT repository to install
+custom packages, the infrastructure can be easily re-used at a later date to
+offer updates of the modified package.

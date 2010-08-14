@@ -10,14 +10,9 @@ po4a.cfg:
 	echo "[po4a_langs] $(LANGUAGES)" > po4a.cfg
 	echo "[po4a_paths] pot/\$$master.pot \$$lang:po/\$$lang/\$$master.po" >> po4a.cfg
 
-	for FILE in en/*.xml; \
+	for FILE in en/*.ssm en/*.ssi; \
 	do \
-		echo "[type: docbook] $${FILE} \$$lang:\$$lang/$$(basename $${FILE})" >> po4a.cfg; \
-	done
-
-	for FILE in en/*/*.xml; \
-	do \
-		echo "[type: docbook] $${FILE} \$$lang:\$$lang/$$(basename $$(dirname $${FILE}))/$$(basename $${FILE})" >> po4a.cfg; \
+		echo "[type: text] $${FILE} \$$lang:\$$lang/$$(basename $${FILE})" >> po4a.cfg; \
 	done
 
 	echo "[type: xhtml] en/index.html.in \$$lang:\$$lang/index.html.in" >> po4a.cfg

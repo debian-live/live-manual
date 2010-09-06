@@ -33,7 +33,7 @@ autobuild: clean build
 	rm -rf build
 	cp -a html build
 
-	for LANGUAGE in $(LANGUAGES); \
+	for LANGUAGE in en $(shell cd manual/po && ls); \
 	do \
 		mkdir -p build/$${LANGUAGE}/html; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/epub/live-manual.epub build/$${LANGUAGE}; \

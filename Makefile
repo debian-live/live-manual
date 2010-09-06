@@ -88,5 +88,6 @@ clean:
 	rm -rf manual/*/build
 
 distclean: clean
+	rm -rf build
 
 rebuild: distclean build

@@ -30,16 +30,24 @@ build:
 	done
 
 autobuild: clean build
-	rm -f build
-
-	cp html/* build
+	rm -rf build
+	cp -a html build
 
 	for LANGUAGE in $(LANGUAGES); \
 	do \
-		cp html/* build/$${LANGUAGE}; \
+		mkdir -p build/$${LANGUAGE}/html; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/epub/live-manual.epub build/$${LANGUAGE}; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/[0-9]*.html manual/$${LANGUAGE}/build/$${LANGUAGE}/index.html build/$${LANGUAGE}/html; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/opendocument.odt build/$${LANGUAGE}/live-manual.odt; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/doc.html build/$${LANGUAGE}/live-manual.html; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/plain.txt build/$${LANGUAGE}/live-manual.txt; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/landscape.a4.pdf build/$${LANGUAGE}/live-manual.landscape-a4.pdf; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/portrait.a4.pdf build/$${LANGUAGE}/live-manual.portrait-a4.pdf; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/landscape.letter.pdf build/$${LANGUAGE}/live-manual.landscape-letter.pdf; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/portrait.letter.pdf build/$${LANGUAGE}/live-manual.portrait-letter.pdf; \
 		sed -e "s|@DATE_BUILD@|$(shell LC_ALL=C date -R)|" \
 		    -e "s|@DATE_CHANGE@|$(shell LC_ALL=C git log | grep -m1 Date | awk -FDate: '{ print $2 }' | sed -e 's|^ *||g')|" \
-		build/$${LANGUAGE}/index.html.in > build/$${LANGUAGE}/index.html; \
+		manual/$${LANGUAGE}/index.html.in > build/$${LANGUAGE}/index.html; \
 	done
 
 commit: tidy test
@@ -59,7 +67,6 @@ commit: tidy test
 	@echo "  * git push"
 
 install:
-
 	for LANGUAGE in $(LANGUAGES); \
 	do \
 		mkdir -p $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}/html; \

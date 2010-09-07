@@ -18,7 +18,7 @@ tidy:
 	done
 
 build:
-	# FIXME: sisu-concordance sisu-pg sisu-sqlite
+	@# FIXME: sisu-concordance sisu-pg sisu-sqlite
 	for LANGUAGE in $(LANGUAGES); \
 	do \
 		cd $(CURDIR)/manual/$${LANGUAGE}; \
@@ -67,18 +67,23 @@ commit: tidy test
 	@echo "  * git push"
 
 install:
+
 	for LANGUAGE in $(LANGUAGES); \
 	do \
-		mkdir -p $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}/html; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/epub/live-manual.epub $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/[0-9]*.html manual/$${LANGUAGE}/build/$${LANGUAGE}/index.html $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}/html; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/opendocument.odt $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}/live-manual.odt; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/doc.html $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}/live-manual.html; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/plain.txt $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}/live-manual.txt; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/landscape.a4.pdf $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}/live-manual.landscape-a4.pdf; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/portrait.a4.pdf $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}/live-manual.portrait-a4.pdf; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/landscape.letter.pdf $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}/live-manual.landscape-letter.pdf; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/portrait.letter.pdf $(DESTDIR)/usr/share/doc/live-manual/$${LANGUAGE}/live-manual.portrait-letter.pdf; \
+		mkdir -p $(DESTDIR)/usr/share/doc/live-manual/epub; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/epub/live-manual.epub $(DESTDIR)/usr/share/doc/live-manual/epub/live-manual.$${LANGUAGE}.epub; \
+		mkdir -p $(DESTDIR)/usr/share/doc/live-manual/html/$${LANGUAGE}; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/[0-9]*.html manual/$${LANGUAGE}/build/$${LANGUAGE}/index.html $(DESTDIR)/usr/share/doc/live-manual/html/$${LANGUAGE}; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/doc.html $(DESTDIR)/usr/share/doc/live-manual/html/live-manual.$${LANGUAGE}.html; \
+		mkdir -p $(DESTDIR)/usr/share/doc/live-manual/odf; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/opendocument.odt $(DESTDIR)/usr/share/doc/live-manual/odf/live-manual.$${LANGUAGE}.odt; \
+		mkdir -p $(DESTDIR)/usr/share/doc/live-manual/txt; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/plain.txt $(DESTDIR)/usr/share/doc/live-manual/txt/live-manual.$${LANGUAGE}.txt; \
+		mkdir -p $(DESTDIR)/usr/share/doc/live-manual/pdf; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/landscape.a4.pdf $(DESTDIR)/usr/share/doc/live-manual/pdf/live-manual.landscape-a4.$${LANGUAGE}.pdf; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/portrait.a4.pdf $(DESTDIR)/usr/share/doc/live-manual/pdf/live-manual.portrait-a4.$${LANGUAGE}.pdf; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/landscape.letter.pdf $(DESTDIR)/usr/share/doc/live-manual/pdf/live-manual.landscape-letter.$${LANGUAGE}.pdf; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/portrait.letter.pdf $(DESTDIR)/usr/share/doc/live-manual/pdf/live-manual.portrait-letter.$${LANGUAGE}.pdf; \
 	done
 
 uninstall:

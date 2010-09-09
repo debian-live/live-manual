@@ -31,6 +31,11 @@ build: po4a.cfg
 
 	po4a --keep 0 --no-backups --package-name live-manual po4a.cfg
 
+	for LANGUAGE in $(LANGUAGES); \
+	do \
+		cp -a en/_sisu $${LANGUAGE}; \
+	done
+
 clean:
 	rm -f po/*/*.po~
 

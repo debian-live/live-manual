@@ -35,16 +35,21 @@ autobuild: clean build
 
 	for LANGUAGE in en $(shell cd manual/po && ls); \
 	do \
+		mkdir -p build/$${LANGUAGE}/epub; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/epub/live-manual.epub build/$${LANGUAGE}/epub; \
 		mkdir -p build/$${LANGUAGE}/html; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/epub/live-manual.epub build/$${LANGUAGE}; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/[0-9]*.html manual/$${LANGUAGE}/build/$${LANGUAGE}/index.html build/$${LANGUAGE}/html; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/opendocument.odt build/$${LANGUAGE}/live-manual.odt; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/doc.html build/$${LANGUAGE}/live-manual.html; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/plain.txt build/$${LANGUAGE}/live-manual.txt; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/landscape.a4.pdf build/$${LANGUAGE}/live-manual.landscape-a4.pdf; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/portrait.a4.pdf build/$${LANGUAGE}/live-manual.portrait-a4.pdf; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/landscape.letter.pdf build/$${LANGUAGE}/live-manual.landscape-letter.pdf; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/portrait.letter.pdf build/$${LANGUAGE}/live-manual.portrait-letter.pdf; \
+		mkdir -p build/$${LANGUAGE}/html-single; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/doc.html build/$${LANGUAGE}/html-single/live-manual.html; \
+		mkdir -p build/$${LANGUAGE}/odf; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/opendocument.odt build/$${LANGUAGE}/odf/live-manual.odt; \
+		mkdir -p build/$${LANGUAGE}/pdf; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/landscape.a4.pdf build/$${LANGUAGE}/pdf/live-manual.landscape-a4.pdf || true; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/portrait.a4.pdf build/$${LANGUAGE}/pdf/live-manual.portrait-a4.pdf || true; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/landscape.letter.pdf build/$${LANGUAGE}/pdf/live-manual.landscape-letter.pdf || true; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/portrait.letter.pdf build/$${LANGUAGE}/pdf/live-manual.portrait-letter.pdf || true; \
+		mkdir -p build/$${LANGUAGE}/txt; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/plain.txt build/$${LANGUAGE}/txt/live-manual.txt; \
 		sed -e "s|@DATE_BUILD@|$(shell LC_ALL=C date -R)|" \
 		    -e "s|@DATE_CHANGE@|$(shell LC_ALL=C git log | grep -m1 Date | awk -FDate: '{ print $2 }' | sed -e 's|^ *||g')|" \
 		manual/$${LANGUAGE}/index.html.in > build/$${LANGUAGE}/index.html; \
@@ -73,7 +78,7 @@ install:
 		mkdir -p $(DESTDIR)/usr/share/doc/live-manual/epub; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/epub/live-manual.epub $(DESTDIR)/usr/share/doc/live-manual/epub/live-manual.$${LANGUAGE}.epub; \
 		mkdir -p $(DESTDIR)/usr/share/doc/live-manual/html/$${LANGUAGE}; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/[0-9]*.html manual/$${LANGUAGE}/build/$${LANGUAGE}/index.html $(DESTDIR)/usr/share/doc/live-manual/html/$${LANGUAGE}; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/[0-9]*.html manual/$${LANGUAGE}/build/$${LANGUAGE}/index.html build/$${LANGUAGE}/html; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/doc.html $(DESTDIR)/usr/share/doc/live-manual/html/live-manual.$${LANGUAGE}.html; \
 		mkdir -p $(DESTDIR)/usr/share/doc/live-manual/odf; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/opendocument.odt $(DESTDIR)/usr/share/doc/live-manual/odf/live-manual.$${LANGUAGE}.odt; \

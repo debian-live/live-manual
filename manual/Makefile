@@ -15,8 +15,6 @@ po4a.cfg:
 		echo "[type: text] $${FILE} \$$lang:\$$lang/$$(basename $${FILE})" >> po4a.cfg; \
 	done
 
-	echo "[type: xhtml] en/index.html.in \$$lang:\$$lang/index.html.in" >> po4a.cfg
-
 update:
 	@./bin/update-version.sh
 
@@ -30,6 +28,11 @@ build: po4a.cfg
 	fi
 
 	po4a --keep 0 --no-backups --package-name live-manual po4a.cfg
+
+	for LANGUAGE in $(LANGUAGES); \
+	do \
+		cp -a en/_sisu $${LANGUAGE}; \
+	done
 
 clean:
 	rm -f po/*/*.po~

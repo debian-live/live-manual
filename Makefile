@@ -2,7 +2,7 @@
 
 SHELL := sh -e
 
-LANGUAGES = en
+LANGUAGES = en $(shell cd manual/po && ls)
 
 all: test build
 

@@ -31,7 +31,6 @@ build:
 
 autobuild: clean build
 	rm -rf build
-	cp -a html build
 
 	for LANGUAGE in $(LANGUAGES); \
 	do \
@@ -44,17 +43,13 @@ autobuild: clean build
 		mkdir -p build/$${LANGUAGE}/odf; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/opendocument.odt build/$${LANGUAGE}/odf/live-manual.odt; \
 		mkdir -p build/$${LANGUAGE}/pdf; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/landscape.a4.pdf build/$${LANGUAGE}/pdf/live-manual.landscape-a4.pdf; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/portrait.a4.pdf build/$${LANGUAGE}/pdf/live-manual.portrait-a4.pdf; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/landscape.letter.pdf build/$${LANGUAGE}/pdf/live-manual.landscape-letter.pdf; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/portrait.letter.pdf build/$${LANGUAGE}/pdf/live-manual.portrait-letter.pdf; \
 		mkdir -p build/$${LANGUAGE}/txt; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/plain.txt build/$${LANGUAGE}/txt/live-manual.txt; \
-		sed -e "s|@DATE_BUILD@|$(shell LC_ALL=C date -R)|" \
-		    -e "s|@DATE_CHANGE@|$(shell LC_ALL=C git log | grep -m1 Date | awk -FDate: '{ print $2 }' | sed -e 's|^ *||g')|" \
-		manual/$${LANGUAGE}/index.html.in > build/$${LANGUAGE}/index.html; \
 	done
-
-#		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/landscape.a4.pdf build/$${LANGUAGE}/pdf/live-manual.landscape-a4.pdf; \
-#		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/portrait.a4.pdf build/$${LANGUAGE}/pdf/live-manual.portrait-a4.pdf; \
-#		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/landscape.letter.pdf build/$${LANGUAGE}/pdf/live-manual.landscape-letter.pdf; \
-#		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/portrait.letter.pdf build/$${LANGUAGE}/pdf/live-manual.portrait-letter.pdf; \
 
 commit: tidy test
 	$(MAKE) -C manual rebuild

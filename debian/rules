@@ -3,28 +3,8 @@
 %:
 	dh ${@}
 
-override_dh_auto_install:
-	dh_auto_install
-
-	# live-manual-epub
-	mkdir -p debian/live-manual-epub/usr/share/doc/live-manual
-	mv debian/tmp/usr/share/doc/live-manual/epub debian/live-manual-epub/usr/share/doc/live-manual
-
-	# live-manual-html
-	mkdir -p debian/live-manual-html/usr/share/doc/live-manual
-	mv debian/tmp/usr/share/doc/live-manual/html debian/live-manual-html/usr/share/doc/live-manual
-
-	# live-manual-odf
-	mkdir -p debian/live-manual-odf/usr/share/doc/live-manual
-	mv debian/tmp/usr/share/doc/live-manual/odf debian/live-manual-odf/usr/share/doc/live-manual
-
-	# live-manual-pdf
-	mkdir -p debian/live-manual-pdf/usr/share/doc/live-manual
-	mv debian/tmp/usr/share/doc/live-manual/pdf debian/live-manual-pdf/usr/share/doc/live-manual
-
-	# live-manual-txt
-	mkdir -p debian/live-manual-txt/usr/share/doc/live-manual
-	mv debian/tmp/usr/share/doc/live-manual/txt debian/live-manual-txt/usr/share/doc/live-manual
+override_dh_install:
+	dh_install --fail-missing
 
 override_dh_compress:
 	dh_compress -X.html -X.odt

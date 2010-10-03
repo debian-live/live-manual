@@ -38,7 +38,7 @@ autobuild: clean build
 		mkdir -p build/$${LANGUAGE}/epub; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/epub/live-manual.epub build/$${LANGUAGE}/epub; \
 		mkdir -p build/$${LANGUAGE}/html; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/[0-9]*.html manual/$${LANGUAGE}/build/$${LANGUAGE}/index.html build/$${LANGUAGE}/html; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/[0-9]*.html manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/index.html build/$${LANGUAGE}/html; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/doc.html build/$${LANGUAGE}/html/live-manual.html; \
 		mkdir -p build/$${LANGUAGE}/odf; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/opendocument.odt build/$${LANGUAGE}/odf/live-manual.odt; \
@@ -77,7 +77,7 @@ install:
 		mkdir -p $(DESTDIR)/usr/share/doc/live-manual/epub; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/epub/live-manual.epub $(DESTDIR)/usr/share/doc/live-manual/epub/live-manual.$${LANGUAGE}.epub; \
 		mkdir -p $(DESTDIR)/usr/share/doc/live-manual/html/$${LANGUAGE}; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/[0-9]*.html manual/$${LANGUAGE}/build/$${LANGUAGE}/index.html $(DESTDIR)/usr/share/doc/live-manual/html/$${LANGUAGE}; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/[0-9]*.html manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/index.html $(DESTDIR)/usr/share/doc/live-manual/html/$${LANGUAGE}; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/doc.html $(DESTDIR)/usr/share/doc/live-manual/html/live-manual.$${LANGUAGE}.html; \
 		mkdir -p $(DESTDIR)/usr/share/doc/live-manual/odf; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/opendocument.odt $(DESTDIR)/usr/share/doc/live-manual/odf/live-manual.$${LANGUAGE}.odt; \

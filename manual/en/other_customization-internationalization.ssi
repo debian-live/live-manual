@@ -4,48 +4,40 @@ B~ Customising Locale And Language
 
 2~ Default locale and keyboard
 
-The default locale when building a live cd is "locale=en_US.UTF-8". To set the locale for the UK (locale=en_GB.UTF-8)
+The default locale when building a live cd is "locales=en_US.UTF-8", to set the locale for e.g. Switzerland, you can use "locales=de_CH.UTF-8".
 
 code{
 
-$ lh_config --bootappend-live "locale=en_GB.UTF-8"
+$ lb config --bootappend-live "locales=de_CH.UTF-8"
 
 }code
 
-The entry for a British keyboard would be
+The entry for a Swiss-German keyboard would be:
 
 code{
 
-$ lh_config --bootappend-live "keyb=uk"
+$ lb config --bootappend-live "keyboard-layouts=ch"
 
 }code
 
-To configure both the locale and the keyboard for the UK the entry would be
+Combined, the keyboard and locale configured for Switzerland would be:
 
 code{
 
-$ lh_config --bootappend-live "locale=en_GB.UTF-8 keyb=uk"
+$ lb config --bootappend-live ="locales=de_CH.UTF-8 keyboard-layouts=ch"
 
 }code
 
-or
-
-code{
-
-$ lh_config --bootappend-live "locale=uk"
-
-}code
-
-Note: You can find a list of options in the manpage for live-initramfs. Only UTF8 locales are supported by live-initramfs.
+Note: You can find a list of options in the manpage for live-config. Currently, only UTF-8 locales are supported.
 
 2~ l10n Packages
 
-lh build can automatically check for each package, for which it's know that there are -l10n packages available and install them. To add Swedish packages the entry would be
+An experimental feature of live-build is to automatically check for each package for which it is know that there are -l10n packages available and install them. To add German packages the entry would be
 
 code{
 
-$ lh_config --language "se"
+$ lh_config --language "de"
 
 }code
 
-This will also change the default syslinux language if #{config/templates/syslinux/se}# is available. Check syslinux configuration FIXME
+This will also change the default syslinux language if translations are available or local translations have been put into #{config/templates/syslinux/de}#.

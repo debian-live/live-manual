@@ -31,7 +31,7 @@ build:
 
 autobuild: clean build
 	rm -rf build
-	cp -a html/* build
+	cp -a html build
 
 	for LANGUAGE in $(LANGUAGES); \
 	do \

@@ -38,8 +38,7 @@ autobuild: clean build
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/epub/live-manual.epub build/$${LANGUAGE}/epub; \
 		mkdir -p build/$${LANGUAGE}/html; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/[0-9]*.html manual/$${LANGUAGE}/build/$${LANGUAGE}/index.html build/$${LANGUAGE}/html; \
-		mkdir -p build/$${LANGUAGE}/html-single; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/doc.html build/$${LANGUAGE}/html-single/live-manual.html; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/doc.html build/$${LANGUAGE}/html/live-manual.html; \
 		mkdir -p build/$${LANGUAGE}/odf; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/opendocument.odt build/$${LANGUAGE}/odf/live-manual.odt; \
 		mkdir -p build/$${LANGUAGE}/pdf; \

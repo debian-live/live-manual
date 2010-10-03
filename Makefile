@@ -50,7 +50,7 @@ autobuild: clean build
 		mkdir -p build/$${LANGUAGE}/txt; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/plain.txt build/$${LANGUAGE}/txt/live-manual.txt; \
 		sed -e "s|@DATE_BUILD@|$(shell LC_ALL=C date -R)|" \
-		    -e "s|@DATE_CHANGE@|$(shell LC_ALL=C git log | grep -m1 Date | awk -FDate: '{ print $2 }' | sed -e 's|^ *||g')|" \
+		    -e "s|@DATE_CHANGE@|$(shell LC_ALL=C git log | grep -m1 Date | awk -FDate: '{ print $2 }' | sed -e 's|  ||g')|" \
 		manual/$${LANGUAGE}/index.html.in > build/$${LANGUAGE}/index.html; \
 	done
 

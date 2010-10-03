@@ -80,7 +80,6 @@ install:
 		mkdir -p $(DESTDIR)/usr/share/doc/live-manual/html/$${LANGUAGE}; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/[0-9]*.html manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/index.html $(DESTDIR)/usr/share/doc/live-manual/html/$${LANGUAGE}; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/doc.html $(DESTDIR)/usr/share/doc/live-manual/html/live-manual.$${LANGUAGE}.html; \
-		cp -a manual/$${LANGUAGE}/build/$${LANGUAGE}/_sisu build/$${LANGUAGE}; \
 		mkdir -p $(DESTDIR)/usr/share/doc/live-manual/odf; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/opendocument.odt $(DESTDIR)/usr/share/doc/live-manual/odf/live-manual.$${LANGUAGE}.odt; \
 		mkdir -p $(DESTDIR)/usr/share/doc/live-manual/txt; \
@@ -91,6 +90,8 @@ install:
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/landscape.letter.pdf $(DESTDIR)/usr/share/doc/live-manual/pdf/live-manual.landscape-letter.$${LANGUAGE}.pdf; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/portrait.letter.pdf $(DESTDIR)/usr/share/doc/live-manual/pdf/live-manual.portrait-letter.$${LANGUAGE}.pdf; \
 	done
+
+	cp -a manual/en/build/en/_sisu $(DESTDIR)/usr/share/doc/live-manual
 
 uninstall:
 	rm -rf $(DESTDIR)/usr/share/doc/live-manual

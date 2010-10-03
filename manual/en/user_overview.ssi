@@ -17,6 +17,7 @@ _* The scripts have a central location for configuring their operation. In debhe
 _* The scripts are independent - that is to say, it is always safe to run each command.
 
 Unlike debhelper, live-build contains a tool to generate a skeleton configuration directory, #{lb config}#. This could be considered to be similar to tools such as #{dh-make}#. For more information about #{lb config}#, please see lb-config.
+
 % FIXME: <xref linkend="lb-config"/>
 
 Besides the common config/common, which is used by all live-build commands, some additional files can be used to configure the behavior of specific helper commands. These files are typically named config/command or config/stage (where "stage", of course, is replaced with the name of the stage that they belong to, and "command" with the name of the command).
@@ -30,22 +31,27 @@ All config files are shell scripts which are sourced by a live-build command. Th
 In some rare cases you may want to have different versions of these files for different architectures or distributions. If files named config/stage.arch or config/stage_command.arch, and config/stage.dist or config/stage_command.dist exist (where "arch" is the same as the output of dpkg --print-architecture and "dist" is the same as the codename of the target distribution), then they will be used in preference to the other, more general files.
 
 Please see installation for information on how to install live-build.
+
 % FIXME: <xref linkend="installation"/>
 
 The remainder of this section discusses the three most important commands:
 
 _* *{lb config}*: Responsible for initialising a Live system configuration directory. See lb-config for more information.
+
 % FIXME: <xref linkend="lb-config"/>
 
 _* *{lb build}*: Responsible for starting a Live system build. See lb-build for more information.
+
 % FIXME: <xref linkend="lb-build"/>
 
 _* *{lb clean}*: Responsible for removing parts of a Live system build. See lb-clean for more information.
+
 % FIXME: <xref linkend="lb-clean"/
 
 3~ The #{lb config}# command
 
 As discussed in live-build, the scripts that make up live-build source their configuration from a single directory named config/. As constructing this directory by hand would be time-consuming and error-prone, the #{lb config}# command can be used to create skeleton configuration folders.
+
 % FIXME: <xref linkend="live-build"/>
 
 Issuing #{lb config}# without any arguments creates a config subdirectory which it populates with some default settings:

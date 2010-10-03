@@ -31,6 +31,7 @@ build:
 
 autobuild: clean build
 	rm -rf build
+	cp -a html/* build
 
 	for LANGUAGE in $(LANGUAGES); \
 	do \
@@ -48,6 +49,9 @@ autobuild: clean build
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/portrait.letter.pdf build/$${LANGUAGE}/pdf/live-manual.portrait-letter.pdf; \
 		mkdir -p build/$${LANGUAGE}/txt; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/plain.txt build/$${LANGUAGE}/txt/live-manual.txt; \
+		sed -e "s|@DATE_BUILD@|$(shell LC_ALL=C date -R)|" \
+		    -e "s|@DATE_CHANGE@|$(shell LC_ALL=C git log | grep -m1 Date | awk -FDate: '{ print $2 }' | sed -e 's|^ *||g')|" \
+		manual/$${LANGUAGE}/index.html.in > build/$${LANGUAGE}/index.html; \
 	done
 
 commit: tidy test

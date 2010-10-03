@@ -22,11 +22,11 @@ build:
 	for LANGUAGE in $(LANGUAGES); \
 	do \
 		cd $(CURDIR)/manual/$${LANGUAGE}; \
-		sisu-epub live-manual.ssm; \
-		sisu-html live-manual.ssm; \
-		sisu-odf live-manual.ssm; \
-		sisu-pdf live-manual.ssm; \
-		sisu-txt live-manual.ssm; \
+		sisu-epub -v live-manual.ssm; \
+		sisu-html -v live-manual.ssm; \
+		sisu-odf -v live-manual.ssm; \
+		sisu-pdf -v live-manual.ssm; \
+		sisu-txt -v live-manual.ssm; \
 	done
 
 autobuild: clean build

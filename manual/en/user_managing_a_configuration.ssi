@@ -1,0 +1,54 @@
+:B~ Managing a configuration
+
+1~ Managing a configuration
+
+This chapter explains how to manage a live configuration from initial creation, through successive revisions and successive releases of both the live-build software and the live image itself.
+
+2~ Use auto to manage configuration changes
+
+Live configurations rarely are perfect on the first try. You'll likely need to make a series of revisions until you are satisfied. However, inconsistencies can creep into your configuration from one revision to the next if you aren't careful. The main problem is, once a variable is given a default value, that value will not be recomputed from other variables that may change in later revisions.
+
+For example, when the distribution is first set, many 'dependent' variables are given default values that suit that distribution. However, if you later decide to change the distribution, those dependent variables continue to retain old values that are no longer appropriate.
+
+A second, related problem is that if you run #{lb config}# and then upgrade to a new version of live-build that has changed one of the variable names, you will discover this only by manual review of the variables in your config files, which you will then need to use to set the appropriate option again.
+
+All of this would be a terrible nuisance if it weren't for auto/* scripts, simple wrappers to the #{lb config}#, #{lb build}# and #{lb clean}# commands that are designed to help you manage your configuration. Simply create an auto/config script containing #{lb config}# command with all desired options, and an auto/clean that removes the files containing configuration variable values, and each time you #{lb config}# and #{lb clean}#, these files will be executed. This will ensure that your configuration is kept internally consistent from one revision to the next and from one live-build release to the next (though you will still have to take care and read the documentation when you upgrade live-build and make adjustments as needed).
+
+2~ Example auto scripts
+
+Use the following auto script examples as the starting point for your new live-build configuration. Take note that when you call the #{lb}# command that the auto script wraps, you must specify #{noauto}# as its parameter to ensure that the auto script isn't called again, recursively.
+
+auto/config
+
+code{
+
+#!/bin/sh
+lb config noauto \
+	--architecture i386 \
+	${@}
+
+}code
+
+auto/clean
+
+code{
+
+#!/bin/sh
+lb clean noauto ${@}
+rm -f config/binary config/bootstrap \
+	config/chroot config/common config/source
+rm -f binary.log
+
+}code
+
+auto/build
+
+code{
+
+#!/bin/sh
+lb build noauto ${@} 2>&1 | tee binary.log
+
+}code
+
+Edit auto/config, changing or adding any options as you see fit. In the example above, --architecture is set to i386 so that when the image is built on an amd64 system, it will not default to building amd64 images. Change this to an appropriate value for your image (or delete it if you want to use the default) and add any additional options in continuation lines that follow.
+

@@ -1,0 +1,156 @@
+:B~ Installation
+
+1~ Installation
+
+2~ Requirements
+
+Building Debian Live images has very few system requirements:
+
+_* Super user (root) access
+
+_* An up-to-date version of live-build
+
+_* A POSIX-compliant shell, such as /{bash}/ or /{dash}/.
+
+_* /{debootstrap}/ or /{cdebootstrap}/
+
+_* Linux 2.6.x
+
+Note that using Debian or a Debian-derived distribution is not required -
+live-build will run on almost any distribution with the above requirements.
+
+2~ Installing live-build
+
+You can install live-build in a number of different ways:
+
+_* From the Debian repository
+
+_* From source
+
+_* From snapshots
+
+If you are using Debian, the recommended way is to install live-build via
+the Debian repository.
+
+3~ From the Debian repository
+
+Simply install live-build like any other package:
+
+code{
+
+# apt-get install live-build
+
+}code
+
+or
+
+code{
+
+# aptitude install live-build
+
+}code
+
+3~ From source
+
+live-build is developed using the Git version control system. On Debian
+systems, this is provided by the /{git}/ package. To check out the latest
+code, execute:
+
+code{
+
+$ git clone git://live.debian.net/git/live-build.git
+
+}code
+
+You can build and install your own Debian package by executing:
+
+code{
+
+$ cd live-build $ dpkg-buildpackage -rfakeroot -b -uc -us $ cd ..
+
+# dpkg -i live-build*.deb
+
+}code
+
+You can also install live-build directly to your system by executing:
+
+code{
+
+# make install
+
+}code
+
+and uninstall it with:
+
+code{
+
+# make uninstall
+
+}code
+
+3~ From 'snapshots'
+
+If you do not wish to build or install live-build from source, you can use
+snapshots. These are built automatically from the latest version in Git and
+are available on http://live.debian.net/debian/.
+
+2~ live-boot
+
+*{Note:}* You do not need to install live-boot on your system to create customized Debian Live systems. However, doing so will do no harm.
+
+3~ Using a customized live-boot
+
+To modify the code you can follow the process below. Please ensure you are
+familiar with the terms mentioned in {Terms}#terms .
+
+_* Checkout the live-boot source
+
+code{
+
+$ git clone git://live.debian.net/git/live-boot.git
+
+}code
+
+_* Make changes to your local copy
+
+And beware that if you want to add your pre-init script in live-bottom, you
+should name it without dashes '-', e.g: call it "99new_feature" and not
+"99new-feature".
+
+_* Build a live-boot .deb
+
+You must build either on your target distribution or in a chroot containing
+your target platform: this means if your target is Squeeze then you should
+build against Squeeze. You can use a personal builder such as /{pbuilder}/
+or /{sbuild}/ to automate building packages in chroot. To build directly on
+the target platform, use #{dpkg-buildpackage}# (provided by the /{dpkg-dev}/
+package):
+
+code{
+
+$ cd live-boot $ dpkg-buildpackage -rfakeroot -b -uc -us
+
+}code
+
+_* Use the generated live-boot .deb
+
+As live-boot is installed by live-build system, installing the package in
+the host system is not sufficient: you should treat the generated .deb like
+another custom package. Please see custom-packages for more information. You
+should pay particular attention to custom-packages-apt.
+
+% FIXME: <xref linkend="custom-packages"/> <xref
+linkend="custom-packages-apt"/>
+
+3~ Using live-boot snapshots
+
+You can let live-build automatically use the latest snapshot of live-boot by
+configuring a third-party repository in your live-build configuration
+directory. Assuming you have already created a configuration tree with #{lb
+config}#:
+
+code{
+
+lb config --repository live.debian.net
+
+}code

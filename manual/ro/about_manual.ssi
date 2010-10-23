@@ -1,83 +1,83 @@
-:B~ About this manual
+:B~ Despre acest manual
 
-1~ About this manual
+1~ Despre acest manual
 
-The main goal of this manual is to serve as a single access point to all
-documentation related to the Debian Live project. It does not include
-end-user documentation for using a Debian Live system as far as things are
-live specific.
+Scopul principal al acestui manual este de a accesa intreaga documentatie a
+proiectului Debian Live intr-un singur loc. Dar aici nu vor fii gasite
+documantatii pentru utilizatorul final cu exceptia celor legate de sistemul
+live.
 
-Some of the commands mentioned in the text must be executed with superuser
-privileges which can be obtained by becoming the root user via #{su}# or by
-using #{sudo}#. To distinguish between commands which may be executed by an
-unprivileged user and those requiring superuser privileges, commands are
-prepended by #{$}# or #{#}# respectively. This symbol is not a part of the
-command.
+Anumite comenzi din text trebuie sa fie executate ca 'super_utilizator',
+privilegiu care poate fi obtinut fie prin comanda #{su}, sau #{sudo}. Pentru
+a distinge intre acesti utilizatori se vor folosi #{$}# respectiv #{#}#
+. Aceste simboluri nu fac parte din comenzi.
 
-2~terms Terms
+2~terms Termeni
 
-_* *{Live system}*: An operating system that can boot without installation
-to a hard drive. Live systems do not alter local operating system(s) or
-file(s) already installed on the computer hard drive unless instructed to do
-so. Live systems are typically booted from media such as CDs, DVDs or USB
-sticks. Some may also boot over the network.
+_* *{Live system}*: Un sistem de operare care porneste fara a instala pe
+discul dur. Un sistem live nu altereaza un sistem de operare local sau
+fisiere deja instalate pe discul dur ci doar dace se mentioneaza expres
+acest lucru. Sistemele livefolosesc spre pornire medii ca CDs, DVDs sau chei
+USB. Unele chiar pot porni prin retaua de net.
 
-_* *{Debian Live}*: The Debian sub-project which maintains the live-boot,
-live-build, live-config, and live-manual packages.
+_* *{Debian Live}*: Sub-proiectul Debian care gereaza pachetele live-boot,
+live-build, live-config, si live-manual.
 
-_* *{Debian Live system}*: A live system that uses software from the Debian
-operating system that may be booted from CDs, DVDs, USB sticks, over the
-network (via netboot images), and over the Internet (via boot parameter
-#{fetch=URL}#).
+_* *{Debian Live system}*: Un sistem live care foloseste programe din
+sitemul de operare Debian, si care poate fi pornit folosind CDs, DVDs, chei
+USB, sau reteaua net (via netboot images), sau prin nternet (via boot
+parameter #{fetch=URL}#).
 
-_* *{Host system}*: The environment used to create the live system.
+_* *{Host system}*: Mediul folosit pentru crearea sistemului live pe un
+sistem dat.
 
-_* *{Target system}*: The environment used to run the live system.
+_* *{Target system}*: Mediul folosit pentru rularea sistemului live.
 
-_* *{live-boot}*: A collection of scripts used to boot live
-systems. live-boot was formerly a part of live-initramfs.
+_* *{live-boot}*: O coloctie se scripte folosite la pornirea sistemului
+live. live-boot a facul parte formal din live-initramfs.
 
-_* *{live-build}*: A collection of scripts used to build customized Debian
-Live systems. live-build was formerly known as live-helper, and even earlier
-known as live-package.
+_* *{live-build}*: O colectie de scripte folosite la particularizatrea
+sistemelor Debian Live. live-build a fost cunoscut ca live-helper, iar mai
+inainte ca live-package.
 
-_* *{live-config}*: A collection of scripts used to configure a live system
-during the boot process. live-config was formerly a part of live-initramfs.
+_* *{live-config}*: O colectie de scripte folosite la configurarea sitemului
+live in timpul procesului de pornire. live-config a fost cunoscut ca parte
+din live-initramfs.
 
-_* *{live-manual}*: This document is maintained in a package called
+_* *{live-manual}*: Acest document face parte din pachetul numit
 live-manual.
 
-_* *{Debian Installer (d-i)}*: The official installation system for the
-Debian distribution.
+_* *{Debian Installer (d-i)}*: Sistemul de instalare oficial pentru
+distributia Debian.
 
-_* *{Boot parameters}*: Parameters that can be entered at the bootloader
-prompt to influence the kernel or live-config.
+_* *{Boot parameters}*: Parameti care pot fi adaugati la promptul
+bootloader-ului care sa infuenteze kernelul sau live-config.
 
-_* *{chroot}*: The chroot program, chroot(8), enables us to run different
-instances of the GNU/Linux environment on a single system simultaneously
-without rebooting.
+_* *{chroot}*: Programul chroot , chroot(8), permite rularea a diferite
+instante din mediul GNU/Linux pe un singur sistem si in simultan fara a
+necesita o repornire a sistemului.
 
-_* *{Binary image}*: A file containing the live system, such as binary.iso
-or binary.img.
+_* *{Binary image}*: Un fisier ce contine sistemul live, ca de exemplu
+binary.iso sau binary.img.
 
-_* *{Target distribution}*: The distribution upon which your live system
-will be based. This can differ from the distribution of your host system.
+_* *{Target distribution}*: Dea pe care se bazeaza sistemul live. Aceasta
+distributie poate fi diferita de cea a sistemului gazda.
 
-_* *{Squeeze/Wheezy/Sid (stable/testing/unstable)}*: The stable distribution
-contains the latest officially released distribution of Debian. The testing
-distribution is the staging area for the next stable release. A major
-advantage of using this distribution is that it has more recent versions of
-software relative to the stable release. The unstable distribution is where
-active development of Debian occurs. Generally, this distribution is run by
-developers and those who like to live on the edge.
+_* *{Squeeze/Wheezy/Sid (stable/testing/unstable)}*: stable contine ultima
+versiune oficiala a distributiei Debian. testing este sursa pentru
+urmatoarea versiune stable. Pricipalul avantaj la folosirea distibutiei
+testing este folosirea programelor mai noi decat cele din
+stable. Distributia unstable este locul unde au loc activ dezvoltarile din
+Debian. In general ea este folosita de dezvoltatori sau de cei ce le place
+riscul ... .
 
-At the time of writing, Squeeze is the current stable release and Wheezy is
-the current testing release. Sid will always be a synonym for the unstable
-release.
+La momentul in care au fost scrise aceste randurei, versiunea stable este
+Squeeze, Wheezy estei versiunea testing. Sid va fi mereu simbolul versiunii
+unstable.
 
-2~ Authors
+2~ Autori
 
-A list of authors (in alphabetical order):
+Lista autorilor (in ordine alfabetica):
 
 _* Ben Armstrong
 
@@ -103,20 +103,20 @@ _* Richard Nelson
 
 _* Trent W. Buck
 
-2~ Contributing to this document
+2~ Cum se poate contribui la acest document
 
-This manual is intended as a community project and all proposals for
-improvements and contributions are extremely welcome. The preferred way to
-submit a contribution is to send it to the mailing list. Please see
-{Contact}#contact for more information.
+Acest manual este conceput ca un proiect comunitar si astfel orice
+propozitie sau inbunatatire sunt bune venite. Principala cale de a face o
+contributie este trimeterea unui mail la mailing list. Vedeti
+{Contact}#contact pentru mai multe informatii.
 
-When submitting a contribution, please clearly identify its copyright holder
-and include the licensing statement. Note that to be accepted, the
-contribution must be licensed under the same license as the rest of the
-document, namely, GPL version 3 or later.
+In orice contributie trimisa va rog sa precizati in clar cine detine
+copyright-ul si sub ce licenta este publicata. A se nota ca o contrinutie
+este acceptata daca este licentiata in acceeasi termeni ca si restul
+documentului , adica GPL version 3 or later.
 
-The sources for this manual are maintained using the Git version control
-system. You can checkout the latest copy by executing:
+Sursele acestui manual sunt gerate folosind Git version control
+system. Pute-ti checkout ultima copie prin executarea :
 
 code{
 
@@ -124,9 +124,9 @@ $ git clone git://live.debian.net/git/live-manual.git
 
 }code
 
-Prior to submission of your contribution, please preview your work. To
-preview the live-manual, ensure the packages needed for building are
-installed by executing:
+Inainte de a trimite contibutia dvs, este de dorit sa efectuati o
+previzualizare a lucrarii. Pentru aceasta verifica-ti ca pachetele necesare
+pentru 'building' sunt instalate, prin executatea comenzii:
 
 code{
 
@@ -134,8 +134,8 @@ code{
 
 }code
 
-You may build the live-manual from the top level directory of your git
-checkout by executing:
+Pute-ti crea live-manual de la nivelul de sus al directorului git checkout
+al dvs, prin executatea:
 
 code{
 
@@ -143,11 +143,11 @@ $ make build
 
 }code
 
-3~ Applying patches
+3~ Aplicarea de patch-uri
 
-Directly commiting to the repository is possible by anyone. However, we ask
-you to send bigger changes to the mailing list to discuss them first. In
-order to push to the repository, the following steps are required.
+Commiterea in direct este la indemana oricui. Totusi, va rugam sa trimeteti
+schimbarile mai mari , spre discutie , la mailing list. Pentru a fi trimise
+contibutiile la repository, pasii urmatori sunt necesari:
 
 _* Fetch the public commit key:
 
@@ -162,7 +162,7 @@ $ chmod 0600 ~/.ssh/identity.d/live-manual@debian-live*
 
 }code
 
-_* Add the following section to your openssh-client config:
+_* Adaugati urmatoarea sectiuna la openssh-client config:
 
 code{
 
@@ -175,7 +175,7 @@ EOF
 
 }code
 
-_* Checkout a clone of the manual through ssh:
+_* Checkout un clon al manualului prin ssh:
 
 code{
 
@@ -183,9 +183,8 @@ $ git clone gitosis@live.debian.net:/live-manual.git
 
 }code
 
-_* After editing the files in manual/en/, please call the 'commit' target in
-the top level directory to sanitize the files and update the translation
-files:
+_* Dupa editarea de fisiere in manual/en/, va rugam folositi 'commit' in the
+top level directory to sanitize the files and update the translation files:
 
 code{
 
@@ -193,9 +192,9 @@ $ make commit
 
 }code
 
-_* After sanitizing commit the changes. Write commit messages, that consist
-of full useful sentences, starting with a capital letter and ending with a
-full stop. Usually starting with the form
+_* Dupa 'sanitizare' 'commit' schimbarile. Scrieti mesajele de commit, care
+constau in propozitii clare, care incep cu litere Mari, si se incheie cu
+punct si sens. Inceputul poate fii de forma
 'Fixing/Adding/Removing/Correcting/':
 
 code{
@@ -204,7 +203,7 @@ $ git commit -a
 
 }code
 
-_* Push the commit to the server:
+_* Primite commit-ul la server:
 
 code{
 

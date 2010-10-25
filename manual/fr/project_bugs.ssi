@@ -12,30 +12,30 @@ For the impatient:
 _* Always check first the image status updates on our homepage at
 http://live.debian.net/ for known issues.
 
-_* Always try to reproduce the bug with the *{most recent version}* of
-live-helper and live-initramfs before submitting a bug report.
+_* Always try to reproduce the bug with the *{most recent versions}* of
+live-build, live-boot, and live-config before submitting a bug report.
 
 _* Try to give *{as specific information as possible}* about the bug. This
-includes (at least) the version of live-helper and live-initramfs used and
-the distribution of the live system you are building.
+includes (at least) the version of live-build, live-boot, and live-config
+used and the distribution of the live system you are building.
 
 2~ Known issues
 
-Due to the nature of Debian testing and Debian unstable branches being a
-moving target, building a live system may not always be possible.
+Due to the nature of Debian testing and Debian unstable distributions being
+a moving target, building a live system may not always be possible.
 
 If this is a problem, do not build a system based on testing or unstable,
-but go with stable. live-helper does always default to the current stable
+but go with stable. live-build does always default to the current stable
 release.
 
 Currently known issues are listed under the section 'status' on our homepage
 at http://live.debian.net/
 
 It is out of the scope of this manual to train you in correctly identifying
-and fixing problems in packages of the development branches, however, there
-are two things you can always try: When not succeeding to build testing, try
-if unstable works. If unstable does not work either, revert to testing and
-pinning the newer version of the failing package from unstable.
+and fixing problems in packages of the development distributions, however,
+there are two things you can always try: When not succeeding to build
+testing, try if unstable works. If unstable does not work either, revert to
+testing and pinning the newer version of the failing package from unstable.
 
 2~ Rebuild from scratch
 
@@ -46,15 +46,12 @@ is reproducible.
 2~ Use up-to-date packages
 
 Using outdated packages can cause significant problems when trying to
-reproduce (and ultimately fix) your problem. If a relevant package is not
-available in Debian anymore, please recognize that the resources of the
-Debian kernel team are limited and will be unlikely to be able to fix the
-problem.
+reproduce (and ultimately fix) your problem.
 
 2~collect-information Collect information
 
 Please provide enough information with your report. At a minimum, it should
-contain the exact version of live-helper version where the bug is
+contain the exact version of live-build version where the bug is
 encountered, and steps to reproduce it. Please use common sense and include
 other relevant information if you think that it might help in solving the
 problem.
@@ -64,9 +61,11 @@ information:
 
 _* Architecture of the host system
 
-_* Version of live-helper on the host system
+_* Version of live-build on the host system
 
-_* Version of live-initramfs on the live system
+_* Version of live-boot on the live system
+
+_* Version of live-config on the live system
 
 _* Version of debootstrap and/or cdebootstrap on the host system
 
@@ -78,7 +77,11 @@ _* Version of the kernel on the live system
 
 You can generate a log of the build process by using the tee command:
 
-% code{ % % lh_build 2>&1 | tee buildlog.txt % % }code
+code{
+
+lb build 2>&1 | tee build.log
+
+}code
 
 Additionally, to rule out other errors, it is always a good idea to tar up
 your config directory and upload it somewhere (do *{not}* send it as an
@@ -86,7 +89,7 @@ attachment to the mailinglist), so that we can try to reproduce the errors
 you encountered.
 
 Remember to send in any logs that were produced with English locale
-settings, e.g. run your live-helper commands with a leading #{LC_ALL=C}# or
+settings, e.g. run your live-build commands with a leading #{LC_ALL=C}# or
 #{LC_ALL=en_US}#.
 
 2~ Use the correct package to report the bug against
@@ -95,26 +98,26 @@ Where does the bug appear?
 
 3~ At build time whilst bootstrapping
 
-live-helper first bootstraps a basic Debian system with #{debootstrap}# or
+live-build first bootstraps a basic Debian system with #{debootstrap}# or
 #{cdebootstrap}#. Depending on the bootstrapping tool used and the Debian
 distribution it is bootstrapping, it may fail. If a bug appears here, check
 if the error is related to a specific Debian package (most likely), or if it
-is related to cdebootstrap itself.
+is related to bootstrapping tool itself.
 
 In both cases, this is not a bug in Debian Live, but rather in Debian itself
-which we can not fix this directly. Please report such a bug against
-#{debootstrap}#, #{cdebootstrap}# or the failing package.
+which we can not fix this directly. Please report such a bug against the
+bootstrapping tool or the failing package.
 
 3~ At build time whilst installing packages
 
-live-helper installs additional packages from the Debian archive and
+live-build installs additional packages from the Debian archive and
 depending on the Debian distribution used and the daily archive state, it
 can fail. If a bug appears here, check if the error is also reproducible on
 a normal system.
 
 If this is the case, this is not a bug in Debian Live, but rather in Debian
 - please report it against the failing package. Running debootstrap
-seperately from the Live system build or running lh_bootstrap with
+seperately from the Live system build or running lb bootstrap with
 #{--debug}# will give you more information.
 
 Also, if you are using a local mirror and/or any of sort of proxy and you
@@ -149,9 +152,9 @@ as the homepage, as these are likely to contain the most up-to-date
 information. If such information exists, always include the references to it
 in your bug report.
 
-In addition, you should check the current bug list for live-helper and the
-current bug list for live-initramfs at to see whether something similar has
-been reported already.
+In addition, you should check the current bug lists for live-build,
+live-boot, and live-config to see whether something similar has been
+reported already.
 
 2~ Where to report bugs
 
@@ -160,13 +163,12 @@ System (BTS). For information on how to use the system, please see
 http://bugs.debian.org/. You can also submit the bugs by using the
 #{reportbug}# command from the package with the same name.
 
-In general, you should report build time errors against the live-helper
-package and run time errors against live-initramfs. If you are unsure of
-which package is appropriate or need more help before submitting a bug
-report, please send a message to the mailing list and we will help you to
-figure it out.
+In general, you should report build time errors against the live-build
+package, boot time errors against live-boot, and run time errors against
+live-config. If you are unsure of which package is appropriate or need more
+help before submitting a bug report, please send a message to the mailing
+list and we will help you to figure it out.
 
 Please note that bugs found in distributions derived from Debian (such as
-Ubuntu, Knoppix, Xandros, etc.) should *{not}* be reported to the Debian BTS
-unless they can be also reproduced on a Debian system using official Debian
-packages.
+Ubuntu and others) should *{not}* be reported to the Debian BTS unless they
+can be also reproduced on a Debian system using official Debian packages.

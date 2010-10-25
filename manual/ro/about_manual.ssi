@@ -1,0 +1,212 @@
+:B~ Despre acest manual
+
+1~ Despre acest manual
+
+Scopul principal al acestui manual este de a accesa intreaga documentatie a
+proiectului Debian Live intr-un singur loc. Dar aici nu vor fii gasite
+documantatii pentru utilizatorul final cu exceptia celor legate de sistemul
+live.
+
+Anumite comenzi din text trebuie sa fie executate ca 'super_utilizator',
+privilegiu care poate fi obtinut fie prin comanda #{su}, sau #{sudo}. Pentru
+a distinge intre acesti utilizatori se vor folosi #{$}# respectiv #{#}#
+. Aceste simboluri nu fac parte din comenzi.
+
+2~terms Termeni
+
+_* *{Live system}*: Un sistem de operare care porneste fara a instala pe
+discul dur. Un sistem live nu altereaza un sistem de operare local sau
+fisiere deja instalate pe discul dur ci doar dace se mentioneaza expres
+acest lucru. Sistemele livefolosesc spre pornire medii ca CDs, DVDs sau chei
+USB. Unele chiar pot porni prin retaua de net.
+
+_* *{Debian Live}*: Sub-proiectul Debian care gereaza pachetele live-boot,
+live-build, live-config, si live-manual.
+
+_* *{Debian Live system}*: Un sistem live care foloseste programe din
+sitemul de operare Debian, si care poate fi pornit folosind CDs, DVDs, chei
+USB, sau reteaua net (via netboot images), sau prin nternet (via boot
+parameter #{fetch=URL}#).
+
+_* *{Host system}*: Mediul folosit pentru crearea sistemului live pe un
+sistem dat.
+
+_* *{Target system}*: Mediul folosit pentru rularea sistemului live.
+
+_* *{live-boot}*: O coloctie se scripte folosite la pornirea sistemului
+live. live-boot a facul parte formal din live-initramfs.
+
+_* *{live-build}*: O colectie de scripte folosite la particularizatrea
+sistemelor Debian Live. live-build a fost cunoscut ca live-helper, iar mai
+inainte ca live-package.
+
+_* *{live-config}*: O colectie de scripte folosite la configurarea sitemului
+live in timpul procesului de pornire. live-config a fost cunoscut ca parte
+din live-initramfs.
+
+_* *{live-manual}*: Acest document face parte din pachetul numit
+live-manual.
+
+_* *{Debian Installer (d-i)}*: Sistemul de instalare oficial pentru
+distributia Debian.
+
+_* *{Boot parameters}*: Parameti care pot fi adaugati la promptul
+bootloader-ului care sa infuenteze kernelul sau live-config.
+
+_* *{chroot}*: Programul chroot , chroot(8), permite rularea a diferite
+instante din mediul GNU/Linux pe un singur sistem si in simultan fara a
+necesita o repornire a sistemului.
+
+_* *{Binary image}*: Un fisier ce contine sistemul live, ca de exemplu
+binary.iso sau binary.img.
+
+_* *{Target distribution}*: Dea pe care se bazeaza sistemul live. Aceasta
+distributie poate fi diferita de cea a sistemului gazda.
+
+_* *{Squeeze/Wheezy/Sid (stable/testing/unstable)}*: stable contine ultima
+versiune oficiala a distributiei Debian. testing este sursa pentru
+urmatoarea versiune stable. Pricipalul avantaj la folosirea distibutiei
+testing este folosirea programelor mai noi decat cele din
+stable. Distributia unstable este locul unde au loc activ dezvoltarile din
+Debian. In general ea este folosita de dezvoltatori sau de cei ce le place
+riscul ... .
+
+La momentul in care au fost scrise aceste randurei, versiunea stable este
+Squeeze, Wheezy estei versiunea testing. Sid va fi mereu simbolul versiunii
+unstable.
+
+2~ Autori
+
+Lista autorilor (in ordine alfabetica):
+
+_* Ben Armstrong
+
+_* Brendan Sleight
+
+_* Chris Lamb
+
+_* Daniel Baumann
+
+_* Franklin Piat
+
+_* Jonas Stein
+
+_* Kai Hendry
+
+_* Marco Amadori
+
+_* Mathieu Geli
+
+_* Matthias Kirschner
+
+_* Richard Nelson
+
+_* Trent W. Buck
+
+2~ Cum se poate contribui la acest document
+
+Acest manual este conceput ca un proiect comunitar si astfel orice
+propozitie sau inbunatatire sunt bune venite. Principala cale de a face o
+contributie este trimeterea unui mail la mailing list. Vedeti
+{Contact}#contact pentru mai multe informatii.
+
+In orice contributie trimisa va rog sa precizati in clar cine detine
+copyright-ul si sub ce licenta este publicata. A se nota ca o contrinutie
+este acceptata daca este licentiata in acceeasi termeni ca si restul
+documentului , adica GPL version 3 or later.
+
+Sursele acestui manual sunt gerate folosind Git version control
+system. Pute-ti checkout ultima copie prin executarea :
+
+code{
+
+$ git clone git://live.debian.net/git/live-manual.git
+
+}code
+
+Inainte de a trimite contibutia dvs, este de dorit sa efectuati o
+previzualizare a lucrarii. Pentru aceasta verifica-ti ca pachetele necesare
+pentru 'building' sunt instalate, prin executatea comenzii:
+
+code{
+
+# apt-get install make po4a sisu-complete
+
+}code
+
+Pute-ti crea live-manual de la nivelul de sus al directorului git checkout
+al dvs, prin executatea:
+
+code{
+
+$ make build
+
+}code
+
+3~ Aplicarea de patch-uri
+
+Commiterea in direct este la indemana oricui. Totusi, va rugam sa trimeteti
+schimbarile mai mari , spre discutie , la mailing list. Pentru a fi trimise
+contibutiile la repository, pasii urmatori sunt necesari:
+
+_* Fetch the public commit key:
+
+code{
+
+$ mkdir -p ~/.ssh/identity.d
+$ wget http://live.debian.net/other/keys/live-manual@debian-live \
+	-O ~/.ssh/identity.d/live-manual@debian-live
+$ wget http://live.debian.net/other/keys/live-manual@debian-live.pub \
+	-O ~/.ssh/identity.d/live-manual@debian-live.pub
+$ chmod 0600 ~/.ssh/identity.d/live-manual@debian-live*
+
+}code
+
+_* Adaugati urmatoarea sectiuna la openssh-client config:
+
+code{
+
+$ cat >> ~/.ssh/config << EOF
+Host live.debian.net
+        Hostname live.debian.net
+        User gitosis
+        IdentityFile ~/.ssh/identity.d/live-manual@debian-live
+EOF
+
+}code
+
+_* Checkout un clon al manualului prin ssh:
+
+code{
+
+$ git clone gitosis@live.debian.net:/live-manual.git
+
+}code
+
+_* Dupa editarea de fisiere in manual/en/, va rugam folositi 'commit' in the
+top level directory to sanitize the files and update the translation files:
+
+code{
+
+$ make commit
+
+}code
+
+_* Dupa 'sanitizare' 'commit' schimbarile. Scrieti mesajele de commit, care
+constau in propozitii clare, care incep cu litere Mari, si se incheie cu
+punct si sens. Inceputul poate fii de forma
+'Fixing/Adding/Removing/Correcting/':
+
+code{
+
+$ git commit -a
+
+}code
+
+_* Primite commit-ul la server:
+
+code{
+
+$ git push
+
+}code

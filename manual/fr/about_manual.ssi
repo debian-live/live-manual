@@ -1,0 +1,218 @@
+:B~ À propos de ce manuel
+
+1~ À propos de ce manuel
+
+Le but principal de ce manuel est de servir de point d'accès centralisé pour
+toute la documentation liée au projet Debian Live. Il ne contient pas de
+documentation utilisateur pour utiliser un système Debian Live tant que
+celle-ci n'est pas spécifique au projet Live.
+
+Certaines commandes mentionnées dans le texte doivent être exécutées avec
+les privilèges super-utilisateur, qui peuvent être obtenu en devenant root à
+l'aide de #{su}# ou en utilisant #{sudo}#. Afin de distinguer les commandes
+qui peuvent être exécutées par un utilisateur sans privilèges de celles
+nécessitant les privilèges super-utilisateur, les commandes sont précédées
+respectivement par #{$}# ou #{#}#. Ce symbole ne fait pas partie de la
+commande.
+
+2~terms Terminologie
+
+_* *{Système Live}*: Un système d'exploitation pouvant être démarré sans
+installation préalable sur disque dur. Les Systèmes Live ne modifient pas le
+système d'exploitation local ou les fichiers installés sur le disque dur
+sans qu'on leur en donne explicitement l'instruction. D'habitude, les
+systèmes Live sont démarrés à partir de media tels que des CD, DVD, ou des
+clés USB. Certains peuvent également être démarrés depuis le réseau.
+
+_* *{Debian Live}*: Le sous-projet Debian qui maintient les paquets
+live-boot, live-build, live-config, et live-manual.
+
+_* *{Système Debian Live}*: Un système live qui utilise les logiciels du
+système d'exploitation Debian et qui peut être lancé depuis CD, DVD, clé
+USB, en réseau (à l'aide des images netboot), et à partir d'Internet (à
+l'aide du paramètre de démarrage #{fetch=URL}#).
+
+_* *{Système hôte}*: L'environnement utilisé pour créer le système live.
+
+_* *{Système de destination}*: L'environnement utilisé pour faire tourner le
+système live.
+
+_* *{live-boot}*: Une collection de scripts utilisés pour lancer des
+systèmes live. live-boot faisait initialement partie de live-initramfs.
+
+_* *{live-build}*: Une collection de scripts utilisés pour personnaliser les
+systèmes Debian Live. live-build était initialement nommé live-package, puis
+live-helper.
+
+_* *{live-config}*: Une collection de scripts utilisés pour configurer un
+système live durant le processus de démarrage. live-config faisait
+initialement partie de live-initramfs.
+
+_* *{live-manual}*: Ce document est maintenu dans un paquet nommé
+live-manual.
+
+_* *{Debian Installer (d-i)}*: Le système d'installation officiel pour la
+distribution Debian.
+
+_* *{Paramètres de démarrage}*: Les paramètres pouvant être entrés à
+l'invite du bootloader afin de modifier le kernel ou live-config.
+
+_* *{chroot}*: Le programme chroot, chroot(8), nous permet de faire tourner
+plusieurs instances concurrentes de l'environnement GNU/Linux sur un système
+sans redémarrage.
+
+_* *{Image binaire}*: Un fichier contenant le système live, tel que
+binary.iso ou binary.img.
+
+_* *{Distribution de destination}*: La distribution sur laquelle votre
+système live sera basée. Ceci peut varier en fonction de la distribution de
+votre système hôte.
+
+_* *{Squeeze/Wheezy/Sid (stable/testing/unstable)}*: La distribution stable
+contient la dernière version officielle de Debian. La distribution testing
+est la future version stable où seuls les paquets suffisamment matures
+peuvent entrer. Un avantage de cette distribution est qu'elle contient des
+logiciels de versions plus récentes que la version stable. La distribution
+unstable est en constante évolution. En général cette distribution est
+utilisée par les développeurs et ceux qui aiment le risque.
+
+Au moment d'écrire ce document, Squeeze est la version Stable et Wheezy est
+la version testing. Sid restera toujours synonyme de version unstable.
+
+2~Auteurs
+
+La liste des auteurs (dans l'ordre alphabétique):
+
+_* Ben Armstrong
+
+_* Brendan Sleight
+
+_* Chris Lamb
+
+_* Daniel Baumann
+
+_* Franklin Piat
+
+_* Jonas Stein
+
+_* Kai Hendry
+
+_* Marco Amadori
+
+_* Mathieu Geli
+
+_* Matthias Kirschner
+
+_* Richard Nelson
+
+_* Trent W. Buck
+
+2~ Contribuer à ce document
+
+This manual is intended as a community project and all proposals for
+improvements and contributions are extremely welcome. The preferred way to
+submit a contribution is to send it to the mailing list. Please see
+{Contact}#contact for more information.
+
+Lorsque vous soumettez une contribution, veuillez indiquer clairement le
+copyright et inclure la mention légale relative à la licence. Notez que pour
+être acceptée, la contribution doit être déposée sous la même licence que le
+reste du document, c'est-à-dire la GPL version 3 ou ultérieure.
+
+Les sources de ce manuel sont maintenues à l'aide du logiciel de gestion de
+versions Git. Vous pouvez obtenir la dernière copie en exécutant:
+
+code{
+
+$ git clone git://live.debian.net/git/live-manual.git
+
+}code
+
+Avant de soumettre votre contribution, veuillez prévisualiser votre
+travail. Afin de prévisualiser live-manual, assurez-vous que les paquets
+nécessaires sont installés en exécutant:
+
+code{
+
+# apt-get install make po4a sisu-complete
+
+}code
+
+Vous pouvez compiler live-manual depuis le répertoire racine de votre
+checkout git en exécutant:
+
+code{
+
+$ make build
+
+}code
+
+3~ Appliquer des patches
+
+Les contributions directes au répertoire sont possibles pour tout le
+monde. Cependant, nous vous demandons d'envoyer les changements conséquents
+sur la liste de discussion au préalable. Afin de de faire un push sur le
+répertoire, les étapes suivantes sont nécessaires.
+
+_* Téléchargez la clé publique:
+
+code{
+
+$ mkdir -p ~/.ssh/identity.d
+$ wget http://live.debian.net/other/keys/live-manual@debian-live \
+	-O ~/.ssh/identity.d/live-manual@debian-live
+$ wget http://live.debian.net/other/keys/live-manual@debian-live.pub \
+	-O ~/.ssh/identity.d/live-manual@debian-live.pub
+$ chmod 0600 ~/.ssh/identity.d/live-manual@debian-live*
+
+}code
+
+_* Ajoutez la section suivante à votre configuration openssh-client:
+
+code{
+
+$ cat >> ~/.ssh/config << EOF
+Host live.debian.net
+        Hostname live.debian.net
+        User gitosis
+        IdentityFile ~/.ssh/identity.d/live-manual@debian-live
+EOF
+
+}code
+
+_* Clonez le manuel via ssh:
+
+code{
+
+$ git clone gitosis@live.debian.net:/live-manual.git
+
+}code
+
+_* Après édition des fichiers dans manual/en/, veuillez appeler 'commit'
+dans le dossier racine du répertoire afin de de nettoyer les fichier et de
+mettre à jour les fichiers de traduction:
+
+code{
+
+$ make commit
+
+}code
+
+_* Après nettoyage, soumettre les modifications. Veuillez écrire les
+commentaires de commit à l'aide de phrases complètes, en commençant par une
+majuscule et en terminant par un point, et en commençant par
+'Fixing/Adding/Removing/Correcting/':
+
+code{
+
+$ git commit -a
+
+}code
+
+_* Envoyez votre commit au serveur:
+
+code{
+
+$ git push
+
+}code

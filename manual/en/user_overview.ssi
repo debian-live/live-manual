@@ -18,16 +18,6 @@ _* The scripts are independent - that is to say, it is always safe to run each c
 
 Unlike debhelper, live-build contains a tool to generate a skeleton configuration directory, #{lb config}#. This could be considered to be similar to tools such as #{dh-make}#. For more information about #{lb config}#, please see {The lb config command}#lb-config.
 
-Besides the common config/common, which is used by all live-build commands, some additional files can be used to configure the behavior of specific helper commands. These files are typically named config/command or config/stage (where "stage", of course, is replaced with the name of the stage that they belong to, and "command" with the name of the command).
-
-For example, the #{lb_bootstrap_debootstrap}# command uses files named config/bootstrap and config/bootstrap_debootstrap to read the options it will use. Generally, these files contain variables with values assigned, one variable per line. Some commands of live-buil use pairs of values or slightly more complicated variable assignments.
-
-live-build respects environment variables which are present in the context of the shell it is running. If variables can be read from config files, then they override environment variables, and if command line options are used, they override values from config files. If no value for a given variable can be found (and is thus unset), live-build will automatically set it to a default value.
-
-All config files are shell scripts which are sourced by a live-build command. That means they have to follow the normal shell syntax. You can also put comments in these files; lines beginning with "#" are ignored.
-
-In some rare cases you may want to have different versions of these files for different architectures or distributions. If files named config/stage.arch or config/stage_command.arch, and config/stage.dist or config/stage_command.dist exist (where "arch" is the same as the output of dpkg --print-architecture and "dist" is the same as the codename of the target distribution), then they will be used in preference to the other, more general files.
-
 The remainder of this section discusses the three most important commands:
 
 _* *{lb config}*: Responsible for initializing a Live system configuration directory. See {The lb config command}#lb-config for more information.
@@ -82,9 +72,9 @@ drwxr-xr-x 2 user user 4096 Sep  7 13:02 templates
 
 }code
 
-Using #{lb config}# without any arguments would be suitable for users who are either happy editing the generated files, or are simply happy with the defaults it creates.
+Using #{lb config}# without any arguments would be suitable for users who need a very basic image, or who intend to later provide a more complete configuration via auto/config (see {Managing a configuration}#managing-a-configuration for details).
 
-You can ask #{lb config}# to generate a config/ directory "preseeded" with various options. This might be suitable if you do not require the default settings but do not need to change a large number of options. For example:
+Normally, you will want to specify some options. For example, to include the 'gnome' package list in your configuration:
 
 code{
 
@@ -92,7 +82,7 @@ $ lb config -p gnome
 
 }code
 
-will build a config/ directory configured to include the 'gnome' package list. It is possible to specify many options:
+It is possible to specify many options, such as:
 
 code{
 
@@ -100,7 +90,7 @@ $ lb config --binary-images net --hostname live-machine --username live-user ...
 
 }code
 
-A full list of options is available in the #{lb_config}# man page. Most options have a parallel with an "LB_" prefixed variable.
+A full list of options is available in the #{lb_config}# man page.
 
 3~lb-build The #{lb build}# command
 

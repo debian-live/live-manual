@@ -2,27 +2,25 @@
 
 1~ The basics
 
-This chapter contains a brief overview of the build process as well as containing instructions on how to boot the various binary image types.
+This chapter contains a brief overview of the build process and instructions for booting the various binary image types.
 
 2~ What is a live system?
 
-A live system usually means an operating system booted on a computer from a removable medium (such as CD-ROM, USB stick, or network), ready to use without any installation on the usual drive(s), with an auto-configuration done at runtime (see {Terms}#terms ).
+A live system usually means an operating system booted on a computer from a removable medium, such as a CD-ROM or USB stick, or from a network, ready to use without any installation on the usual drive(s), with auto-configuration done at runtime (see {Terms}#terms ).
 
-With Debian Live, it's a Debian GNU/Linux operating system, built for one of the supported architectures (currently amd64, i386, powerpc and sparc). It is made from following parts:
+With Debian Live, it's a Debian GNU/Linux operating system, built for one of the supported architectures (currently amd64, i386, powerpc and sparc). It is made from the following parts:
 
-_* Linux kernel
+_* *{Linux kernel image}*, usually named #{vmlinuz*}#
 
-_* The Linux image, usually named #{vmlinuz*}#
+_* *{Initial RAM disk image (initrd)}*: a RAM disk set up for the Linux boot, containing modules possibly needed to mount the System image and some scripts to do it.
 
-_* *{Initial RAM disk image (initrd)}*: RAM disk setup for the Linux boot, containing modules possibly needed to mount the filesystem's image and some scripts to do it.
-
-_* *{System image}*: The operating systems filesystem image. The SquashFS compressed filesystem is used to minimize the Debian Live image size. Note that it's read-only. So, during boot the Debian Live system will use a RAM disk and 'union' mechanism to enable writing files within the running system. However, all modifications will be lost upon shutdown unless optional persistence partition(s) are used (see persistence).
+_* *{System image}*: The operating system's filesystem image. Usually, a SquashFS compressed filesystem is used to minimize the Debian Live image size. Note that it is read-only. So, during boot the Debian Live system will use a RAM disk and 'union' mechanism to enable writing files within the running system. However, all modifications will be lost upon shutdown unless optional persistence is used (see persistence).
 
 % FIXME: <xref linkend="persistence"/>
 
-_* *{Bootloader}*: A small piece of code, crafted to boot up from the chosen media, possibly presenting a prompt or menu to allow selection of options/configuration. It then loads the Linux kernel and its initrd to run with an associated filesystem image. Different solutions can be used depending on the target media and format of the filesystem containing the previous components: Isolinux to boot from a CD or DVD in ISO9660 format, syslinux for HDD or USB drive booting from a VFAT partition, extlinux for ext2/3/4 and btrfs partitions, pxelinux for PXE netboot, GRUB for ext2/3/4 partition, etc.
+_* *{Bootloader}*: A small piece of code crafted to boot from the chosen media, possibly presenting a prompt or menu to allow selection of options/configuration. It loads the Linux kernel and its initrd to run with an associated system filesystem. Different solutions can be used, depending on the target media and format of the filesystem containing the previously mentioned components: isolinux to boot from a CD or DVD in ISO9660 format, syslinux for HDD or USB drive booting from a VFAT partition, extlinux for ext2/3/4 and btrfs partitions, pxelinux for PXE netboot, GRUB for ext2/3/4 partitions, etc.
 
-_* live-build will build the system image from your specifications, setup a Linux kernel and its initrd, a bootloader to run them, all in one media-dependant format (ISO9660 image, disk image, etc.)
+You can use live-build to build the system image from your specifications, set up a Linux kernel, its initrd, and a bootloader to run them, all in one media-dependant format (ISO9660 image, disk image, etc.)
 
 2~ First steps: building an ISO image
 
@@ -36,7 +34,7 @@ $ lb config
 
 }code
 
-By passing no parameters to #{lb config}# we indicated that we wish to use the defaults (see {The lb config command}#lb-config ).
+By passing no parameters to #{lb config}#, we indicated that we wish to use the defaults (see {The lb config command}#lb-config ).
 
 Now that we have a "config/" hierarchy, we may build the image with the lb build command:
 
@@ -94,11 +92,11 @@ $ wodim binary.iso
 
 }code
 
-2~ Building an USB/HDD image
+2~ Building a USB/HDD image
 
 The following sequence of commands will create a basic USB/HDD image containing just the Debian standard system without X.org. It is suitable for booting from USB sticks, USB hard drives, and various other portable storage devices. Normally, an ISO hybrid image can be used for this purpose instead, but if you have a BIOS which does not handle hybrid images properly, or want to use the remaining space on the media for a persistence partition, you need a USB/HDD image.
 
-Note if you created an iso image with the previous example, you will need to clean up your working directory with the #{lb clean} command (see {The lb clean command}#lb-clean ):
+Note: if you created an iso image with the previous example, you will need to clean up your working directory with the #{lb clean} command (see {The lb clean command}#lb-clean ):
 
 code{
 
@@ -124,7 +122,7 @@ code{
 
 3~copying-usb-hdd-image Copying USB/HDD image to a USB stick
 
-The generated binary image contains a VFAT partition and the syslinux bootloader, ready to be directly written on an USB stick. Plug in an USB stick with a size larger than that of binary.img and type:
+The generated binary image contains a VFAT partition and the syslinux bootloader, ready to be directly written on a USB stick. Plug in a USB stick with a size larger than that of binary.img and type:
 
 code{
 
@@ -156,7 +154,7 @@ code{
 
 }code
 
-Ater the creation of the partition you have to create a filsystem on it. One possible choice would be ext4.
+After the creation of the partition, you have to create a filesystem on it. One possible choice would be ext4.
 
 code{
 
@@ -172,13 +170,13 @@ code{
 
 }code
 
-*{Remember: Every time you install a new binary.img on the stick, all your data will be lost because the image includes a complete partition table.}*
+*{Remember: Every time you install a new binary.img on the stick, all data on the stick will be lost because the partition table is overwritten by the contents of the image.}*
 
 2~ Building a netboot image
 
 The following sequence of commands will create a basic netboot image containing the Debian standard system without X.org. It is suitable for booting over the network.
 
-Note if you performed any previous examples, you will need to clean up your working directory with the #{lb clean}# command:
+Note: if you performed any previous examples, you will need to clean up your working directory with the #{lb clean}# command:
 
 code{
 
@@ -194,7 +192,7 @@ $ lb config -b net --net-root-path "/srv/debian-live" --net-root-server "192.168
 
 }code
 
-In contrast with the ISO and USB hdd images, netbooting does not support serving a filesystem image with the client so the files must be served via NFS. The net-root-path and net-root-server options specify the location and server, respectively, of the NFS server where the filesytem image will be located at boot-time.
+In contrast with the ISO and USB/HDD images, netbooting does not support serving a filesystem image with the client, so the files must be served via NFS. The net-root-path and net-root-server options specify the location and server, respectively, of the NFS server where the filesytem image will be located at boot time.
 
 Now build the image with the #{lb build}# command:
 
@@ -204,7 +202,7 @@ code{
 
 }code
 
-In a network boot the client runs a small piece of software, which usually resides on the EPROM of the Ethernet card. This program sends a DHCP request to get an IP address and information about what to do next. Typically the next step is getting a higher level boot loader via the TFTP protocol. That could be PXELINUX, Grub or even boot directly to an operating system like Linux.
+In a network boot, the client runs a small piece of software which usually resides on the EPROM of the Ethernet card. This program sends a DHCP request to get an IP address and information about what to do next. Typically, the next step is getting a higher level bootloader via the TFTP protocol. That could be PXELINUX, GRUB, or even boot directly to an operating system like Linux.
 
 For example, if you unpack the generated binary-net.tar.gz archive in the /srv/debian-live directory, you'll find the filesystem image in live/filesystem.squashfs and the kernel, initrd and PXELINUX bootloader in tftpboot/debian-live/i386.
 
@@ -212,7 +210,7 @@ We must now configure three services on the server to enable netboot.
 
 3~ DHCP server
 
-We must configure our network's DHCP server to be sure to give an IP address to the computer netbooting, and to advertise the location of the PXE bootloader.
+We must configure our network's DHCP server to be sure to give an IP address to the netbooting client system, and to advertise the location of the PXE bootloader.
 
 Here is an example for inspiration, written for the ISC DHCP server #{isc-dhcp-server}# in the /etc/dhcp/dhcpd.conf configuration file;
 
@@ -235,9 +233,9 @@ subnet 192.168.1.0 netmask 255.255.255.0 {   # 192.168.1.0/24
 
   # net boot configuration for guests with a PXE client :
   if substring (option vendor-class-identifier, 0, 9) = "PXEClient" {
-    # Note : all files for PXE are relatives to the TFTP server's root
+    # Note: all files for PXE are relatives to the TFTP server's root
 
-    # PXE boot loader (first program to be loaded, by TFTP)
+    # PXE bootloader (first program to be loaded, by TFTP)
     filename "pxelinux.0";
 
   }
@@ -349,6 +347,6 @@ ethernet0.generatedAddressOffset = "0"
 
 _* You can play with this configuration file (i.e. change memory limit to 256)
 
-_* Double click on this file (or run VMWare player and selecet this file).
+_* Double click on this file (or run VMWare player and select this file).
 
 _* When running just press space if that strange question comes up...

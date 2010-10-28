@@ -66,21 +66,19 @@ In order to test the ISO with virtualbox-ose:
 
 code{
 
-# apt-get install virtualbox-ose
+# apt-get install virtualbox-ose virtualbox-ose-dkms
+
+$ virtualbox
 
 }code
 
-and either install #{virtualbox-ose-source}# or #{virtualbox-ose-dkms}# to build the required kernel modules to run virtualbox-ose.
+Create a new virtual machine, change the storage settings to use binary.iso as the CD/DVD device, and start the machine.
 
-After successful installation, virtualbox can be e.g. found in the GNOME menu under 'Applications/System Tools/VirtualBox OSE'.
-
-Please consider including of following packages onto the live image to achieve higher resolution of the display when booting the live image in virutalbox-ose (1280x1024 instead of 800x600 and in particular if the default resolution of the virtualbox-ose display shouldn't work with the gui-installer).
+Note: For live systems containing X.org that you want to test with virtualbox-ose, you may wish to include the VirtualBox X.org driver package, virtualbox-ose-guest-x11, in your live-build configuration. Otherwise, the resolution is limited to 800x600.
 
 code{
 
-virtualbox-ose-guest-dkms
-virtualbox-ose-guest-utils
-virtualbox-ose-guest-x11
+# lb config --packages virtualbox-ose-guest-x11
 
 }code
 

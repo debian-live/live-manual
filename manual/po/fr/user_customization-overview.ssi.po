@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
-"POT-Creation-Date: 2010-10-22 08:57-0200\n"
+"POT-Creation-Date: 2010-10-29 17:14-0200\n"
 "PO-Revision-Date: 2010-10-22 07:52-0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -27,18 +27,61 @@ msgid "1~customization-overview Customization overview"
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-overview.ssi:7
+#: en/user_customization-overview.ssi:6
 msgid ""
-"% FIXME: just a stub for now.  In conversational style, cover the different "
-"kinds of customization % and link to each section within the text."
+"This chapter gives an overview of the various ways in which you may "
+"customize a Debian Live system."
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-overview.ssi:9
+#: en/user_customization-overview.ssi:8
 msgid ""
-"This chapter gives an overview of the various ways in which your Debian live "
-"systems may be customized. See sections {Customizing package installation}"
-"#customizing-package-installation, {Customizing contents}#customizing-"
-"contents and {Customizing locale and language}#customizing-locale-and-"
-"language."
+"It is important to understand the different layers of a Live system to know "
+"where configurations must occur, and particular, to know when they are "
+"applied. Of course, all configurations are in some way processed by live-"
+"build at build time, but some parts of setting up the Live system don't "
+"actually occur until boot time, either early in the boot by live-boot, or "
+"later by live-config. Thus, it is necessary to have a way to specify boot-"
+"time customizations. In particular, while most #{lb config}# options control "
+"aspects of the build, #{--bootappend-live}# will pass additional options "
+"through the kernel command line to set things up at boot time, such as "
+"persistence, keyboard layouts, or timezone."
+msgstr ""
+
+#. type: Plain text
+#: en/user_customization-overview.ssi:10
+msgid ""
+"Therefore, in addition to the man pages included in live-build, you should "
+"keep near at hand the man pages for live-boot and live-config. Although the "
+"live-boot and live-config packages are installed within the live system you "
+"are building, it is recommended that you also install them on your build "
+"system for easy reference when you are working on your configuration. It is "
+"safe to do so, as none of the scripts contained within them are executed "
+"unless the system is configured as a live system."
+msgstr ""
+
+#. type: Plain text
+#: en/user_customization-overview.ssi:12
+msgid ""
+"You should also be aware of the kinds of material that go into a Debian live "
+"configuration. Although #{lb config}# does create a skeletal configuration "
+"in the config/ directory, to accomplish your goals, you may need to provide "
+"additional files in subdirectories of config/. Depending on where the files "
+"are stored in the configuration, they may be copied into the live system's "
+"filesystem or into the binary image filesystem, or may provide build-time "
+"configurations of the system that would be cumbersome to pass as command-"
+"line options. You may include things such as custom lists of packages, "
+"custom artwork, or hook scripts to run either at build time or at boot time, "
+"boosting the already considerable flexibility of debian-live with code of "
+"your own."
+msgstr ""
+
+#. type: Plain text
+#: en/user_customization-overview.ssi:14
+msgid ""
+"The following chapters are organized by the kinds of customization task "
+"users typically perform: {Customizing package installation}#customizing-"
+"package-installation, {Customizing contents}#customizing-contents and "
+"{Customizing locale and language}#customizing-locale-and-language cover just "
+"a few of the things you might want to do."
 msgstr ""

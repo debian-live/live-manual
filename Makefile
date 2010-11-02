@@ -38,9 +38,10 @@ autobuild: clean build
 		mkdir -p build/$${LANGUAGE}/epub; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/epub/live-manual.epub build/$${LANGUAGE}/epub; \
 		mkdir -p build/$${LANGUAGE}/html; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/[0-9]*.html manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/index.html build/$${LANGUAGE}/html; \
-		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/doc.html build/$${LANGUAGE}/html/live-manual.html; \
+		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/*.html build/$${LANGUAGE}/html; \
+		mv build/$${LANGUAGE}/html/doc.html build/$${LANGUAGE}/html/live-manual.html; \
 		cp -a manual/$${LANGUAGE}/build/$${LANGUAGE}/_sisu build/$${LANGUAGE}; \
+		rm -f build/$${LANGUAGE}/html/toc.html build/$${LANGUAGE}/html/sisu_manifest.html build/$${LANGUAGE}/html/toc.html build/$${LANGUAGE}/html/metadata.html; \
 		mkdir -p build/$${LANGUAGE}/odf; \
 		cp manual/$${LANGUAGE}/build/$${LANGUAGE}/live-manual/opendocument.odt build/$${LANGUAGE}/odf/live-manual.odt; \
 		mkdir -p build/$${LANGUAGE}/pdf; \

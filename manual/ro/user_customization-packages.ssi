@@ -10,14 +10,25 @@ _* Installing modified packages
 
 3~ Debian repositories
 
-To set a local mirror (used to 'build' the live system)
+To set a local mirror to be used to at build time:
 
 code{
 
-$ lb config --mirror-bootstrap http://localhost/debian/ --mirror-chroot
-http://localhost/debian/
+$ lb config --mirror-bootstrap http://localhost/debian/
 
 }code
+
+The chroot repository, specified by --mirror-chroot, defaults to the same as
+--mirror-bootstrap.
+
+Each of the --mirror-* options governs which repository is used at various
+stages of the build. Recall from {Stages of the build}#stages-of-the-build
+that the *bootstrap* stage is when the chroot is initially populated by
+debootstrap with a minimal system, and the *chroot* stage is when the chroot
+used to construct the live system's filesystem is built. Thus, the
+corresponding mirror switches are used for those stages, and later, when the
+binary image is constructed, the --mirror-binary value is used, superceding
+any earlier repositories.
 
 The generic mirror is added to the live system's /etc/apt/sources.list.
 

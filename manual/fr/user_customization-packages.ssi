@@ -2,22 +2,43 @@
 
 1~customizing-package-installation Customizing package installation
 
-_* Selecting additional packages to be installed
-
-_* Installing modified packages
+Perhaps the most basic customization of a Debian live system is the
+selection of packages to be included in the image. This chapter guides you
+through the various build-time options to customize live-build's
+installation of packages. We start with customization of the distribution
+mirror. You can also add your own repositories for backports, experimental
+or custom packages, or include packages directly as files. You can define
+your own lists of packages to include, use live-build's predefined lists,
+use #{tasksel}# tasks, or a combination of all three. Finally, a number of
+options give some control over apt, or if you prefer, aptitude, at build
+time when packages are installed. You may find these handy if you use a
+proxy, want to disable installation of recommended packages to save space,
+or need to control which versions of packages are installed via apt pinning,
+to name a few possibilities.
 
 2~ Package sources
 
 3~ Debian repositories
 
-To set a local mirror (used to 'build' the live system)
+To set a local mirror to be used to at build time:
 
 code{
 
-$ lb config --mirror-bootstrap http://localhost/debian/ --mirror-chroot
-http://localhost/debian/
+$ lb config --mirror-bootstrap http://localhost/debian/
 
 }code
+
+The chroot repository, specified by --mirror-chroot, defaults to the same as
+--mirror-bootstrap.
+
+Each of the --mirror-* options governs which repository is used at various
+stages of the build. Recall from {Stages of the build}#stages-of-the-build
+that the *bootstrap* stage is when the chroot is initially populated by
+debootstrap with a minimal system, and the *chroot* stage is when the chroot
+used to construct the live system's filesystem is built. Thus, the
+corresponding mirror switches are used for those stages, and later, when the
+binary image is constructed, the --mirror-binary value is used, superceding
+any earlier repositories.
 
 The generic mirror is added to the live system's /etc/apt/sources.list.
 

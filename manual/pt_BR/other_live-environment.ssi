@@ -125,18 +125,18 @@ need to setup also the #{keyb}# variable to the #{klayout}#'s value.
 
 2~ Persistence
 
-A live cd paradigm is a preinstalled system which runs from read-only media,
-like a cdrom, where writes and modifications do not survive reboots of the
-host hardware which runs it.
+A live cd paradigm is a pre-installed system which runs from read-only
+media, like a cdrom, where writes and modifications do not survive reboots
+of the host hardware which runs it.
 
 
 A Debian Live system is a generalization of this paradigm and thus supports
 other media in addition to CDs; but still, in its default behaviour, it
-should be considered read-only and all the runtime evolutions of the system
+should be considered read-only and all the run-time evolutions of the system
 are lost at shutdown.
 
 Persistence is a common name for different kinds of solutions for saving
-across reboots some, or all, of this runtime evolution of the system. To
+across reboots some, or all, of this run-time evolution of the system. To
 understand how it could work it could be handy to know that even if the
 system is booted and run from read-only media, modification to the files and
 directories are written on writable media, typically a ram disk (tmpfs) and
@@ -154,7 +154,7 @@ By 'full persistence' it is meant that instead of using a tmpfs for storing
 modifications to the read-only media (with the copy-on-write, COW, system) a
 writable partition is used. In order to use this feature a partition with a
 clean writable supported filesystem on it labeled "live-rw" must be attached
-on the system at bootime and the system must be started with the boot
+on the system at boot time and the system must be started with the boot
 parameter 'persistent'. This partition could be an ext2 partition on the
 hard disk or on a usb key created with, e.g.:
 
@@ -206,7 +206,7 @@ content of a snapshot could reside on a partition or an image file (like the
 above mentioned types) labeled #{live-sn}#, but it defaults to a simple cpio
 archive named #{live-sn.cpio.gz}#. As above, at boot time, the block devices
 connected to the system are traversed to see if a partition or a file named
-like that could be found. A power interruption during runtime could lead to
+like that could be found. A power interruption during run time could lead to
 data loss, hence a tool invoked #{live-snapshot --refresh}# could be called
 to sync important changes. This type of persistence, since it does not write
 continuously to the persistent media, is the most flash-based device
@@ -230,7 +230,8 @@ parameters of: #{persistent}# #{persistent-subtext=subText}#.
 
 3~ Partial remastering
 
-The runtime modification of the tmpfs could be collected using live-snapshot
-in a squashfs and added to the cd by remastering the iso in the case of cd-r
-or adding a session to multisession cd/dvd(rw); live-initramfs mounts all
-/live filesystem in order or with the module bootparameter.
+The run-time modification of the tmpfs could be collected using
+live-snapshot in a squashfs and added to the cd by remastering the iso in
+the case of cd-r or adding a session to multisession cd/dvd(rw);
+live-initramfs mounts all /live filesystem in order or with the module boot
+parameter.

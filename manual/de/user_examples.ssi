@@ -1,0 +1,43 @@
+B~ Examples
+
+1~ Use Case Builds
+
+This chapter covers example builds for specific use cases with Debian Live.
+
+2~ VNC Kiosk Client
+
+Create an image with live-build to boot directly to a VNC server.
+
+_* Make a build directory: #{$ mkdir vncBuild}#
+
+_* Move to the build directory: #{$ cd vncBuild}#
+
+Example to config the build directory to include gdm metacity
+xtightvncviewer: #{$ lb config --packages "gdm3 metacity xtightvncviewer"}#
+
+Create a folder /etc/skel folder for a custom .xsession for the default
+user: #{$ mkdir -p config/chroot_local-includes/etc/skel}#
+
+Create the .xsession for the default user: #{$ touch
+config/chroot_local-includes/etc/skel/.xsession}#
+
+Edit the .xsession file to launch metacity and start xvncviewer with
+something similar to the below:
+
+code{
+
+#!/bin/sh
+
+/usr/bin/metacity & /usr/bin/vncviewer xxx.xxx.xxx.xxx:PORT
+
+exit
+
+}code
+
+_* Build the image: #{# lb build}#
+
+_* Enjoy.
+
+2~ Next Example FIXME
+
+

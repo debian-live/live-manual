@@ -2,60 +2,43 @@
 
 1~customizing-package-installation Customizing package installation
 
-Perhaps the most basic customization of a Debian live system is the selection of packages to be included in the image. This chapter guides you through the various build-time options to customize live-build's installation of packages. We start with customization of the distribution mirror. You can also add your own repositories for backports, experimental or custom packages, or include packages directly as files. You can define your own lists of packages to include, use live-build's predefined lists, use #{tasksel}# tasks, or a combination of all three. Finally, a number of options give some control over apt, or if you prefer, aptitude, at build time when packages are installed. You may find these handy if you use a proxy, want to disable installation of recommended packages to save space, or need to control which versions of packages are installed via apt pinning, to name a few possibilities.
+Perhaps the most basic customization of a Debian live system is the selection of packages to be included in the image. This chapter guides you through the various build-time options to customize live-build's installation of packages. We start with customization of the distribution mirror. You can also add your own repositories for backports, experimental or custom packages, or include packages directly as files. You can define your own lists of packages to include, use live-build's predefined lists, use #{tasksel}# tasks, or a combination of all three. Finally, a number of options give some control over apt, or if you prefer, aptitude, at build time when packages are installed. You may find these handy if you use a proxy, want to disable installation of recommended packages to save space, or need to control which versions of packages are installed via APT pinning, to name a few possibilities.
 
 2~ Package sources
 
-3~ Debian repositories
+3~ Distribution mirrors
 
-To set a local mirror to be used to at build time:
+Each of the --mirror-* options governs which distribution mirror is used at various stages of the build. Recall from {Stages of the build}#stages-of-the-build that the *bootstrap* stage is when the chroot is initially populated by debootstrap with a minimal system, and the *chroot* stage is when the chroot used to construct the live system's filesystem is built. Thus, the corresponding mirror switches are used for those stages, and later, in the *binary* stage, the --mirror-binary and --mirror-binary-security values are used, superceding any mirrors used in an earlier stage.
 
-code{
+4~ Distribution mirrors used at build time
 
-$ lb config --mirror-bootstrap http://localhost/debian/
-
-}code
-
-The chroot repository, specified by --mirror-chroot, defaults to the same as --mirror-bootstrap.
-
-Each of the --mirror-* options governs which repository is used at various stages of the build. Recall from {Stages of the build}#stages-of-the-build that the *bootstrap* stage is when the chroot is initially populated by debootstrap with a minimal system, and the *chroot* stage is when the chroot used to construct the live system's filesystem is built. Thus, the corresponding mirror switches are used for those stages, and later, when the binary image is constructed, the --mirror-binary value is used, superceding any earlier repositories.
-
-The generic mirror is added to the live system's /etc/apt/sources.list.
+To set the distribution mirrors used at build time to point at a local mirror, it is sufficient to set --mirror-bootstrap and --mirror-chroot-security as follows.
 
 code{
 
-$ lb config --mirror-binary http://ftp.debian.org/debian/
+$ lb config --mirror-bootstrap http://localhost/debian/ \
+            --mirror-chroot-security http://localhost/debian-security/
 
 }code
 
-Note: It is not used for building the live system but to install new software while using the live system.
+The chroot mirror, specified by --mirror-chroot, defaults to the --mirror-bootstrap value.
 
-It can be disabled by setting the binary mirror to the same value as the chroot mirror.
+4~ Distribution mirrors used at run time
 
-Note: the same applies for mirror chroot security and mirror binary security
+The --mirror-binary* options govern the distribution mirrors placed in the binary image. These may be used to install additional packages while running the live system. The default values employ cdn.debian.net, a service that chooses a geographically close mirror based on the user's IP number. This is a suitable choice when you cannot predict which mirror will be best for all of your users. Or you may specify your own values as shown in the example below. An image built from this configuration would only be suitable for users on a network where 'mirror' is reachable.
 
 code{
 
-$ lb config --mirror-chroot-security {URL}
-$ lb config --mirror-binary-security {URL}
+$ lb config --mirror-binary http://mirror/debian/ \
+            --mirror-binary-security http://mirror/debian-security/
 
 }code
 
-If you don't want to include apt indices, you can skip those with:
+3~ Additional repositories
 
-code{
+To add more repositories (e.g. backports, experimental or custom packages, etc.), create #{config/chroot_sources/your-repository.{chroot,binary}}# files. As with the #{--mirror-*}# options, these govern the repositories used in the *chroot* stage when building the image, and in the *binary* stage, i.e. for use when running the live system.
 
-$ lb config --binary-indices false
-
-}code
-
-This will not influence the entries in /etc/apt/sources.list, but only if /var/lib/apt contains the indices files or not (and by that making the image smaller).
-
-3~ Own repository
-
-To add more repositories (e.g. backports, experimental or custom packages, etc.), create #{config/chroot_sources/your-repository.{chroot,binary}}# files.
-
-e.g. #{config/chroot_sources/live.chroot}# allows you to install packages from the debian live snapshot repository at live system build time (you have to add the packages in your package list):
+For example, #{config/chroot_sources/live.chroot}# allows you to install packages from the debian live snapshot repository at live system build time.
 
 code{
 
@@ -63,11 +46,11 @@ deb http://live.debian.net/ sid-snapshots main contrib non-free
 
 }code
 
-If you add the line to #{config/chroot_sources/live.binary}# the repository will be added to your live-system's #{/etc/apt/sources.list}#.
+If you add the line to #{config/chroot_sources/live.binary}# the repository will be added to your live system's #{/etc/apt/sources.list.d/}# directory.
 
 If such files exist, they will be picked up automatically.
 
-You can also put the gpg-key used to sign the repository into config/chroot_sources/your-repository.{binary,chroot}.gpg
+You can also put the GPG key used to sign the repository into config/chroot_sources/your-repository.{binary,chroot}.gpg files.
 
 Note: some preconfigured package repositories are available for easy selection through the --repository switch, e.g. for enabling live snapshots, a simple command is enough to enable it:
 
@@ -77,19 +60,11 @@ $ lb config --repository live.debian.net
 
 }code
 
-3~ Package installation
-
-You can elect to use either #{apt}# or #{aptitude}# when installing packages. Which utility is used is governed by the #{LB_APT}# variable in #{config/chroot}# or by the #{--apt}# argument to #{lb config}#:
-
-_* #{apt}#: Specifying a missing package causes package installation to fail, which may not be the desired behaviour. This is the default setting for building images for Lenny or later.
-
-_* #{aptitude}#: Specifying a missing package causes package installation to succeed, which may not be the desired behaviour. This is the default setting for building images for Etch.
-
 2~ Installing additional packages
 
 live-helper has a number of mechanisms for indicating that additional packages should be installed, including:
 
-_* The #{LB_PACKAGES}# variable
+_* The #{--packages}# option
 
 _* Package lists
 
@@ -97,17 +72,9 @@ _* Local packages (#{chroot_local-packages/}#)
 
 _* Tasks
 
-3~ The #{LB_PACKAGES}# variable
+3~ The #{--packages}# option
 
-To install additional packages, simply add them to the #{LB_PACKAGES}# variable in #{config/chroot}#. For example:
-
-code{
-
-LB_PACKAGES="package1 package2 package3 ... "
-
-}code
-
-You can also specify initial values on the command line:
+To install additional packages, simply specify #{--packages}#. For example:
 
 code{
 
@@ -202,7 +169,7 @@ code{
 
 }code
 
-Any live-build configuration variable that begins with #{LB_}# can be tested in this way.
+Any live-build configuration variable that begins with #{LB_}# can be tested in this way. (Generally, this means any #{lb config}# option uppercased and with dashes changed to underscores.)
 
 The nesting of conditionals is not supported.
 
@@ -254,6 +221,57 @@ Because of this, you may wish to increment the version number in your custom pac
 
 % FIXME: <xref linkend="apt-preferences"/>
 
-3~ Altering APT preferences during Live system
+2~ Configuring APT at build time
 
-Whilst it may seem unnecessary effort to create an APT repository to install custom packages, the infrastructure can be easily re-used at a later date to offer updates of the modified package.
+You can configure APT through a number of options applied only at build time. (APT configuration used in the running live system may be configured in the normal way for live system contents, that is, by including the appropriate configurations through #{config/chroot_local_includes/}#.) For a complete list, look for options starting with #{apt}# in the #{lb_config}# man page.
+
+3~ Choosing apt or aptitude
+
+You can elect to use either #{apt}# or #{aptitude}# when installing packages at build time. Which utility is used is governed by the #{--apt}# argument to #{lb config}#. Choose the method implementing the preferred behaviour for package installation, the notable difference being how missing packages are handled.
+
+_* #{apt}#: With this method, if a missing package is specified, the package installation will fail. This is the default setting.
+
+_* #{aptitude}#: With this method, if a missing package is specified, the package installation will succeed.
+
+3~ Using a proxy with APT
+
+One commonly required APT configuration is to deal with building an image behind a proxy. You may specify your APT proxy with the #{--apt-ftp-proxy}# or #{--apt-http-proxy}# options as needed, e.g.
+
+code{
+
+lb config --apt-http-proxy http://proxy/
+
+}code
+
+3~ Tweaking APT to save space
+
+You may find yourself needing to save some space on the image media, in which case one or the other or both of the following options may be of interest.
+
+If you don't want to include APT indices in the image, you can omit those with:
+
+code{
+
+$ lb config --binary-indices false
+
+}code
+
+This will not influence the entries in /etc/apt/sources.list, but merely whether /var/lib/apt contains the indices files or not. The tradeoff is that APT needs those indices in order to operate in the live system, so before performing #{apt-cache search}# or #{apt-get install}#, for instance, the user must #{apt-get update}# first to create those indices.
+
+If you find the installation of recommended packages bloats your image too much, you may disable that default option of APT with:
+
+code{
+
+$ lb config -apt-recommends false
+
+}code
+
+The tradeoff here is that recommended packages are defined as "packages that would be found together with this one in all but unusual installations" (Debian Policy Manual, §7.2). This may lead to some packages that you actually need being omitted, so we suggest you review the difference this makes to your packages list (see the #{binary.packages}# file generated by #{lb build}#) and re-include in your list any missing packages that you still want installed.
+
+3~ Passing options to apt or aptitude
+
+If there is not an #{lb config}# option to alter APT's behaviour in the way you need, use #{--apt-options}# or #{--aptitude-options}# to pass any options through to your configured APT tool. See the man pages for #{apt}# and #{aptitude}# for details.
+
+3~ APT pinning
+
+% FIXME: needs content
+

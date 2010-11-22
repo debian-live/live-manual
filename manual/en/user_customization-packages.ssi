@@ -8,11 +8,11 @@ Perhaps the most basic customization of a Debian live system is the selection of
 
 3~ Distribution mirrors
 
-Each of the --mirror-* options governs which distribution mirror is used at various stages of the build. Recall from {Stages of the build}#stages-of-the-build that the *bootstrap* stage is when the chroot is initially populated by debootstrap with a minimal system, and the *chroot* stage is when the chroot used to construct the live system's filesystem is built. Thus, the corresponding mirror switches are used for those stages, and later, in the *binary* stage, the --mirror-binary and --mirror-binary-security values are used, superceding any mirrors used in an earlier stage.
+Each of the #{--mirror-*}# options governs which distribution mirror is used at various stages of the build. Recall from {Stages of the build}#stages-of-the-build that the *bootstrap* stage is when the chroot is initially populated by debootstrap with a minimal system, and the *chroot* stage is when the chroot used to construct the live system's filesystem is built. Thus, the corresponding mirror switches are used for those stages, and later, in the *binary* stage, the #{--mirror-binary}# and #{--mirror-binary-security}# values are used, superceding any mirrors used in an earlier stage.
 
 4~ Distribution mirrors used at build time
 
-To set the distribution mirrors used at build time to point at a local mirror, it is sufficient to set --mirror-bootstrap and --mirror-chroot-security as follows.
+To set the distribution mirrors used at build time to point at a local mirror, it is sufficient to set #{--mirror-bootstrap}# and #{--mirror-chroot-security}# as follows.
 
 code{
 
@@ -21,11 +21,11 @@ $ lb config --mirror-bootstrap http://localhost/debian/ \
 
 }code
 
-The chroot mirror, specified by --mirror-chroot, defaults to the --mirror-bootstrap value.
+The chroot mirror, specified by #{--mirror-chroot}#, defaults to the #{--mirror-bootstrap}# value.
 
 4~ Distribution mirrors used at run time
 
-The --mirror-binary* options govern the distribution mirrors placed in the binary image. These may be used to install additional packages while running the live system. The default values employ cdn.debian.net, a service that chooses a geographically close mirror based on the user's IP number. This is a suitable choice when you cannot predict which mirror will be best for all of your users. Or you may specify your own values as shown in the example below. An image built from this configuration would only be suitable for users on a network where 'mirror' is reachable.
+The #{--mirror-binary*}# options govern the distribution mirrors placed in the binary image. These may be used to install additional packages while running the live system. The defaults employ #{cdn.debian.net}#, a service that chooses a geographically close mirror based on the user's IP number. This is a suitable choice when you cannot predict which mirror will be best for all of your users. Or you may specify your own values as shown in the example below. An image built from this configuration would only be suitable for users on a network where "#{mirror}#" is reachable.
 
 code{
 
@@ -46,13 +46,13 @@ deb http://live.debian.net/ sid-snapshots main contrib non-free
 
 }code
 
-If you add the line to #{config/chroot_sources/live.binary}# the repository will be added to your live system's #{/etc/apt/sources.list.d/}# directory.
+If you add the line to #{config/chroot_sources/live.binary}#, the repository will be added to your live system's #{/etc/apt/sources.list.d/}# directory.
 
 If such files exist, they will be picked up automatically.
 
-You can also put the GPG key used to sign the repository into config/chroot_sources/your-repository.{binary,chroot}.gpg files.
+You can also put the GPG key used to sign the repository into #{config/chroot_sources/your-repository.{binary,chroot}.gpg}# files.
 
-Note: some preconfigured package repositories are available for easy selection through the --repository switch, e.g. for enabling live snapshots, a simple command is enough to enable it:
+Note: some preconfigured package repositories are available for easy selection through the #{--repository}# option, e.g. for enabling live snapshots, a simple command is enough to enable it:
 
 code{
 
@@ -60,15 +60,15 @@ $ lb config --repository live.debian.net
 
 }code
 
-2~ Installing additional packages
+2~installing-additional-packages Installing additional packages
 
-live-helper has a number of mechanisms for indicating that additional packages should be installed, including:
+live-build has a number of mechanisms for indicating that additional packages should be installed, including:
 
 _* The #{--packages}# option
 
 _* Package lists
 
-_* Local packages (#{chroot_local-packages/}#)
+_* Local packages (#{config/chroot_local-packages/}#)
 
 _* Tasks
 
@@ -82,15 +82,11 @@ $ lb config --packages "package1 package2 package3"
 
 }code
 
-The behaviour of live-build when specifying a package that does not exist is determined by your choice of APT utility. See package-installation for more details.
+The behaviour of live-build when specifying a package that does not exist is determined by your choice of APT utility. See {Choosing apt or aptitude}#choosing-apt-or-aptitude for more details.
 
-% FIXME: <xref linkend="package-installation"/>
+If you need to specify a large number of packages to be installed or you need flexibility regarding which packages to install, you should probably be using package lists. See {Package lists}#package-lists for more information.
 
-If you need to specify a large number of packages to be installed or you need flexibility regarding which packages to install, you should probably be using package lists. See package-lists for more information.
-
-% FIXME: <xref linkend="package-lists"/>
-
-3~ Package lists
+3~package-lists Package lists
 
 Package lists are a powerful way of expressing which packages should be installed. live-build ships with a number of predefined package lists which provide sensible default package selections for the major desktop environments, as well as standard systems.
 
@@ -102,21 +98,21 @@ $ lb config --packages-lists "list1 list2 list3"
 
 }code
 
-Note: Package lists that are distributed with live-build reside in the #{/usr/share/live/build/lists}# directory.
+Note: Package lists that are distributed with live-build reside in the #{/usr/share/live/build/lists/}# directory.
 
-*{Local packages lists}*
+4~ Local package lists
 
-You may supplement the supplied lists using local package lists stored in #{config/chroot_local-packageslists}#.
+You may supplement the supplied lists using local package lists stored in #{config/chroot_local-packageslists/}#.
 
-Package lists that exist in this directory need to have a #{.list}# suffix in order to be processed. Local packages lists always override package lists distributed with live-build. This can cause undesired effects, we therefore recommend to use unique names for local packages lists.
+Package lists that exist in this directory need to have a #{.list}# suffix in order to be processed. Local package lists always override package lists distributed with live-build. This can cause undesired effects, we therefore recommend to use unique names for local package lists.
 
-*{Local binary packages lists}*
+4~ Local binary package lists
 
-In case you want to include some required .deb packages to live media's pool/ (without installing them onto the live image) you may need to use lists using binary local package lists stored in #{config/binary_local-packageslists}#. Such media can be used as a customized debian install image for offline installations.
+In case you want to include some required .deb packages to live media's #{pool/}# (without installing them onto the live image) you may need to use lists using binary local package lists stored in #{config/binary_local-packageslists/}#. Such media can be used as a customized Debian install image for offline installations.
 
-Package lists that exist in this directory need to have a .list suffix in order to be processed.
+Package lists that exist in this directory need to have a #{.list}# suffix in order to be processed.
 
-*{Extending a provided package list using includes}*
+4~ Extending a provided package list using includes
 
 % FIXME
 
@@ -127,9 +123,13 @@ Package lists that exist in this directory need to have a .list suffix in order 
 %
 % }code
 
-The package lists that are included with live-build make extensive use of includes. They are available to view in the #{/usr/share/live/build/lists}# directory.
+The package lists that are included with live-build make extensive use of includes. They are available to view in the #{/usr/share/live/build/lists/}# directory.
 
-*{Using conditionals inside packages lists}*
+4~ Using conditionals inside package lists
+
+Any of the live-build configuration variables stored in #{config/*}# (minus the #{LB_}# prefix) may be used in conditional statements in package lists. Generally, this means any #{lb config}# option uppercased and with dashes changed to underscores. But in practice, it is only the ones that influence package selection that make sense, such as #{DISTRIBUTION}#, #{ARCHITECTURE}# or #{ARCHIVE_AREAS}#.
+
+For example, to install #{ia32-libs}# if the #{--architecture amd64}# is specified:
 
 code{
 
@@ -139,7 +139,7 @@ ia32-libs
 
 }code
 
-or if #{LB_ARCHITECTURE}# is set to #{i386}# or #{amd64}#:
+You may test for any one of a number of values, e.g. to install #{memtest86+} if either #{--architecture i386}# or #{--architecture amd64}# is specified:
 
 code{
 
@@ -149,7 +149,7 @@ memtest86+
 
 }code
 
-or if #{LB_ARCHIVE_AREAS}# contains either #{contrib}# or #{non-free}#:
+You may also test against variables that may contain more than one value, e.g. to install #{vrms}# if either #{contrib}# or #{non-free}# is specified via #{--archive-areas}#:
 
 code{
 
@@ -169,8 +169,6 @@ code{
 
 }code
 
-Any live-build configuration variable that begins with #{LB_}# can be tested in this way. (Generally, this means any #{lb config}# option uppercased and with dashes changed to underscores.)
-
 The nesting of conditionals is not supported.
 
 3~ Tasks
@@ -189,27 +187,25 @@ _* #{chroot_local-packages}#
 
 _* Using a custom APT repository
 
-The #{chroot_local-packages}# is simpler to achieve and useful for "one-off" customizations but has a number of drawbacks, whilst using a custom APT repository is more time-consuming to set up.
+Using #{chroot_local-packages}# is simpler to achieve and useful for "one-off" customizations but has a number of drawbacks, whilst using a custom APT repository is more time-consuming to set up.
 
 3~ Using #{chroot_local-packages}# to install custom packages
 
-To install a custom package, simply copy it to the #{config/chroot_local-packages}# directory. Packages that are inside this directory will be automatically installed into the live system during build - you do not need to specify them elsewhere.
+To install a custom package, simply copy it to the #{config/chroot_local-packages/}# directory. Packages that are inside this directory will be automatically installed into the live system during build - you do not need to specify them elsewhere.
 
 Packages *{must}* be named in the prescribed way. One simple way to do this is to use #{dpkg-name}#.
 
 Using #{chroot_local-packages}# for installation of custom packages has disadvantages:
 
-_* It is not possible to use secure APT
+_* It is not possible to use secure APT.
 
-_* You must install all appropriate packages in the #{config/chroot_local-packages}# directory
+_* You must install all appropriate packages in the #{config/chroot_local-packages/}# directory.
 
-_* It does not lend itself to storing Debian Live configurations in revision control
+_* It does not lend itself to storing Debian Live configurations in revision control.
 
 3~ Using an APT repository to install custom packages
 
-Unlike using #{chroot_local-packages}#, when using a custom APT repository you must ensure that you specify the packages elsewhere. See lb-packages for details.
-
-% FIXME: <xref linkend="lb-packages"/>
+Unlike using #{chroot_local-packages}#, when using a custom APT repository you must ensure that you specify the packages elsewhere. See #{Installing additional packages}#installing-additional-packages for details.
 
 Whilst it may seem unnecessary effort to create an APT repository to install custom packages, the infrastructure can be easily re-used at a later date to offer updates of the modified packages.
 
@@ -225,7 +221,7 @@ Because of this, you may wish to increment the version number in your custom pac
 
 You can configure APT through a number of options applied only at build time. (APT configuration used in the running live system may be configured in the normal way for live system contents, that is, by including the appropriate configurations through #{config/chroot_local_includes/}#.) For a complete list, look for options starting with #{apt}# in the #{lb_config}# man page.
 
-3~ Choosing apt or aptitude
+3~choosing-apt-or-aptitude Choosing apt or aptitude
 
 You can elect to use either #{apt}# or #{aptitude}# when installing packages at build time. Which utility is used is governed by the #{--apt}# argument to #{lb config}#. Choose the method implementing the preferred behaviour for package installation, the notable difference being how missing packages are handled.
 

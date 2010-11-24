@@ -46,7 +46,7 @@ deb http://live.debian.net/ sid-snapshots main contrib non-free
 
 }code
 
-If you add the line to #{config/chroot_sources/live.binary}#, the repository will be added to your live system's #{/etc/apt/sources.list.d/}# directory.
+If you add the same line to #{config/chroot_sources/live.binary}#, the repository will be added to your live system's #{/etc/apt/sources.list.d/}# directory.
 
 If such files exist, they will be picked up automatically.
 
@@ -60,21 +60,13 @@ $ lb config --repository live.debian.net
 
 }code
 
-2~installing-additional-packages Installing additional packages
+2~choosing-packages-to-install Choosing packages to install
 
-live-build has a number of mechanisms for indicating that additional packages should be installed, including:
+There are a number of ways to choose which packages live-build will install in your image, covering a variety of different needs. You can simply name individual packages to install, either with the #{--packages}# option for a few packages, or in a package list of your own for larger numbers. You can also choose larger predefined lists of packages, or use APT tasks. And finally, you may place package files in your #{config/}# tree, which is well suited to testing of new or experimental packages before they are available from a repository.
 
-_* The #{--packages}# option
+3~ Choosing a few packages
 
-_* Package lists
-
-_* Local packages (#{config/chroot_local-packages/}#)
-
-_* Tasks
-
-3~ The #{--packages}# option
-
-To install additional packages, simply specify #{--packages}#. For example:
+When the number of packages added is small, simply specify #{--packages}#. For example:
 
 code{
 
@@ -84,13 +76,13 @@ $ lb config --packages "package1 package2 package3"
 
 The behaviour of live-build when specifying a package that does not exist is determined by your choice of APT utility. See {Choosing apt or aptitude}#choosing-apt-or-aptitude for more details.
 
-If you need to specify a large number of packages to be installed or you need flexibility regarding which packages to install, you should probably be using package lists. See {Package lists}#package-lists for more information.
+If you need to specify a large number of packages to be installed or you need flexibility regarding which packages to install, use package lists as discussed in the following section, {Package lists}#package-lists.
 
 3~package-lists Package lists
 
 Package lists are a powerful way of expressing which packages should be installed. live-build ships with a number of predefined package lists which provide sensible default package selections for the major desktop environments, as well as standard systems.
 
-To specify one or more package list, you can use:
+To specify one or more package lists, you can use:
 
 code{
 
@@ -139,7 +131,7 @@ ia32-libs
 
 }code
 
-You may test for any one of a number of values, e.g. to install #{memtest86+} if either #{--architecture i386}# or #{--architecture amd64}# is specified:
+You may test for any one of a number of values, e.g. to install #{memtest86+ }# if either #{--architecture i386}# or #{--architecture amd64}# is specified:
 
 code{
 
@@ -173,7 +165,33 @@ The nesting of conditionals is not supported.
 
 3~ Tasks
 
-%FIXME
+The Debian Installer offers the user choices of a number of preselected lists of packages, each one focused on a particular kind of system, or task a system may be used for, such as "Graphical desktop environment", "Mail server" or "Laptop". These lists are called "tasks" and are supported by APT through the "Task:" field. You can specify one or more tasks in live-build via the #{--tasks}# option, as in the example below.
+
+code{
+
+$ lb config --tasks "mail-server file-server"
+
+}code
+
+The primary tasks available in the Debian Installer can be listed with #{tasksel --list-tasks}# in the live system. The contents of any task, including ones not included in this list, may be examined with #{tasksel --task-packages}#.
+
+4~ Desktop and language tasks
+
+Desktop and language tasks are special cases. In the Debian Installer, if the medium was prepared for a particular desktop environment flavour, the corresponding task will be automatically installed. Thus, there are there are #{gnome-desktop}#, #{kde-desktop}#, #{lxde-desktop}# and #{xfce-desktop}# tasks, none of which are offered in #{tasksel}#'s menu. Likewise, there are no menu entries for tasks for languages, but the user's language choice during the install influences the selection of corresponding language tasks.
+
+In live-build, therefore, these special cases are also given special consideration, but with three notable differences at the time of writing.
+
+First, there is no provision made yet automatically for language tasks, although a subset of those packages are included if you specify #{lb config --language}#. If you need those tasks, which include such things as language-specific fonts and input-method packages, you need to specify them in your configuration. For example:
+
+code{
+
+$ lb config --tasks "japanese japanese-desktop japanese-gnome-desktop"
+
+}code
+
+Second, if you specify #{--packages gnome-desktop}#, or any of the other three desktop flavours mentioned above, it is equivalent to specifying #{--packages standard-x11 --tasks "gnome-desktop desktop standard laptop"}#, except substituting the #{*-desktop}# task for the flavour you specified.
+
+Third, if any of the tasks for these desktop flavours are selected, either explicitly through #{--tasks}# or implicitly by #{--packages}#, live-build will preseed the corresponding desktop value for Debian Installer (if it is included) to ensure it follows its own rules for installing different desktop flavours.
 
 2~ Installing modified or third-party packages
 
@@ -205,7 +223,7 @@ _* It does not lend itself to storing Debian Live configurations in revision con
 
 3~ Using an APT repository to install custom packages
 
-Unlike using #{chroot_local-packages}#, when using a custom APT repository you must ensure that you specify the packages elsewhere. See #{Installing additional packages}#installing-additional-packages for details.
+Unlike using #{chroot_local-packages}#, when using a custom APT repository you must ensure that you specify the packages elsewhere. See #{Choosing packages to install}#choosing-packages-to-install for details.
 
 Whilst it may seem unnecessary effort to create an APT repository to install custom packages, the infrastructure can be easily re-used at a later date to offer updates of the modified packages.
 

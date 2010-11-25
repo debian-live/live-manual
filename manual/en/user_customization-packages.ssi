@@ -50,7 +50,7 @@ If you add the same line to #{config/chroot_sources/live.binary}#, the repositor
 
 If such files exist, they will be picked up automatically.
 
-You can also put the GPG key used to sign the repository into #{config/chroot_sources/your-repository.{binary,chroot}.gpg}# files.
+You should also put the GPG key used to sign the repository into #{config/chroot_sources/your-repository.{binary,chroot}.gpg}# files.
 
 Note: some preconfigured package repositories are available for easy selection through the #{--repository}# option, e.g. for enabling live snapshots, a simple command is enough to enable it:
 
@@ -80,21 +80,27 @@ If you need to specify a large number of packages to be installed or you need fl
 
 3~package-lists Package lists
 
-Package lists are a powerful way of expressing which packages should be installed. live-build ships with a number of predefined package lists which provide sensible default package selections for the major desktop environments, as well as standard systems.
+Package lists are a powerful way of expressing which packages should be installed. The list syntax supports included files and conditional sections which makes it easy to build lists from other lists and adapt them for use in multiple configurations. You can use predefined package lists, providing in a modular fashion package selections from each of the major desktop environments and some special purpose lists, as well as standard lists the others are based upon. You can also provide your own package lists, or use a combination of both.
 
-To specify one or more package lists, you can use:
+4~ Predefined package lists
+
+The simplest way to use lists is to specify one or more predefined lists with the #{--packages-lists}# option. For example:
 
 code{
 
-$ lb config --packages-lists "list1 list2 list3"
+$ lb config --packages-lists "gnome-core rescue"
 
 }code
 
-Note: Package lists that are distributed with live-build reside in the #{/usr/share/live/build/lists/}# directory.
+In addition to these lists, live-build supports four virtual package lists: #{gnome-desktop}#, #{kde-desktop}#, #{lxde-desktop}# and #{xfce-desktop}#, each of which provide a more extensive selection of packages that corresponds with Debian Installer defaults for these desktop environments. See {Desktop and language tasks}#desktop-and-language-tasks for more details.
+
+Note: The prebuilt GNOME, KDE, LXDE and XFCE images available for download at http://live.debian.net are built using the corresponding virtual #{*-desktop}# lists.
+
+The default location for the list files on your system is #{/usr/share/live/build/lists/}#. To determine the packages in a given list, read the corresponding file, paying attention to included files and conditionals as described in the following sections.
 
 4~ Local package lists
 
-You may supplement the supplied lists using local package lists stored in #{config/chroot_local-packageslists/}#.
+You may supplement or replace entirely the supplied lists using local package lists stored in #{config/chroot_local-packageslists/}#.
 
 Package lists that exist in this directory need to have a #{.list}# suffix in order to be processed. Local package lists always override package lists distributed with live-build. This can cause undesired effects, we therefore recommend to use unique names for local package lists.
 
@@ -106,16 +112,16 @@ Package lists that exist in this directory need to have a #{.list}# suffix in or
 
 4~ Extending a provided package list using includes
 
-% FIXME
+The package lists that are included with live-build make extensive use of includes. Refer to these in the #{/usr/share/live/build/lists/}# directory, as they serve as good examples of how to write your own lists.
 
-% code{
-%
-% #include <gnome>
-% iceweasel
-%
-% }code
+For example, to make a list that includes the predefined #{gnome}# list plus iceweasel, create #{config/chroot_local-packageslists/mygnome.list}# with the following contents:
 
-The package lists that are included with live-build make extensive use of includes. They are available to view in the #{/usr/share/live/build/lists/}# directory.
+code{
+
+#include <gnome>
+iceweasel
+
+}code
 
 4~ Using conditionals inside package lists
 
@@ -175,7 +181,7 @@ $ lb config --tasks "mail-server file-server"
 
 The primary tasks available in the Debian Installer can be listed with #{tasksel --list-tasks}# in the live system. The contents of any task, including ones not included in this list, may be examined with #{tasksel --task-packages}#.
 
-4~ Desktop and language tasks
+4~desktop-and-language-tasks Desktop and language tasks
 
 Desktop and language tasks are special cases. In the Debian Installer, if the medium was prepared for a particular desktop environment flavour, the corresponding task will be automatically installed. Thus, there are there are #{gnome-desktop}#, #{kde-desktop}#, #{lxde-desktop}# and #{xfce-desktop}# tasks, none of which are offered in #{tasksel}#'s menu. Likewise, there are no menu entries for tasks for languages, but the user's language choice during the install influences the selection of corresponding language tasks.
 
@@ -189,7 +195,7 @@ $ lb config --tasks "japanese japanese-desktop japanese-gnome-desktop"
 
 }code
 
-Second, if you specify #{--packages gnome-desktop}#, or any of the other three desktop flavours mentioned above, it is equivalent to specifying #{--packages standard-x11 --tasks "gnome-desktop desktop standard laptop"}#, except substituting the #{*-desktop}# task for the flavour you specified.
+Second, live-build supports #{*-desktop}# virtual package lists for each of the desktop flavours mentioned above, which select the #{standard-x11}# predefined package list, the corresponding #{*-desktop} task and three additional tasks: #{desktop}#, #{standard}# and #{laptop}#. So, for example, if you specify #{--packages gnome-desktop}#, it is equivalent to specifying #{--packages standard-x11 --tasks "gnome-desktop desktop standard laptop"}#.
 
 Third, if any of the tasks for these desktop flavours are selected, either explicitly through #{--tasks}# or implicitly by #{--packages}#, live-build will preseed the corresponding desktop value for Debian Installer (if it is included) to ensure it follows its own rules for installing different desktop flavours.
 

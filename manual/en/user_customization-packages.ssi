@@ -10,7 +10,7 @@ Perhaps the most basic customization of a Debian live system is the selection of
 
 Each of the #{--mirror-*}# options governs which distribution mirror is used at various stages of the build. Recall from {Stages of the build}#stages-of-the-build that the *bootstrap* stage is when the chroot is initially populated by debootstrap with a minimal system, and the *chroot* stage is when the chroot used to construct the live system's filesystem is built. Thus, the corresponding mirror switches are used for those stages, and later, in the *binary* stage, the #{--mirror-binary}# and #{--mirror-binary-security}# values are used, superceding any mirrors used in an earlier stage.
 
-4~ Distribution mirrors used at build time
+3~ Distribution mirrors used at build time
 
 To set the distribution mirrors used at build time to point at a local mirror, it is sufficient to set #{--mirror-bootstrap}# and #{--mirror-chroot-security}# as follows.
 
@@ -23,7 +23,7 @@ $ lb config --mirror-bootstrap http://localhost/debian/ \
 
 The chroot mirror, specified by #{--mirror-chroot}#, defaults to the #{--mirror-bootstrap}# value.
 
-4~ Distribution mirrors used at run time
+3~ Distribution mirrors used at run time
 
 The #{--mirror-binary*}# options govern the distribution mirrors placed in the binary image. These may be used to install additional packages while running the live system. The defaults employ #{cdn.debian.net}#, a service that chooses a geographically close mirror based on the user's IP number. This is a suitable choice when you cannot predict which mirror will be best for all of your users. Or you may specify your own values as shown in the example below. An image built from this configuration would only be suitable for users on a network where "#{mirror}#" is reachable.
 
@@ -82,7 +82,7 @@ If you need to specify a large number of packages to be installed or you need fl
 
 Package lists are a powerful way of expressing which packages should be installed. The list syntax supports included files and conditional sections which makes it easy to build lists from other lists and adapt them for use in multiple configurations. You can use predefined package lists, providing in a modular fashion package selections from each of the major desktop environments and some special purpose lists, as well as standard lists the others are based upon. You can also provide your own package lists, or use a combination of both.
 
-4~ Predefined package lists
+3~ Predefined package lists
 
 The simplest way to use lists is to specify one or more predefined lists with the #{--packages-lists}# option. For example:
 
@@ -98,19 +98,19 @@ Note: The prebuilt GNOME, KDE, LXDE and XFCE images available for download at ht
 
 The default location for the list files on your system is #{/usr/share/live/build/lists/}#. To determine the packages in a given list, read the corresponding file, paying attention to included files and conditionals as described in the following sections.
 
-4~ Local package lists
+3~ Local package lists
 
 You may supplement or replace entirely the supplied lists using local package lists stored in #{config/chroot_local-packageslists/}#.
 
 Package lists that exist in this directory need to have a #{.list}# suffix in order to be processed. Local package lists always override package lists distributed with live-build. This can cause undesired effects, we therefore recommend to use unique names for local package lists.
 
-4~ Local binary package lists
+3~ Local binary package lists
 
 In case you want to include some required .deb packages to live media's #{pool/}# (without installing them onto the live image) you may need to use lists using binary local package lists stored in #{config/binary_local-packageslists/}#. Such media can be used as a customized Debian install image for offline installations.
 
 Package lists that exist in this directory need to have a #{.list}# suffix in order to be processed.
 
-4~ Extending a provided package list using includes
+3~ Extending a provided package list using includes
 
 The package lists that are included with live-build make extensive use of includes. Refer to these in the #{/usr/share/live/build/lists/}# directory, as they serve as good examples of how to write your own lists.
 
@@ -123,7 +123,7 @@ iceweasel
 
 }code
 
-4~ Using conditionals inside package lists
+3~ Using conditionals inside package lists
 
 Any of the live-build configuration variables stored in #{config/*}# (minus the #{LB_}# prefix) may be used in conditional statements in package lists. Generally, this means any #{lb config}# option uppercased and with dashes changed to underscores. But in practice, it is only the ones that influence package selection that make sense, such as #{DISTRIBUTION}#, #{ARCHITECTURE}# or #{ARCHIVE_AREAS}#.
 
@@ -181,7 +181,7 @@ $ lb config --tasks "mail-server file-server"
 
 The primary tasks available in the Debian Installer can be listed with #{tasksel --list-tasks}# in the live system. The contents of any task, including ones not included in this list, may be examined with #{tasksel --task-packages}#.
 
-4~desktop-and-language-tasks Desktop and language tasks
+3~desktop-and-language-tasks Desktop and language tasks
 
 Desktop and language tasks are special cases. In the Debian Installer, if the medium was prepared for a particular desktop environment flavour, the corresponding task will be automatically installed. Thus, there are there are #{gnome-desktop}#, #{kde-desktop}#, #{lxde-desktop}# and #{xfce-desktop}# tasks, none of which are offered in #{tasksel}#'s menu. Likewise, there are no menu entries for tasks for languages, but the user's language choice during the install influences the selection of corresponding language tasks.
 

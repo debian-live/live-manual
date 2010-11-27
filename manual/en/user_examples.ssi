@@ -45,17 +45,31 @@ Assuming all goes well, after a while, the current directory will contain #{bina
 
 *{Use case}* Create a web browser utility image, learning how to apply customizations
 
-In this tutorial, we will create an image suitable for use as a web browser utility using a single extra repository, a single package list, a single extra package, and a single extra file, configured with your locale and keyboard preferences, thereby introducing the various ways you can customize Debian Live images.
+In this tutorial, we will create an image suitable for use as a web browser utility, serving as an introduction to customizing Debian Live images.
+
+code{
+
+mkdir tutorial2 ; cd tutorial2 ; lb config -p lxde --packages iceweasel
+
+}code
+
+Our choice of LXDE for this example reflects our desire to provide a minimal desktop environment, since the focus of the image is the single use we have in mind, the web browser. We could go even further and provide a default configuration for the web browser in #{config/chroot_local-includes/etc/iceweasel/profile/}#, or additional support packages for viewing various kinds of web content, but we leave this as an exercise for the reader.
+
+Build the image, keeping a log as in {Tutorial 1}#tutorial-1:
+
+code{
+
+# lb build 2>&1 | tee binary.log
+
+}code
+
+2~tutorial-3 Tutorial 3: A personalized image
+
+*{Use case}* Create a project to build a personalized image, containing your favourite software to take with you on a USB stick wherever you go, and evolving in successive revisions as your needs and preferences change.
 
 FIXME
 
-2~tutorial-3 Tutorial 3: A personal travelling companion
-
-*{Use case}* Create a project to build a personal travelling companion image, containing your favourite software to take with you on a USB stick wherever you go, and evolving in successive revisions as your needs and preferences change.
-
-FIXME
-
-2~ VNC Kiosk Client
+2~ A VNC Kiosk Client
 
 Create an image with live-build to boot directly to a VNC server.
 
@@ -86,6 +100,27 @@ _* Build the image: #{# lb build}#
 
 _* Enjoy.
 
-2~ Next Example FIXME
+2~ A base image for a 128M USB key
 
+*{Use case}* Create a standard image with some components removed in order to fit on a 128M USB key with space left over to use as you see fit.
+
+When optimizing an image to fit a certain media size, you need to understand the tradeoffs you are making between size and functionality. In this example, we trim only so much as to make room for additional material within a 128M media size, but without doing anything to destroy integrity of the packages contained within, such as the purging of locale data via the #{localepurge}# package, or other such "intrusive" optimizations. Of particular note, you should not use #{--bootstrap-flavour minimal}# unless you really know what you're doing, as omitting priority #{important}# packages will most likely produce a broken live system.
+
+code{
+
+$ lb config -k 486 -p minimal --binary-indices false --memtest none --apt-recommends false --includes none
+
+}code
+
+Now, build the image in the usual way:
+
+code{
+
+# lb build 2>&1 | tee binary.log
+
+}code
+
+On the author's system at time of writing, the above configuration produced a 78Mbyte image. This compares favourably with the 166Mbyte image produced by the default configuration in {Tutorial 1}#tutorial-1.
+
+The biggest space-saver here, compared to building a standard image on an #{i386}# architecture system, is to select only the #{486}# kernel flavour instead of the default #{-k "486 686"}#. Leaving off APT's indices with #{--binary-indices false}# also saves a fair amount of space, the tradeoff being that you need to #{apt-get update}# before using apt in the live system. Choosing the #{minimal}# package list leaves out the large #{locales}# package and associated utilities. Dropping recommended packages with #{--apt-recommends false}# saves some additional space, at the expense of omitting some packages you might otherwise expect to be there, such as #{firmware-linux-free}# which may be needed to support certain hardware. The remaining options shave off additional small amounts of space. It's up to you to decide if the functionality that is sacrificed with each optimization is worth the loss in functionality.
 

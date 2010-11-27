@@ -1,9 +1,16 @@
 :B~ The basics
 
-1~ The basics
+1~the-basics The basics
 
 This chapter contains a brief overview of the build process and instructions
-for booting the various binary image types.
+for using the default image type, #{iso-hybrid}# with a virtual machine,
+optical media or USB portable storage device. The chapter finishes with
+instructions for building and using a #{net}# type image, which is a bit
+more involved due to the setup required on the server. This is a slightly
+advanced topic for anyone who is not familiar already with netbooting, but
+is included here because once the setup is done, it is a very convenient way
+to test and deploy images for booting on the local network without the
+hassle of dealing with image media.
 
 2~ What is a live system?
 
@@ -77,7 +84,7 @@ code{
 This process can take a while, depending on the speed of your network
 connection (see {The lb build command}#lb-build).
 
-3~ Testing an ISO image with Qemu
+3~testing-iso-with-qemu Testing an ISO image with Qemu
 
 Testing an ISO is simple:
 
@@ -89,7 +96,7 @@ $ qemu -cdrom binary.iso
 
 }code
 
-3~ Testing an ISO image with virtualbox-ose
+3~testing-iso-with-virtualbox Testing an ISO image with virtualbox-ose
 
 In order to test the ISO with virtualbox-ose:
 
@@ -115,7 +122,7 @@ code{
 
 }code
 
-3~ Burning an ISO image to a physical medium
+3~burning-iso-image Burning an ISO image to a physical medium
 
 Burning an ISO image is easy:
 
@@ -138,8 +145,8 @@ to use the remaining space on the media for a persistence partition, you
 need a USB/HDD image.
 
 Note: if you created an ISO image with the previous example, you will need
-to clean up your working directory with the #{lb clean} command (see {The lb
-clean command}#lb-clean):
+to clean up your working directory with the #{lb clean}# command (see {The
+lb clean command}#lb-clean):
 
 code{
 
@@ -147,8 +154,8 @@ $ lb clean --binary
 
 }code
 
-Run the #{lb config}# command with the parameters to configure the "config/"
-hierarchy to create a USB/HDD image type:
+Run the #{lb config}# command with the parameters to configure the
+#{config/}# hierarchy to create a USB/HDD image type:
 
 code{
 
@@ -183,7 +190,10 @@ better yet, #{ls -l /dev/disk/by-id}#.
 
 *{This will definitely overwrite any previous contents on your stick!}*
 
-3~ Testing a USB/HDD image with Qemu
+Note: As discussed earlier, this same process can be used for #{iso-hybrid}#
+type images, (suffixed #{-hybrid.iso}#,) but not #{iso}# type images.
+
+3~testing-usb-hdd-with-qemu Testing a USB/HDD image with Qemu
 
 code{
 
@@ -225,7 +235,7 @@ code{
 
 *{Remember: Every time you install a new binary.img on the stick, all data on the stick will be lost because the partition table is overwritten by the contents of the image.}*
 
-2~ Building a netboot image
+2~building-netboot-image Building a netboot image
 
 The following sequence of commands will create a basic netboot image
 containing the Debian standard system without X.org. It is suitable for

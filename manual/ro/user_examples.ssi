@@ -1,8 +1,81 @@
-B~ Examples
+:B~ Examples
 
-1~ Use Case Builds
+1~examples Examples
 
-This chapter covers example builds for specific use cases with Debian Live.
+This chapter covers example builds for specific use cases with Debian
+Live. If you are new to building your own Debian Live images, we recommend
+you first look at the three tutorials in sequence, as each one teaches new
+techniques that will help you use and understand the remaining examples.
+
+2~using-the-examples Using the examples
+
+Note that for the sake of brevity, in all of these examples we do not
+specify a local mirror to use for the build. You can either add the options
+to #{lb config}# each time you use the command, or else establish a default
+for your build system by creating #{/etc/live/build.conf}# and putting your
+preferred mirror in it as in the following example:
+
+code{
+
+LB_MIRROR_BOOTSTRAP="http://mirror/debian"
+LB_MIRROR_CHROOT="http://mirror/debian"
+
+}code
+
+2~tutorial-1 Tutorial 1: A standard image
+
+*{Use case:}* Create a simple first image, learning the basics of live-build
+
+In this tutorial, we will build a default ISO hybrid Debian Live image
+containing only base packages (no Xorg) and some Debian Live support
+packages, as a first exercise in using live-build.
+
+You can't get much simpler than this:
+
+code{
+
+$ mkdir tutorial1 ; cd tutorial1 ; lb config
+
+}code
+
+Examine the contents of the #{config/}# directory if you wish. You will see
+stored here a skeletal configuration, ready to customize or, in this case,
+use immediately to build a default image.
+
+Now, as superuser, build the image, saving a log as you build with #{tee}#.
+
+code{
+
+# lb_build 2>&1 | tee binary.log
+
+}code
+
+Assuming all goes well, after a while, the current directory will contain
+#{binary-hybrid.iso}#. This ISO hybrid image can be booted directly in a
+virtual machine as described in {Testing an ISO image with
+Qemu}#testing-iso-with-qemu and {Testing an ISO image with
+virtualbox-ose}#testing-iso-with-virtualbox, or else imaged onto optical
+media or a USB flash device as described in {Burning an ISO image to a
+physical medium}#burning-iso-image and {Copying USB/HDD image to a USB
+stick}#copying-usb-hdd-image, respectively.
+
+2~tutorial-2 Tutorial 2: A web browser utility
+
+*{Use case}* Create a web browser utility image, learning how to apply customizations
+
+In this tutorial, we will create an image suitable for use as a web browser
+utility using a single extra repository, a single package list, a single
+extra package, and a single extra file, configured with your locale and
+keyboard preferences, thereby introducing the various ways you can customize
+Debian Live images.
+
+FIXME
+
+2~tutorial-3 Tutorial 3: A personal travelling companion
+
+*{Use case}* Create a project to build a personal travelling companion image, containing your favourite software to take with you on a USB stick wherever you go, and evolving in successive revisions as your needs and preferences change.
+
+FIXME
 
 2~ VNC Kiosk Client
 

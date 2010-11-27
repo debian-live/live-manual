@@ -80,7 +80,8 @@ configuration for the web browser in
 support packages for viewing various kinds of web content, but we leave this
 as an exercise for the reader.
 
-Build the image, keeping a log as in {Tutorial 1}#tutorial-1:
+Build the image, again as superuser, keeping a log as in {Tutorial
+1}#tutorial-1:
 
 code{
 
@@ -88,11 +89,130 @@ code{
 
 }code
 
+Again, verify the image is OK and test, as in {Tutorial 1}#tutorial-1.
+
 2~tutorial-3 Tutorial 3: A personalized image
 
 *{Use case}* Create a project to build a personalized image, containing your favourite software to take with you on a USB stick wherever you go, and evolving in successive revisions as your needs and preferences change.
 
-FIXME
+Since we will be changing our personalized image over a number of revisions,
+and we want to track those changes, trying things experimentally and
+possibly reverting them if things don't work out, we will keep our
+configuration in the popular #{git}# version control system. We will also
+use the best practice of autoconfiguration via #{auto}# scripts as described
+in {Managing a configuration}#managing-a-configuration.
+
+3~ First revision
+
+code{
+
+$ mkdir -p tutorial3/auto $ cp /usr/share/live/examples/auto/*
+tutorial3/auto/ $ cd tutorial3
+
+}code
+
+Edit #{auto/config}# to read as follows:
+
+code{
+
+#!/bin/sh
+
+lb config noauto \
+    --architecture i386 \
+    --linux-flavours 686 \
+    --packages-lists lxde \
+    --packages "iceweasel xchat" \
+    "${@}"
+
+}code
+
+First, #{--architecture i386}# ensures that on our #{amd64}# build system,
+we build a 32-bit version suitable for use on most machines. Second, we use
+#{--linux-flavours 686}# because we don't anticipate using this image on
+much older systems. Third, we've chosen the #{lxde}# package list to give us
+a minimal desktop. And finally, we have added two initial favourite
+packages: #{iceweasel}# and #{xchat}#.
+
+Now, build the image:
+
+code{
+
+# lb build
+
+}code
+
+Note that unlike in the first two tutorials, we no longer have to type
+#{2>&1 | tee binary.log}# as that is now included in #{auto/build}#.
+
+Once you've tested the image (as in {Tutorial 1}#tutorial-1) and are
+satisfied it works, it's time to initialize our #{git}# repository, adding
+only the auto scripts we just created, and then make the first commit:
+
+code{
+
+$ git init $ git add auto $ git commit -a -m "Initial import."
+
+}code
+
+3~ Second revision
+
+In this revision, we're going to clean up from the first build, add the
+#{vlc}# package to our configuration, rebuild, test and commit.
+
+The #{lb clean}# command will clean up all generated files from the previous
+build except for the cache, which saves having to re-download packages. This
+ensures that the subsequent #{lb build}# will re-run all stages to
+regenerate the files from our new configuration.
+
+code{
+
+# lb clean
+
+}code
+
+Now edit #{auto/config}# to add the #{vlc}# package:
+
+code{
+
+#!/bin/sh
+
+lb config noauto \
+    --architecture i386 \
+    --linux-flavours 686 \
+    --packages-lists lxde \
+    --packages "iceweasel xchat vlc" \
+    "${@}"
+
+}code
+
+Build again:
+
+code{
+
+# lb build
+
+}code
+
+Test, and when you're satisfied, commit the next revision:
+
+code{
+
+$ git commit -a -m "Adding vlc media player."
+
+}code
+
+Of course, more complicated changes to the configuration are possible,
+perhaps adding files in subdirectories of #{config/}#. When you commit new
+revisions, just take care not to hand edit or commit the top-level files in
+#{config}# containing #{LB_*}# variables, as these are build products, too,
+and are always cleaned up by #{lb clean}# and re-created with #{lb config}#
+via their respective #{auto}# scripts.
+
+We've come to the end of our tutorial series. While many more kinds of
+customization are possible, even just using the few features explored in
+these simple examples, an almost infinite variety of different images can be
+created. The remaining examples in this section cover several other use
+cases drawn from the collected experiences of users of Debian Live.
 
 2~ A VNC Kiosk Client
 

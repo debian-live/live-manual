@@ -49,8 +49,8 @@ code{
 
 #!/bin/sh
 lb config noauto \
-	--architecture i386 \
-	${@}
+	--packages-lists "standard" \
+	"${@}"
 
 }code
 
@@ -59,7 +59,7 @@ auto/clean
 code{
 
 #!/bin/sh
-lb clean noauto ${@}
+lb clean noauto "${@}"
 rm -f config/binary config/bootstrap \
 	config/chroot config/common config/source
 rm -f binary.log
@@ -70,14 +70,13 @@ auto/build
 
 code{
 
-#!/bin/sh lb build noauto ${@} 2>&1 | tee binary.log
+#!/bin/sh lb build noauto "${@}" 2>&1 | tee binary.log
 
 }code
 
-Edit auto/config, changing or adding any options as you see fit. In the
-example above, --architecture is set to i386 so that when the image is built
-on an amd64 system, it will not default to building amd64 images. Change
-this to an appropriate value for your image (or delete it if you want to use
-the default) and add any additional options in continuation lines that
-follow.
+Edit #{auto/config}#, changing or adding any options as you see fit. In the
+example above, #{--packages-lists standard}# is set to the default
+value. Change this to an appropriate value for your image (or delete it if
+you want to use the default) and add any additional options in continuation
+lines that follow.
 

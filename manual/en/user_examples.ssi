@@ -6,12 +6,15 @@ This chapter covers example builds for specific use cases with Debian Live. If y
 
 2~using-the-examples Using the examples
 
-Note that for the sake of brevity, in all of these examples we do not specify a local mirror to use for the build. You can either add the options to #{lb config}# each time you use the command, or else establish a default for your build system by creating #{/etc/live/build.conf}# and putting your preferred mirror in it as in the following example:
+To use these examples you need a system to build them on that meets the requirements listed in {Requirements}#requirements and has live-build installed as described in {Installing live-build}#installing-live-build.
+
+Note that, for the sake of brevity, in these examples we do not specify a local mirror to use for the build. You can speed up downloads considerably if you use a local mirror. You may specify the options when you use #{lb config}#, as described in {Distribution mirrors used at build time}#distribution-mirrors-build-time, or for more convenience, set the default for your build system in #{/etc/live/build.conf}#. Simply create this file and in it, set the corresponding #{LB_MIRROR_*}# variables to your preferred mirror. For example:
 
 code{
 
 LB_MIRROR_BOOTSTRAP="http://mirror/debian"
 LB_MIRROR_CHROOT="http://mirror/debian"
+LB_MIRROR_CHROOT_SECURITY="http://mirror/debian-security"
 
 }code
 

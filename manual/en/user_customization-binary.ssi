@@ -1,0 +1,19 @@
+B~ Customizing the binary image
+
+1~ Customizing the binary image
+
+2~ Bootloader
+
+live-build uses syslinux as bootloader by default, which is by default configured to pause indefinitely at its splash screen. To adjust this, you can pass #{--syslinux-timeout TIMEOUT}# to #{lb config}#. The value is specified in units of seconds. A timeout of 0 (zero) disables the timeout completely. For more information please see syslinux(1).
+
+2~ ISO metadata
+
+When creating an ISO9660 binary image, you can use the following options to add various textual metadata for your image. This can help you easily identify the version or configuration of an image without booting it.
+
+_* #{LB_ISO_APPLICATION/--iso-application NAME}#: This should describe the application that will be on the image. The maximum length for this field is 128 characters.
+
+_* #{LB_ISO_PREPARER/--iso-preparer NAME}#: This should describe the preparer of the image, usually with some contact details. The default for this option is the live-build version you are using, which may help with debugging later. The maximum length for this field is 128 characters.
+
+_* #{LB_ISO_PUBLISHER/--iso-publisher NAME}#: This should describe the publisher of the image, usually with some contact details. The maximum length for this field is 128 characters.
+
+_* #{LB_ISO_VOLUME/--iso-volume NAME}#: This should specify the volume ID of the image. This is used as a user-visible label on some platforms such as Windows and Apple Mac OS. The maximum length for this field is 32 characters.

@@ -2,7 +2,7 @@ B~ Coding Style
 
 1~ Coding Style
 
-This chapter documents the coding style used in live-helper and (ideally) in live-initramfs.
+This chapter documents the coding style used in live-boot and others.
 
 2~ Compatibility
 
@@ -10,7 +10,7 @@ _* Don't use syntax or semantics that are unique to the Bash shell. For example,
 
 _* Only use the POSIX subset - for example, use $(foo) over `foo`.
 
-_* You can check your scripts with 'sh -n' and 'checkbashisms'
+_* You can check your scripts with 'sh -n' and 'checkbashisms'.
 
 2~ Indenting
 
@@ -70,15 +70,19 @@ foo ()
 
 _* Variables are always in capital letters.
 
-_* Variables that used in config always start with LH_ prefix.
+_* Variables that used in lb config always start with LH_ prefix.
 
-_* Internal temporary variables should start with the _LH_ prefix.
+_* Internal temporary variables in live-build should start with the _LH_ prefix.
 
-_* Local variables start with __LH_ prefix.
+_* Local variables start with live-build __LH_ prefix.
+
+_* Variables in connection to a boot parameter in live-config start with LIVE_.
+
+_* All other variables in live-config start with _ prefix.
 
 _* Use braces around variables; eg. write ${FOO} instead of $FOO.
 
-_* Always protect variables with respect to potential whitespaces, write "${FOO}" not ${FOO}.
+_* Always protect variables with quotes to respect potential whitespaces, write "${FOO}" not ${FOO}.
 
 _* For consistency reasons, always use quotes when assigning values to variables:
 
@@ -127,3 +131,5 @@ fi
 _* Use "|" (without the surround quotes) as a seperator in calls to sed, e.g. "sed -e 's|foo|bar|'" (without "").
 
 _* Don't use the test command for comparisons or tests, use "[" "]" (without ""), e.g. "if [ -x /bin/foo ]; ..." and not "if test -x /bin/foo; ...".
+
+_* Use case wherever possible over test, as it's easier to read and faster in execution.

@@ -34,7 +34,7 @@ $ lb config --mirror-binary http://mirror/debian/ \
 
 }code
 
-3~ Additional repositories
+3~additional-repositories Additional repositories
 
 To add more repositories (e.g. backports, experimental or custom packages, etc.), create #{config/chroot_sources/your-repository.{chroot,binary}}# files. As with the #{--mirror-*}# options, these govern the repositories used in the *chroot* stage when building the image, and in the *binary* stage, i.e. for use when running the live system.
 
@@ -237,9 +237,7 @@ Whilst it may seem unnecessary effort to create an APT repository to install cus
 
 live-build uses APT to install all packages into the live system so will therefore inherit behaviours from this program. One relevant example is that (assuming a default configuration) given a package available in two different repositories with different version numbers, APT will elect to install the package with the higher version number.
 
-Because of this, you may wish to increment the version number in your custom packages' #{debian/changelog}# files to ensure that your modified version is installed over one in the official Debian repositories. This may also be achieved by altering the live system's APT pinning preferences - see apt-preferences for more information.
-
-% FIXME: <xref linkend="apt-preferences"/>
+Because of this, you may wish to increment the version number in your custom packages' #{debian/changelog}# files to ensure that your modified version is installed over one in the official Debian repositories. This may also be achieved by altering the live system's APT pinning preferences - see {APT pinning}#apt-pinning for more information.
 
 2~ Configuring APT at build time
 
@@ -281,7 +279,7 @@ If you find the installation of recommended packages bloats your image too much,
 
 code{
 
-$ lb config -apt-recommends false
+$ lb config --apt-recommends false
 
 }code
 
@@ -291,7 +289,24 @@ The tradeoff here is that recommended packages are defined as "packages that wou
 
 If there is not an #{lb config}# option to alter APT's behaviour in the way you need, use #{--apt-options}# or #{--aptitude-options}# to pass any options through to your configured APT tool. See the man pages for #{apt}# and #{aptitude}# for details.
 
-3~ APT pinning
+3~apt-pinning APT pinning
 
-% FIXME: needs content
+For background, please first read the #{apt_preferences(5)}# man page. APT pinning can be configured either for build time, or else for run time. For the former, create #{config/chroot_apt/preferences}#. For the latter, create #{config/chroot_local-includes/etc/preferences}#.
+
+Let's say you are building a Squeeze live system but need all #{live-*}# packages to be installed from Sid at build time. You need to add Sid to your APT sources and pin it so that only the packages you want are installed from it at build time and all others are taken from the target system distribution, Squeeze. The following will accomplish this:
+
+code{
+
+$ echo "deb http://mirror/debian sid main" > config/chroot_sources/sid.chroot
+$ cat >>config/chroot_apt/preferences <<END
+Package: live-*
+Pin: release n=sid
+Pin-Priority: 600
+
+Package: *
+Pin: release n=sid
+Pin-Priority: 1
+END
+
+}code
 

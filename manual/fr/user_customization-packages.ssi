@@ -5,28 +5,71 @@
 Perhaps the most basic customization of a Debian live system is the
 selection of packages to be included in the image. This chapter guides you
 through the various build-time options to customize live-build's
-installation of packages. We start with customization of the distribution
-mirror. You can also add your own repositories for backports, experimental
-or custom packages, or include packages directly as files. You can define
-your own lists of packages to include, use live-build's predefined lists,
-use #{tasksel}# tasks, or a combination of all three. Finally, a number of
-options give some control over apt, or if you prefer, aptitude, at build
-time when packages are installed. You may find these handy if you use a
-proxy, want to disable installation of recommended packages to save space,
-or need to control which versions of packages are installed via APT pinning,
-to name a few possibilities.
+installation of packages. The broadest choices influencing which packages
+are available to install in the image are the distribution and archive
+areas. To ensure decent download speeds, you should choose a nearby
+distribution mirror. You can also add your own repositories for backports,
+experimental or custom packages, or include packages directly as files. You
+can define your own lists of packages to include, use live-build's
+predefined lists, use #{tasksel}# tasks, or a combination of all
+three. Finally, a number of options give some control over apt, or if you
+prefer, aptitude, at build time when packages are installed. You may find
+these handy if you use a proxy, want to disable installation of recommended
+packages to save space, or need to control which versions of packages are
+installed via APT pinning, to name a few possibilities.
 
 2~ Package sources
 
+3~ Distribution, archive areas and mode
+
+The distribution you choose has the broadest impact on which packages are
+available to include in your live image. Specify the codename, which
+defaults to #{squeeze}# for the Squeeze version of live-build. Any current
+distribution carried in the Debian archive may be specified by its codename
+here. (See {Terms}#terms for more details.) The #{--distribution}# option
+not only influences the source of packages within the archive, but also
+instructs #{live-build}# to behave as needed to build each supported
+distribution. For example, to build against the *unstable* release, Sid,
+specify:
+
+code{
+
+$ lb config --distribution sid
+
+}code
+
+Within the distribution archive, archive areas are major divisions of the
+archive. In Debian, these are #{main}#, #{contrib}# and #{non-free}#. Only
+#{main}# contains software that is official a part of the Debian
+distribution, hence that is the default. One or more values may be
+specified, e.g.
+
+code{
+
+$ lb config --archive-areas "main contrib"
+
+}code
+
+Experimental support is available for some Debian derivatives through a
+#{--mode}# option. By default, this option is set to #{debian}#, even if you
+are building on a non-Debian system. If you specify #{--mode ubuntu}# or
+#{--mode emdebian}#, the distribution names and archive areas for the
+specified derivative are supported instead of the ones for Debian. The mode
+also modifies live-build behaviour to suit the derivatives.
+
+*Note:* The projects for whom these modes were added are primarily responsible for supporting users of these options. The Debian live project, in turn, provides development support on a best-effort basis only, based on feedback from the derivative projects as we do not develop or support these derivatives ourselves.
+
 3~ Distribution mirrors
 
-Each of the #{--mirror-*}# options governs which distribution mirror is used
-at various stages of the build. Recall from {Stages of the
-build}#stages-of-the-build that the *bootstrap* stage is when the chroot is
-initially populated by debootstrap with a minimal system, and the *chroot*
-stage is when the chroot used to construct the live system's filesystem is
-built. Thus, the corresponding mirror switches are used for those stages,
-and later, in the *binary* stage, the #{--mirror-binary}# and
+The Debian archive is replicated across a large network of mirrors around
+the world so that people in each region can choose a nearby mirror for best
+download speed. Each of the #{--mirror-*}# options governs which
+distribution mirror is used at various stages of the build. Recall from
+{Stages of the build}#stages-of-the-build that the *bootstrap* stage is when
+the chroot is initially populated by debootstrap with a minimal system, and
+the *chroot* stage is when the chroot used to construct the live system's
+filesystem is built. Thus, the corresponding mirror switches are used for
+those stages, and later, in the *binary* stage, the #{--mirror-binary}# and
 #{--mirror-binary-security}# values are used, superceding any mirrors used
 in an earlier stage.
 
@@ -66,11 +109,14 @@ $ lb config --mirror-binary http://mirror/debian/ \
 
 3~additional-repositories Additional repositories
 
-To add more repositories (e.g. backports, experimental or custom packages,
-etc.), create #{config/chroot_sources/your-repository.{chroot,binary}}#
-files. As with the #{--mirror-*}# options, these govern the repositories
-used in the *chroot* stage when building the image, and in the *binary*
-stage, i.e. for use when running the live system.
+You may add more repositories, broadening your package choices beyond what
+is available in your target distribution. These may be, for example, for
+backports, experimental or custom packages. To configure additional
+repositories, create #{config/chroot_sources/your-repository.chroot}#,
+and/or #{config/chroot_sources/your-repository.binary}# files. As with the
+#{--mirror-*}# options, these govern the repositories used in the *chroot*
+stage when building the image, and in the *binary* stage, i.e. for use when
+running the live system.
 
 For example, #{config/chroot_sources/live.chroot}# allows you to install
 packages from the debian live snapshot repository at live system build time.
@@ -468,7 +514,7 @@ and #{aptitude}# for details.
 For background, please first read the #{apt_preferences(5)}# man page. APT
 pinning can be configured either for build time, or else for run time. For
 the former, create #{config/chroot_apt/preferences}#. For the latter, create
-#{config/chroot_local-includes/etc/preferences}#.
+#{config/chroot_local-includes/etc/apt/preferences}#.
 
 Let's say you are building a Squeeze live system but need all #{live-*}#
 packages to be installed from Sid at build time. You need to add Sid to your

@@ -1,0 +1,139 @@
+B~ Procedures
+
+1~ Procedures
+
+This chapter documents the procedures within the Debian Live project for
+various tasks that need cooperation with other teams in Debian.
+
+2~ Udeb Uploads
+
+Before commiting releases of a udeb in d-i svn, one has to call:
+
+code{
+
+../../scripts/l10n/output-l10n-changes . -d
+
+}code
+
+2~ Major Releases
+
+Releasing a new stable major version of Debian includes a lot of different
+teams working together to make it happen. At some point, the Live team comes
+in and builds live system images. The requirements to do this are:
+
+_* A mirror containing the released versions for the debian, debian-security
+and debian-volatile archive which the debian-live buildd can access.
+
+_* The names of the image need to be known
+(e.g. debian-live-VERSION-ARCH-FLAVOUR.iso).
+
+_* The packagelists need to have been updated.
+
+_* The data from debian-cd needs to be synced (udeb exclude lists).
+
+_* The includes from debian-cd needs to be synced (README.*, doc/*, etc.).
+
+_* Images are built and mirrored on cdimage.debian.org.
+
+2~ Point Releases
+
+_* Again, we need updated mirror of debian, debian-security and
+debian-volatile.
+
+_* Images are built and mirrored on cdimage.debian.org.
+
+_* Send announcement mail.
+
+3~ Point release announcement template
+
+An annoucement mail for point releases can be generated using the template
+below and the following command:
+
+code{
+
+$ sed \
+  -e 's|%major%|5.0|g' \
+  -e 's|%minor%|5.0.2|g' \
+  -e 's|%codename%|lenny|g' \
+  -e 's|%release_mail%|2009/msg00007.html|g'
+
+}code
+
+Please check the mail carefully before sending and pass it to others for
+proof-reading.
+
+code{
+
+Debian Live images for Debian GNU/Linux %major% updated
+
+The Debian Live project is pleased to announce the availability of updated
+Live images for its stable distribution Debian GNU/Linux %major% (codename
+"%codename%").
+
+The images are available for download at:
+
+    <http://cdimage.debian.org/cdimage/release/current-live/>
+
+This update incorporates the changes made in the %minor% point release,
+which adds corrections for security problems to the stable release along
+with a few adjustments for serious problems. A full list of the changes may
+be viewed at:
+
+    <http://lists.debian.org/debian-announce/%release_mail%>
+
+It also includes the following Live-specific changes:
+
+ * [INSERT LIVE-SPECIFIC CHANGE HERE]
+ * [INSERT LIVE-SPECIFIC CHANGE HERE]
+ * [LARGER ISSUES MAY DESERVE THEIR OWN SECTION]
+
+
+URLs
+----
+
+Download location of updated images:
+
+  <http://cdimage.debian.org/cdimage/release/current-live/>
+
+Debian Live project homepage:
+
+  <http://live.debian.net/>
+
+El reflecta starea (actuala) a distributiei:
+
+  <http://ftp.debian.org/debian/dists/stable>
+
+stable distribution information (release notes, errata etc.):
+
+  <http://www.debian.org/releases/stable/>
+
+Security announcements and information:
+
+  <http://www.debian.org/security/>
+
+
+About Debian
+-------------
+
+The Debian Project is an association of Free Software developers who
+volunteer their time and effort in order to produce the completely free
+operating system Debian GNU/Linux.
+
+
+About Debian Live
+-----------------
+
+Debian Live is an official sub-project of Debian which produces Debian
+systems that do not require a classical installer. Images are available for
+CD/DVD discs, USB sticks and PXE netbooting as well as a bare filesystem
+images for booting directly from the internet.
+
+
+Contact Information
+-------------------
+
+For further information, please visit the Debian Live web pages at
+<http://live.debian.net/> or alternatively send mail to
+<debian-live@lists.debian.org>.
+
+}code

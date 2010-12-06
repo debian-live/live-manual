@@ -128,15 +128,16 @@ should name it without dashes '-', e.g: call it "99new_feature" and not
 
 _* Build a live-boot .deb
 
-% FIXME: not strictly true? building sid on squeeze is usually OK. also,
-building lenny on squeeze or sid is fine. clarify.
-
 You must build either on your target distribution or in a chroot containing
 your target platform: this means if your target is Squeeze then you should
-build against Squeeze. You can use a personal builder such as /{pbuilder}/
-or /{sbuild}/ to automate building packages in chroot. To build directly on
-the target platform, use #{dpkg-buildpackage}# (provided by the /{dpkg-dev}/
-package):
+build against Squeeze. Y
+
+Use a personal builder such as /{pbuilder}/ or /{sbuild}/ if you need to
+build #{live-boot}# for a target distribution that differs from your build
+system. For example, for Squeeze live images, build #{live-boot}# in a
+Squeeze chroot. If your target distribution happens to match your build
+system distribution, you may build directly on the build system using
+#{dpkg-buildpackage}# (provided by the /{dpkg-dev}/ package):
 
 code{
 
@@ -148,12 +149,10 @@ _* Use the generated live-boot .deb
 
 As live-boot is installed by live-build system, installing the package in
 the host system is not sufficient: you should treat the generated .deb like
-another custom package. Please see custom-packages for more information. You
-should pay particular attention to custom-packages-apt.
-
-% FIXME: <xref linkend="custom-packages"/> <xref
-linkend="custom-packages-apt"/> % Ben> What is the latter reference for? I
-can't see the relevance.
+another custom package. Please see {Customizing package
+installation}#customizing-package-installation for more information. You
+should pay particular attention to {Additional
+repositories}#additional-repositories.
 
 3~ Using live-boot snapshots
 

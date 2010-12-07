@@ -20,7 +20,7 @@ LB_MIRROR_CHROOT_SECURITY="http://mirror/debian-security"
 
 2~tutorial-1 Tutorial 1: A standard image
 
-*{Use case:}* Create a simple first image, learning the basics of live-build
+*{Use case:}* Create a simple first image, learning the basics of live-build.
 
 In this tutorial, we will build a default ISO hybrid Debian Live image containing only base packages (no Xorg) and some Debian Live support packages, as a first exercise in using live-build.
 
@@ -46,7 +46,7 @@ Assuming all goes well, after a while, the current directory will contain #{bina
 
 2~tutorial-2 Tutorial 2: A web browser utility
 
-*{Use case}* Create a web browser utility image, learning how to apply customizations
+*{Use case:}* Create a web browser utility image, learning how to apply customizations.
 
 In this tutorial, we will create an image suitable for use as a web browser utility, serving as an introduction to customizing Debian Live images.
 
@@ -70,7 +70,7 @@ Again, verify the image is OK and test, as in {Tutorial 1}#tutorial-1.
 
 2~tutorial-3 Tutorial 3: A personalized image
 
-*{Use case}* Create a project to build a personalized image, containing your favourite software to take with you on a USB stick wherever you go, and evolving in successive revisions as your needs and preferences change.
+*{Use case:}* Create a project to build a personalized image, containing your favourite software to take with you on a USB stick wherever you go, and evolving in successive revisions as your needs and preferences change.
 
 Since we will be changing our personalized image over a number of revisions, and we want to track those changes, trying things experimentally and possibly reverting them if things don't work out, we will keep our configuration in the popular #{git}# version control system. We will also use the best practice of autoconfiguration via #{auto}# scripts as described in {Managing a configuration}#managing-a-configuration.
 
@@ -170,7 +170,7 @@ We've come to the end of our tutorial series. While many more kinds of customiza
 
 2~ A VNC Kiosk Client
 
-Create an image with live-build to boot directly to a VNC server.
+*{Use case:}* Create an image with live-build to boot directly to a VNC server.
 
 _* Make a build directory: #{$ mkdir vncBuild}#
 
@@ -201,7 +201,7 @@ _* Enjoy.
 
 2~ A base image for a 128M USB key
 
-*{Use case}* Create a standard image with some components removed in order to fit on a 128M USB key with space left over to use as you see fit.
+*{Use case:}* Create a standard image with some components removed in order to fit on a 128M USB key with space left over to use as you see fit.
 
 When optimizing an image to fit a certain media size, you need to understand the tradeoffs you are making between size and functionality. In this example, we trim only so much as to make room for additional material within a 128M media size, but without doing anything to destroy integrity of the packages contained within, such as the purging of locale data via the #{localepurge}# package, or other such "intrusive" optimizations. Of particular note, you should not use #{--bootstrap-flavour minimal}# unless you really know what you're doing, as omitting priority #{important}# packages will most likely produce a broken live system.
 
@@ -222,4 +222,66 @@ code{
 On the author's system at time of writing, the above configuration produced a 78Mbyte image. This compares favourably with the 166Mbyte image produced by the default configuration in {Tutorial 1}#tutorial-1.
 
 The biggest space-saver here, compared to building a standard image on an #{i386}# architecture system, is to select only the #{486}# kernel flavour instead of the default #{-k "486 686"}#. Leaving off APT's indices with #{--binary-indices false}# also saves a fair amount of space, the tradeoff being that you need to #{apt-get update}# before using apt in the live system. Choosing the #{minimal}# package list leaves out the large #{locales}# package and associated utilities. Dropping recommended packages with #{--apt-recommends false}# saves some additional space, at the expense of omitting some packages you might otherwise expect to be there, such as #{firmware-linux-free}# which may be needed to support certain hardware. The remaining options shave off additional small amounts of space. It's up to you to decide if the functionality that is sacrificed with each optimization is worth the loss in functionality.
+
+2~ A localized KDE desktop and installer
+
+*{Use case:}* Create a KDE desktop image, localized for Brazilian Portuguese and including an installer.
+
+We want to make an iso-hybrid image for i386 architecture using our preferred desktop, in this case KDE, containing all of the same packages that would be installed by the standard Debian installer for KDE.
+
+Our initial problem is the discovery of the names of the appropriate tasks. Currently, live-build cannot help with this. While we might get lucky and find this by trial-and-error, there is a tool, #{grep-dctrl}#, which can be used to dig it out of the task descriptions in tasksel-data, so to prepare, make sure you have both of those things:
+
+code{
+
+# apt-get install dctrl-tools tasksel-data
+
+}code
+
+Now we can search for the appropriate tasks, first with:
+
+code{
+
+$ grep-dctrl -FTest-lang pt_BR /usr/share/tasksel/debian-tasks.desc -sTask,Description
+Task: brazilian-portuguese
+Description: Brazilian Portuguese environment
+ This task installs programs, data files, and
+ documentation that make it easier for Brazilian Portuguese speakers
+ to use Debian.
+
+}code
+
+By this command, we discover the task is called, plainly enough, brazilian-portuguese. Now to find the related tasks:
+
+code{
+
+$ grep-dctrl -FEnhances brazilian-portuguese /usr/share/tasksel/debian-tasks.desc -sTask,Description
+Task: brazilian-portuguese-desktop
+Description: Brazilian Portuguese desktop
+ This task localises the desktop in Brasilian Portuguese.
+
+Task: brazilian-portuguese-kde-desktop
+Description: Brazilian Portuguese KDE desktop
+ This task localises the KDE desktop in Brazilian Portuguese.
+
+}code
+
+We will use the experimental #{--language}# option, as live-build happens to include #{syslinux}# templates for pt_BR (see {Desktop and language tasks}#destkop-and-language-tasks for details). And at boot time we will generate the pt_BR.UTF-8 locale and select the pt-latin1 keyboard layout. Now let's put the pieces together:
+
+code{
+
+$ mkdir live-pt_BR-kde
+$ cd live-pt_BR-kde
+$ lb config \
+     -a i386 \
+     -k 486 \
+     -p kde-desktop \
+     --language pt_BR \
+     --tasks "brazilian-portuguese brazilian-portuguese-desktop brazilian-portuguese-kde-desktop" \
+     --bootappend-live "locales=pt_BR.UTF-8 keyboard-layouts=pt-latin1"
+     --debian-installer live \
+     --packages debian-installer-launcher
+
+}code
+
+Note that we have included the #{debian-installer-launcher}# package to launch the installer from the live desktop, and have also specified the 486 flavour kernel, as it is currently necessary to make the installer and live system kernels match for the launcher to work properly.
 

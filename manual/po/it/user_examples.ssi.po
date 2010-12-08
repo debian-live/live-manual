@@ -2,14 +2,15 @@
 # Copyright (C) 2010 Free Software Foundation, Inc.
 # This file is distributed under the same license as the live-manual package.
 # Automatically generated, 2010.
+# Carlo Stemberger <carlo.stemberger@gmail.com>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
 "POT-Creation-Date: 2010-12-07 20:31-0400\n"
-"PO-Revision-Date: 2010-11-28 07:51-0400\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2010-12-08 17:57+0100\n"
+"Last-Translator: Carlo Stemberger <carlo.stemberger@gmail.com>\n"
+"Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -151,24 +152,23 @@ msgstr "}code"
 #: en/other_faq.ssi:85 en/other_faq.ssi:247 en/user_examples.ssi:92
 #: en/user_examples.ssi:141 en/user_examples.ssi:190
 msgid "#!/bin/sh"
-msgstr ""
+msgstr "#!/bin/sh"
 
 #. type: Plain text
 #: en/user_basics.ssi:44 en/user_basics.ssi:120 en/user_basics.ssi:204
 #: en/user_examples.ssi:109 en/user_examples.ssi:156
-#, fuzzy
 msgid "# lb build"
-msgstr "$ make build"
+msgstr "# lb build"
 
 #. type: Plain text
 #: en/user_examples.ssi:2
 msgid ":B~ Examples"
-msgstr ""
+msgstr ":B~ Esempi"
 
 #. type: Plain text
 #: en/user_examples.ssi:4
 msgid "1~examples Examples"
-msgstr ""
+msgstr "1~examples Esempi"
 
 #. type: Plain text
 #: en/user_examples.ssi:6
@@ -178,11 +178,16 @@ msgid ""
 "first look at the three tutorials in sequence, as each one teaches new "
 "techniques that will help you use and understand the remaining examples."
 msgstr ""
+"Questo capitolo affronta alcune costruzioni di esempio per specifici casi "
+"d'uso con Debian Live. Se si è nuovi nella costruzione di immagini Debian "
+"Live, raccomandiamo di dare innanzitutto un'occhiata ai tre tutorial in "
+"sequenza, dato che ciascuno insegna nuove tecniche che aiuteranno nell'uso e "
+"nella comprensione degli esempi rimanenti."
 
 #. type: Plain text
 #: en/user_examples.ssi:8
 msgid "2~using-the-examples Using the examples"
-msgstr ""
+msgstr "2~using-the-examples Usare gli esempi"
 
 #. type: Plain text
 #: en/user_examples.ssi:10
@@ -191,6 +196,10 @@ msgid ""
 "requirements listed in {Requirements}#requirements and has live-build "
 "installed as described in {Installing live-build}#installing-live-build."
 msgstr ""
+"Per usare questi esempi è necessario un sistema per costruirveli sopra che "
+"soddisfi i requisiti elencati in {Requirements}#requirements e avere live-"
+"build installato come descritto in {Installing live-build}#installing-live-"
+"build."
 
 #. type: Plain text
 #: en/user_examples.ssi:12
@@ -204,6 +213,15 @@ msgid ""
 "and in it, set the corresponding #{LB_MIRROR_*}# variables to your preferred "
 "mirror. For example:"
 msgstr ""
+"Si noti che, for the sake of brevity, in questi esempi non specifichiamo un "
+"mirror locale da usare per la costruzione. Si può accelerare i download "
+"considerevolmente se si usa un mirror locale. Si possono specificare le "
+"opzioni quando si usa #{lb config}#, come descritto in {Distribution mirrors "
+"used at build time}#distribution-mirrors-build-time, o più convenientemente "
+"impostare il default per il proprio sistema di generazione in #{/etc/live/"
+"build.conf}#. Semplicemente si crei questo file ed in esso si impostino le "
+"corrispondenti variabili #{LB_MIRROR_*}# per il proprio mirror preferito. Ad "
+"esempio:"
 
 #. type: Plain text
 #: en/user_examples.ssi:18
@@ -211,17 +229,19 @@ msgid ""
 "LB_MIRROR_BOOTSTRAP=\"http://mirror/debian\" LB_MIRROR_CHROOT=\"http://"
 "mirror/debian\" LB_MIRROR_CHROOT_SECURITY=\"http://mirror/debian-security\""
 msgstr ""
+"LB_MIRROR_BOOTSTRAP=\"http://mirror/debian\" LB_MIRROR_CHROOT=\"http://"
+"mirror/debian\" LB_MIRROR_CHROOT_SECURITY=\"http://mirror/debian-security\""
 
 #. type: Plain text
 #: en/user_examples.ssi:22
 msgid "2~tutorial-1 Tutorial 1: A standard image"
-msgstr ""
+msgstr "2~tutorial-1 Tutorial 1: Un'immagine standard"
 
 #. type: Plain text
 #: en/user_examples.ssi:24
 #, no-wrap
 msgid "*{Use case:}* Create a simple first image, learning the basics of live-build.\n"
-msgstr ""
+msgstr "*{Use case:}* Creazione di una semplice prima immagine, imparando le basi di live-build.\n"
 
 #. type: Plain text
 #: en/user_examples.ssi:26
@@ -230,16 +250,19 @@ msgid ""
 "containing only base packages (no Xorg) and some Debian Live support "
 "packages, as a first exercise in using live-build."
 msgstr ""
+"In questo tutorial genereremo un'immagine ISO ibrida Debian Live di default "
+"contenente solo pacchetti di base (niente Xorg) e alcuni pacchetti Debian "
+"Live di supporto, come primo esercizio sull'uso di live-build."
 
 #. type: Plain text
 #: en/user_examples.ssi:28
 msgid "You can't get much simpler than this:"
-msgstr ""
+msgstr "Non si può fare in modo molto più semplice di così:"
 
 #. type: Plain text
 #: en/user_examples.ssi:32
 msgid "$ mkdir tutorial1 ; cd tutorial1 ; lb config"
-msgstr ""
+msgstr "$ mkdir tutorial1 ; cd tutorial1 ; lb config"
 
 #. type: Plain text
 #: en/user_examples.ssi:36
@@ -248,17 +271,22 @@ msgid ""
 "stored here a skeletal configuration, ready to customize or, in this case, "
 "use immediately to build a default image."
 msgstr ""
+"Si esaminino i contenuti della directory #{config/}# se si desidera. Si "
+"vedrà qui immagazzinato uno scheletro di configurazione, pronto per essere "
+"personalizzato o, in questo caso, usato immediatamente per costruire "
+"un'immagine di default."
 
 #. type: Plain text
 #: en/user_examples.ssi:38
 msgid ""
 "Now, as superuser, build the image, saving a log as you build with #{tee}#."
 msgstr ""
+"Ora, come super-utente, si generi l'immagine, salvando un log con #{tee}#."
 
 #. type: Plain text
 #: en/user_examples.ssi:42
 msgid "# lb_build 2>&1 | tee binary.log"
-msgstr ""
+msgstr "# lb_build 2>&1 | tee binary.log"
 
 #. type: Plain text
 #: en/user_examples.ssi:46
@@ -272,6 +300,14 @@ msgid ""
 "and {Copying USB/HDD image to a USB stick}#copying-usb-hdd-image, "
 "respectively."
 msgstr ""
+"Assumendo che tutto vada per il verso giusto, dopo un po' la directory "
+"corrente conterrà #{binary-hybrid.iso}#. Questa immagine ISO ibrida può "
+"essere avviata direttamente in una macchina virtuale come descritto in "
+"{Testing an ISO image with Qemu}#testing-iso-with-qemu e{Testing an ISO "
+"image with virtualbox-ose}#testing-iso-with-virtualbox, oppure masterizzata "
+"su un supporto ottico o ancora su una chiavetta USB come descritto "
+"rispettivamente in {Burning an ISO image to a physical medium}#burning-iso-"
+"image e {Copying USB/HDD image to a USB stick}#copying-usb-hdd-image."
 
 #. type: Plain text
 #: en/user_examples.ssi:48

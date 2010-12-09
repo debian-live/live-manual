@@ -16,22 +16,23 @@ di super-utente, i comandi sono preceduti rispettivamente da #{$}# o
 
 2~ Per gli impazienti
 
-While we believe that everything in this manual is important to at least
-some of our users, we realize it is a lot of material to cover and that you
-may wish to experience early success using the software before delving into
-the details. Therefore, we have provided three tutorials in the
-{Examples}#examples section designed to teach you image building and
-customization basics. Read {Using the examples}#using-the-examples first,
-followed by {Tutorial 1: A standard image}#tutorial-1, {Tutorial 2: A web
-browser utility}#tutorial-2 and finally {Tutorial 3: A personalized
-image}#tutorial-3. By the end of these tutorials, you will have a taste of
-what can be done with Debian Live. We encourage you to return to more
-in-depth study of the manual, perhaps next reading {The basics}#the-basics,
-skimming or skipping {Building a netboot image}#building-netboot-image, and
-finishing by reading the {Customization overview}#customization-overview and
-the chapters that follow it. By this point, we hope you are thoroughly
-excited by what can be done with Debian Live and motivated to read the rest
-of the manual, cover-to-cover.
+Sebbene crediamo che ogni cosa in questo manuale sia importante almeno per
+alcuni dei nostri utenti, ci rendiamo conto che c'è tanto materiale da
+trattare e che si potrebbe voler provare il software prima di entrare nei
+dettagli. Pertanto, abbiamo messo a disposizione nella sezione
+{Examples}#examples tre tutorial progettati per insegnarvi le basi della
+costruzione e della personalizzazione delle immagini. Si legga innanzitutto
+{Using the examples}#using-the-examples, seguito da {Tutorial 1: A standard
+image}#tutorial-1, {Tutorial 2: A web browser utility}#tutorial-2 e, infine,
+{Tutorial 3: A personalized image}#tutorial-3. Alla fine di queste
+esercitazioni, si avrà un assaggio di ciò che si può fare con Debian
+Live. Ti invitiamo ad uno studio più approfondito del manuale, magari
+leggendo in seguito {The basics}#the-basics, sfogliando o saltando {Building
+a netboot image}#building-netboot-image, e finendo con la lettura di
+{Customization overview}#customization-overview e dei capitoli che lo
+seguono. A questo punto, ci auguriamo che tu sia davvero eccitato per ciò
+che si può fare con Debian Live e motivato a leggere il resto del manuale,
+da cima a fondo.
 
 2~terms Glossario
 
@@ -178,9 +179,10 @@ $ make build LANGUAGES=en
 
 3~ Applicare le patch
 
-Anyone can directly commit to the repository. However, we ask you to send
-bigger changes to the mailing list to discuss them first. To push to the
-repository, you must follow this procedure:
+Chiunque può eseguire il commit direttamente sul repository; tuttavia
+chiediamo di inviare le modifiche più corpose in mailing list, per poterne
+prima discuterne. Per eseguire il push sul repository, si deve seguire
+questa procedura:
 
 _* Prelevare la chiave pubblica:
 
@@ -209,7 +211,7 @@ EOF
 
 }code
 
-_* Check out a clone of the manual through ssh:
+_* Scaricare tramite ssh un clone del manuale:
 
 code{
 
@@ -217,9 +219,9 @@ $ git clone gitosis@live.debian.net:/live-manual.git
 
 }code
 
-_* After editing the files in #{manual/en/}#, please call the 'commit'
-target in the top level directory to sanitize the files and update the
-translation files:
+_* Dopo aver modificato i file in #{manual/en/}#, chiamare il target
+'commit' nella directory superiore per bonificare i file ed aggiornare i
+file di traduzione:
 
 code{
 
@@ -227,10 +229,11 @@ $ make commit
 
 }code
 
-_* After sanitizing, commit the changes. Write commit messages that consist
-of full, useful sentences in English, starting with a capital letter and
-ending with a full stop. Usually, these will start with the form
-'Fixing/Adding/Removing/Correcting/Translating', e.g.
+_* Dopo la pulizia è possibile eseguire il commit delle modifiche. Si
+scrivano messaggi costituiti da frasi in inglese esaurienti ed utili,
+inizianti con una lettera maiuscola e terminanti con un punto. Solitamente
+cominceranno con la forma 'Fixing/Adding/Removing/Correcting/Translating',
+ad esempio.
 
 code{
 
@@ -248,13 +251,17 @@ $ git push
 
 3~ Traduzione
 
-To submit a translation for a new language, follow these two steps:
+To submit a translation for a new language, follow these three steps:
 
 _* Translate the about_manual.ssi.pot, about_project.ssi.pot and
 index.html.in.pot files to your language with your favourite editor (such as
 poedit). Send translated files to the mailing list. Once we have reviewed
-your submission, we will add the new language to the manual and will enable
-it in the autobuild.
+your submission, we will add the new language to the manual (providing the
+po files) and will enable it in the autobuild.
 
-_* Una volta che la nuova lingua è stata aggiunta, si può iniziare a
-tradurre gli altri file pot nell'ordine che si preferisce.
+_* Once the new language is added, you can randomly start translating all po
+files in #{manual/po/}#.
+
+_* Don't forget you need #{make commit}# to ensure the translated manuals
+are updated from the po files, before #{git commit -a}# and #{git push}#.
+

@@ -1,6 +1,6 @@
 :B~ Nozioni di base
 
-1~ nozioni di base Nozioni di base
+1~the-basics nozioni di base Nozioni di base
 
 Questo capitolo contiene una breve panoramica del processo di generazione e
 le istruzioni per utilizzare i tre tipi di immagine più comunemente
@@ -57,7 +57,7 @@ vostre specifiche, scegliere un kernel Linux, il suo initrd ed un bootloader
 per avviarlo, il tutto in un unico formato indipendente dal media. (ISO9660,
 immagine del disco.etc.)
 
-2~Primo passo: creare una immagine ISO
+2~ Primo passo: creare una immagine ISO
 
 La seguente sequenza di comandi di live-build creerà una immagine ISO
 standard di base contenente solamente il sistema Debian standard senza
@@ -91,7 +91,7 @@ code{
 Questo processo può richiedere un del tempo, in base alla velocità della
 connessione di rete (vedere {The lb build command}#lb-build).
 
-3~provare-una-iso-con-qemu Provare una immagine ISO con Qemu
+3~testing-iso-with-qemu Provare una immagine ISO con Qemu
 
 Provare una ISO è semplice:
 
@@ -103,7 +103,7 @@ $ qemu -cdrom binary.iso
 
 }code
 
-3~provare-una-iso-con-virtualbox Provare una immagine ISO con virtualbox-ose 
+3~testing-iso-with-virtualbox Provare una immagine ISO con virtualbox-ose
 
 Al fine di provare la ISO con virtualbox-ose:
 
@@ -130,8 +130,7 @@ code{
 
 }code
 
-3~masterizzare-una-immagine-iso Masterizzare una immagine ISO su un supporto
-fisico
+3~burning-iso-image Masterizzare una immagine ISO su un supporto fisico
 
 Masterizzare una immagine ISO è semplice:
 
@@ -180,7 +179,7 @@ code{
 
 }code
 
-3~copiare-una-immagine-usb-hdd Copiare una immagine USB/HDD su una penna USB
+3~copying-usb-hdd-image Copiare una immagine USB/HDD su una penna USB
 
 L'immagine binaria generata contiene una partizione VFAT e il bootloader
 syslinux, pronti per essere scritti direttamente su una penna USB. Inserire
@@ -193,7 +192,7 @@ $ dd if=binary.img of=${USBSTICK}
 
 }code
 
-dove${USBSTICK}}#è il nome del dispositivo,come#{/dev/sdb}# (non una
+dove #{${USBSTICK}}# è il nome del dispositivo,come#{/dev/sdb}# (non una
 partizione come #{/dev/sdb1}#!); si può trovare il giusto nome del supporto
 guardando l'output di #{dmesg}# dopo aver inserito la chiavetta USB, per
 esempio, o meglio ancora, #{ls -l /dev/disk/by-id}#.
@@ -202,10 +201,9 @@ esempio, o meglio ancora, #{ls -l /dev/disk/by-id}#.
 
 Nota:Come disquisito in precedenza, questo stesso processo può essere usato
 per #{iso-hybrid}# nome immagine,( col suffisso #{-hybrid.iso}#,) ma non
-#{iso}#nome immagine.
+#{iso}#i nome immagine.
 
-3~provare-una-immagine-usb-hdd-con-qemu Provare una immagine USB/HDD con
-Qemu
+3~testing-usb-hdd-with-qemu Provare una immagine USB/HDD con Qemu
 
 code{
 
@@ -247,7 +245,7 @@ code{
 
 *{Ricorda: ogni volta che si installa una nuova binary.img nella penna, verranno persi tutti i dati, considerato che la partizione verrà sovrascritta con i contenuti della nuova immagine.}*
 
-2~ creare-una-immagine-netboot Creare una immagine netboot
+2~building-netboot-image Creare una immagine netboot
 
 La seguente sequenza di comandi creerà una immagine netboot iniziale
 contenete un sistema Debian standard senza X.org. Essa è adatta per il boot

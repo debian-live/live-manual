@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 2.0~a12\n"
-"POT-Creation-Date: 2010-12-09 10:51-0400\n"
+"POT-Creation-Date: 2010-12-10 08:47-0400\n"
 "PO-Revision-Date: 2010-10-22 07:52-0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -40,8 +40,8 @@ msgstr ""
 #: en/user_basics.ssi:184 en/user_basics.ssi:192 en/user_basics.ssi:202
 #: en/user_basics.ssi:222 en/user_basics.ssi:255 en/user_basics.ssi:271
 #: en/user_basics.ssi:279 en/user_basics.ssi:299 en/user_basics.ssi:324
-#: en/user_customization-contents.ssi:34 en/user_customization-contents.ssi:43
-#: en/user_customization-contents.ssi:66 en/user_customization-packages.ssi:14
+#: en/user_customization-contents.ssi:26 en/user_customization-contents.ssi:35
+#: en/user_customization-contents.ssi:58 en/user_customization-packages.ssi:14
 #: en/user_customization-packages.ssi:22 en/user_customization-packages.ssi:40
 #: en/user_customization-packages.ssi:53 en/user_customization-packages.ssi:66
 #: en/user_customization-packages.ssi:80 en/user_customization-packages.ssi:94
@@ -106,8 +106,8 @@ msgstr "code{"
 #: en/user_basics.ssi:188 en/user_basics.ssi:196 en/user_basics.ssi:206
 #: en/user_basics.ssi:247 en/user_basics.ssi:259 en/user_basics.ssi:275
 #: en/user_basics.ssi:283 en/user_basics.ssi:310 en/user_basics.ssi:349
-#: en/user_customization-contents.ssi:39 en/user_customization-contents.ssi:54
-#: en/user_customization-contents.ssi:70 en/user_customization-packages.ssi:18
+#: en/user_customization-contents.ssi:31 en/user_customization-contents.ssi:46
+#: en/user_customization-contents.ssi:62 en/user_customization-packages.ssi:18
 #: en/user_customization-packages.ssi:26 en/user_customization-packages.ssi:45
 #: en/user_customization-packages.ssi:58 en/user_customization-packages.ssi:70
 #: en/user_customization-packages.ssi:84 en/user_customization-packages.ssi:98
@@ -159,7 +159,13 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:6
-msgid "This chapter discusses further customization of the live system."
+msgid ""
+"This chapter discusses fine-tuning customization of the live system contents "
+"beyond merely choosing which packages to include. Includes allow you to add "
+"or replace arbitrary files in your Debian Live image, hooks allow you to "
+"execute arbitrary commands at different stages of the build and at boot "
+"time, and preseeding allows you to configure packages when they are "
+"installed by supplying answers to debconf questions."
 msgstr ""
 
 #. type: Plain text
@@ -170,77 +176,63 @@ msgstr ""
 #. type: Plain text
 #: en/user_customization-contents.ssi:10
 msgid ""
-"Using includes, it is possible to add (or replace) arbitrary files in your "
-"Debian Live image. live-build provides three mechanisms for using them:"
+"While ideally a Debian live system would include files entirely provided by "
+"unmodified Debian packages, it is sometimes convenient to provide or modify "
+"some content by means of files. Using includes, it is possible to add (or "
+"replace) arbitrary files in your Debian Live image. live-build provides "
+"three mechanisms for using them:"
 msgstr ""
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:12
 msgid ""
 "_* Chroot local includes: These allow you to add or replace files to the "
-"chroot/Live filesystem. Please see chroot-local-includes for more "
-"information."
+"chroot/Live filesystem. Please see {Live/chroot local includes}#live-chroot-"
+"local-includes for more information."
 msgstr ""
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:14
-msgid "% FIXME: <xref linkend=\"chroot-local-includes\"/>"
+msgid ""
+"_* Binary local includes: These allow you to add or replace files in the "
+"binary image. Please see {Binary local includes}#binary-local-includes for "
+"more information."
 msgstr ""
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:16
 msgid ""
-"_* Binary local includes: These allow you to add or replace files in the "
-"binary image. Please see binary-local-includes for more information."
+"_* Binary includes: These allow you to add or replace Debian specific files "
+"in the binary image, such as the templates and tools directories. Please see "
+"{Binary includes}#binary-includes for more information."
 msgstr ""
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:18
-msgid "% FIXME: <xref linkend=\"binary-local-includes\"/>"
+msgid ""
+"Please see {Terms}#terms for more information about the distinction between "
+"the \"Live\" and \"binary\" images."
 msgstr ""
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:20
-msgid ""
-"_* Binary includes: These allow you to add or replace Debian specific files "
-"in the binary image, such as the templates and tools directories. Please see "
-"binary-includes for more information."
-msgstr ""
-
-#. type: Plain text
-#: en/user_customization-contents.ssi:22
-msgid "% FIXME: <xref linkend=\"binary-includes\"/>"
-msgstr ""
-
-#. type: Plain text
-#: en/user_customization-contents.ssi:24
-msgid ""
-"Please see terms for more information about the distinction between the "
-"\"Live\" and \"binary\" images."
-msgstr ""
-
-#. type: Plain text
-#: en/user_customization-contents.ssi:26
-msgid "% FIXME: <xref linkend=\"terms\"/>"
-msgstr ""
-
-#. type: Plain text
-#: en/user_customization-contents.ssi:28
 msgid "3~live-chroot-local-includes Live/chroot local includes"
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-contents.ssi:30
+#: en/user_customization-contents.ssi:22
 msgid ""
 "Chroot local includes can be used to add or replace files in the chroot/Live "
-"filesystem so that they are visible when the Live system is booted. Typical "
-"uses for them are to populate the skeleton user directory (#{/etc/skel}#) "
-"used by the live system to create the live user's home directory, or adding "
-"configuration files where additional processing is not required."
+"filesystem so that they may be used in the Live system. A typical use is to "
+"populate the skeleton user directory (#{/etc/skel}#) used by the Live system "
+"to create the live user's home directory. Another is to supply configuration "
+"files that can be simply added or replaced in the image without processing; "
+"see {Live/chroot local hooks}#live-chroot-local-hooks if processing is "
+"needed."
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-contents.ssi:32
+#: en/user_customization-contents.ssi:24
 msgid ""
 "To include files, simply add them to your #{config/chroot_local-includes}# "
 "directory. This directory corresponds to the root directory (#{/}#) of the "
@@ -249,19 +241,19 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-contents.ssi:37
+#: en/user_customization-contents.ssi:29
 msgid ""
 "$ mkdir -p config/chroot_local-includes/var/www $ cp /path/to/my/index.html "
 "config/chroot_local-includes/var/www"
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-contents.ssi:41
+#: en/user_customization-contents.ssi:33
 msgid "Your configuration will then have the following layout:"
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-contents.ssi:52
+#: en/user_customization-contents.ssi:44
 #, no-wrap
 msgid ""
 "-- config\n"
@@ -275,60 +267,60 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-contents.ssi:56
+#: en/user_customization-contents.ssi:48
 msgid ""
 "Chroot local includes are installed after package installation so that files "
 "installed by packages are overwritten."
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-contents.ssi:58
-msgid "3~ Binary local includes"
+#: en/user_customization-contents.ssi:50
+msgid "3~binary-local-includes Binary local includes"
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-contents.ssi:60
+#: en/user_customization-contents.ssi:52
 msgid ""
 "The same way as chroot local includes work, there exists the corresponding "
 "mechanism to include files in the live media itself."
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-contents.ssi:62
-msgid "3~ Binary includes"
+#: en/user_customization-contents.ssi:54
+msgid "3~binary-includes Binary includes"
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-contents.ssi:64
+#: en/user_customization-contents.ssi:56
 msgid ""
 "live-build has some standard files (like documentation) that gets included "
 "in the default configuration on every live media. This can be disabled with:"
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-contents.ssi:68
+#: en/user_customization-contents.ssi:60
 msgid "$ lb config --includes none"
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-contents.ssi:72
+#: en/user_customization-contents.ssi:64
 msgid "2~ Hooks"
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-contents.ssi:74
+#: en/user_customization-contents.ssi:66
 msgid ""
 "Hooks allow commands to be performed in the chroot and binary stages of the "
 "build in order to customize the image."
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-contents.ssi:76
-msgid "3~ Live/chroot local hooks"
+#: en/user_customization-contents.ssi:68
+msgid "3~live-chroot-local-hooks Live/chroot local hooks"
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-contents.ssi:78
+#: en/user_customization-contents.ssi:70
 msgid ""
 "To run commands in the chroot stage, create a hook script containing the "
 "commands in the #{config/chroot_local-hooks}# directory. The hook will run "
@@ -341,12 +333,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-contents.ssi:80
+#: en/user_customization-contents.ssi:72
 msgid "3~ Boot-time hooks"
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-contents.ssi:82
+#: en/user_customization-contents.ssi:74
 msgid ""
 "To execute commands at boot time, you can supply live-config hooks as "
 "explained in the \"Customization\" section of its man page. Examine live-"
@@ -359,12 +351,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-contents.ssi:84
+#: en/user_customization-contents.ssi:76
 msgid "3~ Binary local hooks"
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-contents.ssi:86
+#: en/user_customization-contents.ssi:78
 msgid ""
 "To run commands in the binary stage, create a hook script containing the "
 "commands in the #{config/binary_local-hooks}#. The hook will run after all "
@@ -377,12 +369,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-contents.ssi:88
+#: en/user_customization-contents.ssi:80
 msgid "2~ Preseeding Debconf questions"
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-contents.ssi:90
+#: en/user_customization-contents.ssi:82
 msgid ""
 "Files in the #{config/chroot_local-preseed}# directory are considered to be "
 "debconf preseed files and are installed by live-build using #{debconf-set-"
@@ -390,7 +382,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-contents.ssi:91
+#: en/user_customization-contents.ssi:83
 msgid ""
 "For more information about debconf, please see debconf(7) in the #{debconf}# "
 "package."

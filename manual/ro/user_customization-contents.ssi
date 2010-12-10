@@ -74,8 +74,21 @@ installed by packages are overwritten.
 
 3~binary-local-includes Binary local includes
 
-The same way as chroot local includes work, there exists the corresponding
-mechanism to include files in the live media itself.
+To include material such as documentation or videos on the media filesystem
+so that it is accessible immediately upon insertion of the media without
+booting the Live system, you can use binary local includes. This works in a
+similar fashion to chroot local includes. For example, suppose the files
+#{~/video_demo.*}# are demo videos of the live system described by and
+linked to by an HTML index page. Simply copy the material to
+#{config/binary_local-includes/} as follows:
+
+code{
+
+$ cp ~/video_demo.* config/binary_local-includes/
+
+}code
+
+These files will now appear in the root directory of the live media.
 
 3~binary-includes Binary includes
 
@@ -87,6 +100,10 @@ code{
 $ lb config --includes none
 
 }code
+
+Otherwise, the material will be installed by live-build in #{/includes/}# by
+default on the media filesystem, or else you can specify an alternate path
+with #{--includes}#.
 
 2~ Hooks
 

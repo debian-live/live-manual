@@ -4,6 +4,17 @@ SHELL := sh -e
 
 LANGUAGES = $(shell cd po && ls)
 
+DEBUG=0
+PO4A_FLAGS=
+
+ifeq ($(DEBUG),1)
+    PO4A_FLAGS=-d
+endif
+
+ifeq ($(DEBUG),2)
+    PO4A_FLAGS=-d -v
+endif
+
 all: build
 
 po4a.cfg:
@@ -29,7 +40,7 @@ build: po4a.cfg
 		exit 1; \
 	fi
 
-	po4a --keep 0 --no-backups --package-name live-manual po4a.cfg
+	po4a --keep 0 --no-backups --package-name live-manual $(PO4A_FLAGS) po4a.cfg
 
 	for LANGUAGE in $(LANGUAGES); \
 	do \

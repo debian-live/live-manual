@@ -1,40 +1,42 @@
-:B~ Traduzione
+:B~ Installazione
 
-1~ Traduzione
+1~ Installazione
 
-2~requirements Requirements
+2~requirements Requisiti
 
-Building Debian Live images has very few system requirements:
+Per costruire immagini Debian Live i requisiti di sistema sono davvero
+pochi:
 
-_* Super user (root) access
+_* Accesso come super-utente (root)
 
-_* An up-to-date version of live-build
+_* Una versione aggiornata di live-build
 
-_* A POSIX-compliant shell, such as /{bash}/ or /{dash}/.
+_* Una shell POSIX-compliant, come /{bash}/ o /{dash}/.
 
-_* /{debootstrap}/ or /{cdebootstrap}/
+_* /{debootstrap}/ o /{cdebootstrap}/
 
 _* Linux 2.6.x
 
-Note that using Debian or a Debian-derived distribution is not required -
-live-build will run on almost any distribution with the above requirements.
+Si noti che usare Debian o una distribuzione derivata Debian non è richiesto
+- live-build funzionerà sostanzialmente su qualsiasi distribuzione che
+soddisfi i requisiti di cui sopra.
 
-2~installing-live-build Installing live-build
+2~installing-live-build Installare live-build
 
-You can install live-build in a number of different ways:
+Si può installare live-build in diversi modi:
 
-_* From the Debian repository
+_* Dal repository Debian
 
-_* From source
+_* Da sorgenti
 
-_* From snapshots
+_* Da istantanee
 
-If you are using Debian, the recommended way is to install live-build via
-the Debian repository.
+Se si sta usando Debian, il metodo raccomandato è di installare live-build
+attraverso il repository Debian.
 
-3~ From the Debian repository
+3~ Dal repository Debian
 
-Simply install live-build like any other package:
+Installare live-build semplicemente come qualsiasi altro pacchetto:
 
 code{
 
@@ -42,7 +44,7 @@ code{
 
 }code
 
-or
+o
 
 code{
 
@@ -50,11 +52,11 @@ code{
 
 }code
 
-3~ From source
+3~ Da sorgenti
 
-live-build is developed using the Git version control system. On Debian
-systems, this is provided by the /{git}/ package. To check out the latest
-code, execute:
+live-build è sviluppato usando il sistema di controllo versione Git. Sui
+sistemi Debian è fornito dal pacchetto  /{git}/. Per scaricare il codice
+aggiornato, eseguire:
 
 code{
 
@@ -62,7 +64,7 @@ $ git clone git://live.debian.net/git/live-build.git
 
 }code
 
-You can build and install your own Debian package by executing:
+È possibile costruirsi ed installarsi il proprio pacchetto Debian eseguendo:
 
 code{
 
@@ -70,8 +72,8 @@ $ cd live-build $ dpkg-buildpackage -rfakeroot -b -uc -us $ cd ..
 
 }code
 
-Now install whichever of the freshly built #{.deb}# files you were
-interested in, e.g.
+Si installino ora i file #{.deb}# appena generati ai quali si è interessati,
+ad esempio:
 
 code{
 
@@ -79,44 +81,46 @@ code{
 
 }code
 
-You can also install live-build directly to your system by executing:
+Si può anche installare live-build direttamente sul proprio sistema
+eseguendo:
 
 code{
 
-$ make install
+# make install
 
 }code
 
-and uninstall it with:
+e disinstallarlo con:
 
 code{
 
-$ make uninstall
+# make uninstall
 
 }code
 
-3~ From 'snapshots'
+3~ Da 'istantanee'
 
-If you do not wish to build or install live-build from source, you can use
-snapshots. These are built automatically from the latest version in Git and
-are available on http://live.debian.net/debian/.
+Se non si desidera generare o installare live-build da sorgenti, si può
+usare le istantanee. Sono costruite automaticamente dall'ultima versione
+presente su Git e disponibili su http://live.debian.net/debian/.
 
 2~ live-boot
 
-*{Note:}* You do not need to install live-boot on your system to create customized Debian Live systems. However, doing so will do no harm.
+*{Nota:}* non è necessario installare live-boot sul proprio sistema per creare sistemi Debian Live personalizzati. Tuttavia, farlo non nuoce.
 
 % FIXME: we also need to mention live-config
 
-3~ Using a customized live-boot
+3~ Usare un live-boot personalizzato
 
 % FIXME: should follow the structure for live-build above (i.e. "from
 source", not "customized" -- we should not get into customization now, but
 should reserve that discussion for later.
 
-To modify the code you can follow the process below. Please ensure you are
-familiar with the terms mentioned in {Terms}#terms.
+Per modificare il codice si può seguire il procedimento
+seguente. Assicurarsi di conoscere i termini menzionati in
+{Glossario}#terms.
 
-_* Checkout the live-boot source
+_* Scaricare i sorgenti di live-boot
 
 code{
 
@@ -124,27 +128,28 @@ $ git clone git://live.debian.net/git/live-boot.git
 
 }code
 
-_* Make changes to your local copy
+_* Eseguire le modifiche sulla copia locale
 
 % FIXME: as indicated above, it's too early for this topic. Move to later in
 the manual.
 
-And beware that if you want to add your pre-init script in live-bottom, you
-should name it without dashes '-', e.g: call it "99new_feature" and not
-"99new-feature".
+E fare attenzione che se si vuole aggiungere il proprio script di pre-init
+in live-bottom, si dovrebbe dargli un nome senza trattini '-', ad esempio:
+chiamarlo "99new_feature" e non "99new-feature".
 
-_* Build a live-boot .deb
+_* Costruire un .deb di live-boot
 
 You must build either on your target distribution or in a chroot containing
 your target platform: this means if your target is Squeeze then you should
-build against Squeeze. Y
+build against Squeeze.
 
-Use a personal builder such as /{pbuilder}/ or /{sbuild}/ if you need to
-build #{live-boot}# for a target distribution that differs from your build
-system. For example, for Squeeze live images, build #{live-boot}# in a
-Squeeze chroot. If your target distribution happens to match your build
-system distribution, you may build directly on the build system using
-#{dpkg-buildpackage}# (provided by the /{dpkg-dev}/ package):
+Utilizzare un builder personale tipo /{pbuilder}/ o /{sbuild}/ se si deve
+costruire #{live-boot}# per una distribuzione target diversa dal proprio
+sistema di build. Ad esempio, per immagini live Squeeze, si generi
+#{live-boot}# in un chroot Squeeze. Se la distribuzione target corrisponde
+con la distribuzione del proprio sistema di build, si può costruire
+direttamente sul sistema di build usando #{dpkg-buildpackage}# (fornito dal
+pacchetto /{dpkg-dev}/):
 
 code{
 
@@ -152,21 +157,21 @@ $ cd live-boot $ dpkg-buildpackage -b -uc -us
 
 }code
 
-_* Use the generated live-boot .deb
+_* Usare il .deb di live-boot generato
 
-As live-boot is installed by live-build system, installing the package in
-the host system is not sufficient: you should treat the generated .deb like
-another custom package. Please see {Customizing package
-installation}#customizing-package-installation for more information. You
-should pay particular attention to {Additional
+Siccome live-boot è installato dal sistema live-build, installare il
+pacchetto nel sistema host non è sufficiente: occorre trattare il .deb
+generato come un altro pacchetto su misura. Si veda {Customizing package
+installation}#customizing-package-installation per maggiori
+informazioni. Fare particolare attenzione a {Additional
 repositories}#additional-repositories.
 
-3~ Using live-boot snapshots
+3~ Usare le istantanee di live-boot
 
-You can let live-build automatically use the latest snapshot of live-boot by
-configuring a third-party repository in your live-build configuration
-directory. Assuming you have already created a configuration tree with #{lb
-config}#:
+Si può lasciare che live-build usi automaticamente l'ultima istantanea di
+live-boot configurando un repository esterno nella directory di
+configurazione di live-build. Assumendo che si sia già creato un albero di
+configurazione con #{lb config}#:
 
 code{
 

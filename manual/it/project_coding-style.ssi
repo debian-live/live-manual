@@ -1,29 +1,30 @@
-B~ Coding Style
+B~ Tipo di codice
 
-1~ Coding Style
+1~ Tipo di codice
 
-This chapter documents the coding style used in live-boot and others.
+Questo capitolo documenta il tipo di codice utilizzato per live-boot e gli
+altri.
 
-2~ Compatibility
+2~ Compatibilità
 
-_* Don't use syntax or semantics that are unique to the Bash shell. For
-example, the use of array constructs.
+_* Non usare sintassi o semantiche mirate alla shell Bash come ad esempio
+l'uso di costrutti array.
 
-_* Only use the POSIX subset - for example, use $(foo) over `foo`.
+_* Utilizzare solo sottoinsiemi POSIX, ad esempio $(foo) rispetto a `foo`.
 
-_* You can check your scripts with 'sh -n' and 'checkbashisms'.
+_* È possibile verificare i propri script con "sh -n" e "checkbashisms".
 
-2~ Indenting
+2~ Indentare
 
-_* Always use tabs over spaces.
+_* Usare sempre i tab piuttosto degli spazi.
 
-2~ Wrapping
+2~ Testo a capo
 
-_* Generally, lines are 80 chars at maximum.
+_* Generalmente le righe sono composte da un massimo di 80 caratteri.
 
-_* Use the "Linux style" of line breaks:
+_* Utilizzare lo "stile Linux" per le interruzioni di riga.
 
-Bad:
+Sbagliato:
 
 code{
 
@@ -33,7 +34,7 @@ fi
 
 }code
 
-Good:
+Corretto:
 
 code{
 
@@ -44,9 +45,9 @@ fi
 
 }code
 
-_* The same holds for functions:
+_* Lo stesso vale per le funzioni:
 
-Bad:
+Sbagliato:
 
 code{
 
@@ -56,7 +57,7 @@ foo () {
 
 }code
 
-Good:
+Corretto:
 
 code{
 
@@ -67,31 +68,33 @@ foo ()
 
 }code
 
-2~ Variables
+2~ Variabili
 
-_* Variables are always in capital letters.
+_* Le variabili vanno sempre scritte in maiuscolo.
 
-_* Variables that used in lb config always start with LH_ prefix.
+_* Le variabili usate nella configurazione di lb iniziano sempre con il
+prefisso "LH_".
 
-_* Internal temporary variables in live-build should start with the _LH_
-prefix.
+_* Le variabili temporanee interne a live-build dovrebbero iniziare con il
+prefisso "_LH_".
 
-_* Local variables start with live-build __LH_ prefix.
+_* Le variabili locali iniziano con il prefisso di live-build "__LH_"
 
-_* Variables in connection to a boot parameter in live-config start with
-LIVE_.
+_* Le variabili relative ai parametri di avvio di live-config iniziano con
+il prefisso "LIVE_".
 
-_* All other variables in live-config start with _ prefix.
+_* Tutte le altre variabili di live-config iniziano con il prefisso "_".
 
-_* Use braces around variables; eg. write ${FOO} instead of $FOO.
+_* Intorno alle variabili utilizzare le parentesi, scrivere ${FOO} invece di
+$FOO.
 
-_* Always protect variables with quotes to respect potential whitespaces,
-write "${FOO}" not ${FOO}.
+_* Racchiudere sempre le variabili tra virgolette per rispettare potenziali
+spaziature, scrivere "${FOO}" e non ${FOO}.
 
-_* For consistency reasons, always use quotes when assigning values to
-variables:
+_* Per coerenza usare sempre le virgolette per assegnare un valore ad una
+variabile:
 
-Bad:
+Sbagliato:
 
 code{
 
@@ -99,7 +102,7 @@ FOO=bar
 
 }code
 
-Good:
+Corretto:
 
 code{
 
@@ -107,9 +110,9 @@ FOO="bar"
 
 }code
 
-_* If multiple variables are used, quote the full expression:
+_* Utilizzando molteplici variabili si quota l'intera espressione:
 
-Bad:
+Sbagliato:
 
 code{
 
@@ -120,7 +123,7 @@ fi
 
 }code
 
-Good:
+Corretto:
 
 code{
 
@@ -131,13 +134,13 @@ fi
 
 }code
 
-2~ Miscellaneous
+2~ Varie
 
-_* Use "|" (without the surround quotes) as a seperator in calls to sed,
-e.g. "sed -e 's|foo|bar|'" (without "").
+_* In sed utilizzare "|" (senza virgolette intorno) come separatore, "sed -e
+'s|foo|bar|'" (senza "").
 
-_* Don't use the test command for comparisons or tests, use "[" "]" (without
-""), e.g. "if [ -x /bin/foo ]; ..." and not "if test -x /bin/foo; ...".
+_* Non utilizzare il comando "test" per prove o confronti, usare invece "["
+"]" (senza ""), "if [ -x /bin/foo ]; ..." e non "if test -x /bin/foo; ...".
 
-_* Use case wherever possible over test, as it's easier to read and faster
-in execution.
+_* Ove possibile utilizzare "case" invece di "test", è più facile da leggere
+e più veloce in esecuzione.

@@ -1,73 +1,74 @@
 :B~ Nozioni di base
 
-1~the-basics Nozioni di base
+1~the-basics nozioni di base Nozioni di base
 
 Questo capitolo contiene una breve panoramica del processo di generazione e
 le istruzioni per utilizzare i tre tipi di immagine più comunemente
-utilizzati. La tipologia di immagine più versatile, #{iso-hybrid}#, può
-essere usata su una macchina virtuale, supporto ottico o dispositivo di
-archiviazione portatile USB. In alcuni casi particolari, la #{usb-hdd}#
-potrebbe essere più adatta per i dispositivi USB. Il capitolo termina con le
-istruzioni per costruire e usare un'immagine di tipo #{net}#, che è un poco
-più complessa a causa del setup richiesto sul server. Si tratta di un
-argomento leggermente avanzato per chi non ha familiarità con l'avvio da
-rete, ma è incluso qui perché, una volta che il setup è stato fatto, è un
-modo molto comodo per collaudare e distribuire immagini facendo il boot
-nella rete locale senza la seccatura di doversi occupare dei mezzi di
-divulgazione dell'immagine.
+utilizzati. Il tipo di immagine più versatile, # {iso-hybrid} #, può essere
+usata su una macchina virtuale, supporto ottico o dispositivo di
+archiviazione  portabile USB.  In alcuni casi particolari potrebbe essere
+adatto per i dispositivi USB #{usb-hdd}#.Il capitolo termina con le
+istruzioni per costruire e usare una immagine  # {net} #, la quale è un poco
+più complessa per una installazione lato server. Questo è un concetto molto
+avanzato per chi non ha familiarità con una installazione via rete, ma è
+incluso qui dato che una volta che il setup è stato fatto è molto comodo
+testare e distribuire le immagini per fare il boot dalla rete locale senza
+il problema di avere immagini su supporti ottici.
 
-2~ Che cos'è un sistema live?
+2~ Cosa è un sistema live?
 
-Per sistema live generalmente si intende un sistema operativo che può essere
-avviato da un supporto rimovibile, come un CD-ROM o una chiavetta USB,
-oppure da una rete, pronto per l'uso senza alcuna installazione su hard
-disk, con una auto-configurazione fatta durante l'esecuzione (vedere
-{Glossario}#terms).
+Per sistema live genericamente si intende un sistema operativo che può
+essere avviato da un supporto rimovibile, come un CD-ROM, penna USB o via
+rete pronto per essere usato senza installazione su hard disk, con una auto
+configurazione fatta all'avvio (vedere {Terms}#terms).
 
-Con Debian Live, si tratta di un sistema operativo Debian GNU/Linux,
-generato per una delle architetture previste (attualmente amd64, i386,
-powerpc e sparc). È costituito dalle seguenti parti:
+Debian Live, è il sistema operativo Debian GNU/Linux, costruito per diverse
+architetture ( attualmente amd64, i386, powerpc and sparc). Esso è
+costituito dalle seguenti parti:
 
-_* *{Immagine del kernel Linux}*, comunemente chiamata #{vmlinuz*}#
+_* *{Linux kernel image}*, comunemente chiamato #{vmlinuz*}#
 
-_* *{Initial RAM disk image (initrd)}*: un disco RAM creato per il boot di
-Linux, contenente i moduli potenzialmente necessari per montare l'immagine
-di sistema e alcuni script per farlo.
+_* *{Initial RAM disk image (initrd)}*: Un disco RAM creato per il boot di
+Linux, contiene i moduli necessari  e alcuni script per montare l'immagine
+di sistema.
 
-_* *{System image}*: The operating system's filesystem image. Usually, a
-SquashFS compressed filesystem is used to minimize the Debian Live image
-size. Note that it is read-only. So, during boot the Debian Live system will
-use a RAM disk and 'union' mechanism to enable writing files within the
-running system. However, all modifications will be lost upon shutdown unless
-optional persistence is used (see {Persistence}#persistence).
+_* *{System image}*: Il file system del sistema operativo. Normalmente è
+scelta una immagine del file system compressa come SquashFS, per ridurre le
+dimensioni dell'immagine. Nota che essa è solo in lettura. Così, durante il
+boot il sistema Debian Live userà un disco RAM e il meccanismo 'union' per
+attivare i file di scrittura all'interno del sistema in esecuzione. Ad ogni
+modo, tutte le modifiche verranno perse alla chiusura a meno che non si usi
+l'opzione persistenza (see persistence).
 
-_* *{Bootloader}*: una piccola porzione di codice predisposto per l'avvio
-dal supporto scelto, che presenta un prompt o un menu per la selezione di
-opzioni/configurazioni. Carica il kernel Linux ed il suo initrd da eseguire
-con un filesystem associato. Possono essere usate diverse soluzioni, in base
-al supporto di destinazione ed al formato del filesystem contenenti le
+% FIXME: <xref linkend="persistence"/>
+
+_* *{Bootloader}*:  Una piccola porzione di codice predisposto per l'avvio
+del supporto scelto, presenta un prompt o un menù per la selezione di
+opzioni/configurazioni. Esso carica il kernel Linux ed il suo initrd per
+eseguire il file system associato. Possono essere usate diverse soluzioni in
+base al supporto di destinazione ed al tipo di file system contenenti le
 componenti precedentemente citate: isolinux per il boot da CD o DVD nel
-formato ISO9660, syslinux per supporti HDD o USB che si avviano da una
+formato ISO9660, syslinux per supporti HDD o USB per il boot da una
 partizione VFAT, extlinux per le partizioni ext/2/3/4 e btrfs, pxelinux per
-il netboot PXE, GRUB per partizioni ext2/3/4, ecc.
+il netboot PXE, Grub per partizioni ext2/3/4, etc.
 
-È possibile usare live-build per creare l'immagine di sistema secondo le
+È possibile usare live-builb per creare una immagine di sistema secondo le
 vostre specifiche, scegliere un kernel Linux, il suo initrd ed un bootloader
-per avviarli, tutto in un unico formato che dipende dal mezzo (immagini
-ISO9660, immagine disco, ecc.)
+per avviarlo, il tutto in un unico formato indipendente dal media. (ISO9660,
+immagine del disco.etc.)
 
-2~ Primi passi: creare una immagine ISO
+2~ Primo passo: creare una immagine ISO
 
-La seguente sequenza di comandi di live-build creerà un'immagine ISO ibrida
-di base contenente soltanto il sistema Debian standard senza X.org. È adatta
-per essere masterizzata su CD o DVD e anche per essere copiata su una penna
-USB (come per {Copiare una immagine USB/HDD su una penna
-USB}#copying-usb-hdd-image, specificando l'estensione ".iso" dove è indicato
-".img").
+La seguente sequenza di comandi di live-build creerà una immagine ISO
+standard di base contenente solamente il sistema Debian standard senza
+Xorg. Esso è adatto per essere masterizzato su CD o DVD o anche copiato in
+una penna USB (as per {Copying USB/HDD image to a USB
+stick}#copying-usb-hdd-image, specifying ".iso" extension where ".img" is
+indicated).
 
-In primo luogo eseguire il comando #{lb config}#, il quale creerà una
-gerarchia "config/" nella directory corrente e che verrà utilizzata da altri
-comandi:
+Per iniziare lanciare il comando #{lb config}# il quale creerà una struttura
+gerarchica "config/" nella directory corrente che verrà utilizzata per gli
+altri comandi:
 
 code{
 
@@ -75,12 +76,11 @@ $ lb config
 
 }code
 
-Non passando alcun parametro a #{lb config}#, si indica che si intende
-utilizzare le impostazione predefinite (vedere {Il comando lb
-config}#lb-config).
+Non passando nessun parametro a #{lb config}# verranno utilizzate le
+impostazione predefinite  (vedere {The lb config command}#lb-config).
 
-Ora che si ha una gerarchia "config/" si può generare l'immagine con il
-comando lb build:
+Ora che si ha la struttura gerarchica "/config/" si può creare l'immagine
+con il comando lb build:
 
 code{
 
@@ -88,12 +88,12 @@ code{
 
 }code
 
-Questo processo può richiedere tempo, a seconda della velocità della
-connessione di rete (vedere {Il comando lb build}#lb-build).
+Questo processo può richiedere un del tempo, in base alla velocità della
+connessione di rete (vedere {The lb build command}#lb-build).
 
-3~testing-iso-with-qemu Provare un'immagine ISO con Qemu
+3~testing-iso-with-qemu Provare una immagine ISO con Qemu
 
-Collaudare una ISO è semplice:
+Provare una ISO è semplice:
 
 code{
 
@@ -103,9 +103,9 @@ $ qemu -cdrom binary.iso
 
 }code
 
-3~testing-iso-with-virtualbox Provare un'immagine ISO con virtualbox-ose
+3~testing-iso-with-virtualbox Provare una immagine ISO con virtualbox-ose
 
-Per provare la ISO con virtualbox-ose:
+Al fine di provare la ISO con virtualbox-ose:
 
 code{
 
@@ -116,13 +116,13 @@ $ virtualbox
 }code
 
 Creare una nuova macchina virtuale, modificare le impostazione di
-archiviazione in modo da usare binary.iso come dispositivo CD/DVD, ed
-avviare la macchina.
+archiviazione in modo da usare binary.iso come dispositivo CD/DVD ed avviare
+la macchina.
 
-Nota: per sistemi live contenenti X.org che si vogliono provare con
-virtualbox-ose, si può voler includere il pacchetto dei driver per X.org di
-VirtualBox, virtualbox-ose-guest-x11, nella configurazione di
-live-build. Altrimenti, la risoluzione è limitata a 800x600.
+Nota: Se vuoi provare con virtualbox-ose un sistema-live con Xorg, devi
+installare il pacchetto Virtualbox con i driver Xorg,
+virtualbox-ose-guest-x11, nella configurazione di live-build. Altrimenti, la
+risoluzione sarà limitata a 800x600.
 
 code{
 
@@ -130,9 +130,9 @@ code{
 
 }code
 
-3~burning-iso-image Masterizzare un'immagine ISO su un supporto fisico
+3~burning-iso-image Masterizzare una immagine ISO su un supporto fisico
 
-Masterizzare un'immagine ISO è semplice:
+Masterizzare una immagine ISO è semplice:
 
 code{
 
@@ -142,19 +142,19 @@ $ wodim binary.iso
 
 }code
 
-2~ Creare un'immagine USB/HDD
+2~ Creare una immagine USB/HDD
 
-La seguente sequenza di comandi creerà un'immagine USB/HDD di base
-contenente solamente un sistema Debian standard senza X.org. È adatta per
-avviarsi da penna USB, disco rigido USB e svariati altri dispositivi di
-archiviazione portatili. In genere per questo scopo può essere usata
-un'immagine ibrida, ma se si ha un BIOS che non la gestisce correttamente o
-si vuole usare lo spazio rimanente sul supporto per una partizione
-persistente, allora occorre un'immagine USB/HDD.
+La seguente sequenza di comandi creerà una immagine iniziale USB/HDD
+contenente solamente un sistema Debian standard senza X.org. Adatta per fare
+il boot da penna USB, disco rigido USB, e da svariati altri dispositivi di
+archiviazione portatili. Normalmente, per questo scopo può essere usata una
+immagine ibrida, ma se si ha un BIOS che non supporta le immagini ibride, o
+si vuole usare lo spazio rimanente su un supporto per una partizione
+persistente, allora occorre una immagine USB/HDD.
 
-Nota: se si è creata un'immagine ISO con gli esempi precedenti, occorre
-pulire la directory di lavoro con il comando #{lb clean}# (vedere {Il
-comando lb clean}#lb-clean):
+Nota: se si è creata una immagine ISO con gli esempi precedenti, occorre
+pulire la directory di lavoro con il #{lb clean}# comando (vedere {The lb
+clean command}#lb-clean):
 
 code{
 
@@ -162,8 +162,8 @@ $ lb clean --binary
 
 }code
 
-Eseguire il comando #{lb config}# con i parametri atti a configurare la
-struttura #{config/}# per creare un'immagine USB/HDD:
+Lanciare il #{lb config}# comando con i parametri per configurare la
+struttura #{config/}# gerarchica per creare una immagine USB/HDD  digitare
 
 code{
 
@@ -171,7 +171,7 @@ $ lb config -b usb-hdd
 
 }code
 
-Creare quindi l'immagine con il comando #{lb build}:
+Ora creare l'immagine con il #{lb build} comando:
 
 code{
 
@@ -179,7 +179,7 @@ code{
 
 }code
 
-3~copying-usb-hdd-image Copiare un'immagine USB/HDD su una penna USB
+3~copying-usb-hdd-image Copiare una immagine USB/HDD su una penna USB
 
 L'immagine binaria generata contiene una partizione VFAT e il bootloader
 syslinux, pronti per essere scritti direttamente su una penna USB. Inserire
@@ -192,18 +192,18 @@ $ dd if=binary.img of=${USBSTICK}
 
 }code
 
-dove #{${USBSTICK}}# è il nome del device, come #{/dev/sdb}# (non una
-partizione come #{/dev/sdb1}#!); si può trovare il nome corretto del device
-guardando l'output di #{dmesg}# dopo aver inserito la chiavetta USB, o
-meglio ancora #{ls -l /dev/disk/by-id}#.
+dove #{${USBSTICK}}# è il nome del dispositivo,come#{/dev/sdb}# (non una
+partizione come #{/dev/sdb1}#!); si può trovare il giusto nome del supporto
+guardando l'output di #{dmesg}# dopo aver inserito la chiavetta USB, per
+esempio, o meglio ancora, #{ls -l /dev/disk/by-id}#.
 
-*{Questo sovrascriverà qualsiasi altro dato sulla chiavetta!}*
+*{Questo sovrascriverà qualsiasi altro dato nella chiavetta!}*
 
-Nota: come disquisito in precedenza, questo stesso processo può essere usato
-per i tipi di immagine #{iso-hybrid}# (con suffisso #{-hybrid.iso}#), ma non
-per le immagini #{iso}#.
+Nota:Come disquisito in precedenza, questo stesso processo può essere usato
+per #{iso-hybrid}# nome immagine,( col suffisso #{-hybrid.iso}#,) ma non
+#{iso}#i nome immagine.
 
-3~testing-usb-hdd-with-qemu Provare un'immagine USB/HDD con Qemu
+3~testing-usb-hdd-with-qemu Provare una immagine USB/HDD con Qemu
 
 code{
 
@@ -216,9 +216,9 @@ $ qemu -hda binary.img
 3~ Usare lo spazio rimanente sulla penna USB
 
 Se si vuole usare lo spazio libero che rimane dopo l'installazione di
-binary.img si può usare uno strumento di partizionamento come #{gparted}# o
-#{parted}# per creare una nuova partizione sulla penna. La prima partizione
-verrà utilizzata dal sistema Debian Live.
+binary.img si può usare uno strumento di partizionamento come #{gparted}# or
+#{parted}# per creare una nuova partizione sulla penna.  La prima partizione
+sarà usata dal sistema Debian Live.
 
 code{
 
@@ -226,8 +226,8 @@ code{
 
 }code
 
-Dopo aver creato la partizione si deve creare il filesystem. ext4 potrebbe
-essere una scelta possibile.
+Dopo la creazione della partizione, si deve creare il file system. Una
+scelta potrebbe essere ext4.
 
 code{
 
@@ -235,7 +235,7 @@ code{
 
 }code
 
-Usare FAT32 se si vuole usare questa partizione dati con Windows.
+Se si vuole usare questa partizione dati con windows, usare FAT32.
 
 code{
 
@@ -243,16 +243,16 @@ code{
 
 }code
 
-*{Ricorda: ogni volta che si installa un nuovo file binary.img sulla penna verranno persi tutti i dati perché la partizione verrà sovrascritta con i contenuti della nuova immagine.}*
+*{Ricorda: ogni volta che si installa una nuova binary.img nella penna, verranno persi tutti i dati, considerato che la partizione verrà sovrascritta con i contenuti della nuova immagine.}*
 
-2~building-netboot-image Creare un'immagine netboot
+2~building-netboot-image Creare una immagine netboot
 
-La seguente sequenza di comandi creerà un'immagine netboot di base
-contenente un sistema Debian standard senza X.org. È adatta per il boot
-tramite rete.
+La seguente sequenza di comandi creerà una immagine netboot iniziale
+contenete un sistema Debian standard senza X.org. Essa è adatta per il boot
+via rete.
 
 Nota: se è stato usato uno dei precedenti esempi, bisogna pulire la
-directory di lavoro con il comando #{lb clean}#:
+directory di lavoro con il #{lb clean}# comando:
 
 code{
 
@@ -260,8 +260,8 @@ $ lb clean --binary
 
 }code
 
-Eseguire il comando #{lb config}# con i parametri atti a configurare la
-struttura "config/" per creare un'immagine netboot:
+Lanciare il #{lb config}# comando con i parametri per configurare la
+struttura "config/" gerarchica  per creare una immagine netboot:
 
 code{
 
@@ -271,12 +271,12 @@ $ lb config -b net --net-root-path "/srv/debian-live" --net-root-server
 }code
 
 Diversamente dalle immagini nei formati ISO e USB/HDD, il boot via rete non
-dispone di un'immagine del filesytem con il client, perciò occorre che venga
-reso disponibile via NFS. Le opzioni net-root-path e net-root-server
-specificano rispettivamente il percorso e il server del server NFS dove le
-immagini filesystem saranno situate all'avvio.
+supporta l'accesso diretto come immagine sul client, ma occorre che venga
+reso disponibile via NFS. Le opzioni net-root-path e  net-root-server
+specificano, rispettivamente, il percorso e il server dove saranno
+localizzate le immagini del server NFS per il boot.
 
-Si crei ora l'immagine con il comando #{lb build}#:
+Ceare l'immagine con il #{lb build}# comando:
 
 code{
 
@@ -284,32 +284,31 @@ code{
 
 }code
 
-In un avvio tramite rete il client esegue una minima parte di software che
-normalmente risiede nel EPROM della scheda di rete. Questo programma invia
-una richiesta DHCP per ottenere un indirizzo IP e le informazioni su cosa
-fare in seguito. In genere il passo successivo è ottenere un bootloader di
-di livello superiore attraverso il protocollo TFTP. Questo potrebbe essere
-pxelinux, GRUB, o anche avviare direttamente un sistema operativo come
+Nel boot via rete il client avvia un software minimo che normalmente risiede
+nel EPROM della scheda ethernet.Questo programma invia una richiesta al DHCP
+per ottenere un indirizzo IP e informazioni di quello che deve fare in
+seguito. In genere, il passo successivo è ottenere un livello superiore del
+bootloader per mezzo del protocollo TFTP. Questo potrebbe essere pxelinux,
+GRUB, o fare perfino il boot direttamente di un sistema operativo come
 Linux.
 
-Per esempio, estraendo l'archivio binary-net.tar.gz nella directory
-/srv/debian-live si otterrà l'immagine del filesystem in
-live/filesystem.squashfs mentre il kernel, initrd e il bootloader pxelinux
-in tftpboot/debian-live/i386.
+Per esempio, se si scompatta l'archivio binary-net.tar.gz nella directory
+/srv/debian-live, si avrà l'immagine del file system in
+live/filesystem.squashfs e il kernel, initrd e il bootloader pxelinux in
+tftpboot/debian-live/i386.
 
-Per abilitare l'avvio tramite rete vanno ora configurati tre servizi.
+Si devono configurare tre servizi sul server per abilitare il netboot.
 
 3~ DHCP server
 
-Si deve configurare il server DHCP della rete per essere sicuri di fornire
-un indirizzo IP al client per l'avvio tramite rete e notificare la posizione
-del bootloader PXE.
+Si deve configurare il server DHCP della rete per essere sicuri di dare un
+indirizzo IP per permettere il boot via rete al client, e notificare la
+posizione del bootloader PXE.
 
-Ecco un esempio scritto per un server ISC DHCP #{isc-dhcp-server}# nel file
+Ecco un esempio, scritto per un server ISC DHCP #{isc-dhcp-server}# nel file
 di configurazione /etc/dhcp/dhcpd.conf;
 
-% FIXME: bring up to date: base example on default isc-dhcp-server config
-file in Squeeze
+% FIXME
 
 code{
 
@@ -338,14 +337,14 @@ subnet 192.168.1.0 netmask 255.255.255.0 {   # 192.168.1.0/24
 
 }code
 
-3~ Server TFTP
+3~ TFTP server
 
-Fornisce al sistema il kernel e il ramdisk iniziale in fase di esecuzione.
+Questo fornisce il kernel e il ramdisk iniziale per l'avvio del sistema.
 
-Si installi il pacchetto tftpd-hpa, che mette a disposizione tutti i file
-contenuti in una directory, comunemente /srv/tftp. Affinché metta a
-disposizione i file contenuti in /srv/debian-live/tftpboot, eseguire il
-seguente comando come utente root:
+Deve essere installato il pacchetto tftpd. Esso mette a disposizione tutti i
+file contenuti in una direcotory root, comunemente /srv/tftp. Per permettere
+l'uso dei file in /srv/debian-live/tftpboot, lanciare come root il seguente
+comando:
 
 code{
 
@@ -353,17 +352,17 @@ dpkg-reconfigure -plow tftpd-hpa
 
 }code
 
-e inserire la nuova directory del server tftp quando viene richiesto.
+e metterli nella nuova directory del server tftp quando viene richiesto.
 
-3~ Server NFS
+3~ NFS server
 
-Una volta che il computer ospite ha scaricato e avviato un kernel Linux e
-caricato il suo initrd, cercherà di montare l'immagine del filesystem live
-tramite il server NFS.
+Una volta che il computer ospite ha scaricato e fatto il boot del kernel
+Linux e caricato il suo initrd, esso cercherà di montare l'immagine del file
+system Live via il server NFS.
 
-Bisogna installare il pacchetto nfs-kernel-server.
+Bisogna installare il pacchetto nfs-kernel-server
 
-In seguito rendere disponibile l'immagine del filesystem aggiungendo la
+In seguito rendere disponibile l'immagine del file system aggiungendo la
 seguente riga in /etc/exports:
 
 code{
@@ -372,7 +371,7 @@ code{
 
 }code
 
-e comunicare il nuovo export al server NFS con il seguente comando:
+e dire al server NFS del nuovo exports con il seguente comando:
 
 code{
 
@@ -380,25 +379,26 @@ code{
 
 }code
 
-configurare questi tre servizi può essere un po' problematico, serve un po'
-di pazienza per farli funzionare assieme. Giacché il processo è molto
-simile, la sezione per l'avvio TFTP da rete del manuale del Debian Installer
-http://d-i.alioth.debian.org/manual/en.i386/ch04s05.html può essere d'aiuto.
+configurare questi tre servizi può essere un poco problematico. Serve un
+poco di pazienza per farli funzionare assieme. La sezione TFTP Net Booting
+del manuale Debian Installer
+http://d-i.alioth.debian.org/manual/en.i386/ch04s05.html può essere d'aiuto
+dato che il processo è molto simile.
 
 3~ Come provare una netboot
 
-La creazione dell'immagine netboot è resa semplice dal potere di live-build,
-ma provare l'immagine su una macchina reale può essere dispendioso in
-termini di tempo.
+La creazione dell'immagine netboot è semplice con live-build magic, ma
+provare l'immagine su una macchina reale può essere dispendioso in termini
+di tempo.
 
-Per semplificarsi la vita si può usare la virtualizzazione, ci sono due
+Per rendere la vita semplice, si può usare la virtualizzazione. Ci sono due
 soluzioni.
 
 3~ Qemu
 
-_* Installare qemu, bridge-utils, sudo.
+_* installare qemu, bridge-utils, sudo.
 
-Modificare /etc/qemu-ifup:
+Editare /etc/qemu-ifup:
 
 code{
 
@@ -409,15 +409,15 @@ code{
 
 }code
 
-Procurarsi o compilare grub-floppy-netboot (su svn).
+Procurare. o creare grub-floppy-netboot (nel svn).
 
 Lanciare qemu con "-net nic,vlan=0 -net tap,vlan=0,ifname=tun0"
 
 3~ VMWare Player
 
-_* Installare VMWare Player (edizione "free as a beer")
+_* Installare VMWare Player ("edizione "free as a beer")
 
-_* Creare una directory PXETester e crearvi un file di testo nominandolo
+_* Creare una directory PXETester, e crearvi un file di testo nominandolo
 pxe.vmx
 
 _* Copiarci questo testo:
@@ -440,11 +440,11 @@ ethernet0.generatedAddress = "00:0c:29:8d:71:3b" uuid.location = "56 4d 83
 
 }code
 
-_* Si può modificare questo file di configurazione (ad esempio portando a
-256 il limite della memoria)
+_* Si può modificare questo file di configurazione (es. cambiando il limite
+della memoria a 256)
 
-_* Doppio click su questo file (o avviare il player VMWare e selezionare
+_* Doppio click su questo file ( o avviare il player VMWare e seleziona
 questo file).
 
-_* Se viene posta qualche strana durante l'esecuzione premere il tasto
-spazio...
+_* Quando è in esecuzione premere spazio se viene posta qualche strana
+domanda...

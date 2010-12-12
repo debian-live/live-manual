@@ -323,11 +323,12 @@ including ones not included in this list, may be examined with #{tasksel
 
 Desktop and language tasks are special cases. In the Debian Installer, if
 the medium was prepared for a particular desktop environment flavour, the
-corresponding task will be automatically installed. Thus, there are
-#{gnome-desktop}#, #{kde-desktop}#, #{lxde-desktop}# and #{xfce-desktop}#
-tasks, none of which are offered in #{tasksel}#'s menu. Likewise, there are
-no menu entries for tasks for languages, but the user's language choice
-during the install influences the selection of corresponding language tasks.
+corresponding task will be automatically installed. Thus, there are there
+are #{gnome-desktop}#, #{kde-desktop}#, #{lxde-desktop}# and
+#{xfce-desktop}# tasks, none of which are offered in #{tasksel}#'s
+menu. Likewise, there are no menu entries for tasks for languages, but the
+user's language choice during the install influences the selection of
+corresponding language tasks.
 
 In live-build, therefore, these special cases are also given special
 consideration, but with three notable differences at the time of writing.
@@ -348,15 +349,14 @@ Second, live-build supports #{*-desktop}# virtual package lists for each of
 the desktop flavours mentioned above, which select the #{standard-x11}#
 predefined package list, the corresponding #{*-desktop}# task and three
 additional tasks: #{desktop}#, #{standard}# and #{laptop}#. So, for example,
-if you specify #{--packages-lists gnome-desktop}#, it is equivalent to
-specifying #{--packages debian-installer-launcher --packages-lists
-standard-x11 --tasks "gnome-desktop desktop standard laptop"}#.
+if you specify #{--packages gnome-desktop}#, it is equivalent to specifying
+#{--packages standard-x11 --tasks "gnome-desktop desktop standard laptop"}#.
 
 Third, if any of the tasks for these desktop flavours are selected, either
-explicitly through #{--tasks}# or implicitly by #{--packages-lists}#,
-live-build will preseed the corresponding desktop value for Debian Installer
-(if it is included) to ensure it follows its own rules for installing
-different desktop flavours.
+explicitly through #{--tasks}# or implicitly by #{--packages}#, live-build
+will preseed the corresponding desktop value for Debian Installer (if it is
+included) to ensure it follows its own rules for installing different
+desktop flavours.
 
 *{Note:}* There is also an experimental #{--language}# option that has an overlapping purpose with language tasks. For any language for which it is known that there are #{*-l10n}# packages, if #{--language}# is specified, those packages will be installed. Furthermore, if any #{syslinux}# templates matching the language are found, they will be used instead of the default English templates. The package selection done by #{--language}# is a poor approximation of language tasks, as it requires that the list of packages to include per language be maintained internally in live-build, and besides, language tasks are more comprehensive and flexible. However, the #{syslinux}# aspect is still useful. Thus, if you use #{--bootloader syslinux}# and templates for the specified language exist either in #{/usr/share/live/build/templates/syslinux/}# or #{config/templates/syslinux/}#, consider using this option, possibly in combination with tasks to ensure all relevant packages are installed. For example:
 

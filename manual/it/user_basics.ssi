@@ -34,16 +34,12 @@ _* *{Initial RAM disk image (initrd)}*: un disco RAM creato per il boot di
 Linux, contenente i moduli potenzialmente necessari per montare l'immagine
 di sistema e alcuni script per farlo.
 
-_* *{Immagine di sistema}*: L'immagine del filesystem del sistema
-operativo. Normalmente è usato un file system compresso SquashFS, per
-minimizzare le dimensioni dell'immagine Debian Live. Si noti che è in sola
-lettura. Dunque, durante il boot il sistema Debian Live userà un disco RAM e
-il meccanismo 'unione' per attivare i file in scrittura all'interno del
-sistema in esecuzione. Ad ogni modo, tutte le modifiche verranno perse con
-lo spegnimento a meno che non si usi l'opzione persistenza (si veda la
-persistenza).
-
-% FIXME: <xref linkend="persistence"/>
+_* *{System image}*: The operating system's filesystem image. Usually, a
+SquashFS compressed filesystem is used to minimize the Debian Live image
+size. Note that it is read-only. So, during boot the Debian Live system will
+use a RAM disk and 'union' mechanism to enable writing files within the
+running system. However, all modifications will be lost upon shutdown unless
+optional persistence is used (see {Persistence}#persistence).
 
 _* *{Bootloader}*: una piccola porzione di codice predisposto per l'avvio
 dal supporto scelto, che presenta un prompt o un menu per la selezione di
@@ -312,7 +308,8 @@ del bootloader PXE.
 Ecco un esempio scritto per un server ISC DHCP #{isc-dhcp-server}# nel file
 di configurazione /etc/dhcp/dhcpd.conf;
 
-% FIXME
+% FIXME: bring up to date: base example on default isc-dhcp-server config
+file in Squeeze
 
 code{
 

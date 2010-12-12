@@ -2,19 +2,20 @@
 # Copyright (C) 2010 Free Software Foundation, Inc.
 # This file is distributed under the same license as the live-manual package.
 # Automatically generated, 2010.
+# lillo sciascia <lillosciascia@gmail.com>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
 "POT-Creation-Date: 2010-12-01 05:55-0400\n"
-"PO-Revision-Date: 2010-12-01 05:55-0400\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2010-12-12 12:46+0100\n"
+"Last-Translator: lillo sciascia <lillosciascia@gmail.com>\n"
+"Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2: plural=(n !=1)\n"
 
 #. type: Plain text
 #: en/about_manual.ssi:84 en/about_manual.ssi:92 en/about_manual.ssi:100
@@ -149,12 +150,12 @@ msgstr "}code"
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:2
 msgid ":B~ Managing a configuration"
-msgstr ""
+msgstr ":B~ Gestire una configurazione"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:4
 msgid "1~managing-a-configuration Managing a configuration"
-msgstr ""
+msgstr "1~managing-a-configuration Gestire una configurazione"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:6
@@ -163,11 +164,14 @@ msgid ""
 "creation, through successive revisions and successive releases of both the "
 "live-build software and the live image itself."
 msgstr ""
+"Questo capitolo spiega come gestire una configurazione per una live sin "
+"dalla creazione iniziale, attraverso le successive revisioni e rilasci sia "
+"del software live-build che della stessa immagine live."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:8
 msgid "2~ Use auto to manage configuration changes"
-msgstr ""
+msgstr "2~ Utilizzare auto per gestire i cambiamenti di configurazione"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:10
@@ -179,6 +183,12 @@ msgid ""
 "default value, that value will not be recomputed from other variables that "
 "may change in later revisions."
 msgstr ""
+"Le configurazioni live raramente sono perfette da riuscire al primo colpo. "
+"Servono una serie di revisioni prima di essere soddisfatti. Comunque, "
+"possono verificarsi delle incoerenze tra una revisione ed un'altra se non si "
+"presta attenzione. Il problema principale è, una volta che ad una variabile "
+"è assegnato un valore predefinito, tale valore non sarà ricalcolato da altre "
+"variabili che possono cambiare in altre revisioni. "
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:12
@@ -188,6 +198,11 @@ msgid ""
 "decide to change the distribution, those dependent variables continue to "
 "retain old values that are no longer appropriate."
 msgstr ""
+"Per esempio, durante la messa a punto della prima distribuzione, molte "
+"variabili 'dependent' sono date dalle caratteristiche della distribuzione. "
+"Quindi, se in seguito si decide di cambiare distribuzione, quelle variabili "
+"dipendenti continueranno a mantenere i vecchi valori i quali non sono più "
+"appropriati "
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:14
@@ -197,6 +212,11 @@ msgid ""
 "you will discover this only by manual review of the variables in your config "
 "files, which you will then need to use to set the appropriate option again."
 msgstr ""
+"Un secondo relativo problema è che se si lancia #{lb config}# e si è "
+"aggiornato live-build ad una nuova versione il quale ha cambiato il nome di "
+"una o più variabili, si può scoprire ciò solamente con una revisione manuale "
+"delle variabili nei file config,  bisogna che vengano risistemate, di nuovo, "
+"le appropriate opzioni."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:16
@@ -212,11 +232,20 @@ msgid ""
 "release to the next (though you will still have to take care and read the "
 "documentation when you upgrade live-build and make adjustments as needed)."
 msgstr ""
+"Tutto ciò potrebbe essere un fastidio terribile se non fosse per lo script "
+"auto/*, una semplice alternativa ai comandi #{lb config}#, #{lb build}# e #"
+"{lb clean}# che sono disegnati per aiutare nella gestione della "
+"configurazione. Basta creare un semplice script auto/config che contenga il "
+"comando #{lb config}# con le opzioni desiderate, e un auot/clean che rimuova "
+"i file contenenti i valori variabili di configurazione, cosi ogni volta "
+"saranno eseguiti #{lb config}# #{lb clean}#. Questo farà si che la "
+"configurazione sia sempre coerente da una revisione all'altra o dal rilascio "
+"delle varie versioni del live-build."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:18
 msgid "2~ Example auto scripts"
-msgstr ""
+msgstr "2~ Esempi di auto script"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:20
@@ -228,11 +257,17 @@ msgid ""
 "Also, don't forget to ensure the scripts are executable (e.g. #{chmod 755 "
 "auto/*}#)."
 msgstr ""
+"Usare esempi di auto script come il seguente come punto di partenza per una "
+"nuova configurazione di live-build. Prendere nota che quando si chiama il "
+"comando #{lb}# che l'auto script wraps, si deve specificare il parametro #"
+"{noauto}# per essere sicuri che l'auto script chiamato di nuovo "
+"ricorsivamente. Non dimenticare, inoltre, di rendere lo script eseguibile "
+"(es. #{chmod 755 auto/*}#)."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:22
 msgid "#{auto/config}#"
-msgstr ""
+msgstr "#{auto/config}#"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:29
@@ -243,11 +278,15 @@ msgid ""
 "\t--packages-lists \"standard\" \\\n"
 "\t\"${@}\"\n"
 msgstr ""
+"#!/bin/sh\n"
+"lb config noauto \\\n"
+"\t--packages-lists \"standard\" \\\n"
+"\t\"${@}\"\n"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:33
 msgid "#{auto/clean}#"
-msgstr ""
+msgstr "#{auto/clean}#"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:41
@@ -259,16 +298,21 @@ msgid ""
 "\tconfig/chroot config/common config/source\n"
 "rm -f binary.log\n"
 msgstr ""
+"#!/bin/sh\n"
+"lb clean noauto \"${@}\"\n"
+"rm -f config/binary config/bootstrap \\\n"
+"\tconfig/chroot config/common config/source\n"
+"rm -f binary.log\n"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:45
 msgid "#{auto/build}#"
-msgstr ""
+msgstr "#{auto/build}#"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:50
 msgid "#!/bin/sh lb build noauto \"${@}\" 2>&1 | tee binary.log"
-msgstr ""
+msgstr "#!/bin/sh lb build noauto \"${@}\" 2>&1 | tee binary.log"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:54
@@ -276,11 +320,13 @@ msgid ""
 "We now ship example auto scripts with live-build based on the examples "
 "above. You may copy those as your starting point."
 msgstr ""
+"Facciamo un esempio di auto script per live-build basato sull'esempio "
+"precedente. Si possono copiare come punto di partenza."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:58
 msgid "$ cp /usr/share/live/build/examples/auto/* auto/"
-msgstr ""
+msgstr "$ cp /usr/share/live/build/examples/auto/* auto/"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:62
@@ -291,3 +337,9 @@ msgid ""
 "to use the default) and add any additional options in continuation lines "
 "that follow."
 msgstr ""
+"Modifica #{auto/config}# aggiungendo o togliendo le opzioni come meglio "
+"credi. Nel precedente esempio #{--packages-lists standard}# è impostato il "
+"valore predefinito.Cambiare questo in un valore appropriato per l'immagine "
+"( o cancellarlo se si desidera utilizzare un valore predefinito) e "
+"aggiungere eventuali opzioni aggiuntive in continuazione delle righe che "
+"seguono."

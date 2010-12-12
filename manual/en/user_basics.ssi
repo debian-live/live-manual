@@ -14,9 +14,7 @@ _* *{Linux kernel image}*, usually named #{vmlinuz*}#
 
 _* *{Initial RAM disk image (initrd)}*: a RAM disk set up for the Linux boot, containing modules possibly needed to mount the System image and some scripts to do it.
 
-_* *{System image}*: The operating system's filesystem image. Usually, a SquashFS compressed filesystem is used to minimize the Debian Live image size. Note that it is read-only. So, during boot the Debian Live system will use a RAM disk and 'union' mechanism to enable writing files within the running system. However, all modifications will be lost upon shutdown unless optional persistence is used (see persistence).
-
-% FIXME: <xref linkend="persistence"/>
+_* *{System image}*: The operating system's filesystem image. Usually, a SquashFS compressed filesystem is used to minimize the Debian Live image size. Note that it is read-only. So, during boot the Debian Live system will use a RAM disk and 'union' mechanism to enable writing files within the running system. However, all modifications will be lost upon shutdown unless optional persistence is used (see {Persistence}#persistence).
 
 _* *{Bootloader}*: A small piece of code crafted to boot from the chosen media, possibly presenting a prompt or menu to allow selection of options/configuration. It loads the Linux kernel and its initrd to run with an associated system filesystem. Different solutions can be used, depending on the target media and format of the filesystem containing the previously mentioned components: isolinux to boot from a CD or DVD in ISO9660 format, syslinux for HDD or USB drive booting from a VFAT partition, extlinux for ext2/3/4 and btrfs partitions, pxelinux for PXE netboot, GRUB for ext2/3/4 partitions, etc.
 
@@ -216,7 +214,7 @@ We must configure our network's DHCP server to be sure to give an IP address to 
 
 Here is an example for inspiration, written for the ISC DHCP server #{isc-dhcp-server}# in the /etc/dhcp/dhcpd.conf configuration file;
 
-% FIXME
+% FIXME: bring up to date: base example on default isc-dhcp-server config file in Squeeze
 
 code{
 

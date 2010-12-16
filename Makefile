@@ -4,6 +4,8 @@ SHELL := sh -e
 
 LANGUAGES = en $(shell cd manual/po && ls)
 
+DEBUG = 0
+
 all: test build
 
 test:
@@ -31,6 +33,11 @@ build:
 		cd $(CURDIR)/manual/$${LANGUAGE}; \
 		sisu-epub -v live-manual.ssm; \
 		sisu-html -v live-manual.ssm; \
+		for FILE in build/$${LANGUAGE}/live-manual/*.html; \
+		do \
+			../bin/fix-sisu-html.rb $${FILE}; \
+			([ $(DEBUG) -gt 0 ] || rm -f $${FILE}~); \
+		done; \
 		sisu-odf -v live-manual.ssm; \
 		sisu-pdf -v live-manual.ssm; \
 		sisu-txt -v live-manual.ssm; \

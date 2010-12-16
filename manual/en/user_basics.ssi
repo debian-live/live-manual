@@ -18,7 +18,7 @@ _* *{System image}*: The operating system's filesystem image. Usually, a SquashF
 
 _* *{Bootloader}*: A small piece of code crafted to boot from the chosen media, possibly presenting a prompt or menu to allow selection of options/configuration. It loads the Linux kernel and its initrd to run with an associated system filesystem. Different solutions can be used, depending on the target media and format of the filesystem containing the previously mentioned components: isolinux to boot from a CD or DVD in ISO9660 format, syslinux for HDD or USB drive booting from a VFAT partition, extlinux for ext2/3/4 and btrfs partitions, pxelinux for PXE netboot, GRUB for ext2/3/4 partitions, etc.
 
-You can use live-build to build the system image from your specifications, set up a Linux kernel, its initrd, and a bootloader to run them, all in one media-dependant format (ISO9660 image, disk image, etc.)
+You can use live-build to build the system image from your specifications, set up a Linux kernel, its initrd, and a bootloader to run them, all in one media-dependant format (ISO9660 image, disk image, etc.).
 
 2~ First steps: building an ISO image
 
@@ -34,7 +34,7 @@ $ lb config
 
 By passing no parameters to #{lb config}#, we indicated that we wish to use the defaults (see {The lb config command}#lb-config).
 
-Now that we have a "config/" hierarchy, we may build the image with the lb build command:
+Now that we have a "config/" hierarchy, we may build the image with the #{lb build}# command:
 
 code{
 
@@ -110,7 +110,7 @@ $ lb config -b usb-hdd
 
 }code
 
-Now build the image with the #{lb build} command:
+Now build the image with the #{lb build}# command:
 
 code{
 
@@ -132,7 +132,7 @@ where #{${USBSTICK}}# is the device file of your key, like #{/dev/sdb}# (not a p
 
 *{This will definitely overwrite any previous contents on your stick!}*
 
-Note: As discussed earlier, this same process can be used for #{iso-hybrid}# type images, (suffixed #{-hybrid.iso}#,) but not #{iso}# type images.
+Note: As discussed earlier, this same process can be used for #{iso-hybrid}# type images (suffixed #{-hybrid.iso}#), but not #{iso}# type images.
 
 3~testing-usb-hdd-with-qemu Testing a USB/HDD image with Qemu
 
@@ -345,7 +345,7 @@ ethernet0.generatedAddressOffset = "0"
 
 }code
 
-_* You can play with this configuration file (i.e. change memory limit to 256)
+_* You can play with this configuration file (e.g. change memory limit to 256)
 
 _* Double click on this file (or run VMWare player and select this file).
 

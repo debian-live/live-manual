@@ -18,11 +18,11 @@ This whole process can be preseeded and customized in a number of ways; see the 
 
 *{"Live" Debian Installer}*: This is a Debian Live image with a separate kernel and initrd which (when selected from the appropriate bootloader) launches into an instance of the Debian Installer.
 
-Installation will proceed in an identical fashion to the "Regular" installation described above, but at the actual package installation stage, instead of using #{debootstrap}# to fetch and install packages, the live filesystem image is copied to the target. This is achieved with a special udeb called live-installer. live-installer can be preseeded to be disabled, allowing to support normal and live installer entries in the bootloader of the same live media.
-
-% FIXME: supply example of this preseeding
+Installation will proceed in an identical fashion to the "Regular" installation described above, but at the actual package installation stage, instead of using #{debootstrap}# to fetch and install packages, the live filesystem image is copied to the target. This is achieved with a special udeb called live-installer.
 
 After this stage, the Debian Installer continues as normal, installing and configuring items such as bootloaders and local users, etc.
+
+Note: to support both normal and live installer entries in the bootloader of the same live media, you must disable live-installer by preseeding #{live-installer/enable=false}.
 
 *{"Desktop" Debian Installer}*: Regardless of the type of Debian Installer included, #{d-i}# can be launched from the Desktop by clicking on an icon. This is user friendlier in some situations. In order to make use of this, the debian-installer-launcher package needs to be included.
 

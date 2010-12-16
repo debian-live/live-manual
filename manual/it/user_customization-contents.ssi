@@ -1,51 +1,52 @@
-B~ Personalizzare i contenuti
+:B~ Customizing contents
 
 1~customizing-contents Personalizzazione dei contenuti
 
-This chapter discusses fine-tuning customization of the live system contents
-beyond merely choosing which packages to include. Includes allow you to add
-or replace arbitrary files in your Debian Live image, hooks allow you to
-execute arbitrary commands at different stages of the build and at boot
-time, and preseeding allows you to configure packages when they are
-installed by supplying answers to debconf questions.
+Questo capitolo tratta la personalizzazione dei contenuti del sistema live
+che va oltre la semplice scelta dei pacchetti da includere. Gli include
+permettono di aggiungere o sostituire file nell'immagine di Debian Live, gli
+hook permettono di eseguire comandi in fasi differenti della creazione e
+all'avvio, e la preconfigurazione permette di configurare i pacchetti quando
+vengono installati fornendo risposte alle domande di debconf.
 
-2~ Includes
+2~ Include
 
-While ideally a Debian live system would include files entirely provided by
-unmodified Debian packages, it is sometimes convenient to provide or modify
-some content by means of files. Using includes, it is possible to add (or
-replace) arbitrary files in your Debian Live image. live-build provides
-three mechanisms for using them:
+Anche se idealmente un sistema live Debian dovrebbe includere file forniti
+interamente dal pacchetti Debian non modificati, a volte è conveniente
+fornire o modificare parte del contenuto per mezzo di file. Utilizzando gli
+include, si può aggiungere (o sostituire) file arbitrari nell'immagine di
+Debian Live. Per usarli, live-build mette a disposizione tre meccanismi:
 
-_* Chroot local includes: Ciò permette di aggiungere o sostituire file al
-file system chroot/Live. Vedere {Live/chroot local
-includes}#live-chroot-local-includes per maggiori informazioni.
+_* Include locali del chroot: permettono di aggiungere o sostituire file al
+file system chroot/Live. Vedere {Live/chroot include
+locali}#live-chroot-local-includes per maggiori informazioni.
 
-_* Binary local includes: Ciò permette di aggiungere o sostituire file
-nell'immagine binaria. Vedere {Binary local includes}#binary-local-includes
+_* Include locali binari: permettono di aggiungere o sostituire file
+nell'immagine binaria. Vedere {Include locali binari}#binary-local-includes
 per maggiori informazioni
 
-_* Binary includes: Ciò permette di aggiungere o sostituire specifici file
-Debian nell'immagine  binaria, come le directory dei template e dei
-tool. Vedere {Binary includes}#binary-includes per maggiori informazioni.
+_* Include binari: permettono di aggiungere o sostituire specifici file
+Debian nell'immagine binaria, come le directory dei template e dei
+tool. Vedere {Include binari}#binary-includes per maggiori informazioni.
 
-Si consulti il {glossario}#terms per ulteriori informazioni sulla
-distinzione per le immagini "Live" e "binari".
+Si consulti il {Glossario}#terms per ulteriori informazioni sulla
+distinzione tra immagini "Live" e "binarie".
 
-3~live-chroot-local-includes Live/chroot local includes
+3~live-chroot-local-includes Live/chroot include locali
 
-Chroot local includes can be used to add or replace files in the chroot/Live
-filesystem so that they may be used in the Live system. A typical use is to
-populate the skeleton user directory (#{/etc/skel}#) used by the Live system
-to create the live user's home directory. Another is to supply configuration
-files that can be simply added or replaced in the image without processing;
-see {Live/chroot local hooks}#live-chroot-local-hooks if processing is
-needed.
+Gli include locali del chroot possono essere usati per aggiungere o
+sostituire file nel filesystem chroot/Live in modo che possano essere
+utilizzati nel sistema live. Un utilizzo tipico è popolare la directory
+scheletro dell'utente (#{/etc/skel}#) che il sistema impiega per creare la
+home dell'utente. Un altro è quello di fornire file di configurazione che
+possono essere semplicemente aggiunti o sostituiti nell'immagine senza
+elaborazione; si veda {Live/chroot local hooks}#live-chroot-local-hooks se è
+necessaria l'elaborazione.
 
-Per aggiungere i file, si aggiungano semplicemente nella directory
-#{config/chroot_local-includes}#. Questa directory corrisponde alla
-directory root (#{/}#) del sistema live. Per esempio, per aggiungere un file
-#{/var/www/index.html}# nel sistema live, usare:
+Per includere i file si aggiungano semplicemente alla directory
+#{config/chroot_local-includes}#. Questa corrisponde alla directory root
+(#{/}#) del sistema live. Per esempio, per aggiungere un file
+#{/var/www/index.html}# nel sistema live, si usi:
 
 code{
 
@@ -69,19 +70,18 @@ code{
 
 }code
 
-I pacchetti inseriti in chroot local includes  vengono installati dopo
-l'installazione degli altri pacchetti standard che vengono in seguito
-sovrascitti.
+Gli include locali del chroot vengono installati dopo l'installazione dei
+pacchetti in modo che tali file vengano in seguito sovrascitti.
 
-3~binary-local-includes Binary local includes
+3~binary-local-includes Include locali binari
 
-To include material such as documentation or videos on the media filesystem
-so that it is accessible immediately upon insertion of the media without
-booting the Live system, you can use binary local includes. This works in a
-similar fashion to chroot local includes. For example, suppose the files
-#{~/video_demo.*}# are demo videos of the live system described by and
-linked to by an HTML index page. Simply copy the material to
-#{config/binary_local-includes/} as follows:
+Si possono utilizzare include locali binari per inserire sul filesystem del
+supporto materiale come documentazione o video affinché sia immediatamente
+accessibile dopo l'inserimento dello stesso senza avviare il sistema
+live. Ciò funziona in modo simile agli include locali del chroot; supponendo
+che i file #{~/video_demo.*}# siano video dimostrativi del sistema descritti
+da e collegati a una pagina HTML indice, basta copiare il materiale in
+#{config/binary_local-includes/} come segue:
 
 code{
 
@@ -89,12 +89,12 @@ $ cp ~/video_demo.* config/binary_local-includes/
 
 }code
 
-These files will now appear in the root directory of the live media.
+Questi file appariranno nella directory principale del supporto live.
 
-3~binary-includes Binary includes
+3~binary-includes Include binari
 
-live-build ha alcuni file predefiniti (come da documentazione) che sono
-inclusi  nella configurazione predefinita di ogni media live. Ciò può essere
+live-build ha alcuni file standard (come la documentazione) inclusi nella
+configurazione predefinita di ogni supporto live. Ciò può essere
 disabilitato con:
 
 code{
@@ -103,53 +103,54 @@ $ lb config --includes none
 
 }code
 
-Otherwise, the material will be installed by live-build in #{/includes/}# by
-default on the media filesystem, or else you can specify an alternate path
-with #{--includes}#.
+In caso contrario il materiale verrà installato da live-build nella
+directory #{/includes/}# del filesystem in modo predefinito, oppure è
+possibile specificare un percorso alternativo con #{--includes}#.
 
-2~ Hooks
+2~ Hook
 
-Hooks permette di eseguire comandi nel chroot e nella costruzione dei binari
-al fine della personalizzazione dell'immagine.
+Gli hook permettono di eseguire comandi nel chroot e nelle fasi binarie
+della creazione al fine di personalizzare l'immagine.
 
-3~live-chroot-local-hooks Live/chroot local hooks
+3~live-chroot-local-hooks Live/chroot hook locali
 
-Per eseguire comandi nello stadio chroot, creare un hook script contenete i
-comandi nella directory #{config/chroot_local-hooks}#. Lo hook verrà
-eseguito nel chroot dopo che tutta la configurazione del chroot sarà
-eseguita, quindi ricorda di includere tutti i pacchetti e i file di
-configurazione per far in modo che lo hook funzioni. Vedere gli esempi degli
-script chroot hook per le diverse comuni personalizzazioni contenuti in
-#{/usr/share/live/build/examples/hooks}# le quali puoi copiarle o creare dei
-collegamenti da usare nella configurazione.
+Per eseguire comandi nella fase chroot, creare uno script hook contenente i
+comandi nella directory #{config/chroot_local-hooks}#. L'hook verrà eseguito
+nel chroot dopo che verrà applicata il resto della configurazione del
+chroot, ricordare quindi di garantire che la propria configurazione includa
+tutti i pacchetti e i file che l'hook necessita per funzionare. Vedere gli
+script d'esempio degli hook di chroot per i vari compiti di
+personalizzazione del chroot contenuti in
+#{/usr/share/live/build/examples/hooks}# da copiare o collegare nella
+propria configurazione.
 
-3~ Boot-time hooks
+3~ Hook in fase di avvio
 
-To execute commands at boot time, you can supply live-config hooks as
-explained in the "Customization" section of its man page. Examine
-live-config's own hooks provided in #{/lib/live/config/}#, noting the
-sequence numbers. Then provide your own hook prefixed with an appropriate
-sequence number, either as a chroot local include in
-#{config/chroot_local-includes/lib/live/config/}#, or as a custom package as
-discussed in {Installing modified or third-party
-packages}#installing-modified-or-third-party-packages.
+Per eseguire comandi all'avvio, è possibile fornire degli hook a live-config
+come spiegato nella sezione "Customization" del suo manuale. Controllare gli
+hook di live-config in #{/lib/live/config/}# e notare i numeri sequenziali;
+fornire quindi i propri hook con una sequenza numerica appropriata, sia come
+include locali del chroot in
+#{config/chroot_local-includes/lib/live/config/}#, sia come pacchetto
+personalizzato come discusso in {Installare pacchetti modificati o di terze
+parti}#installing-modified-or-third-party-packages.
 
-3~ Binary local hooks
+3~ Hook binari locali
 
-Per eseguire comandi nello stadio binario, creare uno script hook che
-contienga i comandi in #{config/binary_local-hooks}#. Lo hook verrà eseguito
-dopo tutti gli altri comandi per i binari, ma prima del binary_checksums,
-l'ultimo definitivo comando. I comandi dello hook non vengono eseguiti nel
-chroot, quindi fai attenzione a non modificare nessun file dell'abero di
-costruzione, pena puoi corrompere la costruzione del sistema! Vedere gli
-esempi di personalizzazione degli script hook binari in
-#{/usr/share/live/build/examples/hooks}# i quali puoi copiarli o creare dei
-collegamenti per usarli nella configurazione.
+To run commands in the binary stage, create a hook script containing the
+commands in the #{config/binary_local-hooks}#. The hook will run after all
+other binary commands are run, but before binary_checksums, the very last
+binary commands The commands in your hook do not run in the chroot, so take
+care to not modify any files outside of the build tree, or you may damage
+your build system! See the example binary hook scripts for various common
+binary customization tasks provided in
+#{/usr/share/live/build/examples/hooks}# which you can copy or symlink to
+use them in your own configuration.
 
-2~ Domande su Preseeding Debconf 
+2~ Preconfigurare le domande di Debconf
 
-I file nella directory #{config/chroot_local-preseed}# sono considerati
-essere file debconf preseed ed essi sono installati dal live-build usando
+I file nella directory #{config/chroot_local-preseed}# sono considerati file
+di preconfigurazione di debconf e sono installati da live-build usando
 #{debconf-set-selections}#.
 
 Per ulteriori informazioni su debconf, vedere debconf(7) nel pacchetto

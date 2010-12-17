@@ -33,9 +33,9 @@ LB_MIRROR_CHROOT_SECURITY="http://mirror/debian-security"
 
 }code
 
-2~tutorial-1 Tutorial 1: Un'immagine standard
+2~tutorial-1 Tutorial 1: un'immagine standard
 
-*{Use case:}* Creazione di una semplice prima immagine, imparando le basi di live-build.
+*{Caso d'uso:}* Creazione di una semplice prima immagine, imparando le basi di live-build.
 
 In questo tutorial genereremo un'immagine ISO ibrida Debian Live di default
 contenente solo pacchetti di base (niente Xorg) e alcuni pacchetti Debian
@@ -72,9 +72,9 @@ rispettivamente in {Burning an ISO image to a physical
 medium}#burning-iso-image e {Copying USB/HDD image to a USB
 stick}#copying-usb-hdd-image.
 
-2~tutorial-2 Tutorial 2: Servizio browser web
+2~tutorial-2 Tutorial 2: servizio browser web
 
-*{Use case:}* Creazione di un'immagine per servizio browser web, che insegna come applicare personalizzazioni.
+*{Caso d'uso:}* Creazione di un'immagine per servizio browser web, che insegna come applicare personalizzazioni.
 
 In questo tutorial creeremo un'immagine adatta all'uso come servizio browser
 web, che ci serve come introduzione alla personalizzazione delle immagini
@@ -106,17 +106,17 @@ code{
 Di nuovo, si verifichi che l'immagine sia a posto e la si collaudi, come in
 {Tutorial 1}#tutorial-1.
 
-2~tutorial-3 Tutorial 3: Una immagine personalizzata
+2~tutorial-3 Tutorial 3: un'immagine personalizzata
 
-*{Use case:}* Creare un progetto per costruire una immagine personalizzata, contenete i tuoi pacchetti preferiti da portare con te in una chiavetta USB ovunque sei, in continua evoluzione nelle revisioni successive apportando le modifiche secondo i vostri bisogni o preferenze.
+*{Caso d'uso:}* creare un progetto per costruire un'immagine personalizzata, contenete i pacchetti preferiti da portare con sé in una chiavetta USB ovunque si vada, in continua evoluzione nelle revisioni successive allorché i bisogni o le preferenze cambino.
 
-Dal momento che la nostra immagine personalizzata cambierà in base al numero
-di revisione, e noi vogliamo monitorare questi cambiamenti cercando cose
-sperimentali ed eventualmente tornare indietro, se qualcosa non funziona,
-manterremo la nostra configurazione nel popolare sistema di controllo di
-versione #{git}#. Useremo anche le migliori pratiche di auto configurazione
-tramite gli script #{auto}# come descritto in {Managing a
-configuration}#managing-a-configuration.
+Dal momento che la nostra immagine personalizzata cambierà in un certo
+numero di revisioni, e che vogliamo tener traccia di questi cambiamenti,
+cercando cose sperimentalmente ed eventualmente tornando indietro se
+qualcosa non funziona, conserveremo la nostra configurazione nel popolare
+sistema di controllo di versione #{git}#. Useremo anche le migliori pratiche
+di auto-configurazione tramite gli script #{auto}# come descritto in
+{Managing a configuration}#managing-a-configuration.
 
 3~ Prima revisione
 
@@ -142,14 +142,15 @@ lb config noauto \
 
 }code
 
-First, #{--architecture i386}# ensures that on our #{amd64}# build system,
-we build a 32-bit version suitable for use on most machines. Second, we use
-#{--linux-flavours 686}# because we don't anticipate using this image on
-much older systems. Third, we've chosen the #{lxde}# package list to give us
-a minimal desktop. And finally, we have added two initial favourite
-packages: #{iceweasel}# and #{xchat}#.
+Per prima cosa, #{--architecture i386}# ci assicura che sul nostro sistema
+di build #{amd64}#, costruiamo una versione a 32-bit utilizzabile sulla
+maggior parte delle macchine. In secondo luogo, usiamo #{--linux-flavours
+686}# dato che non prevediamo di usare questa immagine su sistemi troppo
+vecchi. Terzo, abbiamo scelto la lista di pacchetti #{lxde}# per avere un
+desktop minimale. Infine, abbiamo aggiunto due pacchetti preferiti per
+cominciare: #{iceweasel}# e #{xchat}#.
 
-Now, build the image:
+Ora, costruire l'immagine:
 
 code{
 
@@ -157,12 +158,13 @@ code{
 
 }code
 
-Note that unlike in the first two tutorials, we no longer have to type
-#{2>&1 | tee binary.log}# as that is now included in #{auto/build}#.
+Si noti che diversamente dai primi due tutorial, non abbiamo più da digitare
+#{2>&1 | tee binary.log}# dato che questo è ora incluso in #{auto/build}#.
 
-Once you've tested the image (as in {Tutorial 1}#tutorial-1) and are
-satisfied it works, it's time to initialize our #{git}# repository, adding
-only the auto scripts we just created, and then make the first commit:
+Una volta che si sia collaudata l'immagine (come in {Tutorial 1}#tutorial-1)
+e che si sia persuasi che funzioni correttamente, è il momento di
+inizializzare il nostro repository #{git}#, aggiungendo solo gli script auto
+che abbiamo appena creato, e poi di fare il primo commit:
 
 code{
 
@@ -170,15 +172,15 @@ $ git init $ git add auto $ git commit -a -m "Initial import."
 
 }code
 
-3~ Second revision
+3~ Seconda revisione
 
-In this revision, we're going to clean up from the first build, add the
-#{vlc}# package to our configuration, rebuild, test and commit.
+In questa revisione ripuliremo il primo build, aggiungeremo il pacchetto
+#{vlc}# alla nostra configurazione, faremo un nuovo build, test e commit.
 
-The #{lb clean}# command will clean up all generated files from the previous
-build except for the cache, which saves having to re-download packages. This
-ensures that the subsequent #{lb build}# will re-run all stages to
-regenerate the files from our new configuration.
+Il comando #{lb clean}# ripulirà tutti i file generati dalla precedente
+costruzione eccetto che per la cache, che ci evita un nuovo download dei
+pacchetti. Ciò assicura che il seguente #{lb build}# eseguirà di nuovo tutti
+i passaggi per rigenerare i file dalla nostra nuova configurazione.
 
 code{
 
@@ -186,7 +188,7 @@ code{
 
 }code
 
-Now edit #{auto/config}# to add the #{vlc}# package:
+Si editi ora #{auto/config}# per aggiungere il pacchetto #{vlc}#:
 
 code{
 
@@ -201,7 +203,7 @@ lb config noauto \
 
 }code
 
-Build again:
+Costruire nuovamente:
 
 code{
 
@@ -209,7 +211,8 @@ code{
 
 }code
 
-Test, and when you're satisfied, commit the next revision:
+Verificare, e quando soddisfatti, eseguire il commit della revisione
+successiva:
 
 code{
 
@@ -217,18 +220,20 @@ $ git commit -a -m "Adding vlc media player."
 
 }code
 
-Of course, more complicated changes to the configuration are possible,
-perhaps adding files in subdirectories of #{config/}#. When you commit new
-revisions, just take care not to hand edit or commit the top-level files in
-#{config}# containing #{LB_*}# variables, as these are build products, too,
-and are always cleaned up by #{lb clean}# and re-created with #{lb config}#
-via their respective #{auto}# scripts.
+Ovviamente sono possibili cambiamenti della configurazione più complicati,
+magari aggiungendo file in sottodirectory di #{config/}#. Quando si esegue
+il commit di nuove revisioni, si faccia solo attenzione a non editare
+manualmente o fare un commit dei file al più alto livello di #{config}# che
+contengono variabili #{LB_*}#, dato che si tratta di prodotti della
+costruzione, anche, e che sono sempre ripuliti da #{lb clean}# e ricreati
+con #{lb config}# attraversi i loro rispettivi script #{auto}#.
 
-We've come to the end of our tutorial series. While many more kinds of
-customization are possible, even just using the few features explored in
-these simple examples, an almost infinite variety of different images can be
-created. The remaining examples in this section cover several other use
-cases drawn from the collected experiences of users of Debian Live.
+Siamo arrivati alla fine di questa nostra serie di tutorial. Molti altri
+tipi di personalizzazioni sono possibili, anche solo usando i pochi
+strumenti esplorati i questi semplici esempi; di conseguenza può essere
+creata una varietà quasi infinita di immagini. Gli esempi rimanenti in
+questa sezione coprono diversi altri casi d'uso estrapolati dalle esperienze
+raccolte degli utenti Debian Live.
 
 2~ A VNC Kiosk Client
 

@@ -12,7 +12,7 @@ File.open(output_file,"w") do |o|
     # removing all tables with summaries (OK for current sisu output).
     # Change to use a custom pseudo class if anything more refined is needed.
     doc.css(%[table[summary]]).remove
-    toc=doc.css(%[h2,h4[class="toc"]]).each do |node|
+    toc=doc.css(%[h2,h4[class$="toc"]]).each do |node|
 	node.remove if node.inner_text.match(/Metadata|Manifest|SiSU/)
     end
     o.puts doc.to_html

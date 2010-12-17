@@ -53,9 +53,10 @@ formato ISO9660, syslinux per supporti HDD o USB che si avviano da una
 partizione VFAT, extlinux per le partizioni ext/2/3/4 e btrfs, pxelinux per
 il netboot PXE, GRUB per partizioni ext2/3/4, ecc.
 
-You can use live-build to build the system image from your specifications,
-set up a Linux kernel, its initrd, and a bootloader to run them, all in one
-media-dependant format (ISO9660 image, disk image, etc.).
+È possibile usare live-build per creare l'immagine di sistema secondo le
+proprie specifiche, scegliere un kernel Linux, il suo initrd ed un
+bootloader per avviarli, tutto in un unico formato che dipende dal mezzo
+(immagini ISO9660, immagine disco, ecc.)
 
 2~ Primi passi: creare una immagine ISO
 
@@ -271,11 +272,11 @@ $ lb config -b net --net-root-path "/srv/debian-live" --net-root-server
 
 }code
 
-In contrast with the ISO and USB/HDD images, netbooting does not support
-serving a filesystem image with the client, so the files must be served via
-NFS. The net-root-path and net-root-server options specify the location and
-server, respectively, of the NFS server where the filesytem image will be
-located at boot time.
+Diversamente dalle immagini ISO e USB/HDD, il boot via rete non fornisce
+un'immagine del filesytem al client, perciò i file devono essere forniti via
+NFS. Le opzioni net-root-path e net-root-server specificano,
+rispettivamente, il percorso e il server del server NFS dove l'immagine del
+filesystem sarà situata all'avvio.
 
 Si crei ora l'immagine con il comando #{lb build}#:
 

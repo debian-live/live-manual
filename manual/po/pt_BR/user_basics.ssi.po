@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 2.0.0\n"
-"POT-Creation-Date: 2010-12-16 15:00+0100\n"
+"POT-Creation-Date: 2010-12-17 13:34+0100\n"
 "PO-Revision-Date: 2010-10-20 06:53-0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -32,8 +32,8 @@ msgstr ""
 #: en/user_basics.ssi:116 en/user_basics.ssi:126 en/user_basics.ssi:140
 #: en/user_basics.ssi:152 en/user_basics.ssi:160 en/user_basics.ssi:168
 #: en/user_basics.ssi:182 en/user_basics.ssi:190 en/user_basics.ssi:200
-#: en/user_basics.ssi:220 en/user_basics.ssi:253 en/user_basics.ssi:269
-#: en/user_basics.ssi:277 en/user_basics.ssi:297 en/user_basics.ssi:322
+#: en/user_basics.ssi:218 en/user_basics.ssi:246 en/user_basics.ssi:262
+#: en/user_basics.ssi:270 en/user_basics.ssi:290 en/user_basics.ssi:315
 #: en/user_customization-contents.ssi:26 en/user_customization-contents.ssi:35
 #: en/user_customization-contents.ssi:54 en/user_customization-contents.ssi:66
 #: en/user_customization-installer.ssi:32
@@ -95,8 +95,8 @@ msgstr "code{"
 #: en/user_basics.ssi:120 en/user_basics.ssi:130 en/user_basics.ssi:146
 #: en/user_basics.ssi:156 en/user_basics.ssi:164 en/user_basics.ssi:172
 #: en/user_basics.ssi:186 en/user_basics.ssi:194 en/user_basics.ssi:204
-#: en/user_basics.ssi:245 en/user_basics.ssi:257 en/user_basics.ssi:273
-#: en/user_basics.ssi:281 en/user_basics.ssi:308 en/user_basics.ssi:347
+#: en/user_basics.ssi:238 en/user_basics.ssi:250 en/user_basics.ssi:266
+#: en/user_basics.ssi:274 en/user_basics.ssi:301 en/user_basics.ssi:340
 #: en/user_customization-contents.ssi:31 en/user_customization-contents.ssi:46
 #: en/user_customization-contents.ssi:58 en/user_customization-contents.ssi:70
 #: en/user_customization-installer.ssi:36
@@ -605,81 +605,55 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:218
-msgid ""
-"% FIXME: bring up to date: base example on default isc-dhcp-server config "
-"file in Squeeze"
+#: en/user_basics.ssi:220
+msgid "# /etc/dhcp/dhcpd.conf - configuration file for isc-dhcp-server"
 msgstr ""
 
 #. type: Plain text
 #: en/user_basics.ssi:222
-#, no-wrap
-msgid "subnet 192.168.1.0 netmask 255.255.255.0 {   # 192.168.1.0/24\n"
+msgid "ddns-update-style none;"
 msgstr ""
 
 #. type: Plain text
 #: en/user_basics.ssi:225
-#, no-wrap
 msgid ""
-"  # IP addresses available for guests\n"
-"  range 192.168.1.100 192.168.1.149;\n"
+"option domain-name \"example.org\"; option domain-name-servers ns1.example."
+"org, ns2.example.org;"
 msgstr ""
 
 #. type: Plain text
 #: en/user_basics.ssi:228
-#, no-wrap
-msgid ""
-"  # allow booting from the net\n"
-"  allow bootp;\n"
+msgid "default-lease-time 600; max-lease-time 7200;"
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:233
-#, no-wrap
-msgid ""
-"  # for net booting, server where the first file to be loaded (by TFTP\n"
-"  # protocol) (\"filename\" following definition) lies: so the TFTP\n"
-"  # server's name.\n"
-"  next-server myserver;\n"
+#: en/user_basics.ssi:230
+msgid "log-facility local7;"
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:237
+#: en/user_basics.ssi:236
 #, no-wrap
 msgid ""
-"  # net boot configuration for guests with a PXE client:\n"
-"  if substring (option vendor-class-identifier, 0, 9) = \"PXEClient\" {\n"
-"    # Note: all files for PXE are relatives to the TFTP server's root\n"
-msgstr ""
-
-#. type: Plain text
-#: en/user_basics.ssi:240
-#, no-wrap
-msgid ""
-"    # PXE bootloader (first program to be loaded, by TFTP)\n"
-"    filename \"pxelinux.0\";\n"
-msgstr ""
-
-#. type: Plain text
-#: en/user_basics.ssi:243
-#, no-wrap
-msgid ""
-"  }\n"
+"subnet 192.168.0.0 netmask 255.255.255.0 {\n"
+"  range 192.168.0.1 192.168.0.254;\n"
+"  next-server servername;\n"
+"  filename \"pxelinux.0\";\n"
 "}\n"
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:247
+#: en/user_basics.ssi:240
 msgid "3~ TFTP server"
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:249
+#: en/user_basics.ssi:242
 msgid "This serves the kernel and initial ramdisk to the system at run time."
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:251
+#: en/user_basics.ssi:244
 msgid ""
 "You should install the tftpd-hpa package. It can serve all files contained "
 "inside a root directory, usually /srv/tftp. To let it serve files inside /"
@@ -687,22 +661,22 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:255
+#: en/user_basics.ssi:248
 msgid "dpkg-reconfigure -plow tftpd-hpa"
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:259
+#: en/user_basics.ssi:252
 msgid "and fill in the new tftp server directory when being asked about it."
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:261
+#: en/user_basics.ssi:254
 msgid "3~ NFS server"
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:263
+#: en/user_basics.ssi:256
 msgid ""
 "Once the guest computer has downloaded and booted a Linux kernel and loaded "
 "its initrd, it will try to mount the Live filesystem image through a NFS "
@@ -710,35 +684,35 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:265
+#: en/user_basics.ssi:258
 msgid "You need to install the nfs-kernel-server package."
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:267
+#: en/user_basics.ssi:260
 msgid ""
 "Then, make the filesystem image available through NFS by adding a line like "
 "the following to /etc/exports:"
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:271
+#: en/user_basics.ssi:264
 msgid "/srv/debian-live *(ro,async,no_root_squash,no_subtree_check)"
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:275
+#: en/user_basics.ssi:268
 msgid ""
 "and tell the NFS server about this new export with the following command:"
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:279
+#: en/user_basics.ssi:272
 msgid "# exportfs -rv"
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:283
+#: en/user_basics.ssi:276
 msgid ""
 "Setting up these three services can be a little tricky. You might need some "
 "patience to get all of them working together. The Debian Installer Manual's "
@@ -747,40 +721,40 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:285
+#: en/user_basics.ssi:278
 msgid "3~ Netboot testing HowTo"
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:287
+#: en/user_basics.ssi:280
 msgid ""
 "Netboot image creation is made easy with live-build magic, but testing the "
 "images on physical machines can be really time consuming."
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:289
+#: en/user_basics.ssi:282
 msgid ""
 "To make our life easier, we can use virtualization. There are two solutions."
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:291
+#: en/user_basics.ssi:284
 msgid "3~ Qemu"
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:293
+#: en/user_basics.ssi:286
 msgid "_* Install qemu, bridge-utils, sudo."
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:295
+#: en/user_basics.ssi:288
 msgid "Edit /etc/qemu-ifup:"
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:306
+#: en/user_basics.ssi:299
 msgid ""
 "#!/bin/sh sudo -p \"Password for $0:\" /sbin/ifconfig $1 172.20.0.1 echo "
 "\"Executing /etc/qemu-ifup\" echo \"Bringing up $1 for bridged mode...\" "
@@ -789,62 +763,62 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:310
+#: en/user_basics.ssi:303
 msgid "Get, or build a grub-floppy-netboot (in the svn)."
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:312
+#: en/user_basics.ssi:305
 msgid "Launch qemu with \"-net nic,vlan=0 -net tap,vlan=0,ifname=tun0\""
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:314
+#: en/user_basics.ssi:307
 msgid "3~ VMWare Player"
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:316
+#: en/user_basics.ssi:309
 msgid "_* Install VMWare Player (\"free as in beer\" edition)"
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:318
+#: en/user_basics.ssi:311
 msgid ""
 "_* Create a PXETester directory, and create a text file called pxe.vwx inside"
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:320
+#: en/user_basics.ssi:313
 msgid "_* Paste this text inside:"
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:328
+#: en/user_basics.ssi:321
 msgid ""
 "#!/usr/bin/vmware config.version = \"8\" virtualHW.version = \"4\" memsize = "
 "\"512\" MemAllowAutoScaleDown = \"FALSE\""
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:334
+#: en/user_basics.ssi:327
 msgid ""
 "ide0:0.present = \"FALSE\" ide1:0.present = \"FALSE\" floppy0.present = "
 "\"FALSE\" sound.present = \"FALSE\" tools.remindInstall = \"FALSE\""
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:337
+#: en/user_basics.ssi:330
 msgid "ethernet0.present = \"TRUE\" ethernet0.addressType = \"generated\""
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:340
+#: en/user_basics.ssi:333
 msgid "displayName = \"Test Boot PXE\" guestOS = \"other\""
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:345
+#: en/user_basics.ssi:338
 msgid ""
 "ethernet0.generatedAddress = \"00:0c:29:8d:71:3b\" uuid.location = \"56 4d "
 "83 72 5c c4 de 3f-ae 9e 07 91 1d 8d 71 3b\" uuid.bios = \"56 4d 83 72 5c c4 "
@@ -852,19 +826,19 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:349
+#: en/user_basics.ssi:342
 msgid ""
 "_* You can play with this configuration file (e.g. change memory limit to "
 "256)"
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:351
+#: en/user_basics.ssi:344
 msgid ""
 "_* Double click on this file (or run VMWare player and select this file)."
 msgstr ""
 
 #. type: Plain text
-#: en/user_basics.ssi:352
+#: en/user_basics.ssi:345
 msgid "_* When running just press space if that strange question comes up..."
 msgstr ""

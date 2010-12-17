@@ -72,22 +72,24 @@ foo ()
 
 _* Le variabili vanno sempre scritte in maiuscolo.
 
-_* Variables that used in #{lb config}# always start with #{LB_}# prefix.
+_* Le variabili usate nella configurazione di lb iniziano sempre con il
+prefisso "#{LB_}#".
 
-_* Internal temporary variables in live-build should start with the
-#{\_LB_}# prefix.
+_* Le variabili temporanee interne a live-build dovrebbero iniziare con il
+prefisso "#{\_LB_}#".
 
-_* Local variables start with live-build #{\_\_LB_}# prefix.
+_* Le variabili locali iniziano con il prefisso di live-build "#{\_\_LB_}#"
 
-_* Variables in connection to a boot parameter in live-config start with
-#{LIVE_}#.
+_* Le variabili relative ai parametri di avvio di live-config iniziano con
+il prefisso "#{LIVE_}#".
 
-_* All other variables in live-config start with #{_}# prefix.
+_* Tutte le altre variabili di live-config iniziano con il prefisso "#{_}#".
 
-_* Use braces around variables; eg. write #{${FOO}}# instead of #{$FOO}#.
+_* Intorno alle variabili utilizzare le parentesi, scrivere #{${FOO}}#
+invece di #{$FOO}#.
 
-_* Always protect variables with quotes to respect potential whitespaces,
-write #{"${FOO}"}# not #{${FOO}}#.
+_* Racchiudere sempre le variabili tra virgolette per rispettare potenziali
+spaziature, scrivere #{"${FOO}"}# e non #{${FOO}}#.
 
 _* Per coerenza usare sempre le virgolette per assegnare un valore ad una
 variabile:
@@ -134,12 +136,12 @@ fi
 
 2~ Varie
 
-_* Use "#{|}#" (without the surround quotes) as a seperator in calls to sed,
-e.g. "#{sed -e 's|foo|bar|'}#" (without "").
+_* In sed utilizzare "#{|}#" (senza virgolette intorno) come separatore,
+#{"sed -e 's|foo|bar|'"}# (senza "").
 
-_* Don't use the test command for comparisons or tests, use "#{[}#" "#{]}#"
-(without ""), e.g. "#{if [ -x /bin/foo ]; ...}#" and not "#{if test -x
-/bin/foo; ...}#".
+_* Non utilizzare il comando "#{test}#" per prove o confronti, usare invece
+"#{[}#" "#{]}#" (senza ""), "#{if [ -x /bin/foo ]; ...}#" e non "#{if test
+-x /bin/foo; ...}#".
 
-_* Use #{case}# wherever possible over #{test}#, as it's easier to read and
-faster in execution.
+_* Ove possibile utilizzare "#{case}#" invece di "#{test}#", è più facile da
+leggere e più veloce in esecuzione.

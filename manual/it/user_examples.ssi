@@ -237,23 +237,24 @@ raccolte degli utenti Debian Live.
 
 2~ A VNC Kiosk Client
 
-*{Use case:}* Create an image with live-build to boot directly to a VNC server.
+*{Caso d'uso:}* Creare una immagine con live-build per fare il boot direttamente da un server VNC.
 
-_* Make a build directory: #{$ mkdir vncBuild}#
+_* Creare una directory di lavoro: #{$ mkdir vncBuild}#
 
-_* Move to the build directory: #{$ cd vncBuild}#
+_* Spostarsi nella directory di lavoro: #{$ cd vncBuild}#
 
-Example to config the build directory to include gdm metacity
-xtightvncviewer: #{$ lb config --packages "gdm3 metacity xtightvncviewer"}#
+Esempio per configurare la directory di costruzione per includere gdm
+metacity xtightvncviewer: #{$ lb config --packages "gdm3 metacity
+xtightvncviewer"}#
 
-Create a folder /etc/skel folder for a custom .xsession for the default
-user: #{$ mkdir -p config/chroot_local-includes/etc/skel}#
+Creare una cartella /etc/skel per una cartella .xsession personalizzata per
+l'utente predefinito: #{$ mkdir -p config/chroot_local-includes/etc/skel}#
 
-Create the .xsession for the default user: #{$ touch
+Creare la .xsession per l'utente predefinito: #{$ touch
 config/chroot_local-includes/etc/skel/.xsession}#
 
-Edit the .xsession file to launch metacity and start xvncviewer with
-something similar to the below:
+Modificare il file .xsession per lanciare ed iniziare xvncviewer con
+qualcosa simile a questo che segue:
 
 code{
 
@@ -265,23 +266,23 @@ exit
 
 }code
 
-_* Build the image: #{# lb build}#
+_* Costruire l'immagine: #{# lb build}#
 
-_* Enjoy.
+_* Divertiti.
 
-2~ A base image for a 128M USB key
+2~ Una immagine base per una chiavetta  USB da 128M
 
-*{Use case:}* Create a standard image with some components removed in order to fit on a 128M USB key with space left over to use as you see fit.
+*{Caso d'uso:}* Creare una immagine standard rimuovendo alcuni componenti per stare su una chiavetta USB da 128M con lo spazio che rimane da usare come meglio si crede.
 
-When optimizing an image to fit a certain media size, you need to understand
-the tradeoffs you are making between size and functionality. In this
-example, we trim only so much as to make room for additional material within
-a 128M media size, but without doing anything to destroy integrity of the
-packages contained within, such as the purging of locale data via the
-#{localepurge}# package, or other such "intrusive" optimizations. Of
-particular note, you should not use #{--bootstrap-flavour minimal}# unless
-you really know what you're doing, as omitting priority #{important}#
-packages will most likely produce a broken live system.
+Quando si cerca di ottimizzare una immagine per essere contenuta in un
+media, è necessario capire il compromesso che si deve fare tra la dimensione
+e la funzionalità. In questo esempio, taglieremo materiale aggiuntivo per
+far sì che il tutto stia in 128M, senza fare nient'altro che distrugga
+l'integrità dei pacchetti contenuti, come purgare i locale con il pacchetto
+#{localepurge}# package, o altre ottimizzazioni "intrusive". Particolarmente
+da notare, non si deve usare #{--bootstrap-flavour minimal}# a meno che non
+sai cosa si sta facendo, come omettendo la priorità #{important}# packages è
+molto probabile che produca un sistema live danneggiato.
 
 code{
 
@@ -290,7 +291,7 @@ $ lb config -k 486 -p minimal --binary-indices false --memtest none
 
 }code
 
-Now, build the image in the usual way:
+Ora, costruiamo una immagine nel modo consueto:
 
 code{
 
@@ -298,37 +299,39 @@ code{
 
 }code
 
-On the author's system at time of writing, the above configuration produced
-a 78Mbyte image. This compares favourably with the 166Mbyte image produced
-by the default configuration in {Tutorial 1}#tutorial-1.
+All'autore del sistema al momento di scrivere, la seguente configurazione ha
+prodotto una immagine di 78Mbyte. Comparabile favorevolmente con i 166Mbyte
+prodotta dalla configurazione predefinita nel {Tutorial 1}#tutorial-1.
 
-The biggest space-saver here, compared to building a standard image on an
-#{i386}# architecture system, is to select only the #{486}# kernel flavour
-instead of the default #{-k "486 686"}#. Leaving off APT's indices with
-#{--binary-indices false}# also saves a fair amount of space, the tradeoff
-being that you need to #{apt-get update}# before using apt in the live
-system. Choosing the #{minimal}# package list leaves out the large
-#{locales}# package and associated utilities. Dropping recommended packages
-with #{--apt-recommends false}# saves some additional space, at the expense
-of omitting some packages you might otherwise expect to be there, such as
-#{firmware-linux-free}# which may be needed to support certain hardware. The
-remaining options shave off additional small amounts of space. It's up to
-you to decide if the functionality that is sacrificed with each optimization
-is worth the loss in functionality.
+Il maggior spazio salvato qui, comparato alla costruzione di una immagine
+standard su un sistema con architettura #{i386}# è dovuto alla selezione
+solo del kernel #{486}# invece che quello predefinito #{-k "486
+686"}#. Lasciando fuori anche gli indici di APT con #{--binary-indices
+false}# si può salvare una certa quantità di spazio, il compromesso è usare
+precedentemente #{apt-get update}# prima di usare apt nel sistema
+live. Scegliendo la lista dei pacchetti #{minimal}# esclude il grosso
+pacchetto #{locales}# e le utilità associate. Saltare i pacchetti
+raccomandati con #{--apt-recommends false}# salva altro spazio, a scapito di
+alcuni pacchetti che ti aspetteresti di trovare, come
+#{firmware-linux-free}# del quale si potrebbe aver bisogno in relazione
+all'hardware. Le restanti opzioni limano altre piccole quantità di
+spazio. Sta a voi decidere se le funzionalità sacrificate con ciascuna
+ottimizzazione valgono la pena.
 
-2~ A localized KDE desktop and installer
+2~ Un desktop KDE localizzato e l'installer
 
-*{Use case:}* Create a KDE desktop image, localized for Brazilian Portuguese and including an installer.
+*{Caso d'uso:}* Creare una immagine con il desktop KDE, localizzato per il Portoghese Brasiliano che include l'installatore.
 
-We want to make an iso-hybrid image for i386 architecture using our
-preferred desktop, in this case KDE, containing all of the same packages
-that would be installed by the standard Debian installer for KDE.
+Si vuole creare una immagine iso-hybrid per architettura 1386 usando il
+nostro desktop preferito, in questo caso KDE, contenente tutti gli stessi
+pacchetti che verrebbero installati dall'installatore Debian standard per
+KDE.
 
-Our initial problem is the discovery of the names of the appropriate
-tasks. Currently, live-build cannot help with this. While we might get lucky
-and find this by trial-and-error, there is a tool, #{grep-dctrl}#, which can
-be used to dig it out of the task descriptions in tasksel-data, so to
-prepare, make sure you have both of those things:
+Il problema iniziale è di scoprire i nomi dei task appropriati. Attualmente,
+live-build non aiuta in questo. Si può essere fortunati o arrivarci con vari
+tentativi, ma c'è uno strumento #{grep-dctrl}# il quale può essere
+utilizzato per scavare nelle descrizioni in tasksel-data, perciò
+assicuratevi di avere entrambe questi pacchetti:
 
 code{
 
@@ -336,7 +339,7 @@ code{
 
 }code
 
-Now we can search for the appropriate tasks, first with:
+Ora si possono cercare le task appropriate, la prima con:
 
 code{
 
@@ -349,8 +352,8 @@ Description: Brazilian Portuguese environment
 
 }code
 
-By this command, we discover the task is called, plainly enough,
-brazilian-portuguese. Now to find the related tasks:
+Con questo comando, si è scoperto il nome della task, spiegata chiaramente,
+brazilian-portuguese. Ora per trovare le altre relative task:
 
 code{
 
@@ -365,11 +368,11 @@ Description: Brazilian Portuguese KDE desktop
 
 }code
 
-We will use the experimental #{--language}# option, as live-build happens to
+Useremo l'opzione sperimentale #{--language}#, as live-build happens to
 include #{syslinux}# templates for pt_BR (see {Desktop and language
 tasks}#desktop-and-language-tasks for details). And at boot time we will
 generate the pt_BR.UTF-8 locale and select the pt-latin1 keyboard
-layout. Now let's put the pieces together:
+layout. Ora mettiamo insieme i pezzi:
 
 code{
 
@@ -387,8 +390,9 @@ $ lb config \
 
 }code
 
-Note that we have included the #{debian-installer-launcher}# package to
-launch the installer from the live desktop, and have also specified the 486
-flavour kernel, as it is currently necessary to make the installer and live
-system kernels match for the launcher to work properly.
+Si noti che è stato incluso il pacchetto #{debian-installer-launcher}# in
+modo da poter lanciare l'installer dal desktop della live, ed è stato
+specificato il kernel 486, poiché attualmente è necessario che il kernel
+dell'installer e quello del sistema coincidano affinche il launcher funzioni
+appropriatamente.
 

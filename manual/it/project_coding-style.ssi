@@ -1,28 +1,29 @@
-B~ Tipo di codice
+B~ Lo stile nello scrivere codice
 
-1~ Tipo di codice
+1~ Lo stile nello scrivere codice
 
-Questo capitolo documenta il tipo di codice utilizzato per live-boot e gli
+Questo capitolo documenta lo stile usato per il codice di live-boot e gli
 altri.
 
 2~ Compatibilità
 
-_* Non usare sintassi o semantiche mirate alla shell Bash come ad esempio
-l'uso di costrutti array.
+_* Non usare sintassi o semantiche mirate alla shell Bash. Ad esempio, l'uso
+di costrutti array.
 
-_* Utilizzare solo sottoinsiemi POSIX, ad esempio $(foo) rispetto a `foo`.
+_* Utilizzare solo il sottoinsieme POSIX - ad esempio, usare $(foo) invece
+di `foo`.
 
 _* È possibile verificare i propri script con "sh -n" e "checkbashisms".
 
-2~ Indentare
+2~ Rientri
 
-_* Usare sempre i tab piuttosto degli spazi.
+_* Usare sempre i tab piuttosto che gli spazi.
 
-2~ Testo a capo
+2~ Ritorno a capo
 
 _* Generalmente le righe sono composte da un massimo di 80 caratteri.
 
-_* Utilizzare lo "stile Linux" per le interruzioni di riga.
+_* Utilizzare lo "stile Linux" per le interruzioni di riga:
 
 Sbagliato:
 
@@ -72,27 +73,26 @@ foo ()
 
 _* Le variabili vanno sempre scritte in maiuscolo.
 
-_* Le variabili usate nella configurazione di lb iniziano sempre con il
-prefisso "#{LB_}#".
+_* Le variabili usate in #{lb config}# iniziano sempre con il prefisso
+#{LB_}#.
 
-_* Le variabili temporanee interne a live-build dovrebbero iniziare con il
-prefisso "#{\_LB_}#".
+_* Le variabili interne temporanee in live-build dovrebbero iniziare con il
+prefisso #{\_LB_}#.
 
-_* Le variabili locali iniziano con il prefisso di live-build "#{\_\_LB_}#"
+_* Le variabili locali iniziano con il prefisso live-build #{\_\_LB_}#.
 
-_* Le variabili relative ai parametri di avvio di live-config iniziano con
-il prefisso "#{LIVE_}#".
+_* Le variabili in live-config relative ai parametri di avvio iniziano con
+#{LIVE_}#.
 
-_* Tutte le altre variabili di live-config iniziano con il prefisso "#{_}#".
+_* Tutte le altre variabili in live-config iniziano con il prefisso #{_}#.
 
-_* Intorno alle variabili utilizzare le parentesi, scrivere #{${FOO}}#
-invece di #{$FOO}#.
+_* Use braces around variables; e.g. write #{${FOO}}# instead of #{$FOO}#.
 
-_* Racchiudere sempre le variabili tra virgolette per rispettare potenziali
-spaziature, scrivere #{"${FOO}"}# e non #{${FOO}}#.
+_* Always protect variables with quotes to respect potential whitespaces:
+write #{"${FOO}"}# not #{${FOO}}#.
 
-_* Per coerenza usare sempre le virgolette per assegnare un valore ad una
-variabile:
+_* Per ragioni di coerenza, usare sempre le virgolette quando si assegnano
+valori alle variabili:
 
 Sbagliato:
 
@@ -110,7 +110,7 @@ FOO="bar"
 
 }code
 
-_* Utilizzando molteplici variabili si quota l'intera espressione:
+_* Utilizzando variabili multiple, quotare l'intera espressione:
 
 Sbagliato:
 
@@ -136,12 +136,12 @@ fi
 
 2~ Varie
 
-_* In sed utilizzare "#{|}#" (senza virgolette intorno) come separatore,
-#{"sed -e 's|foo|bar|'"}# (senza "").
+_* Per le chiamate a sed utilizzare "#{|}#" (senza virgolette intorno) come
+separatore, ad esempio "#{sed -e 's|foo|bar|'}#" (senza "").
 
-_* Non utilizzare il comando "#{test}#" per prove o confronti, usare invece
-"#{[}#" "#{]}#" (senza ""), "#{if [ -x /bin/foo ]; ...}#" e non "#{if test
+_* Don't use the #{test}# command for comparisons or tests, use "#{[}#"
+"#{]}#" (without ""); e.g. "#{if [ -x /bin/foo ]; ...}#" and not "#{if test
 -x /bin/foo; ...}#".
 
-_* Ove possibile utilizzare "#{case}#" invece di "#{test}#", è più facile da
-leggere e più veloce in esecuzione.
+_* Ove possibile utilizzare #{case}# invece di #{test}#, essendo più facile
+da leggere e più veloce in esecuzione.

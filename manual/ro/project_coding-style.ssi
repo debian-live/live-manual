@@ -83,9 +83,9 @@ _* Variables in connection to a boot parameter in live-config start with
 
 _* All other variables in live-config start with #{_}# prefix.
 
-_* Use braces around variables; eg. write #{${FOO}}# instead of #{$FOO}#.
+_* Use braces around variables; e.g. write #{${FOO}}# instead of #{$FOO}#.
 
-_* Always protect variables with quotes to respect potential whitespaces,
+_* Always protect variables with quotes to respect potential whitespaces:
 write #{"${FOO}"}# not #{${FOO}}#.
 
 _* For consistency reasons, always use quotes when assigning values to
@@ -136,9 +136,9 @@ fi
 _* Use "#{|}#" (without the surround quotes) as a seperator in calls to sed,
 e.g. "#{sed -e 's|foo|bar|'}#" (without "").
 
-_* Don't use the test command for comparisons or tests, use "#{[}#" "#{]}#"
-(without ""), e.g. "#{if [ -x /bin/foo ]; ...}#" and not "#{if test -x
-/bin/foo; ...}#".
+_* Don't use the #{test}# command for comparisons or tests, use "#{[}#"
+"#{]}#" (without ""); e.g. "#{if [ -x /bin/foo ]; ...}#" and not "#{if test
+-x /bin/foo; ...}#".
 
 _* Use #{case}# wherever possible over #{test}#, as it's easier to read and
 faster in execution.

@@ -42,7 +42,7 @@ the #{--bootappend-live}# option of #{lb config}#, e.g.
 
 code{
 
-lb config --bootappend-live "locales=de_CH.UTF-8"
+$ lb config --bootappend-live "locales=de_CH.UTF-8"
 
 }code
 
@@ -51,14 +51,16 @@ a locale by a full #{language_country.encoding}# word.
 
 Both the console and X keyboard configuration depend on the
 #{keyboard-layouts}# parameter of the #{--bootappend-live}# option. Valid
-options for X keyboard layouts can be found in #{/etc/X11/xkb/base.xml}#
-(rather limited to two-letters country codes). To find the value (the two
-characters) corresponding to a language try searching for the english name
-of the nation where the language is spoken, e.g:
+options for X keyboard layouts can be found in
+#{/usr/share/X11/xkb/rules/base.xml}# (rather limited to two-letters country
+codes). To find the value (the two characters) corresponding to a language
+try searching for the english name of the nation where the language is
+spoken, e.g:
 
 code{
 
-$ grep -i sweden -C3 /etc/X11/xkb/base.xml | grep name <name>se</name>
+$ grep -i sweden -C3 /usr/share/X11/xkb/rules/base.xml | grep name
+<name>se</name>
 
 }code
 
@@ -67,7 +69,7 @@ use:
 
 code{
 
-lb config --bootappend-live "locales=de_CH.UTF-8 keyboard-layouts=ch"
+$ lb config --bootappend-live "locales=de_CH.UTF-8 keyboard-layouts=ch"
 
 }code
 
@@ -76,7 +78,7 @@ with the following command:
 
 code{
 
-for i in $(find /usr/share/keymaps/ -iname "*kmap.gz"); do basename $i |
+$ for i in $(find /usr/share/keymaps/ -iname "*kmap.gz"); do basename $i |
 head -c -9; echo; done | sort | less
 
 }code
@@ -91,7 +93,7 @@ TypeMatrix keyboard, both in console and X11, use:
 
 code{
 
-lb config --bootappend-live "locales=fr_FR.UTF-8 keyboard-layouts=fr
+$ lb config --bootappend-live "locales=fr_FR.UTF-8 keyboard-layouts=fr
 keyboard-variant=bepo keyboard-model=tm2030usb"
 
 }code

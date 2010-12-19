@@ -238,36 +238,40 @@ utenti Debian Live.
 
 *{Caso d'uso:}* creare un'immagine con live-build per avviare direttamente un server VNC.
 
-_* Creare una directory di lavoro: #{$ mkdir vncBuild}#
-
-_* Spostarsi nella directory: #{$ cd vncBuild}#
-
-Esempio per configurare la directory di costruzione per includere gdm
-metacity xtightvncviewer: #{$ lb config --packages "gdm3 metacity
-xtightvncviewer"}#
-
-Creare una directory /etc/skel per un .xsession personalizzato per l'utente
-predefinito: #{$ mkdir -p config/chroot_local-includes/etc/skel}#
-
-Creare il file .xsession per l'utente: #{$ touch
-config/chroot_local-includes/etc/skel/.xsession}#
-
-Modificare il file .xsession per lanciare metacity e xvncviewer con qualcosa
-simile a quanto segue:
+Make a build directory and create a skeletal configuration in it, including
+#{gdm3}#, #{metacity}# and #{xtightvncviewer}#:
 
 code{
 
-#!/bin/sh
-
-/usr/bin/metacity & /usr/bin/vncviewer xxx.xxx.xxx.xxx:PORT
-
-exit
+$ mkdir vnc_kiosk_client $ cd vnc_kiosk_client $ lb config -p standard-x11
+--packages "gdm3 metacity xtightvncviewer"
 
 }code
 
-_* Costruire l'immagine: #{# lb build}#
+Create the directory #{/etc/skel}# and put a custom #{.xsession}# in it for
+the default user that will launch metacity and start xvncviewer, connecting
+to port #{5901}# on a server at #{192.168.1.2}#:
 
-_* Buon divertimento.
+code{
+
+$ mkdir -p config/chroot_local-includes/etc/skel $ cat
+config/chroot_local-includes/etc/skel/.xsession <<END #!/bin/sh
+
+/usr/bin/metacity & /usr/bin/xvncviewer 192.168.1.2:1
+
+exit END
+
+}code
+
+Build the image:
+
+code{
+
+# lb build
+
+}code
+
+Enjoy.
 
 2~ Un'immagine base per una chiavetta USB da 128M
 

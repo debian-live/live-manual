@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 2.0.0\n"
-"POT-Creation-Date: 2010-12-19 10:06-0400\n"
+"POT-Creation-Date: 2010-12-19 14:14-0400\n"
 "PO-Revision-Date: 2010-11-04 16:34-0400\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -70,10 +70,10 @@ msgstr ""
 #: en/user_examples.ssi:54 en/user_examples.ssi:64 en/user_examples.ssi:80
 #: en/user_examples.ssi:90 en/user_examples.ssi:107 en/user_examples.ssi:117
 #: en/user_examples.ssi:131 en/user_examples.ssi:139 en/user_examples.ssi:154
-#: en/user_examples.ssi:162 en/user_examples.ssi:178 en/user_examples.ssi:188
-#: en/user_examples.ssi:204 en/user_examples.ssi:218 en/user_examples.ssi:226
-#: en/user_examples.ssi:244 en/user_examples.ssi:252 en/user_examples.ssi:265
-#: en/user_examples.ssi:280 en/user_installation.ssi:38
+#: en/user_examples.ssi:162 en/user_examples.ssi:178 en/user_examples.ssi:190
+#: en/user_examples.ssi:206 en/user_examples.ssi:220 en/user_examples.ssi:228
+#: en/user_examples.ssi:246 en/user_examples.ssi:254 en/user_examples.ssi:267
+#: en/user_examples.ssi:282 en/user_installation.ssi:38
 #: en/user_installation.ssi:46 en/user_installation.ssi:56
 #: en/user_installation.ssi:64 en/user_installation.ssi:74
 #: en/user_installation.ssi:82 en/user_installation.ssi:90
@@ -134,10 +134,10 @@ msgstr "code{"
 #: en/user_examples.ssi:58 en/user_examples.ssi:68 en/user_examples.ssi:86
 #: en/user_examples.ssi:101 en/user_examples.ssi:111 en/user_examples.ssi:123
 #: en/user_examples.ssi:135 en/user_examples.ssi:150 en/user_examples.ssi:158
-#: en/user_examples.ssi:166 en/user_examples.ssi:184 en/user_examples.ssi:200
-#: en/user_examples.ssi:208 en/user_examples.ssi:222 en/user_examples.ssi:230
-#: en/user_examples.ssi:248 en/user_examples.ssi:261 en/user_examples.ssi:276
-#: en/user_examples.ssi:294 en/user_installation.ssi:42
+#: en/user_examples.ssi:166 en/user_examples.ssi:186 en/user_examples.ssi:202
+#: en/user_examples.ssi:210 en/user_examples.ssi:224 en/user_examples.ssi:232
+#: en/user_examples.ssi:250 en/user_examples.ssi:263 en/user_examples.ssi:278
+#: en/user_examples.ssi:296 en/user_installation.ssi:42
 #: en/user_installation.ssi:50 en/user_installation.ssi:60
 #: en/user_installation.ssi:70 en/user_installation.ssi:78
 #: en/user_installation.ssi:86 en/user_installation.ssi:94
@@ -152,7 +152,7 @@ msgstr "}code"
 
 #. type: Plain text
 #: en/user_basics.ssi:42 en/user_basics.ssi:118 en/user_basics.ssi:202
-#: en/user_examples.ssi:109 en/user_examples.ssi:156 en/user_examples.ssi:206
+#: en/user_examples.ssi:109 en/user_examples.ssi:156 en/user_examples.ssi:208
 msgid "# lb build"
 msgstr ""
 
@@ -247,7 +247,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:42 en/user_examples.ssi:66 en/user_examples.ssi:228
+#: en/user_examples.ssi:42 en/user_examples.ssi:66 en/user_examples.ssi:230
 msgid "# lb build 2>&1 | tee binary.log"
 msgstr ""
 
@@ -495,19 +495,24 @@ msgstr ""
 #. type: Plain text
 #: en/user_examples.ssi:176
 msgid ""
-"Make a build directory and create a skeletal configuration in it, including #"
-"{gdm3}#, #{metacity}# and #{xtightvncviewer}#:"
+"Make a build directory and create a skeletal configuration in it built "
+"around the standard-x11 list, including #{gdm3}#, #{metacity}# and #"
+"{xtightvncviewer}#, disabling recommends to make a minimal system:"
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:182
+#: en/user_examples.ssi:184
+#, no-wrap
 msgid ""
-"$ mkdir vnc_kiosk_client $ cd vnc_kiosk_client $ lb config -p standard-x11 --"
-"packages \"gdm3 metacity xtightvncviewer\""
+"$ mkdir vnc_kiosk_client\n"
+"$ cd vnc_kiosk_client\n"
+"$ lb config -a i386 -k 686 -p standard-x11 \\\n"
+"    --packages \"gdm3 metacity xvnc4viewer\" \\\n"
+"    --apt-recommends false\n"
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:186
+#: en/user_examples.ssi:188
 msgid ""
 "Create the directory #{/etc/skel}# and put a custom #{.xsession}# in it for "
 "the default user that will launch metacity and start xvncviewer, connecting "
@@ -515,45 +520,45 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:192
+#: en/user_examples.ssi:194
 msgid ""
-"$ mkdir -p config/chroot_local-includes/etc/skel $ cat config/chroot_local-"
+"$ mkdir -p config/chroot_local-includes/etc/skel $ cat >config/chroot_local-"
 "includes/etc/skel/.xsession <<END #!/bin/sh"
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:195
+#: en/user_examples.ssi:197
 msgid "/usr/bin/metacity & /usr/bin/xvncviewer 192.168.1.2:1"
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:198
+#: en/user_examples.ssi:200
 msgid "exit END"
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:202
+#: en/user_examples.ssi:204
 msgid "Build the image:"
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:210
+#: en/user_examples.ssi:212
 msgid "Enjoy."
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:212
+#: en/user_examples.ssi:214
 msgid "2~ A base image for a 128M USB key"
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:214
+#: en/user_examples.ssi:216
 #, no-wrap
 msgid "*{Use case:}* Create a standard image with some components removed in order to fit on a 128M USB key with space left over to use as you see fit.\n"
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:216
+#: en/user_examples.ssi:218
 msgid ""
 "When optimizing an image to fit a certain media size, you need to understand "
 "the tradeoffs you are making between size and functionality. In this "
@@ -567,19 +572,19 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:220
+#: en/user_examples.ssi:222
 msgid ""
 "$ lb config -k 486 -p minimal --binary-indices false --memtest none --apt-"
 "recommends false --includes none"
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:224
+#: en/user_examples.ssi:226
 msgid "Now, build the image in the usual way:"
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:232
+#: en/user_examples.ssi:234
 msgid ""
 "On the author's system at time of writing, the above configuration produced "
 "a 78Mbyte image. This compares favourably with the 166Mbyte image produced "
@@ -587,7 +592,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:234
+#: en/user_examples.ssi:236
 msgid ""
 "The biggest space-saver here, compared to building a standard image on an #"
 "{i386}# architecture system, is to select only the #{486}# kernel flavour "
@@ -605,18 +610,18 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:236
+#: en/user_examples.ssi:238
 msgid "2~ A localized KDE desktop and installer"
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:238
+#: en/user_examples.ssi:240
 #, no-wrap
 msgid "*{Use case:}* Create a KDE desktop image, localized for Brazilian Portuguese and including an installer.\n"
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:240
+#: en/user_examples.ssi:242
 msgid ""
 "We want to make an iso-hybrid image for i386 architecture using our "
 "preferred desktop, in this case KDE, containing all of the same packages "
@@ -624,7 +629,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:242
+#: en/user_examples.ssi:244
 msgid ""
 "Our initial problem is the discovery of the names of the appropriate tasks. "
 "Currently, live-build cannot help with this. While we might get lucky and "
@@ -634,17 +639,17 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:246
+#: en/user_examples.ssi:248
 msgid "# apt-get install dctrl-tools tasksel-data"
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:250
+#: en/user_examples.ssi:252
 msgid "Now we can search for the appropriate tasks, first with:"
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:259
+#: en/user_examples.ssi:261
 #, no-wrap
 msgid ""
 "$ grep-dctrl -FTest-lang pt_BR /usr/share/tasksel/debian-tasks.desc -sTask,Description\n"
@@ -656,14 +661,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:263
+#: en/user_examples.ssi:265
 msgid ""
 "By this command, we discover the task is called, plainly enough, brazilian-"
 "portuguese. Now to find the related tasks:"
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:270
+#: en/user_examples.ssi:272
 #, no-wrap
 msgid ""
 "$ grep-dctrl -FEnhances brazilian-portuguese /usr/share/tasksel/debian-tasks.desc -sTask,Description\n"
@@ -673,7 +678,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:274
+#: en/user_examples.ssi:276
 #, no-wrap
 msgid ""
 "Task: brazilian-portuguese-kde-desktop\n"
@@ -682,7 +687,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:278
+#: en/user_examples.ssi:280
 msgid ""
 "We will use the experimental #{--language}# option, as live-build happens to "
 "include #{syslinux}# templates for pt_BR (see {Desktop and language tasks}"
@@ -692,7 +697,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:292
+#: en/user_examples.ssi:294
 #, no-wrap
 msgid ""
 "$ mkdir live-pt_BR-kde\n"
@@ -709,7 +714,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_examples.ssi:296
+#: en/user_examples.ssi:298
 msgid ""
 "Note that we have included the #{debian-installer-launcher}# package to "
 "launch the installer from the live desktop, and have also specified the 486 "

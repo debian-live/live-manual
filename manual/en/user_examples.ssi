@@ -172,13 +172,15 @@ We've come to the end of our tutorial series. While many more kinds of customiza
 
 *{Use case:}* Create an image with live-build to boot directly to a VNC server.
 
-Make a build directory and create a skeletal configuration in it, including #{gdm3}#, #{metacity}# and #{xtightvncviewer}#:
+Make a build directory and create a skeletal configuration in it built around the standard-x11 list, including #{gdm3}#, #{metacity}# and #{xtightvncviewer}#, disabling recommends to make a minimal system:
 
 code{
 
 $ mkdir vnc_kiosk_client
 $ cd vnc_kiosk_client
-$ lb config -p standard-x11 --packages "gdm3 metacity xtightvncviewer"
+$ lb config -a i386 -k 686 -p standard-x11 \
+    --packages "gdm3 metacity xvnc4viewer" \
+    --apt-recommends false
 
 }code
 
@@ -187,7 +189,7 @@ Create the directory #{/etc/skel}# and put a custom #{.xsession}# in it for the 
 code{
 
 $ mkdir -p config/chroot_local-includes/etc/skel
-$ cat config/chroot_local-includes/etc/skel/.xsession <<END
+$ cat >config/chroot_local-includes/etc/skel/.xsession <<END
 #!/bin/sh
 
 /usr/bin/metacity &

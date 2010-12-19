@@ -180,11 +180,11 @@ Note: if you performed any previous examples, you will need to clean up your wor
 
 code{
 
-$ lb clean --binary
+# lb clean --binary
 
 }code
 
-Run the #{lb config}# command with the parameters to configure the "config/" hierarchy to create our netboot image:
+Run the #{lb config}# command as follows to configure your image for netbooting:
 
 code{
 
@@ -192,7 +192,7 @@ $ lb config -b net --net-root-path "/srv/debian-live" --net-root-server "192.168
 
 }code
 
-In contrast with the ISO and USB/HDD images, netbooting does not support serving a filesystem image with the client, so the files must be served via NFS. The net-root-path and net-root-server options specify the location and server, respectively, of the NFS server where the filesytem image will be located at boot time.
+In contrast with the ISO and USB/HDD images, netbooting does not, itself, serve the filesystem image to the client, so the files must be served via NFS. The #{--net-root-path}# and #{--net-root-server}# options specify the location and server, respectively, of the NFS server where the filesytem image will be located at boot time. Make sure these are set to suitable values for your network and server.
 
 Now build the image with the #{lb build}# command:
 
@@ -204,15 +204,15 @@ code{
 
 In a network boot, the client runs a small piece of software which usually resides on the EPROM of the Ethernet card. This program sends a DHCP request to get an IP address and information about what to do next. Typically, the next step is getting a higher level bootloader via the TFTP protocol. That could be pxelinux, GRUB, or even boot directly to an operating system like Linux.
 
-For example, if you unpack the generated binary-net.tar.gz archive in the /srv/debian-live directory, you'll find the filesystem image in live/filesystem.squashfs and the kernel, initrd and pxelinux bootloader in tftpboot/debian-live/i386.
+For example, if you unpack the generated #{binary-net.tar.gz}# archive in the #{/srv/debian-live}# directory, you'll find the filesystem image in #{live/filesystem.squashfs}# and the kernel, initrd and pxelinux bootloader in #{tftpboot/debian-live/i386}#.
 
-We must now configure three services on the server to enable netboot.
+We must now configure three services on the server to enable netboot: the DHCP server, the TFTP server and the NFS server.
 
 3~ DHCP server
 
 We must configure our network's DHCP server to be sure to give an IP address to the netbooting client system, and to advertise the location of the PXE bootloader.
 
-Here is an example for inspiration, written for the ISC DHCP server #{isc-dhcp-server}# in the /etc/dhcp/dhcpd.conf configuration file;
+Here is an example for inspiration, written for the ISC DHCP server #{isc-dhcp-server}# in the #{/etc/dhcp/dhcpd.conf}# configuration file:
 
 code{
 
@@ -240,11 +240,11 @@ subnet 192.168.0.0 netmask 255.255.255.0 {
 
 This serves the kernel and initial ramdisk to the system at run time.
 
-You should install the tftpd-hpa package. It can serve all files contained inside a root directory, usually /srv/tftp. To let it serve files inside /srv/debian-live/tftpboot, run as root the following command:
+You should install the tftpd-hpa package. It can serve all files contained inside a root directory, usually #{/srv/tftp}#. To let it serve files inside #{/srv/debian-live/tftpboot}#, run as root the following command:
 
 code{
 
-dpkg-reconfigure -plow tftpd-hpa
+# dpkg-reconfigure -plow tftpd-hpa
 
 }code
 
@@ -254,9 +254,9 @@ and fill in the new tftp server directory when being asked about it.
 
 Once the guest computer has downloaded and booted a Linux kernel and loaded its initrd, it will try to mount the Live filesystem image through a NFS server.
 
-You need to install the nfs-kernel-server package.
+You need to install the #{nfs-kernel-server}# package.
 
-Then, make the filesystem image available through NFS by adding a line like the following to /etc/exports:
+Then, make the filesystem image available through NFS by adding a line like the following to #{/etc/exports}#:
 
 code{
 
@@ -282,9 +282,9 @@ To make our life easier, we can use virtualization. There are two solutions.
 
 3~ Qemu
 
-_* Install qemu, bridge-utils, sudo.
+_* Install #{qemu}#, #{bridge-utils}#, #{sudo}#.
 
-Edit /etc/qemu-ifup:
+Edit #{/etc/qemu-ifup}#:
 
 code{
 
@@ -299,15 +299,15 @@ sleep 2
 
 }code
 
-Get, or build a grub-floppy-netboot (in the svn).
+Get, or build a #{grub-floppy-netboot}# (in the svn).
 
-Launch qemu with "-net nic,vlan=0 -net tap,vlan=0,ifname=tun0"
+Launch #{qemu}# with "#{-net nic,vlan=0 -net tap,vlan=0,ifname=tun0}#"
 
 3~ VMWare Player
 
 _* Install VMWare Player ("free as in beer" edition)
 
-_* Create a PXETester directory, and create a text file called pxe.vwx inside
+_* Create a PXETester directory, and create a text file called #{pxe.vwx}# inside
 
 _* Paste this text inside:
 

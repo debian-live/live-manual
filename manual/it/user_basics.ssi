@@ -262,8 +262,8 @@ code{
 
 }code
 
-Run the #{lb config}# command as follows to configure your image for
-netbooting:
+Per configurare l'immagine per l'avvio da rete, eseguire il comando #{lb
+config}# come segue:
 
 code{
 
@@ -272,12 +272,12 @@ $ lb config -b net --net-root-path "/srv/debian-live" --net-root-server
 
 }code
 
-In contrast with the ISO and USB/HDD images, netbooting does not, itself,
-serve the filesystem image to the client, so the files must be served via
-NFS. The #{--net-root-path}# and #{--net-root-server}# options specify the
-location and server, respectively, of the NFS server where the filesytem
-image will be located at boot time. Make sure these are set to suitable
-values for your network and server.
+Diversamente dalle immagini ISO e USB/HDD, il boot via rete non fornisce
+un'immagine del filesytem al client, perciò i file devono essere forniti via
+NFS. Le opzioni net-root-path e net-root-server specificano,
+rispettivamente, il percorso e il server del server NFS dove l'immagine del
+filesystem sarà situata all'avvio. Accertarsi che questi siano impostati su
+valori adeguati alla propria rete.
 
 Si crei ora l'immagine con il comando #{lb build}#:
 
@@ -295,13 +295,13 @@ di di livello superiore attraverso il protocollo TFTP. Questi potrebbe
 essere pxelinux, GRUB, o anche avviare direttamente un sistema operativo
 come Linux.
 
-For example, if you unpack the generated #{binary-net.tar.gz}# archive in
-the #{/srv/debian-live}# directory, you'll find the filesystem image in
-#{live/filesystem.squashfs}# and the kernel, initrd and pxelinux bootloader
-in #{tftpboot/debian-live/i386}#.
+Per esempio, estraendo l'archivio generato #{binary-net.tar.gz}# nella
+directory #{/srv/debian-live}#, si troverà l'immagine del filesystem in
+#{live/filesystem.squashfs}# mentre il kernel, initrd ed il bootloader
+pxelinux in #{tftpboot/debian-live/i386}#.
 
-We must now configure three services on the server to enable netboot: the
-DHCP server, the TFTP server and the NFS server.
+Per abilitare l'avvio tramite rete vanno ora configurati tre servizi:i
+server DHCP, TFTP e NFS.
 
 3~ Server DHCP
 
@@ -309,8 +309,8 @@ Si deve configurare il server DHCP della rete per essere sicuri di fornire
 un indirizzo IP al sistema client che si avvia tramite rete, e notificare la
 posizione del bootloader PXE.
 
-Here is an example for inspiration, written for the ISC DHCP server
-#{isc-dhcp-server}# in the #{/etc/dhcp/dhcpd.conf}# configuration file:
+Ecco un esempio, scritto per un server DHCP ISC #{isc-dhcp-server}# nel file
+di configurazione #{/etc/dhcp/dhcpd.conf}#:
 
 code{
 
@@ -337,9 +337,10 @@ subnet 192.168.0.0 netmask 255.255.255.0 {
 
 Fornisce al sistema il kernel e il ramdisk iniziale in fase di esecuzione.
 
-You should install the tftpd-hpa package. It can serve all files contained
-inside a root directory, usually #{/srv/tftp}#. To let it serve files inside
-#{/srv/debian-live/tftpboot}#, run as root the following command:
+Si installi il pacchetto tftpd-hpa, che mette a disposizione tutti i file
+contenuti in una directory root, di solito #{/srv/tftp}#. Affinché si possa
+disporre dei file contenuti in #{/srv/debian-live/tftpboot}#, eseguire il
+seguente comando come utente root:
 
 code{
 
@@ -355,10 +356,10 @@ Una volta che il computer ospite ha scaricato e avviato un kernel Linux e
 caricato il suo initrd, cercherà di montare l'immagine del filesystem Live
 tramite un server NFS.
 
-You need to install the #{nfs-kernel-server}# package.
+Bisogna installare il pacchetto #{nfs-kernel-server}#.
 
-Then, make the filesystem image available through NFS by adding a line like
-the following to #{/etc/exports}#:
+Quindi, rendere disponibile l'immagine del filesystem via NFS aggiungendo
+una riga come la seguente in #{/etc/exports}#:
 
 code{
 
@@ -392,9 +393,9 @@ soluzioni.
 
 3~ Qemu
 
-_* Install #{qemu}#, #{bridge-utils}#, #{sudo}#.
+_* Installare #{qemu}#, #{bridge-utils}#, #{sudo}#.
 
-Edit #{/etc/qemu-ifup}#:
+Modificare #{/etc/qemu-ifup}#:
 
 code{
 
@@ -405,16 +406,16 @@ code{
 
 }code
 
-Get, or build a #{grub-floppy-netboot}# (in the svn).
+Procurarsi o compilare #{grub-floppy-netboot}# (su svn).
 
-Launch #{qemu}# with "#{-net nic,vlan=0 -net tap,vlan=0,ifname=tun0}#"
+Lanciare #{qemu}# con "#{-net nic,vlan=0 -net tap,vlan=0,ifname=tun0}#"
 
 3~ VMWare Player
 
 _* Installare VMWare Player (edizione "free as in beer")
 
-_* Create a PXETester directory, and create a text file called #{pxe.vwx}#
-inside
+_* Creare una directory PXETester, e crearvi all'interno un file di testo
+chiamato #{pxe.vwx}#
 
 _* Vi si copi dentro questo testo:
 

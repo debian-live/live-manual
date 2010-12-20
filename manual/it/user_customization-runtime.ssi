@@ -24,8 +24,7 @@ ad un file nella directory #{config/chroot_local-preseed}#:
 
 code{
 
-debconf passwd/user-default-groups string audio cdrom dialout floppy video
-plugdev netdev powerdev fuse
+ debconf passwd/user-default-groups string audio cdrom dialout floppy video plugdev netdev powerdev fuse
 
 }code
 
@@ -46,7 +45,7 @@ Quando si crea un sistema live la localizzazione predefinita è
 
 code{
 
-$ lb config --bootappend-live "locales=de_CH.UTF-8"
+ $ lb config --bootappend-live "locales=de_CH.UTF-8"
 
 }code
 
@@ -63,8 +62,8 @@ cui si parla tale lingua:
 
 code{
 
-$ grep -i sweden -C3 /usr/share/X11/xkb/rules/base.xml | grep name
-<name>se</name>
+ $ grep -i sweden -C3 /usr/share/X11/xkb/rules/base.xml | grep name
+ <name>se</name>
 
 }code
 
@@ -73,7 +72,7 @@ svizzero-tedesco in X:
 
 code{
 
-$ lb config --bootappend-live "locales=de_CH.UTF-8 keyboard-layouts=ch"
+ $ lb config --bootappend-live "locales=de_CH.UTF-8 keyboard-layouts=ch"
 
 }code
 
@@ -82,8 +81,8 @@ il seguente comando:
 
 code{
 
-$ for i in $(find /usr/share/keymaps/ -iname "*kmap.gz"); do basename $i |
-head -c -9; echo; done | sort | less
+ $ for i in $(find /usr/share/keymaps/ -iname "*kmap.gz"); \
+     do basename $i | head -c -9; echo; done | sort | less
 
 }code
 
@@ -97,8 +96,8 @@ francese con una tastiera TypeMatrix, sia in console sia in X11:
 
 code{
 
-$ lb config --bootappend-live "locales=fr_FR.UTF-8 keyboard-layouts=fr
-keyboard-variant=bepo keyboard-model=tm2030usb"
+ $ lb config --bootappend-live \
+     "locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variant=bepo keyboard-model=tm2030usb"
 
 }code
 
@@ -141,7 +140,7 @@ o una penna usb creata ad esempio con:
 
 code{
 
-# mkfs.ext2 -L live-rw /dev/sdb1
+ # mkfs.ext2 -L live-rw /dev/sdb1
 
 }code
 
@@ -150,8 +149,8 @@ l'etichetta con una delle seguenti:
 
 code{
 
-# tune2fs -L live-rw /dev/sdb1 # per filesystem ext2,3,4 # dosfslabel
-/dev/sdb1 live-rw # per un filesystem fat
+ # tune2fs -L live-rw /dev/sdb1 # for ext2,3,4 filesystems
+ # dosfslabel /dev/sdb1 live-rw # for a fat filesystem
 
 }code
 
@@ -164,8 +163,8 @@ su una partizione NTFS di un sistema operativo estraneo, qualcosa come:
 
 code{
 
-$ dd if=/dev/null of=live-rw bs=1G seek=1 # for a 1GB sized image file $
-/sbin/mkfs.ext2 -F live-rw
+ $ dd if=/dev/null of=live-rw bs=1G seek=1 # for a 1GB sized image file
+ $ /sbin/mkfs.ext2 -F live-rw
 
 }code
 

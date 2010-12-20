@@ -28,7 +28,7 @@ First, we run the #{lb config}# command which will create a "config/" hierarchy 
 
 code{
 
-$ lb config
+ $ lb config
 
 }code
 
@@ -38,7 +38,7 @@ Now that we have a "config/" hierarchy, we may build the image with the #{lb bui
 
 code{
 
-# lb build
+ # lb build
 
 }code
 
@@ -50,9 +50,9 @@ Testing an ISO is simple:
 
 code{
 
-# apt-get install qemu
+ # apt-get install qemu
 
-$ qemu -cdrom binary.iso
+ $ qemu -cdrom binary.iso
 
 }code
 
@@ -62,9 +62,9 @@ In order to test the ISO with virtualbox-ose:
 
 code{
 
-# apt-get install virtualbox-ose virtualbox-ose-dkms
+ # apt-get install virtualbox-ose virtualbox-ose-dkms
 
-$ virtualbox
+ $ virtualbox
 
 }code
 
@@ -74,7 +74,7 @@ Note: For live systems containing X.org that you want to test with virtualbox-os
 
 code{
 
-# lb config --packages virtualbox-ose-guest-x11
+ $ lb config --packages virtualbox-ose-guest-x11
 
 }code
 
@@ -84,9 +84,9 @@ Burning an ISO image is easy:
 
 code{
 
-# apt-get install wodim
+ # apt-get install wodim
 
-$ wodim binary.iso
+ $ wodim binary.iso
 
 }code
 
@@ -98,7 +98,7 @@ Note: if you created an ISO image with the previous example, you will need to cl
 
 code{
 
-$ lb clean --binary
+ # lb clean --binary
 
 }code
 
@@ -106,7 +106,7 @@ Run the #{lb config}# command with the parameters to configure the #{config/}# h
 
 code{
 
-$ lb config -b usb-hdd
+ $ lb config -b usb-hdd
 
 }code
 
@@ -114,7 +114,7 @@ Now build the image with the #{lb build}# command:
 
 code{
 
-# lb build
+ # lb build
 
 }code
 
@@ -124,7 +124,7 @@ The generated binary image contains a VFAT partition and the syslinux bootloader
 
 code{
 
-$ dd if=binary.img of=${USBSTICK}
+ $ dd if=binary.img of=${USBSTICK}
 
 }code
 
@@ -138,9 +138,9 @@ Note: As discussed earlier, this same process can be used for #{iso-hybrid}# typ
 
 code{
 
-# apt-get install qemu
+ # apt-get install qemu
 
-$ qemu -hda binary.img
+ $ qemu -hda binary.img
 
 }code
 
@@ -150,7 +150,7 @@ If you want to use the remaining free space after you have installed the binary.
 
 code{
 
-# gparted ${USBSTICK}
+ # gparted ${USBSTICK}
 
 }code
 
@@ -158,7 +158,7 @@ After the creation of the partition, you have to create a filesystem on it. One 
 
 code{
 
-# mkfs.ext4 ${USBSTICK}
+ # mkfs.ext4 ${USBSTICK}
 
 }code
 
@@ -166,7 +166,7 @@ If you want to use this data partition with Windows, use FAT32.
 
 code{
 
-# mkfs.vfat -F 32
+ # mkfs.vfat -F 32
 
 }code
 
@@ -180,7 +180,7 @@ Note: if you performed any previous examples, you will need to clean up your wor
 
 code{
 
-# lb clean --binary
+ # lb clean --binary
 
 }code
 
@@ -188,7 +188,7 @@ Run the #{lb config}# command as follows to configure your image for netbooting:
 
 code{
 
-$ lb config -b net --net-root-path "/srv/debian-live" --net-root-server "192.168.0.1"
+ $ lb config -b net --net-root-path "/srv/debian-live" --net-root-server "192.168.0.1"
 
 }code
 
@@ -198,7 +198,7 @@ Now build the image with the #{lb build}# command:
 
 code{
 
-# lb build
+ # lb build
 
 }code
 
@@ -216,22 +216,22 @@ Here is an example for inspiration, written for the ISC DHCP server #{isc-dhcp-s
 
 code{
 
-# /etc/dhcp/dhcpd.conf - configuration file for isc-dhcp-server
+ # /etc/dhcp/dhcpd.conf - configuration file for isc-dhcp-server
 
-ddns-update-style none;
+ ddns-update-style none;
 
-option domain-name "example.org";
-option domain-name-servers ns1.example.org, ns2.example.org;
+ option domain-name "example.org";
+ option domain-name-servers ns1.example.org, ns2.example.org;
 
-default-lease-time 600;
-max-lease-time 7200;
+ default-lease-time 600;
+ max-lease-time 7200;
 
-log-facility local7;
+ log-facility local7;
 
-subnet 192.168.0.0 netmask 255.255.255.0 {
-  range 192.168.0.1 192.168.0.254;
-  next-server servername;
-  filename "pxelinux.0";
+ subnet 192.168.0.0 netmask 255.255.255.0 {
+   range 192.168.0.1 192.168.0.254;
+   next-server servername;
+   filename "pxelinux.0";
 }
 
 }code
@@ -244,7 +244,7 @@ You should install the tftpd-hpa package. It can serve all files contained insid
 
 code{
 
-# dpkg-reconfigure -plow tftpd-hpa
+ # dpkg-reconfigure -plow tftpd-hpa
 
 }code
 
@@ -260,7 +260,7 @@ Then, make the filesystem image available through NFS by adding a line like the 
 
 code{
 
-/srv/debian-live *(ro,async,no_root_squash,no_subtree_check)
+ /srv/debian-live *(ro,async,no_root_squash,no_subtree_check)
 
 }code
 
@@ -268,7 +268,7 @@ and tell the NFS server about this new export with the following command:
 
 code{
 
-# exportfs -rv
+ # exportfs -rv
 
 }code
 
@@ -288,14 +288,14 @@ Edit #{/etc/qemu-ifup}#:
 
 code{
 
-#!/bin/sh
-sudo -p "Password for $0:" /sbin/ifconfig $1 172.20.0.1
-echo "Executing /etc/qemu-ifup"
-echo "Bringing up $1 for bridged mode..."
-sudo /sbin/ifconfig $1 0.0.0.0 promisc up
-echo "Adding $1 to br0..."
-sudo /usr/sbin/brctl addif br0 $1
-sleep 2
+ #!/bin/sh
+ sudo -p "Password for $0:" /sbin/ifconfig $1 172.20.0.1
+ echo "Executing /etc/qemu-ifup"
+ echo "Bringing up $1 for bridged mode..."
+ sudo /sbin/ifconfig $1 0.0.0.0 promisc up
+ echo "Adding $1 to br0..."
+ sudo /usr/sbin/brctl addif br0 $1
+ sleep 2
 
 }code
 
@@ -313,28 +313,28 @@ _* Paste this text inside:
 
 code{
 
-#!/usr/bin/vmware
-config.version = "8"
-virtualHW.version = "4"
-memsize = "512"
-MemAllowAutoScaleDown = "FALSE"
+ #!/usr/bin/vmware
+ config.version = "8"
+ virtualHW.version = "4"
+ memsize = "512"
+ MemAllowAutoScaleDown = "FALSE"
 
-ide0:0.present = "FALSE"
-ide1:0.present = "FALSE"
-floppy0.present = "FALSE"
-sound.present = "FALSE"
-tools.remindInstall = "FALSE"
+ ide0:0.present = "FALSE"
+ ide1:0.present = "FALSE"
+ floppy0.present = "FALSE"
+ sound.present = "FALSE"
+ tools.remindInstall = "FALSE"
 
-ethernet0.present = "TRUE"
-ethernet0.addressType = "generated"
+ ethernet0.present = "TRUE"
+ ethernet0.addressType = "generated"
 
-displayName = "Test Boot PXE"
-guestOS = "other"
+ displayName = "Test Boot PXE"
+ guestOS = "other"
 
-ethernet0.generatedAddress = "00:0c:29:8d:71:3b"
-uuid.location = "56 4d 83 72 5c c4 de 3f-ae 9e 07 91 1d 8d 71 3b"
-uuid.bios = "56 4d 83 72 5c c4 de 3f-ae 9e 07 91 1d 8d 71 3b"
-ethernet0.generatedAddressOffset = "0"
+ ethernet0.generatedAddress = "00:0c:29:8d:71:3b"
+ uuid.location = "56 4d 83 72 5c c4 de 3f-ae 9e 07 91 1d 8d 71 3b"
+ uuid.bios = "56 4d 83 72 5c c4 de 3f-ae 9e 07 91 1d 8d 71 3b"
+ ethernet0.generatedAddressOffset = "0"
 
 }code
 

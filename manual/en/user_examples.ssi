@@ -12,9 +12,9 @@ Note that, for the sake of brevity, in these examples we do not specify a local 
 
 code{
 
-LB_MIRROR_BOOTSTRAP="http://mirror/debian"
-LB_MIRROR_CHROOT="http://mirror/debian"
-LB_MIRROR_CHROOT_SECURITY="http://mirror/debian-security"
+ LB_MIRROR_BOOTSTRAP="http://mirror/debian"
+ LB_MIRROR_CHROOT="http://mirror/debian"
+ LB_MIRROR_CHROOT_SECURITY="http://mirror/debian-security"
 
 }code
 
@@ -28,7 +28,7 @@ You can't get much simpler than this:
 
 code{
 
-$ mkdir tutorial1 ; cd tutorial1 ; lb config
+ $ mkdir tutorial1 ; cd tutorial1 ; lb config
 
 }code
 
@@ -38,7 +38,7 @@ Now, as superuser, build the image, saving a log as you build with #{tee}#.
 
 code{
 
-# lb build 2>&1 | tee binary.log
+ # lb build 2>&1 | tee binary.log
 
 }code
 
@@ -52,7 +52,7 @@ In this tutorial, we will create an image suitable for use as a web browser util
 
 code{
 
-$ mkdir tutorial2 ; cd tutorial2 ; lb config -p lxde --packages iceweasel
+ $ mkdir tutorial2 ; cd tutorial2 ; lb config -p lxde --packages iceweasel
 
 }code
 
@@ -62,7 +62,7 @@ Build the image, again as superuser, keeping a log as in {Tutorial 1}#tutorial-1
 
 code{
 
-# lb build 2>&1 | tee binary.log
+ # lb build 2>&1 | tee binary.log
 
 }code
 
@@ -78,9 +78,9 @@ Since we will be changing our personalized image over a number of revisions, and
 
 code{
 
-$ mkdir -p tutorial3/auto
-$ cp /usr/share/live/build/examples/auto/* tutorial3/auto/
-$ cd tutorial3
+ $ mkdir -p tutorial3/auto
+ $ cp /usr/share/live/build/examples/auto/* tutorial3/auto/
+ $ cd tutorial3
 
 }code
 
@@ -88,14 +88,14 @@ Edit #{auto/config}# to read as follows:
 
 code{
 
-#!/bin/sh
+ #!/bin/sh
 
-lb config noauto \
-    --architecture i386 \
-    --linux-flavours 686 \
-    --packages-lists lxde \
-    --packages "iceweasel xchat" \
-    "${@}"
+ lb config noauto \
+     --architecture i386 \
+     --linux-flavours 686 \
+     --packages-lists lxde \
+     --packages "iceweasel xchat" \
+     "${@}"
 
 }code
 
@@ -105,7 +105,7 @@ Now, build the image:
 
 code{
 
-# lb build
+ # lb build
 
 }code
 
@@ -115,9 +115,9 @@ Once you've tested the image (as in {Tutorial 1}#tutorial-1) and are satisfied i
 
 code{
 
-$ git init
-$ git add auto
-$ git commit -a -m "Initial import."
+ $ git init
+ $ git add auto
+ $ git commit -a -m "Initial import."
 
 }code
 
@@ -129,7 +129,7 @@ The #{lb clean}# command will clean up all generated files from the previous bui
 
 code{
 
-# lb clean
+ # lb clean
 
 }code
 
@@ -137,14 +137,14 @@ Now edit #{auto/config}# to add the #{vlc}# package:
 
 code{
 
-#!/bin/sh
+ #!/bin/sh
 
-lb config noauto \
-    --architecture i386 \
-    --linux-flavours 686 \
-    --packages-lists lxde \
-    --packages "iceweasel xchat vlc" \
-    "${@}"
+ lb config noauto \
+     --architecture i386 \
+     --linux-flavours 686 \
+     --packages-lists lxde \
+     --packages "iceweasel xchat vlc" \
+     "${@}"
 
 }code
 
@@ -160,7 +160,7 @@ Test, and when you're satisfied, commit the next revision:
 
 code{
 
-$ git commit -a -m "Adding vlc media player."
+ $ git commit -a -m "Adding vlc media player."
 
 }code
 
@@ -176,11 +176,11 @@ Make a build directory and create a skeletal configuration in it built around th
 
 code{
 
-$ mkdir vnc_kiosk_client
-$ cd vnc_kiosk_client
-$ lb config -a i386 -k 686 -p standard-x11 \
-    --packages "gdm3 metacity xvnc4viewer" \
-    --apt-recommends false
+ $ mkdir vnc_kiosk_client
+ $ cd vnc_kiosk_client
+ $ lb config -a i386 -k 686 -p standard-x11 \
+     --packages "gdm3 metacity xvnc4viewer" \
+     --apt-recommends false
 
 }code
 
@@ -188,15 +188,15 @@ Create the directory #{/etc/skel}# and put a custom #{.xsession}# in it for the 
 
 code{
 
-$ mkdir -p config/chroot_local-includes/etc/skel
-$ cat >config/chroot_local-includes/etc/skel/.xsession <<END
-#!/bin/sh
+ $ mkdir -p config/chroot_local-includes/etc/skel
+ $ cat >config/chroot_local-includes/etc/skel/.xsession <<END
+ #!/bin/sh
 
-/usr/bin/metacity &
-/usr/bin/xvncviewer 192.168.1.2:1
+ /usr/bin/metacity &
+ /usr/bin/xvncviewer 192.168.1.2:1
 
-exit
-END
+ exit
+ END
 
 }code
 
@@ -204,7 +204,7 @@ Build the image:
 
 code{
 
-# lb build
+ # lb build
 
 }code
 
@@ -218,7 +218,8 @@ When optimizing an image to fit a certain media size, you need to understand the
 
 code{
 
-$ lb config -k 486 -p minimal --binary-indices false --memtest none --apt-recommends false --includes none
+ $ lb config -k 486 -p minimal --binary-indices false \
+     --memtest none --apt-recommends false --includes none
 
 }code
 
@@ -226,7 +227,7 @@ Now, build the image in the usual way:
 
 code{
 
-# lb build 2>&1 | tee binary.log
+ # lb build 2>&1 | tee binary.log
 
 }code
 
@@ -244,7 +245,7 @@ Our initial problem is the discovery of the names of the appropriate tasks. Curr
 
 code{
 
-# apt-get install dctrl-tools tasksel-data
+ # apt-get install dctrl-tools tasksel-data
 
 }code
 
@@ -252,12 +253,12 @@ Now we can search for the appropriate tasks, first with:
 
 code{
 
-$ grep-dctrl -FTest-lang pt_BR /usr/share/tasksel/debian-tasks.desc -sTask,Description
-Task: brazilian-portuguese
-Description: Brazilian Portuguese environment
- This task installs programs, data files, and
- documentation that make it easier for Brazilian Portuguese speakers
- to use Debian.
+ $ grep-dctrl -FTest-lang pt_BR /usr/share/tasksel/debian-tasks.desc -sTask,Description
+ Task: brazilian-portuguese
+ Description: Brazilian Portuguese environment
+  This task installs programs, data files, and
+  documentation that make it easier for Brazilian Portuguese speakers
+  to use Debian.
 
 }code
 
@@ -265,14 +266,14 @@ By this command, we discover the task is called, plainly enough, brazilian-portu
 
 code{
 
-$ grep-dctrl -FEnhances brazilian-portuguese /usr/share/tasksel/debian-tasks.desc -sTask,Description
-Task: brazilian-portuguese-desktop
-Description: Brazilian Portuguese desktop
- This task localises the desktop in Brasilian Portuguese.
+ $ grep-dctrl -FEnhances brazilian-portuguese /usr/share/tasksel/debian-tasks.desc -sTask,Description
+ Task: brazilian-portuguese-desktop
+ Description: Brazilian Portuguese desktop
+  This task localises the desktop in Brasilian Portuguese.
 
-Task: brazilian-portuguese-kde-desktop
-Description: Brazilian Portuguese KDE desktop
- This task localises the KDE desktop in Brazilian Portuguese.
+ Task: brazilian-portuguese-kde-desktop
+ Description: Brazilian Portuguese KDE desktop
+  This task localises the KDE desktop in Brazilian Portuguese.
 
 }code
 
@@ -280,9 +281,9 @@ We will use the experimental #{--language}# option, as live-build happens to inc
 
 code{
 
-$ mkdir live-pt_BR-kde
-$ cd live-pt_BR-kde
-$ lb config \
+ $ mkdir live-pt_BR-kde
+ $ cd live-pt_BR-kde
+ $ lb config \
      -a i386 \
      -k 486 \
      -p kde-desktop \

@@ -12,7 +12,7 @@ You can specify additional groups that the live user will belong to by preseedin
 
 code{
 
-debconf passwd/user-default-groups string audio cdrom dialout floppy video plugdev netdev powerdev fuse
+ debconf passwd/user-default-groups string audio cdrom dialout floppy video plugdev netdev powerdev fuse
 
 }code
 
@@ -30,7 +30,7 @@ The default locale when building a Live system is "locales=en_US.UTF-8". To defi
 
 code{
 
-$ lb config --bootappend-live "locales=de_CH.UTF-8"
+ $ lb config --bootappend-live "locales=de_CH.UTF-8"
 
 }code
 
@@ -40,8 +40,8 @@ Both the console and X keyboard configuration depend on the #{keyboard-layouts}#
 
 code{
 
-$ grep -i sweden -C3 /usr/share/X11/xkb/rules/base.xml | grep name
-<name>se</name>
+ $ grep -i sweden -C3 /usr/share/X11/xkb/rules/base.xml | grep name
+ <name>se</name>
 
 }code
 
@@ -49,7 +49,7 @@ To get the locale files for German and Swiss German keyboard layout in X use:
 
 code{
 
-$ lb config --bootappend-live "locales=de_CH.UTF-8 keyboard-layouts=ch"
+ $ lb config --bootappend-live "locales=de_CH.UTF-8 keyboard-layouts=ch"
 
 }code
 
@@ -57,7 +57,8 @@ A list of the valid values of the keyboards for the console can be figured with 
 
 code{
 
-$ for i in $(find /usr/share/keymaps/ -iname "*kmap.gz"); do basename $i | head -c -9; echo; done | sort | less
+ $ for i in $(find /usr/share/keymaps/ -iname "*kmap.gz"); \
+     do basename $i | head -c -9; echo; done | sort | less
 
 }code
 
@@ -65,7 +66,8 @@ Alternatively, you can use the #{console-setup}# package, a tool to let you conf
 
 code{
 
-$ lb config --bootappend-live "locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variant=bepo keyboard-model=tm2030usb"
+ $ lb config --bootappend-live \
+     "locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variant=bepo keyboard-model=tm2030usb"
 
 }code
 
@@ -85,7 +87,7 @@ By 'full persistence' it is meant that instead of using a tmpfs for storing modi
 
 code{
 
-# mkfs.ext2 -L live-rw /dev/sdb1
+ # mkfs.ext2 -L live-rw /dev/sdb1
 
 }code
 
@@ -93,8 +95,8 @@ If you already have a partition on your device, you could just change the label 
 
 code{
 
-# tune2fs -L live-rw /dev/sdb1 # for ext2,3,4 filesystems
-# dosfslabel /dev/sdb1 live-rw # for a fat filesystem
+ # tune2fs -L live-rw /dev/sdb1 # for ext2,3,4 filesystems
+ # dosfslabel /dev/sdb1 live-rw # for a fat filesystem
 
 }code
 
@@ -102,8 +104,8 @@ But since live system users cannot always use a hard drive partition, and consid
 
 code{
 
-$ dd if=/dev/null of=live-rw bs=1G seek=1 # for a 1GB sized image file
-$ /sbin/mkfs.ext2 -F live-rw
+ $ dd if=/dev/null of=live-rw bs=1G seek=1 # for a 1GB sized image file
+ $ /sbin/mkfs.ext2 -F live-rw
 
 }code
 

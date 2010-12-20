@@ -12,7 +12,7 @@ The distribution you choose has the broadest impact on which packages are availa
 
 code{
 
-$ lb config --distribution sid
+ $ lb config --distribution sid
 
 }code
 
@@ -20,7 +20,7 @@ Within the distribution archive, archive areas are major divisions of the archiv
 
 code{
 
-$ lb config --archive-areas "main contrib"
+ $ lb config --archive-areas "main contrib"
 
 }code
 
@@ -38,8 +38,8 @@ To set the distribution mirrors used at build time to point at a local mirror, i
 
 code{
 
-$ lb config --mirror-bootstrap http://localhost/debian/ \
-            --mirror-chroot-security http://localhost/debian-security/
+ $ lb config --mirror-bootstrap http://localhost/debian/ \
+             --mirror-chroot-security http://localhost/debian-security/
 
 }code
 
@@ -51,8 +51,8 @@ The #{--mirror-binary*}# options govern the distribution mirrors placed in the b
 
 code{
 
-$ lb config --mirror-binary http://mirror/debian/ \
-            --mirror-binary-security http://mirror/debian-security/
+ $ lb config --mirror-binary http://mirror/debian/ \
+             --mirror-binary-security http://mirror/debian-security/
 
 }code
 
@@ -64,7 +64,7 @@ For example, #{config/chroot_sources/live.chroot}# allows you to install package
 
 code{
 
-deb http://live.debian.net/ sid-snapshots main contrib non-free
+ deb http://live.debian.net/ sid-snapshots main contrib non-free
 
 }code
 
@@ -78,7 +78,7 @@ Note: some preconfigured package repositories are available for easy selection t
 
 code{
 
-$ lb config --repository live.debian.net
+ $ lb config --repository live.debian.net
 
 }code
 
@@ -92,7 +92,7 @@ When the number of packages added is small, simply specify #{--packages}#. For e
 
 code{
 
-$ lb config --packages "package1 package2 package3"
+ $ lb config --packages "package1 package2 package3"
 
 }code
 
@@ -110,7 +110,7 @@ The simplest way to use lists is to specify one or more predefined lists with th
 
 code{
 
-$ lb config --packages-lists "gnome-core rescue"
+ $ lb config --packages-lists "gnome-core rescue"
 
 }code
 
@@ -140,8 +140,8 @@ For example, to make a list that includes the predefined #{gnome}# list plus ice
 
 code{
 
-#include <gnome>
-iceweasel
+ #include <gnome>
+ iceweasel
 
 }code
 
@@ -153,9 +153,9 @@ For example, to install #{ia32-libs}# if the #{--architecture amd64}# is specifi
 
 code{
 
-#if ARCHITECTURE amd64
-ia32-libs
-#endif
+ #if ARCHITECTURE amd64
+ ia32-libs
+ #endif
 
 }code
 
@@ -163,9 +163,9 @@ You may test for any one of a number of values, e.g. to install #{memtest86+}# i
 
 code{
 
-#if ARCHITECTURE i386 amd64
-memtest86+
-#endif
+ #if ARCHITECTURE i386 amd64
+ memtest86+
+ #endif
 
 }code
 
@@ -173,9 +173,9 @@ You may also test against variables that may contain more than one value, e.g. t
 
 code{
 
-#if ARCHIVE_AREAS contrib non-free
-vrms
-#endif
+ #if ARCHIVE_AREAS contrib non-free
+ vrms
+ #endif
 
 }code
 
@@ -183,9 +183,9 @@ A conditional may surround an #{#include}# directive:
 
 code{
 
-#if ARCHITECTURE amd64
-#include <gnome-full>
-#endif
+ #if ARCHITECTURE amd64
+ #include <gnome-full>
+ #endif
 
 }code
 
@@ -197,7 +197,7 @@ The Debian Installer offers the user choices of a number of preselected lists of
 
 code{
 
-$ lb config --tasks "mail-server file-server"
+ $ lb config --tasks "mail-server file-server"
 
 }code
 
@@ -213,7 +213,7 @@ First, there is no provision made yet automatically for language tasks, although
 
 code{
 
-$ lb config --tasks "japanese japanese-desktop japanese-gnome-desktop"
+ $ lb config --tasks "japanese japanese-desktop japanese-gnome-desktop"
 
 }code
 
@@ -225,7 +225,7 @@ Third, if any of the tasks for these desktop flavours are selected, either expli
 
 code{
 
-$ lb config --language es
+ $ lb config --language es
 
 }code
 
@@ -289,7 +289,7 @@ One commonly required APT configuration is to deal with building an image behind
 
 code{
 
-$ lb config --apt-http-proxy http://proxy/
+ $ lb config --apt-http-proxy http://proxy/
 
 }code
 
@@ -301,7 +301,7 @@ If you don't want to include APT indices in the image, you can omit those with:
 
 code{
 
-$ lb config --binary-indices false
+ $ lb config --binary-indices false
 
 }code
 
@@ -311,7 +311,7 @@ If you find the installation of recommended packages bloats your image too much,
 
 code{
 
-$ lb config --apt-recommends false
+ $ lb config --apt-recommends false
 
 }code
 
@@ -329,16 +329,16 @@ Let's say you are building a Squeeze live system but need all #{live-*}# package
 
 code{
 
-$ echo "deb http://mirror/debian sid main" > config/chroot_sources/sid.chroot
-$ cat >>config/chroot_apt/preferences <<END
-Package: live-*
-Pin: release n=sid
-Pin-Priority: 600
+ $ echo "deb http://mirror/debian sid main" > config/chroot_sources/sid.chroot
+ $ cat >>config/chroot_apt/preferences <<END
+ Package: live-*
+ Pin: release n=sid
+ Pin-Priority: 600
 
-Package: *
-Pin: release n=sid
-Pin-Priority: 1
-END
+ Package: *
+ Pin: release n=sid
+ Pin-Priority: 1
+ END
 
 }code
 
@@ -346,9 +346,9 @@ Negative pin priorities will prevent a package from being installed, as in the c
 
 code{
 
-Package: gnome-keyring
-Pin: version *
-Pin-Priority: -1
+ Package: gnome-keyring
+ Pin: version *
+ Pin-Priority: -1
 
 }code
 

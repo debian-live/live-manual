@@ -38,7 +38,7 @@ distribuzione supportata. Ad esempio se si vuole costruire un rilascio
 
 code{
 
-$ lb config --distribution sid
+ $ lb config --distribution sid
 
 }code
 
@@ -50,7 +50,7 @@ specificati uno o più valori:
 
 code{
 
-$ lb config --archive-areas "main contrib"
+ $ lb config --archive-areas "main contrib"
 
 }code
 
@@ -88,8 +88,8 @@ uno locale, è sufficiente impostare #{--mirror-bootstrap}# e
 
 code{
 
-$ lb config --mirror-bootstrap http://localhost/debian/ \
-            --mirror-chroot-security http://localhost/debian-security/
+ $ lb config --mirror-bootstrap http://localhost/debian/ \
+             --mirror-chroot-security http://localhost/debian-security/
 
 }code
 
@@ -111,8 +111,8 @@ raggiungibile il "#{mirror}#".
 
 code{
 
-$ lb config --mirror-binary http://mirror/debian/ \
-            --mirror-binary-security http://mirror/debian-security/
+ $ lb config --mirror-binary http://mirror/debian/ \
+             --mirror-binary-security http://mirror/debian-security/
 
 }code
 
@@ -134,7 +134,7 @@ del sistema live.
 
 code{
 
-deb http://live.debian.net/ sid-snapshots main contrib non-free
+ deb http://live.debian.net/ sid-snapshots main contrib non-free
 
 }code
 
@@ -153,7 +153,7 @@ snapshot live è sufficiente un semplice comando:
 
 code{
 
-$ lb config --repository live.debian.net
+ $ lb config --repository live.debian.net
 
 }code
 
@@ -175,7 +175,7 @@ specificare #{--packages}#. Per esempio:
 
 code{
 
-$ lb config --packages "package1 package2 package3"
+ $ lb config --packages "package1 package2 package3"
 
 }code
 
@@ -205,7 +205,7 @@ l'opzione #{--packages-lists}#. Per esempio:
 
 code{
 
-$ lb config --packages-lists "gnome-core rescue"
+ $ lb config --packages-lists "gnome-core rescue"
 
 }code
 
@@ -258,7 +258,8 @@ Per esempio, per creare un elenco che includa quello predefinito di
 
 code{
 
-#include <gnome> iceweasel
+ #include <gnome>
+ iceweasel
 
 }code
 
@@ -277,7 +278,9 @@ amd64}#:
 
 code{
 
-#if ARCHITECTURE amd64 ia32-libs #endif
+ #if ARCHITECTURE amd64
+ ia32-libs
+ #endif
 
 }code
 
@@ -287,7 +290,9 @@ installare #{memtest86+}# specificando sia #{--architecture i386}# sia
 
 code{
 
-#if ARCHITECTURE i386 amd64 memtest86+ #endif
+ #if ARCHITECTURE i386 amd64
+ memtest86+
+ #endif
 
 }code
 
@@ -297,7 +302,9 @@ esempio per installare #{vrms}# specificando sia da #{contrib}# sia da
 
 code{
 
-#if ARCHIVE_AREAS contrib non-free vrms #endif
+ #if ARCHIVE_AREAS contrib non-free
+ vrms
+ #endif
 
 }code
 
@@ -305,7 +312,9 @@ Una condizione può coinvolegere una direttiva #{#include}#:
 
 code{
 
-#if ARCHITECTURE amd64 #include <gnome-full> #endif
+ #if ARCHITECTURE amd64
+ #include <gnome-full>
+ #endif
 
 }code
 
@@ -323,7 +332,7 @@ nell'esempio seguente.
 
 code{
 
-$ lb config --tasks "mail-server file-server"
+ $ lb config --tasks "mail-server file-server"
 
 }code
 
@@ -354,7 +363,7 @@ specificati nella configurazione. Per esempio:
 
 code{
 
-$ lb config --tasks "japanese japanese-desktop japanese-gnome-desktop"
+ $ lb config --tasks "japanese japanese-desktop japanese-gnome-desktop"
 
 }code
 
@@ -376,7 +385,7 @@ i vari tipi di desktop.
 
 code{
 
-$ lb config --language es
+ $ lb config --language es
 
 }code
 
@@ -490,7 +499,7 @@ un'immagine dietro un proxy, lo si può specificare con le opzioni
 
 code{
 
-$ lb config --apt-http-proxy http://proxy/
+ $ lb config --apt-http-proxy http://proxy/
 
 }code
 
@@ -504,7 +513,7 @@ d'interesse.
 
 code{
 
-$ lb config --binary-indices false
+ $ lb config --binary-indices false
 
 }code
 
@@ -519,7 +528,7 @@ troppo l'immagine, si può disabilitare l'opzione predefinita di APT con:
 
 code{
 
-$ lb config --apt-recommends false
+ $ lb config --apt-recommends false
 
 }code
 
@@ -557,11 +566,16 @@ dalla distribuzione principale, Squeeze. Quanto segue servirà allo scopo:
 
 code{
 
-$ echo "deb http://mirror/debian sid main" >
-config/chroot_sources/sid.chroot $ cat >>config/chroot_apt/preferences <<END
-Package: live-* Pin: release n=sid Pin-Priority: 600
+ $ echo "deb http://mirror/debian sid main" > config/chroot_sources/sid.chroot
+ $ cat >>config/chroot_apt/preferences <<END
+ Package: live-*
+ Pin: release n=sid
+ Pin-Priority: 600
 
-Package: * Pin: release n=sid Pin-Priority: 1 END
+ Package: *
+ Pin: release n=sid
+ Pin-Priority: 1
+ END
 
 }code
 
@@ -574,7 +588,9 @@ following stanza to #{config/chroot_apt/preferences}#:
 
 code{
 
-Package: gnome-keyring Pin: version * Pin-Priority: -1
+ Package: gnome-keyring
+ Pin: version *
+ Pin-Priority: -1
 
 }code
 

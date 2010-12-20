@@ -26,9 +26,9 @@ desiderato. Ad esempio:
 
 code{
 
-LB_MIRROR_BOOTSTRAP="http://mirror/debian"
-LB_MIRROR_CHROOT="http://mirror/debian"
-LB_MIRROR_CHROOT_SECURITY="http://mirror/debian-security"
+ LB_MIRROR_BOOTSTRAP="http://mirror/debian"
+ LB_MIRROR_CHROOT="http://mirror/debian"
+ LB_MIRROR_CHROOT_SECURITY="http://mirror/debian-security"
 
 }code
 
@@ -44,7 +44,7 @@ Non può essere più semplice:
 
 code{
 
-$ mkdir tutorial1 ; cd tutorial1 ; lb config
+ $ mkdir tutorial1 ; cd tutorial1 ; lb config
 
 }code
 
@@ -56,7 +56,7 @@ Ora, come super-utente, si generi l'immagine, salvando un log con #{tee}#.
 
 code{
 
-# lb build 2>&1 | tee binary.log
+ # lb build 2>&1 | tee binary.log
 
 }code
 
@@ -80,7 +80,7 @@ Live.
 
 code{
 
-$ mkdir tutorial2 ; cd tutorial2 ; lb config -p lxde --packages iceweasel
+ $ mkdir tutorial2 ; cd tutorial2 ; lb config -p lxde --packages iceweasel
 
 }code
 
@@ -97,7 +97,7 @@ Si generi l'immagine, ancora come super-utente, conservando un log come in
 
 code{
 
-# lb build 2>&1 | tee binary.log
+ # lb build 2>&1 | tee binary.log
 
 }code
 
@@ -120,8 +120,9 @@ configurazione}#managing-a-configuration.
 
 code{
 
-$ mkdir -p tutorial3/auto $ cp /usr/share/live/build/examples/auto/*
-tutorial3/auto/ $ cd tutorial3
+ $ mkdir -p tutorial3/auto
+ $ cp /usr/share/live/build/examples/auto/* tutorial3/auto/
+ $ cd tutorial3
 
 }code
 
@@ -129,14 +130,14 @@ Modificare #{auto/config}# come segue:
 
 code{
 
-#!/bin/sh
+ #!/bin/sh
 
-lb config noauto \
-    --architecture i386 \
-    --linux-flavours 686 \
-    --packages-lists lxde \
-    --packages "iceweasel xchat" \
-    "${@}"
+ lb config noauto \
+     --architecture i386 \
+     --linux-flavours 686 \
+     --packages-lists lxde \
+     --packages "iceweasel xchat" \
+     "${@}"
 
 }code
 
@@ -152,7 +153,7 @@ Costruire quindi l'immagine:
 
 code{
 
-# lb build
+ # lb build
 
 }code
 
@@ -166,7 +167,9 @@ creati, e poi fare il primo commit:
 
 code{
 
-$ git init $ git add auto $ git commit -a -m "Initial import."
+ $ git init
+ $ git add auto
+ $ git commit -a -m "Initial import."
 
 }code
 
@@ -183,7 +186,7 @@ tutti i passaggi per rigenerare i file dalla nuova configurazione.
 
 code{
 
-# lb clean
+ # lb clean
 
 }code
 
@@ -191,14 +194,14 @@ Si modifichi ora #{auto/config}# per aggiungere il pacchetto #{vlc}#:
 
 code{
 
-#!/bin/sh
+ #!/bin/sh
 
-lb config noauto \
-    --architecture i386 \
-    --linux-flavours 686 \
-    --packages-lists lxde \
-    --packages "iceweasel xchat vlc" \
-    "${@}"
+ lb config noauto \
+     --architecture i386 \
+     --linux-flavours 686 \
+     --packages-lists lxde \
+     --packages "iceweasel xchat vlc" \
+     "${@}"
 
 }code
 
@@ -215,7 +218,7 @@ successiva:
 
 code{
 
-$ git commit -a -m "Adding vlc media player."
+ $ git commit -a -m "Adding vlc media player."
 
 }code
 
@@ -245,11 +248,11 @@ ottenere un sistema minimale:
 
 code{
 
-$ mkdir vnc_kiosk_client
-$ cd vnc_kiosk_client
-$ lb config -a i386 -k 686 -p standard-x11 \
-    --packages "gdm3 metacity xvnc4viewer" \
-    --apt-recommends false
+ $ mkdir vnc_kiosk_client
+ $ cd vnc_kiosk_client
+ $ lb config -a i386 -k 686 -p standard-x11 \
+     --packages "gdm3 metacity xvnc4viewer" \
+     --apt-recommends false
 
 }code
 
@@ -260,12 +263,15 @@ xvncviewer, connesso alla porta #{5901}# su un server all'indirizzo
 
 code{
 
-$ mkdir -p config/chroot_local-includes/etc/skel $ cat
->config/chroot_local-includes/etc/skel/.xsession <<END #!/bin/sh
+ $ mkdir -p config/chroot_local-includes/etc/skel
+ $ cat >config/chroot_local-includes/etc/skel/.xsession <<END
+ #!/bin/sh
 
-/usr/bin/metacity & /usr/bin/xvncviewer 192.168.1.2:1
+ /usr/bin/metacity &
+ /usr/bin/xvncviewer 192.168.1.2:1
 
-exit END
+ exit
+ END
 
 }code
 
@@ -273,7 +279,7 @@ Costruire l'immagine:
 
 code{
 
-# lb build
+ # lb build
 
 }code
 
@@ -295,8 +301,8 @@ sappia cosa si sta facendo, come omettere la priorità dei pacchetti
 
 code{
 
-$ lb config -k 486 -p minimal --binary-indices false --memtest none
---apt-recommends false --includes none
+ $ lb config -k 486 -p minimal --binary-indices false \
+     --memtest none --apt-recommends false --includes none
 
 }code
 
@@ -304,7 +310,7 @@ Costruire quindi l'immagine nel modo consueto:
 
 code{
 
-# lb build 2>&1 | tee binary.log
+ # lb build 2>&1 | tee binary.log
 
 }code
 
@@ -343,7 +349,7 @@ di avere entrambi questi pacchetti:
 
 code{
 
-# apt-get install dctrl-tools tasksel-data
+ # apt-get install dctrl-tools tasksel-data
 
 }code
 
@@ -351,12 +357,12 @@ Ora si possono cercare i task appropriati:
 
 code{
 
-$ grep-dctrl -FTest-lang pt_BR /usr/share/tasksel/debian-tasks.desc -sTask,Description
-Task: brazilian-portuguese
-Description: Brazilian Portuguese environment
- This task installs programs, data files, and
- documentation that make it easier for Brazilian Portuguese speakers
- to use Debian.
+ $ grep-dctrl -FTest-lang pt_BR /usr/share/tasksel/debian-tasks.desc -sTask,Description
+ Task: brazilian-portuguese
+ Description: Brazilian Portuguese environment
+  This task installs programs, data files, and
+  documentation that make it easier for Brazilian Portuguese speakers
+  to use Debian.
 
 }code
 
@@ -365,14 +371,14 @@ chiaramente, brazilian-portuguese. Ora per trovare i task correlati:
 
 code{
 
-$ grep-dctrl -FEnhances brazilian-portuguese /usr/share/tasksel/debian-tasks.desc -sTask,Description
-Task: brazilian-portuguese-desktop
-Description: Brazilian Portuguese desktop
- This task localises the desktop in Brasilian Portuguese.
+ $ grep-dctrl -FEnhances brazilian-portuguese /usr/share/tasksel/debian-tasks.desc -sTask,Description
+ Task: brazilian-portuguese-desktop
+ Description: Brazilian Portuguese desktop
+  This task localises the desktop in Brasilian Portuguese.
 
-Task: brazilian-portuguese-kde-desktop
-Description: Brazilian Portuguese KDE desktop
- This task localises the KDE desktop in Brazilian Portuguese.
+ Task: brazilian-portuguese-kde-desktop
+ Description: Brazilian Portuguese KDE desktop
+  This task localises the KDE desktop in Brazilian Portuguese.
 
 }code
 
@@ -384,9 +390,9 @@ tastiera. Ora mettiamo insieme i pezzi:
 
 code{
 
-$ mkdir live-pt_BR-kde
-$ cd live-pt_BR-kde
-$ lb config \
+ $ mkdir live-pt_BR-kde
+ $ cd live-pt_BR-kde
+ $ lb config \
      -a i386 \
      -k 486 \
      -p kde-desktop \

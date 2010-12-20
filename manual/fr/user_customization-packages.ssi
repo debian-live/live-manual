@@ -34,7 +34,7 @@ specify:
 
 code{
 
-$ lb config --distribution sid
+ $ lb config --distribution sid
 
 }code
 
@@ -46,7 +46,7 @@ specified, e.g.
 
 code{
 
-$ lb config --archive-areas "main contrib"
+ $ lb config --archive-areas "main contrib"
 
 }code
 
@@ -81,8 +81,8 @@ mirror, it is sufficient to set #{--mirror-bootstrap}# and
 
 code{
 
-$ lb config --mirror-bootstrap http://localhost/debian/ \
-            --mirror-chroot-security http://localhost/debian-security/
+ $ lb config --mirror-bootstrap http://localhost/debian/ \
+             --mirror-chroot-security http://localhost/debian-security/
 
 }code
 
@@ -102,8 +102,8 @@ suitable for users on a network where "#{mirror}#" is reachable.
 
 code{
 
-$ lb config --mirror-binary http://mirror/debian/ \
-            --mirror-binary-security http://mirror/debian-security/
+ $ lb config --mirror-binary http://mirror/debian/ \
+             --mirror-binary-security http://mirror/debian-security/
 
 }code
 
@@ -123,7 +123,7 @@ packages from the debian live snapshot repository at live system build time.
 
 code{
 
-deb http://live.debian.net/ sid-snapshots main contrib non-free
+ deb http://live.debian.net/ sid-snapshots main contrib non-free
 
 }code
 
@@ -142,7 +142,7 @@ snapshots, a simple command is enough to enable it:
 
 code{
 
-$ lb config --repository live.debian.net
+ $ lb config --repository live.debian.net
 
 }code
 
@@ -164,7 +164,7 @@ When the number of packages added is small, simply specify
 
 code{
 
-$ lb config --packages "package1 package2 package3"
+ $ lb config --packages "package1 package2 package3"
 
 }code
 
@@ -194,7 +194,7 @@ with the #{--packages-lists}# option. For example:
 
 code{
 
-$ lb config --packages-lists "gnome-core rescue"
+ $ lb config --packages-lists "gnome-core rescue"
 
 }code
 
@@ -247,7 +247,8 @@ the following contents:
 
 code{
 
-#include <gnome> iceweasel
+ #include <gnome>
+ iceweasel
 
 }code
 
@@ -265,7 +266,9 @@ specified:
 
 code{
 
-#if ARCHITECTURE amd64 ia32-libs #endif
+ #if ARCHITECTURE amd64
+ ia32-libs
+ #endif
 
 }code
 
@@ -275,7 +278,9 @@ is specified:
 
 code{
 
-#if ARCHITECTURE i386 amd64 memtest86+ #endif
+ #if ARCHITECTURE i386 amd64
+ memtest86+
+ #endif
 
 }code
 
@@ -285,7 +290,9 @@ via #{--archive-areas}#:
 
 code{
 
-#if ARCHIVE_AREAS contrib non-free vrms #endif
+ #if ARCHIVE_AREAS contrib non-free
+ vrms
+ #endif
 
 }code
 
@@ -293,7 +300,9 @@ A conditional may surround an #{#include}# directive:
 
 code{
 
-#if ARCHITECTURE amd64 #include <gnome-full> #endif
+ #if ARCHITECTURE amd64
+ #include <gnome-full>
+ #endif
 
 }code
 
@@ -310,7 +319,7 @@ via the #{--tasks}# option, as in the example below.
 
 code{
 
-$ lb config --tasks "mail-server file-server"
+ $ lb config --tasks "mail-server file-server"
 
 }code
 
@@ -340,7 +349,7 @@ in your configuration. For example:
 
 code{
 
-$ lb config --tasks "japanese japanese-desktop japanese-gnome-desktop"
+ $ lb config --tasks "japanese japanese-desktop japanese-gnome-desktop"
 
 }code
 
@@ -362,7 +371,7 @@ different desktop flavours.
 
 code{
 
-$ lb config --language es
+ $ lb config --language es
 
 }code
 
@@ -474,7 +483,7 @@ or #{--apt-http-proxy}# options as needed, e.g.
 
 code{
 
-$ lb config --apt-http-proxy http://proxy/
+ $ lb config --apt-http-proxy http://proxy/
 
 }code
 
@@ -489,7 +498,7 @@ with:
 
 code{
 
-$ lb config --binary-indices false
+ $ lb config --binary-indices false
 
 }code
 
@@ -504,7 +513,7 @@ much, you may disable that default option of APT with:
 
 code{
 
-$ lb config --apt-recommends false
+ $ lb config --apt-recommends false
 
 }code
 
@@ -542,11 +551,16 @@ distribution, Squeeze. The following will accomplish this:
 
 code{
 
-$ echo "deb http://mirror/debian sid main" >
-config/chroot_sources/sid.chroot $ cat >>config/chroot_apt/preferences <<END
-Package: live-* Pin: release n=sid Pin-Priority: 600
+ $ echo "deb http://mirror/debian sid main" > config/chroot_sources/sid.chroot
+ $ cat >>config/chroot_apt/preferences <<END
+ Package: live-*
+ Pin: release n=sid
+ Pin-Priority: 600
 
-Package: * Pin: release n=sid Pin-Priority: 1 END
+ Package: *
+ Pin: release n=sid
+ Pin-Priority: 1
+ END
 
 }code
 
@@ -559,7 +573,9 @@ following stanza to #{config/chroot_apt/preferences}#:
 
 code{
 
-Package: gnome-keyring Pin: version * Pin-Priority: -1
+ Package: gnome-keyring
+ Pin: version *
+ Pin-Priority: -1
 
 }code
 

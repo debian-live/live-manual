@@ -21,42 +21,44 @@ used and the distribution of the live system you are building.
 
 2~ Known issues
 
-Due to the nature of Debian *{testing}* and Debian *{unstable}*
-distributions being a moving target, building a live system may not always
-be possible.
+Because Debian *{testing}* and Debian *{unstable}* distributions are a
+moving target, when you specify either as the target system distribution, a
+successful build may not always be possible.
 
-If this is a problem, do not build a system based on *{testing}* or
-*{unstable}*, but go with *{stable}*. live-build does always default to the
-current *{stable}* release.
+% FIXME:
+
+If this causes too much difficulty for you, do not build a system based on
+*{testing}* or *{unstable}*, but rather, use *{stable}*. live-build does
+always default to the *{stable}* release.
 
 Currently known issues are listed under the section 'status' on our homepage
-at http://live.debian.net/
+at http://live.debian.net/.
 
-It is out of the scope of this manual to train you in correctly identifying
-and fixing problems in packages of the development distributions, however,
-there are two things you can always try: When not succeeding to build
-*{testing}*, try if *{unstable}* works. If *{unstable}* does not work
-either, revert to *{testing}* and pinning the newer version of the failing
-package from *{unstable}*.
+It is out of the scope of this manual to train you to correctly identify and
+fix problems in packages of the development distributions, however, there
+are two things you can always try: If a build fails when the target
+distribution is *{testing}*, try *{unstable}*. If *{unstable}* does not work
+either, revert to *{testing}* and pin the newer version of the failing
+package from *{unstable}* (see {APT pinning}#apt-pinning for details).
 
 2~ Rebuild from scratch
 
-To ensure that a particular bug is not caused by an unclean built system,
+To ensure that a particular bug is not caused by an uncleanly built system,
 please always rebuild the whole live system from scratch to see if the bug
 is reproducible.
 
 2~ Use up-to-date packages
 
 Using outdated packages can cause significant problems when trying to
-reproduce (and ultimately fix) your problem.
+reproduce (and ultimately fix) your problem. Make sure your build system is
+up-to-date and any packages included in your image are up-to-date as well.
 
 2~collect-information Collect information
 
-Please provide enough information with your report. At a minimum, it should
-contain the exact version of live-build version where the bug is
-encountered, and steps to reproduce it. Please use common sense and include
-other relevant information if you think that it might help in solving the
-problem.
+Please provide enough information with your report. At least include the
+exact version of live-build version where the bug is encountered and steps
+to reproduce it. Please use common sense and include other relevant
+information if you think that it might help in solving the problem.
 
 To make the most out of your bug report, we require at least the following
 information:
@@ -69,7 +71,7 @@ _* Version of live-boot on the live system
 
 _* Version of live-config on the live system
 
-_* Version of debootstrap and/or cdebootstrap on the host system
+_* Version of #{debootstrap}# and/or #{cdebootstrap}# on the host system
 
 _* Architecture of the live system
 
@@ -77,7 +79,9 @@ _* Distribution of the live system
 
 _* Version of the kernel on the live system
 
-You can generate a log of the build process by using the tee command:
+You can generate a log of the build process by using the #{tee}# command. We
+recommend doing this automatically with an #{auto/build}# script; see
+{Managing a configuration}#managing-a-configuration for details).
 
 code{
 
@@ -85,17 +89,32 @@ code{
 
 }code
 
-For runtime log, live-boot stores a log in #{/var/log/live.log}# (or
+At boot time, live-boot stores a log in #{/var/log/live.log}# (or
 #{/var/log/live-boot.log}#).
 
 Additionally, to rule out other errors, it is always a good idea to tar up
-your config directory and upload it somewhere (do *{not}* send it as an
-attachment to the mailinglist), so that we can try to reproduce the errors
-you encountered.
+your #{config/}# directory and upload it somewhere (do *{not}* send it as an
+attachment to the mailing list), so that we can try to reproduce the errors
+you encountered. If this is difficult (e.g. due to size) you can use the
+output of #{lb config --dump}# which produces a summary of your config tree
+(i.e. lists files in subdirectories of #{config/}# but does not include
+them).
 
 Remember to send in any logs that were produced with English locale
 settings, e.g. run your live-build commands with a leading #{LC_ALL=C}# or
 #{LC_ALL=en_US}#.
+
+2~ Isolate the failing case if possible
+
+If possible, isolate the failing case to the smallest possible change that
+breaks. It is not always easy to do this, so if you can't manage it for your
+report, don't worry. However, if you plan your development cycle well, using
+small enough change sets per iteration, you may be able to isolate the
+problem by constructing a simpler 'base' configuration that closely matches
+your actual configuration plus just the broken change set added to it. If
+you have a hard time sorting out which of your changes broke, it may be that
+you are including too much in each change set and should develop in smaller
+increments.
 
 2~ Use the correct package to report the bug against
 
@@ -121,9 +140,9 @@ can fail. If a bug appears here, check if the error is also reproducible on
 a normal system.
 
 If this is the case, this is not a bug in Debian Live, but rather in Debian
-- please report it against the failing package. Running debootstrap
-seperately from the Live system build or running lb bootstrap with
-#{--debug}# will give you more information.
+- please report it against the failing package. Running #{debootstrap}#
+separately from the Live system build or running #{lb bootstrap --debug}#
+will give you more information.
 
 Also, if you are using a local mirror and/or any of sort of proxy and you
 are experiencing a problem, please always reproduce it first by
@@ -134,10 +153,10 @@ bootstrapping from an official mirror.
 If your image does not boot, please report it to the mailing list together
 with the information requested in {Collect
 information}#collect-information. Do not forget to mention, how/when the
-image failed, in Qemu, VMWare or real hardware. If you are using a
-virtualization technology of any kind, please always run it on real hardware
-before reporting a bug. Providing a screenshot of the failure is also very
-helpful.
+image failed, in Qemu, Virtualbox, VMWare or real hardware. If you are using
+a virtualization technology of any kind, please always run it on real
+hardware before reporting a bug. Providing a screenshot of the failure is
+also very helpful.
 
 3~ At run time
 

@@ -22,8 +22,9 @@ retain old values that are no longer appropriate.
 
 A second, related problem is that if you run #{lb config}# and then upgrade
 to a new version of live-build that has changed one of the variable names,
-you will discover this only by manual review of the variables in your config
-files, which you will then need to use to set the appropriate option again.
+you will discover this only by manual review of the variables in your
+#{config/*}# files, which you will then need to use to set the appropriate
+option again.
 
 All of this would be a terrible nuisance if it weren't for auto/* scripts,
 simple wrappers to the #{lb config}#, #{lb build}# and #{lb clean}# commands
@@ -49,10 +50,10 @@ recursively. Also, don't forget to ensure the scripts are executable
 
 code{
 
-#!/bin/sh
-lb config noauto \
-	--packages-lists "standard" \
-	"${@}"
+ #!/bin/sh
+ lb config noauto \
+     --packages-lists "standard" \
+     "${@}"
 
 }code
 
@@ -60,11 +61,11 @@ lb config noauto \
 
 code{
 
-#!/bin/sh
-lb clean noauto "${@}"
-rm -f config/binary config/bootstrap \
-	config/chroot config/common config/source
-rm -f binary.log
+ #!/bin/sh
+ lb clean noauto "${@}"
+ rm -f config/binary config/bootstrap \
+     config/chroot config/common config/source
+ rm -f binary.log
 
 }code
 
@@ -72,7 +73,8 @@ rm -f binary.log
 
 code{
 
-#!/bin/sh lb build noauto "${@}" 2>&1 | tee binary.log
+ #!/bin/sh
+ lb build noauto "${@}" 2>&1 | tee binary.log
 
 }code
 
@@ -81,7 +83,7 @@ above. You may copy those as your starting point.
 
 code{
 
-$ cp /usr/share/live/build/examples/auto/* auto/
+ $ cp /usr/share/live/build/examples/auto/* auto/
 
 }code
 

@@ -21,9 +21,9 @@ the details. Therefore, we have provided three tutorials in the
 {Examples}#examples section designed to teach you image building and
 customization basics. Read {Using the examples}#using-the-examples first,
 followed by {Tutorial 1: A standard image}#tutorial-1, {Tutorial 2: A web
-browser utility}#tutorial-2 and finally {Tutorial 3: A personal travelling
-companion}#tutorial-3. By the end of these tutorials, you will have a taste
-of what can be done with Debian Live. We encourage you to return to more
+browser utility}#tutorial-2 and finally {Tutorial 3: A personalized
+image}#tutorial-3. By the end of these tutorials, you will have a taste of
+what can be done with Debian Live. We encourage you to return to more
 in-depth study of the manual, perhaps next reading {The basics}#the-basics,
 skimming or skipping {Building a netboot image}#building-netboot-image, and
 finishing by reading the {Customization overview}#customization-overview and
@@ -151,16 +151,16 @@ pentru 'building' sunt instalate, prin executatea comenzii:
 
 code{
 
-# apt-get install make po4a sisu-complete
+ # apt-get install make po4a sisu-complete libnokogiri-ruby
 
 }code
 
-Pute-ti crea live-manual de la nivelul de sus al directorului git checkout
+Pute-ti crea live-manual de la nivelul de sus al directorului Git checkout
 al dvs, prin executatea:
 
 code{
 
-$ make build
+ $ make build
 
 }code
 
@@ -170,7 +170,7 @@ executing:
 
 code{
 
-$ make build LANGUAGES=en
+ $ make build LANGUAGES=en
 
 }code
 
@@ -184,12 +184,12 @@ _* Fetch the public commit key:
 
 code{
 
-$ mkdir -p ~/.ssh/identity.d
-$ wget http://live.debian.net/other/keys/gitosis@live.debian.net \
-	-O ~/.ssh/identity.d/gitosis@live.debian.net
-$ wget http://live.debian.net/other/keys/gitosis@live.debian.net.pub \
-	-O ~/.ssh/identity.d/gitosis@live.debian.net.pub
-$ chmod 0600 ~/.ssh/identity.d/gitosis@live.debian.net*
+ $ mkdir -p ~/.ssh/identity.d
+ $ wget http://live.debian.net/other/keys/gitosis@live.debian.net \
+     -O ~/.ssh/identity.d/gitosis@live.debian.net
+ $ wget http://live.debian.net/other/keys/gitosis@live.debian.net.pub \
+     -O ~/.ssh/identity.d/gitosis@live.debian.net.pub
+ $ chmod 0600 ~/.ssh/identity.d/gitosis@live.debian.net*
 
 }code
 
@@ -197,12 +197,12 @@ _* Adaugati urmatoarea sectiuna la openssh-client config:
 
 code{
 
-$ cat >> ~/.ssh/config << EOF
-Host live.debian.net
-        Hostname live.debian.net
-        User gitosis
-        IdentityFile ~/.ssh/identity.d/gitosis@live.debian.net
-EOF
+ $ cat >> ~/.ssh/config << EOF
+ Host live.debian.net
+     Hostname live.debian.net
+     User gitosis
+     IdentityFile ~/.ssh/identity.d/gitosis@live.debian.net
+ EOF
 
 }code
 
@@ -210,27 +210,28 @@ _* Checkout un clon al manualului prin ssh:
 
 code{
 
-$ git clone gitosis@live.debian.net:/live-manual.git
+ $ git clone gitosis@live.debian.net:/live-manual.git
 
 }code
 
-_* Dupa editarea de fisiere in manual/en/, va rugam folositi 'commit' in the
-top level directory to sanitize the files and update the translation files:
+_* After editing the files in #{manual/en/}#, please call the 'commit'
+target in the top level directory to sanitize the files and update the
+translation files:
 
 code{
 
-$ make commit
+ $ make commit
 
 }code
 
 _* Dupa 'sanitizare' 'commit' schimbarile. Scrieti mesajele de commit, care
 constau in propozitii clare, care incep cu litere Mari, si se incheie cu
 punct si sens. Inceputul poate fii de forma
-'Fixing/Adding/Removing/Correcting/':
+'Fixing/Adding/Removing/Correcting/Translating':
 
 code{
 
-$ git commit -a
+ $ git commit -a -m "Adding a section on applying patches."
 
 }code
 
@@ -238,18 +239,23 @@ _* Primite commit-ul la server:
 
 code{
 
-$ git push
+ $ git push
 
 }code
 
 3~ Translation
 
-Submiting a translation for a new language is recommendet in two steps:
+To submit a translation for a new language, follow these three steps:
 
-_* Translate the about_manual.ssi.pot about_project.ssi.pot
+_* Translate the about_manual.ssi.pot, about_project.ssi.pot and
 index.html.in.pot files to your language with your favourite editor (such as
-poedit). Send translated files to the mailinglist. It will then be included
-and autobuild for that language enabled.
+poedit). Send translated files to the mailing list. Once we have reviewed
+your submission, we will add the new language to the manual (providing the
+po files) and will enable it in the autobuild.
 
-_* Now that the new language was added, you can randomly start translating
-all other pot files.
+_* Once the new language is added, you can randomly start translating all po
+files in #{manual/po/}#.
+
+_* Don't forget you need #{make commit}# to ensure the translated manuals
+are updated from the po files, before #{git commit -a}# and #{git push}#.
+

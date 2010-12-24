@@ -34,7 +34,7 @@ specify:
 
 code{
 
-$ lb config --distribution sid
+ $ lb config --distribution sid
 
 }code
 
@@ -46,7 +46,7 @@ specified, e.g.
 
 code{
 
-$ lb config --archive-areas "main contrib"
+ $ lb config --archive-areas "main contrib"
 
 }code
 
@@ -81,8 +81,8 @@ mirror, it is sufficient to set #{--mirror-bootstrap}# and
 
 code{
 
-$ lb config --mirror-bootstrap http://localhost/debian/ \
-            --mirror-chroot-security http://localhost/debian-security/
+ $ lb config --mirror-bootstrap http://localhost/debian/ \
+             --mirror-chroot-security http://localhost/debian-security/
 
 }code
 
@@ -102,8 +102,8 @@ suitable for users on a network where "#{mirror}#" is reachable.
 
 code{
 
-$ lb config --mirror-binary http://mirror/debian/ \
-            --mirror-binary-security http://mirror/debian-security/
+ $ lb config --mirror-binary http://mirror/debian/ \
+             --mirror-binary-security http://mirror/debian-security/
 
 }code
 
@@ -123,7 +123,7 @@ packages from the debian live snapshot repository at live system build time.
 
 code{
 
-deb http://live.debian.net/ sid-snapshots main contrib non-free
+ deb http://live.debian.net/ sid-snapshots main contrib non-free
 
 }code
 
@@ -142,7 +142,7 @@ snapshots, a simple command is enough to enable it:
 
 code{
 
-$ lb config --repository live.debian.net
+ $ lb config --repository live.debian.net
 
 }code
 
@@ -164,7 +164,7 @@ When the number of packages added is small, simply specify
 
 code{
 
-$ lb config --packages "package1 package2 package3"
+ $ lb config --packages "package1 package2 package3"
 
 }code
 
@@ -194,7 +194,7 @@ with the #{--packages-lists}# option. For example:
 
 code{
 
-$ lb config --packages-lists "gnome-core rescue"
+ $ lb config --packages-lists "gnome-core rescue"
 
 }code
 
@@ -247,7 +247,8 @@ the following contents:
 
 code{
 
-#include <gnome> iceweasel
+ #include <gnome>
+ iceweasel
 
 }code
 
@@ -265,17 +266,21 @@ specified:
 
 code{
 
-#if ARCHITECTURE amd64 ia32-libs #endif
+ #if ARCHITECTURE amd64
+ ia32-libs
+ #endif
 
 }code
 
-You may test for any one of a number of values, e.g. to install #{memtest86+
-}# if either #{--architecture i386}# or #{--architecture amd64}# is
-specified:
+You may test for any one of a number of values, e.g. to install
+#{memtest86+}# if either #{--architecture i386}# or #{--architecture amd64}#
+is specified:
 
 code{
 
-#if ARCHITECTURE i386 amd64 memtest86+ #endif
+ #if ARCHITECTURE i386 amd64
+ memtest86+
+ #endif
 
 }code
 
@@ -285,7 +290,9 @@ via #{--archive-areas}#:
 
 code{
 
-#if ARCHIVE_AREAS contrib non-free vrms #endif
+ #if ARCHIVE_AREAS contrib non-free
+ vrms
+ #endif
 
 }code
 
@@ -293,7 +300,9 @@ A conditional may surround an #{#include}# directive:
 
 code{
 
-#if ARCHITECTURE amd64 #include <gnome-full> #endif
+ #if ARCHITECTURE amd64
+ #include <gnome-full>
+ #endif
 
 }code
 
@@ -310,7 +319,7 @@ via the #{--tasks}# option, as in the example below.
 
 code{
 
-$ lb config --tasks "mail-server file-server"
+ $ lb config --tasks "mail-server file-server"
 
 }code
 
@@ -323,12 +332,11 @@ including ones not included in this list, may be examined with #{tasksel
 
 Desktop and language tasks are special cases. In the Debian Installer, if
 the medium was prepared for a particular desktop environment flavour, the
-corresponding task will be automatically installed. Thus, there are there
-are #{gnome-desktop}#, #{kde-desktop}#, #{lxde-desktop}# and
-#{xfce-desktop}# tasks, none of which are offered in #{tasksel}#'s
-menu. Likewise, there are no menu entries for tasks for languages, but the
-user's language choice during the install influences the selection of
-corresponding language tasks.
+corresponding task will be automatically installed. Thus, there are
+#{gnome-desktop}#, #{kde-desktop}#, #{lxde-desktop}# and #{xfce-desktop}#
+tasks, none of which are offered in #{tasksel}#'s menu. Likewise, there are
+no menu entries for tasks for languages, but the user's language choice
+during the install influences the selection of corresponding language tasks.
 
 In live-build, therefore, these special cases are also given special
 consideration, but with three notable differences at the time of writing.
@@ -341,7 +349,7 @@ in your configuration. For example:
 
 code{
 
-$ lb config --tasks "japanese japanese-desktop japanese-gnome-desktop"
+ $ lb config --tasks "japanese japanese-desktop japanese-gnome-desktop"
 
 }code
 
@@ -349,16 +357,31 @@ Second, live-build supports #{*-desktop}# virtual package lists for each of
 the desktop flavours mentioned above, which select the #{standard-x11}#
 predefined package list, the corresponding #{*-desktop}# task and three
 additional tasks: #{desktop}#, #{standard}# and #{laptop}#. So, for example,
-if you specify #{--packages gnome-desktop}#, it is equivalent to specifying
-#{--packages standard-x11 --tasks "gnome-desktop desktop standard laptop"}#.
+if you specify #{--packages-lists gnome-desktop}#, it is equivalent to
+specifying #{--packages debian-installer-launcher --packages-lists
+standard-x11 --tasks "gnome-desktop desktop standard laptop"}#.
 
 Third, if any of the tasks for these desktop flavours are selected, either
-explicitly through #{--tasks}# or implicitly by #{--packages}#, live-build
-will preseed the corresponding desktop value for Debian Installer (if it is
-included) to ensure it follows its own rules for installing different
-desktop flavours.
+explicitly through #{--tasks}# or implicitly by #{--packages-lists}#,
+live-build will preseed the corresponding desktop value for Debian Installer
+(if it is included) to ensure it follows its own rules for installing
+different desktop flavours.
 
-2~ Installing modified or third-party packages
+*{Note:}* There is also an experimental #{--language}# option that has an overlapping purpose with language tasks. For any language for which it is known that there are #{*-l10n}# packages, if #{--language}# is specified, those packages will be installed. Furthermore, if any #{syslinux}# templates matching the language are found, they will be used instead of the default English templates. The package selection done by #{--language}# is a poor approximation of language tasks, as it requires that the list of packages to include per language be maintained internally in live-build, and besides, language tasks are more comprehensive and flexible. However, the #{syslinux}# aspect is still useful. Thus, if you use #{--bootloader syslinux}# and templates for the specified language exist either in #{/usr/share/live/build/templates/syslinux/}# or #{config/templates/syslinux/}#, consider using this option, possibly in combination with tasks to ensure all relevant packages are installed. For example:
+
+code{
+
+ $ lb config --language es
+
+}code
+
+Even so, it is limited in that it only supports a single language and a
+single bootloader. Therefore, for all of these reasons, the future of this
+option is under review, possibly to be replaced with something entirely
+different in the next major release of live-build.
+
+2~installing-modified-or-third-party-packages Installing modified or
+third-party packages
 
 Whilst it is against the philosophy of Debian Live, it may sometimes be
 necessary to build a Live system with modified versions of packages that are
@@ -460,7 +483,7 @@ or #{--apt-http-proxy}# options as needed, e.g.
 
 code{
 
-lb config --apt-http-proxy http://proxy/
+ $ lb config --apt-http-proxy http://proxy/
 
 }code
 
@@ -475,7 +498,7 @@ with:
 
 code{
 
-$ lb config --binary-indices false
+ $ lb config --binary-indices false
 
 }code
 
@@ -490,17 +513,21 @@ much, you may disable that default option of APT with:
 
 code{
 
-$ lb config --apt-recommends false
+ $ lb config --apt-recommends false
 
 }code
 
-The tradeoff here is that recommended packages are defined as "packages that
-would be found together with this one in all but unusual installations"
-(Debian Policy Manual, Â§7.2). This may lead to some packages that you
-actually need being omitted, so we suggest you review the difference this
-makes to your packages list (see the #{binary.packages}# file generated by
-#{lb build}#) and re-include in your list any missing packages that you
-still want installed.
+The tradeoff here is that if you don't install recommended packages for a
+given package, that is, "packages that would be found together with this one
+in all but unusual installations" (Debian Policy Manual, Â§7.2), some
+packages that you actually need may be omitted. Therefore, we suggest you
+review the difference turning off recommends makes to your packages list
+(see the #{binary.packages}# file generated by #{lb build}#) and re-include
+in your list any missing packages that you still want
+installed. Alternatively, if you find you only want a small number of
+recommended packages left out, leave recommends enabled and set a negative
+APT pin priority on selected packages to prevent them from being installed,
+as explained in {APT pinning}#apt-pinning.
 
 3~ Passing options to apt or aptitude
 
@@ -524,11 +551,31 @@ distribution, Squeeze. The following will accomplish this:
 
 code{
 
-$ echo "deb http://mirror/debian sid main" >
-config/chroot_sources/sid.chroot $ cat >>config/chroot_apt/preferences <<END
-Package: live-* Pin: release n=sid Pin-Priority: 600
+ $ echo "deb http://mirror/debian sid main" > config/chroot_sources/sid.chroot
+ $ cat >>config/chroot_apt/preferences <<END
+ Package: live-*
+ Pin: release n=sid
+ Pin-Priority: 600
 
-Package: * Pin: release n=sid Pin-Priority: 1 END
+ Package: *
+ Pin: release n=sid
+ Pin-Priority: 1
+ END
+
+}code
+
+Negative pin priorities will prevent a package from being installed, as in
+the case where you do not want a package that is recommended by another
+package. Suppose you are building a GNOME image but don't want the user
+prompted to store wifi passwords in the keyring, so you want to omit the
+recommended #{gnome-keyring}# package. This can be done by adding the
+following stanza to #{config/chroot_apt/preferences}#:
+
+code{
+
+ Package: gnome-keyring
+ Pin: version *
+ Pin-Priority: -1
 
 }code
 

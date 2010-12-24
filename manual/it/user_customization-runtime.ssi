@@ -1,0 +1,220 @@
+:B~ Personalizzare i comportamenti durante l'esecuzione
+
+1~customizing-run-time-behaviours Personalizzare i comportamenti durante
+l'esecuzione
+
+Tutte le configurazioni durante l'esecuzione sono eseguite da
+live-config. Vengono qui presentate alcune delle opzioni di live-config più
+comuni alle quali gli utenti sono interessati; una lista completa può essere
+trovata nel suo manuale.
+
+2~ Personalizzare l'utente live
+
+Un'importante considerazione è che l'utente live viene creato all'avvio da
+live-boot e non da live-build durante la compilazione. Questo non solo
+influenza dove viene introdotto il materiale relativo all'utente nella
+creazione, come discusso in {Live/chroot include
+locali}#live-chroot-local-includes, ma anche ogni gruppo e permesso
+associato all'utente live.
+
+È possibile specificare gruppi aggiuntivi ai quali l'utente live apparterrà
+preconfigurando il valore #{passwd/user-default-groups}# di debconf. Ad
+esempio, per aggiungere l'utente al gruppo #{fuse}#, inserire quanto segue
+ad un file nella directory #{config/chroot_local-preseed}#:
+
+code{
+
+ debconf passwd/user-default-groups string audio cdrom dialout floppy video plugdev netdev powerdev fuse
+
+}code
+
+2~customizing-locale-and-language Personalizzare la localizzazione e la
+lingua
+
+Quando il sistema live si avvia, la lingua è inserita in tre fasi:
+
+_* generazione della localizzazione
+
+_* impostazione del layout di tastiera per la console
+
+impostazione del layout di tastiera per X
+
+Quando si crea un sistema live la localizzazione predefinita è
+"locales=en_US.UTF-8". Per definire quale generare, si usi il parametro
+#{locales}# nell'opzione #{--bootappend-live}# di #{lb config}#:
+
+code{
+
+ $ lb config --bootappend-live "locales=de_CH.UTF-8"
+
+}code
+
+Questo parametro può inoltre essere usato dalla riga di comando del kernel,
+specificando una localizzazione nella forma #{lingua_nazione.codifica}#.
+
+Sia la configurazione della tastiera in console sia di X dipendono dal
+parametro #{keyboard-layouts}# dell'opzione #{--bootappend-live}#. Si
+possono trovare le opzioni valide per i layout di X in
+#{/usr/share/X11/xkb/rules/base.xml}# (piuttosto che limitate alle due
+lettere del codice della nazione); per trovare il valore (i due caratteri)
+corrispondenti alla lingua, si cerchi con il nome inglese della nazione in
+cui si parla tale lingua:
+
+code{
+
+ $ grep -i sweden -C3 /usr/share/X11/xkb/rules/base.xml | grep name
+ <name>se</name>
+
+}code
+
+Per ottenere i file di localizzazione per il layout di tastiera tedesco e
+svizzero-tedesco in X:
+
+code{
+
+ $ lb config --bootappend-live "locales=de_CH.UTF-8 keyboard-layouts=ch"
+
+}code
+
+Si può ottenere un elenco di valori validi della tastiera per la console con
+il seguente comando:
+
+code{
+
+ $ for i in $(find /usr/share/keymaps/ -iname "*kmap.gz"); \
+     do basename $i | head -c -9; echo; done | sort | less
+
+}code
+
+In alternativa è possibile utilizzare il pacchetto #{console-setup}#, uno
+strumento per configurare il layout della console tramite le definizioni di
+X (XKB); si può dunque impostare il layout in modo più preciso con le
+variabili #{keyboard-layouts}#, #{keyboard-variant}#, #{keyboard-options}# e
+#{keyboard-model}#; live-boot userà questi parametri anche per X. Ad
+esempio, per impostare un layout French-Dvorak (chiamato Bepo) su un sistema
+francese con una tastiera TypeMatrix, sia in console sia in X11:
+
+code{
+
+ $ lb config --bootappend-live \
+     "locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variant=bepo keyboard-model=tm2030usb"
+
+}code
+
+2~persistence Persistenza
+
+Uno dei paradigmi di un cd live è un sistema preinstallato eseguito da un
+supporto in sola lettura, come un cdrom, dove le modifiche non sopravvivono
+ai riavvii dell'hardware della macchina ospitante.
+
+Un sistema Debian Live è una generalizzazione di questo paradigma e di
+conseguenza oltre ai CD gestisce altri supporti; ma comunque, nel suo
+comportamento predefinito, deve essere considerato in sola lettura e tutte i
+cambiamenti fatti durante l'esecuzione del sistema verranno persi allo
+spegnimento.
+
+Persistenza è il nome comune per differenti tipi di soluzioni per salvare
+alcune o tutte queste modifiche con i riavii. Per capire come funziona
+potrebbe essere utile sapere che sebbene il sistema venga avviato ed
+eseguito da un dispositivo in sola lettura, le modifiche a file e directory
+vengono scritte su uno scrivibile, tipicamente un ram disk (tmpfs) e i dati
+sui ram disk non sopravvivono ai riavii.
+
+I dati immagazzinati su questo ramdisk andrebbero salvati un supporto
+scrivibile persistente come un hard disk, una chiave USB, una condivisione
+di rete o anche una sessione di un CD/DVD riscrivibile multisessione. Tutti
+questi supporti sono gestiti in Debian Live in modi differenti, e tutti
+tranne l'ultimo richiedono un parametro d'avvio speciale da specificare
+all'avvio: #{persistent}#.
+
+3~ Persistenza completa
+
+Con "persistenza completa" si intende l'uso di una partizione scrivibile
+invece di un filesystem temporaneo (tmpfs) per salvare le modifiche al
+supporto in sola lettura (con il sistema COW, copy-on-write). Per utilizzare
+questa caratteristica, una partizione con un filesystem scrivibile e
+supportato ed etichettata come "live-rw" deve essere collegata al sistema in
+fase di avvio e il sistema va fatto partire con il parametro
+"persistent". Questa partizione potrebbe essere di tipo ext2 su un hard disk
+o una penna usb creata ad esempio con:
+
+code{
+
+ # mkfs.ext2 -L live-rw /dev/sdb1
+
+}code
+
+Se si possiede già una partizione sul dispositivo basta solo cambiare
+l'etichetta con una delle seguenti:
+
+code{
+
+ # tune2fs -L live-rw /dev/sdb1 # for ext2,3,4 filesystems
+ # dosfslabel /dev/sdb1 live-rw # for a fat filesystem
+
+}code
+
+Ma siccome gli utenti dei sistemi live non hanno sempre la possibilità di
+utilizzare una partizione su disco rigido, e considerando che la maggior
+parte delle chiavi USB hanno scarse velocità di scrittura, la persistenza
+"completa" può anche essere usata con dei file immagine, è possibile creare
+un file che rappresenta una partizione e inserire questo file immagine anche
+su una partizione NTFS di un sistema operativo estraneo, qualcosa come:
+
+code{
+
+ $ dd if=/dev/null of=live-rw bs=1G seek=1 # for a 1GB sized image file
+ $ /sbin/mkfs.ext2 -F live-rw
+
+}code
+
+Quindi copiare il file #{live-rw}# su una partizione scrivibile e riavviare
+con il parametro d'avvio "persistent".
+
+3~ Mount automatico della home
+
+Se durante l'avvio viene trovata una partizione (filesystem) su file
+immagine o una partizione etichettata come #{home-rw}#, questa verrà montata
+direttamente come #{/home}#, permettendo quindi la persistenza dei file che
+appartengono ad esempio all'utente predefinito. Può essere unita alla
+persistenza completa.
+
+3~ Istantanee
+
+Le istantanee sono raccolte di file e directory che non vengono montate
+durante l'esecuzione ma copiate all'avvio da un dispositivo persistente al
+sistema (tmpfs) e risincronizzate al riavvio e spegnimento. Il contenuto di
+un'istantanea può risiedere su una partizione o file immagine (come i tipi
+menzionati poc'anzi) etichettati come #{live-sn}#, ma sotto forma di un
+semplice archivio cpio nominato #{live-sn.cpio.gz}#. Come sopra, all'avvio,
+i device a blocchi collegati al sistema vengono analizzati alla ricerca di
+una partizione o file così nominati. Un'interruzione di corrente durante
+l'esecuzione potrebbe portare ad una perdita di dati, per cui si può usare
+uno strumento che richiama #{live-snapshot --refresh}# per sincronizzare i
+cambiamenti importanti. Giacché non scrive continuamente sul dispositivo,
+questo tipo di persistenza è il sistema più comodo e veloce per dispositivi
+basati su memoria flash.
+
+Esiste anche un'istantanea della /home con etichetta #{home-sn.*}#; funziona
+come la principale ma viene applicata solo ad /home.
+
+Attualmente le istantanee non possono gestire la cancellazione dei file, al
+contrario della persistenza completa e il mount automatico della home. 
+
+3~ Sottotesto persistente
+
+Se un utente avesse bisogno di archiviazioni multiple dello stesso tipo per
+differenti posti o per test, come #{live-rw-casa}# e #{live-rw-lavoro}#, il
+parametro d'avvio #{persistent-subtext}# usato in congiunzione con
+#{persistent}# permetterà supporti persistenti multipli ma univoci. Un
+esempio potrebbe essere un utente che vuole usare una partizione etichettata
+come #{live-sn-sottotesto}#, userebbe: #{persistent}#
+#{persistent-subtext=sottotesto}#.
+
+3~ Rimasterizzazione parziale
+
+Le modifiche in fase di esecuzione del tmpfs possono essere incluse in uno
+squashfs usando live-snapshot e aggiunte al cd per rimasterizzare la iso nel
+caso di un cd riscrivibile o aggiunto ad una sessione di un cd/dvd(rw)
+multisessione; live-boot monta tutti i filesystem /live in ordine o con il
+modulo del parametro d'avvio.

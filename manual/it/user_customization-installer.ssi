@@ -1,0 +1,90 @@
+:B~ Personalizzare il Debian Installer
+
+1~customizing-installer Personalizzare il Debian Installer
+
+Le immagini del sistema Debian Live possono essere integrate nel Debian
+Installer. Ci sono differenti tipi d'installazione che variano in cosa viene
+incluso e come agisce l'installatore.
+
+In questa sezione si presti attenzione all'uso delle lettere maiuscole
+quando si fa riferimento al "Debian Installer" - quando usato ci si
+riferisce all'installatore ufficiale Debian, niente altro. Spesso è
+abbreviato come "d-i".
+
+2~ Tipologie del Debian Installer
+
+I tre principali tipi dell'installer sono:
+
+*{Debian Installer "normale"}*: questa è un'immagine Debian Live con un kernel e un initrd separati i quali (quando viene selezionato da un appropriato bootloader) lancia un'istanza standard del Debian Installer, così come quando si scarica un'immagine di Debian e la si avvia. Le immagini che contengono un sistema live e un installatore indipendenti sono spesso definite "immagini combinate".
+
+In queste immagini, Debian è installata prendendo e installando pacchetti
+.deb usando {debootstrap}# o #{cdebootstrap}# da supporti locali o dalla
+rete, risultante in un sistema Debian standard che viene installato sul
+disco rigido.
+
+L'intero processo può essere preimpostato e personalizzato in diversi modi;
+per ulteriori informazioni si vedano le corrispondenti pagine del manuale
+del Debian Installer. Una volta che si ha un file preimpostato che funzioni,
+live-build può inserirlo automaticamente nell'immagine e abilitarlo.
+
+*{Debian Installer "live"}*: Questa è un'immagine Debian Live con un kernel ed un initrd separato (quando selezionato dall'appropriato bootloader) lanciata in un'instanza del Debian Installer.
+
+L'installazione procederà nello stesso modo di un'installazione "Regolare"
+come descritto sopra, ma allo stadio attuale dell'installazione del
+pacchetto, invece di usare #{debootstrap}# per prelevare e installare i
+pacchetti, l'immagine del filesystem live viene copiata sulla
+destinazione. Questo si ottiene con uno speciale udeb chiamato
+live-installer.
+
+Dopo questa fase, il Debian Installer continua normalmente, installando e
+configurando elementi come bootloader e utenti locali, ecc.
+
+Si noti: per supportare entrambi le voci dell'installer live o normale nel
+bootloader sullo stesso media, si deve disabilitare il live-installer dalla
+preconfigurazione #{live-installer/enable=false}.
+
+*{Debian Installer "Desktop"}*: indipendentemente dal tipo del Debian Installer incluso, #{d-i}# può essere lanciato cliccando un'icona sul desktop, Questo è molto semplice in alcune situazioni. Per poterne usufruire deve essere incluso il pacchetto debian-installer-launcher.
+
+Si noti che live-build non include il Debian Installer nell'immagine in modo
+predefinito, bisogna che sia espressamente abilitato con #{lb
+config}#.Inoltre, affinché l'installatore "Desktop" funzioni, il kernel del
+sistema live deve corrispondere a quello usato dal #{d-i}# per
+l'architettura specificata. Per esempio:
+
+code{
+
+ $ lb config --architecture i386 --linux-flavours 486 \
+     --debian-installer live --packages debian-installer-launcher
+
+}code
+
+2~ Personalizzare il Debian Installer con la preconfigurazione
+
+Come descritto nell'appendice B del manuale del Debian Installer
+all'indirizzo http://www.debian.org/releases/stable/i386/apb.html, "La
+preconfigurazione fornisce un modo per impostare le risposte alle domande
+poste durante il processo d'installazione senza la necessità di inserirle
+manualmente. Ciò permette di automatizzare totalmente molti tipi di
+installazione offrendo anche alcune caratteristiche normalmente non
+disponibili." Questo tipo di personalizzazione è compiuta in modo ottimale
+con live-build mettendo la configurazione in un file #{preseed.cfg}# incluso
+in #{config/binary_debian-installer/}#. Ad esempio per preconfigurare
+l'impostazione della localizzazione su #{en_US}#:
+
+code{
+
+ $ echo "d-i debian-installer/locale string en_US" \
+     >> config/binary_debian-installer/preseed.cfg
+
+}code
+
+2~ Personalizzare il contenuto del Debian Installer
+
+Si può voler includere pacchetti udeb compilati localmente come componenti
+del #{d-i}# per scopi di sperimentazione o debug; per includerli
+nell'immagine inserirli in #{config/binary_local-udebs/}#. I file e le
+directory aggiuntivi o di rimpiazzo si possono includere nell'initrd
+dell'installatore in maniera simile agli {Include locali del
+Live/chroot}#live-chroot-local-includes, inserendo il materiale in
+#{config/binary_debian-installer-includes/}#.
+

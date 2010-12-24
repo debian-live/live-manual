@@ -1,0 +1,412 @@
+:B~ Esempi
+
+1~examples Esempi
+
+Questo capitolo affronta alcune costruzioni di esempio per specifici casi
+d'uso con Debian Live. Se si è nuovi nella costruzione di immagini Debian
+Live, raccomandiamo di dare innanzitutto un'occhiata ai tre tutorial in
+sequenza, dato che ciascuno insegna nuove tecniche che aiuteranno nell'uso e
+nella comprensione degli esempi rimanenti.
+
+2~using-the-examples Usare gli esempi
+
+Per usare questi esempi è necessario un sistema per costruirveli sopra che
+soddisfi i requisiti elencati in {Requisiti}#requirements e avere live-build
+installato come descritto in {Installare live-build}#installing-live-build.
+
+Si noti che, per brevità, in questi esempi non specifichiamo un mirror
+locale da usare per la costruzione. Usando un mirror locale, si possono
+accelerare considerevolmente i download. Si possono specificare le opzioni
+quando si usa #{lb config}#, come descritto in {Mirror delle distribuzioni
+usati in fase di compilazione}#distribution-mirrors-build-time o, più
+convenientemente, impostare il predefinito per il proprio sistema in
+#{/etc/live/build.conf}#. Si crei semplicemente questo file e si impostino
+in esso le corrispondenti variabili #{LB_MIRROR_*}# per il mirror
+desiderato. Ad esempio:
+
+code{
+
+ LB_MIRROR_BOOTSTRAP="http://mirror/debian"
+ LB_MIRROR_CHROOT="http://mirror/debian"
+ LB_MIRROR_CHROOT_SECURITY="http://mirror/debian-security"
+
+}code
+
+2~tutorial-1 Tutorial 1: un'immagine standard
+
+*{Caso d'uso:}* creare una prima immagine semplice, imparare i fondameni di live-build.
+
+In questo tutorial genereremo un'immagine ISO ibrida di Debian Live
+contenente solo i pacchetti base (niente Xorg) e alcuni pacchetti Debian
+Live di supporto, come primo esercizio sull'uso di live-build.
+
+Non può essere più semplice:
+
+code{
+
+ $ mkdir tutorial1 ; cd tutorial1 ; lb config
+
+}code
+
+Esaminare i contenuti della directory #{config/}#; si noterà uno scheletro
+di configurazione pronto per essere personalizzato o, in questo caso, usato
+immediatamente per costruire un'immagine predefinita.
+
+Ora, come super-utente, si generi l'immagine, salvando un log con #{tee}#.
+
+code{
+
+ # lb build 2>&1 | tee binary.log
+
+}code
+
+Presupponendo che tutto vada per il verso giusto, dopo un po' la directory
+corrente conterrà #{binary-hybrid.iso}#. Questa immagine ISO ibrida può
+essere avviata direttamente in una macchina virtuale come descritto in
+{Provare un'immagine ISO con Qemu}#testing-iso-with-qemu e {Provare
+un'immagine ISO con virtualbox-ose}#testing-iso-with-virtualbox, oppure
+masterizzata su un supporto ottico o ancora su una chiavetta USB come
+descritto rispettivamente in {Masterizzare un'immagine ISO su un supporto
+fisico}#burning-iso-image e {Copiare un'immagine USB/HDD su una penna
+USB}#copying-usb-hdd-image.
+
+2~tutorial-2 Tutorial 2: un programma di utilità web browser
+
+*{Caso d'uso:}* creazione di un'immagine browser web, imparare come applicare le personalizzazioni.
+
+In questo tutorial verrà creata un'immagine adatta all'uso come browser web,
+che serve come introduzione alla personalizzazione delle immagini Debian
+Live.
+
+code{
+
+ $ mkdir tutorial2 ; cd tutorial2 ; lb config -p lxde --packages iceweasel
+
+}code
+
+La scelta di LXDE per questo esempio riflette il desiderio di fornire un
+ambiente desktop minimale, dato che il punto focale dell'immagine è il
+singolo uso che abbiamo in mente, il browser web. Potremmo anche spingerci
+oltre e fornire una configurazione predefinita per il browser web in
+#{config/chroot_local-includes/etc/iceweasel/profile/}#, o pacchetti
+addizionali di supporto per la fruizione di vari tipi di contenuti web, ma
+lasciamo questo come esercizio per il lettore.
+
+Si generi l'immagine, ancora come super-utente, conservando un log come in
+{Tutorial 1}#tutorial-1:
+
+code{
+
+ # lb build 2>&1 | tee binary.log
+
+}code
+
+Di nuovo, si verifichi che l'immagine sia a posto e la si collaudi, come in
+{Tutorial 1}#tutorial-1.
+
+2~tutorial-3 Tutorial 3: un'immagine personalizzata
+
+*{Caso d'uso:}* creare un progetto per costruire un'immagine personalizzata, contenente i pacchetti preferiti da portare con sé in una chiavetta USB ovunque si vada, da evolvere in revisioni successive allorché i bisogni o le preferenze cambino.
+
+Dal momento che la nostra immagine personalizzata cambierà con le successive
+revisioni, e che vogliamo tener traccia di questi cambiamenti, sperimentando
+ed eventualmente tornare indietro se qualcosa non funziona, conserveremo la
+nostra configurazione nel popolare sistema di controllo di versione
+#{git}#. Useremo anche le migliori pratiche di auto-configurazione tramite
+gli script #{auto}# come descritto in {Gestire una
+configurazione}#managing-a-configuration.
+
+3~ Prima revisione
+
+code{
+
+ $ mkdir -p tutorial3/auto
+ $ cp /usr/share/live/build/examples/auto/* tutorial3/auto/
+ $ cd tutorial3
+
+}code
+
+Modificare #{auto/config}# come segue:
+
+code{
+
+ #!/bin/sh
+
+ lb config noauto \
+     --architecture i386 \
+     --linux-flavours 686 \
+     --packages-lists lxde \
+     --packages "iceweasel xchat" \
+     "${@}"
+
+}code
+
+Per prima cosa, #{--architecture i386}# assicura che sul nostro sistema
+#{amd64}# costruiamo una versione a 32-bit utilizzabile sulla maggior parte
+delle macchine. In secondo luogo, usiamo #{--linux-flavours 686}# dato che
+non prevediamo di usare questa immagine su sistemi troppo vecchi. Terzo,
+abbiamo scelto la lista di pacchetti #{lxde}# per avere un desktop
+minimale. Infine, abbiamo aggiunto due pacchetti preferiti per cominciare:
+#{iceweasel}# e #{xchat}#.
+
+Costruire quindi l'immagine:
+
+code{
+
+ # lb build
+
+}code
+
+Si noti che diversamente dai primi due tutorial, non bisogna più digitare
+#{2>&1 | tee binary.log}# dato che questo è ora incluso in #{auto/build}#.
+
+Una volta che l'immagine è stata collaudata (come in {Tutorial
+1}#tutorial-1) e che si è sicuri che funzioni correttamente, è il momento di
+inizializzare il repository #{git}#, aggiungendo solo gli script auto appena
+creati, e poi fare il primo commit:
+
+code{
+
+ $ git init
+ $ git add auto
+ $ git commit -a -m "Initial import."
+
+}code
+
+3~ Seconda revisione
+
+In questa revisione ripuliremo la prima compilazione, aggiungeremo il
+pacchetto #{vlc}# alla configurazione, dunque avverrà una ricompilazione,
+verifica e commit.
+
+Il comando #{lb clean}# ripulirà tutti i file generati dalla precedente
+compilazione eccetto la cache, che ci evita un nuovo download dei
+pacchetti. Ciò assicura che il successivo #{lb build}# eseguirà di nuovo
+tutti i passaggi per rigenerare i file dalla nuova configurazione.
+
+code{
+
+ # lb clean
+
+}code
+
+Si modifichi ora #{auto/config}# per aggiungere il pacchetto #{vlc}#:
+
+code{
+
+ #!/bin/sh
+
+ lb config noauto \
+     --architecture i386 \
+     --linux-flavours 686 \
+     --packages-lists lxde \
+     --packages "iceweasel xchat vlc" \
+     "${@}"
+
+}code
+
+Compilare nuovamente:
+
+code{
+
+# lb build
+
+}code
+
+Verificare, e quando soddisfatti, eseguire il commit della revisione
+successiva:
+
+code{
+
+ $ git commit -a -m "Adding vlc media player."
+
+}code
+
+Ovviamente sono possibili cambiamenti alla configurazione più complicati,
+magari aggiungendo file in sottodirectory di #{config/}#. Quando si esegue
+il commit di nuove revisioni, si faccia solo attenzione a non modificare
+manualmente o fare un commit dei file al livello superiore di #{config}# che
+contengono le variabili #{LB_*}#, giacché sono anche  prodotti della
+compilazione, e che sono sempre ripuliti da #{lb clean}# e ricreati con #{lb
+config}# attraverso i loro rispettivi script #{auto}#.
+
+Siamo arrivati alla fine di questa serie di tutorial. Mentre sono possibili
+molti altri tipi di personalizzazioni, anche solo usando le poche
+caratteristiche esplorate in questi semplici esempi, può essere creata una
+varietà quasi infinita di immagini. Gli esempi rimanenti in questa sezione
+coprono diversi altri casi d'uso estrapolati dalle esperienze raccolte degli
+utenti Debian Live.
+
+2~ Un client Kiosk VNC
+
+*{Caso d'uso:}* creare un'immagine con live-build per avviare direttamente un server VNC.
+
+Creare una directory con al suo interno una configurazione scheletrica
+costruita sulla base dell'elenco di standard-x11, tra cui #{gdm3}#,
+#{metacity}# e #{xtightvncviewer}#, disabilitando i raccomandati per
+ottenere un sistema minimale:
+
+code{
+
+ $ mkdir vnc_kiosk_client
+ $ cd vnc_kiosk_client
+ $ lb config -a i386 -k 686 -p standard-x11 \
+     --packages "gdm3 metacity xvnc4viewer" \
+     --apt-recommends false
+
+}code
+
+Creare la directory #{/etc/skel}# e inserirvi un #{.xsession}#
+personalizzato per l'utente predefinito che lancerà metacity e avvierà
+xvncviewer, connesso alla porta #{5901}# su un server all'indirizzo
+#{192.168.1.2}#:
+
+code{
+
+ $ mkdir -p config/chroot_local-includes/etc/skel
+ $ cat >config/chroot_local-includes/etc/skel/.xsession <<END
+ #!/bin/sh
+
+ /usr/bin/metacity &
+ /usr/bin/xvncviewer 192.168.1.2:1
+
+ exit
+ END
+
+}code
+
+Costruire l'immagine:
+
+code{
+
+ # lb build
+
+}code
+
+Buon divertimento.
+
+2~ Un'immagine base per una chiavetta USB da 128M
+
+*{Caso d'uso:}* creare un'immagine standard rimuovendo alcuni componenti affinché stia su una chiavetta USB da 128M con lo spazio che rimane da usare come meglio si crede.
+
+Quando si cerca di ottimizzare un'immagine affinché sia contenuta in un
+supporto, è necessario capire il compromesso che si deve fare tra la
+dimensione e la funzionalità. In questo esempio, taglieremo solo quanto
+basta per far sì che il tutto stia in 128M, senza fare nient'altro che
+distrugga l'integrità dei pacchetti contenuti, come eliminare localizzazioni
+con il pacchetto #{localepurge}# o altre ottimizzazioni "intrusive". È da
+notare che non va usato #{--bootstrap-flavour minimal}# a meno che non si
+sappia cosa si sta facendo, come omettere la priorità dei pacchetti
+#{important}# che molto probabilmente produrrà un sistema live danneggiato.
+
+code{
+
+ $ lb config -k 486 -p minimal --binary-indices false \
+     --memtest none --apt-recommends false --includes none
+
+}code
+
+Costruire quindi l'immagine nel modo consueto:
+
+code{
+
+ # lb build 2>&1 | tee binary.log
+
+}code
+
+All'autore del sistema al momento di scrivere, la seguente configurazione ha
+prodotto una immagine di 78Mbyte. Comparabile favorevolmente con i 166Mbyte
+prodotta dalla configurazione predefinita nel {Tutorial 1}#tutorial-1.
+
+Ciò che salva più spazio, comparato alla costruzione di un'immagine standard
+su un sistema con architettura #{i386}#, è la selezione del solo kernel
+#{486}# invece che quello predefinito #{-k "486 686"}#. Lasciando fuori
+anche gli indici di APT con #{--binary-indices false}# si può salvare una
+certa quantità di spazio, il compromesso è usare #{apt-get update}# prima di
+usare apt nel sistema live. Scegliendo la lista #{minima}# dei pacchetti si
+esclude il grosso pacchetto #{locales}# e le utilità associate. Saltare i
+pacchetti raccomandati con #{--apt-recommends false}# salva altro spazio, a
+scapito di alcuni pacchetti che ci si aspetta di trovare, come
+#{firmware-linux-free}# che potrebbe servire a supportare un certo
+hardware. Le restanti opzioni limano altre piccole quantità di spazio. Sta a
+voi decidere se le funzionalità sacrificate con ciascuna ottimizzazione
+valgono la pena.
+
+2~ Un desktop KDE localizzato e l'installer
+
+*{Caso d'uso:}* creare un'immagine con il desktop KDE, localizzato per il Brasiliano Portoghese che includa l'installatore.
+
+Si vuole creare un'immagine iso ibrida per architettura i386 usando il
+nostro desktop preferito, in questo caso KDE, contenente tutti gli stessi
+pacchetti che verrebbero installati dall'installatore Debian standard per
+KDE.
+
+Il problema iniziale è di scoprire i nomi dei task appropriati, attualmente,
+live-build non aiuta in questo. Si può essere fortunati o arrivarci con vari
+tentativi, ma c'è uno strumento #{grep-dctrl}# il quale può essere
+utilizzato per scavare nelle descrizioni in tasksel-data, perciò assicursi
+di avere entrambi questi pacchetti:
+
+code{
+
+ # apt-get install dctrl-tools tasksel-data
+
+}code
+
+Ora si possono cercare i task appropriati:
+
+code{
+
+ $ grep-dctrl -FTest-lang pt_BR /usr/share/tasksel/debian-tasks.desc -sTask,Description
+ Task: brazilian-portuguese
+ Description: Brazilian Portuguese environment
+  This task installs programs, data files, and
+  documentation that make it easier for Brazilian Portuguese speakers
+  to use Debian.
+
+}code
+
+Con questo comando, si è scoperto che il task si chiama, abbastanza
+chiaramente, brazilian-portuguese. Ora per trovare i task correlati:
+
+code{
+
+ $ grep-dctrl -FEnhances brazilian-portuguese /usr/share/tasksel/debian-tasks.desc -sTask,Description
+ Task: brazilian-portuguese-desktop
+ Description: Brazilian Portuguese desktop
+  This task localises the desktop in Brasilian Portuguese.
+
+ Task: brazilian-portuguese-kde-desktop
+ Description: Brazilian Portuguese KDE desktop
+  This task localises the KDE desktop in Brazilian Portuguese.
+
+}code
+
+Si userà l'opzione sperimentale #{--language}#, poiché live-build contempla
+i template #{syslinux}# per pt_BR (Vedere {Task per desktop e
+lingua}#desktop-and-language-tasks per i dettagli). All'avvio verrà generata
+la lingua pt_BR.UTF-8 e selezionato pt-latin1 come layout della
+tastiera. Ora mettiamo insieme i pezzi:
+
+code{
+
+ $ mkdir live-pt_BR-kde
+ $ cd live-pt_BR-kde
+ $ lb config \
+     -a i386 \
+     -k 486 \
+     -p kde-desktop \
+     --language pt_BR \
+     --tasks "brazilian-portuguese brazilian-portuguese-desktop brazilian-portuguese-kde-desktop" \
+     --bootappend-live "locales=pt_BR.UTF-8 keyboard-layouts=pt-latin1" \
+     --debian-installer live \
+     --packages debian-installer-launcher
+
+}code
+
+Si noti che è stato incluso il pacchetto #{debian-installer-launcher}# in
+modo da poter lanciare l'installer dal desktop della live, ed è stato anche
+specificato il kernel 486, poiché è necessario che il kernel dell'installer
+e quello del sistema coincidano affinche il launcher funzioni
+appropriatamente.
+

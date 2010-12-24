@@ -10,7 +10,7 @@ Live configurations rarely are perfect on the first try. You'll likely need to m
 
 For example, when the distribution is first set, many 'dependent' variables are given default values that suit that distribution. However, if you later decide to change the distribution, those dependent variables continue to retain old values that are no longer appropriate.
 
-A second, related problem is that if you run #{lb config}# and then upgrade to a new version of live-build that has changed one of the variable names, you will discover this only by manual review of the variables in your config files, which you will then need to use to set the appropriate option again.
+A second, related problem is that if you run #{lb config}# and then upgrade to a new version of live-build that has changed one of the variable names, you will discover this only by manual review of the variables in your #{config/*}# files, which you will then need to use to set the appropriate option again.
 
 All of this would be a terrible nuisance if it weren't for auto/* scripts, simple wrappers to the #{lb config}#, #{lb build}# and #{lb clean}# commands that are designed to help you manage your configuration. Simply create an auto/config script containing #{lb config}# command with all desired options, and an auto/clean that removes the files containing configuration variable values, and each time you #{lb config}# and #{lb clean}#, these files will be executed. This will ensure that your configuration is kept internally consistent from one revision to the next and from one live-build release to the next (though you will still have to take care and read the documentation when you upgrade live-build and make adjustments as needed).
 
@@ -22,10 +22,10 @@ Use auto script examples such as the following as the starting point for your ne
 
 code{
 
-#!/bin/sh
-lb config noauto \
-	--packages-lists "standard" \
-	"${@}"
+ #!/bin/sh
+ lb config noauto \
+     --packages-lists "standard" \
+     "${@}"
 
 }code
 
@@ -33,11 +33,11 @@ lb config noauto \
 
 code{
 
-#!/bin/sh
-lb clean noauto "${@}"
-rm -f config/binary config/bootstrap \
-	config/chroot config/common config/source
-rm -f binary.log
+ #!/bin/sh
+ lb clean noauto "${@}"
+ rm -f config/binary config/bootstrap \
+     config/chroot config/common config/source
+ rm -f binary.log
 
 }code
 
@@ -45,8 +45,8 @@ rm -f binary.log
 
 code{
 
-#!/bin/sh
-lb build noauto "${@}" 2>&1 | tee binary.log
+ #!/bin/sh
+ lb build noauto "${@}" 2>&1 | tee binary.log
 
 }code
 
@@ -54,7 +54,7 @@ We now ship example auto scripts with live-build based on the examples above. Yo
 
 code{
 
-$ cp /usr/share/live/build/examples/auto/* auto/
+ $ cp /usr/share/live/build/examples/auto/* auto/
 
 }code
 

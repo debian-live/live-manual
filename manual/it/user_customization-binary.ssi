@@ -1,0 +1,38 @@
+B~ Personalizzare l'immagine binaria
+
+1~ Personalizzare l'immagine binaria
+
+2~ Bootloader
+
+live-build usa syslinux come bootloader predefinito, il quale è configurato
+per restare in pausa continua sulla schermata d'avvio. Per cambiare questo
+comportamento, si passi #{--syslinux-timeout TIMEOUT}# a #{lb
+config}#. Questo valore è espresso in secondi, 0 (zero) disabilita
+completamente il tempo di attesa. Per maggiori informazioni vedere
+syslinux(1).
+
+2~ Metadati ISO
+
+Quando si crea un'immagine binaria ISO9660, si possono usare le seguenti
+opzioni per aggiungere vari metadati testuali. Questo può aiutare a
+identificare facilmente la versione o la configurazione di un'immagine senza
+avviarla.
+
+_* #{LB_ISO_APPLICATION/--iso-application NAME}#: descrive l'applicazione
+che sarà nell'immagine. La lunghezza massima per questo campo è di 128
+caratteri.
+
+* #{LB_ISO_PREPARER/--iso-preparer NAME}#: descrive il costruttore
+dell'mmagine, solitamente con alcuni dettagli per
+contattarlo. L'impostazione predefinita è la versione di live-build che si
+sta usando, il quale potrà essere utile in seguito per il debugging. La
+lunghezza massima per questo campo è di 128 caratteri.
+
+_* #{LB_ISO_PUBLISHER/--iso-publisher NAME}#: descrive l'editore
+dell'immagine, solitamente con qualche dettaglio per contattarlo. La
+lunghezza massima lunghezza per questo campo è di 128 caratteri.
+
+_* #{LB_ISO_VOLUME/--iso-volume NAME}#: specifica l'ID del volume
+dell'immagine. Questa è utilizzata come etichetta visibile all'utente su
+alcune piattaforme, come Windows e Apple Mac OS. La lunghezza massima per
+questo campo è di 128 caratteri.

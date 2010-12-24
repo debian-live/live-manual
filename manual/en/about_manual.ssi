@@ -8,7 +8,7 @@ Some of the commands mentioned in the text must be executed with superuser privi
 
 2~ For the impatient
 
-While we believe that everything in this manual is important to at least some of our users, we realize it is a lot of material to cover and that you may wish to experience early success using the software before delving into the details. Therefore, we have provided three tutorials in the {Examples}#examples section designed to teach you image building and customization basics. Read {Using the examples}#using-the-examples first, followed by {Tutorial 1: A standard image}#tutorial-1, {Tutorial 2: A web browser utility}#tutorial-2 and finally {Tutorial 3: A personal travelling companion}#tutorial-3. By the end of these tutorials, you will have a taste of what can be done with Debian Live. We encourage you to return to more in-depth study of the manual, perhaps next reading {The basics}#the-basics, skimming or skipping {Building a netboot image}#building-netboot-image, and finishing by reading the {Customization overview}#customization-overview and the chapters that follow it. By this point, we hope you are thoroughly excited by what can be done with Debian Live and motivated to read the rest of the manual, cover-to-cover.
+While we believe that everything in this manual is important to at least some of our users, we realize it is a lot of material to cover and that you may wish to experience early success using the software before delving into the details. Therefore, we have provided three tutorials in the {Examples}#examples section designed to teach you image building and customization basics. Read {Using the examples}#using-the-examples first, followed by {Tutorial 1: A standard image}#tutorial-1, {Tutorial 2: A web browser utility}#tutorial-2 and finally {Tutorial 3: A personalized image}#tutorial-3. By the end of these tutorials, you will have a taste of what can be done with Debian Live. We encourage you to return to more in-depth study of the manual, perhaps next reading {The basics}#the-basics, skimming or skipping {Building a netboot image}#building-netboot-image, and finishing by reading the {Customization overview}#customization-overview and the chapters that follow it. By this point, we hope you are thoroughly excited by what can be done with Debian Live and motivated to read the rest of the manual, cover-to-cover.
 
 2~terms Terms
 
@@ -74,11 +74,11 @@ _* Trent W. Buck
 
 2~ Contributing to this document
 
-This manual is intended as a community project and all proposals for improvements and contributions are extremely welcome. The preferred way to submit a contribution is to send it to the mailing list. Please see {Contact}#contact for more information.
+This manual is intended as a community project and all proposals for improvements and contributions are extremely welcome. The preferred way to submit a contribution is to send it to the mailing list. Please see the section {Contact}#contact for more information.
 
 When submitting a contribution, please clearly identify its copyright holder and include the licensing statement. Note that to be accepted, the contribution must be licensed under the same license as the rest of the document, namely, GPL version 3 or later.
 
-The sources for this manual are maintained using the Git version control system. You can checkout the latest copy by executing:
+The sources for this manual are maintained using the Git version control system. You can check out the latest copy by executing:
 
 code{
 
@@ -90,15 +90,15 @@ Prior to submission of your contribution, please preview your work. To preview t
 
 code{
 
-# apt-get install make po4a sisu-complete
+ # apt-get install make po4a sisu-complete libnokogiri-ruby
 
 }code
 
-You may build the live-manual from the top level directory of your git checkout by executing:
+You may build the live-manual from the top level directory of your Git checkout by executing:
 
 code{
 
-$ make build
+ $ make build
 
 }code
 
@@ -106,24 +106,24 @@ Since it takes a while to build the manual in all supported languages, you may f
 
 code{
 
-$ make build LANGUAGES=en
+ $ make build LANGUAGES=en
 
 }code
 
 3~ Applying patches
 
-Directly commiting to the repository is possible by anyone. However, we ask you to send bigger changes to the mailing list to discuss them first. In order to push to the repository, the following steps are required.
+Anyone can directly commit to the repository. However, we ask you to send bigger changes to the mailing list to discuss them first. To push to the repository, you must follow this procedure:
 
 _* Fetch the public commit key:
 
 code{
 
-$ mkdir -p ~/.ssh/identity.d
-$ wget http://live.debian.net/other/keys/gitosis@live.debian.net \
-	-O ~/.ssh/identity.d/live.debian.net
-$ wget http://live.debian.net/other/keys/gitosis@live.debian.net.pub \
-	-O ~/.ssh/identity.d/live.debian.net.pub
-$ chmod 0600 ~/.ssh/identity.d/live.debian.net*
+ $ mkdir -p ~/.ssh/identity.d
+ $ wget http://live.debian.net/other/keys/gitosis@live.debian.net \
+     -O ~/.ssh/identity.d/gitosis@live.debian.net
+ $ wget http://live.debian.net/other/keys/gitosis@live.debian.net.pub \
+     -O ~/.ssh/identity.d/gitosis@live.debian.net.pub
+ $ chmod 0600 ~/.ssh/identity.d/gitosis@live.debian.net*
 
 }code
 
@@ -131,36 +131,36 @@ _* Add the following section to your openssh-client config:
 
 code{
 
-$ cat >> ~/.ssh/config << EOF
-Host live.debian.net
-        Hostname live.debian.net
-        User gitosis
-        IdentityFile ~/.ssh/identity.d/gitosis@live.debian.net
-EOF
+ $ cat >> ~/.ssh/config << EOF
+ Host live.debian.net
+     Hostname live.debian.net
+     User gitosis
+     IdentityFile ~/.ssh/identity.d/gitosis@live.debian.net
+ EOF
 
 }code
 
-_* Checkout a clone of the manual through ssh:
+_* Check out a clone of the manual through ssh:
 
 code{
 
-$ git clone gitosis@live.debian.net:/live-manual.git
+ $ git clone gitosis@live.debian.net:/live-manual.git
 
 }code
 
-_* After editing the files in manual/en/, please call the 'commit' target in the top level directory to sanitize the files and update the translation files:
+_* After editing the files in #{manual/en/}#, please call the 'commit' target in the top level directory to sanitize the files and update the translation files:
 
 code{
 
-$ make commit
+ $ make commit
 
 }code
 
-_* After sanitizing commit the changes. Write commit messages, that consist of full useful sentences, starting with a capital letter and ending with a full stop. Usually starting with the form 'Fixing/Adding/Removing/Correcting/':
+_* After sanitizing, commit the changes. Write commit messages that consist of full, useful sentences in English, starting with a capital letter and ending with a full stop. Usually, these will start with the form 'Fixing/Adding/Removing/Correcting/Translating', e.g.
 
 code{
 
-$ git commit -a
+ $ git commit -a -m "Adding a section on applying patches."
 
 }code
 
@@ -168,14 +168,17 @@ _* Push the commit to the server:
 
 code{
 
-$ git push
+ $ git push
 
 }code
 
 3~ Translation
 
-Submiting a translation for a new language is recommendet in two steps:
+To submit a translation for a new language, follow these three steps:
 
-_* Translate the about_manual.ssi.pot about_project.ssi.pot index.html.in.pot files to your language with your favourite editor (such as poedit). Send translated files to the mailinglist. It will then be included and autobuild for that language enabled.
+_* Translate the about_manual.ssi.pot, about_project.ssi.pot and index.html.in.pot files to your language with your favourite editor (such as poedit). Send translated files to the mailing list. Once we have reviewed your submission, we will add the new language to the manual (providing the po files) and will enable it in the autobuild.
 
-_* Now that the new language was added, you can randomly start translating all other pot files.
+_* Once the new language is added, you can randomly start translating all po files in #{manual/po/}#.
+
+_* Don't forget you need #{make commit}# to ensure the translated manuals are updated from the po files, before #{git commit -a}# and #{git push}#.
+

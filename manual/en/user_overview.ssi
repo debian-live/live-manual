@@ -12,7 +12,7 @@ The idea behind live-build is to be a framework that uses a configuration direct
 
 Many concepts are similar to those in the debhelper Debian package tools written by Joey Hess:
 
-_* The scripts have a central location for configuring their operation. In debhelper, this is the debian subdirectory of a package tree. For example, dh_install will look, amongst others, for a file called #{debian/install}# to determine which files should exist in a particular binary package. In much the same way, live-build stores its configuration entirely under a config subdirectory.
+_* The scripts have a central location for configuring their operation. In debhelper, this is the #{debian/}# subdirectory of a package tree. For example, dh_install will look, amongst others, for a file called #{debian/install}# to determine which files should exist in a particular binary package. In much the same way, live-build stores its configuration entirely under a #{config/}# subdirectory.
 
 _* The scripts are independent - that is to say, it is always safe to run each command.
 
@@ -28,47 +28,47 @@ _* *{lb clean}*: Responsible for removing parts of a Live system build. See {The
 
 3~lb-config The #{lb config}# command
 
-As discussed in {live-build}#live-build, the scripts that make up live-build source their configuration from a single directory named config/. As constructing this directory by hand would be time-consuming and error-prone, the #{lb config}# command can be used to create skeleton configuration folders.
+As discussed in {live-build}#live-build, the scripts that make up live-build source their configuration from a single directory named #{config/}#. As constructing this directory by hand would be time-consuming and error-prone, the #{lb config}# command can be used to create skeleton configuration folders.
 
-Issuing #{lb config}# without any arguments creates a config subdirectory which it populates with some default settings:
+Issuing #{lb config}# without any arguments creates a #{config/}# subdirectory which it populates with some default settings:
 
 code{
 
-$ lb config
-P: Creating config tree
+ $ lb config
+ P: Creating config tree
 
-$ ls -l
-total 8
-drwxr-xr-x  3 user user 4096 Sep  7 13:02 auto
-drwxr-xr-x 22 user user 4096 Sep  7 13:02 config
+ $ ls -l
+ total 8
+ drwxr-xr-x  3 user user 4096 Sep  7 13:02 auto
+ drwxr-xr-x 22 user user 4096 Sep  7 13:02 config
 
-$ ls -l config/
-total 104
--rw-r--r-- 1 user user 4197 Sep  7 13:02 binary
-drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_debian-installer
-drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_debian-installer-includes
-drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_grub
-drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-debs
-drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-hooks
-drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-includes
-drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-packageslists
-drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-udebs
-drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_rootfs
-drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_syslinux
--rw-r--r-- 1 user user 2051 Sep  7 13:02 bootstrap
--rw-r--r-- 1 user user 1647 Sep  7 13:02 chroot
-drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_apt
-drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-hooks
-drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-includes
-drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-packages
-drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-packageslists
-drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-patches
-drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-preseed
-drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_sources
--rw-r--r-- 1 user user 2954 Sep  7 13:02 common
-drwxr-xr-x 2 user user 4096 Sep  7 13:02 includes
--rw-r--r-- 1 user user  205 Sep  7 13:02 source
-drwxr-xr-x 2 user user 4096 Sep  7 13:02 templates
+ $ ls -l config/
+ total 104
+ -rw-r--r-- 1 user user 4197 Sep  7 13:02 binary
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_debian-installer
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_debian-installer-includes
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_grub
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-debs
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-hooks
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-includes
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-packageslists
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-udebs
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_rootfs
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_syslinux
+ -rw-r--r-- 1 user user 2051 Sep  7 13:02 bootstrap
+ -rw-r--r-- 1 user user 1647 Sep  7 13:02 chroot
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_apt
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-hooks
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-includes
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-packages
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-packageslists
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-patches
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-preseed
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_sources
+ -rw-r--r-- 1 user user 2954 Sep  7 13:02 common
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 includes
+ -rw-r--r-- 1 user user  205 Sep  7 13:02 source
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 templates
 
 }code
 
@@ -78,7 +78,7 @@ Normally, you will want to specify some options. For example, to include the 'gn
 
 code{
 
-$ lb config -p gnome
+ $ lb config -p gnome
 
 }code
 
@@ -86,7 +86,7 @@ It is possible to specify many options, such as:
 
 code{
 
-$ lb config --binary-images net --hostname live-machine --username live-user ...
+ $ lb config --binary-images net --hostname live-machine --username live-user ...
 
 }code
 

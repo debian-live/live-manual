@@ -1,0 +1,95 @@
+:B~ Gestire una configurazione
+
+1~managing-a-configuration Gestire una configurazione
+
+Questo capitolo spiega come gestire una configurazione per una live sin
+dalla creazione iniziale, attraverso le successive revisioni e rilasci sia
+del software live-build che della stessa immagine live.
+
+2~ Utilizzare auto per gestire i cambiamenti di configurazione
+
+Le configurazioni live raramente sono perfette da riuscire al primo
+colpo. Servono una serie di revisioni prima di essere soddisfatti. Comunque,
+possono verificarsi delle incoerenze tra una revisione ed un'altra se non si
+presta attenzione. Il problema principale è, una volta che ad una variabile
+è assegnato un valore predefinito, tale valore non sarà ricalcolato da altre
+variabili che possono cambiare in altre revisioni. 
+
+Per esempio, durante la messa a punto della prima distribuzione, molte
+variabili 'dependent' sono date dalle caratteristiche della
+distribuzione. Quindi, se in seguito si decide di cambiare distribuzione,
+quelle variabili dipendenti continueranno a mantenere i vecchi valori i
+quali non sono più appropriati 
+
+Un secondo relativo problema è che se si lancia #{lb config}# e si è
+aggiornato live-build ad una nuova versione il quale ha cambiato il nome di
+una o più variabili, si può scoprire ciò solamente con una revisione manuale
+delle variabili nei file #{config/*}#,  bisogna che vengano risistemate, di
+nuovo, le appropriate opzioni.
+
+Tutto ciò potrebbe essere un fastidio terribile se non fosse per lo script
+auto/*, una semplice alternativa ai comandi #{lb config}#, #{lb build}# e
+#{lb clean}# che sono disegnati per aiutare nella gestione della
+configurazione. Basta creare un semplice script auto/config che contenga il
+comando #{lb config}# con le opzioni desiderate, e un auot/clean che rimuova
+i file contenenti i valori variabili di configurazione, cosi ogni volta
+saranno eseguiti #{lb config}# #{lb clean}#. Questo farà si che la
+configurazione sia sempre coerente da una revisione all'altra o dal rilascio
+delle varie versioni del live-build.
+
+2~ Esempi di auto script
+
+Usare esempi di auto script come il seguente come punto di partenza per una
+nuova configurazione di live-build. Prendere nota che quando si chiama il
+comando #{lb}# che l'auto script wraps, si deve specificare il parametro
+#{noauto}# per essere sicuri che l'auto script chiamato di nuovo
+ricorsivamente. Non dimenticare, inoltre, di rendere lo script eseguibile
+(es. #{chmod 755 auto/*}#).
+
+#{auto/config}#
+
+code{
+
+ #!/bin/sh
+ lb config noauto \
+     --packages-lists "standard" \
+     "${@}"
+
+}code
+
+#{auto/clean}#
+
+code{
+
+ #!/bin/sh
+ lb clean noauto "${@}"
+ rm -f config/binary config/bootstrap \
+     config/chroot config/common config/source
+ rm -f binary.log
+
+}code
+
+#{auto/build}#
+
+code{
+
+ #!/bin/sh
+ lb build noauto "${@}" 2>&1 | tee binary.log
+
+}code
+
+Facciamo un esempio di auto script per live-build basato sull'esempio
+precedente. Si possono copiare come punto di partenza.
+
+code{
+
+ $ cp /usr/share/live/build/examples/auto/* auto/
+
+}code
+
+Modifica #{auto/config}# aggiungendo o togliendo le opzioni come meglio
+credi. Nel precedente esempio #{--packages-lists standard}# è impostato il
+valore predefinito.Cambiare questo in un valore appropriato per l'immagine (
+o cancellarlo se si desidera utilizzare un valore predefinito) e aggiungere
+eventuali opzioni aggiuntive in continuazione delle righe che seguono.
+

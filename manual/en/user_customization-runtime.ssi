@@ -1,20 +1,22 @@
-B~ Customization at Runtime
+:B~ Customizing run time behaviours
 
-All configuration that is done during runtime is done by live-config. Here are some most common options of live-config that users are interested in. A full list of all possibilities can be found in the manpage of live-config.
+1~customizing-run-time-behaviours Customizing run time behaviours
 
-1~ User
+All configuration that is done during run time is done by live-config. Here are some most common options of live-config that users are interested in. A full list of all possibilities can be found in the manpage of live-config.
 
-One important consideration is that the live user is created by live-boot during bootup, it is not created by live-build when building the image.
+2~ Customizing the live user
+
+One important consideration is that the live user is created by live-boot at boot time, not by live-build at build time. This not only influences where materials relating to the live user are introduced in your build, as discussed in {Live/chroot local includes}#live-chroot-local-includes, but also any groups and permissions associated with the live user.
 
 You can specify additional groups that the live user will belong to by preseeding the #{passwd/user-default-groups}# debconf value. For example, to add the live user to the #{fuse}# group, add the following to a file in the #{config/chroot_local-preseed}# directory:
 
 code{
 
-debconf passwd/user-default-groups string audio cdrom dialout floppy video plugdev netdev powerdev fuse
+ debconf passwd/user-default-groups string audio cdrom dialout floppy video plugdev netdev powerdev fuse
 
 }code
 
-1~ Language
+2~customizing-locale-and-language Customizing locale and language
 
 When the live system boots, language is involved in three steps:
 
@@ -24,21 +26,22 @@ _* setting the keyboard layout for the console
 
 _* setting the keyboard layout for X
 
-To define the locale that should be generated, use the #{locale}# parameter into the #{--bootappend-live}# option of #{lb config}#, e.g.:
+The default locale when building a Live system is "locales=en_US.UTF-8". To define the locale that should be generated, use the #{locales}# parameter in the #{--bootappend-live}# option of #{lb config}#, e.g.
 
 code{
 
-lb config --bootappend-live "locales=de_CH.UTF-8"
+ $ lb config --bootappend-live "locales=de_CH.UTF-8"
 
 }code
 
-This parameter can also be used in kernel command line. You can specify a locale by a full #{language_country.encoding}# word.
+This parameter can also be used at the kernel command line. You can specify a locale by a full #{language_country.encoding}# word.
 
-Both the console and X keyboard configuration depends on the #{keyb}# parameter of the #{--bootappend-live}# option. Valid options for X keyboard layouts can be found in #{/etc/X11/xkb/base.xml}# (rather limited to two-letters country codes). To find the value (the two characters) corresponding to a language try searching for the english name of the nation where the language is spoken, e.g:
+Both the console and X keyboard configuration depend on the #{keyboard-layouts}# parameter of the #{--bootappend-live}# option. Valid options for X keyboard layouts can be found in #{/usr/share/X11/xkb/rules/base.xml}# (rather limited to two-letters country codes). To find the value (the two characters) corresponding to a language try searching for the english name of the nation where the language is spoken, e.g:
 
 code{
 
-$ grep -i sweden -C3 /etc/X11/xkb/base.xml | grep name <name>se</name>
+ $ grep -i sweden -C3 /usr/share/X11/xkb/rules/base.xml | grep name
+ <name>se</name>
 
 }code
 
@@ -46,7 +49,7 @@ To get the locale files for German and Swiss German keyboard layout in X use:
 
 code{
 
-lb config --bootappend-live "locales=de_CH.UTF-8 keyboard-layouts=ch"
+ $ lb config --bootappend-live "locales=de_CH.UTF-8 keyboard-layouts=ch"
 
 }code
 
@@ -54,19 +57,21 @@ A list of the valid values of the keyboards for the console can be figured with 
 
 code{
 
-for i in $(find /usr/share/keymaps/ -iname "*kmap.gz"); do basename $i | head -c -9; echo; done | sort | less
+ $ for i in $(find /usr/share/keymaps/ -iname "*kmap.gz"); \
+     do basename $i | head -c -9; echo; done | sort | less
 
 }code
 
-Alternatively, you can use the #{console-setup}# package, a tool to let you configure console layout using X (XKB) definitions; you can then setup your keyboard layout more precisely with #{keyboard-layouts}#, #{keyboard-variant}#, #{keyboard-options}# and #{keyboard-model}# variables; live-boot will use also these parameters for X configuration. For example, to set up a French system with a French-Dvorak layout (called Bepo) on a TypeMatrix keyboard, both in console and X11, use:
+Alternatively, you can use the #{console-setup}# package, a tool to let you configure console layout using X (XKB) definitions; you can then set your keyboard layout more precisely with #{keyboard-layouts}#, #{keyboard-variant}#, #{keyboard-options}# and #{keyboard-model}# variables; live-boot will use also these parameters for X configuration. For example, to set up a French system with a French-Dvorak layout (called Bepo) on a TypeMatrix keyboard, both in console and X11, use:
 
 code{
 
-lb config --bootappend-live "locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variant=bepo keyboard-model=tm2030usb"
+ $ lb config --bootappend-live \
+     "locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variant=bepo keyboard-model=tm2030usb"
 
 }code
 
-2~ Persistence
+2~persistence Persistence
 
 A live cd paradigm is a pre-installed system which runs from read-only media, like a cdrom, where writes and modifications do not survive reboots of the host hardware which runs it.
 
@@ -82,7 +87,7 @@ By 'full persistence' it is meant that instead of using a tmpfs for storing modi
 
 code{
 
-# mkfs.ext2 -L live-rw /dev/sdb1
+ # mkfs.ext2 -L live-rw /dev/sdb1
 
 }code
 
@@ -90,8 +95,8 @@ If you already have a partition on your device, you could just change the label 
 
 code{
 
-# tune2fs -L live-rw /dev/sdb1 # for ext2,3,4 filesystems
-# dosfslabel /dev/sdb1 live-rw # for a fat filesystem
+ # tune2fs -L live-rw /dev/sdb1 # for ext2,3,4 filesystems
+ # dosfslabel /dev/sdb1 live-rw # for a fat filesystem
 
 }code
 
@@ -99,8 +104,8 @@ But since live system users cannot always use a hard drive partition, and consid
 
 code{
 
-$ dd if=/dev/null of=live-rw bs=1G seek=1 # for a 1GB sized image file
-$ /sbin/mkfs.ext2 -F live-rw
+ $ dd if=/dev/null of=live-rw bs=1G seek=1 # for a 1GB sized image file
+ $ /sbin/mkfs.ext2 -F live-rw
 
 }code
 

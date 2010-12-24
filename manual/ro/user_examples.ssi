@@ -24,15 +24,15 @@ preferred mirror. For example:
 
 code{
 
-LB_MIRROR_BOOTSTRAP="http://mirror/debian"
-LB_MIRROR_CHROOT="http://mirror/debian"
-LB_MIRROR_CHROOT_SECURITY="http://mirror/debian-security"
+ LB_MIRROR_BOOTSTRAP="http://mirror/debian"
+ LB_MIRROR_CHROOT="http://mirror/debian"
+ LB_MIRROR_CHROOT_SECURITY="http://mirror/debian-security"
 
 }code
 
 2~tutorial-1 Tutorial 1: A standard image
 
-*{Use case:}* Create a simple first image, learning the basics of live-build
+*{Use case:}* Create a simple first image, learning the basics of live-build.
 
 In this tutorial, we will build a default ISO hybrid Debian Live image
 containing only base packages (no Xorg) and some Debian Live support
@@ -42,7 +42,7 @@ You can't get much simpler than this:
 
 code{
 
-$ mkdir tutorial1 ; cd tutorial1 ; lb config
+ $ mkdir tutorial1 ; cd tutorial1 ; lb config
 
 }code
 
@@ -54,7 +54,7 @@ Now, as superuser, build the image, saving a log as you build with #{tee}#.
 
 code{
 
-# lb_build 2>&1 | tee binary.log
+ # lb build 2>&1 | tee binary.log
 
 }code
 
@@ -69,14 +69,14 @@ stick}#copying-usb-hdd-image, respectively.
 
 2~tutorial-2 Tutorial 2: A web browser utility
 
-*{Use case}* Create a web browser utility image, learning how to apply customizations
+*{Use case:}* Create a web browser utility image, learning how to apply customizations.
 
 In this tutorial, we will create an image suitable for use as a web browser
 utility, serving as an introduction to customizing Debian Live images.
 
 code{
 
-mkdir tutorial2 ; cd tutorial2 ; lb config -p lxde --packages iceweasel
+ $ mkdir tutorial2 ; cd tutorial2 ; lb config -p lxde --packages iceweasel
 
 }code
 
@@ -93,7 +93,7 @@ Build the image, again as superuser, keeping a log as in {Tutorial
 
 code{
 
-# lb build 2>&1 | tee binary.log
+ # lb build 2>&1 | tee binary.log
 
 }code
 
@@ -101,7 +101,7 @@ Again, verify the image is OK and test, as in {Tutorial 1}#tutorial-1.
 
 2~tutorial-3 Tutorial 3: A personalized image
 
-*{Use case}* Create a project to build a personalized image, containing your favourite software to take with you on a USB stick wherever you go, and evolving in successive revisions as your needs and preferences change.
+*{Use case:}* Create a project to build a personalized image, containing your favourite software to take with you on a USB stick wherever you go, and evolving in successive revisions as your needs and preferences change.
 
 Since we will be changing our personalized image over a number of revisions,
 and we want to track those changes, trying things experimentally and
@@ -114,8 +114,9 @@ in {Managing a configuration}#managing-a-configuration.
 
 code{
 
-$ mkdir -p tutorial3/auto $ cp /usr/share/live/examples/auto/*
-tutorial3/auto/ $ cd tutorial3
+ $ mkdir -p tutorial3/auto
+ $ cp /usr/share/live/build/examples/auto/* tutorial3/auto/
+ $ cd tutorial3
 
 }code
 
@@ -123,14 +124,14 @@ Edit #{auto/config}# to read as follows:
 
 code{
 
-#!/bin/sh
+ #!/bin/sh
 
-lb config noauto \
-    --architecture i386 \
-    --linux-flavours 686 \
-    --packages-lists lxde \
-    --packages "iceweasel xchat" \
-    "${@}"
+ lb config noauto \
+     --architecture i386 \
+     --linux-flavours 686 \
+     --packages-lists lxde \
+     --packages "iceweasel xchat" \
+     "${@}"
 
 }code
 
@@ -145,7 +146,7 @@ Now, build the image:
 
 code{
 
-# lb build
+ # lb build
 
 }code
 
@@ -158,7 +159,9 @@ only the auto scripts we just created, and then make the first commit:
 
 code{
 
-$ git init $ git add auto $ git commit -a -m "Initial import."
+ $ git init
+ $ git add auto
+ $ git commit -a -m "Initial import."
 
 }code
 
@@ -174,7 +177,7 @@ regenerate the files from our new configuration.
 
 code{
 
-# lb clean
+ # lb clean
 
 }code
 
@@ -182,14 +185,14 @@ Now edit #{auto/config}# to add the #{vlc}# package:
 
 code{
 
-#!/bin/sh
+ #!/bin/sh
 
-lb config noauto \
-    --architecture i386 \
-    --linux-flavours 686 \
-    --packages-lists lxde \
-    --packages "iceweasel xchat vlc" \
-    "${@}"
+ lb config noauto \
+     --architecture i386 \
+     --linux-flavours 686 \
+     --packages-lists lxde \
+     --packages "iceweasel xchat vlc" \
+     "${@}"
 
 }code
 
@@ -205,7 +208,7 @@ Test, and when you're satisfied, commit the next revision:
 
 code{
 
-$ git commit -a -m "Adding vlc media player."
+ $ git commit -a -m "Adding vlc media player."
 
 }code
 
@@ -224,41 +227,53 @@ cases drawn from the collected experiences of users of Debian Live.
 
 2~ A VNC Kiosk Client
 
-Create an image with live-build to boot directly to a VNC server.
+*{Use case:}* Create an image with live-build to boot directly to a VNC server.
 
-_* Make a build directory: #{$ mkdir vncBuild}#
-
-_* Move to the build directory: #{$ cd vncBuild}#
-
-Example to config the build directory to include gdm metacity
-xtightvncviewer: #{$ lb config --packages "gdm3 metacity xtightvncviewer"}#
-
-Create a folder /etc/skel folder for a custom .xsession for the default
-user: #{$ mkdir -p config/chroot_local-includes/etc/skel}#
-
-Create the .xsession for the default user: #{$ touch
-config/chroot_local-includes/etc/skel/.xsession}#
-
-Edit the .xsession file to launch metacity and start xvncviewer with
-something similar to the below:
+Make a build directory and create a skeletal configuration in it built
+around the standard-x11 list, including #{gdm3}#, #{metacity}# and
+#{xtightvncviewer}#, disabling recommends to make a minimal system:
 
 code{
 
-#!/bin/sh
-
-/usr/bin/metacity & /usr/bin/vncviewer xxx.xxx.xxx.xxx:PORT
-
-exit
+ $ mkdir vnc_kiosk_client
+ $ cd vnc_kiosk_client
+ $ lb config -a i386 -k 686 -p standard-x11 \
+     --packages "gdm3 metacity xvnc4viewer" \
+     --apt-recommends false
 
 }code
 
-_* Build the image: #{# lb build}#
+Create the directory #{/etc/skel}# and put a custom #{.xsession}# in it for
+the default user that will launch metacity and start xvncviewer, connecting
+to port #{5901}# on a server at #{192.168.1.2}#:
 
-_* Enjoy.
+code{
+
+ $ mkdir -p config/chroot_local-includes/etc/skel
+ $ cat >config/chroot_local-includes/etc/skel/.xsession <<END
+ #!/bin/sh
+
+ /usr/bin/metacity &
+ /usr/bin/xvncviewer 192.168.1.2:1
+
+ exit
+ END
+
+}code
+
+Build the image:
+
+code{
+
+ # lb build
+
+}code
+
+Enjoy.
 
 2~ A base image for a 128M USB key
 
-*{Use case}* Create a standard image with some components removed in order to fit on a 128M USB key with space left over to use as you see fit.
+*{Use case:}* Create a standard image with some components removed in order to fit on a 128M USB key with space left over to use as you see fit.
 
 When optimizing an image to fit a certain media size, you need to understand
 the tradeoffs you are making between size and functionality. In this
@@ -272,8 +287,8 @@ packages will most likely produce a broken live system.
 
 code{
 
-$ lb config -k 486 -p minimal --binary-indices false --memtest none
---apt-recommends false --includes none
+ $ lb config -k 486 -p minimal --binary-indices false \
+     --memtest none --apt-recommends false --includes none
 
 }code
 
@@ -281,7 +296,7 @@ Now, build the image in the usual way:
 
 code{
 
-# lb build 2>&1 | tee binary.log
+ # lb build 2>&1 | tee binary.log
 
 }code
 
@@ -302,4 +317,80 @@ of omitting some packages you might otherwise expect to be there, such as
 remaining options shave off additional small amounts of space. It's up to
 you to decide if the functionality that is sacrificed with each optimization
 is worth the loss in functionality.
+
+2~ A localized KDE desktop and installer
+
+*{Use case:}* Create a KDE desktop image, localized for Brazilian Portuguese and including an installer.
+
+We want to make an iso-hybrid image for i386 architecture using our
+preferred desktop, in this case KDE, containing all of the same packages
+that would be installed by the standard Debian installer for KDE.
+
+Our initial problem is the discovery of the names of the appropriate
+tasks. Currently, live-build cannot help with this. While we might get lucky
+and find this by trial-and-error, there is a tool, #{grep-dctrl}#, which can
+be used to dig it out of the task descriptions in tasksel-data, so to
+prepare, make sure you have both of those things:
+
+code{
+
+ # apt-get install dctrl-tools tasksel-data
+
+}code
+
+Now we can search for the appropriate tasks, first with:
+
+code{
+
+ $ grep-dctrl -FTest-lang pt_BR /usr/share/tasksel/debian-tasks.desc -sTask,Description
+ Task: brazilian-portuguese
+ Description: Brazilian Portuguese environment
+  This task installs programs, data files, and
+  documentation that make it easier for Brazilian Portuguese speakers
+  to use Debian.
+
+}code
+
+By this command, we discover the task is called, plainly enough,
+brazilian-portuguese. Now to find the related tasks:
+
+code{
+
+ $ grep-dctrl -FEnhances brazilian-portuguese /usr/share/tasksel/debian-tasks.desc -sTask,Description
+ Task: brazilian-portuguese-desktop
+ Description: Brazilian Portuguese desktop
+  This task localises the desktop in Brasilian Portuguese.
+
+ Task: brazilian-portuguese-kde-desktop
+ Description: Brazilian Portuguese KDE desktop
+  This task localises the KDE desktop in Brazilian Portuguese.
+
+}code
+
+We will use the experimental #{--language}# option, as live-build happens to
+include #{syslinux}# templates for pt_BR (see {Desktop and language
+tasks}#desktop-and-language-tasks for details). And at boot time we will
+generate the pt_BR.UTF-8 locale and select the pt-latin1 keyboard
+layout. Now let's put the pieces together:
+
+code{
+
+ $ mkdir live-pt_BR-kde
+ $ cd live-pt_BR-kde
+ $ lb config \
+     -a i386 \
+     -k 486 \
+     -p kde-desktop \
+     --language pt_BR \
+     --tasks "brazilian-portuguese brazilian-portuguese-desktop brazilian-portuguese-kde-desktop" \
+     --bootappend-live "locales=pt_BR.UTF-8 keyboard-layouts=pt-latin1" \
+     --debian-installer live \
+     --packages debian-installer-launcher
+
+}code
+
+Note that we have included the #{debian-installer-launcher}# package to
+launch the installer from the live desktop, and have also specified the 486
+flavour kernel, as it is currently necessary to make the installer and live
+system kernels match for the launcher to work properly.
 

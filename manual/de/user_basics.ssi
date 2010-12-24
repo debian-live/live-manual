@@ -36,9 +36,7 @@ SquashFS compressed filesystem is used to minimize the Debian Live image
 size. Note that it is read-only. So, during boot the Debian Live system will
 use a RAM disk and 'union' mechanism to enable writing files within the
 running system. However, all modifications will be lost upon shutdown unless
-optional persistence is used (see persistence).
-
-% FIXME: <xref linkend="persistence"/>
+optional persistence is used (see {Persistence}#persistence).
 
 _* *{Bootloader}*: A small piece of code crafted to boot from the chosen
 media, possibly presenting a prompt or menu to allow selection of
@@ -52,7 +50,7 @@ partitions, etc.
 
 You can use live-build to build the system image from your specifications,
 set up a Linux kernel, its initrd, and a bootloader to run them, all in one
-media-dependant format (ISO9660 image, disk image, etc.)
+media-dependant format (ISO9660 image, disk image, etc.).
 
 2~ First steps: building an ISO image
 
@@ -67,19 +65,19 @@ hierarchy in the current directory for use by other commands:
 
 code{
 
-$ lb config
+ $ lb config
 
 }code
 
 By passing no parameters to #{lb config}#, we indicated that we wish to use
 the defaults (see {The lb config command}#lb-config).
 
-Now that we have a "config/" hierarchy, we may build the image with the lb
-build command:
+Now that we have a "config/" hierarchy, we may build the image with the #{lb
+build}# command:
 
 code{
 
-# lb build
+ # lb build
 
 }code
 
@@ -92,9 +90,9 @@ Testing an ISO is simple:
 
 code{
 
-# apt-get install qemu
+ # apt-get install qemu
 
-$ qemu -cdrom binary.iso
+ $ qemu -cdrom binary.iso
 
 }code
 
@@ -104,9 +102,9 @@ In order to test the ISO with virtualbox-ose:
 
 code{
 
-# apt-get install virtualbox-ose virtualbox-ose-dkms
+ # apt-get install virtualbox-ose virtualbox-ose-dkms
 
-$ virtualbox
+ $ virtualbox
 
 }code
 
@@ -120,7 +118,7 @@ resolution is limited to 800x600.
 
 code{
 
-# lb config --packages virtualbox-ose-guest-x11
+ $ lb config --packages virtualbox-ose-guest-x11
 
 }code
 
@@ -130,9 +128,9 @@ Burning an ISO image is easy:
 
 code{
 
-# apt-get install wodim
+ # apt-get install wodim
 
-$ wodim binary.iso
+ $ wodim binary.iso
 
 }code
 
@@ -152,7 +150,7 @@ lb clean command}#lb-clean):
 
 code{
 
-$ lb clean --binary
+ # lb clean --binary
 
 }code
 
@@ -161,15 +159,15 @@ Run the #{lb config}# command with the parameters to configure the
 
 code{
 
-$ lb config -b usb-hdd
+ $ lb config -b usb-hdd
 
 }code
 
-Now build the image with the #{lb build} command:
+Now build the image with the #{lb build}# command:
 
 code{
 
-# lb build
+ # lb build
 
 }code
 
@@ -181,7 +179,7 @@ with a size larger than that of binary.img and type:
 
 code{
 
-$ dd if=binary.img of=${USBSTICK}
+ $ dd if=binary.img of=${USBSTICK}
 
 }code
 
@@ -193,15 +191,15 @@ better yet, #{ls -l /dev/disk/by-id}#.
 *{This will definitely overwrite any previous contents on your stick!}*
 
 Note: As discussed earlier, this same process can be used for #{iso-hybrid}#
-type images, (suffixed #{-hybrid.iso}#,) but not #{iso}# type images.
+type images (suffixed #{-hybrid.iso}#), but not #{iso}# type images.
 
 3~testing-usb-hdd-with-qemu Testing a USB/HDD image with Qemu
 
 code{
 
-# apt-get install qemu
+ # apt-get install qemu
 
-$ qemu -hda binary.img
+ $ qemu -hda binary.img
 
 }code
 
@@ -214,7 +212,7 @@ be used by the Debian Live system.
 
 code{
 
-# gparted ${USBSTICK}
+ # gparted ${USBSTICK}
 
 }code
 
@@ -223,7 +221,7 @@ it. One possible choice would be ext4.
 
 code{
 
-# mkfs.ext4 ${USBSTICK}
+ # mkfs.ext4 ${USBSTICK}
 
 }code
 
@@ -231,7 +229,7 @@ If you want to use this data partition with Windows, use FAT32.
 
 code{
 
-# mkfs.vfat -F 32
+ # mkfs.vfat -F 32
 
 }code
 
@@ -248,31 +246,31 @@ working directory with the #{lb clean}# command:
 
 code{
 
-$ lb clean --binary
+ # lb clean --binary
 
 }code
 
-Run the #{lb config}# command with the parameters to configure the "config/"
-hierarchy to create our netboot image:
+Run the #{lb config}# command as follows to configure your image for
+netbooting:
 
 code{
 
-$ lb config -b net --net-root-path "/srv/debian-live" --net-root-server
-"192.168.0.1"
+ $ lb config -b net --net-root-path "/srv/debian-live" --net-root-server "192.168.0.1"
 
 }code
 
-In contrast with the ISO and USB/HDD images, netbooting does not support
-serving a filesystem image with the client, so the files must be served via
-NFS. The net-root-path and net-root-server options specify the location and
-server, respectively, of the NFS server where the filesytem image will be
-located at boot time.
+In contrast with the ISO and USB/HDD images, netbooting does not, itself,
+serve the filesystem image to the client, so the files must be served via
+NFS. The #{--net-root-path}# and #{--net-root-server}# options specify the
+location and server, respectively, of the NFS server where the filesytem
+image will be located at boot time. Make sure these are set to suitable
+values for your network and server.
 
 Now build the image with the #{lb build}# command:
 
 code{
 
-# lb build
+ # lb build
 
 }code
 
@@ -283,12 +281,13 @@ next step is getting a higher level bootloader via the TFTP protocol. That
 could be pxelinux, GRUB, or even boot directly to an operating system like
 Linux.
 
-For example, if you unpack the generated binary-net.tar.gz archive in the
-/srv/debian-live directory, you'll find the filesystem image in
-live/filesystem.squashfs and the kernel, initrd and pxelinux bootloader in
-tftpboot/debian-live/i386.
+For example, if you unpack the generated #{binary-net.tar.gz}# archive in
+the #{/srv/debian-live}# directory, you'll find the filesystem image in
+#{live/filesystem.squashfs}# and the kernel, initrd and pxelinux bootloader
+in #{tftpboot/debian-live/i386}#.
 
-We must now configure three services on the server to enable netboot.
+We must now configure three services on the server to enable netboot: the
+DHCP server, the TFTP server and the NFS server.
 
 3~ DHCP server
 
@@ -297,33 +296,26 @@ to the netbooting client system, and to advertise the location of the PXE
 bootloader.
 
 Here is an example for inspiration, written for the ISC DHCP server
-#{isc-dhcp-server}# in the /etc/dhcp/dhcpd.conf configuration file;
-
-% FIXME
+#{isc-dhcp-server}# in the #{/etc/dhcp/dhcpd.conf}# configuration file:
 
 code{
 
-subnet 192.168.1.0 netmask 255.255.255.0 {   # 192.168.1.0/24
+ # /etc/dhcp/dhcpd.conf - configuration file for isc-dhcp-server
 
-  # IP addresses available for guests
-  range 192.168.1.100 192.168.1.149;
+ ddns-update-style none;
 
-  # allow booting from the net
-  allow bootp;
+ option domain-name "example.org";
+ option domain-name-servers ns1.example.org, ns2.example.org;
 
-  # for net booting, server where the first file to be loaded (by TFTP
-  # protocol) ("filename" following definition) liesÂ : so the TFTP
-  # server's name.
-  next-server myserver;
+ default-lease-time 600;
+ max-lease-time 7200;
 
-  # net boot configuration for guests with a PXE clientÂ :
-  if substring (option vendor-class-identifier, 0, 9) = "PXEClient" {
-    # Note: all files for PXE are relatives to the TFTP server's root
+ log-facility local7;
 
-    # PXE bootloader (first program to be loaded, by TFTP)
-    filename "pxelinux.0";
-
-  }
+ subnet 192.168.0.0 netmask 255.255.255.0 {
+   range 192.168.0.1 192.168.0.254;
+   next-server servername;
+   filename "pxelinux.0";
 }
 
 }code
@@ -333,12 +325,12 @@ subnet 192.168.1.0 netmask 255.255.255.0 {   # 192.168.1.0/24
 This serves the kernel and initial ramdisk to the system at run time.
 
 You should install the tftpd-hpa package. It can serve all files contained
-inside a root directory, usually /srv/tftp. To let it serve files inside
-/srv/debian-live/tftpboot, run as root the following command:
+inside a root directory, usually #{/srv/tftp}#. To let it serve files inside
+#{/srv/debian-live/tftpboot}#, run as root the following command:
 
 code{
 
-dpkg-reconfigure -plow tftpd-hpa
+ # dpkg-reconfigure -plow tftpd-hpa
 
 }code
 
@@ -350,14 +342,14 @@ Once the guest computer has downloaded and booted a Linux kernel and loaded
 its initrd, it will try to mount the Live filesystem image through a NFS
 server.
 
-You need to install the nfs-kernel-server package.
+You need to install the #{nfs-kernel-server}# package.
 
 Then, make the filesystem image available through NFS by adding a line like
-the following to /etc/exports:
+the following to #{/etc/exports}#:
 
 code{
 
-/srv/debian-live *(ro,async,no_root_squash,no_subtree_check)
+ /srv/debian-live *(ro,async,no_root_squash,no_subtree_check)
 
 }code
 
@@ -365,15 +357,16 @@ and tell the NFS server about this new export with the following command:
 
 code{
 
-# exportfs -rv
+ # exportfs -rv
 
 }code
 
 Setting up these three services can be a little tricky. You might need some
-patience to get all of them working together. The Debian Installer Manual's
-TFTP Net Booting section at
-http://d-i.alioth.debian.org/manual/en.i386/ch04s05.html might help as that
-process is very similar.
+patience to get all of them working together. For more information, see the
+syslinux wiki at http://syslinux.zytor.com/wiki/index.php/PXELINUX or the
+Debian Installer Manual's TFTP Net Booting section at
+http://d-i.alioth.debian.org/manual/en.i386/ch04s05.html. They might help,
+as their processes are very similar.
 
 3~ Netboot testing HowTo
 
@@ -384,51 +377,64 @@ To make our life easier, we can use virtualization. There are two solutions.
 
 3~ Qemu
 
-_* Install qemu, bridge-utils, sudo.
+_* Install #{qemu}#, #{bridge-utils}#, #{sudo}#.
 
-Edit /etc/qemu-ifup:
+Edit #{/etc/qemu-ifup}#:
 
 code{
 
-#!/bin/sh sudo -p "Password for $0:" /sbin/ifconfig $1 172.20.0.1 echo
-"Executing /etc/qemu-ifup" echo "Bringing up $1 for bridged mode..." sudo
-/sbin/ifconfig $1 0.0.0.0 promisc up echo "Adding $1 to br0..." sudo
-/usr/sbin/brctl addif br0 $1 sleep 2
+ #!/bin/sh
+ sudo -p "Password for $0:" /sbin/ifconfig $1 172.20.0.1
+ echo "Executing /etc/qemu-ifup"
+ echo "Bringing up $1 for bridged mode..."
+ sudo /sbin/ifconfig $1 0.0.0.0 promisc up
+ echo "Adding $1 to br0..."
+ sudo /usr/sbin/brctl addif br0 $1
+ sleep 2
 
 }code
 
-Get, or build a grub-floppy-netboot (in the svn).
+Get, or build a #{grub-floppy-netboot}# (in the svn).
 
-Launch qemu with "-net nic,vlan=0 -net tap,vlan=0,ifname=tun0"
+Launch #{qemu}# with "#{-net nic,vlan=0 -net tap,vlan=0,ifname=tun0}#"
 
 3~ VMWare Player
 
 _* Install VMWare Player ("free as in beer" edition)
 
-_* Create a PXETester directory, and create a text file called pxe.vwx
+_* Create a PXETester directory, and create a text file called #{pxe.vwx}#
 inside
 
 _* Paste this text inside:
 
 code{
 
-#!/usr/bin/vmware config.version = "8" virtualHW.version = "4" memsize =
-"512" MemAllowAutoScaleDown = "FALSE"
+ #!/usr/bin/vmware
+ config.version = "8"
+ virtualHW.version = "4"
+ memsize = "512"
+ MemAllowAutoScaleDown = "FALSE"
 
-ide0:0.present = "FALSE" ide1:0.present = "FALSE" floppy0.present = "FALSE"
-sound.present = "FALSE" tools.remindInstall = "FALSE"
+ ide0:0.present = "FALSE"
+ ide1:0.present = "FALSE"
+ floppy0.present = "FALSE"
+ sound.present = "FALSE"
+ tools.remindInstall = "FALSE"
 
-ethernet0.present = "TRUE" ethernet0.addressType = "generated"
+ ethernet0.present = "TRUE"
+ ethernet0.addressType = "generated"
 
-displayName = "Test Boot PXE" guestOS = "other"
+ displayName = "Test Boot PXE"
+ guestOS = "other"
 
-ethernet0.generatedAddress = "00:0c:29:8d:71:3b" uuid.location = "56 4d 83
-72 5c c4 de 3f-ae 9e 07 91 1d 8d 71 3b" uuid.bios = "56 4d 83 72 5c c4 de
-3f-ae 9e 07 91 1d 8d 71 3b" ethernet0.generatedAddressOffset = "0"
+ ethernet0.generatedAddress = "00:0c:29:8d:71:3b"
+ uuid.location = "56 4d 83 72 5c c4 de 3f-ae 9e 07 91 1d 8d 71 3b"
+ uuid.bios = "56 4d 83 72 5c c4 de 3f-ae 9e 07 91 1d 8d 71 3b"
+ ethernet0.generatedAddressOffset = "0"
 
 }code
 
-_* You can play with this configuration file (i.e. change memory limit to
+_* You can play with this configuration file (e.g. change memory limit to
 256)
 
 _* Double click on this file (or run VMWare player and select this file).

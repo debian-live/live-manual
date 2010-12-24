@@ -1,0 +1,80 @@
+B~ Personalizzazione dei contenuti
+
+1~customization-overview Panoramica sulla personalizzazione
+
+Questo capitolo mostra una panoramica dei vari metodi con i quali è
+possibile personalizzare un sistema Debian Live.
+
+2~ Configurazione in fase di compilazione e di avvio
+
+La configurazione del sistema live è divisa in opzioni applicate in fase di
+compilazione e al momento dell'avvio. Le opzioni di compilazione sono
+ulteriormente divise in quelle che si verificano prima dell'avvio, applicate
+dal pacchetto live-boot, e quelle dopo l'avvio, applicate da
+live-config. Qualsiasi opzione in fase di avvio può essere modificata
+dall'utente specificandola al prompt di avvio. L'immagine può inoltre essere
+costruita con i parametri di avvio predefiniti in modo che quando tutti i
+valori predefiniti sono adatti gli utenti possano avviare direttamente il
+sistema senza specificare alcuna opzione. In particolare, l'argomento di
+#{lb --bootappend-live}# è costituito da tutte le opzioni da riga di comando
+del kernel predefinite in un sistema live, come persistenza dei dati, layout
+di tastiera o fuso orario. Per gli esempi si veda {Personalizzare
+localizzazione e lingua}#customizing-locale-and-language.
+
+Le opzioni di configurazione in fase di compilazione sono descritte nel
+manuale di #{lb config}#, mentre quelle in fase di avvio nel manuale di
+live-boot e live-config. Sebbene i pacchetti live-boot e live-config siano
+installati nel sistema live che si sta costruendo si raccomanda, per un
+comodo riferimento quando si lavora alla propria configurazione, di
+installarli anche sul sistema che lo crea. Fare ciò risulta sicuro in quanto
+nessuno degli script contenuti viene eseguito, a meno che il sistema sia
+configurato come sistema live.
+
+2~stages-of-the-build Fasi della creazione
+
+Il processo di creazione è diviso in due fasi, con varie personalizzazioni
+applicate in sequenza a ciascuna di esse. La prima consiste nell'*{avvio}*,
+questa è la fase iniziale di popolamento della directory di chroot con i
+pacchetti atti a creare un sistema Debian di base. Viene quindi seguita
+dalla fase *{chroot}* che completa la costruzione della directory chroot e
+la popola con tutti i pacchetti elencati nella configurazione insieme a
+qualsiasi altro materiale; la maggior parte della personalizzazione dei
+contenuti avviene in questa tappa. La parte finale della preparazione
+dell'immagine è la fase *{binaria}* che genera un'immagine avviabile
+utilizzando i contenuti della directory chroot per costruire il file system
+pricipale per il sistema live, includere l'installatore e ogni altro
+materiale aggiuntivo sul supporto di destinazione al di fuori del file
+system del sistema live. Una volta che l'immagine è pronta viene creato, se
+abilitato, l'archivio dei sorgenti nella fase *{sorgenti}*.
+
+All'interno di ciascuna di queste fasi c'è una sequenza particolare in cui
+vengono applicati i comandi, sono organizzati in modo da assicurare che le
+personalizzazioni siano ragionevolmente stratificate. Ad esempio, nella fase
+*{chroot}* i preseed vengono applicati prima che qualsiasi pacchetto sia
+installato, i pacchetti vengono installati prima di qualsiasi file incluso
+localmente o le patch sono applicate e gli hook eseguiti dopo che tutto il
+materiale è a posto.
+
+2~ Integrare la configurazione di lb con dei file
+
+Anche se #{lb config}# crea una configurazione scheletrica nella directory
+config/, per realizzare i propri obiettivi potrebbe essere necessario
+fornire dei file aggiuntivi nelle sottodirectory. A seconda di dove vengono
+memorizzati i file nella configurazione, possono essere copiati nel file
+system del sistema live o nel file system dell'immagine binaria, o fornire
+configurazioni per la creazione del sistema che sarebbe scomodo passare come
+opzioni da riga di comando. Si possono includere cose come elenchi
+personalizzati dei pacchetti, grafica personalizzata o script hook da
+eseguire sia al momento della compilazione che in fase di avvio;
+incrementando quindi la notevole flessibilità di debian-live con il proprio
+codice.
+
+2~ Personalizzazione dei compiti
+
+I capitoli seguenti sono costituiti dai tipi di compito personalizzato che
+gli utenti eseguono solitamente: {personalizzare l'installazione dei
+pacchetti}#customizing-package-installation, {personalizzare i
+contenuti}#customizing-contents e {personalizzare localizzazione e
+lingua}#customizing-locale-and-language coprono solo alcune delle cose che
+si potrebbero desiderare.
+

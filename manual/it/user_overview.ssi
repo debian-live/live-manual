@@ -1,0 +1,160 @@
+:B~ Panoramica degli strumenti
+
+1~ Panoramica degli strumenti
+
+Questo capitolo contiene una panoramica dei tre principali strumenti
+utilizzati nella creazione dei sistemi Debian Live: live-build, live-boot e
+live-config.
+
+2~live-build live-build
+
+live-build è una raccolta di script, chiamati anche "comandi", usati per
+creare sistemi Debian Live.
+
+L'idea dietro live-build è di essere un'infrastruttura che utilizza una
+directory di configurazione per automatizzare totalmente e personalizzare
+tutti gli aspetti della creazione di un'immagine live.
+
+Molti concetti sono simili a quelli negli strumenti del pacchetto Debian
+debhelper scritto da Joey Hess:
+
+_* Gli script hanno una locazione centrale per configurare le loro
+operazioni, in debhelper questa è la sottodirectory #{debian/}# dell'albero
+di un pacchetto. Ad esempio dh_install cercherà, tra gli altri, un file
+chiamato #{debian/install}# per determinare quali file dovrebbero esistere
+in un certo pacchetto binario. Allo stesso modo, live-build salva la sua
+configurazione interamente in una sottodirectory #{config/}#.
+
+_* Gli script sono indipendenti, vale a dire che è sempre sicuro eseguire
+ogni comando.
+
+Al contrario di debhelper, live-build contiene uno strumento per generare
+una directory scheletro di configurazione, #{lb config}#, che può essere
+considerato simile a utilità come #{dh-make}#. Per maggiori informazioni su
+#{lb config}# si veda {Il comando lb config}#lb-config.
+
+Il resto di questa sezione tratta i tre comandi più importanti:
+
+_* *{lb config}*: responsabile dell'inizializzazione di una directory di
+configurazione del sistema live. Si veda {Il comando lb config}#lb-config
+per maggiori informazioni.
+
+_* *{lb build}*: responsabile di iniziare la creazione di un sistema
+live. Si veda {Il comando lb}#lb-build per maggiori informazioni.
+
+_* *{lb clean}*: responsabile della rimozione di parti della creazione di un
+sistema live. Si veda {Il comando lb clean}#lb-clean per maggiori
+informazioni.
+
+3~lb-config Il comando #{lb config}#
+
+Come discusso in {live-build}#live-build, gli script che compongono
+live-build attingono la loro configurazione da una singola directory
+chiamata #{config/}#. Dal momento che crearla a mano sarebbe dispendioso in
+termini di tempo e soggetto a errori, si può usare il comando #{lb config}#
+per creare la directory scheletro di configurazione.
+
+L'esecuzione di #{lb config}# senza argomenti crea una sottodirectory di
+#{config/}# popolata con alcune impostazioni predefinite:
+
+code{
+
+ $ lb config
+ P: Creating config tree
+
+ $ ls -l
+ total 8
+ drwxr-xr-x  3 user user 4096 Sep  7 13:02 auto
+ drwxr-xr-x 22 user user 4096 Sep  7 13:02 config
+
+ $ ls -l config/
+ total 104
+ -rw-r--r-- 1 user user 4197 Sep  7 13:02 binary
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_debian-installer
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_debian-installer-includes
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_grub
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-debs
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-hooks
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-includes
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-packageslists
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-udebs
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_rootfs
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_syslinux
+ -rw-r--r-- 1 user user 2051 Sep  7 13:02 bootstrap
+ -rw-r--r-- 1 user user 1647 Sep  7 13:02 chroot
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_apt
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-hooks
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-includes
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-packages
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-packageslists
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-patches
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-preseed
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_sources
+ -rw-r--r-- 1 user user 2954 Sep  7 13:02 common
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 includes
+ -rw-r--r-- 1 user user  205 Sep  7 13:02 source
+ drwxr-xr-x 2 user user 4096 Sep  7 13:02 templates
+
+}code
+
+L'uso di #{lb config}# senza argomenti è adatto ad utenti che necessitano di
+un'immagine di base o che intendono fornire in seguito una configurazione
+più completa tramite auto/config (per i dettagli vedere {Gestire una
+configurazione}#managing-a-configuration).
+
+Normalmente si vorranno specificare delle opzioni, ad esempio per includere
+nella propria configurazione l'elenco del pacchetto "gnome":
+
+code{
+
+ $ lb config -p gnome
+
+}code
+
+È possibile specificare molte opzioni, come:
+
+code{
+
+ $ lb config --binary-images net --hostname live-machine --username live-user ...
+
+}code
+
+Una lista completa delle opzioni e' disponibile nel manuale di
+#{lb_config}#.
+
+3~lb-build Il comando #{lb build}#
+
+Il comando #{lb build}# legge la configurazione dalla directory #{config/}#
+ed esegue ad un livello inferiore i comandi necessari a costruire il sistema
+live.
+
+3~lb-clean Il comando #{lb clean}#
+
+Il compito del comando #{lb clean}# è di rimuovere diverse parti di una
+compilazione affinché quelle successive possano iniziare in un ambiente
+pulito.
+
+2~live-boot Il pacchetto live-boot
+
+live-boot è una raccolta di script che forniscono hook per initramfs-tools,
+utilizzato per generare un initramfs in grado di avviare sistemi live, come
+quelli creati da live-build. Questo include le ISO di Debian Live, archivi
+per l'avvio da rete e immagini per penne USB.
+
+All'avvio cercherà supporti in sola lettura che contengano una directory
+"/live" dove sia presente un filesystem root (spesso un'immagine compressa
+come squashfs). Se trovata, creerà un ambiente scrivibile usando aufs, per
+avviarsi da sistemi simili a Debian.
+
+Si possono trovare maggiori informazioni sui ramfs iniziali nel capitolo su
+initramfs del Debian Linux Kernel Handbook all'indirizzo
+http://kernel-handbook.alioth.debian.org/.
+
+2~live-config Il pacchetto live-config
+
+live-config è costituito da script eseguiti all'avvio dopo live-boot per
+configurare automaticamente il sistema live. Gestisce attività quali
+impostare l'hostname, localizzazione e fuso orario, creare l'utente live,
+inibire compiti automatizzati tramite cron ed eseguire il login automatico
+dell'utente live.
+

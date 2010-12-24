@@ -227,7 +227,7 @@ inclusi e condizionali come descritto nella sezioni seguenti.
 
 3~ Elenchi locali dei pacchetti
 
-Gli elenchi si possono integrare o sostituire interamente usando gli elenchi
+Gli elenchi si possono integrare o sostituire interamente usando quelli
 locali dei pacchetti in #{config/chroot_local-packageslists/}#.
 
 Per essere processati, questi elenchi devono avere il suffisso #{.list}#. I
@@ -579,12 +579,12 @@ code{
 
 }code
 
-Negative pin priorities will prevent a package from being installed, as in
-the case where you do not want a package that is recommended by another
-package. Suppose you are building a GNOME image but don't want the user
-prompted to store wifi passwords in the keyring, so you want to omit the
-recommended #{gnome-keyring}# package. This can be done by adding the
-following stanza to #{config/chroot_apt/preferences}#:
+Un valore negativo della priorità evita che un pacchetto venga installato,
+come nel caso in cui non se ne voglia uno raccomandato da un
+altro. Supponendo di costruire un'immagine di GNOME ma non si desidera che
+all'utente venga richiesto di salvare la password wifi nel portachiavi; in
+questo caso si vorrà omettere il pacchetto raccomandato #{gnome-keyring}#
+aggiungendo a #{config/chroot_apt/preferences}# la seguente definizione:
 
 code{
 

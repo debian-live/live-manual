@@ -34,11 +34,11 @@ code{
 
 2~tutorial-1 Tutorial 1: un'immagine standard
 
-*{Caso d'uso:}* creare una prima immagine semplice, imparare i fondameni di live-build.
+*{Caso d'uso:}* creazione di una prima semplice immagine, imparando i fondamenti di live-build.
 
 In questo tutorial genereremo un'immagine ISO ibrida di Debian Live
-contenente solo i pacchetti base (niente Xorg) e alcuni pacchetti Debian
-Live di supporto, come primo esercizio sull'uso di live-build.
+contenente solo pacchetti base (senza Xorg) e alcuni pacchetti Debian Live
+di supporto, come primo esercizio sull'uso di live-build.
 
 Non può essere più semplice:
 
@@ -70,9 +70,9 @@ descritto rispettivamente in {Masterizzare un'immagine ISO su un supporto
 fisico}#burning-iso-image e {Copiare un'immagine USB/HDD su una penna
 USB}#copying-usb-hdd-image.
 
-2~tutorial-2 Tutorial 2: un programma di utilità web browser
+2~tutorial-2 Tutorial 2: servizio browser web
 
-*{Caso d'uso:}* creazione di un'immagine browser web, imparare come applicare le personalizzazioni.
+*{Caso d'uso:}* creazione di un'immagine per servizio browser web, imparando come applicare le personalizzazioni.
 
 In questo tutorial verrà creata un'immagine adatta all'uso come browser web,
 che serve come introduzione alla personalizzazione delle immagini Debian
@@ -106,14 +106,14 @@ Di nuovo, si verifichi che l'immagine sia a posto e la si collaudi, come in
 
 2~tutorial-3 Tutorial 3: un'immagine personalizzata
 
-*{Caso d'uso:}* creare un progetto per costruire un'immagine personalizzata, contenente i pacchetti preferiti da portare con sé in una chiavetta USB ovunque si vada, da evolvere in revisioni successive allorché i bisogni o le preferenze cambino.
+*{Caso d'uso:}* creazione di un progetto per costruire un'immagine personalizzata che contiene i pacchetti preferiti da portare con sé in una chiavetta USB ovunque si vada, e che evolve in revisioni successive allorché i bisogni o le preferenze cambino.
 
 Dal momento che la nostra immagine personalizzata cambierà con le successive
-revisioni, e che vogliamo tener traccia di questi cambiamenti, sperimentando
-ed eventualmente tornare indietro se qualcosa non funziona, conserveremo la
-nostra configurazione nel popolare sistema di controllo di versione
-#{git}#. Useremo anche le migliori pratiche di auto-configurazione tramite
-gli script #{auto}# come descritto in {Gestire una
+revisioni, e che vogliamo tener traccia di questi cambiamenti, andando per
+tentativi ed eventualmente tornando indietro se qualcosa non funziona,
+conserveremo la nostra configurazione nel popolare sistema di controllo di
+versione #{git}#. Useremo anche le migliori pratiche di auto-configurazione
+tramite gli script #{auto}# come descritto in {Gestire una
 configurazione}#managing-a-configuration.
 
 3~ Prima revisione
@@ -157,13 +157,13 @@ code{
 
 }code
 
-Si noti che diversamente dai primi due tutorial, non bisogna più digitare
+Si noti che diversamente dai primi due tutorial, non occorre più digitare
 #{2>&1 | tee binary.log}# dato che questo è ora incluso in #{auto/build}#.
 
 Una volta che l'immagine è stata collaudata (come in {Tutorial
 1}#tutorial-1) e che si è sicuri che funzioni correttamente, è il momento di
 inizializzare il repository #{git}#, aggiungendo solo gli script auto appena
-creati, e poi fare il primo commit:
+creati, e di fare poi il primo commit:
 
 code{
 
@@ -179,8 +179,8 @@ In questa revisione ripuliremo la prima compilazione, aggiungeremo il
 pacchetto #{vlc}# alla configurazione, dunque avverrà una ricompilazione,
 verifica e commit.
 
-Il comando #{lb clean}# ripulirà tutti i file generati dalla precedente
-compilazione eccetto la cache, che ci evita un nuovo download dei
+Il comando #{lb clean}# ripulirà tutti i file ottenuti con la precedente
+generazione eccetto la cache, che ci evita un nuovo download dei
 pacchetti. Ciò assicura che il successivo #{lb build}# eseguirà di nuovo
 tutti i passaggi per rigenerare i file dalla nuova configurazione.
 
@@ -205,7 +205,7 @@ code{
 
 }code
 
-Compilare nuovamente:
+Lanciare nuovamente la generazione:
 
 code{
 
@@ -226,9 +226,9 @@ Ovviamente sono possibili cambiamenti alla configurazione più complicati,
 magari aggiungendo file in sottodirectory di #{config/}#. Quando si esegue
 il commit di nuove revisioni, si faccia solo attenzione a non modificare
 manualmente o fare un commit dei file al livello superiore di #{config}# che
-contengono le variabili #{LB_*}#, giacché sono anche  prodotti della
-compilazione, e che sono sempre ripuliti da #{lb clean}# e ricreati con #{lb
-config}# attraverso i loro rispettivi script #{auto}#.
+contengono le variabili #{LB_*}#, giacché sono anche prodotti
+dell'assemblaggio, e che sono sempre ripuliti da #{lb clean}# e ricreati con
+#{lb config}# attraverso i loro rispettivi script #{auto}#.
 
 Siamo arrivati alla fine di questa serie di tutorial. Mentre sono possibili
 molti altri tipi di personalizzazioni, anche solo usando le poche
@@ -239,7 +239,7 @@ utenti Debian Live.
 
 2~ Un client Kiosk VNC
 
-*{Caso d'uso:}* creare un'immagine con live-build per avviare direttamente un server VNC.
+*{Caso d'uso:}* creazione di un'immagine con live-build per avviare direttamente un server VNC.
 
 Creare una directory con al suo interno una configurazione scheletrica
 costruita sulla base dell'elenco di standard-x11, tra cui #{gdm3}#,
@@ -287,7 +287,7 @@ Buon divertimento.
 
 2~ Un'immagine base per una chiavetta USB da 128M
 
-*{Caso d'uso:}* creare un'immagine standard rimuovendo alcuni componenti affinché stia su una chiavetta USB da 128M con lo spazio che rimane da usare come meglio si crede.
+*{Caso d'uso:}* creazione di un'immagine standard con alcuni componenti rimossi affinché possa stare su una chiavetta USB da 128M, con lo spazio che rimane da usarsi come meglio si crede.
 
 Quando si cerca di ottimizzare un'immagine affinché sia contenuta in un
 supporto, è necessario capire il compromesso che si deve fare tra la
@@ -334,7 +334,7 @@ valgono la pena.
 
 2~ Un desktop KDE localizzato e l'installer
 
-*{Caso d'uso:}* creare un'immagine con il desktop KDE, localizzato per il Brasiliano Portoghese che includa l'installatore.
+*{Caso d'uso:}* creazione di un'immagine con il desktop KDE, localizzato per il portoghese brasiliano e che includa l'installatore.
 
 Si vuole creare un'immagine iso ibrida per architettura i386 usando il
 nostro desktop preferito, in questo caso KDE, contenente tutti gli stessi
@@ -383,7 +383,7 @@ code{
 }code
 
 Si userà l'opzione sperimentale #{--language}#, poiché live-build contempla
-i template #{syslinux}# per pt_BR (Vedere {Task per desktop e
+i template #{syslinux}# per pt_BR (vedere {Task per desktop e
 lingua}#desktop-and-language-tasks per i dettagli). All'avvio verrà generata
 la lingua pt_BR.UTF-8 e selezionato pt-latin1 come layout della
 tastiera. Ora mettiamo insieme i pezzi:
@@ -405,8 +405,8 @@ code{
 }code
 
 Si noti che è stato incluso il pacchetto #{debian-installer-launcher}# in
-modo da poter lanciare l'installer dal desktop della live, ed è stato anche
-specificato il kernel 486, poiché è necessario che il kernel dell'installer
-e quello del sistema coincidano affinche il launcher funzioni
-appropriatamente.
+modo da poter lanciare l'installer dal desktop della live, e che è stato
+anche specificato il kernel 486, dato che attualmente è necessario che il
+kernel dell'installer e quello del sistema live coincidano affinché il
+launcher funzioni correttamente.
 

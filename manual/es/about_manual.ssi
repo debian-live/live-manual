@@ -1,0 +1,284 @@
+:B~ Acerca de este manual
+
+1~about-manual Acerca de este manual
+
+El objetivo principal de este manual es ser el único punto de acceso a toda
+la documentación relativa al proyecto Debian Live. Esto no incluye la
+documentación que describe su uso dirigida al usuario de un sistema Debian
+Live sino que se circunscribe a temas específicos de la creación y arranque
+de un Sistema Live.
+
+Algunos de los comandos mencionados en el texto deben ser ejecutados con
+privilegios de superusuario, que pueden ser obtenidos accediendo a la cuenta
+de root mediante el comando #{su}# o mediante el comando #{sudo}#. Para
+distinguir los comandos que deben ser ejecutados como usuario no
+privilegiado de los que si requieren privilegios de superusuario se ha
+prefijado con #{$}# los primeros y con #{#}# los segundos. Estos símbolos no
+son parte del comando.
+
+2~ Para el impaciente.
+
+Aunque se cree que todo lo descrito en este manual es importante para la
+mayoría de los usuarios, es cierto que hay mucho material a interiorizar y
+que los usuarios desean experimentar con las herramientas de forma
+satisfactoria y rápida antes de entrar en detalles. Esta es la razón por la
+que se presentan tres tutoriales en la sección {Ejemplos}#examples pensados
+para aprender a configurar y construir imágenes Live de forma básica. Se
+deberá leer primero {Utilización de ejemplos}#using-the-examples primero,
+seguido de {Tutorial 1: Una imagen estandar}#tutorial-1 y  {Tutorial 2: Una
+utilidad para el navegador}#tutorial-2, para finalizar con {Tutorial 3: Una
+imagen personalizada}#tutorial-3. Al final de estos tutoriales, el lector
+tendrá una visión de lo que se puede hacer con Debian Live. Se anima a
+profundizar en el estudio del manual con la lectura detenida del siguiente
+capítulo, {Temas básicos}#the-basics, y de una manera más somera el capítulo
+{La creación de una imagen netboot}#building-netboot-image, para acabar con
+la lectura de {Un resumen de la personalización}#customization-overview y
+los capítulos que le siguen. Se espera que, en este punto, el lector esté lo
+suficientemente motivado por lo que se puede hacer con Debian Live para leer
+el resto del manual, de cabo a rabo.
+
+2~terms Términos
+
+_* *{Sistema Live}*: Se entiende por Sistema Live a aquel sistema operativo
+que puede arrancar sin su instalación previa en el disco duro. Un Sistema
+Live no altera ningún sistema operativo previamente instalado ni ningún
+fichero existente en el disco duro de la máquina a menos que se le instruya
+para hacerlo. Los Sistemas Live son arrancados típicamente desde medios
+extraíbles como CD, DVD o llaves USB. Algunos pueden también arrancar desde
+la red local.
+
+_* *{Debian Live}*: Es un subproyecto de Debian que mantiene los paquetes
+Debian live-boot, live-build, live-config y live-manual.
+
+_* *{Sistema Debian Live}*: Es un Sistema Live que utiliza programas del
+sistema operativo Debian y que puede ser arrancado desde medios extraíbles
+como CD, DVD o llaves USB, desde red local (mediante imágenes netboot) o
+desde Internet (utilizando el la opción de arranque #{fetch=URL}#).
+
+_* *{Sistema Host}*: Es el conjunto de herramientas y equipo utilizado para
+crear el Sistema Live.
+
+_* *{Sistema Target}*: Es el conjunto de herramientas y equipo donde se
+ejecutará el Sistema Live.
+
+_* *{live-boot}*: Es una colección de scripts que serán responsables de
+arrancar el Sistema Live. live-boot fue anteriormente una parte del paquete
+live-initramfs.
+
+_* *{live-build}*: Es una colección de scripts utilizados para construir
+sistemas Debian Live personalizados. live-build fue conocido anteriormente
+como live-helper, y en una versión anterior como live-package.
+
+_* *{live-config}*: Es una colección de scripts utilizados para configurar
+un Sistema Live durante el proceso de arranque. live-config fue
+anteriormente parte del paquete live-initramfs.
+
+_* *{live-manual}*: Este documento es mantenido en un paquete llamado
+live-manual.
+
+_* *{Debian Installer (d-i)}*: Es el mecanismo oficial de instalación para
+la distribución Debian.
+
+_* *{Parámetros de arranque}*: Parámetros que son entregados por el gestor
+de arranque (bootloader) para modificar el comportamiento del kernel o del
+conjunto de scripts live-config. Son llamados también Parámetros de kernel u
+Opciones de arranque.
+
+_* *{chroot}*: El programa chroot, #{chroot(8)}#, permite ejecutar
+diferentes instancias de un entorno GNU/Linux en un solo sistema de manera
+simultánea sin necesidad de reiniciar el sistema.
+
+_* *{Imagen binaria}*: Es un fichero binario que contiene el Sistema
+Live. Su nombre puede ser binary.iso o binary.img dependiendo de su formato.
+
+_* *{Distribución objetivo}*: Es la versión de la distribución Debian en la
+cual estará basado el Sistema Live que puede diferir de la versión de la
+distribución en el sistema Host.
+
+_* *{Squeeza/Wheezy/Sid (stable/testing/unestable)}*: Son los nombres clave
+de las diferentes versiones de distribución Debian. En el momento de
+escribir este documento, Squeeze es la actual versión *{stable}* o estable,
+Wheezy es la actual versión *{testing}* o en pruebas. Sid es y será siempre
+sinónimo de versión *{unestable}* o inestable.
+
+La distribución *{stable}* contiene la última distribución Debian
+oficialmente entregada. La distribución *{testing}* está en la rampa de
+salida para ser la próxima distribución *{stable}*. La principal ventaja de
+utilizar esta distribución es que tiene versiones de programas más recientes
+si se compara con la versión *{stable}*. La distribución *{unstable}* es
+donde se realiza el desarrollo de Debian. Generalmente esta distribución es
+ejecutada por los desarrolladores y aquellos que les gusta vivir al filo de
+lo imposible.
+
+2~ Autores
+
+Lista de autores (en orden alfabético):
+
+_* Ben Armstrong
+
+_* Brendan Sleight
+
+_* Chris Lamb
+
+_* Daniel Baumann
+
+_* Franklin Piat
+
+_* Jonas Stein
+
+_* Kai Hendry
+
+_* Marco Amadori
+
+_* Mathieu Geli
+
+_* Matthias Kirschner
+
+_* Richard Nelson
+
+_* Trent W. Buck
+
+2~how-to-contribute Como contribuir en este documento
+
+Este manual se ha creado como un proyecto de comunidad y cualquier propuesta
+para su mejora u otras contribuciones son siempre bienvenidas. La mejor
+forma de hacer una contribución es enviarla a la lista de correos. Ver la
+sección {Contactos}#contact para más información.
+
+Cuando se envía una contribución se debe identificar claramente su copyright
+e incluir la declaración de licencia. Se hace notar que para ser aceptada,
+una contribución debe ser licenciada bajo la misma licencia que el resto del
+documento, esto es, GPL versión 3 o posterior.
+
+Los originales de este manual se mantienen utilizando el sistema de control
+de versiones Git. Se puede obtener la copia más actualizada ejecutando el
+siguiente comando:
+
+code{
+
+$ git clone git://live.debian.net/git/live-manual.git
+
+}code
+
+Antes de enviar una contribución se debería realizar una visualización del
+trabajo realizado. Para ello se debe asegurar que los paquetes necesarios
+para la construcción del documento están instalados ejecutando el siguiente
+comando:
+
+code{
+
+ # apt-get install make po4a sisu-complete libnokogiri-ruby
+
+}code
+
+Se puede realizar la construcción del manual posicionándose en el directorio
+de mayor nivel, donde se ha obtenido los originales mediante Git y
+ejecutando el siguiente comando:
+
+code{
+
+ $ make build
+
+}code
+
+Ya que la construcción del manual para todos los idiomas soportados tarda un
+rato, se encontrará conveniente el poder ejecutar la construcción para un
+solo idioma. Esto puede realizarse ejecutando el siguiente comando:
+
+code{
+
+$ make build LANGUAGES=en
+
+}code
+
+3~ Aplicación de parches
+
+Cualquiera puede directamente hacer una entrega en el repositorio. Sin
+embargo, a la hora de hacer grandes cambios, es conveniente enviarlos a la
+lista de correos para discutirlos primero. Para realizar una entrega al
+repositorio se debe seguir el siguiente procedimiento:
+
+_* Obtener la clave publica de entrega:
+
+code{
+
+ $ mkdir -p ~/.ssh/identity.d
+ $ wget http://live.debian.net/other/keys/gitosis@live.debian.net \
+     -O ~/.ssh/identity.d/gitosis@live.debian.net
+ $ wget http://live.debian.net/other/keys/gitosis@live.debian.net.pub \
+     -O ~/.ssh/identity.d/gitosis@live.debian.net.pub
+ $ chmod 0600 ~/.ssh/identity.d/gitosis@live.debian.net*
+
+}code
+
+_* Añadir la siguiente sección en el fichero de configuración de
+openssh-client:
+
+code{
+
+ $ cat >> ~/.ssh/config << EOF
+ Host live.debian.net
+     Hostname live.debian.net
+     User gitosis
+     IdentityFile ~/.ssh/identity.d/gitosis@live.debian.net
+ EOF
+
+}code
+
+_* Obtener un clon del manual mediante Git:
+
+code{
+
+ $ git clone gitosis@live.debian.net:/live-manual.git
+}code
+
+_* Después de editar los ficheros que se deseen en #{manual/en/}#, llamar al
+objetivo make "commit" en el directorio superior para sanear los ficheros y
+actualizar los ficheros de traducciones:
+
+code{
+
+ $ make commit
+
+}code
+
+_* Una vez se ha saneado, se deberán entregar los cambios. Se deberá
+escribir un mensaje de entrega que consistirá en una o varias frases en
+Ingles, comenzando con una letra mayúscula y acabando con un punto final. Es
+habitual comenzar estas frases con la forma
+'Fixing/Adding/Removing/Correcting/Translating', por ejemplo:
+
+code{
+
+$ git commit -a -m "Adding a section on applying patches."
+
+}code
+
+_* Para finalizar se realizará la entrega al servidor utilizando el
+siguiente comando:
+
+code{
+
+ $ git push
+
+}code
+
+3~ Traducciones
+
+Para enviar una traducción para un nuevo idioma, se deben seguir los
+siguientes pasos:
+
+_* Traducir los ficheros about_manual.ssi.pog, about_project.ssi.pot e
+index.html.in.pot al idioma deseado con cualquier editor (como puede ser
+poedit) y enviarlos a la lista de correos. Una vez hayan sido revisados, el
+idioma será añadido al manual, (añadiendo los ficheros .po) y se habilitará
+en el autobuild.
+
+_* Una vez que el nuevo idioma haya sido añadido, se puede comenzar la
+traducción de todos los ficheros .po exisitentes en #{manual/po/}# de manera
+aleatoria.
+
+_* No se debe olvidar la ejecución del comando #{make commit}# para asegurar
+que los manuales traducidos son actualizados desde los ficheros .po, antes
+de realizar la entrega mediante #{git commit -a}# y #{git push}#.
+

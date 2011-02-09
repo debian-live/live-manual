@@ -342,7 +342,7 @@ code{
 
 }code
 
-Negative pin priorities will prevent a package from being installed, as in the case where you do not want a package that is recommended by another package. Suppose you are building a GNOME image but don't want the user prompted to store wifi passwords in the keyring, so you want to omit the recommended #{gnome-keyring}# package. This can be done by adding the following stanza to #{config/chroot_apt/preferences}#:
+Negative pin priorities will prevent a package from being installed, as in the case where you do not want a package that is recommended by another package. Suppose you are building an LXDE image using #{--packages-lists lxde}# option, but don't want the user prompted to store wifi passwords in the keyring. This list includes #{gdm}#, which depends on #{gksu}#, which in turn recommends #{gnome-keyring}#. So you want to omit the recommended #{gnome-keyring}# package. This can be done by adding the following stanza to #{config/chroot_apt/preferences}#:
 
 code{
 
@@ -351,4 +351,3 @@ code{
  Pin-Priority: -1
 
 }code
-

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
 "POT-Creation-Date: 2010-12-19 20:37-0400\n"
-"PO-Revision-Date: 2010-12-19 20:37-0400\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2011-02-13 07:49+0100\n"
+"Last-Translator: José Luis Zabalza <jlz.3008@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -147,12 +147,12 @@ msgstr "}code"
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:2
 msgid ":B~ Managing a configuration"
-msgstr ""
+msgstr ":B~ Gestionar una configuración"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:4
 msgid "1~managing-a-configuration Managing a configuration"
-msgstr ""
+msgstr "1~managing-a-configuration Gestionar una configuración"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:6
@@ -161,11 +161,15 @@ msgid ""
 "creation, through successive revisions and successive releases of both the "
 "live-build software and the live image itself."
 msgstr ""
+"Este capítulo explica como gestionar una configuración para generar un "
+"sistema en vivo desde el principio, pasando por sucesivas versiones tanto de "
+"la herramienta live-build como de la imagen del sistema en vivo propiamente "
+"dicha."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:8
 msgid "2~ Use auto to manage configuration changes"
-msgstr ""
+msgstr "2~ Utilización de auto para gestionar los cambios de la configuración"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:10
@@ -177,6 +181,16 @@ msgid ""
 "default value, that value will not be recomputed from other variables that "
 "may change in later revisions."
 msgstr ""
+"La configuración necesaria para generar un sistema en vivo rara vez es "
+"perfecta a la primera. Lo normal es que se necesite realizar una serie de "
+"revisiones hasta que se obtenga algo satisfactorio. Sin embargo, las "
+"inconsistencias pueden transmitirse de una revisión de la configuración a "
+"otra si no se es lo suficientemente cuidadoso. El principal problema es que, "
+"una vez que una variable de la configuración tiene un valor asignado, este "
+"valor no es recalculado en revisiones posteriores de la configuración. Esto "
+"hace que, si una variable depende del valor de otra y esta segunda cambia de "
+"valor, el valor actual de la primera no se ve alterado, debido a que ya "
+"tenía el valor asignado de antemano."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:12
@@ -186,6 +200,12 @@ msgid ""
 "decide to change the distribution, those dependent variables continue to "
 "retain old values that are no longer appropriate."
 msgstr ""
+"Por ejemplo, la primera vez que se asigna la distribución a utilizar, se "
+"asigna a muchas variables un valor por defecto para adecuarse la "
+"distribución seleccionada. Sin embargo, si posteriormente se decide "
+"modificar la distribución, estas variables dependientes continuan reteniendo "
+"los valores antiguos que, por supuesto, no son los adecuados para la nueva "
+"distribución."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:14
@@ -196,6 +216,13 @@ msgid ""
 "{config/*}# files, which you will then need to use to set the appropriate "
 "option again."
 msgstr ""
+"Otro problema es que la ejecución de la orden #{lb config}# no se "
+"reejecutará correctamente si se realiza una actualización a una nueva "
+"versión de las herramientas live-build que modifique el nombre de alguna "
+"variable de configuración. Además solamente podrá ser descubierto mediante "
+"una revisión manual de los ficheros del directorio #{config/*} que se "
+"deberán modificar para  asignar las variables de configuración a un nuevo "
+"valor apropiado."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:16
@@ -211,11 +238,24 @@ msgid ""
 "release to the next (though you will still have to take care and read the "
 "documentation when you upgrade live-build and make adjustments as needed)."
 msgstr ""
+"Todo esto sería un terrible embrollo si no fuese por los scripts auto/*, "
+"simples envoltorios para las ordenes #{lb config}#, #{lb build}# y #{lb "
+"clean}# que están diseñados para ayudar a la gestión de la configuración. "
+"Simplemente se debe crear un script llamado auto/config que contenga la "
+"orden #{lb config}# con todas las opciones que se deseen y otro script "
+"llamado auto/clean  que elimine los ficheros que contienen los valores de "
+"las variables de configuración. Estos scripts se ejecutarán cada vez que se "
+"ejecuten las ordenes #{lb config}# o #{lb clean}# de manera automática. Esto "
+"asegurará que la configuración se mantendrá consistente desde una versión a "
+"otra y desde una versión de las herramientas live-build a otra. (Aunque esto "
+"no elimina la necesidad de leer la documentación cuando se instale una nueva "
+"version de las herramientas live-build y quizas realizar algún ajuste manual "
+"en los ficheros de configuración)."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:18
 msgid "2~ Example auto scripts"
-msgstr ""
+msgstr "2~ Un ejemplo de scripts auto."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:20
@@ -227,11 +267,18 @@ msgid ""
 "Also, don't forget to ensure the scripts are executable (e.g. #{chmod 755 "
 "auto/*}#)."
 msgstr ""
+"Se debe utilizar scripts auto similares a los ejemplos que se muestran a "
+"continuación como punto de partida para nueva configuración de las "
+"herramientas live-build. Hay que hacer notar que, cuando se ejecuta una "
+"orden #{lb}# dentro del script auto, se debe especificar la opción #{noauto}"
+"# para asegurar que el script auto no es vuelto a ejecutar recursivamente. "
+"Tampoco se debe olvidar el asegurar que los scripts auto deben ser "
+"ejecutables (por ejemplo #{chmod 755 auto/*}#). "
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:22
 msgid "#{auto/config}#"
-msgstr ""
+msgstr "#{auto/config}#"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:29
@@ -242,11 +289,15 @@ msgid ""
 "     --packages-lists \"standard\" \\\n"
 "     \"${@}\"\n"
 msgstr ""
+"#!/bin/sh\n"
+" lb config noauto \\\n"
+"     --packages-lists \"standard\" \\\n"
+"     \"${@}\"\n"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:33
 msgid "#{auto/clean}#"
-msgstr ""
+msgstr "#{auto/clean}#"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:41
@@ -258,11 +309,16 @@ msgid ""
 "     config/chroot config/common config/source\n"
 " rm -f binary.log\n"
 msgstr ""
+" #!/bin/sh\n"
+" lb clean noauto \"${@}\"\n"
+" rm -f config/binary config/bootstrap \\\n"
+"     config/chroot config/common config/source\n"
+" rm -f binary.log\n"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:45
 msgid "#{auto/build}#"
-msgstr ""
+msgstr "#{auto/build}#"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:50
@@ -271,6 +327,8 @@ msgid ""
 " #!/bin/sh\n"
 " lb build noauto \"${@}\" 2>&1 | tee binary.log\n"
 msgstr ""
+" #!/bin/sh\n"
+" lb build noauto \"${@}\" 2>&1 | tee binary.log\n"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:54
@@ -278,12 +336,14 @@ msgid ""
 "We now ship example auto scripts with live-build based on the examples "
 "above. You may copy those as your starting point."
 msgstr ""
+"Estos auto scripts vienen de serie con las herramientas live-build. Bastaría "
+"con copiar estos scripts como punto de partida."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:58
 #, no-wrap
 msgid " $ cp /usr/share/live/build/examples/auto/* auto/\n"
-msgstr ""
+msgstr " $ cp /usr/share/live/build/examples/auto/* auto/\n"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:62
@@ -294,3 +354,10 @@ msgid ""
 "to use the default) and add any additional options in continuation lines "
 "that follow."
 msgstr ""
+"Se puede editar el script #{auto/config}#, modificándolo o añadiendo "
+"cualquier opción que se acomode a las necesidades requeridas. En el ejemplo "
+"anterior, se asignará la opción #{--packages-lists standard} # como si fuese "
+"asignada por defecto. Se puede cambiar este valor a uno adecuado o "
+"simplemente eliminarlo si no es necesario añadiendo cualquier otra opción "
+"que se adecue a las necesidades requeridas por la imagen a crear, en líneas "
+"como las siguientes. "

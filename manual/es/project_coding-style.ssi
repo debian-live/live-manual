@@ -1,32 +1,29 @@
-B~ Estilo de código
+B~ Coding Style
 
-1~coding-style Estilo de código
+1~coding-style Coding Style
 
-En este capítulo se documenta el estilo de codificación utilizado en
-live-boot y otros.
+This chapter documents the coding style used in live-boot and others.
 
-2~ Compatibilidad
+2~ Compatibility
 
-_* No utilizar sintaxis o semántica que sea única para el intérprete de
-comandos Bash. Por ejemplo, el uso de matrices.
+_* Don't use syntax or semantics that are unique to the Bash shell. For
+example, the use of array constructs.
 
-_* Utilice únicamente el subconjunto POSIX - por ejemplo, usar $(foo) en
-lugar de «foo ».
+_* Only use the POSIX subset - for example, use $(foo) over `foo`.
 
-_* Usted puede comprobar las secuencias de comandos con «sh-n» y
-«checkbashisms».
+_* You can check your scripts with 'sh -n' and 'checkbashisms'.
 
-2~ Sangría
+2~ Indenting
 
-_* Utilice siempre los tabuladores para los espacios.
+_* Always use tabs over spaces.
 
-2~ Envoltorio
+2~ Wrapping
 
-_* En general, las líneas contienen 80 caracteres como máximo.
+_* Generally, lines are 80 chars at maximum.
 
-_* Utilice los saltos de línea al "estilo Linux" :
+_* Use the "Linux style" of line breaks:
 
-Mal:
+Bad:
 
 code{
 
@@ -36,7 +33,7 @@ code{
 
 }code
 
-Bién:
+Good:
 
 code{
 
@@ -47,9 +44,9 @@ code{
 
 }code
 
-_* Lo mismo vale para las funciones:
+_* The same holds for functions:
 
-Mal:
+Bad:
 
 code{
 
@@ -59,7 +56,7 @@ code{
 
 }code
 
-Bién:
+Good:
 
 code{
 
@@ -72,31 +69,29 @@ code{
 
 2~ Variables
 
-_* Las variables deben escribirse siempre en letras mayúsculas.
+_* Variables are always in capital letters.
 
-_* Las variables que se utiliza en #{lb config}# siempre comienzan con el
-prefijo #{LB_}#
+_* Variables that used in #{lb config}# always start with #{LB_}# prefix.
 
-_* Las variables temporales internas del live-build deben comenzar con el
-prefijo #{\_LB_}#
+_* Internal temporary variables in live-build should start with the
+#{\_LB_}# prefix.
 
-_* Las variables locales comienzan con el prefijo live-build #{\_\_LB_}#
+_* Local variables start with live-build #{\_\_LB_}# prefix.
 
-_* Las variables en relación a un parámetro de arranque en live-config
-comienzan con #{LIVE_}#.
+_* Variables in connection to a boot parameter in live-config start with
+#{LIVE_}#.
 
-_* Todas las demás variables de live-config comienzan con el prefijo #{_}#
+_* All other variables in live-config start with #{_}# prefix.
 
-_* Utilice llaves para las variables, por ejemplo, escriba #{${FOO}}# en
-lugar de #{$FOO}#.
+_* Use braces around variables; e.g. write #{${FOO}}# instead of #{$FOO}#.
 
-_* Usar comillas dobles en las variables para evitar dejar espacios en
-blanco: Escribe #{"${FOO}"}# en lugar de #{${FOO}}#.
+_* Always protect variables with quotes to respect potential whitespaces:
+write #{"${FOO}"}# not #{${FOO}}#.
 
-_* Por motivos de coherencia, usar siempre comillas en la asignación de
-valores a las variables:
+_* For consistency reasons, always use quotes when assigning values to
+variables:
 
-Mal:
+Bad:
 
 code{
 
@@ -104,7 +99,7 @@ code{
 
 }code
 
-Bién:
+Good:
 
 code{
 
@@ -112,10 +107,9 @@ code{
 
 }code
 
-_* Si se utilizan múltiples variables, incluya la expresión completa entre
-comillas dobles:
+_* If multiple variables are used, quote the full expression:
 
-Mal:
+Bad:
 
 code{
 
@@ -126,7 +120,7 @@ code{
 
 }code
 
-Bién:
+Good:
 
 code{
 
@@ -137,14 +131,14 @@ code{
 
 }code
 
-2~ Varios
+2~ Miscellaneous
 
-_* Utilice  "#{|}#"  (sin comillas) como separador cuando se invoque a sed,
-p.ej. "#{sed -e 's|foo|bar|'}#" (Pero sin las comillas "")
+_* Use "#{|}#" (without the surround quotes) as a seperator in calls to sed,
+e.g. "#{sed -e 's|foo|bar|'}#" (without "").
 
-_* No utilice el comando #{test}# para hacer comparaciones o pruebas, use
-"#{[}#" "#{]}#" (sin ""); p.ej.  "#{if [ -x /bin/foo ]; ...}#" en lugar de
-"#{if test -x /bin/foo; ...}#".
+_* Don't use the #{test}# command for comparisons or tests, use "#{[}#"
+"#{]}#" (without ""); e.g. "#{if [ -x /bin/foo ]; ...}#" and not "#{if test
+-x /bin/foo; ...}#".
 
-_* Use #{case}# siempre que sea posible en lugar de #{test}#, ya que es más
-facil de leer y más rápido en la ejecución.
+_* Use #{case}# wherever possible over #{test}#, as it's easier to read and
+faster in execution.

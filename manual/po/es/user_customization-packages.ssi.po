@@ -7,14 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
 "POT-Creation-Date: 2011-01-26 19:24+0000\n"
-"PO-Revision-Date: 2011-01-26 19:24+0000\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2011-02-27 21:11-0000\n"
+"Last-Translator: José Luis Zabalza <jlz.3008@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-Country: SPAIN\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #. type: Plain text
 #: en/about_manual.ssi:84 en/about_manual.ssi:92 en/about_manual.ssi:100
@@ -147,12 +150,14 @@ msgstr "}code"
 #. type: Plain text
 #: en/user_customization-packages.ssi:2
 msgid ":B~ Customizing package installation"
-msgstr ""
+msgstr ":B~ Personalización de la instalación de paquetes"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:4
 msgid "1~customizing-package-installation Customizing package installation"
 msgstr ""
+"1~customizing-package-installation Personalización de la instalación de "
+"paquetes"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:6
@@ -173,16 +178,35 @@ msgid ""
 "packages to save space, or need to control which versions of packages are "
 "installed via APT pinning, to name a few possibilities."
 msgstr ""
+"Quizas, la tarea más básica de personalizacion en Debian Live es la "
+"selección de paquetes que serán incluidos en la imagen. Este capítulo "
+"orienta a través de las diferentes opciones de live-build que, en el momento "
+"de la creación de la imagen, personalizan la instalación de paquetes. Las "
+"opciones que seleccionan la distribucion base y las areas de archivo Debian "
+"a utilizar son las que más influyen a la hora de conocer que paquetes "
+"estarán disponibles para su instalación en la imagen. Para asegurar una "
+"buena velocidad de descarga de paquetes, se debería elegir el repositorio "
+"Debian más cercano. Se pueden añadir repositorios para paquetes backports, "
+"experimentales, paquetes personalizados o incluir ficheros de paquetes "
+"directamente. Se pueden definir listas de paquetes a incluir personalizadas, "
+"utilizar listas predefinidas en live-build, seleccionar tareas de #{tasksel}"
+"# o una combinación de los tres métodos. Por último existen varias opciones "
+"que dan algún control sobre cuando son instalados los paquetes por la "
+"herramienta apt o la herramienta aptitude, según sea la elegida. Estas "
+"opciones pueden ser útiles si se utiliza un proxy, se quiere desactivar la "
+"instalación de paquetes recomendados para ahorrar espacio o se necesita "
+"controlar las versiones de los paquetes a instalar mediante APT pinning, por "
+"nombrar algunas posibilidades."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:8
 msgid "2~ Package sources"
-msgstr ""
+msgstr "2~ Origen de los paquetes"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:10
 msgid "3~ Distribution, archive areas and mode"
-msgstr ""
+msgstr "3~ Distribución, areas de archivo y modo"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:12
@@ -197,12 +221,22 @@ msgid ""
 "distribution. For example, to build against the *unstable* release, Sid, "
 "specify:"
 msgstr ""
+"La distribución seleccionada tiene gran impacto en qué paquetes están "
+"disponibles para incluir en la imagen. Se debe indicar el nombre en clave de "
+"la distribución, que por defecto es #{squeeze}# para la versión Squeeze de "
+"live-build. Se puede especificar cualquier nombre de distribución disponible "
+"en los repositorios Debian indicando su nombre en clave. (Para más detalles "
+"ver {Terminos}#terms). La opcion #{--distribution}# no solamente influencia "
+"la fuente de los paquetes dentro del archivo Debian, sino que instruye a #"
+"{live-build}# a comportarse tal y como se necesita para construir cada una "
+"de las distribuciones. Por ejemplo, para construir contra la versión "
+"*inestable*, Sid, se debe indicar: "
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:16
 #, no-wrap
 msgid " $ lb config --distribution sid\n"
-msgstr ""
+msgstr " $ lb config --distribution sid\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:20
@@ -213,12 +247,18 @@ msgid ""
 "distribution, hence that is the default. One or more values may be "
 "specified, e.g."
 msgstr ""
+"Las areas de archivo Debian son la principal división de paquetes dentro de "
+"una distribución dada. En Debian las areas de archivo establecidas son #"
+"{main}#, #{contrib}# y #{non-free}#. Solamente los paquetes contenidos en #"
+"{main}# son parte oficial de la distribución Debian. Esta es el area "
+"definida por defecto en live-build. Se pueden indicar uno o más valores tal "
+"y como se muestra en el siguiente ejemplo:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:24
 #, no-wrap
 msgid " $ lb config --archive-areas \"main contrib\"\n"
-msgstr ""
+msgstr " $ lb config --archive-areas \"main contrib\"\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:28
@@ -230,17 +270,24 @@ msgid ""
 "derivative are supported instead of the ones for Debian. The mode also "
 "modifies live-build behaviour to suit the derivatives."
 msgstr ""
+"Experimentalmente hay soporte para alguna distribución derivada de Debian "
+"mediante la opción #{--mode}#. Por defecto, esta opción toma el valor de #"
+"{debian}# incluso si live-build se está ejecutando en un sistema no Debian. "
+"Si se especifica #{--mode ubuntu}# o #{--mode emdebian}# se utilizará el "
+"nombre de la distribución y las areas de archivos específicas de la "
+"distribución derivada en lugar de los propios de Debian y live-build "
+"modificará su comportamiento para adecuarlo al modo seleccionado."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:30
 #, no-wrap
 msgid "*Note:* The projects for whom these modes were added are primarily responsible for supporting users of these options. The Debian live project, in turn, provides development support on a best-effort basis only, based on feedback from the derivative projects as we do not develop or support these derivatives ourselves.\n"
-msgstr ""
+msgstr "*Nota:* El soporte de las distribuciones utilizadas con estos modos son responsabilidad de los desarrolladores de dichas distribuciones. El proyecto Debian Live soporta su creación de la mejor manera posible, basándose en la información recogida de dichas distribuciones derivadas a pesar de que no desarrolla ni da soporte a las mismas.\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:32
 msgid "3~ Distribution mirrors"
-msgstr ""
+msgstr "3~ Réplicas de Distribución Debian"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:34
@@ -257,12 +304,28 @@ msgid ""
 "{--mirror-binary-security}# values are used, superceding any mirrors used in "
 "an earlier stage."
 msgstr ""
+"Los repositorios de Debian están replicados en una gran red alrededor del "
+"mundo, de manera que se puede seleccionar la réplica más cercana con el fin "
+"de obtener la mejor velocidad de descarga. Cada una de las opciones #{--"
+"mirror-*}# gobierna que réplica de repositorio Debian se utiliza en las "
+"diferentes etapas de creación. Si se recuerda de {Etapas de la creación}"
+"#stages-of-the-build, en la etapa de *preinstalación (bootstrap)* es cuando "
+"se crea el directorio chroot y se rellena con un sistema mínimo  mediante  "
+"la herramienta debootstrap, y en la etapa *chroot* es cuando el directorio "
+"chroot es completado con los paquetes necesarios para crear el sistema de "
+"ficheros que será utilizado en el sistema en vivo. A cada una de estas "
+"etapas le corresponde su propia opción #{--mirror-*}#. Posteriormente, en la "
+"etapa *binary* se utilizarán las réplicas Debian indicadas en los valores de "
+"las opciones #{--mirror-binary}# y #{--mirror-binary-security}# en lugar de "
+"utilizar los indicados para las etapas anteriores."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:36
 msgid ""
 "3~distribution-mirrors-build-time Distribution mirrors used at build time"
 msgstr ""
+"3~distribution-mirrors-build-time Réplicas de Distribution utilizadas "
+"durante la creación"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:38
@@ -271,6 +334,9 @@ msgid ""
 "mirror, it is sufficient to set #{--mirror-bootstrap}# and #{--mirror-chroot-"
 "security}# as follows."
 msgstr ""
+"Para indicar que réplicas deben ser utilizadas en el momento de crear la "
+"imágen es suficiente con utilizar las opciones #{--mirror-bootstrap}# y #{--"
+"mirror-chroot-security}# como se muestra a continuación."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:43
@@ -279,6 +345,8 @@ msgid ""
 " $ lb config --mirror-bootstrap http://localhost/debian/ \\\n"
 "             --mirror-chroot-security http://localhost/debian-security/\n"
 msgstr ""
+" $ lb config --mirror-bootstrap http://localhost/debian/ \\\n"
+"             --mirror-chroot-security http://localhost/debian-security/\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:47
@@ -286,11 +354,13 @@ msgid ""
 "The chroot mirror, specified by #{--mirror-chroot}#, defaults to the #{--"
 "mirror-bootstrap}# value."
 msgstr ""
+"El valor indicado en #{--mirror-chroot}# es utilizado como valor por defecto "
+"para la opción #{--mirror-bootstrap}# si esta no es indicada."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:49
 msgid "3~ Distribution mirrors used at run time"
-msgstr ""
+msgstr "3~ Réplicas de distribución Debian utilizadas en la ejecución."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:51
@@ -304,6 +374,15 @@ msgid ""
 "example below. An image built from this configuration would only be suitable "
 "for users on a network where \"#{mirror}#\" is reachable."
 msgstr ""
+"Las opciones #{--mirror-binary*}# gobiernan las réplicas configuradas en la "
+"imagen binaria que serán utilizadas para instalar paquetes adicionales "
+"mientras se ejecuta el sistema en vivo. Por defecto se utiliza #{cdn.debian."
+"net}#, que es un servicio que selecciona la réplica más cercana basándose en "
+"el número de IP. Es una elección bastante acertada siempre que no se pueda "
+"predecir que réplica será la mejor para todos los usuarios. También se puede "
+"especificar valores personalizados como se muestra en el siguiente ejemplo. "
+"Una imágen construida con esta configuración solamente sería accesible a los "
+"usuarios de una red donde \"#{mirror}#\" fuese alcanzable."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:56
@@ -312,11 +391,13 @@ msgid ""
 " $ lb config --mirror-binary http://mirror/debian/ \\\n"
 "             --mirror-binary-security http://mirror/debian-security/\n"
 msgstr ""
+" $ lb config --mirror-binary http://mirror/debian/ \\\n"
+"             --mirror-binary-security http://mirror/debian-security/\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:60
 msgid "3~additional-repositories Additional repositories"
-msgstr ""
+msgstr "3~additional-repositories Repositorios adicionales"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:62
@@ -330,6 +411,15 @@ msgid ""
 "when building the image, and in the *binary* stage, i.e. for use when "
 "running the live system."
 msgstr ""
+"Se pueden añadir más repositorios, ampliando la lista de paquetes "
+"seleccionables más alla de aquellos disponibles para la distribución "
+"indicada, como pueden ser paquetes de backport, paquetes experimentales o "
+"personalizados. Para configurar repositorios adicionales se debe crear los "
+"ficheros #{config/chroot_sources/your-repository.chroot}#, y/o #{config/"
+"chroot_sources/your-repository.binary}#. Al igual que en las opciones #{--"
+"mirror-*}#, estos ficheros gobiernan los repositorios utilizados en las "
+"etapa *chroot* y *binary* respectivamente, esto es, los repositorios que "
+"serán utilizados cuando se ejecute el sistema en vivo."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:64
@@ -337,12 +427,14 @@ msgid ""
 "For example, #{config/chroot_sources/live.chroot}# allows you to install "
 "packages from the debian live snapshot repository at live system build time."
 msgstr ""
+"Por ejemplo, #{config/chroot_sources/live.chroot}# permite instalar paquetes "
+"del repositorio Debian Live Snapshot en el momento de crear la imagen."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:68
 #, no-wrap
 msgid " deb http://live.debian.net/ sid-snapshots main contrib non-free\n"
-msgstr ""
+msgstr " deb http://live.debian.net/ sid-snapshots main contrib non-free\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:72
@@ -351,11 +443,14 @@ msgid ""
 "repository will be added to your live system's #{/etc/apt/sources.list.d/}# "
 "directory."
 msgstr ""
+"Si se añade la misma línea a #{config/chroot_sources/live.binary}#, el "
+"repositorio será añadido al directorio #{/etc/apt/sources.list.d/}# del "
+"sistema en vivo."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:74
 msgid "If such files exist, they will be picked up automatically."
-msgstr ""
+msgstr "Estos ficheros serán utilizados automáticamente si existen."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:76
@@ -363,6 +458,9 @@ msgid ""
 "You should also put the GPG key used to sign the repository into #{config/"
 "chroot_sources/your-repository.{binary,chroot}.gpg}# files."
 msgstr ""
+"Se debería también incluir en el fichero #{config/chroot_sources/your-"
+"repository.{binary,chroot}.gpg}# la clave GPG a utilizar para firmar dicho "
+"repositorio."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:78
@@ -371,6 +469,10 @@ msgid ""
 "selection through the #{--repository}# option, e.g. for enabling live "
 "snapshots, a simple command is enough to enable it:"
 msgstr ""
+"Nota: Existen algunos repositorios de paquetes ya preconfigurados para "
+"facilitar la selección mediante la opción #{--repository}#. Por ejemplo, "
+"para utilizar los repositorios de  Live Snapshots, sería suficiente con "
+"activarlo mediante:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:82 en/user_installation.ssi:148
@@ -381,7 +483,7 @@ msgstr " $ lb config --repository live.debian.net\n"
 #. type: Plain text
 #: en/user_customization-packages.ssi:86
 msgid "2~choosing-packages-to-install Choosing packages to install"
-msgstr ""
+msgstr "2~choosing-packages-to-install Selección de los paquetes a instalar"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:88
@@ -395,11 +497,21 @@ msgid ""
 "suited to testing of new or experimental packages before they are available "
 "from a repository."
 msgstr ""
+"Hay varias maneras de seleccionar qué paquetes serán instalados por live-"
+"build en la imagen que cubren una variedad de necesidades diversas. Se puede "
+"nombrar un paquete individual para que sea instalado o se pueden nombrar "
+"unos pocos paquetes mediante la opción #{--packages}#, o incluso se puede "
+"indicar un gran número de paquetes mediante una lista. También se puede "
+"seleccionar listas de paquetes predefinidos o incluso utilizar tareas de "
+"APT. Por último, también se pueden utilizar ficheros de paquetes de test o "
+"experimentales obtenidos antes de que aparezcan en los repositorios "
+"oficiales simplemente depositando estos ficheros directamente en el árbol de "
+"directorios #{config/}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:90
 msgid "3~ Choosing a few packages"
-msgstr ""
+msgstr "3~ Selección de unos pocos paquetes"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:92
@@ -407,12 +519,14 @@ msgid ""
 "When the number of packages added is small, simply specify #{--packages}#. "
 "For example:"
 msgstr ""
+"Cuando el número de paquetes a añadir es pequeño pueden indicarse mediante "
+"la opción #{--pauqetes}#. Por ejemplo:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:96
 #, no-wrap
 msgid " $ lb config --packages \"package1 package2 package3\"\n"
-msgstr ""
+msgstr " $ lb config --packages \"package1 package2 package3\"\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:100
@@ -421,6 +535,9 @@ msgid ""
 "determined by your choice of APT utility. See {Choosing apt or aptitude}"
 "#choosing-apt-or-aptitude for more details."
 msgstr ""
+"El comportamiento de live-build cuando se especifica un paquete que no "
+"existe es determinado por lo que se haya configurado en la utilidad APT. "
+"Para más detalles ver {Seleccionar apt o aptitude}#choosing-apt-or-aptitude ."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:102
@@ -429,11 +546,15 @@ msgid ""
 "need flexibility regarding which packages to install, use package lists as "
 "discussed in the following section, {Package lists}#package-lists."
 msgstr ""
+"Si se necesita especificar un gran número de paquetes o se necesita cierta "
+"flexibilidad a la hora de indicar que paquetes se necesitan instalar se "
+"puede utilizar las listas de paquetes tal y como se indica en la sección, "
+"{Listas de paquetes}#package-lists."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:104
 msgid "3~package-lists Package lists"
-msgstr ""
+msgstr "3~package-lists Listas de paquetes"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:106
@@ -447,11 +568,20 @@ msgid ""
 "others are based upon. You can also provide your own package lists, or use a "
 "combination of both."
 msgstr ""
+"Las listas de paquetes proporcionan una potente forma de expresar qué "
+"paquetes deberían ser instalados. La sintaxis de la lista soporta la "
+"inclusión de ficheros y secciones condicionales, que facilitan la creación "
+"de listas a partir de otras listas, adaptando su utilización a diversas "
+"configuraciones. También pueden utilizarse listas de paquetes predefinidas, "
+"dando una manera modular a la selección de paquetes para cada uno de los "
+"diferentes entornos de escritorios y algunas listas de propósito especial "
+"basadas en otras listas de propósito general. Puede utilizarse listas "
+"propias o una combinación de listas propias y listas predefinidas."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:108
 msgid "3~ Predefined package lists"
-msgstr ""
+msgstr "3~ Listas de paquetes predefinidas"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:110
@@ -459,12 +589,14 @@ msgid ""
 "The simplest way to use lists is to specify one or more predefined lists "
 "with the #{--packages-lists}# option. For example:"
 msgstr ""
+"La forma más simple de utilizar listas de paquetes es especificar una o más "
+"listas predefinidas mediante la opción #{--packages-lists}#, por ejemplo:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:114
 #, no-wrap
 msgid " $ lb config --packages-lists \"gnome-core rescue\"\n"
-msgstr ""
+msgstr " $ lb config --packages-lists \"gnome-core rescue\"\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:118
@@ -475,6 +607,12 @@ msgid ""
 "corresponds with Debian Installer defaults for these desktop environments. "
 "See {Desktop and language tasks}#desktop-and-language-tasks for more details."
 msgstr ""
+"Además de estas listas, live-build soporta cuatro listas de paquetes "
+"virtuales, #{gnome-desktop}#, #{kde-desktop}#, #{lxde-desktop}# y #{xfce-"
+"desktop}#, cada una de las cuales provee una selección de paquetes extensiva "
+"que corresponde con los valores por defecto del Instalador de Debian para "
+"estos entornos de escritorio. Para más información ver {Tareas de Escritorio "
+"e Idioma}#desktop-and-language-tasks ."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:120
@@ -483,6 +621,9 @@ msgid ""
 "at http://live.debian.net are built using the corresponding virtual #{*-"
 "desktop}# lists."
 msgstr ""
+"Nota: Existen imágenes listas para su descarga con los escritorios GNOME, "
+"KDE, LXDE y XFCE en http://live.debian.net. Estas imágenes han sido creadas "
+"utilizando la lista virtual #{*-desktop}# correspondiente."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:122
@@ -492,11 +633,16 @@ msgid ""
 "corresponding file, paying attention to included files and conditionals as "
 "described in the following sections."
 msgstr ""
+"La ubicación por defecto de los ficheros de lista en el sistema huesped es #"
+"{/usr/share/live/build/lists/}#. Para determinar qué paquetes componen una "
+"lista dada se debe leer el correspondiente fichero poniendo atención en los "
+"ficheros incluidos y en las secciones condicionales como se describen a "
+"continuación."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:124
 msgid "3~ Local package lists"
-msgstr ""
+msgstr "3~ Listas de paquetes locales"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:126
@@ -504,6 +650,9 @@ msgid ""
 "You may supplement or replace entirely the supplied lists using local "
 "package lists stored in #{config/chroot_local-packageslists/}#."
 msgstr ""
+"Se pueden añadir o reemplazar completamente las listas predefinidas "
+"depositando listas de paquetes locales en el directorio #{config/"
+"chroot_local-packageslists/}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:128
@@ -513,11 +662,17 @@ msgid ""
 "distributed with live-build. This can cause undesired effects, we therefore "
 "recommend to use unique names for local package lists."
 msgstr ""
+"Para que sean procesadas, las listas de paquetes que existan en dicho "
+"directorio deben tener la extensión #{.list}#. Las listas de paquetes "
+"locales se superponen a las listas predefinidas por live-build. Esto puede "
+"causar efectos no deseados de manera que se recomienda utilizar nombres "
+"únicos para las listas de paquetes locales, que no coincidan con los nombres "
+"de listas de paquetes predefinidas."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:130
 msgid "3~ Local binary package lists"
-msgstr ""
+msgstr "3~ Listas de paquetes locales para binary"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:132
@@ -528,6 +683,12 @@ msgid ""
 "packageslists/}#. Such media can be used as a customized Debian install "
 "image for offline installations."
 msgstr ""
+"En caso de que se desee incluir algún paquete .deb en el directorio #{pool/}"
+"# del medio de instalación sin instalarlo en la imágen del sistema en vivo "
+"se pueden utilizar las listas de paquetes locales para binary depositando "
+"dichas listas en el directoro #{config/binary_local-packageslists/}#, de "
+"manera que el medio de instalación pueda ser utilizado como un medio de "
+"instalación personalizado para instalaciones sin red local (modo offline)."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:134
@@ -535,11 +696,13 @@ msgid ""
 "Package lists that exist in this directory need to have a #{.list}# suffix "
 "in order to be processed."
 msgstr ""
+"Para que sean procesadas, las listas de paquetes que se depositen en este "
+"directorio deben tener la extensión #{.list}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:136
 msgid "3~ Extending a provided package list using includes"
-msgstr ""
+msgstr "3~ Extensión de una lista de paquetes dada mediante «includes»"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:138
@@ -548,6 +711,10 @@ msgid ""
 "includes. Refer to these in the #{/usr/share/live/build/lists/}# directory, "
 "as they serve as good examples of how to write your own lists."
 msgstr ""
+"Las listas de paquetes predefinidas en live-build hacen un uso intensivo de "
+"las directiva «include». Los ficheros existentes en el directorio #{/usr/"
+"share/live/build/lists/}# pueden servir como buen ejemplo de como escribir "
+"listas de paquetes."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:140
@@ -556,6 +723,10 @@ msgid ""
 "iceweasel, create #{config/chroot_local-packageslists/mygnome.list}# with "
 "the following contents:"
 msgstr ""
+"Por ejemplo, para hacer una lista de paquetes que incluya la lista de "
+"paquetes predefinida #{gnome}# y añadir el paquete iceweasel se puede crear "
+"un fichero llamado #{config/chroot_local-packageslists/mygnome.list}# con el "
+"siguiente contenido:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:145
@@ -564,11 +735,13 @@ msgid ""
 " #include <gnome>\n"
 " iceweasel\n"
 msgstr ""
+" #include <gnome>\n"
+" iceweasel\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:149
 msgid "3~ Using conditionals inside package lists"
-msgstr ""
+msgstr "3~ Utilización de condiciones dentro de las listas de paquetes"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:151
@@ -580,6 +753,14 @@ msgid ""
 "package selection that make sense, such as #{DISTRIBUTION}#, #{ARCHITECTURE}"
 "# or #{ARCHIVE_AREAS}#."
 msgstr ""
+"En las sentencias condicionales de las listas de paquetes pueden utilizarse "
+"cualquier variable disponible en #{config/*}# (excepto las que tienen el "
+"prefijo #{LB_}#). En general esto significa que puede utilizarse cualquier "
+"opción válida para #{lb config}# cambiando las letras minúsculas por "
+"mayúsculas y los guiones por subrayados. En la práctica solamente tiene "
+"sentido utilizar aquellas variables relacionadas con la selección de "
+"paquetes, como pueden ser #{DISTRIBUTION}#, #{ARCHITECTURE}# o #"
+"{ARCHIVE_AREAS}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:153
@@ -587,6 +768,8 @@ msgid ""
 "For example, to install #{ia32-libs}# if the #{--architecture amd64}# is "
 "specified:"
 msgstr ""
+"Por ejemplo, para instalar el paquete #{ia32-libs}# si se ha especificado la "
+"arquitectura amd64 (#{--architecture amd64}#) se puede utilizar:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:159
@@ -596,6 +779,9 @@ msgid ""
 " ia32-libs\n"
 " #endif\n"
 msgstr ""
+" #if ARCHITECTURE amd64\n"
+" ia32-libs\n"
+" #endif\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:163
@@ -603,6 +789,10 @@ msgid ""
 "You may test for any one of a number of values, e.g. to install #{memtest86+}"
 "# if either #{--architecture i386}# or #{--architecture amd64}# is specified:"
 msgstr ""
+"En la expresión condicional pueden utilizarse varios valores. Por ejemplo "
+"para instalar el paquete #{memtest86+}# si la arquitecturaes i386 (#{--"
+"architecture i386}#) o es amd64 (#{--architecture amd64}#) se puede "
+"especificar:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:169
@@ -612,6 +802,9 @@ msgid ""
 " memtest86+\n"
 " #endif\n"
 msgstr ""
+" #if ARCHITECTURE i386 amd64\n"
+" memtest86+\n"
+" #endif\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:173
@@ -620,6 +813,10 @@ msgid ""
 "g. to install #{vrms}# if either #{contrib}# or #{non-free}# is specified "
 "via #{--archive-areas}#:"
 msgstr ""
+"En la expresión condicional también pueden utilizarse variables que pueden "
+"contener más de un valor. Por ejemplo para instalar #{vrms}# si se utilizan "
+"las areas de archivo #{contrib}# o #{non-free}# mediante la opción #{--"
+"archive-areas}# se puede indicar:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:179
@@ -629,11 +826,14 @@ msgid ""
 " vrms\n"
 " #endif\n"
 msgstr ""
+" #if ARCHIVE_AREAS contrib non-free\n"
+" vrms\n"
+" #endif\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:183
 msgid "A conditional may surround an #{#include}# directive:"
-msgstr ""
+msgstr "Es habitual que una condición incluya una directiva «include»:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:189
@@ -643,16 +843,19 @@ msgid ""
 " #include <gnome-full>\n"
 " #endif\n"
 msgstr ""
+" #if ARCHITECTURE amd64\n"
+" #include <gnome-full>\n"
+" #endif\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:193
 msgid "The nesting of conditionals is not supported."
-msgstr ""
+msgstr "No se permite el anidamiento de estructuras condicionales."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:195
 msgid "3~ Tasks"
-msgstr ""
+msgstr "3~ Tareas"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:197
@@ -664,12 +867,19 @@ msgid ""
 "by APT through the \"Task:\" field. You can specify one or more tasks in "
 "live-build via the #{--tasks}# option, as in the example below."
 msgstr ""
+"El Instalador de Debian ofrece al usuario un conjunto de opciones con una "
+"lista de paquetes preseleccionada enfocadas a configurar un tipo de sistema "
+"o configurar el sistema para realizar una tarea como puede ser \"Entorno de "
+"escritorio gráfico\", \"Servidor de correo\", \"Portátil\", etc. Estas "
+"listas son llamadas \"tareas\" y son soportadas por APT mediante el campo "
+"\"Task:\". Se puede especificar a live-build que seleccione estas tareas "
+"mediante la opción #{--task}# tal y como se muestra en el siguiente ejemplo:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:201
 #, no-wrap
 msgid " $ lb config --tasks \"mail-server file-server\"\n"
-msgstr ""
+msgstr " $ lb config --tasks \"mail-server file-server\"\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:205
@@ -679,11 +889,16 @@ msgid ""
 "including ones not included in this list, may be examined with #{tasksel --"
 "task-packages}#."
 msgstr ""
+"Una vez ha sido arrancado el sistema en vivo puede conocerse que tareas "
+"primarias están disponibles en el Instalador de Debian mediante la orden #"
+"{tasksel --list-tasks}#. La lista de paquetes contenidos en cualquier tarea "
+"(incluidas aquiellas que no aparecen en la lista de tareas primarias) puede "
+"obtenerse mediante la orden #{tasksel --task-packages}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:207
 msgid "3~desktop-and-language-tasks Desktop and language tasks"
-msgstr ""
+msgstr "3~desktop-and-language-tasks Tareas de Escritorio e Idioma"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:209
@@ -696,6 +911,15 @@ msgid ""
 "entries for tasks for languages, but the user's language choice during the "
 "install influences the selection of corresponding language tasks."
 msgstr ""
+"Las tareas de escritorio y de idioma son casos especiales. Si el medio de "
+"instalación fue preparado para una clase particular de entorno de "
+"escritorio, el Instalador de Debian instalará automáticamente la tarea de "
+"entorno de escritorio correspondiente. Para ello existen las tareas  #{gnome-"
+"desktop}#, #{kde-desktop}#, #{lxde-desktop}# y #{xfce-desktop}# pero ninguna "
+"de ellas son presentadas en el menú de #{tasksel}#. De igual forma, las "
+"tareas para idiomas tampoco son presentadas en el menú de #{tasksel}#, pero "
+"la selección del idioma, al inicio de la instalación repercute la selección "
+"de la correspondiente tarea de idioma."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:211
@@ -703,6 +927,9 @@ msgid ""
 "In live-build, therefore, these special cases are also given special "
 "consideration, but with three notable differences at the time of writing."
 msgstr ""
+"En live-build estos casos especiales también son tratados de manera "
+"especial, pero en el momento de escribir este manual, hay tres notables "
+"diferencias."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:213
@@ -713,12 +940,18 @@ msgid ""
 "specific fonts and input-method packages, you need to specify them in your "
 "configuration. For example:"
 msgstr ""
+"Primero, no se ha previsto, todavía, la instalación automática de tareas de "
+"idiomas, aunque se incluye un subconjunto de estos paquetes si se especifica "
+"un idioma mediante #{lb config --language}#. Se puede especificar en la "
+"configuración de live-build la utilización de estas tareas, que incluyen "
+"cosas específicas del idioma, como pueden ser paquetes tipos de letra y "
+"métodos de introducción. Por ejemplo:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:217
 #, no-wrap
 msgid " $ lb config --tasks \"japanese japanese-desktop japanese-gnome-desktop\"\n"
-msgstr ""
+msgstr " $ lb config --tasks \"japanese japanese-desktop japanese-gnome-desktop\"\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:221
@@ -731,6 +964,14 @@ msgid ""
 "specifying #{--packages debian-installer-launcher --packages-lists standard-"
 "x11 --tasks \"gnome-desktop desktop standard laptop\"}#."
 msgstr ""
+"Segundo, live-build soporta la lista de paquetes virtuales #{*-desktop}# "
+"para cada clase de escritorio mencionado anteriormente. Esto seleccionará la "
+"lista de paquetes predefinida #{standard-x11}#, la correspondiente tarea de "
+"escritorio #{*-desktop}#  y tres tareas adicionales #{desktop}#, #{standard}"
+"# y #{laptop}#. Así, por ejemplo, si se especifica #{--packages-lists gnome-"
+"desktop}#, será equivalente a especificar #{--packages debian-installer-"
+"launcher --packages-lists standard-x11 --tasks \"gnome-desktop desktop "
+"standard laptop\"}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:223
@@ -741,18 +982,23 @@ msgid ""
 "it is included) to ensure it follows its own rules for installing different "
 "desktop flavours."
 msgstr ""
+"Tercero, si se selecciona cualquier tarea de escritorio, explicitamente a "
+"través de #{--tasks}# o implicitamente mediante #{--packages-lists}#, live-"
+"build preconfigurará (preseed) en el Instalador de Debian (si es incluido) "
+"el escritorio correspondiente para asegurar que sigue sus propias reglas "
+"cuando sea instalado."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:225
 #, no-wrap
 msgid "*{Note:}* There is also an experimental #{--language}# option that has an overlapping purpose with language tasks. For any language for which it is known that there are #{*-l10n}# packages, if #{--language}# is specified, those packages will be installed. Furthermore, if any #{syslinux}# templates matching the language are found, they will be used instead of the default English templates. The package selection done by #{--language}# is a poor approximation of language tasks, as it requires that the list of packages to include per language be maintained internally in live-build, and besides, language tasks are more comprehensive and flexible. However, the #{syslinux}# aspect is still useful. Thus, if you use #{--bootloader syslinux}# and templates for the specified language exist either in #{/usr/share/live/build/templates/syslinux/}# or #{config/templates/syslinux/}#, consider using this option, possibly in combination with tasks to ensure all relevant packages are installed. For example:\n"
-msgstr ""
+msgstr "*{Nota:}* Existe también la opción experimental #{--language}# cuyo propósito se solapa con las tareas de idioma. Se instalarán los paquetes de soporte #{*-l10n}# siempre que existan y que se especifique un idioma mediante la opción #{--language}#. Además, si existe, se utilizará, en lugar de las plantillas por defecto en ingles, cualquier plantilla para #{syslinux}# del  idioma indicado mediante esta opción. La selección de paquetes realizada mediante la opción #{--language}# es una pobre aproximación a las tareas de idiomas. Las tareas de idiomas son un método más completo y flexible que la utilización de la opción #{--language}# que requiere que la lista de paquetes a incluir por idioma sea mantenida internamente en live-build. Sin embargo el tratamiento de las plantillas de #{syslinux}# es útil. Por esto, si se utiliza la opción #{--bootloader syslinux}# y plantillas para un idioma existente en #{/usr/share/live/build/templates/syslinux/}# o #{config/templates/syslinux/}#, esta opción es un punto a tener en cuenta, posiblemente en combinación con las tareas de idiomas para asegurar la instalación de los paquetes adecuados. Por ejemplo:\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:229
 #, no-wrap
 msgid " $ lb config --language es\n"
-msgstr ""
+msgstr " $ lb config --language es\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:233
@@ -762,6 +1008,10 @@ msgid ""
 "option is under review, possibly to be replaced with something entirely "
 "different in the next major release of live-build."
 msgstr ""
+"Esta opción solamente soporta un idioma y un gestor de arranque. Por todas "
+"estas razones, el futuro de esta opción está bajo revisión y posiblemente "
+"será reemplazada por algo completamente diferente en la proxima revisión "
+"general de live-build."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:235
@@ -769,6 +1019,8 @@ msgid ""
 "2~installing-modified-or-third-party-packages Installing modified or third-"
 "party packages"
 msgstr ""
+"2~installing-modified-or-third-party-packages Instalación de paquetes "
+"personalizados o paquetes de terceros"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:237
@@ -780,6 +1032,13 @@ msgid ""
 "packages that are undesirable. Similarly, \"third-party\" packages may be "
 "used to add bespoke and/or proprietary functionality."
 msgstr ""
+"Si bien está encontra de la filosofía de Debian Live, en ocasiones es "
+"necesario crear un sistema en vivo con versiones de paquetes modificados a "
+"partir de los disponibles en el repositorio de Debian. Estos paquetes pueden "
+"modificar características existentes o dar soporte a características "
+"adicionales, idiomas y derivados (branding), o eliminar elementos existentes "
+"en los paquetes que no son de interes. De manera similar, se pueden incluir "
+"paquetes \"de terceros\" para añadir funcionalidades a medida o propietarias."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:239
@@ -791,21 +1050,27 @@ msgid ""
 "the Debian New Maintainers' Guide at http://www.debian.org/doc/maint-guide/ "
 "and elsewhere."
 msgstr ""
+"En esta sección no se describe la creación o mantenimiento de paquetes "
+"personalizados. Puede ser interesante una lectura del método descrito por "
+"Joachim Breitner 'How to fork privately' en http://www.joachim-breitner.de/"
+"blog/archives/282-How-to-fork-privately.html. La guía del nuevo "
+"desarrollador de Debian en http://www.debian.org/doc/maint-guide/ describe "
+"la creación de paquetes a medida."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:241
 msgid "There are two ways of installing modified custom packages:"
-msgstr ""
+msgstr "Existen dos formas de instalar paquetes personalizados:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:243
 msgid "_* #{chroot_local-packages}#"
-msgstr ""
+msgstr "_* #{chroot_local-packages}#"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:245
 msgid "_* Using a custom APT repository"
-msgstr ""
+msgstr "_* Utilizando un repositorio APT personalizado"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:247
@@ -814,11 +1079,16 @@ msgid ""
 "off\" customizations but has a number of drawbacks, whilst using a custom "
 "APT repository is more time-consuming to set up."
 msgstr ""
+"El método #{chroot_local-packages}# es el más simple para añadir paquetes "
+"personalizados. Es muy útil para personalizaciones \"rápidas\" (one-off) "
+"pero tiene tiene unos cuantos inconvenientes mientras que la utilización de "
+"un repositorio APT personalizado es más lento de poner en marcha."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:249
 msgid "3~ Using #{chroot_local-packages}# to install custom packages"
 msgstr ""
+"3~ Método #{chroot_local-packages}# para instalar paquetes personalizados"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:251
@@ -828,6 +1098,11 @@ msgid ""
 "automatically installed into the live system during build - you do not need "
 "to specify them elsewhere."
 msgstr ""
+"Para instalar paquetes personalizados solamente hay que copiar el paquete en "
+"el directorio #{config/chroot_local-packages/}#. Los paquetes contenidos en "
+"este directorio serán automáticamente instalados en el sistema en vivo "
+"durante el proceso de creación. No es necesario especificar de donde se "
+"deben obtener los paquetes."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:253
@@ -835,6 +1110,8 @@ msgid ""
 "Packages *{must}* be named in the prescribed way. One simple way to do this "
 "is to use #{dpkg-name}#."
 msgstr ""
+"Los paquetes *{deben}* nombrarse de la forma prescrita. La forma más simple "
+"es usar #{dpkg-name}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:255
@@ -842,11 +1119,13 @@ msgid ""
 "Using #{chroot_local-packages}# for installation of custom packages has "
 "disadvantages:"
 msgstr ""
+"El método #{chroot_local-packages}# para la instalación de paquetes "
+"personalizados tiene desventajas:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:257
 msgid "_* It is not possible to use secure APT."
-msgstr ""
+msgstr "_* No es posible utilizar APT seguro."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:259
@@ -854,6 +1133,8 @@ msgid ""
 "_* You must install all appropriate packages in the #{config/chroot_local-"
 "packages/}# directory."
 msgstr ""
+"_* Se deben depositar todos los paquetes necesarios para cumplir "
+"dependencias en el directorio #{config/chroot_local-packages/}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:261
@@ -861,11 +1142,13 @@ msgid ""
 "_* It does not lend itself to storing Debian Live configurations in revision "
 "control."
 msgstr ""
+"_* No es adecuado para almacenar configuraciones de Debian Live en un "
+"control de versiones."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:263
 msgid "3~ Using an APT repository to install custom packages"
-msgstr ""
+msgstr "3~ Método de repositorio APT para instalar paquetes personalizados"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:265
@@ -874,6 +1157,10 @@ msgid ""
 "you must ensure that you specify the packages elsewhere. See {Choosing "
 "packages to install}#choosing-packages-to-install for details."
 msgstr ""
+"Al contrario del método #{chroot_local-packages}#, cuando se utiliza el "
+"método de repositorio APT personalizado se debe asegurar que se especifica "
+"donde se deben buscar los paquetes a instalar. Para más información ver "
+"{Elegir los paquetes a instalar}#choosing-packages-to-install."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:267
@@ -882,11 +1169,14 @@ msgid ""
 "custom packages, the infrastructure can be easily re-used at a later date to "
 "offer updates of the modified packages."
 msgstr ""
+"Aunque crear un repositorio APT para instalar paquetes personalizados puede "
+"parecer un esfuerzo innecesaro, la infraestructurar puede ser fácilmente "
+"reutilizada posteriormente para ofrecer nuevas versiones de los paquetes."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:269
 msgid "3~ Custom packages and APT"
-msgstr ""
+msgstr "3~ Paquetes personalizados y APT"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:271
@@ -897,6 +1187,11 @@ msgid ""
 "different repositories with different version numbers, APT will elect to "
 "install the package with the higher version number."
 msgstr ""
+"live-build utiliza APT para instalar todos los paquetes en el sistema en "
+"vivo, así que hereda sus comportamientos. Un punto a resaltar es que "
+"(asumiendo una configuración de APT por defecto) dado un paquete en dos "
+"repositorios diferentes con diferentes números de versiones, APT "
+"seleccionará para instalar el paquete con número de versión superior."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:273
@@ -907,11 +1202,17 @@ msgid ""
 "achieved by altering the live system's APT pinning preferences - see {APT "
 "pinning}#apt-pinning for more information."
 msgstr ""
+"Esta sería una buena razón para incrementar el número de version en los "
+"ficheros #{debian/changelog}# de los paquetes personalizados y así asegurar "
+"que serán estos los paquetes instalados en lugar de los contenidos en los "
+"repositorios oficiales de Debian. Esto puede también lograrse alterando las "
+"preferencias de pinning de APT del sistema en vivo. Para más información ver "
+"{APT pinning}#apt-pinning."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:275
 msgid "2~ Configuring APT at build time"
-msgstr ""
+msgstr "2~ Configurar APT en la creación"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:277
@@ -923,11 +1224,19 @@ msgid ""
 "complete list, look for options starting with #{apt}# in the #{lb_config}# "
 "man page."
 msgstr ""
+"Se puede configurar APT mediante varias opciones que se aplicarán en el "
+"momento de crear la imagen. (La configuración que APT utilizará cuando se "
+"ejecute el sistema en vivo puede ser configurada de la manera que "
+"habitualmente se utiliza para introducir contenidos del sistema en vivo, "
+"esto es, incluyendo las configuraciones apropiadas en el directorio #{config/"
+"chroot_local_includes/}#.) Se puede encontrar una lista completa de las "
+"opciones para configurar APT en la página de manual de #{lb_config}#. Son "
+"aquellas opciones que comienzan con #{apt}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:279
 msgid "3~choosing-apt-or-aptitude Choosing apt or aptitude"
-msgstr ""
+msgstr "3~choosing-apt-or-aptitude Utilizar apt o aptitude"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:281
@@ -938,6 +1247,11 @@ msgid ""
 "package installation, the notable difference being how missing packages are "
 "handled."
 msgstr ""
+"Se puede seleccionar que herramienta se utilizará para instalar paquetes, #"
+"{apt}# o #{aptitude}#, en el momento de crear la imagen mediante la opción #"
+"{--apt}# de #{lb config}#. Esta selección definirá el comportamiento "
+"preferido en la instalación de paquetes, siendo la mayor diferencia la "
+"manera de tratar los paquetes no disponibles."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:283
@@ -945,6 +1259,8 @@ msgid ""
 "_* #{apt}#: With this method, if a missing package is specified, the package "
 "installation will fail. This is the default setting."
 msgstr ""
+"_* #{apt}#: Con este método, si se especifica un paquete no existente, la "
+"instalación fallará. Es el comportamiento por defecto."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:285
@@ -952,11 +1268,13 @@ msgid ""
 "_* #{aptitude}#: With this method, if a missing package is specified, the "
 "package installation will succeed."
 msgstr ""
+"_* #{aptitude}#: Con este método, si se especifica un paquete no existente, "
+"la instalación continuará sin error."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:287
 msgid "3~ Using a proxy with APT"
-msgstr ""
+msgstr "3~ Utilización de un proxy con APT"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:289
@@ -965,17 +1283,20 @@ msgid ""
 "behind a proxy. You may specify your APT proxy with the #{--apt-ftp-proxy}# "
 "or #{--apt-http-proxy}# options as needed, e.g."
 msgstr ""
+"Un problema habitual en la configuración de APT es tratar con la creación de "
+"una imagen desde detras de un proxy. Se puede especificar dicho proxy con "
+"las opciones  #{--apt-ftp-proxy}# o #{--apt-http-proxy}#. Por ejemplo:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:293
 #, no-wrap
 msgid " $ lb config --apt-http-proxy http://proxy/\n"
-msgstr ""
+msgstr " $ lb config --apt-http-proxy http://proxy/\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:297
 msgid "3~ Tweaking APT to save space"
-msgstr ""
+msgstr "3~ Ajuste de APT para ahorrar espacio"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:299
@@ -984,6 +1305,8 @@ msgid ""
 "which case one or the other or both of the following options may be of "
 "interest."
 msgstr ""
+"En ocasiones será necesario ahorrar algún espacio en el medio de "
+"instalación. Las dos opciones descritas a continuación pueden ser de interes."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:301
@@ -991,12 +1314,14 @@ msgid ""
 "If you don't want to include APT indices in the image, you can omit those "
 "with:"
 msgstr ""
+"Si no se desea incluir los índices de APT en la imagen creada se puede "
+"utilizar la siguiente opción:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:305
 #, no-wrap
 msgid " $ lb config --binary-indices false\n"
-msgstr ""
+msgstr " $ lb config --binary-indices false\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:309
@@ -1007,6 +1332,13 @@ msgid ""
 "performing #{apt-cache search}# or #{apt-get install}#, for instance, the "
 "user must #{apt-get update}# first to create those indices."
 msgstr ""
+"Esto no modificará el comportamiento de las entradas definidas en /etc/apt/"
+"sources.list, sino que solo afecta a si exitirán o no ficheros de indice en "
+"el directorio /var/lib/apt. El compromiso viene de que APT necesita estos "
+"ficheros indices para funcionar en el sistema en vivo, así que, si no "
+"existen, el usuario deberá ejecutar la orden #{apt-get update}# para crear "
+"estos indices antes de poder ejecutar una orden del tipo #{apt-cache search}"
+"# o #{apt-get install}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:311
@@ -1014,12 +1346,15 @@ msgid ""
 "If you find the installation of recommended packages bloats your image too "
 "much, you may disable that default option of APT with:"
 msgstr ""
+"Si la instalación de los paquetes recomendados aumenta demasiado el tamaño "
+"de la imagen, se puede desactivar el valor por defecto de esta opción de APT "
+"con:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:315
 #, no-wrap
 msgid " $ lb config --apt-recommends false\n"
-msgstr ""
+msgstr " $ lb config --apt-recommends false\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:319
@@ -1036,11 +1371,23 @@ msgid ""
 "priority on selected packages to prevent them from being installed, as "
 "explained in {APT pinning}#apt-pinning."
 msgstr ""
+"El compromiso viene de que, si no se instalan los paquetes recomendados para "
+"un paquete dado, esto es \"los paquetes que supuestamente deberían "
+"encontrase intalados si un paquete ya lo está\" (Debian Policy Manual, "
+"seccion 7.2), algún paquete que supuestamente debería estar instalado será "
+"omitido. Por otra parte, se sugiere que, si se desactiva esta opción, se "
+"revise las recomendaciones hechas a la lista de paquetes indicada (ver el "
+"fichero #{binary.packages}# generado por #{lb build}#) y que se incluya en "
+"la lista cualquier paquete que deba ser instalado. Si se encuentra que el "
+"número de paquetes descartado es pequeño, se recomienda que la opción se "
+"active y que se utilice una prioridad negativa para el pin de APT en dichos "
+"paquetes y así evitar que sean instalados tal y como se explica en {APT "
+"pinning}#apt-pinning."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:321
 msgid "3~ Passing options to apt or aptitude"
-msgstr ""
+msgstr "3~ Pasar opciones a apt o a aptitude"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:323
@@ -1050,11 +1397,16 @@ msgid ""
 "options through to your configured APT tool. See the man pages for #{apt}# "
 "and #{aptitude}# for details."
 msgstr ""
+"Si no existe utiliza ninguna opción de #{lb config}# para alterar el "
+"comportamiento de APT tal y como se desea, se puede utilizar las opciones #"
+"{--apt-options}# o #{--aptitude-options}# para pasar cualquier opción que se "
+"desee a la herramienta APT. Para más información, ver las páginas de manual "
+"de #{apt}# y #{aptitude}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:325
 msgid "3~apt-pinning APT pinning"
-msgstr ""
+msgstr "3~apt-pinning APT pinning"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:327
@@ -1064,6 +1416,11 @@ msgid ""
 "the former, create #{config/chroot_apt/preferences}#. For the latter, create "
 "#{config/chroot_local-includes/etc/apt/preferences}#."
 msgstr ""
+"Como información básica, sería recomendable leer la página de manual #"
+"{apt_preferences(5)}#. APT pinning puede ser configurado o en tiempo de "
+"creación de la imagen, creando el fichero #{config/chroot_apt/preferences}# "
+"o en tiempo de ejecución del sistema en vivo creando el fichero #{config/"
+"chroot_local-includes/etc/apt/preferences}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:329
@@ -1074,6 +1431,13 @@ msgid ""
 "it at build time and all others are taken from the target system "
 "distribution, Squeeze. The following will accomplish this:"
 msgstr ""
+"Supongamos que se está creando un sistema en vivo basado en Squeeze pero se "
+"necesita instalar todos los paquetes #{live-*}# desde la versión inestable "
+"\"Sid\" en el momento de crear la imagen. Se deberá añadir Sid a los "
+"orígenes (sources) de APT y fijarlo (pin) de manera que solamente los "
+"paquetes #{live-*}# sean instalados desde Sid mientras que el resto será "
+"obtenido desde la distribución base, Squeeze. Esto se puede realizar de la "
+"siguiente forma:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:337
@@ -1085,6 +1449,11 @@ msgid ""
 " Pin: release n=sid\n"
 " Pin-Priority: 600\n"
 msgstr ""
+" $ echo \"deb http://mirror/debian sid main\" > config/chroot_sources/sid.chroot\n"
+" $ cat >>config/chroot_apt/preferences <<END\n"
+" Package: live-*\n"
+" Pin: release n=sid\n"
+" Pin-Priority: 600\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:342
@@ -1095,6 +1464,10 @@ msgid ""
 " Pin-Priority: 1\n"
 " END\n"
 msgstr ""
+" Package: *\n"
+" Pin: release n=sid\n"
+" Pin-Priority: 1\n"
+" END\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:346
@@ -1108,6 +1481,15 @@ msgid ""
 "{gnome-keyring}# package. This can be done by adding the following stanza to "
 "#{config/chroot_apt/preferences}#:"
 msgstr ""
+"Una prioridad negativa previene la instalación de un paquete, como puede ser "
+"el caso de que no se desee que un paquete recomendado por otro sea instalado "
+"al instalar el primero. Supongamos que se está creando una imagen LXDE "
+"mediante la opción #{--packages-lists lxde}#, pero no se desea preguntar al "
+"usuario si desea almacenar las claves wifi en el almacen de claves. La lista "
+"lxde incluye #{gdm}#, la cual depende de #{gksu}# que a su vez recomienda #"
+"{gnome-keyring}#. Así que el objetivo es omitir la instalación del paquete #"
+"{gnome-keyring}#, que puede conseguirse añadiendo un fichero con el "
+"siguiente contenido a #{config/chroot_apt/preferences}#:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:352
@@ -1117,3 +1499,6 @@ msgid ""
 " Pin: version *\n"
 " Pin-Priority: -1\n"
 msgstr ""
+" Package: gnome-keyring\n"
+" Pin: version *\n"
+" Pin-Priority: -1\n"

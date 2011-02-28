@@ -1,23 +1,27 @@
-:B~ Customizing run time behaviours
+:B~ Personalización del comportamiento en tiempo de ejecución.
 
-1~customizing-run-time-behaviours Customizing run time behaviours
+1~customizing-run-time-behaviours Personalización del comportamiento en
+tiempo de ejecución.
 
-All configuration that is done during run time is done by live-config. Here
-are some most common options of live-config that users are interested in. A
-full list of all possibilities can be found in the manpage of live-config.
+Toda la configuración que se hace en tiempo de ejecución es realizada por
+live-config. Estas son algunas de las opciones más comunes de live-config en
+las que los usuarios están más interesados. Se puede encontrar una lista
+completa de todas las posibilidades en la página del manual de live-config.
 
-2~ Customizing the live user
+2~ Personalización del usuario en vivo
 
-One important consideration is that the live user is created by live-boot at
-boot time, not by live-build at build time. This not only influences where
-materials relating to the live user are introduced in your build, as
-discussed in {Live/chroot local includes}#live-chroot-local-includes, but
-also any groups and permissions associated with the live user.
+Una consideración importante es que el usuario en vivo lo crea live-boot en
+el arranque y no live-build durante la creación de la imagen. Esto no sólo
+influye dónde se introducen los materiales relacionados con el usuario en
+vivo durante la creación de la imagen tal y como se explica en {Live/chroot
+local includes}#live-chroot-local-includes sino tambien a cualquier grupo y
+a los permisos asociados con el usuario en vivo.
 
-You can specify additional groups that the live user will belong to by
-preseeding the #{passwd/user-default-groups}# debconf value. For example, to
-add the live user to the #{fuse}# group, add the following to a file in the
-#{config/chroot_local-preseed}# directory:
+Se puede especificar grupos adicionales a los que pertenecerá el usuario en
+vivo  preconfigurando el valor debconf #{passwd/user-default-groups}#. Por
+ejemplo, para agregar el usuario en vivo al grupo #{fuse}# , añadir el
+siguiente código en un fichero en el directorio
+#{config/chroot_local-preseed}#.
 
 code{
 
@@ -25,19 +29,21 @@ code{
 
 }code
 
-2~customizing-locale-and-language Customizing locale and language
+2~customizing-locale-and-language Personalización de las variantes locales y
+el lenguaje
 
-When the live system boots, language is involved in three steps:
+Cuando el sistema en vivo arranca, el lenguaje está implicado en tres pasos:
 
-_* the locale generation
+_* Generar las variantes locales
 
-_* setting the keyboard layout for the console
+_* Establecer la distribución de teclado para el consola
 
-_* setting the keyboard layout for X
+_* Establecer la distribución del teclado para el entorno gráfico X
 
-The default locale when building a Live system is "locales=en_US.UTF-8". To
-define the locale that should be generated, use the #{locales}# parameter in
-the #{--bootappend-live}# option of #{lb config}#, e.g.
+La variante local predeterminada en la creación de un sistema en vivo es
+"locales=en_US.UTF-8". Para definir la variante local que se debe generar,
+utilizar el parámetro #{locales}# en la opción #{--bootappend-live}# de #{lb
+config}#, p.ej.
 
 code{
 
@@ -45,16 +51,17 @@ code{
 
 }code
 
-This parameter can also be used at the kernel command line. You can specify
-a locale by a full #{language_country.encoding}# word.
+Este parámetro también se puede utilizar en la línea de comandos del
+kernel. Se puede especificar una variante local usando una palabra completa
+#{language_country.encoding}#.
 
-Both the console and X keyboard configuration depend on the
-#{keyboard-layouts}# parameter of the #{--bootappend-live}# option. Valid
-options for X keyboard layouts can be found in
-#{/usr/share/X11/xkb/rules/base.xml}# (rather limited to two-letters country
-codes). To find the value (the two characters) corresponding to a language
-try searching for the english name of the nation where the language is
-spoken, e.g:
+Tanto la configuración del teclado de la consola y del entorno gráfico X
+dependen del parámetro #{keyboard-layouts}# de la opción
+#{--bootappend-live}#. Se pueden encontrar opciones válidas de la
+disposición del teclado en #{/usr/share/X11/xkb/rules/base.xml}# (bastante
+limitado a los códigos de país de dos letras). Para hallar el valor (los dos
+letras) que corresponde a una lengua trate de buscar el nombre en inglés de
+la nación donde se habla el idioma, por ejemplo:
 
 code{
 
@@ -63,8 +70,8 @@ code{
 
 }code
 
-To get the locale files for German and Swiss German keyboard layout in X
-use:
+Para obtener los ficheros de la variante local de la disposición del teclado
+alemán y suizo-alemán en X usar:
 
 code{
 
@@ -72,8 +79,8 @@ code{
 
 }code
 
-A list of the valid values of the keyboards for the console can be figured
-with the following command:
+Se puede ver una lista de los valores válidos de los teclados para la
+consola con el siguiente comando:
 
 code{
 
@@ -82,13 +89,14 @@ code{
 
 }code
 
-Alternatively, you can use the #{console-setup}# package, a tool to let you
-configure console layout using X (XKB) definitions; you can then set your
-keyboard layout more precisely with #{keyboard-layouts}#,
-#{keyboard-variant}#, #{keyboard-options}# and #{keyboard-model}# variables;
-live-boot will use also these parameters for X configuration. For example,
-to set up a French system with a French-Dvorak layout (called Bepo) on a
-TypeMatrix keyboard, both in console and X11, use:
+Alternativamente, se puede usar el paquete #{console-setup}# una herramienta
+que permite configurar la disposición de la consola utilizando definiciones
+X (XKB), a continuación, se puede configurar el teclado con mayor precisión
+con las variables #{keyboard-layouts}#, #{keyboard-variant}#,
+#{keyboard-options}# y #{keyboard-model}#;  live-boot también usará estos
+parámetros para la configuración de X. Por ejemplo, para establecer un
+sistema francés con un diseño francés-Dvorak (llamado Bepo) en un teclado
+TypeMatrix, tanto en consola X  y X11, utilice:
 
 code{
 
@@ -97,39 +105,46 @@ code{
 
 }code
 
-2~persistence Persistence
+2~persistence  Persistencia (Modo guardar cambios)
 
-A live cd paradigm is a pre-installed system which runs from read-only
-media, like a cdrom, where writes and modifications do not survive reboots
-of the host hardware which runs it.
+Un paradigma de un cd en vivo es ser un sistema pre-instalado que funciona
+desde medios de almacenamiento de sólo lectura, como un CD-ROM, donde los
+cambios y las modificaciones no se guardan tras reiniciar el hardware del
+anfitrión en que se ejecuta.
 
-A Debian Live system is a generalization of this paradigm and thus supports
-other media in addition to CDs; but still, in its default behaviour, it
-should be considered read-only and all the run-time evolutions of the system
-are lost at shutdown.
+Un sistema Debian Live es una generalización de este paradigma pero que es
+compatible con otros medios de almacenamiento, no sólo en CDs, pero aún así,
+en su comportamiento predeterminado, se debe considerar un sistema de sólo
+lectura y todos los cambios en tiempo de ejecución del sistema se pierden al
+apagar el equipo.
 
-Persistence is a common name for different kinds of solutions for saving
-across reboots some, or all, of this run-time evolution of the system. To
-understand how it could work it could be handy to know that even if the
-system is booted and run from read-only media, modification to the files and
-directories are written on writable media, typically a ram disk (tmpfs) and
-ram disks' data do not survive reboots.
+La persistencia (o modo guardar cambios) es un nombre común que se dá a los
+diferentes tipos de soluciones para guardar algunos o todos los cambios
+realizados durante la ejecución tras reiniciar los equipos. Para entender
+cómo funciona es útil saber que incluso si el sistema se inicia y se ejecuta
+desde los medios de almacenamiento de sólo lectura, las modificaciones de
+los ficheros y directorios se escriben en medios de escritura, por lo
+general en la memoria ram (tmpfs) y los datos guardados en la ram no se
+guardan tras reiniciar.
 
-The data stored on this ramdisk should be saved on a writable persistent
-medium like a Hard Disk, a USB key, a network share or even a session of a
-multisession (re)writable CD/DVD. All these media are supported in Debian
-Live in different ways, and all but the last one require a special boot
-parameter to be specified at boot time: #{persistent}#.
+Los datos almacenados en esta memoria ram se pueden guardar en un soporte
+grabable como un disco duro, una memoria USB, un recurso compartido de red o
+incluso en una sesión de un CD/DVD regrabable en multisesión. Todos estos
+medios son compatibles con Debian Live de diferentes maneras, y todos menos
+el último requieren un parámetro de arranque especial que se especificará en
+el momento del arranque: #{persistent}#.
 
-3~ Full persistence
+3~ Persistencia total
 
-By 'full persistence' it is meant that instead of using a tmpfs for storing
-modifications to the read-only media (with the copy-on-write, COW, system) a
-writable partition is used. In order to use this feature a partition with a
-clean writable supported filesystem on it labeled "live-rw" must be attached
-on the system at boot time and the system must be started with the boot
-parameter 'persistent'. This partition could be an ext2 partition on the
-hard disk or on a usb key created with, e.g.:
+Por «Persistencia total» se entiende que se usa una partición en lugar de
+usar un tmpfs (sistema de ficheros temporal) para guardar los cambios
+realizados a los medios de sólo lectura (con el sistema copiar-al-escribir o
+COW «copy-on-write» N. del T.). Para utilizar esta función se debe crear una
+partición grabable limpia con la etiqueta «live-rw» formateada con un
+sistema de ficheros compatible en el medio usado para arracar el sistema en
+vivo. En el momento de arrancar se debe iniciar el sistema con el parámetro
+de arranque 'persistent'. Esta partición puede ser una partición ext2 en el
+disco duro o en una memoria USB creada con, por ejemplo:
 
 code{
 
@@ -137,8 +152,8 @@ code{
 
 }code
 
-If you already have a partition on your device, you could just change the
-label with one of the following:
+Si ya existe una partición en el dispositivo, sólo se tiene que cambiar la
+etiqueta con uno de los siguientes:
 
 code{
 
@@ -146,11 +161,13 @@ code{
 
 }code
 
-But since live system users cannot always use a hard drive partition, and
-considering that most USB keys have poor write speeds, 'full' persistence
-could be also used with just image files, so you could create a file
-representing a partition and put this image file even on a NTFS partition of
-a foreign OS, with something like:
+Pero ya que los usuarios de un sistema en vivo no siempre pueden utilizar
+una partición del disco duro, y teniendo en cuenta que la mayoría de
+memorias USB tienen velocidades de escritura lentas, la persistencia total
+también puede ser usada con imágenes de ficheros, de este modo se puede
+crear un fichero que represente una partición y poner esa imagen de los
+ficheros incluso en una partición NTFS de un sistema operativo no nativo,
+con algo similar a esto:
 
 code{
 
@@ -159,50 +176,57 @@ code{
 
 }code
 
-Then copy the #{live-rw}# file to a writable partition and reboot with the
-boot parameter 'persistent'.
+A continuación, copiar el fichero #{live-rw}# a un partición grabable y
+reiniciar el sistema con el parámetro de arranque «persistent».
 
-3~ Home automounting
+3~ Montar Home de forma automática
 
-If during the boot a partition (filesystem) image file or a partition
-labeled #{home-rw}# is discovered, this filesystem will be directly mounted
-as #{/home}#, thus permitting persistence of files that belong to e.g. the
-default user. It can be combined with full persistence.
+Si durante el arranque se encuentra una partición (sistema de ficheros) con
+una imágen de ficheros o una partición con la etiqueta #{home-rw}# el
+sistema de ficheros será montado de forma automática como #{/home}#, lo que
+permite la persistencia de los ficheros que pertenecen a, por ejemplo, el
+usuario por defecto. Se puede combinar con persistencia total.
 
-3~ Snapshots
+3~ Instantáneas
 
-Snapshots are collections of files and directories which are not mounted
-while running but which are copied from a persistent device to the system
-(tmpfs) at boot and which are resynced at reboot/shutdown of the system. The
-content of a snapshot could reside on a partition or an image file (like the
-above mentioned types) labeled #{live-sn}#, but it defaults to a simple cpio
-archive named #{live-sn.cpio.gz}#. As above, at boot time, the block devices
-connected to the system are traversed to see if a partition or a file named
-like that could be found. A power interruption during run time could lead to
-data loss, hence a tool invoked #{live-snapshot --refresh}# could be called
-to sync important changes. This type of persistence, since it does not write
-continuously to the persistent media, is the most flash-based device
-friendly and the fastest of all the persistence systems.
+Las instantáneas son colecciones de ficheros y directorios que no se montan
+durante la ejecución, pero que se copian desde un dispositivo persistente al
+sistema (tmpfs) en el arranque y que se resincroniza en el reinicio /
+apagado del sistema.  El contenido de una instantánea puede residir en una
+partición o en una imágen de ficheros (como los tipos mencionados
+anteriormente) con la etiqueta #{live-sn}#, pero el valor predeterminado es
+un archivo cpio simple denominado #{live-sn.cpio.gz}#. Como en el caso
+anterior, en el momento del arranque los dispositivos conectados al sistema
+se escanean para ver si se encuentra una partición o un fichero llamado
+así. Una interrupción de la alimentación en tiempo de ejecución podría
+conducir a la pérdida de datos, por lo tanto, se puede usar un herramienta
+#{live-snapshot --refresh}# para sincronizar cambios importantes. Este tipo
+de persistencia es la menos agresiva con dispositivos tipo flash y la más
+rápida de todos los sistemas de persistencia, ya que no escribe
+continuamente en los medios de almacenamiento.
 
-A /home version of snapshot exists too and its label is #{home-sn.*}#; it
-works the same as the main snapshot but it is only applied to /home.
+Existe también una versión de la instantánea /home y su etiqueta es
+#{home-sn.*}#; que funciona igual que la instantánea principal, pero sólo se
+aplica a /home.
 
-Snapshots cannot currently handle file deletion but full persistence and
-home automounting can.
+Las instantáneas actualmente no pueden manejar el borrado de ficheros pero
+la persistencia total y el montaje automático sí pueden.
 
-3~ Persistent SubText
+3~ SubText persistente
 
-If a user would need multiple persistent storage of the same type for
-different locations or testing, such as #{live-rw-nonwork}# and
-#{live-rw-work}#, the boot parameter #{persistent-subtext}# used in
-conjunction with the boot parameter #{persistent}# will allow for multiple
-but unique persistent media. An example would be if a user wanted to use a
-persistent partition labeled #{live-sn-subText}# they would use the boot
-parameters of: #{persistent}# #{persistent-subtext=subText}#.
+Si un usuario necesita un almacenamiento persistente múltiple del mismo tipo
+para diferentes lugares o pruebas, tales como #{live-rw-nonwork}# y
+#{live-rw-work}#, el parámetro de arranque #{persistent-subtext}# usado
+junto con el parámetro de arranque #{persistent}# permitirá medios de
+almacenamiento persistentes múltiples pero únicos. Un ejemplo sería si un
+usuario desea utilizar una partición persistente etiquetada
+#{live-sn-subText}# usaría los parámetros de arranque de: #{persistent}#
+#{persistent-subtext=subText}#.
 
-3~ Partial remastering
+3~ Remasterización parcial
 
-The run-time modification of the tmpfs could be collected using
-live-snapshot in a squashfs and added to the cd by remastering the iso in
-the case of cd-r or adding a session to multisession cd/dvd(rw); live-boot
-mounts all /live filesystem in order or with the module boot parameter.
+La modificación en tiempo de ejecución de la tmpfs podría ser guardada
+usando una instantánea en vivo en un squashfs y añadirla a un cd
+remasterizando la iso en el caso de un cd-r o añadiendo una sesión a un
+cd/dvd(rw) multisesión; live-boot monta todo el sistema de ficheros /live en
+orden o con el parámetro del módulo de arranque.

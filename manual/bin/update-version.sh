@@ -7,7 +7,7 @@ VERSION="$(cat ../VERSION)"
 YEAR="$(LC_ALL=C date +%Y)"
 
 echo "Updating version information..."
-
+exit 0
 sed -i  -e "s|^ :published:.*$| :published: ${DATE}|" \
 	-e "s|(C) 2006-.*|(C) 2006-${YEAR} Debian Live Project|" \
 en/live-manual.ssm

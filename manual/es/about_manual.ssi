@@ -7,12 +7,12 @@ la documentación relativa al projecto Debian Live. Está principalmente
 enfocado a ayudar en la creación de un sistema en vivo y no está dirigido al
 usuario final de estos sistemas. Un usuario final puede encontrar
 información útil en las siguentes secciones: {Temas básicos}#the-basics
-cubre la preparción de las imágenes para arrancar un sistetema desde un
-medio de almacenamiento o desde red local. {Personalización del
-comportamiento en tiempo de ejecución}#customizing-run-time-behaviours
-describe alguna de las opciones que pueden especificarse en el indicador de
-arranque, como pueden ser la selección de la distribución del teclado, las
-variantes locales o la persistencia.
+cubre la preparación de las imágenes para arrancar un sistema desde un medio
+de almacenamiento o desde red local. {Personalización del comportamiento en
+tiempo de ejecución}#customizing-run-time-behaviours describe alguna de las
+opciones que pueden especificarse en el indicador de arranque, como pueden
+ser la selección de la distribución del teclado, las variantes locales o la
+persistencia.
 
 Algunos de los comandos mencionados en el texto deben ser ejecutados con
 privilegios de superusuario, que pueden ser obtenidos accediendo a la cuenta
@@ -59,7 +59,7 @@ Debian live-boot, live-build, live-config y live-manual.
 _* *{Sistema Debian Live}*: Es un sistema en vivo que utiliza programas del
 sistema operativo Debian y que puede ser arrancado desde medios extraíbles
 como CD, DVD o llaves USB, desde red local (mediante imágenes netboot) o
-desde Internet (utilizando el la opción de arranque #{fetch=URL}#).
+desde Internet (utilizando la opción de arranque #{fetch=URL}#).
 
 _* *{Sistema huesped}*: Es el conjunto de herramientas y equipo utilizado
 para crear el sistema en vivo.
@@ -82,8 +82,8 @@ anteriormente parte del paquete live-initramfs.
 _* *{live-manual}*: Este documento es mantenido en un paquete llamado
 live-manual.
 
-_* *{Debian Installer (d-i)}*: Es el mecanismo oficial de instalación para
-la distribución Debian.
+_* *{Instalador de Debia (Debian Installer o d-i)}*: Es el mecanismo oficial
+de instalación para la distribución Debian.
 
 _* *{Parámetros de arranque}*: Parámetros que son entregados por el gestor
 de arranque (bootloader) para modificar el comportamiento del kernel o del
@@ -101,7 +101,7 @@ _* *{Distribución objetivo}*: Es la versión de la distribución Debian en la
 cual estará basado el sistema en vivo que puede diferir de la versión de la
 distribución en el sistema huesped.
 
-_* *{Squeeza/Wheezy/Sid (stable/testing/unestable)}*: Son los nombres clave
+_* *{Squeeze/Wheezy/Sid (stable/testing/unestable)}*: Son los nombres clave
 de las diferentes versiones de distribución Debian. En el momento de
 escribir este documento, Squeeze es la actual versión *{stable}* o estable,
 Wheezy es la actual versión *{testing}* o en pruebas. Sid es y será siempre
@@ -157,8 +157,9 @@ una contribución debe ser licenciada bajo la misma licencia que el resto del
 documento, esto es, GPL versión 3 o posterior.
 
 Los originales de este manual se mantienen utilizando el sistema de control
-de versiones Git. Se puede obtener la copia más actualizada ejecutando el
-siguiente comando:
+de versiones Git. Se puede obtener la copia más actualizada ejecutando la
+siguiente orden:
+
 
 code{
 
@@ -168,8 +169,9 @@ $ git clone git://live.debian.net/git/live-manual.git
 
 Antes de enviar una contribución se debería realizar una visualización del
 trabajo realizado. Para ello se debe asegurar que los paquetes necesarios
-para la construcción del documento están instalados ejecutando el siguiente
-comando:
+para la construcción del documento están instalados ejecutando la siguiente
+orden:
+
 
 code{
 
@@ -179,7 +181,8 @@ code{
 
 Se puede realizar la construcción del manual posicionándose en el directorio
 de mayor nivel, donde se ha obtenido los originales mediante Git y
-ejecutando el siguiente comando:
+ejecutando la siguiente orden:
+
 
 code{
 
@@ -189,7 +192,8 @@ code{
 
 Ya que la construcción del manual para todos los idiomas soportados tarda un
 rato, se encontrará conveniente el poder ejecutar la construcción para un
-solo idioma. Esto puede realizarse ejecutando el siguiente comando:
+solo idioma. Esto puede realizarse ejecutando la siguiente orden:
+
 
 code{
 
@@ -204,7 +208,9 @@ embargo, a la hora de hacer grandes cambios, es conveniente enviarlos a la
 lista de correo para discutirlos primero. Para realizar una entrega al
 repositorio se debe seguir el siguiente procedimiento:
 
+
 _* Obtener la clave publica de entrega:
+
 
 code{
 
@@ -220,6 +226,7 @@ code{
 _* Añadir la siguiente sección en el fichero de configuración de
 openssh-client:
 
+
 code{
 
  $ cat >> ~/.ssh/config << EOF
@@ -233,6 +240,7 @@ code{
 
 _* Obtener un clon del manual mediante git mediante ssh:
 
+
 code{
 
  $ git clone gitosis@live.debian.net:/live-manual.git
@@ -243,6 +251,7 @@ _* Después de editar los ficheros que se deseen en #{manual/en/}#, llamar al
 objetivo make "commit" en el directorio superior para sanear los ficheros y
 actualizar los ficheros de traducciones:
 
+
 code{
 
  $ make commit
@@ -251,9 +260,10 @@ code{
 
 _* Una vez se ha saneado, se deberán entregar los cambios. Se deberá
 escribir un mensaje de entrega que consistirá en una o varias frases en
-Ingles, comenzando con una letra mayúscula y acabando con un punto final. Es
+ingles, comenzando con una letra mayúscula y acabando con un punto final. Es
 habitual comenzar estas frases con la forma
 'Fixing/Adding/Removing/Correcting/Translating', por ejemplo:
+
 
 code{
 
@@ -278,8 +288,8 @@ siguientes pasos:
 _* Traducir los ficheros about_manual.ssi.pog, about_project.ssi.pot e
 index.html.in.pot al idioma deseado con cualquier editor (como puede ser
 poedit) y enviarlos a la lista de correos. Una vez hayan sido revisados, el
-idioma será añadido al manual, (añadiendo los ficheros .po) y se habilitará
-en el autobuild.
+idioma será añadido al manual, (añadiendo los ficheros .po) y se activará en
+el autobuild.
 
 _* Una vez que el nuevo idioma haya sido añadido, se puede comenzar la
 traducción de todos los ficheros .po exisitentes en #{manual/po/}# de manera

@@ -7,7 +7,7 @@ imágenes en vivo y las instrucciones para el uso de los tres tipos de
 imágenes más utilizadas. El tipo de imagen más versátil,#{iso-hybrid}#, se
 puede utilizar en una máquina virtual, en medios ópticos u otros dispositivo
 de almacenamiento USB portátil. En ciertos casos especiales, las imágenes
-#{usb-hdd}#, pueden ser más adecuados para dispositivos USB. El capítulo
+#{usb-hdd}#, pueden ser más adecuadas para dispositivos USB. El capítulo
 termina con instrucciones para crear y usar una imagen de tipo #{red}#, que
 es un poco más complicado debido a la configuración necesaria en el
 servidor. Es un tema un poco avanzado para cualquier persona que no esté
@@ -24,31 +24,30 @@ USB, o desde una red, listo para usar sin ningún tipo de instalación en la
 unidad de costumbre, con configuración automática en tiempo de ejecución
 (Ver {Términos}#terms).
 
-Con Debian Live, es un sistema Debian GNU/Linux, creado para una de las
+Debian Live, es un sistema Debian GNU/Linux, creado para una de las
 arquitecturas soportadas (actualmente amd64, i386, PowerPC y SPARC). Se
 compone de las siguientes partes:
 
 _* *{Imágen del kernel de Linux}*, normalmente llamada #{vmlinuz*}#
 
-_* *{Imagen del ramdisk inicial (initrd)}*: posiblemente sea necesaria una
-configuración de la RAM para el arranque de Linux, con módulos incluidos,
-para montar la imagen del sistema y algunos scripts para hacerlo.
+_* *{Imagen del ramdisk inicial (initrd)}*: Un disco RAM, que incluya los
+módulos de kernel necesarios para montar la imagen del sistema y algunos
+scripts para ponerlo en marcha.
 
-_* *{Imagen del sistema}*: La imagen del sistema de ficheros del sistema
-operativo. Por lo general, se utiliza un sistema de ficheros comprimido
-SquashFS para reducir al mínimo el tamaño de la imagen de Debian en
-vivo. Hay que tener en cuenta que es de sólo lectura. Por lo tanto, durante
-el arranque del sistema Debian en vivo se utiliza un disco RAM y un
-mecanismo de «unión» que permite escribir ficheros en el sistema en
-funcionamiento. Sin embargo, todas las modificaciones se perderán al apagar
-el equipo a menos que se use de modo opcional la persistencia (ver
-{Persistencia}).
+_* *{Imagen del sistema}*: La imagen del sistema de ficheros raiz. Por lo
+general, se utiliza un sistema de ficheros comprimido SquashFS para reducir
+al mínimo el tamaño de la imagen de Debian Live. Hay que tener en cuenta que
+es de sólo lectura. Por lo tanto, durante el arranque del sistema Debian
+Live se utiliza un disco RAM y un mecanismo de «unión» que permite escribir
+ficheros en el sistema en funcionamiento. Sin embargo, todas las
+modificaciones se perderán al apagar el equipo a menos que se use de modo
+opcional la persistencia (ver {Persistencia}#persistence).
 
 _* *{Gestor de arranque}*: Una pequeña pieza de código diseñada para
-arrancar desde los medios de almacenamiento escogidos, posiblemente
-mostrando un menú o un indicador de arranque para permitir la selección de
+arrancar desde el medio de almacenamiento escogido, posiblemente mostrando
+un menú o un indicador de arranque para permitir la selección de
 opciones/configuración. Carga el kernel de Linux y su initrd para funcionar
-con un sistema de ficheros asociados. Se pueden usar soluciones diferentes,
+con un sistema de ficheros asociado. Se pueden usar soluciones diferentes,
 dependiendo del medio de almacenamiento de destino y el formato del sistema
 de ficheros que contenga los componentes mencionados anteriormente: isolinux
 para arrancar desde un CD o DVD en formato ISO9660, syslinux para arrancar
@@ -124,10 +123,10 @@ Crear una nueva máquina virtual, cambiar la configuración de almacenamiento
 para utilizar binary.iso como el dispositivo de CD/DVD y arrancar la
 máquina.
 
-Nota: Para los sistemas en vivo con X.org que se desea probar con
-virtualbox-ose, se podría incluir el driver de VirtualBox X.org,
-virtualbox-ose-guest-x11, en la configuración de live-build. De lo
-contrario, la resolución se limita a 800x600
+Nota: Para probar los sistemas en vivo con soporte X.org en virtualbox-ose,
+se puede incluir el driver de VirtualBox X.org, virtualbox-ose-guest-x11, en
+la configuración de live-build. De lo contrario, la resolución se limita a
+800x600
 
 code{
 
@@ -152,11 +151,11 @@ code{
 La siguiente secuencia de comandos creará una imagen USB/HDD básica que
 contendrá sólo el sistema estándar de Debian sin X.org. Es adecuada para el
 arranque desde dispositivos USB, discos duros USB y otros dispositivos de
-almacenamiento portátil. Normalmente, una imagen ISO híbrida se puede
-utilizar para este propósito, pero si tiene una BIOS que no maneja
-adecuadamente las imágenes híbridas, o si desea utilizar el espacio restante
-en los medios de almacenamiento para una partición con persistencia,
-necesita una imagen USB/HDD.
+almacenamiento portátil. Normalmente, se puede utilizar para este propósito
+una imagen ISO híbrida, pero es posible que la BIOS que no maneje
+adecuadamente las imágenes híbridas. También es interesante una imagen
+USB/HDD si se desea utilizar el espacio restante en los medios de
+almacenamiento para una partición con persistencia.
 
 Nota: si se ha creado una imagen ISO con el ejemplo anterior, se tendrá que
 limpiar el directorio de trabajo con el comando #{lb clean}# (ver el comando
@@ -189,7 +188,8 @@ code{
 
 La imagen binaria generada contiene una partición VFAT y el gestor de
 arranque syslinux, lista para ser copiada directamente en un dispositivo
-USB. Conecte una memoria USB de tamaño mayor que el de binary.img y teclee:
+USB. Conecte una memoria USB de tamaño mayor que el del fichero binary.img y
+teclee:
 
 code{
 
@@ -197,12 +197,13 @@ code{
 
 }code
 
-Donde #{${USBSTICK}}# es la ubicación del dispositivo, como #{/dev/sdb}# y
-no una partición como #{/dev/sdb1}#!); se puede encontrar el nombre correcto
-del dispositivo mirando el output de #{dmesg}# después de conectar el
-dispositivo, o incluso mejor #{ls -l /dev/disk/by-id}#.
+Siendo #{${USBSTICK}}# la ubicación del dispositivo, como #{/dev/sdb}#
+(ATENCIÓN: no es una partición como #{/dev/sdb1}# sino todo el dispositivo
+completo). Una vez conectado el dispositivo, se puede encontrar su nombre
+correcto utilizando mediante la orden #{dmesg}#, o incluso mejor mediante la
+orden #{ls -l /dev/disk/by-id}#.
 
-*{Esto borrará definitivamente cualquier contenido anterior del dispositivo!}*
+*{ATENCIÓN: Esto borrará definitivamente cualquier contenido anterior del dispositivo.}*
 
 Nota: Como se mencionó anteriormente, este mismo proceso se puede utilizar
 para imágenes #{iso-hybrid}# (con sufijo #{-hybrid.iso}#), pero no imágenes
@@ -231,9 +232,9 @@ code{
 
 }code
 
-After the creation of the partition, where #{${PARTITION}}# is the name of
-the partition, like #{/dev/sdb2}#, you have to create a filesystem on
-it. One possible choice would be ext4.
+Después de la creación de la partición, siendo #{${PARTITION}}# el nombre de
+la partición (por ejemplo #{/dev/sdb2}# ),se tiene que crear un sistema de
+ficheros en él. Una opción posible sería ext4.
 
 code{
 
@@ -276,12 +277,12 @@ code{
 }code
 
 A diferencia de las imágenes ISO y USB/HDD, el sistema de arranque en red en
-sí mismo no envia la imagen del sistema de ficheros al cliente, por eso los
-ficheros se deben enviar via NFS.  Las opciones #{--net-root-path}# y
+sí mismo no envía la imagen del sistema de ficheros al cliente, por eso los
+ficheros se deben enviar mediante NFS. Las opciones #{--net-root-path}# y
 #{--net-root-server}# especifican la ubicación y el servidor,
 respectivamente, del servidor NFS en el que se encuentra la imagen del
-sistema de ficheros en el arranque. Asegurarse de que estos se ajustan a los
-valores adecuados para la red y el servidor.
+sistema de ficheros en el arranque. Se debe asegurar que estos se ajustan a
+los valores adecuados para la red y el servidor deseados.
 
 Crear ahora la imagen con el comando #{lb build}#:
 
@@ -309,12 +310,13 @@ red: el servidor DHCP, el servidor TFTP y el servidor NFS.
 
 3~ Servidor DHCP
 
-Hay que configurar el servidor DHCP de nuestra red para asegurarse de que
-proporciona una dirección IP para el sistema de arranque en red del cliente,
-y para anunciar la ubicación del gestor de arranque PXE.
+Hay que configurar el servidor DHCP de la red para asegurar que proporciona
+una dirección IP al cliente, y para anunciar la ubicación del gestor de
+arranque PXE.
 
-He aquí un ejemplo de inspiración, escrito para el servidor ISC DHCP
-#{isc-dhcp-server}# en el fichero de configuración #{/etc/dhcp/dhcpd.conf}#:
+He aquí un ejemplo que puede servir de inspiración. Fue escrito para el
+servidor ISC DHCP #{isc-dhcp-server}# en su fichero de configuración
+#{/etc/dhcp/dhcpd.conf}#:
 
 code{
 
@@ -340,13 +342,13 @@ code{
 
 3~ Servidor TFTP
 
-Esto sirve al kernel y disco RAM inicial para el sistema en tiempo de
-ejecución.
+Se encarga de suministrar el kernel y el disco RAM inicial para el sistema.
 
-Se debe instalar el paquete tftpd-hpa. Este puede servir todos los ficheros
-contenidos de un directorio raíz, normalmente #{/srv/tftp}#. Para permitirle
-que pueda servir los ficheros de #{/srv/debian-live/tftpboot}#, ejecutar
-como root el siguiente comando:
+Se debe instalar el paquete tftpd-hpa. Este servidor podrá suministrar todos
+los ficheros contenidos de un directorio raíz, normalmente
+#{/srv/tftp}#. Para permitirle que pueda servir los ficheros de
+#{/srv/debian-live/tftpboot}#, se debe ejecutar  el siguiente comando con
+privilegios de superusuario:
 
 code{
 
@@ -358,14 +360,15 @@ y llenar el directorio del nuevo servidor tftp cuando sea requerido.
 
 3~ Servidor NFS 
 
-El equipo huésped intentará montar el sistema de archivos de la imagen en
-vivo a través de un servidor NFS una vez haya descargado y arrancado un
-kernel Linux y cargado su initrd.
+Una vez el equipo cliente ha descargado y arrancado el kernel de Linux junto
+a su initrd, intentará montar el sistema de archivos de la imagen en vivo a
+través de un servidor NFS.
 
 Se debe instalar el paquete #{nfs-kernel-server}#.
 
-Entonces, hacer que la imagen del sistema de archivos esté disponible a
-través de NFS añadiendo una línea como la siguiente para #{/etc/exports}#:
+Entonces, se debe hacer que la imagen del sistema de archivos esté
+disponible a través de NFS añadiendo una línea como la siguiente para
+#{/etc/exports}#:
 
 code{
 
@@ -396,14 +399,14 @@ La creación de una imagen de arranque en red es fácil usando la mágia de
 live-build, pero probar las imágenes en máquinas físicas puede ser un
 proceso mucho más lento.
 
-Para hacer nuestra vida más fácil, se puede usar la virtualización. Hay dos
-soluciones.
+Para hacer nuestra vida más fácil, se puede utilizar la virtualización. Hay
+dos soluciones.
 
 3~ Qemu
 
 _* Install #{qemu}#, #{bridge-utils}#, #{sudo}#.
 
-Edit #{/etc/qemu-ifup}#:
+Se debe editar el fichero #{/etc/qemu-ifup}#:
 
 code{
 
@@ -458,8 +461,8 @@ code{
 
 }code
 
-_* Se puede jugar con este fichero de configuración (p.ej. cambiar el limite
-de memoria a 256)
+_* Se pueden realizar pruebas con este fichero de configuración
+(p.ej. cambiar el limite de memoria a 256)
 
 _* Hacer doble clic en este fichero (o lanzar VMWare player y seleccionar
 este fichero).

@@ -19,15 +19,15 @@ arranque del kernel mediante el indicador de arranque (boot prompt). La
 imagen puede ser creada por defecto con los parámetros de arranque
 adecuados, de manera que los usuarios solamente tendrán que arrancar el
 sistema en vivo, directamente, sin necesidad de especificar ninguna opción
-adicional, ya que las opciones por defecto son las adecuadas. En particular,
-la opcion #{lb --bootappend-live}# permite introducir cualquier parámetro
-del kernel para el sistema en vivo, como pueden ser la persistencia,
-distribuciones de teclado, zonas horarias, etc. Ver un ejemplo en
-{Personalización de variantes locales e
+adicional, ya que las opciones por defecto serán las adecuadas. En
+particular, la opcion #{lb --bootappend-live}# permite introducir cualquier
+parámetro del kernel para el sistema en vivo, como pueden ser la
+persistencia, distribuciones de teclado, zonas horarias, etc. Ver un ejemplo
+en {Personalización de variantes locales e
 idioma}#customizing-locale-and-language.
 
 Las opciones de configuración en tiempo de creación se describen en la
-página del manual de la orden #{lb config}#. Las opciones en tiempo de
+página del manual del comando #{lb config}#. Las opciones en tiempo de
 arranque se describen en las páginas de manual de los paquetes live-boot y
 live-config. Aunque los paquetes live-boot y live-config se instalan en el
 sistema en vivo que se está creando, también se recomienda que sean
@@ -46,7 +46,7 @@ el directorio chroot con paquetes que constituyen un sistema Debian
 básico. A continuación la etapa *{chroot}* completa la creación del
 directorio chroot, rellenandolo con todos los paquetes que han sido listados
 en la configuración y material adicional. En esta etapa se utiliza la
-mayoria de las personalizaciones de contenido. La etapa *{binary}* es la
+mayoría de las personalizaciones de contenido. La etapa *{binary}* es la
 etapa final en la que se prepara la imagen del sistema en vivo utilizando el
 contenido del directorio chroot para construir el sistema de ficheros raiz
 del futuro sistema en vivo, se incluye el instalador y cualquier otro
@@ -59,29 +59,28 @@ los paquetes utilizados.
 En cada una de estas etapas hay una secuencia particular en la se aplican
 las acciones a realizar. Estas acciones son organizadas en forma de capas de
 tal manera que aseguran la personalización de una manera razonable. Por
-ejemplo, dentro de la etapa *{chroot}*, los preseeds se aplican antes que
-cualquier paquete sea instalado, los paquetes son instalados antes de
-incluir localmente ningún fichero o antes de aplicar cualquer parche y los
-scripts de gancho (scripts hooks) serán ejecutados al final de todo, una vez
-que todos los materiales estan ubicados en su lugar.
+ejemplo, dentro de la etapa *{chroot}*, las preconfiguraciones (preseeds) se
+aplican antes que cualquier paquete sea instalado, los paquetes son
+instalados antes de incluir localmente ningún fichero o antes de aplicar
+cualquer parche y los scripts gancho (scripts hooks) serán ejecutados al
+final de todo, una vez que todos los materiales estan ubicados en su lugar.
 
 2~ Opciones para lb config en ficheros
 
 Aunque la orden #{lb config}# crea un esqueleto de configuración en el
 directorio config/, quizas sea necesario escribir ficheros de configuración
-adicionales dentro de la jerarquia de subdirectorios de config/ con el fin
-de alcanzar los fines propuestos.  En el proceso de creación de la imagen
-estos ficheros adicionales serán copiados o en el sistema de ficheros que se
-utilizará en el sistema en vivo, o en el sistema de ficheros de la propia
-imagen binaria o quizas podrán suministrar opciones de configuracion al
-sistema en vivo que sería incomodo pasar en la línea de parámetros del
-kernel. Esto dependerá de en que parte de la jerarquia de subdirectorios de
+adicionales dentro de la jerarquía de subdirectorios de config/ con el fin
+de alcanzar los objetivos propuestos.  En el proceso de creación de la
+imagen estos ficheros adicionales serán copiados o en el sistema de ficheros
+que se utilizará en el sistema en vivo, o en el sistema de ficheros de la
+propia imagen binaria o quizas podrán suministrar opciones de configuracion
+al sistema en vivo que sería incomodo pasar en la línea de parámetros del
+kernel. Esto dependerá de en que parte de la jerarquía de subdirectorios de
 config/ se copian estos ficheros. Se puede incluir cosas como listas de
-paquetes personalizadas, imágenes gráficas personalizadas o scripts de
-gancho (scripts hook) para ejecutar o en el momento de creación de la imagen
-o en el momento de arranque del sistema en vivo, aumentando la, ya por otra
-parte considerable, flexibilidad de Debian Live con código creado ex
-profeso.
+paquetes personalizadas, imágenes gráficas personalizadas o scripts gancho
+(scripts hook) para ejecutar o en el momento de creación de la imagen o en
+el momento de arranque del sistema en vivo, aumentando la, ya por otra parte
+considerable, flexibilidad de Debian Live con código creado ex profeso.
 
 2~ Tareas de personalización
 
@@ -89,5 +88,5 @@ Los siguientes capítulos se organizan por tareas de personalización que el
 usuario realiza típicamente: Los capítulos de {Personalización de la
 instalación de paquetes}#customizing-package-installation, {Personalización
 de contenidos}#customizing-contents y {Personalización de variantes locales
-e idioma}#customizing-locale-and-language cubre solamente unas pocas de
-estas tareas que pueden realizarse.
+e idioma}#customizing-locale-and-language cubre solamente unas pocas de las
+tareas que pueden realizarse.

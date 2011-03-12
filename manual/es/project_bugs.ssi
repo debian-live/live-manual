@@ -1,6 +1,6 @@
 B~ Cómo informar acerca  de errores.
 
-1~bugs Informes de errrores.
+1~bugs Informes de errores.
 
 Debian Live está lejos de ser perfecto, pero queremos que sea lo más
 perfecto posible - con su ayuda. No dude en informar de un error: es mejor
@@ -9,17 +9,18 @@ incluye recomendaciones sobre cómo presentar buenos informes de errores.
 
 Para los impacientes:
 
-_* Compruebe siempre primero las actualizaciones del estado de la imagen en
-nuestra página web en http://live.debian.net/ para consultar problemas
-conocidos.
+_* Primero, siempre se debe comprobar el estado actualizado de la imagen en
+busca de problemas conocidos en nuestra página web en
+http://live.debian.net/.
 
-_* Intente reproducir el error con las *{versiones más recientes}* de
-live-build, live-boot, y live-config antes de presentar un informe de error.
+_* Se debe intentar reproducir el error con las *{versiones más recientes}*
+de live-build, live-boot, y live-config antes de presentar un informe de
+error.
 
-_* Trate de dar *{información tan específica como sea posible}* acerca del
-error. Esto incluye (al menos) la versión de live-build, live-boot, y
-live-config  utilizada y la distribución del sistema en vivo que está
-construyendo.
+_* Se debe intentar dar la *{información tan específica como sea posible}*
+acerca del error. Esto incluye (al menos) la versión de live-build,
+live-boot, y live-config  utilizada y la distribución del sistema en vivo
+que está construyendo.
 
 2~ Problemas conocidos
 
@@ -29,61 +30,62 @@ especifica cualquiera de estas dos versiones.
 
 % CORRÍGEME:
 
-Si esto le causa mucha dificultad, no cree un sistema basado en *{testing}*
-o *{unstable}*, sino más bien use *{stable}*. Live-build siempre usa por
-omisión la versión *{stable}* .
+Si esto causa mucha dificultad, no se debe crear un sistema basado en
+*{testing}*  o *{unstable}*, sino que debe utilizarse *{stable}*. Live-build
+siempre utiliza por defecto la versión *{stable}* .
 
-Los problemas detectados se especifican en la sección  'status' de nuestra
+Los problemas detectados se especifican en la sección 'status' de nuestra
 página web en http://live.debian.net/.
 
-Está fuera del alcance de este manual capacitarle para identificar y
+Está fuera del alcance de este manual la capacitación para identificar y
 solucionar correctamente problemas de los paquetes de las distribuciones en
-desarrollo, sin embargo, hay dos cosas que siempre se puede intentar: Si
-detecta un error de generación cuando la distribución de destino es
-*{testing}*, pruebe *{unstable}*. Si *{unstable}* no funciona bien, vuelva a
-*{testing}* y haga un pin con la nueva versión del paquete de  *{unstable}*
-(véase {APT pinning}#apt-pinning para más detalles).
+desarrollo, sin embargo, hay dos cosas que siempre se puede intentar: Si se
+detecta un error de creación cuando la distribución de destino es
+*{testing}*, se debe intentar con *{unstable}*. Si *{unstable}* no funciona
+bien, se debe volver a *{testing}* haciendo un pin con la nueva versión del
+paquete de *{unstable}* (véase {APT pinning}#apt-pinning para más detalles).
 
 2~ Reconstruir desde cero
 
-Para asegurarse de que un error en particular no es causado por un sistema
-construido de forma sucia,  reconstruir siempre el sistema entero en vivo
-desde el principio para ver si el error es reproducible.
+Para asegurarse de que un error en particular no es causado por crear el
+sistema basandose en los datos de un sistema anterior, se debe reconstruir
+el sistema en vivo entero, desde el principio y comprobar si el error es
+reproducible.
 
-2~ Usar paquetes actualizados
+2~ Utilizar paquetes actualizados
 
-Usar paquetes obsoletos puede causar problemas importantes al tratar de
-reproducir (y en última instancia, solucionar) el problema. Asegúrese de que
-su sistema de construcción está actualizado y cualquier paquete que incluya
-en su imagen esté también al día .
+Utilizar paquetes obsoletos puede causar problemas importantes al tratar de
+reproducir (y en última instancia, solucionar) el problema. Hay que
+asegurarse de que el sistema de construcción está actualizado y cualquier
+paquete que incluya en su imagen esté también al día .
 
 2~collect-information Recopilar información
 
-Proporcione información suficiente con el informe. Como mínimo, la versión
-exacta de la versión de live-build donde se encuentra el error y los pasos
-para reproducirlo. Use el sentido común e incluya cualquier información
-pertinente si usted piensa que podría ayudar a resolver el problema.
+Se debe proporcionar información suficiente con el informe. Como mínimo, la
+versión exacta de live-build donde se encuentra el error y los pasos para
+reproducirlo. Se debe utilizar el sentido común e incluir cualquier
+información pertinente si se cree que podría ayudar a resolver el problema.
 
-Para sacar el máximo provecho de su informe de error, se requerirá al menos
+Para sacar el máximo provecho de un informe de error, se requerirá al menos
 la siguiente información:
 
 _* Arquitectura del sistema anfitrión
 
 _* La versión de live-build del sistema anfitrión.
 
-_* Version de live-boot en el sistema en vivo.
+_* Versión de live-boot en el sistema en vivo.
 
-_* Version de live-config en el sistema en vivo.
+_* Versión de live-config en el sistema en vivo.
 
-_* Version de #{debootstrap}# y/o #{cdebootstrap}# en el sistema anfitrión.
+_* Versión de #{debootstrap}# y/o #{cdebootstrap}# en el sistema anfitrión.
 
 _* Arquitectura del sistema en vivo.
 
 _* Distribución del sistema en vivo.
 
-_* Version del kernel en el sistema en vivo.
+_* Versión del kernel en el sistema en vivo.
 
-Puede generar un registro del proceso de construcción mediante el comando
+Se puede generar un registro del proceso de creación mediante el comando
 #{tee}#. Se recomienda hacer esto de forma automática con un script
 #{auto/build}#; (ver {Gestión de una configuración}#managing-a-configuration
 para más detalles).
@@ -98,70 +100,73 @@ En el momento del arranque, live-boot guarda un registro en
 #{/var/log/live.log}# (o #{/var/log/live-boot.log}#).
 
 Además, para descartar otros errores, siempre es una buena idea comprimir en
-un .tar el directorio de su #{configuración/}# y subirlo a algún lugar,
-(*{No}* lo envie como documento adjunto a la lista de correo) para que
-podamos puede tratar de reproducir los errores que has encontrado. Si esto
-es difícil (por ejemplo, debido a su tamaño) puedes utilizar la salida
-(«output» N. del T.) de #{lb config --dump}# que produce un resumen de su
-fichero de configuración de árbol (es decir, listas de archivos de los
-subdirectorios de #{config /}# pero no los incluye).
+un .tar el directorio #{configuración/}# y subirlo a algún lugar, para que
+el equipo de Debian Live pueda reproducir el error (*{No}* se debe enviar
+como documento adjunto a la lista de correo). Si esto es difícil (por
+ejemplo, debido a su tamaño) se puede utilizar la salida del comando #{lb
+config --dump}# que produce un resumen del árbol de configuración (es decir,
+listas de archivos de los subdirectorios de #{config /}# pero no los
+incluye).
 
-Recuerde que debe enviar en cualquier registro que se produjeron con la
-variable local Inglesa, p.ej. ejecutar los comandos de live-build precedidos
-de #{LC_ALL=C}# o #{LC_ALL=en_US}#.
+Hay que recordar que los informes a enviar se deben hacer en ingles, por lo
+que para generar los registros en este idioma se debe utilizar la variante
+local English, p.ej. ejecutar los comandos de live-build o cualquier otro
+precedidos de #{LC_ALL=C}# o #{LC_ALL=en_US}#.
 
 2~ Aislar el fallo si es posible
 
-Si es posible, aislar el caso del fallo al menor cambio posible. No siempre
-es fácil hacer esto, así que si no lo consigue para su informe, no se
-preocupe. Sin embargo, si planea su ciclo de desarrollo bién, con conjuntos
-de cambios lo bastante pequeños por iteración, puede ser capaz de aislar el
-problema mediante la constucción de una simple "base" de configuración que
-se ajuste a su configuración actual, más justo el conjunto del cambio que
-falla añadido. Si resulta difícil  determinar que cambios fallaron, puede
-ser que haya incluido demasiado en cada conjunto de cambios y deba
-desarrollar en incrementos más pequeños.
+Si es posible, aislar el caso del fallo al menor cambio posible que lo
+produzca. No siempre es fácil hacer esto, así que si no se consigue para su
+informe, no hay que preocuparse. Sin embargo, si se planea el ciclo de
+desarrollo bién, con conjuntos de cambios lo bastante pequeños por
+iteración, puede ser posible aislar el problema mediante la construcción de
+una simple "base" de configuración que se ajuste a la configuración actual
+deseada, más justo el conjunto del cambio que falla añadido. Si resulta
+difícil determinar que cambios produjeron el error, puede ser que se haya
+incluido demasiado en cada conjunto de cambios y se deba desarrollar en
+incrementos más pequeños.
 
-2~ Usar el paquete correcto para informar sobre el fallo
+2~ Utilizar el paquete correcto sobre el que informar del error
 
 ¿Dónde aparece el error ?
 
-3~ Durante la generación, durante la rutina de arranque.
+3~ En la preinstalación (bootstrap) en tiempo de creación.
 
 live-build arranca primero un sistema Debian básico con #{debootstrap}# o
 #{cdebootstrap}#. Puede fallar dependiendo de la herramienta usada en la
-rutina de arranque y de la distribución Debian que se use. Si un error
-aparece en este momento, compruebe si el error está relacionado con un
-paquete específico de Debian (Es lo más probable), o si está relacionado con
-la herramienta de la rutina de arranque en sí.
+preinstalación y de la distribución Debian empleada. Si un error aparece en
+este momento, se debe comprobar si está relacionado con un paquete
+específico de Debian (es lo más probable), o si está relacionado con la
+herramienta de preinstalación en sí.
 
 En ambos casos, esto no es un error de Debian Live, sino de Debian en sí
-mismo, el cual nosotros no podemos solucionar directamente. Informe del
-error sobre la herramienta de la rutina de arranque o el paquete que falla.
+mismo, por lo cual el equipo de Debian Live no puede solucionarlo
+directamente. Informe del error sobre la herramienta de preinstalación o el
+paquete que falla.
 
-3~ En el momento de la creación, mientras se está instalando paquetes.
+3~ Mientras se instalan paquetes en tiempo de creación.
 
-live-build instala paquetes adicionales del archivo de Debian y puede fallar
-en función de la distribución Debian utilizada y del estado diario del
-archivo. Si un error aparece en este momento, compruebe si el error es
-reproducible en un sistema normal.
+live-build instala paquetes adicionales del archivo de Debian que pueden
+fallar en función de la distribución Debian utilizada y del estado diario
+del archivo Debian. Se debe comprobar si el error es reproducible en un
+sistema Debian normal, si el fallo aparece en esta etapa.
 
-Si este es el caso, esto no es un error de Debian Live, sino de Debian - por
-favor informe sobre el paquete que falla.
+Si este es el caso, esto no es un error de Debian Live, sino de Debian - se
+debería informar sobre el paquete que falla.
 
-Además, si usted está usando una réplica local y / o cualquier tipo de proxy
-y está experimentando un problema,  reproduzcalo siempre  primero con una
-rutina de arranque desde una réplica oficial.
+Además, si se está utilizando una réplica local y/o cualquier tipo de proxy
+y se experimenta un problema, se debe intentar reproducir siempre
+preinstalando desde una réplica oficial.
 
-3~ En el momento del arranque
+3~ En tiempo de arranque
 
-Si tu imagen no arranca, por favor informe a la lista de correo, junto con
-la información solicitada en {Recopilar información}
-#collect-information. No olvide mencionar, cómo y cuando la imagen falla, en
-Qemu, VirtualBox, VMWare o hardware real. Si está utilizando una tecnología
-de virtualización de cualquier tipo, pruébela siempre en hardware real antes
-de informar de un error. Proporcionar una captura de pantalla del error
-también es muy útil.
+Si la imagen no arranca, se debería informar la lista de correo, junto con
+la información solicitada en {Recopilar información}#collect-information. No
+hay que olvidar mencionar, cómo y cuando la imagen falla, en Qemu,
+VirtualBox, VMWare o hardware real. Si se está utilizando una tecnología de
+virtualización de cualquier tipo, se debe probar la imagen en hardware real
+antes de informar de un error. Proporcionar una captura de pantalla del
+error también es muy útil.
 
 3~ En tiempo de ejecución
 
@@ -172,34 +177,35 @@ sistema vivo, esto es probablemente un error en Debian Live. Sin embargo,
 
 Antes de presentar el informe de errores, buscar en la web el mensaje de
 error en particular o el síntoma que se está percibiendo. Como es muy poco
-probable que usted sea la única persona que tiene ese problema en concreto,
-siempre existe la posibilidad de que se haya discutido en otras partes, y
-exista una posible solución, parche o se haya propuesto una alternativa .
+probable que sea la única persona que tiene ese problema en concreto,
+siempre existe la posibilidad de que se haya discutido en otras partes y
+exista una posible solución, parche o se haya propuesto una alternativa.
 
 Se debe prestar especial atención a la lista de correo de Debian Live, así
-como la página principal, ya que estas seguramente tienen la información más
+como su página principal, ya que seguramente tienen la información más
 actualizada. Si esa información existe, se debe incluir la referencia a ella
 en su informe de error.
 
-Además, debe comprobar las listas de errores actuales de  live-build,
-live-boot, y live-config para ver si se ha informado ya de algo similar.
+Además, se debe comprobar las listas de errores actuales de live-build,
+live-boot, y live-config y verificar si se ha informado ya de algo similar.
 
-2~ Dónde informar de los errores
+2~ Dónde informar de los fallos
 
-El proyecto Debian Live realiza un seguimiento de todos los fallos en el
-sistema de seguimiento de fallos de Debian (BTS).  Para obtener información
+El proyecto Debian Live realiza un seguimiento de todos los errores en el
+sistema de seguimiento de fallos de Debian (BTS). Para obtener información
 sobre cómo utilizar el sistema, consulte http://bugs.debian.org/. También
 puede enviar los errores mediante el comando #{reportbug}# del paquete con
 el mismo nombre.
 
-En general, usted debe informar sobre los errores en el momento de la
-generación sobre el paquete live-build. De los errores en el momento de
-arrancar sobre live-boot, y de los errores en el momento de la ejecución
-sobre live-config. Si no está seguro de qué paquete es el adecuado o
-necesita más ayuda antes de presentar un informe de errores, envíe un
-mensaje a la lista de correo y nosotros le ayudaremos a resolverlo.
+En general, se debe informar sobre los errores en tiempo de creación en el
+BTS contra el paquete live-build. De los fallos en el tiempo de arranque
+contra el paquete live-boot, y de los errores en tiempo de ejecución contra
+el paquete live-config. Si no se está seguro de qué paquete es el adecuado o
+se necesita más ayuda antes de presentar un informe de errores, lo mejor es
+enviar un mensaje a la lista de correo y el equipo de Debian Live le ayudará
+a resolverlo.
 
-Tenga en cuenta que los errores que se encuentran en las distribuciones
-derivadas de Debian (como Ubuntu y otros) *{not}* deben enviarse al BTS de
-Debian a menos que también se puedan reproducir en un sistema Debian usando
-paquetes oficiales de Debian.
+Hay que tener en cuenta que los errores que se encuentran en las
+distribuciones derivadas de Debian (como Ubuntu y otros) *{NO}* deben
+enviarse al BTS de Debian a menos que también se puedan reproducir en un
+sistema Debian usando paquetes oficiales de Debian.

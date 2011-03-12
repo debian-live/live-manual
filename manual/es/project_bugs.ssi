@@ -3,19 +3,18 @@ B~ Cómo informar acerca  de errores.
 1~bugs Informes de errores.
 
 Debian Live está lejos de ser perfecto, pero queremos que sea lo más
-perfecto posible - con su ayuda. No dude en informar de un error: es mejor
+perfecto posible - con tu ayuda. No dudar en informar de un error: es mejor
 llenar un informe dos veces que no hacerlo nunca. Sin embargo, este capítulo
 incluye recomendaciones sobre cómo presentar buenos informes de errores.
 
 Para los impacientes:
 
 _* Primero, siempre se debe comprobar el estado actualizado de la imagen en
-busca de problemas conocidos en nuestra página web en
-http://live.debian.net/.
+busca de problemas conocidos en la página web http://live.debian.net/.
 
 _* Se debe intentar reproducir el error con las *{versiones más recientes}*
 de live-build, live-boot, y live-config antes de presentar un informe de
-error.
+errores.
 
 _* Se debe intentar dar la *{información tan específica como sea posible}*
 acerca del error. Esto incluye (al menos) la versión de live-build,
@@ -34,21 +33,21 @@ Si esto causa mucha dificultad, no se debe crear un sistema basado en
 *{testing}*  o *{unstable}*, sino que debe utilizarse *{stable}*. Live-build
 siempre utiliza por defecto la versión *{stable}* .
 
-Los problemas detectados se especifican en la sección 'status' de nuestra
-página web en http://live.debian.net/.
+Los problemas detectados se especifican en la sección 'status' de la página
+web http://live.debian.net/.
 
-Está fuera del alcance de este manual la capacitación para identificar y
-solucionar correctamente problemas de los paquetes de las distribuciones en
-desarrollo, sin embargo, hay dos cosas que siempre se puede intentar: Si se
-detecta un error de creación cuando la distribución de destino es
-*{testing}*, se debe intentar con *{unstable}*. Si *{unstable}* no funciona
-bien, se debe volver a *{testing}* haciendo un pin con la nueva versión del
-paquete de *{unstable}* (véase {APT pinning}#apt-pinning para más detalles).
+Está fuera del alcance de este manual enseñar cómo identificar y solucionar
+correctamente problemas de los paquetes de las distribuciones en desarrollo,
+sin embargo, hay dos cosas que siempre se puede intentar: Si se detecta un
+error de creación cuando la distribución de destino es *{testing}*, se debe
+intentar con *{unstable}*. Si *{unstable}* no funciona bien, se debe volver
+a *{testing}* haciendo un pin con la nueva versión del paquete de
+*{unstable}* (véase {APT pinning}#apt-pinning para más detalles).
 
 2~ Reconstruir desde cero
 
 Para asegurarse de que un error en particular no es causado por crear el
-sistema basandose en los datos de un sistema anterior, se debe reconstruir
+sistema basándose en los datos de un sistema anterior, se debe reconstruir
 el sistema en vivo entero, desde el principio y comprobar si el error es
 reproducible.
 
@@ -57,7 +56,7 @@ reproducible.
 Utilizar paquetes obsoletos puede causar problemas importantes al tratar de
 reproducir (y en última instancia, solucionar) el problema. Hay que
 asegurarse de que el sistema de construcción está actualizado y cualquier
-paquete que incluya en su imagen esté también al día .
+paquete que se incluya en la imagen esté también al día .
 
 2~collect-information Recopilar información
 
@@ -66,8 +65,8 @@ versión exacta de live-build donde se encuentra el error y los pasos para
 reproducirlo. Se debe utilizar el sentido común e incluir cualquier
 información pertinente si se cree que podría ayudar a resolver el problema.
 
-Para sacar el máximo provecho de un informe de error, se requerirá al menos
-la siguiente información:
+Para sacar el máximo provecho de un informe de errores, se requerirá al
+menos la siguiente información:
 
 _* Arquitectura del sistema anfitrión
 
@@ -85,9 +84,9 @@ _* Distribución del sistema en vivo.
 
 _* Versión del kernel en el sistema en vivo.
 
-Se puede generar un registro del proceso de creación mediante el comando
+Se puede generar un log del proceso de creación mediante el comando
 #{tee}#. Se recomienda hacer esto de forma automática con un script
-#{auto/build}#; (ver {Gestión de una configuración}#managing-a-configuration
+#{auto/build}#; (ver {Gestionar una configuración}#managing-a-configuration
 para más detalles).
 
 code{
@@ -96,21 +95,20 @@ code{
 
 }code
 
-En el momento del arranque, live-boot guarda un registro en
-#{/var/log/live.log}# (o #{/var/log/live-boot.log}#).
+En el momento del arranque, live-boot guarda un log en #{/var/log/live.log}#
+(o #{/var/log/live-boot.log}#).
 
 Además, para descartar otros errores, siempre es una buena idea comprimir en
-un .tar el directorio #{configuración/}# y subirlo a algún lugar, para que
-el equipo de Debian Live pueda reproducir el error (*{No}* se debe enviar
-como documento adjunto a la lista de correo). Si esto es difícil (por
-ejemplo, debido a su tamaño) se puede utilizar la salida del comando #{lb
-config --dump}# que produce un resumen del árbol de configuración (es decir,
-listas de archivos de los subdirectorios de #{config /}# pero no los
-incluye).
+un .tar el directorio #{config/}# y subirlo a algún lugar, para que el
+equipo de Debian Live pueda reproducir el error (*{No}* se debe enviar como
+documento adjunto a la lista de correo). Si esto es difícil (por ejemplo,
+debido a su tamaño) se puede utilizar la salida del comando #{lb config
+--dump}# que produce un resumen del árbol de configuración (es decir, listas
+de archivos de los subdirectorios de #{config /}# pero no los incluye).
 
 Hay que recordar que los informes a enviar se deben hacer en ingles, por lo
-que para generar los registros en este idioma se debe utilizar la variante
-local English, p.ej. ejecutar los comandos de live-build o cualquier otro
+que para generar los logs en este idioma se debe utilizar la variante local
+English, p.ej. ejecutar los comandos de live-build o cualquier otro
 precedidos de #{LC_ALL=C}# o #{LC_ALL=en_US}#.
 
 2~ Aislar el fallo si es posible
@@ -120,15 +118,15 @@ produzca. No siempre es fácil hacer esto, así que si no se consigue para su
 informe, no hay que preocuparse. Sin embargo, si se planea el ciclo de
 desarrollo bién, con conjuntos de cambios lo bastante pequeños por
 iteración, puede ser posible aislar el problema mediante la construcción de
-una simple "base" de configuración que se ajuste a la configuración actual
-deseada, más justo el conjunto del cambio que falla añadido. Si resulta
-difícil determinar que cambios produjeron el error, puede ser que se haya
-incluido demasiado en cada conjunto de cambios y se deba desarrollar en
-incrementos más pequeños.
+una simple «base» de configuración que se ajuste a la configuración actual
+deseada, más el conjunto del cambio que falla añadido. Si resulta difícil
+determinar que cambios produjeron el error, puede ser que se haya incluido
+demasiado en cada conjunto de cambios y se deba desarrollar en incrementos
+más pequeños.
 
 2~ Utilizar el paquete correcto sobre el que informar del error
 
-¿Dónde aparece el error ?
+¿Dónde aparece el error?
 
 3~ En la preinstalación (bootstrap) en tiempo de creación.
 
@@ -152,7 +150,9 @@ del archivo Debian. Se debe comprobar si el error es reproducible en un
 sistema Debian normal, si el fallo aparece en esta etapa.
 
 Si este es el caso, esto no es un error de Debian Live, sino de Debian - se
-debería informar sobre el paquete que falla.
+debe informar sobre el paquete que falla. Se puede obtener más información
+ejecutando #{debootstrap}# de forma separada del sistema de creación en vivo
+o ejecutando #{lb bootstrap --debug}#.
 
 Además, si se está utilizando una réplica local y/o cualquier tipo de proxy
 y se experimenta un problema, se debe intentar reproducir siempre
@@ -171,7 +171,7 @@ error también es muy útil.
 3~ En tiempo de ejecución
 
 Si un paquete se ha instalado correctamente, pero falla cuando se ejecuta el
-sistema vivo, esto es probablemente un error en Debian Live. Sin embargo,
+sistema en vivo, esto es probablemente un error en Debian Live. Sin embargo,
 
 2~ Hacer la investigación
 
@@ -184,7 +184,7 @@ exista una posible solución, parche o se haya propuesto una alternativa.
 Se debe prestar especial atención a la lista de correo de Debian Live, así
 como su página principal, ya que seguramente tienen la información más
 actualizada. Si esa información existe, se debe incluir la referencia a ella
-en su informe de error.
+en su informe de errores.
 
 Además, se debe comprobar las listas de errores actuales de live-build,
 live-boot, y live-config y verificar si se ha informado ya de algo similar.
@@ -193,9 +193,9 @@ live-boot, y live-config y verificar si se ha informado ya de algo similar.
 
 El proyecto Debian Live realiza un seguimiento de todos los errores en el
 sistema de seguimiento de fallos de Debian (BTS). Para obtener información
-sobre cómo utilizar el sistema, consulte http://bugs.debian.org/. También
-puede enviar los errores mediante el comando #{reportbug}# del paquete con
-el mismo nombre.
+sobre cómo utilizar el sistema, consultar http://bugs.debian.org/. También
+se puede enviar los errores mediante el comando #{reportbug}# del paquete
+con el mismo nombre.
 
 En general, se debe informar sobre los errores en tiempo de creación en el
 BTS contra el paquete live-build. De los fallos en el tiempo de arranque

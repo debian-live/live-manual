@@ -2,7 +2,7 @@
 
 1~the-basics The basics
 
-This chapter contains a brief overview of the build process and instructions for using the three most commonly used image types. The most versatile image type, #{iso-hybrid}#, may be used on a virtual machine, optical media or USB portable storage device. In certain special cases, #{usb-hdd}# may be more suitable for USB devices. The chapter finishes with instructions for building and using a #{net}# type image, which is a bit more involved due to the setup required on the server. This is a slightly advanced topic for anyone who is not familiar already with netbooting, but is included here because once the setup is done, it is a very convenient way to test and deploy images for booting on the local network without the hassle of dealing with image media.
+This chapter contains a brief overview of the build process and instructions for using the three most commonly used image types. The most versatile image type, #{iso-hybrid}#, may be used on a virtual machine, optical media or USB portable storage device. In certain special cases, such as the use of persistence, #{usb-hdd}# may be more suitable for USB devices. The chapter finishes with instructions for building and using a #{net}# type image, which is a bit more involved due to the setup required on the server. This is a slightly advanced topic for anyone who is not familiar already with netbooting, but is included here because once the setup is done, it is a very convenient way to test and deploy images for booting on the local network without the hassle of dealing with image media.
 
 2~ What is a live system?
 
@@ -20,11 +20,11 @@ _* *{Bootloader}*: A small piece of code crafted to boot from the chosen media, 
 
 You can use live-build to build the system image from your specifications, set up a Linux kernel, its initrd, and a bootloader to run them, all in one media-dependant format (ISO9660 image, disk image, etc.).
 
-2~ First steps: building an ISO image
+2~ First steps: building an ISO hybrid image
 
-The following sequence of live-build commands will create a basic ISO hybrid image containing just the Debian standard system without X.org. It is suitable for burning to CD or DVD media, and also to copy onto a USB stick (as per {Copying USB/HDD image to a USB stick}#copying-usb-hdd-image, specifying ".iso" extension where ".img" is indicated).
+Regardless of the image type, you will need to perform the same basic steps to build an image each time. As a first example, execute the following sequence of live-build commands to create a basic ISO hybrid image containing just the Debian standard system without X.org. It is suitable for burning to CD or DVD media, and also to copy onto a USB stick.
 
-First, we run the #{lb config}# command which will create a "config/" hierarchy in the current directory for use by other commands:
+First, run the #{lb config}# command. This will create a "config/" hierarchy in the current directory for use by other commands:
 
 code{
 
@@ -32,9 +32,9 @@ code{
 
 }code
 
-By passing no parameters to #{lb config}#, we indicated that we wish to use the defaults (see {The lb config command}#lb-config).
+No parameters are passed to #{lb config}#, so defaults for all of its various options will be used. See {The lb config command}#lb-config for more details.
 
-Now that we have a "config/" hierarchy, we may build the image with the #{lb build}# command:
+Now that the "config/" hierarchy exists, build the image with the #{lb build}# command:
 
 code{
 
@@ -42,19 +42,82 @@ code{
 
 }code
 
-This process can take a while, depending on the speed of your network connection (see {The lb build command}#lb-build).
+This process can take a while, depending on the speed of your network connection. When it is complete, there should be a #{binary-hybrid.iso}# image file, ready to use, in the current directory.
 
-3~testing-iso-with-qemu Testing an ISO image with Qemu
+2~ Using an ISO hybrid live image
 
-Testing an ISO is simple:
+After either building or downloading an ISO hybrid image, which can be obtained at http://www.debian.org/CD/live/, the usual next step is to prepare your media for booting, either CD-R(W) or DVD-R(W) optical media or a USB stick.
+
+3~burning-iso-image Burning an ISO image to a physical medium
+
+Burning an ISO image is easy:
 
 code{
 
- # apt-get install qemu
+ # apt-get install wodim
 
- $ qemu -cdrom binary.iso
+ $ wodim binary-hybrid.iso
 
 }code
+
+3~copying-iso-hybrid-to-usb Copying an ISO hybrid image to a USB stick
+
+ISO images prepared with the #{isohybrid}# command, like the images produced by live-build's default #{iso-hybrid}# binary image type, can be copied to a USB stick and directly booted without further steps. Plug in a USB stick with a size larger than that of #{binary-hybrid.iso}# and determine which device it is, which we hereafter refer to as #{${USBSTICK}}#. This is the device file of your key, such as #{/dev/sdb}#, not a partition, such as #{/dev/sdb1}#! You can find the right device name by looking in #{dmesg}#'s output after plugging in the stick, or better yet, #{ls -l /dev/disk/by-id}#.
+
+*{This will definitely overwrite any previous contents on your stick!}*
+
+Once you are certain you have the correct device name, use the #{dd}# command to copy the image to the stick as follows:
+
+code{
+
+ $ dd if=binary-hybrid.iso of=${USBSTICK}
+
+}code
+
+
+3~ Booting the live media
+
+The first time you boot your live media, whether CD, DVD, USB key, or PXE boot, some setup in your computer's BIOS may be needed first. Since BIOSes vary greatly in features and key bindings, we cannot get into the topic in depth here. Some BIOSes provide a key to bring up a menu of boot devices at boot time, which is the easiest way if it is available on your system. Otherwise, you need to enter the BIOS configuration menu and change the boot order to place the boot device for the live system before your normal boot device.
+
+Once you've booted the media, you are presented with a boot menu. If you just press enter here, the system will boot using the default entry, #{Live}# and default options. For more information about boot options, see the "help" entry in the menu and also the #{live-boot}# and #{live-config}# man pages found within the live system.
+
+Assuming you've selected #{Live}# and booted a default desktop live image, after the boot messages scroll by, you should be automatically logged into the #{user}# account and see a desktop, ready to use. If you've booted a console-only image, such as #{standard}# or #{rescue}# flavour prebuilt images, you should be automatically logged in on the console to the #{user}# account and see a shell prompt, ready to use.
+
+2~ Using a virtual machine for testing
+
+It can be a great time-saver for the development of live images to run them in a virtual machine (VM). This is not without its caveats:
+
+_* Running a VM requires enough RAM for both the guest OS and the host and a CPU with hardware support for virtualization is recommended.
+
+_* There are some inherent limitations to running on a VM, e.g. poor video performance, limited choice of emulated hardware.
+
+_* When developing for specific hardware, there is no substitute for running on the hardware itself.
+
+_* Occasionally there are bugs that relate only to running in a VM. When in doubt, test your image directly on the hardware.
+
+Provided you can work within these constraints, survey the available VM software and choose one that is suitable for your needs.
+
+3~testing-iso-with-qemu Testing an ISO image with QEMU
+
+The most versatile VM in Debian is QEMU. If your processor has hardware support for virtualization, use the #{qemu-kvm}# package; the #{qemu-kvm}# package description briefly lists the requirements.
+
+First, install #{qemu-kvm}# if your processor supports it. If not, install #{qemu}#, in which case the program name is #{qemu}# instead of #{kvm}# in the following examples. The #{qemu-utils}# package is also valuable for creating virtual disk images with #{qemu-img}#.
+
+code{
+
+ # apt-get install qemu-kvm qemu-utils
+
+}code
+
+Booting an ISO image is simple:
+
+code{
+
+ $ kvm -cdrom binary-hybrid.iso
+
+}code
+
+See the man pages for more details.
 
 3~testing-iso-with-virtualbox Testing an ISO image with virtualbox-ose
 
@@ -68,25 +131,13 @@ code{
 
 }code
 
-Create a new virtual machine, change the storage settings to use binary.iso as the CD/DVD device, and start the machine.
+Create a new virtual machine, change the storage settings to use binary-hybrid.iso as the CD/DVD device, and start the machine.
 
-Note: For live systems containing X.org that you want to test with virtualbox-ose, you may wish to include the VirtualBox X.org driver package, virtualbox-ose-guest-x11, in your live-build configuration. Otherwise, the resolution is limited to 800x600.
+Note: For live systems containing X.org that you want to test with #{virtualbox-ose}#, you may wish to include the VirtualBox X.org driver package, #{virtualbox-ose-guest-x11}#, in your live-build configuration. Otherwise, the resolution is limited to 800x600.
 
 code{
 
  $ lb config --packages virtualbox-ose-guest-x11
-
-}code
-
-3~burning-iso-image Burning an ISO image to a physical medium
-
-Burning an ISO image is easy:
-
-code{
-
- # apt-get install wodim
-
- $ wodim binary.iso
 
 }code
 
@@ -119,6 +170,8 @@ code{
 }code
 
 3~copying-usb-hdd-image Copying USB/HDD image to a USB stick
+
+% FIXME: eliminate duplication with ISO hybrid, as these are virtually the same instructions!
 
 The generated binary image contains a VFAT partition and the syslinux bootloader, ready to be directly written on a USB stick. Plug in a USB stick with a size larger than that of binary.img and type:
 

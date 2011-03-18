@@ -14,7 +14,7 @@ netbooting, but is included here because once the setup is done, it is a
 very convenient way to test and deploy images for booting on the local
 network without the hassle of dealing with image media.
 
-2~ Che cos'è un sistema live?
+2~what-is-live What is a live system?
 
 Per sistema live generalmente si intende un sistema operativo che può essere
 avviato da un supporto rimovibile, come un CD-ROM o una chiavetta USB,
@@ -56,7 +56,7 @@ proprie specifiche, scegliere un kernel Linux, il suo initrd ed un
 bootloader per avviarli, tutto in un unico formato che dipende dal mezzo
 (immagini ISO9660, immagine disco, ecc.)
 
-2~ First steps: building an ISO hybrid image
+2~building-iso-hybrid First steps: building an ISO hybrid image
 
 Regardless of the image type, you will need to perform the same basic steps
 to build an image each time. As a first example, execute the following
@@ -90,7 +90,7 @@ This process can take a while, depending on the speed of your network
 connection. When it is complete, there should be a #{binary-hybrid.iso}#
 image file, ready to use, in the current directory.
 
-2~ Using an ISO hybrid live image
+2~using-iso-hybrid Using an ISO hybrid live image
 
 After either building or downloading an ISO hybrid image, which can be
 obtained at http://www.debian.org/CD/live/, the usual next step is to
@@ -112,19 +112,18 @@ code{
 3~copying-iso-hybrid-to-usb Copying an ISO hybrid image to a USB stick
 
 ISO images prepared with the #{isohybrid}# command, like the images produced
-by live-build's default #{iso-hybrid}# binary image type, can be copied to a
-USB stick and directly booted without further steps. Plug in a USB stick
-with a size larger than that of #{binary-hybrid.iso}# and determine which
-device it is, which we hereafter refer to as #{${USBSTICK}}#. This is the
-device file of your key, such as #{/dev/sdb}#, not a partition, such as
+by the default #{iso-hybrid}# binary image type, can be simply copied to a
+USB stick with the #{dd}# program or an equivalent. Plug in a USB stick with
+a size larger than that of #{binary-hybrid.iso}# and determine which device
+it is, which we hereafter refer to as #{${USBSTICK}}#. This is the device
+file of your key, such as #{/dev/sdb}#, not a partition, such as
 #{/dev/sdb1}#! You can find the right device name by looking in #{dmesg}#'s
 output after plugging in the stick, or better yet, #{ls -l
 /dev/disk/by-id}#.
 
-*{Questo sovrascriverà definitivamente qualsiasi dato esistente sulla chiavetta!}*
-
 Once you are certain you have the correct device name, use the #{dd}#
-command to copy the image to the stick as follows:
+command to copy the image to the stick.  *{This will definitely overwrite
+any previous contents on your stick!}*
 
 code{
 
@@ -133,7 +132,7 @@ code{
 }code
 
 
-3~ Booting the live media
+3~booting-live-media Booting the live media
 
 The first time you boot your live media, whether CD, DVD, USB key, or PXE
 boot, some setup in your computer's BIOS may be needed first. Since BIOSes
@@ -157,7 +156,7 @@ console-only image, such as #{standard}# or #{rescue}# flavour prebuilt
 images, you should be automatically logged in on the console to the #{user}#
 account and see a shell prompt, ready to use.
 
-2~ Using a virtual machine for testing
+2~using-virtual-machine Using a virtual machine for testing
 
 It can be a great time-saver for the development of live images to run them
 in a virtual machine (VM). This is not without its caveats:
@@ -230,19 +229,20 @@ code{
 
 }code
 
-2~ Creare un'immagine USB/HDD
+2~building-usb-hdd Building a USB/HDD image
 
-La seguente sequenza di comandi creerà un'immagine USB/HDD di base
-contenente solo un sistema Debian standard senza X.org. È adatta per
-avviarsi da chiavette USB, dischi rigidi USB, e da svariati altri
-dispositivi di archiviazione portatili. In genere per questo scopo può
-essere usata un'immagine ISO ibrida, ma se si ha un BIOS che non supporta le
-immagini ibride, o si vuole usare lo spazio rimanente sul supporto per una
-partizione persistente, allora occorre un'immagine USB/HDD.
+Building a USB/HDD image is similar to ISO hybrid in all respects except you
+specify #{--b usb-hdd}# and the resulting filename is #{binary.img}# which
+cannot be burnt to optical media. It is suitable for booting from USB
+sticks, USB hard drives, and various other portable storage
+devices. Normally, an ISO hybrid image can be used for this purpose instead,
+but if you have a BIOS which does not handle hybrid images properly, or want
+to use the remaining space on the media for some purpose, such as a
+persistence partition, you need a USB/HDD image.
 
-Nota: se si è creata un'immagine ISO con gli esempi precedenti, occorre
-pulire la directory di lavoro con il comando #{lb clean}# (vedere {Il
-comando lb clean}#lb-clean):
+Note: if you created an ISO hybrid image with the previous example, you will
+need to clean up your working directory with the #{lb clean}# command (see
+{The lb clean command}#lb-clean):
 
 code{
 
@@ -250,8 +250,8 @@ code{
 
 }code
 
-Eseguire il comando #{lb config}# con i parametri atti a configurare la
-struttura #{config/}# per creare un'immagine di tipo USB/HDD:
+Run the #{lb config}# command as before, except this time specifying the
+USB/HDD image type:
 
 code{
 
@@ -267,49 +267,36 @@ code{
 
 }code
 
-3~copying-usb-hdd-image Copiare un'immagine USB/HDD su una penna USB
+When the build finishes, a #{binary.img}# file should be present in the
+current directory.
 
-% FIXME: eliminate duplication with ISO hybrid, as these are virtually the
-same instructions!
+2~using-usb-hdd-image Using a USB/HDD image
 
-L'immagine binaria generata contiene una partizione VFAT e il bootloader
-syslinux, pronti per essere scritti direttamente su una penna USB. Inserire
-una chiavetta USB con una dimensione maggiore di quella di binary.img e
-digitare:
-
-code{
-
- $ dd if=binary.img of=${USBSTICK}
-
-}code
-
-dove #{${USBSTICK}}# è il nome del device, come #{/dev/sdb}# (non una
-partizione come #{/dev/sdb1}#!); si può trovare il nome corretto del device
-guardando l'output di #{dmesg}# dopo aver inserito la chiavetta USB, o
-meglio ancora #{ls -l /dev/disk/by-id}#.
-
-*{Questo sovrascriverà definitivamente qualsiasi dato esistente sulla chiavetta!}*
-
-Nota: come disquisito in precedenza, questo stesso processo può essere usato
-per immagini di tipo #{iso-hybrid}# (con suffisso #{-hybrid.iso}#), ma non
-per le immagini di tipo #{iso}#.
+The generated binary image contains a VFAT partition and the syslinux
+bootloader, ready to be directly written on a USB stick. Since using a
+USB/HDD image is just like using an ISO hybrid image on USB, follow the
+instructions in #{Using an ISO hybrid live image}#using-iso-hybrid, except
+use the filename #{binary.img}# instead of #{binary-hybrid.iso}#.
 
 3~testing-usb-hdd-with-qemu Provare un'immagine USB/HDD con Qemu
 
+First, install QEMU as described above in #{Testing an ISO image with
+QEMU}#testing-iso-with-qemu. Then run #{kvm}# or #{qemu}#, depending on
+which version your host system needs, specifying #{binary.img}# as the first
+hard drive.
+
 code{
 
- # apt-get install qemu
-
- $ qemu -hda binary.img
+ $ kvm -hda binary.img
 
 }code
 
-3~ Usare lo spazio rimanente su una penna USB
+3~using-usb-extra-space Using the space left on a USB stick
 
-Se si vuole usare lo spazio libero che rimane dopo l'installazione di
-binary.img, si può usare uno strumento di partizionamento come #{gparted}# o
-#{parted}# per creare una nuova partizione sulla penna. La prima partizione
-verrà utilizzata dal sistema Debian Live.
+To use the remaining free space after copying #{binary.img}# to a USB stick,
+use a partitioning tool such as #{gparted}# or #{parted}# to create a new
+partition on the stick. The first partition will be used by the Debian Live
+system.
 
 code{
 
@@ -317,9 +304,9 @@ code{
 
 }code
 
-Dopo aver creato la partizione, dove #{${PARTITION}}# è il nome della
-partizione, ad esempio #{/dev/sdb2}#, si deve creare su di essa un
-filesystem. Una scelta possibile potrebbe essere ext4.
+After the partition is created, where #{${PARTITION}}# is the name of the
+partition, such as #{/dev/sdb2}#, you have to create a filesystem on it. One
+possible choice would be ext4.
 
 code{
 
@@ -327,15 +314,12 @@ code{
 
 }code
 
-Usare FAT32 se si vuole usare questa partizione dati con Windows.
+Note: If you want to use the extra space with Windows, apparently that OS
+cannot normally access any partitions but the first. Some solutions to this
+problem have been discussed on our #{mailing list}#contact, but it seems
+there are no easy answers.
 
-code{
-
- # mkfs.vfat -F 32
-
-}code
-
-*{Ricorda: ogni volta che si installa un nuovo file binary.img sulla penna, tutti i dati sulla chiavetta saranno persi perché la tabella delle partizioni viene sovrascritta con i contenuti dell'immagine.}*
+*{Remember: Every time you install a new binary.img on the stick, all data on the stick will be lost because the partition table is overwritten by the contents of the image, so back up your extra partition first to restore again after updating the live image.}*
 
 2~building-netboot-image Creare un'immagine netboot
 

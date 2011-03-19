@@ -2,19 +2,22 @@
 
 1~the-basics Conceptos básicos
 
-This chapter contains a brief overview of the build process and instructions
-for using the three most commonly used image types. The most versatile image
-type, #{iso-hybrid}#, may be used on a virtual machine, optical media or USB
-portable storage device. In certain special cases, such as the use of
-persistence, #{usb-hdd}# may be more suitable for USB devices. The chapter
-finishes with instructions for building and using a #{net}# type image,
-which is a bit more involved due to the setup required on the server. This
-is a slightly advanced topic for anyone who is not familiar already with
-netbooting, but is included here because once the setup is done, it is a
-very convenient way to test and deploy images for booting on the local
-network without the hassle of dealing with image media.
+Este capítulo contiene una breve descripción del proceso de creación de las
+imágenes en vivo y las instrucciones para el uso de los tres tipos de
+imágenes más utilizadas. El tipo de imagen más versátil, #{iso-hybrid}#, se
+puede utilizar en una máquina virtual, en medios ópticos u otros dispositivo
+de almacenamiento USB. En ciertos casos especiales, como para el uso de la
+persistencia («persistence» N. del T.) las imágenes #{usb-hdd}#, pueden ser
+las más adecuadas para dispositivos USB. El capítulo termina con
+instrucciones para crear y usar una imagen de tipo #{red}#, que es un poco
+más complicado debido a la configuración necesaria en el servidor. Es un
+tema ligeramente avanzado para cualquier persona que no esté familiarizada
+con el arranque en red, pero se incluye aquí porque una vez que se realiza
+la instalación, es una forma muy conveniente para probar y desplegar
+imágenes de arranque en red local sin la molestia de tratar con los
+dispositivos de almacenamiento de la imagen.
 
-2~what-is-live What is a live system?
+2~what-is-live ¿Qué es un sistema en vivo?
 
 Por lo general, un sistema en vivo se refiere a un sistema operativo que
 arranca en un equipo desde un medio extraíble, como un CD-ROM, dispositivo
@@ -23,14 +26,14 @@ unidad de costumbre, con configuración automática en tiempo de ejecución
 (Ver {Términos}#terms).
 
 Debian Live, es un sistema Debian GNU/Linux, creado para una de las
-arquitecturas soportadas (actualmente amd64, i386, PowerPC y SPARC). Se
+arquitecturas soportadas (actualmente amd64, i386, powerpc y sparc). Se
 compone de las siguientes partes:
 
 _* *{Imágen del kernel de Linux}*, normalmente llamada #{vmlinuz*}#
 
-_* *{Imagen del Disco RAM inicial (initrd)}*: Un Disco RAM, que incluya los
-módulos de kernel necesarios para montar la imagen del sistema y algunos
-scripts para ponerlo en marcha.
+_* *{Imagen del Disco RAM inicial (initrd)}*: Un Disco RAM configurado para
+el arranque de Linux, que incluya los módulos posiblemente necesarios para
+montar la imagen del sistema y algunos scripts para ponerlo en marcha.
 
 _* *{Imagen del sistema}*: La imagen del sistema de ficheros raiz. Por lo
 general, se utiliza un sistema de ficheros comprimido SquashFS para reducir
@@ -59,16 +62,18 @@ de arranque para ponerlos en funcionamiento, todo ello en un formato que
 depende del medio de almacenamiento elegido (imagen ISO9660, imagen de
 disco, etc.)
 
-2~building-iso-hybrid First steps: building an ISO hybrid image
+2~building-iso-hybrid Primeros pasos: creación de una imagen ISO híbrida
 
-Regardless of the image type, you will need to perform the same basic steps
-to build an image each time. As a first example, execute the following
-sequence of live-build commands to create a basic ISO hybrid image
-containing just the Debian standard system without X.org. It is suitable for
-burning to CD or DVD media, and also to copy onto a USB stick.
+Independientemente del tipo de imagen, cada vez se tendrá que realizar los
+mismos pasos básicos para construir una imagen. Como primer ejemplo ejecutar
+la siguiente secuencia de comandos live-build para crear una imagen ISO
+híbrida básica que contiene sólo el sistema estándar de Debian sin X.org. Es
+adecuada para grabarla en un CD o DVD y también para copiarla en un
+dispositivo USB. 
 
-First, run the #{lb config}# command. This will create a "config/" hierarchy
-in the current directory for use by other commands:
+En primer lugar, se ejecuta el comando #{lb config}#. Ésto creará una
+jerarquía «config/» en el directorio actual que será usada por otros
+comandos:
 
 code{
 
@@ -76,12 +81,12 @@ code{
 
 }code
 
-No parameters are passed to #{lb config}#, so defaults for all of its
-various options will be used. See {The lb config command}#lb-config for more
-details.
+Al no pasar ningún parámetro a #{lb config}#, se indica que se quiere
+utilizar todas las opciones por defecto. Ver{El comando lb config}#lb-config
+para más detalles.
 
-Now that the "config/" hierarchy exists, build the image with the #{lb
-build}# command:
+Ahora que existe un jerarquía «config/», se puede crear la imagen con el
+comando #{lb build}#:
 
 code{
 
@@ -89,16 +94,16 @@ code{
 
 }code
 
-This process can take a while, depending on the speed of your network
-connection. When it is complete, there should be a #{binary-hybrid.iso}#
-image file, ready to use, in the current directory.
+Este proceso puede llevar un tiempo, dependiendo de la velocidad de la
+conexión de red. Cuando haya terminado, debería haber un fichero
+#{binary-hybrid.iso}# listo para ser usado en el directorio actual.
 
-2~using-iso-hybrid Using an ISO hybrid live image
+2~using-iso-hybrid Usar una imagen ISO híbrida
 
-After either building or downloading an ISO hybrid image, which can be
-obtained at http://www.debian.org/CD/live/, the usual next step is to
-prepare your media for booting, either CD-R(W) or DVD-R(W) optical media or
-a USB stick.
+Después de construir o descargar una imagen ISO híbrida, las cuales se
+pueden obtener en http://www.debian.org/CD/live/,  el siguiente paso
+habitual es preparar los medios de almacenamieto, ya sean medios ópticos
+CD-R(W) o DVD-R(W) o llaves USB.
 
 3~burning-iso-image Grabar una imagen ISO a un medio físico.
 
@@ -112,83 +117,92 @@ code{
 
 }code
 
-3~copying-iso-hybrid-to-usb Copying an ISO hybrid image to a USB stick
+ 3~copying-iso-hybrid-to-usb Copiar una imagen ISO híbrida a un dispositivo
+USB
 
-ISO images prepared with the #{isohybrid}# command, like the images produced
-by the default #{iso-hybrid}# binary image type, can be simply copied to a
-USB stick with the #{dd}# program or an equivalent. Plug in a USB stick with
-a size larger than that of #{binary-hybrid.iso}# and determine which device
-it is, which we hereafter refer to as #{${USBSTICK}}#. This is the device
-file of your key, such as #{/dev/sdb}#, not a partition, such as
-#{/dev/sdb1}#! You can find the right device name by looking in #{dmesg}#'s
-output after plugging in the stick, or better yet, #{ls -l
-/dev/disk/by-id}#.
+Las imágenes ISO preparadas con el comando #{isohybrid}#, igual que las
+imágenes del tipo #{iso-hybrid}# producidas por defecto, pueden
+sencillamente copiarse a una llave USB con #{dd}# o con un programa
+equivalente. Conectar una llave USB con un tamaño mayor que el de
+#{binary-hybrid.iso}# y determinar qué dispositivo es,(«device» N. del T.)
+al cual nos referiremos de ahora en adelante como #{${USBSTICK}}#. Este
+nombre de «dispositivo» se refiere a la llave entera o #{/dev/sdb}# y ¡No a
+una partición como #{/dev/sdb1}#! Se puede encontrar el nombre del
+dispositivo correcto mirando la salida de #{dmesg}# después de conectar la
+llave, o mejor aún ejecutando #{ls -l /dev/disk/by-id}#.
 
-Once you are certain you have the correct device name, use the #{dd}#
-command to copy the image to the stick.  *{This will definitely overwrite
-any previous contents on your stick!}*
+Cuando se esté seguro de tener el nombre del dispositivo correcto, usar el
+comando #{dd}# para copiar la imagen a la llave. *{¡Ésto borrará de forma
+definitiva cualquier contenido previo en la llave!}*
 
 code{
 
- $ dd if=binary-hybrid.iso of=${USBSTICK}
+$ dd if=binary-hybrid.iso of=${USBSTICK}
 
 }code
 
 
-3~booting-live-media Booting the live media
+3~booting-live-media Arrancar los medios en vivo
 
-The first time you boot your live media, whether CD, DVD, USB key, or PXE
-boot, some setup in your computer's BIOS may be needed first. Since BIOSes
-vary greatly in features and key bindings, we cannot get into the topic in
-depth here. Some BIOSes provide a key to bring up a menu of boot devices at
-boot time, which is the easiest way if it is available on your
-system. Otherwise, you need to enter the BIOS configuration menu and change
-the boot order to place the boot device for the live system before your
-normal boot device.
+La primera vez que se arranque desde los medios de almacenamiento en vivo,
+ya sea CD, DVD, llave USB, o de arranque en red PXE, primero puede ser
+necesario algún tipo de configuración en la BIOS de la máquina. Dado que las
+BIOS varían mucho en sus características y combinaciones de teclas, no se
+puede entrar en el tema en profundidad aquí. Algunas BIOS proporcionan un
+tecla para abrir un menú de dispositivos de arranque que es la manera más
+fácil de hacerlo si se encuentra disponible en el sistema.
 
-Once you've booted the media, you are presented with a boot menu. If you
-just press enter here, the system will boot using the default entry,
-#{Live}# and default options. For more information about boot options, see
-the "help" entry in the menu and also the #{live-boot}# and #{live-config}#
-man pages found within the live system.
+Una vez que se haya arrancado desde los medios de almacenamiento externos,
+se accede a un menú de arranque. Si se pulsa la tecla «enter»,  el sistema
+arrancará usando el modo por defecto #{Live}# y las opciones
+predeterminadas. Para obtener más información acerca de las opciones de
+arranque, ver la opción  «help» del menú y también las páginas del manual de
+#{live-boot}# y #{live-config}# que se encuentran en el sistema en vivo.
 
-Assuming you've selected #{Live}# and booted a default desktop live image,
-after the boot messages scroll by, you should be automatically logged into
-the #{user}# account and see a desktop, ready to use. If you've booted a
-console-only image, such as #{standard}# or #{rescue}# flavour prebuilt
-images, you should be automatically logged in on the console to the #{user}#
-account and see a shell prompt, ready to use.
+Suponiendo que se ha seleccionado #{Live}# y arrancado una imagen en vivo
+por defecto con escritorio gráfico, después de que los mensajes de arranque
+hayan pasado, se habrá iniciado automáticamente una sesión como usuario
+#{user}# y se verá el escritorio preparado para ser usado. Si se ha
+arrancado una imagen sólo con  consola como por ejemplo las imágenes
+predeterminadas #{standard}# o #{rescue}# se habrá iniciado automáticamente
+una sesión como usuario #{user}# y se verá el cursor del intérprete de
+comandos preparado para ser usado.
 
-2~using-virtual-machine Using a virtual machine for testing
+2~using-virtual-machine Usar una máquina virtual para pruebas
 
-It can be a great time-saver for the development of live images to run them
-in a virtual machine (VM). This is not without its caveats:
+Ejecutar las imágenes en vivo en una máquina virtual (VM) puede ser un gran
+ahorro de tiempo para su desarrollo. Esto no está exento de advertencias:
 
-_* Running a VM requires enough RAM for both the guest OS and the host and a
-CPU with hardware support for virtualization is recommended.
+_* Para ejecutar una máquina virtual se requiere tener suficiente memoria
+RAM para el sistema operativo huésped y el anfitrión y se recomienda una CPU
+con soporte de hardware para la virtualización.
 
-_* There are some inherent limitations to running on a VM, e.g. poor video
-performance, limited choice of emulated hardware.
+_* Existen algunas limitaciones inherentes a la ejecución en una máquina
+virtual, por ejemplo, rendimiento de video pobre, la limitada gama de
+hardware emulado.
 
-_* When developing for specific hardware, there is no substitute for running
-on the hardware itself.
+_* Cuando se desarrolla para un hardware específico, no hay sustituto mejor
+que el propio hardware.
 
-_* Occasionally there are bugs that relate only to running in a VM. When in
-doubt, test your image directly on the hardware.
+_* A veces hay errores que se refieren únicamente a la ejecución en una
+máquina virtual. En caso de duda, probar la imagen directamente en el
+hardware.
 
-Provided you can work within these constraints, survey the available VM
-software and choose one that is suitable for your needs.
+Siempre que se pueda trabajar dentro de estas limitaciones, mirar que
+software VM hay disponible y elegir uno que sea adecuado según las
+necesidades.
 
-3~testing-iso-with-qemu Testing an ISO image with QEMU
+3~testing-iso-with-qemu Probar una imagen ISO con QEMU
 
-The most versatile VM in Debian is QEMU. If your processor has hardware
-support for virtualization, use the #{qemu-kvm}# package; the #{qemu-kvm}#
-package description briefly lists the requirements.
+La máquina virtual más versátil en Debian es QEMU. Si el procesador tiene
+soporte de hardware para virtualización, utilizar el paquete #{qemu-kvm}#;
+en la descripción del paquete #{qemu-kvm}# se enumera brevemente la lista de
+requisitos.
 
-First, install #{qemu-kvm}# if your processor supports it. If not, install
-#{qemu}#, in which case the program name is #{qemu}# instead of #{kvm}# in
-the following examples. The #{qemu-utils}# package is also valuable for
-creating virtual disk images with #{qemu-img}#.
+En primer lugar, instalar #{qemu-kvm}# si el procesador lo soporta. Si no es
+así, instalar #{qemu}#, en cuyo caso el nombre del programa será #{qemu}# en
+vez de #{kvm}# en los siguientes ejemplos. El paquete #{qemu-utils}# también
+es útil para la creación de imágenes virtuales de disco con #{qemu-img}#.
 
 code{
 
@@ -196,7 +210,7 @@ code{
 
 }code
 
-Booting an ISO image is simple:
+Arrancar una imagen ISO es sencillo:
 
 code{
 
@@ -204,7 +218,7 @@ code{
 
 }code
 
-See the man pages for more details.
+Consultar las páginas del manual para más detalles.
 
 3~testing-iso-with-virtualbox  Probar una imagen ISO con virtualbox-ose
 
@@ -218,13 +232,14 @@ code{
 
 }code
 
-Create a new virtual machine, change the storage settings to use
-binary-hybrid.iso as the CD/DVD device, and start the machine.
+Crear una nueva máquina virtual, cambiar la configuración de almacenamiento
+para utilizar binary-hybrid.iso como dispositivo CD/DVD y arrancar la
+máquina.
 
-Note: For live systems containing X.org that you want to test with
-#{virtualbox-ose}#, you may wish to include the VirtualBox X.org driver
-package, #{virtualbox-ose-guest-x11}#, in your live-build
-configuration. Otherwise, the resolution is limited to 800x600.
+Nota: Para probar los sistemas en vivo con soporte X.org en virtualbox-ose,
+se puede incluir el paquete del driver de VirtualBox X.org,
+#{virtualbox-ose-guest-x11}#, en la configuración de live-build. De lo
+contrario, la resolución se limita a 800x600
 
 code{
 
@@ -232,20 +247,20 @@ code{
 
 }code
 
-2~building-usb-hdd Building a USB/HDD image
+2~building-usb-hdd Crear una imagen USB/HDD
 
-Building a USB/HDD image is similar to ISO hybrid in all respects except you
-specify #{-b usb-hdd}# and the resulting filename is #{binary.img}# which
-cannot be burnt to optical media. It is suitable for booting from USB
-sticks, USB hard drives, and various other portable storage
-devices. Normally, an ISO hybrid image can be used for this purpose instead,
-but if you have a BIOS which does not handle hybrid images properly, or want
-to use the remaining space on the media for some purpose, such as a
-persistence partition, you need a USB/HDD image.
+La siguiente secuencia de comandos creará una imagen USB/HDD básica que
+contendrá sólo el sistema estándar de Debian sin X.org. Es adecuada para el
+arranque desde dispositivos USB, discos duros USB y otros dispositivos de
+almacenamiento portátil. Normalmente, se puede utilizar para este propósito
+una imagen ISO hybrid, pero es posible que la BIOS no maneje adecuadamente
+las imágenes híbridas. También es interesante una imagen USB/HDD si se desea
+utilizar el espacio restante en los medios de almacenamiento para una
+partición con persistencia.
 
-Note: if you created an ISO hybrid image with the previous example, you will
-need to clean up your working directory with the #{lb clean}# command (see
-{The lb clean command}#lb-clean):
+Nota: si se ha creado una imagen ISO hybrid con el ejemplo anterior, se
+tendrá que limpiar el directorio de trabajo con el comando #{lb clean}# (ver
+{El comando lb clean}#lb-clean):
 
 code{
 
@@ -253,8 +268,8 @@ code{
 
 }code
 
-Run the #{lb config}# command as before, except this time specifying the
-USB/HDD image type:
+Ejecutar el comando #{lb config}# como antes pero esta vez especificando el
+tipo de imagen USB/HDD:
 
 code{
 
@@ -270,23 +285,24 @@ code{
 
 }code
 
-When the build finishes, a #{binary.img}# file should be present in the
-current directory.
+Cuando termine el proceso de creación, debe haber un fichero llamado
+#{binary.img}# en el directorio actual .
 
-2~using-usb-hdd-image Using a USB/HDD image
+2~using-usb-hdd-image Utilizar una imágen USB/HDD
 
-The generated binary image contains a VFAT partition and the syslinux
-bootloader, ready to be directly written on a USB stick. Since using a
-USB/HDD image is just like using an ISO hybrid image on USB, follow the
-instructions in #{Using an ISO hybrid live image}#using-iso-hybrid, except
-use the filename #{binary.img}# instead of #{binary-hybrid.iso}#.
+La imagen binaria generada contiene una partición VFAT y el gestor de
+arranque syslinux, lista para ser copiada directamente en un dispositivo
+USB. Dado que utilizar una imagen USB/HDD es igual a usar una imagen ISO
+híbrida en un USB, seguir las instrucciones de #{Usar una imagen ISO
+hybrid}#using-iso-hybrid con la diferencia de usar el nombre #{binary.img}#
+en lugar de #{binary-hybrid.iso}#.
 
 3~testing-usb-hdd-with-qemu Probar una imágen USB/HDD con Qemu
 
-First, install QEMU as described above in #{Testing an ISO image with
-QEMU}#testing-iso-with-qemu. Then run #{kvm}# or #{qemu}#, depending on
-which version your host system needs, specifying #{binary.img}# as the first
-hard drive.
+En primer lugar, instalar QEMU como se describe más arriba en #{Probar una
+imágen ISO con QEMU}#testing-iso-with-qemu A continuación, ejecutar #{kvm}#
+o #{qemu}#, según qué versión necesita el sistema anfitrión y especificando
+#{binary.img}# como primer disco duro.
 
 code{
 
@@ -294,12 +310,12 @@ code{
 
 }code
 
-3~using-usb-extra-space Using the space left on a USB stick
+3~using-usb-extra-space Usar el espacio libre en el dispositivo USB
 
-To use the remaining free space after copying #{binary.img}# to a USB stick,
-use a partitioning tool such as #{gparted}# or #{parted}# to create a new
-partition on the stick. The first partition will be used by the Debian Live
-system.
+Si se desea usar el espacio libre después de haber instalado la imagen
+#{binary.img}# en una llave USB, se puede usar un programa de particionado
+como #{gparted}# o #{parted}# para crear una partición nueva en el
+dispositivo. La primera partición será usada por el sistema Debian en vivo.
 
 code{
 
@@ -307,9 +323,9 @@ code{
 
 }code
 
-After the partition is created, where #{${PARTITION}}# is the name of the
-partition, such as #{/dev/sdb2}#, you have to create a filesystem on it. One
-possible choice would be ext4.
+Después de crear la partición, dónde #{${PARTITION}}# es el nombre de la
+partición, por ejemplo #{/dev/sdb2}# se tiene que crear un sistema de
+ficheros en él. Una opción posible sería ext4.
 
 code{
 
@@ -317,12 +333,12 @@ code{
 
 }code
 
-Note: If you want to use the extra space with Windows, apparently that OS
-cannot normally access any partitions but the first. Some solutions to this
-problem have been discussed on our #{mailing list}#contact, but it seems
-there are no easy answers.
+Nota: Si se desea usar el espacio extra con Windows, segun parece, ese
+sistema operativo no puede acceder normalmente a otra partición más que a la
+primera. Se han comentado algunas soluciones a este problema en nuestra
+#{lista de correo}#contact pero según parece no hay una solución fácil.
 
-*{Remember: Every time you install a new binary.img on the stick, all data on the stick will be lost because the partition table is overwritten by the contents of the image, so back up your extra partition first to restore again after updating the live image.}*
+*{Recordar: Cada vez que se instale una nueva binary.img en el dispositivo, todos los datos del dispositivo se perderán debido a que la tabla de particiones se sobrescribe con el contenido de la imagen, así pues, realizar primero una copia de seguridad de la partición para poder restaurarla trás actualizar la imagen en vivo.}*
 
 2~building-netboot-image Creación de una imagen de arranque en red
 
@@ -339,7 +355,7 @@ code{
 
 }code
 
-Ejecute el comando #{lb config}# de la siguiente manera para configurar la
+Ejecutar el comando #{lb config}# de la siguiente manera para configurar la
 imagen de arranque en red:
 
 code{
@@ -382,9 +398,9 @@ red: el servidor DHCP, el servidor TFTP y el servidor NFS.
 
 3~ Servidor DHCP
 
-Hay que configurar el servidor DHCP de la red para asegurar que proporciona
-una dirección IP al cliente, y para anunciar la ubicación del gestor de
-arranque PXE.
+Hay que configurar el servidor DHCP de red para asegurar que proporciona una
+dirección IP al cliente, y para anunciar la ubicación del gestor de arranque
+PXE.
 
 He aquí un ejemplo que puede servir de inspiración. Fue escrito para el
 servidor ISC DHCP #{isc-dhcp-server}# en su fichero de configuración
@@ -419,7 +435,7 @@ Se encarga de suministrar el kernel y el Disco RAM inicial para el sistema.
 Se debe instalar el paquete tftpd-hpa. Este servidor podrá suministrar todos
 los ficheros contenidos de un directorio raíz, normalmente
 #{/srv/tftp}#. Para permitirle que pueda servir los ficheros de
-#{/srv/debian-live/tftpboot}#, se debe ejecutar  el siguiente comando con
+#{/srv/debian-live/tftpboot}#, se debe ejecutar el siguiente comando con
 privilegios de superusuario:
 
 code{
@@ -462,7 +478,7 @@ necesario un poco de paciencia para conseguir que todos ellos funcionen
 juntos. Para obtener más información, ver el wiki de syslinux en
 http://syslinux.zytor.com/wiki/index.php/PXELINUX o la sección sobre TFTP
 Net Booting del Manual del Instalador de Debian en
-http://d-i.alioth.debian.org/manual/en.i386/ch04s05.html Esto puede ser
+http://d-i.alioth.debian.org/manual/en.i386/ch04s05.html Ésto puede ser
 útil, ya que sus procesos son muy similares.
 
 3~ Cómo probar el arranque en red
@@ -499,7 +515,7 @@ Lanzar #{qemu}# con "#{-net nic,vlan=0 -net tap,vlan=0,ifname=tun0}#"
 
 3~ VMWare Player
 
-_* Instalar VMWare Player (Edición gratuita "free as in beer")
+_* Instalar VMWare Player (Edición gratuita «free as in beer»)
 
 _* Crear un directorio PXETester y crear un fichero de texto dentro llamado
 #{pxe.vwx}#
@@ -539,5 +555,5 @@ _* Se pueden realizar pruebas con este fichero de configuración
 _* Hacer doble clic en este fichero (o lanzar VMWare player y seleccionar
 este fichero).
 
-_* Mientras esté en ejecución solo hay que  pulsar espacio si surge esa
+_* Mientras esté en ejecución solo hay que pulsar espacio si surge esa
 extraña pregunta...

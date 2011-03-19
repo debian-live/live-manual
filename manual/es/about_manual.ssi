@@ -2,11 +2,11 @@
 
 1~about-manual Acerca de este manual
 
-La meta principal de este manual es servir como único punto de acceso a toda
-la documentación relativa al projecto Debian Live. Está principalmente
+El objetivo principal de este manual es servir como único punto de acceso a
+toda la documentación referente al projecto Debian Live. Está principalmente
 enfocado a ayudar en la creación de un sistema en vivo y no está dirigido al
 usuario final de estos sistemas. Un usuario final puede encontrar
-información útil en las siguentes secciones: {Temas básicos}#the-basics
+información útil en las siguentes secciones: {Conceptos básicos}#the-basics
 cubre la preparación de las imágenes para arrancar un sistema desde un medio
 de almacenamiento o desde red local. {Personalización del comportamiento en
 tiempo de ejecución}#customizing-run-time-behaviours describe alguna de las
@@ -26,32 +26,32 @@ la orden.
 
 Aunque se cree que todo lo descrito en este manual es importante para la
 mayoría de los usuarios, es cierto que hay mucho material a interiorizar y
-que los usuarios desean experimentar con las herramientas de forma
-satisfactoria y rápida antes de entrar en detalles. Esta es la razón por la
-que se presentan tres tutoriales en la sección {Ejemplos}#examples pensados
-para aprender a configurar y construir imágenes de sistemas en vivo de forma
-básica. Se deberá leer primero {Utilización de ejemplos}#using-the-examples,
-seguido de {Tutorial 1: Una imagen estandar}#tutorial-1 y {Tutorial 2: Una
-utilidad para el navegador}#tutorial-2, para finalizar con {Tutorial 3: Una
-imagen personalizada}#tutorial-3. Al final de estos tutoriales, el lector
-tendrá una visión de lo que se puede hacer con Debian Live. Se anima a
-profundizar en el estudio del manual con la lectura detenida del siguiente
-capítulo, {Temas básicos}#the-basics, y de una manera más somera el capítulo
-{La creación de una imagen netboot}#building-netboot-image, para acabar con
-la lectura de {Un resumen de la personalización}#customization-overview y
-los capítulos que le siguen. Se espera que, en este punto, el lector esté lo
-suficientemente motivado por lo que se puede hacer con Debian Live para leer
-el resto del manual, de cabo a rabo.
+que los usuarios desean experimentar con las herramientas de forma rápida y
+satisfactoria antes de entrar en detalles. Ésta es la razón por la que se
+presentan tres tutoriales en la sección {Ejemplos}#examples pensados para
+aprender a configurar y construir imágenes de sistemas en vivo de forma
+básica. Se deberá leer primero {Uso de ejemplos}#using-the-examples, seguido
+de {Tutorial 1: Una imagen estándar}#tutorial-1 y {Tutorial 2: Una utilidad
+de navegador web}#tutorial-2, para finalizar con {Tutorial 3: Una imagen
+personalizada}#tutorial-3. Al final de estos tutoriales, el lector tendrá
+una visión de lo que se puede hacer con Debian Live. Se anima a profundizar
+en el estudio del manual con la lectura detenida del siguiente capítulo,
+{Conceptos básicos}#the-basics, y de una manera más somera el capítulo {La
+creación de una imagen netboot}#building-netboot-image, para acabar con la
+lectura de {Un resumen de la personalización}#customization-overview y los
+capítulos que le siguen. Se espera que, en este punto, el lector esté lo
+suficientemente motivado con lo que se puede hacer con Debian Live para leer
+el resto del manual, de principio a fin.
 
 2~terms Términos
 
-_* *{Sistema en vivo}*: Se entiende por sistema en vivo a aquel sistema
-operativo que se puede arrancar sin su instalación previa en el disco
-duro. Un sistema en vivo no altera ningún sistema operativo previamente
-instalado ni ningún fichero existente en el disco duro de la máquina a menos
-que se le instruya para hacerlo. Los sistemas en vivo son arrancados
-típicamente desde medios extraíbles como CD, DVD o llaves USB. Algunos
-pueden también arrancar desde la red local.
+_* *{Sistema en vivo}*: Se entiende por sistema en vivo aquel sistema
+operativo que se puede arrancar sin instalación previa en el disco duro. Un
+sistema en vivo no altera ningún sistema operativo previamente instalado ni
+ningún fichero existente en el disco duro de la máquina a menos que se le
+instruya para hacerlo. Los sistemas en vivo son arrancados típicamente desde
+medios extraíbles como CD, DVD o llaves USB. Algunos pueden también arrancar
+desde la red local.
 
 _* *{Debian Live}*: Es un subproyecto de Debian que mantiene los paquetes
 Debian live-boot, live-build, live-config y live-manual.
@@ -61,7 +61,7 @@ sistema operativo Debian y que puede ser arrancado desde medios extraíbles
 como CD, DVD o llaves USB, desde red local (mediante imágenes netboot) o
 desde Internet (utilizando la opción de arranque #{fetch=URL}#).
 
-_* *{Sistema huesped}*: Es el conjunto de herramientas y equipo utilizado
+_* *{Sistema huésped}*: Es el conjunto de herramientas y equipo utilizado
 para crear el sistema en vivo.
 
 _* *{Sistema objetivo}*: Es el conjunto de herramientas y equipo donde se
@@ -79,14 +79,14 @@ _* *{live-config}*: Es una colección de scripts utilizados para configurar
 un sistema en vivo durante el proceso de arranque. live-config fue
 anteriormente parte del paquete live-initramfs.
 
-_* *{live-manual}*: Este documento es mantenido en un paquete llamado
+_* *{live-manual}*: Este documento forma parte de un paquete llamado
 live-manual.
 
-_* *{Instalador de Debia (Debian Installer o d-i)}*: Es el mecanismo oficial
-de instalación para la distribución Debian.
+_* *{Instalador de Debian (Debian Installer o d-i)}*: Es el mecanismo
+oficial de instalación para la distribución Debian.
 
-_* *{Parámetros de arranque}*: Parámetros que son entregados por el gestor
-de arranque (bootloader) para modificar el comportamiento del kernel o del
+_* *{Parámetros de arranque}*: Parámetros que son entregados al gestor de
+arranque (bootloader) para modificar el comportamiento del kernel o del
 conjunto de scripts live-config. Son llamados también Parámetros de kernel u
 Opciones de arranque.
 
@@ -105,16 +105,18 @@ _* *{Squeeze/Wheezy/Sid (stable/testing/unestable)}*: Son los nombres clave
 de las diferentes versiones de distribución Debian. En el momento de
 escribir este documento, Squeeze es la actual versión *{stable}* o estable,
 Wheezy es la actual versión *{testing}* o en pruebas. Sid es y será siempre
-sinónimo de versión *{unestable}* o inestable.
+sinónimo de versión *{unestable}* o inestable. A lo largo de todo el manual
+se usan los nombres en clave de las versiones ya que las herramientas
+también los usan.
 
 La distribución *{stable}* contiene la última distribución Debian
-oficialmente entregada. La distribución *{testing}* está en la rampa de
+oficialmente publicada. La distribución *{testing}* está en la rampa de
 salida para ser la próxima distribución *{stable}*. La principal ventaja de
 utilizar esta distribución es que tiene versiones de programas más recientes
 si se compara con la versión *{stable}*. La distribución *{unstable}* es
-donde se realiza el desarrollo de Debian. Generalmente esta distribución es
-ejecutada por los desarrolladores y aquellos que les gusta vivir al filo de
-lo imposible.
+dónde se realiza el desarrollo de Debian. Generalmente esta distribución es
+usada por los desarrolladores y aquellos que les gusta vivir al filo de lo
+imposible.
 
 2~ Autores
 
@@ -144,12 +146,12 @@ _* Richard Nelson
 
 _* Trent W. Buck
 
-2~how-to-contribute Como contribuir en este documento
+2~how-to-contribute Cómo contribuir en este documento
 
-Este manual se ha creado como un proyecto de comunidad y cualquier propuesta
+Este manual se ha creado como un proyecto comunitario y cualquier propuesta
 para su mejora u otras contribuciones son siempre bienvenidas. La mejor
 forma de hacer una contribución es enviarla a la lista de correo. Ver la
-sección {Contactos}#contact para más información.
+sección {Contacto}#contact para más información.
 
 Cuando se envía una contribución se debe identificar claramente su copyright
 e incluir la declaración de licencia. Se hace notar que para ser aceptada,
@@ -160,7 +162,6 @@ Los originales de este manual se mantienen utilizando el sistema de control
 de versiones Git. Se puede obtener la copia más actualizada ejecutando la
 siguiente orden:
 
-
 code{
 
 $ git clone git://live.debian.net/git/live-manual.git
@@ -168,10 +169,9 @@ $ git clone git://live.debian.net/git/live-manual.git
 }code
 
 Antes de enviar una contribución se debería realizar una visualización del
-trabajo realizado. Para ello se debe asegurar que los paquetes necesarios
-para la construcción del documento están instalados ejecutando la siguiente
+trabajo realizado. Para ello asegurarse de tener instalados los paquetes
+necesarios para la construcción del live-manual ejecutando la siguiente
 orden:
-
 
 code{
 
@@ -180,8 +180,8 @@ code{
 }code
 
 Se puede realizar la construcción del manual posicionándose en el directorio
-de mayor nivel, donde se ha obtenido los originales mediante Git y
-ejecutando la siguiente orden:
+de nivel superior, o sea, en el directorio clonado mediante Git y ejecutando
+la siguiente orden:
 
 
 code{
@@ -191,8 +191,8 @@ code{
 }code
 
 Ya que la construcción del manual para todos los idiomas soportados tarda un
-rato, se encontrará conveniente el poder ejecutar la construcción para un
-solo idioma. Esto puede realizarse ejecutando la siguiente orden:
+rato, puede ser mejor crear un solo idioma. Esto puede realizarse ejecutando
+la siguiente orden:
 
 
 code{
@@ -203,10 +203,10 @@ $ make build LANGUAGES=en
 
 3~ Aplicación de parches
 
-Cualquiera puede directamente hacer una entrega en el repositorio. Sin
-embargo, a la hora de hacer grandes cambios, es conveniente enviarlos a la
-lista de correo para discutirlos primero. Para realizar una entrega al
-repositorio se debe seguir el siguiente procedimiento:
+Cualquiera puede hacer una entrega en el repositorio. Sin embargo, a la hora
+de hacer grandes cambios, es conveniente enviarlos a la lista de correo para
+discutirlos primero. Para realizar una entrega al repositorio se debe seguir
+el siguiente procedimiento:
 
 
 _* Obtener la clave publica de entrega:
@@ -238,7 +238,7 @@ code{
 
 }code
 
-_* Obtener un clon del manual mediante git mediante ssh:
+_* Obtener un clon del manual mediante git utilizando ssh:
 
 
 code{
@@ -248,11 +248,11 @@ code{
 
 }code
 
-_* Note that you should commit any changes on the debian-next branch, not on
-the debian branch.
+_* Asegurarse de enviar los cambios a la rama debian-next y no a la rama
+Debian.
 
-_* Después de editar los ficheros que se deseen en #{manual/en/}#, llamar al
-objetivo make "commit" en el directorio superior para sanear los ficheros y
+_* Después de editar los ficheros que se deseen en #{manual/en/}#, ejecutar
+make "commit" en el directorio superior para sanear los ficheros y
 actualizar los ficheros de traducciones:
 
 

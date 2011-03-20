@@ -9,7 +9,7 @@ live-boot y live-config.
 2~live-build live-build
 
 live-build es una colección de scripts para generar los sistemas Debian
-Live. A estos scripts también se les conoce como "comandos".
+Live. A estos scripts también se les conoce como «comandos».
 
 La idea detrás de live-build es ser un marco (framework) que utiliza un
 directorio de configuración para automatizar completamente y personalizar
@@ -19,7 +19,7 @@ Muchos conceptos son similares a las del paquete de herramientas de Debian
 debhelper escrito por Joey Hess:
 
 _* Los scripts tiene una ubicación central para la configuración de su
-funcionamiento. En debhelper, este es el  subdirectorio #{debian/}# de un
+funcionamiento. En debhelper, éste es el subdirectorio #{debian/}# de un
 árbol de paquetes. Por ejemplo, dh_install buscará, entre otros, un fichero
 llamado #{debian/install}# para determinar qué ficheros deben existir en un
 paquete binario en particular. De la misma manera, live-build almacena toda
@@ -28,11 +28,11 @@ su configuración bajo un subdirectorio #{config/}#.
 _* Los scripts son independientes - es decir, siempre es seguro ejecutar
 cada comando.
 
-A diferencia de debhelper, live-build contiene una herramienta para generar
-un directorio de configuración de esqueleto, #{lb config}#. Esto podría ser
+A diferencia de debhelper, live-build contiene una herramienta para crear un
+directorio de configuración en esqueleto, #{lb config}#. Ésto podría ser
 considerado como similar a herramientas tales como #{dh-make}#. Para obtener
-más información sobre #{lb config}# , por favor consulte {El comando lb
-config }#lb-config.
+más información sobre #{lb config}#, consultar {El comando lb config
+}#lb-config
 
 El resto de esta sección describe los tres comandos más importantes:
 
@@ -40,11 +40,12 @@ _* *{lb config}*: Responsable de la creación de un directorio de
 configuración del sistema en vivo. Ver {El comando lb config}#lb-config para
 más información.
 
-_* *{lb build}*: Responsable de iniciar la generación de un sistema
+_* *{lb build}*: Responsable de iniciar la creación de un sistema en
 vivo. Ver {El comando lb build}#lb-build para más información.
 
 _* *{lb clean}*: Responsable de la eliminación de partes de la creación de
-un sistema vivo. Ver {El comando lb clean}#lb-clean para  más información.
+un sistema en vivo. Ver {El comando lb clean}#lb-clean para  más
+información.
 
 3~lb-config El comando #{lb config}#
 
@@ -52,7 +53,7 @@ Como se comentó en {live-build}#live-build, los scripts que componen
 live-build obtienen su configuración desde un único directorio llamado
 #{config/}#. Como la creación de este directorio a mano sería largo y
 propenso a errores, se puede utilizar el comando #{lb config}# para crear el
-esqueleto de carpetas de configuración.
+esqueleto de directorios de configuración.
 
 Ejecutar #{lb config}# sin argumentos crea un subdirectorio #{config/}# que
 se completa con algunas opciones por defecto:
@@ -102,8 +103,8 @@ que necesitan una imagen muy básica, o que tienen intención de proporcionar
 más tarde una configuración más completa a través de auto/config (ver
 {Gestionar una configuración}#managing-a-configuration para más detalles).
 
-Normalmente, tendrá que especificar algunas opciones. Por ejemplo, para
-incluir la lista del paquete  'gnome' en su configuración:
+Normalmente, se tendrá que especificar algunas opciones. Por ejemplo, para
+incluir la lista del paquete 'gnome' en la configuración:
 
 code{
 
@@ -124,27 +125,27 @@ Una lista completa de opciones está disponible en la página del manual
 
 3~lb-build El comando #{lb build}#
 
-El comando #{lb build}# lee la configuración del directorio config/. A
-continuación, ejecuta los comandos del nivel inferior más bajo necesarios
-para crear el sistema en vivo.
+The #{lb build}# command reads in your configuration from the config/
+directory. It then runs the lower level commands needed to build your Live
+system.
 
 3~lb-clean El comando #{lb clean}#
 
 La función del comando #{lb clean}# es eliminar diversas partes de una
-generación de forma que generaciones posteriores puedan comenzar a partir de
-un estado limpio.
+creación de forma que creaciones posteriores puedan comenzar a partir de un
+estado limpio.
 
 2~live-boot El paquete live-boot
 
-live-boot es una colección de scripts que proporcionan ganchos para
-initramfs-tools, que sirve para generar un initramfs capaz de arrancar los
-sistemas vivos, tales como los creados por live-build. Esto incluye las ISOs
-de Debian Live, archivos comprimidos en tar de netboot, e imágenes para
-pendrives USB.
+live-boot es una colección de scripts que proporcionan scripts gancho
+(hooks) para initramfs-tools, que sirve para generar un initramfs capaz de
+arrancar los sistemas en vivo, tales como los creados por live-build. Ésto
+incluye las ISOs de Debian Live, archivos comprimidos en tar de netboot, e
+imágenes para llaves USB.
 
 En el momento del arranque, buscará en los medios de almacenamiento de sólo
-lectura un directorio  "/ live" donde se encuentra un sistema de archivos
-raíz (a menudo una imagen del sistema de archivos comprimidos como
+lectura un directorio  "/ live" donde se encuentra un sistema de ficheros
+raíz (a menudo una imagen del sistema de ficheros comprimidos como
 squashfs). Si lo encuentra, creará un entorno de escritura, utilizando aufs,
 para que arranquen los sistemas tipo Debian.
 

@@ -290,18 +290,19 @@ Cuando termine el proceso de creación, debe haber un fichero llamado
 
 2~using-usb-hdd-image Utilizar una imágen USB/HDD
 
-The generated binary image contains a VFAT partition and the syslinux
-bootloader, ready to be directly written on a USB stick. Since using a
-USB/HDD image is just like using an ISO hybrid image on USB, follow the
-instructions in {Using an ISO hybrid live image}#using-iso-hybrid, except
-use the filename #{binary.img}# instead of #{binary-hybrid.iso}#.
+La imagen binaria generada contiene una partición VFAT y el gestor de
+arranque syslinux, lista para ser copiada directamente en un dispositivo
+USB. Dado que utilizar una imagen USB/HDD es igual a usar una imagen ISO
+híbrida en un USB, seguir las instrucciones de {Usar una imagen ISO
+hybrid}#using-iso-hybrid con la diferencia de usar el nombre #{binary.img}#
+en lugar de #{binary-hybrid.iso}#.
 
 3~testing-usb-hdd-with-qemu Probar una imágen USB/HDD con Qemu
 
-First, install QEMU as described above in {Testing an ISO image with
-QEMU}#testing-iso-with-qemu. Then run #{kvm}# or #{qemu}#, depending on
-which version your host system needs, specifying #{binary.img}# as the first
-hard drive.
+En primer lugar, instalar QEMU como se describe más arriba en {Probar una
+imágen ISO con QEMU}#testing-iso-with-qemu A continuación, ejecutar #{kvm}#
+o #{qemu}#, según qué versión necesita el sistema anfitrión y especificando
+#{binary.img}# como primer disco duro.
 
 code{
 
@@ -332,10 +333,10 @@ code{
 
 }code
 
-Note: If you want to use the extra space with Windows, apparently that OS
-cannot normally access any partitions but the first. Some solutions to this
-problem have been discussed on our {mailing list}#contact, but it seems
-there are no easy answers.
+Nota: Si se desea usar el espacio extra con Windows, segun parece, ese
+sistema operativo no puede acceder normalmente a otra partición más que a la
+primera. Se han comentado algunas soluciones a este problema en nuestra
+{lista de correo}#contact pero según parece no hay una solución fácil.
 
 *{Recordar: Cada vez que se instale una nueva binary.img en el dispositivo, todos los datos del dispositivo se perderán debido a que la tabla de particiones se sobrescribe con el contenido de la imagen, así pues, realizar primero una copia de seguridad de la partición para poder restaurarla trás actualizar la imagen en vivo.}*
 

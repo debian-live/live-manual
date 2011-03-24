@@ -2,7 +2,8 @@
 
 SHELL := sh -e
 
-LANGUAGES = en $(shell cd manual/po && ls)
+#LANGUAGES = en $(shell cd manual/po && ls)
+LANGUAGES = en de fr it pt_BR ro
 
 DEBUG = 0
 

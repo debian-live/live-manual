@@ -2,8 +2,7 @@
 
 SHELL := sh -e
 
-#LANGUAGES = en $(shell cd manual/po && ls)
-LANGUAGES = en de fr it pt_BR ro
+LANGUAGES = en $(shell cd manual/po && ls)
 
 DEBUG = 0
 
@@ -48,7 +47,7 @@ autobuild: clean build
 	rm -rf build
 	cp -a html build
 
-	for LANGUAGE in $(LANGUAGES); \
+	sed +e; for LANGUAGE in $(LANGUAGES); \
 	do \
 		FROMDIR=$(CURDIR)/manual/$${LANGUAGE}/build/$${LANGUAGE}; \
 		TODIR=$(CURDIR)/build/$${LANGUAGE}; \

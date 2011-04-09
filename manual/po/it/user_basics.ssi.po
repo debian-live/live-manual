@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 2.0.0\n"
 "POT-Creation-Date: 2011-03-19 20:29-0200\n"
-"PO-Revision-Date: 2011-03-11 10:56+0100\n"
+"PO-Revision-Date: 2011-04-10 00:43+0100\n"
 "Last-Translator: skizzhg <skizzhg@gmx.com>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -199,10 +199,10 @@ msgid ""
 "done at run time (see {Terms}#terms)."
 msgstr ""
 "Per sistema live generalmente si intende un sistema operativo che può essere "
-"avviato da un supporto rimovibile, come un CD-ROM o una chiavetta USB, "
-"oppure da una rete, pronto per l'uso senza alcuna installazione su hard "
-"disk, con una auto-configurazione fatta durante l'esecuzione (vedere "
-"{Glossario}#terms)."
+"avviato da un supporto rimovibile, come un CD-ROM o una chiavetta USB oppure "
+"da una rete, pronto per l'uso senza alcuna installazione su hard disk con "
+"una configurazione automatica fatta durante l'esecuzione (vedere {Glossario}"
+"#terms)."
 
 #. type: Plain text
 #: en/user_basics.ssi:12
@@ -329,8 +329,8 @@ msgid ""
 "various options will be used. See {The lb config command}#lb-config for more "
 "details."
 msgstr ""
-"Non viene passat alcun parametro a #{lb config}#, in modo da utilizzare le "
-"impostazione predefinite per le varie opzioni, vedere {Il comando lb config}"
+"Non viene passato alcun parametro a #{lb config}#, in modo da utilizzare le "
+"impostazioni predefinite per le varie opzioni, vedere {Il comando lb config}"
 "#lb-config) per maggiori dettagli."
 
 #. type: Plain text
@@ -373,6 +373,10 @@ msgid ""
 "prepare your media for booting, either CD-R(W) or DVD-R(W) optical media or "
 "a USB stick."
 msgstr ""
+"Dopo aver costruito o scaricato un'immagine ISO ibrida, ottenibile "
+"all'indirizzo http://www.debian.org/CD/live/, il passo successivo è "
+"preparare il supporto per l'avvio, che sia esso un CD-R(W), un DVD-R(W) o "
+"una penna USB."
 
 #. type: Plain text
 #: en/user_basics.ssi:52
@@ -414,6 +418,15 @@ msgid ""
 "#! You can find the right device name by looking in #{dmesg}#'s output after "
 "plugging in the stick, or better yet, #{ls -l /dev/disk/by-id}#."
 msgstr ""
+"Le immagini ISO preparate con il comando #{isohybrid}#, come quelle prodotte "
+"in modo predefinito da #{iso-hybrid}#, possono essere semplicemente copiate "
+"su una penna USB con il programma #{dd}# o suo equivalente. Inserire una "
+"penna USB con una dimensione maggiore di #{binary-hybrid.iso}# e determinare "
+"quale device sia, alla quale in seguito si farà riferimento come #"
+"{${USBSTICK}}#. Questo è il device della penna, ad esempio #{/dev/sdb}#, non "
+"una partizione come #{/dev/sdb1}#! È possibile trovare il nome corretto "
+"controllando l'output di #{dmesg}# una volta inserita, o meglio ancora con "
+"il comando #{ls -l /dev/disk/by-id}#."
 
 #. type: Plain text
 #: en/user_basics.ssi:69
@@ -422,6 +435,9 @@ msgid ""
 "command to copy the image to the stick.  *{This will definitely overwrite "
 "any previous contents on your stick!}*"
 msgstr ""
+"Una volta che si è certi sul nome del device, usare il comando #{dd}# per "
+"copiare l'immagine sulla penna. *{Questo sovrascriverà qualsiasi dato "
+"presente su di essa!}*"
 
 #. type: Plain text
 #: en/user_basics.ssi:73
@@ -446,6 +462,14 @@ msgid ""
 "order to place the boot device for the live system before your normal boot "
 "device."
 msgstr ""
+"La prima volta che si avvia il supporto live, CD, DVD, penna USB o PXE, può "
+"essere necessario impostare il BIOS del computer, ma giacché questi variano "
+"parecchio in opzioni e scorciatoie, non siamo in grado di descriverli. "
+"Alcuni BIOS offrono un menu per selezionare il device in fase di boot, in "
+"caso sia disponibile nel vostro sistema è il modo più semplice. Altrimenti è "
+"necessario accedere alla sua configurazione e modificare l'ordine di avvio "
+"per posizionare la periferica di boot del sistema live prima di quella "
+"usuale."
 
 #. type: Plain text
 #: en/user_basics.ssi:82
@@ -456,6 +480,10 @@ msgid ""
 "\"help\" entry in the menu and also the #{live-boot}# and #{live-config}# "
 "man pages found within the live system."
 msgstr ""
+"Avviando il supporto si otterrà un menu, premendo il tasto enter il sistema "
+"partirà utilizzando la voce #{Live}# e le opzioni predefinite. Per ulteriori "
+"informazioni sulle opzioni di boot, si veda la voce \"help\" nel menu e le "
+"pagine di manuale di #{live-boot}# e #{live-config}# all'interno del sistema."
 
 #. type: Plain text
 #: en/user_basics.ssi:84
@@ -467,11 +495,17 @@ msgid ""
 "images, you should be automatically logged in on the console to the #{user}# "
 "account and see a shell prompt, ready to use."
 msgstr ""
+"Supponendo di aver selezionato #{Live}# e avviato l'immagine desktop "
+"predefinita, dopo i messaggi di avvio si dovrebbe automaticamente accedere "
+"all'account #{user}# e avere il desktop pronto all'uso. Se invece si è "
+"avviata un'immagine per la sola console, come le preconfezionate #{standard}"
+"# o #{rescue}#, si accederà alla console dell'account #{user}# ed avere un "
+"prompt di shell pronto da usare."
 
 #. type: Plain text
 #: en/user_basics.ssi:86
 msgid "2~using-virtual-machine Using a virtual machine for testing"
-msgstr ""
+msgstr "2~using-virtual-machine Utilizzare una macchina virtuale per le prove"
 
 #. type: Plain text
 #: en/user_basics.ssi:88
@@ -479,6 +513,9 @@ msgid ""
 "It can be a great time-saver for the development of live images to run them "
 "in a virtual machine (VM). This is not without its caveats:"
 msgstr ""
+"Per lo sviluppo delle immagini live, può essere un notevole risparmio di "
+"tempo eseguirle in una macchina virtuale (VM). Non senza qualche "
+"raccomandazione:"
 
 #. type: Plain text
 #: en/user_basics.ssi:90
@@ -486,6 +523,9 @@ msgid ""
 "_* Running a VM requires enough RAM for both the guest OS and the host and a "
 "CPU with hardware support for virtualization is recommended."
 msgstr ""
+"_* Eseguire una VM richiede un quantitativo sufficiente di RAM sia per il "
+"sistema ospitato che per quello ospitante; è consigliato un processore che "
+"gestisca la virtualizzazione a livello hardware."
 
 #. type: Plain text
 #: en/user_basics.ssi:92
@@ -493,6 +533,8 @@ msgid ""
 "_* There are some inherent limitations to running on a VM, e.g. poor video "
 "performance, limited choice of emulated hardware."
 msgstr ""
+"_* Ci sono alcune limitazioni inerenti, quali uno scarso rendimento video e "
+"una scelta limitata di hardware emulato."
 
 #. type: Plain text
 #: en/user_basics.ssi:94
@@ -500,6 +542,8 @@ msgid ""
 "_* When developing for specific hardware, there is no substitute for running "
 "on the hardware itself."
 msgstr ""
+"_* Quando si sviluppa per un hardware specifico non vi è alcun sostituto "
+"migliore del proprio hardware."
 
 #. type: Plain text
 #: en/user_basics.ssi:96
@@ -507,6 +551,8 @@ msgid ""
 "_* Occasionally there are bugs that relate only to running in a VM. When in "
 "doubt, test your image directly on the hardware."
 msgstr ""
+"_* Occasionalmente possono esserci dei bug relativi al solo utilizzo di una "
+"VM. Nel dubbio si provi l'immagine direttamente sul proprio hardware."
 
 #. type: Plain text
 #: en/user_basics.ssi:98
@@ -514,6 +560,9 @@ msgid ""
 "Provided you can work within these constraints, survey the available VM "
 "software and choose one that is suitable for your needs."
 msgstr ""
+"A condizione che si possa lavorare entro questi vincoli, cercare il software "
+"disponibile per la virtualizzazione e scegliere quello adatto alle proprie "
+"necessità."
 
 #. type: Plain text
 #: en/user_basics.ssi:100
@@ -527,6 +576,9 @@ msgid ""
 "support for virtualization, use the #{qemu-kvm}# package; the #{qemu-kvm}# "
 "package description briefly lists the requirements."
 msgstr ""
+"Il programma più versatile in Debian è QEMU. Se il processore gestisce la "
+"virtualizzazione hardware utilizzare il pacchetto #{qemu-kvm}#; la "
+"descrizione elenca brevemente i requisiti."
 
 #. type: Plain text
 #: en/user_basics.ssi:104
@@ -536,6 +588,10 @@ msgid ""
 "the following examples. The #{qemu-utils}# package is also valuable for "
 "creating virtual disk images with #{qemu-img}#."
 msgstr ""
+"Per prima cosa installare #{qemu-kvm}# o altrimenti #{qemu}#, nel qual caso "
+"il nome del programma nei successivi sarà #{qemu}# invece di #{kvm}#. Il "
+"pacchetto #{qemu-utils}# è inoltre utile per creare immagini di dischi "
+"virtuali con #{qemu-img}#."
 
 #. type: Plain text
 #: en/user_basics.ssi:108
@@ -557,7 +613,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:120
 msgid "See the man pages for more details."
-msgstr ""
+msgstr "Per maggiori dettagli si vedano le pagine di manuale."
 
 #. type: Plain text
 #: en/user_basics.ssi:122
@@ -645,7 +701,7 @@ msgid ""
 "need to clean up your working directory with the #{lb clean}# command (see "
 "{The lb clean command}#lb-clean):"
 msgstr ""
-"Nota: se si è creata un'immagine ISO ibridia con gli esempi precedenti, "
+"Nota: se si è creata un'immagine ISO ibrida con gli esempi precedenti, "
 "occorre pulire la directory di lavoro con il comando #{lb clean}# (vedere "
 "{Il comando lb clean}#lb-clean):"
 
@@ -681,6 +737,8 @@ msgid ""
 "When the build finishes, a #{binary.img}# file should be present in the "
 "current directory."
 msgstr ""
+"Quando la costruzione è terminata dovrebbe essere presente un file #{binary."
+"img}# nella directory corrente."
 
 #. type: Plain text
 #: en/user_basics.ssi:174
@@ -716,6 +774,10 @@ msgid ""
 "version your host system needs, specifying #{binary.img}# as the first hard "
 "drive."
 msgstr ""
+"Installare QEMU come descritto in {Provare un'immagine ISO con QEMU}#testing-"
+"iso-with-qemu; quindi eseguire #{kvm}# o #{qemu}#, a seconda di quale "
+"versione è necessaria al sistema ospitante, specificando #{binary.img}# come "
+"disco rigido principale."
 
 #. type: Plain text
 #: en/user_basics.ssi:184
@@ -772,6 +834,10 @@ msgid ""
 "problem have been discussed on our {mailing list}#contact, but it seems "
 "there are no easy answers."
 msgstr ""
+"Nota: se si desidera utilizzare lo spazio extra con Windows pare che questo "
+"sistema operativo non possa accedere a nessuna partizione eccetto la prima. "
+"Alcune soluzioni a questo problema sono state discusse sulla nostra {mailing "
+"list}#contact, ma non sembrano esserci risposte semplici."
 
 #. type: Plain text
 #: en/user_basics.ssi:208

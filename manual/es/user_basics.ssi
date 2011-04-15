@@ -17,9 +17,9 @@ la instalación, es una forma muy conveniente para probar y desplegar
 imágenes de arranque en red local sin la molestia de tratar con los
 dispositivos de almacenamiento de la imagen.
 
-Throughout the chapter, we will often refer to the default filenames
-produced by live-build. If you are downloading a prebuilt image instead, the
-actual filenames may vary.
+A lo largo de todo el capítulo se hace a menudo referencia al nombre de las
+imágenes producidas por defecto por live-build. Si se descarga una imagen ya
+creada, el nombre puede variar.
 
 2~what-is-live ¿Qué es un sistema en vivo?
 
@@ -111,8 +111,8 @@ CD-R(W) o DVD-R(W) o llaves USB.
 
 3~burning-iso-image Grabar una imagen ISO en un medio físico.
 
-Burning an ISO image is easy. Just install wodim and use it from the
-command-line to burn the image. For instance:
+Grabar una imagen ISO es fácil. Simplemente instalar wodim y usarlo desde el
+intérprete de comandos para grabar la imagen. Por ejemplo: 
 
 code{
 
@@ -125,14 +125,16 @@ code{
 3~copying-iso-hybrid-to-usb Copiar una imagen ISO híbrida a un dispositivo
 USB
 
-ISO images prepared with the #{isohybrid}# command, like the images produced
-by the default #{iso-hybrid}# binary image type, can be simply copied to a
-USB stick with the #{dd}# program or an equivalent. Plug in a USB stick with
-a size large enough for your image file and determine which device it is,
-which we hereafter refer to as #{${USBSTICK}}#. This is the device file of
-your key, such as #{/dev/sdb}#, not a partition, such as #{/dev/sdb1}#! You
-can find the right device name by looking in #{dmesg}#'s output after
-plugging in the stick, or better yet, #{ls -l /dev/disk/by-id}#.
+Las imágenes ISO preparadas con el comando #{isohybrid}# igual que las
+imágenes del tipo #{iso-hybrid}# producidas por defecto, pueden
+sencillamente copiarse a una llave USB con #{dd}# o con un programa
+equivalente. Conectar una llave USB con un tamaño suficiente para la imagen
+y determinar qué dispositivo es, («device» N. del T.) al cual nos
+referiremos de ahora en adelante como #{${USBSTICK}}#. Este nombre de
+«dispositivo» se refiere a la llave entera como por ejemplo #{/dev/sdb}# y
+¡No a una partición como #{/dev/sdb1}#! Se puede encontrar el nombre del
+dispositivo correcto mirando la salida de #{dmesg}# después de conectar la
+llave, o mejor aún ejecutando #{ls -l /dev/disk/by-id}#.
 
 Cuando se esté seguro de tener el nombre del dispositivo correcto, usar el
 comando #{dd}# para copiar la imagen a la llave. *{¡Esto borrará de forma
@@ -225,7 +227,7 @@ Consultar las páginas del manual para más detalles.
 
 3~testing-iso-with-virtualbox  Probar una imagen ISO con virtualbox-ose
 
-In order to test the ISO with #{virtualbox-ose}#:
+Para probar una imagen ISO con #{virtualbox-ose}#:
 
 code{
 
@@ -235,8 +237,9 @@ code{
 
 }code
 
-Create a new virtual machine, change the storage settings to use
-#{binary-hybrid.iso}# as the CD/DVD device, and start the machine.
+Crear una nueva máquina virtual, cambiar la configuración de almacenamiento
+para utilizar #{binary-hybrid.iso}# como dispositivo CD/DVD y arrancar la
+máquina.
 
 Nota: Para probar los sistemas en vivo con soporte X.org en virtualbox-ose,
 se puede incluir el paquete del driver de VirtualBox X.org,

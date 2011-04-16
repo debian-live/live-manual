@@ -120,14 +120,15 @@ code{
 
 3~copying-iso-hybrid-to-usb Copiare un'immagine ISO ibrida su una penna USB
 
-ISO images prepared with the #{isohybrid}# command, like the images produced
-by the default #{iso-hybrid}# binary image type, can be simply copied to a
-USB stick with the #{dd}# program or an equivalent. Plug in a USB stick with
-a size large enough for your image file and determine which device it is,
-which we hereafter refer to as #{${USBSTICK}}#. This is the device file of
-your key, such as #{/dev/sdb}#, not a partition, such as #{/dev/sdb1}#! You
-can find the right device name by looking in #{dmesg}#'s output after
-plugging in the stick, or better yet, #{ls -l /dev/disk/by-id}#.
+Le immagini ISO preparate con il comando #{isohybrid}#, come quelle prodotte
+in modo predefinito da #{iso-hybrid}#, possono essere semplicemente copiate
+su una penna USB con il programma #{dd}# o suo equivalente. Inserire una
+penna USB con una dimensione sufficiente a contenere l'immagine e
+determinarequale device sia, alla quale in seguito si farà riferimento come
+#{${USBSTICK}}#.Questo è il device della penna, ad esempio #{/dev/sdb}#, non
+una partizione come #{/dev/sdb1}#! È possibile trovare il nome corretto
+controllando l'output di #{dmesg}# una volta inserita, o meglio ancora con
+il comando #{ls -l /dev/disk/by-id}#.
 
 Una volta che si è certi sul nome del device, usare il comando #{dd}# per
 copiare l'immagine sulla penna. *{Questo sovrascriverà qualsiasi dato
@@ -216,7 +217,7 @@ Per maggiori dettagli si vedano le pagine di manuale.
 
 3~testing-iso-with-virtualbox Provare un'immagine ISO con virtualbox-ose
 
-In order to test the ISO with #{virtualbox-ose}#:
+Per provare la ISO con #{virtualbox-ose}#:
 
 code{
 
@@ -226,8 +227,9 @@ code{
 
 }code
 
-Create a new virtual machine, change the storage settings to use
-#{binary-hybrid.iso}# as the CD/DVD device, and start the machine.
+Creare una nuova macchina virtuale, modificare le impostazione di
+archiviazione in modo da usare #{binary-hybrid.iso}# come dispositivo
+CD/DVD, e avviare la macchina.
 
 Nota: per sistemi live contenenti X.org che si vogliono provare con
 #{virtualbox-ose}#, si può voler includere il pacchetto dei driver per X.org

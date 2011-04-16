@@ -3,12 +3,12 @@
 1~customizing-package-installation Personalización de la instalación de
 paquetes
 
-Quizás la tarea más básica de personalizacion en Debian Live es la selección
+Quizás la tarea más básica de personalización en Debian Live es la selección
 de paquetes que serán incluidos en la imagen. Este capítulo orienta a través
 de las diferentes opciones de live-build que, en el momento de la creación
 de la imagen, personalizan la instalación de paquetes. Las opciones que
-seleccionan la distribucion base y las areas de archivo Debian a utilizar
-son las que más influyen a la hora de conocer que paquetes estarán
+seleccionan la distribucion base y las áreas del archivo Debian a utilizar
+son las que más influyen a la hora de conocer qué paquetes estarán
 disponibles para su instalación en la imagen. Para asegurar una buena
 velocidad de descarga de paquetes, se debería elegir el repositorio Debian
 más cercano. Se pueden añadir repositorios para paquetes backports,
@@ -25,7 +25,7 @@ nombrar algunas posibilidades.
 
 2~ Origen de los paquetes
 
-3~ Distribución, areas de archivo y modo
+3~ Distribución, áreas de archivo y modo
 
 La distribución seleccionada tiene gran impacto en qué paquetes están
 disponibles para incluir en la imagen. Se debe indicar el nombre en clave de
@@ -44,10 +44,10 @@ code{
 
 }code
 
-Las areas de archivo Debian son la principal división de paquetes dentro de
-una distribución dada. En Debian las areas de archivo establecidas son
+Las áreas del archivo Debian son la principal división de paquetes dentro de
+una distribución dada. En Debian las áreas del archivo establecidas son
 #{main}#, #{contrib}# y #{non-free}#. Solamente los paquetes contenidos en
-#{main}# son parte oficial de la distribución Debian. Ésta es el area
+#{main}# son parte oficial de la distribución Debian. Ésta es el área
 definida por defecto en live-build. Se pueden indicar uno o más valores tal
 y como se muestra en el siguiente ejemplo:
 
@@ -61,7 +61,7 @@ Experimentalmente hay soporte para alguna distribución derivada de Debian
 mediante la opción #{--mode}#. Por defecto, esta opción toma el valor de
 #{debian}# incluso si live-build se está ejecutando en un sistema no
 Debian. Si se especifica #{--mode ubuntu}# o #{--mode emdebian}# se
-utilizará el nombre de la distribución y las areas de archivos específicas
+utilizará el nombre de la distribución y las áreas de archivos específicas
 de la distribución derivada en lugar de los propios de Debian y live-build
 modificará su comportamiento para adecuarlo al modo seleccionado.
 
@@ -87,7 +87,7 @@ en lugar de utilizar los indicados para las etapas anteriores.
 3~distribution-mirrors-build-time Réplicas de Distribution utilizadas
 durante la creación
 
-Para indicar que réplicas deben ser utilizadas en el momento de crear la
+Para indicar qué réplicas deben ser utilizadas en el momento de crear la
 imágen es suficiente con utilizar las opciones #{--mirror-bootstrap}# y
 #{--mirror-chroot-security}# como se muestra a continuación.
 
@@ -130,7 +130,7 @@ personalizados. Para configurar repositorios adicionales se debe crear los
 ficheros #{config/chroot_sources/your-repository.chroot}#, y/o
 #{config/chroot_sources/your-repository.binary}#. Al igual que en las
 opciones #{--mirror-*}#, estos ficheros gobiernan los repositorios
-utilizados en las etapa *chroot* y *binary* respectivamente, esto es, los
+utilizados en las etapas *chroot* y *binary* respectivamente, esto es, los
 repositorios que serán utilizados cuando se ejecute el sistema en vivo.
 
 Por ejemplo, #{config/chroot_sources/live.chroot}# permite instalar paquetes
@@ -194,9 +194,9 @@ APT. Para más detalles ver {Utilizar apt o
 aptitude}#choosing-apt-or-aptitude .
 
 Si se necesita especificar un gran número de paquetes o se necesita cierta
-flexibilidad a la hora de indicar que paquetes se necesitan instalar se
-puede utilizar las listas de paquetes tal y como se indica en la sección,
-{Listas de paquetes}#package-lists.
+flexibilidad a la hora de indicar qué paquetes hay que instalar se puede
+utilizar las listas de paquetes tal y como se indica en la sección, {Listas
+de paquetes}#package-lists.
 
 3~package-lists Listas de paquetes
 
@@ -246,7 +246,7 @@ depositando listas de paquetes locales en el directorio
 
 Para que sean procesadas, las listas de paquetes que existan en dicho
 directorio deben tener la extensión #{.list}#. Las listas de paquetes
-locales se superponen a las listas predefinidas por live-build. Ésto puede
+locales se superponen a las listas predefinidas por live-build. Esto puede
 causar efectos no deseados de manera que se recomienda utilizar nombres
 únicos para las listas de paquetes locales, que no coincidan con los nombres
 de listas de paquetes predefinidas.
@@ -320,7 +320,7 @@ code{
 
 En la expresión condicional también pueden utilizarse variables que pueden
 contener más de un valor. Por ejemplo para instalar #{vrms}# si se utilizan
-las areas de archivo #{contrib}# o #{non-free}# mediante la opción
+las áreas del archivo #{contrib}# o #{non-free}# mediante la opción
 #{--archive-areas}# se puede indicar:
 
 code{
@@ -403,8 +403,8 @@ escritorio #{*-desktop}#  y tres tareas adicionales #{desktop}#,
 #{--packages debian-installer-launcher --packages-lists standard-x11 --tasks
 "gnome-desktop desktop standard laptop"}#.
 
-Tercero, si se selecciona cualquier tarea de escritorio, explicitamente a
-través de #{--tasks}# o implicitamente mediante #{--packages-lists}#,
+Tercero, si se selecciona cualquier tarea de escritorio, explícitamente a
+través de #{--tasks}# o implícitamente mediante #{--packages-lists}#,
 live-build preconfigurará (preseed) en el Instalador de Debian (si es
 incluido) el escritorio correspondiente para asegurar que sigue sus propias
 reglas cuando sea instalado.
@@ -422,8 +422,8 @@ estas razones, el futuro de esta opción está bajo revisión y posiblemente
 será reemplazada por algo completamente diferente en la proxima revisión
 general de live-build.
 
-2~installing-modified-or-third-party-packages Instalación de paquetes
-personalizados o paquetes de terceros
+2~installing-modified-or-third-party-packages Instalar paquetes de terceros
+o paquetes modificados
 
 Si bien está en contra de la filosofía de Debian Live, en ocasiones es
 necesario crear un sistema en vivo con versiones de paquetes modificados a
@@ -496,7 +496,7 @@ seleccionará para instalar el paquete con número de versión superior.
 Esta sería una buena razón para incrementar el número de version en los
 ficheros #{debian/changelog}# de los paquetes personalizados y así asegurar
 que serán estos los paquetes instalados en lugar de los contenidos en los
-repositorios oficiales de Debian. Ésto puede también lograrse alterando las
+repositorios oficiales de Debian. Esto puede también lograrse alterando las
 preferencias de pinning de APT del sistema en vivo. Para más información ver
 {APT pinning}#apt-pinning.
 
@@ -513,7 +513,7 @@ las opciones para configurar APT en la página de manual de
 
 3~choosing-apt-or-aptitude Utilizar apt o aptitude
 
-Se puede seleccionar que herramienta se utilizará para instalar paquetes,
+Se puede seleccionar qué herramienta se utilizará para instalar paquetes,
 #{apt}# o #{aptitude}#, en el momento de crear la imagen mediante la opción
 #{--apt}# de #{lb config}#. Esta selección definirá el comportamiento
 preferido en la instalación de paquetes, siendo la mayor diferencia la
@@ -554,10 +554,10 @@ code{
 
 Esto no modificará el comportamiento de las entradas definidas en
 /etc/apt/sources.list, sino que solo afecta a si exitirán o no ficheros de
-indice en el directorio /var/lib/apt. El compromiso viene de que APT
-necesita estos ficheros indices para funcionar en el sistema en vivo, así
+índice en el directorio /var/lib/apt. El compromiso viene de que APT
+necesita estos ficheros índices para funcionar en el sistema en vivo, así
 que, si no existen, el usuario deberá ejecutar la orden #{apt-get update}#
-para crear estos indices antes de poder ejecutar una orden del tipo
+para crear estos índices antes de poder ejecutar una orden del tipo
 #{apt-cache search}# o #{apt-get install}#.
 
 Si la instalación de los paquetes recomendados aumenta demasiado el tamaño

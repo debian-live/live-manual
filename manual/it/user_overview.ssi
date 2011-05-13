@@ -129,9 +129,13 @@ live.
 
 3~lb-clean Il comando #{lb clean}#
 
-Il compito del comando #{lb clean}# è di rimuovere diverse parti di una
-compilazione affinché quelle successive possano iniziare in un ambiente
-pulito.
+It is the job of the #{lb clean}# command to remove various parts of a build
+so subsequent builds can start from a clean state. By default, #{chroot}#,
+#{binary}# and #{source}# stages are cleaned, but the cache is left
+intact. Also, individual stages can be cleaned. For example, if you have
+made changes that only affect the binary stage, use #{lb clean --binary}#
+prior to building a new binary. See the #{lb_clean}# man page for a full
+list of options.
 
 2~live-boot Il pacchetto live-boot
 

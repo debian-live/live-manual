@@ -1,87 +1,92 @@
-B~ Reporting bugs
+B~ Cómo informar acerca  de errores.
 
-1~bugs Reporting bugs
+1~bugs Informes de errrores.
 
-Debian Live is far from being perfect, but we want to make it as close as
-possible to perfect - with your help. Do not hesitate to report a bug: it is
-better to fill a report twice than never. However, this chapter includes
-recommendations how to file good bug reports.
+Debian Live está lejos de ser perfecto, pero queremos que sea lo más
+perfecto posible - con su ayuda. No dude en informar de un error: es mejor
+llenar un informe dos veces que no hacerlo nunca. Sin embargo, este capítulo
+incluye recomendaciones sobre cómo presentar buenos informes de errores.
 
-For the impatient:
+Para los impacientes:
 
-_* Always check first the image status updates on our homepage at
-http://live.debian.net/ for known issues.
+_* Compruebe siempre primero las actualizaciones del estado de la imagen en
+nuestra página web en http://live.debian.net/ para consultar problemas
+conocidos.
 
-_* Always try to reproduce the bug with the *{most recent versions}* of
-live-build, live-boot, and live-config before submitting a bug report.
+_* Intente reproducir el error con las *{versiones más recientes}* de
+live-build, live-boot, y live-config antes de presentar un informe de error.
 
-_* Try to give *{as specific information as possible}* about the bug. This
-includes (at least) the version of live-build, live-boot, and live-config
-used and the distribution of the live system you are building.
+_* Trate de dar *{información tan específica como sea posible}* acerca del
+error. Esto incluye (al menos) la versión de live-build, live-boot, y
+live-config  utilizada y la distribución del sistema en vivo que está
+construyendo.
 
-2~ Known issues
+2~ Problemas conocidos
 
-Because Debian *{testing}* and Debian *{unstable}* distributions are a
-moving target, when you specify either as the target system distribution, a
-successful build may not always be possible.
+Debido a que Debian *{testing}* y Debian *{unstable}* están cambiando
+continuamente, no siempre es posible crear un sistema con éxito cuando se
+especifica cualquiera de estas dos versiones.
 
-% FIXME:
+% CORRÍGEME:
 
-If this causes too much difficulty for you, do not build a system based on
-*{testing}* or *{unstable}*, but rather, use *{stable}*. live-build does
-always default to the *{stable}* release.
+Si esto le causa mucha dificultad, no cree un sistema basado en *{testing}*
+o *{unstable}*, sino más bien use *{stable}*. Live-build siempre usa por
+omisión la versión *{stable}* .
 
-Currently known issues are listed under the section 'status' on our homepage
-at http://live.debian.net/.
+Los problemas detectados se especifican en la sección  'status' de nuestra
+página web en http://live.debian.net/.
 
-It is out of the scope of this manual to train you to correctly identify and
-fix problems in packages of the development distributions, however, there
-are two things you can always try: If a build fails when the target
-distribution is *{testing}*, try *{unstable}*. If *{unstable}* does not work
-either, revert to *{testing}* and pin the newer version of the failing
-package from *{unstable}* (see {APT pinning}#apt-pinning for details).
+Está fuera del alcance de este manual capacitarle para identificar y
+solucionar correctamente problemas de los paquetes de las distribuciones en
+desarrollo, sin embargo, hay dos cosas que siempre se puede intentar: Si
+detecta un error de generación cuando la distribución de destino es
+*{testing}*, pruebe *{unstable}*. Si *{unstable}* no funciona bien, vuelva a
+*{testing}* y haga un pin con la nueva versión del paquete de  *{unstable}*
+(véase {APT pinning}#apt-pinning para más detalles).
 
-2~ Rebuild from scratch
+2~ Reconstruir desde cero
 
-To ensure that a particular bug is not caused by an uncleanly built system,
-please always rebuild the whole live system from scratch to see if the bug
-is reproducible.
+Para asegurarse de que un error en particular no es causado por un sistema
+construido de forma sucia,  reconstruir siempre el sistema entero en vivo
+desde el principio para ver si el error es reproducible.
 
-2~ Use up-to-date packages
+2~ Usar paquetes actualizados
 
-Using outdated packages can cause significant problems when trying to
-reproduce (and ultimately fix) your problem. Make sure your build system is
-up-to-date and any packages included in your image are up-to-date as well.
+Usar paquetes obsoletos puede causar problemas importantes al tratar de
+reproducir (y en última instancia, solucionar) el problema. Asegúrese de que
+su sistema de construcción está actualizado y cualquier paquete que incluya
+en su imagen esté también al día .
 
-2~collect-information Collect information
+2~collect-information Recopilar información
 
-Please provide enough information with your report. At least include the
-exact version of live-build version where the bug is encountered and steps
-to reproduce it. Please use common sense and include other relevant
-information if you think that it might help in solving the problem.
+Proporcione información suficiente con el informe. Como mínimo, la versión
+exacta de la versión de live-build donde se encuentra el error y los pasos
+para reproducirlo. Use el sentido común e incluya cualquier información
+pertinente si usted piensa que podría ayudar a resolver el problema.
 
-To make the most out of your bug report, we require at least the following
-information:
+Para sacar el máximo provecho de su informe de error, se requerirá al menos
+la siguiente información:
 
-_* Architecture of the host system
+_* Arquitectura del sistema anfitrión
 
-_* Version of live-build on the host system
+_* La versión de live-build del sistema anfitrión.
 
-_* Version of live-boot on the live system
+_* Version de live-boot en el sistema en vivo.
 
-_* Version of live-config on the live system
+_* Version de live-config en el sistema en vivo.
 
-_* Version of #{debootstrap}# and/or #{cdebootstrap}# on the host system
+_* Version de #{debootstrap}# y/o #{cdebootstrap}# en el sistema anfitrión.
 
-_* Architecture of the live system
+_* Arquitectura del sistema en vivo.
 
-_* Distribution of the live system
+_* Distribución del sistema en vivo.
 
-_* Version of the kernel on the live system
+_* Version del kernel en el sistema en vivo.
 
-You can generate a log of the build process by using the #{tee}# command. We
-recommend doing this automatically with an #{auto/build}# script; (see
-{Managing a configuration}#managing-a-configuration for details).
+Puede generar un registro del proceso de construcción mediante el comando
+#{tee}#. Se recomienda hacer esto de forma automática con un script
+#{auto/build}#; (ver {Gestión de una configuración}#managing-a-configuration
+para más detalles).
 
 code{
 
@@ -89,110 +94,112 @@ code{
 
 }code
 
-At boot time, live-boot stores a log in #{/var/log/live.log}# (or
-#{/var/log/live-boot.log}#).
+En el momento del arranque, live-boot guarda un registro en
+#{/var/log/live.log}# (o #{/var/log/live-boot.log}#).
 
-Additionally, to rule out other errors, it is always a good idea to tar up
-your #{config/}# directory and upload it somewhere (do *{not}* send it as an
-attachment to the mailing list), so that we can try to reproduce the errors
-you encountered. If this is difficult (e.g. due to size) you can use the
-output of #{lb config --dump}# which produces a summary of your config tree
-(i.e. lists files in subdirectories of #{config/}# but does not include
-them).
+Además, para descartar otros errores, siempre es una buena idea comprimir en
+un .tar el directorio de su #{configuración/}# y subirlo a algún lugar,
+(*{No}* lo envie como documento adjunto a la lista de correo) para que
+podamos puede tratar de reproducir los errores que has encontrado. Si esto
+es difícil (por ejemplo, debido a su tamaño) puedes utilizar la salida
+(«output» N. del T.) de #{lb config --dump}# que produce un resumen de su
+fichero de configuración de árbol (es decir, listas de archivos de los
+subdirectorios de #{config /}# pero no los incluye).
 
-Remember to send in any logs that were produced with English locale
-settings, e.g. run your live-build commands with a leading #{LC_ALL=C}# or
-#{LC_ALL=en_US}#.
+Recuerde que debe enviar en cualquier registro que se produjeron con la
+variable local Inglesa, p.ej. ejecutar los comandos de live-build precedidos
+de #{LC_ALL=C}# o #{LC_ALL=en_US}#.
 
-2~ Isolate the failing case if possible
+2~ Aislar el fallo si es posible
 
-If possible, isolate the failing case to the smallest possible change that
-breaks. It is not always easy to do this, so if you can't manage it for your
-report, don't worry. However, if you plan your development cycle well, using
-small enough change sets per iteration, you may be able to isolate the
-problem by constructing a simpler 'base' configuration that closely matches
-your actual configuration plus just the broken change set added to it. If
-you have a hard time sorting out which of your changes broke, it may be that
-you are including too much in each change set and should develop in smaller
-increments.
+Si es posible, aislar el caso del fallo al menor cambio posible. No siempre
+es fácil hacer esto, así que si no lo consigue para su informe, no se
+preocupe. Sin embargo, si planea su ciclo de desarrollo bién, con conjuntos
+de cambios lo bastante pequeños por iteración, puede ser capaz de aislar el
+problema mediante la constucción de una simple "base" de configuración que
+se ajuste a su configuración actual, más justo el conjunto del cambio que
+falla añadido. Si resulta difícil  determinar que cambios fallaron, puede
+ser que haya incluido demasiado en cada conjunto de cambios y deba
+desarrollar en incrementos más pequeños.
 
-2~ Use the correct package to report the bug against
+2~ Usar el paquete correcto para informar sobre el fallo
 
-Where does the bug appear?
+¿Dónde aparece el error ?
 
-3~ At build time whilst bootstrapping
+3~ Durante la generación, durante la rutina de arranque.
 
-live-build first bootstraps a basic Debian system with #{debootstrap}# or
-#{cdebootstrap}#. Depending on the bootstrapping tool used and the Debian
-distribution it is bootstrapping, it may fail. If a bug appears here, check
-if the error is related to a specific Debian package (most likely), or if it
-is related to bootstrapping tool itself.
+live-build arranca primero un sistema Debian básico con #{debootstrap}# o
+#{cdebootstrap}#. Puede fallar dependiendo de la herramienta usada en la
+rutina de arranque y de la distribución Debian que se use. Si un error
+aparece en este momento, compruebe si el error está relacionado con un
+paquete específico de Debian (Es lo más probable), o si está relacionado con
+la herramienta de la rutina de arranque en sí.
 
-In both cases, this is not a bug in Debian Live, but rather in Debian itself
-which we can not fix this directly. Please report such a bug against the
-bootstrapping tool or the failing package.
+En ambos casos, esto no es un error de Debian Live, sino de Debian en sí
+mismo, el cual nosotros no podemos solucionar directamente. Informe del
+error sobre la herramienta de la rutina de arranque o el paquete que falla.
 
-3~ At build time whilst installing packages
+3~ En el momento de la creación, mientras se está instalando paquetes.
 
-live-build installs additional packages from the Debian archive and
-depending on the Debian distribution used and the daily archive state, it
-can fail. If a bug appears here, check if the error is also reproducible on
-a normal system.
+live-build instala paquetes adicionales del archivo de Debian y puede fallar
+en función de la distribución Debian utilizada y del estado diario del
+archivo. Si un error aparece en este momento, compruebe si el error es
+reproducible en un sistema normal.
 
-If this is the case, this is not a bug in Debian Live, but rather in Debian
-- please report it against the failing package. Running #{debootstrap}#
-separately from the Live system build or running #{lb bootstrap --debug}#
-will give you more information.
+Si este es el caso, esto no es un error de Debian Live, sino de Debian - por
+favor informe sobre el paquete que falla.
 
-Also, if you are using a local mirror and/or any of sort of proxy and you
-are experiencing a problem, please always reproduce it first by
-bootstrapping from an official mirror.
+Además, si usted está usando una réplica local y / o cualquier tipo de proxy
+y está experimentando un problema,  reproduzcalo siempre  primero con una
+rutina de arranque desde una réplica oficial.
 
-3~ At boot time
+3~ En el momento del arranque
 
-If your image does not boot, please report it to the mailing list together
-with the information requested in {Collect
-information}#collect-information. Do not forget to mention, how/when the
-image failed, in Qemu, Virtualbox, VMWare or real hardware. If you are using
-a virtualization technology of any kind, please always run it on real
-hardware before reporting a bug. Providing a screenshot of the failure is
-also very helpful.
+Si tu imagen no arranca, por favor informe a la lista de correo, junto con
+la información solicitada en {Recopilar información}
+#collect-information. No olvide mencionar, cómo y cuando la imagen falla, en
+Qemu, VirtualBox, VMWare o hardware real. Si está utilizando una tecnología
+de virtualización de cualquier tipo, pruébela siempre en hardware real antes
+de informar de un error. Proporcionar una captura de pantalla del error
+también es muy útil.
 
-3~ At run time
+3~ En tiempo de ejecución
 
-If a package was successfully installed, but fails while actually running
-the Live system, this is probably a bug in Debian Live. However,
+Si un paquete se ha instalado correctamente, pero falla cuando se ejecuta el
+sistema vivo, esto es probablemente un error en Debian Live. Sin embargo,
 
-2~ Do the research
+2~ Hacer la investigación
 
-Before filing the bug, please search the web for the particular error
-message or symptom you are getting. As it is highly unlikely that you are
-the only person experiencing a particular problem, there is always a chance
-that it has been discussed elsewhere, and a possible solution, patch, or
-workaround has been proposed.
+Antes de presentar el informe de errores, buscar en la web el mensaje de
+error en particular o el síntoma que se está percibiendo. Como es muy poco
+probable que usted sea la única persona que tiene ese problema en concreto,
+siempre existe la posibilidad de que se haya discutido en otras partes, y
+exista una posible solución, parche o se haya propuesto una alternativa .
 
-You should pay particular attention to the Debian Live mailing list, as well
-as the homepage, as these are likely to contain the most up-to-date
-information. If such information exists, always include the references to it
-in your bug report.
+Se debe prestar especial atención a la lista de correo de Debian Live, así
+como la página principal, ya que estas seguramente tienen la información más
+actualizada. Si esa información existe, se debe incluir la referencia a ella
+en su informe de error.
 
-In addition, you should check the current bug lists for live-build,
-live-boot, and live-config to see whether something similar has been
-reported already.
+Además, debe comprobar las listas de errores actuales de  live-build,
+live-boot, y live-config para ver si se ha informado ya de algo similar.
 
-2~ Where to report bugs
+2~ Dónde informar de los errores
 
-The Debian Live project keeps track of all bugs in the Debian Bug Tracking
-System (BTS). For information on how to use the system, please see
-http://bugs.debian.org/. You can also submit the bugs by using the
-#{reportbug}# command from the package with the same name.
+El proyecto Debian Live realiza un seguimiento de todos los fallos en el
+sistema de seguimiento de fallos de Debian (BTS).  Para obtener información
+sobre cómo utilizar el sistema, consulte http://bugs.debian.org/. También
+puede enviar los errores mediante el comando #{reportbug}# del paquete con
+el mismo nombre.
 
-In general, you should report build time errors against the live-build
-package, boot time errors against live-boot, and run time errors against
-live-config. If you are unsure of which package is appropriate or need more
-help before submitting a bug report, please send a message to the mailing
-list and we will help you to figure it out.
+En general, usted debe informar sobre los errores en el momento de la
+generación sobre el paquete live-build. De los errores en el momento de
+arrancar sobre live-boot, y de los errores en el momento de la ejecución
+sobre live-config. Si no está seguro de qué paquete es el adecuado o
+necesita más ayuda antes de presentar un informe de errores, envíe un
+mensaje a la lista de correo y nosotros le ayudaremos a resolverlo.
 
-Please note that bugs found in distributions derived from Debian (such as
-Ubuntu and others) should *{not}* be reported to the Debian BTS unless they
-can be also reproduced on a Debian system using official Debian packages.
+Tenga en cuenta que los errores que se encuentran en las distribuciones
+derivadas de Debian (como Ubuntu y otros) *{not}* deben enviarse al BTS de
+Debian a menos que también se puedan reproducir en un sistema Debian usando
+paquetes oficiales de Debian.

@@ -2,14 +2,14 @@
 
 1~managing-a-configuration Gestionar una configuración
 
-Este capítulo explica como gestionar una configuración para generar un
-sistema en vivo desde el principio, pasando por sucesivas versiones tanto de
-la herramienta live-build como de la imagen del sistema en vivo propiamente
+Este capítulo explica como gestionar una configuración para crear un sistema
+en vivo desde el principio, pasando por sucesivas versiones tanto de la
+herramienta live-build como de la imagen del sistema en vivo propiamente
 dicha.
 
 2~ Utilización de auto para gestionar los cambios de la configuración
 
-La configuración necesaria para generar un sistema en vivo rara vez es
+La configuración necesaria para crear un sistema en vivo rara vez es
 perfecta a la primera. Lo normal es que se necesite realizar una serie de
 revisiones hasta que se obtenga algo satisfactorio. Sin embargo, las
 inconsistencias pueden transmitirse de una revisión de la configuración a
@@ -21,7 +21,7 @@ valor, el valor actual de la primera no se ve alterado, debido a que ya
 tenía el valor asignado de antemano.
 
 Por ejemplo, la primera vez que se asigna la distribución a utilizar, se
-asigna a muchas variables un valor por defecto para adecuarse la
+asigna a muchas variables un valor por defecto para adecuarse a la
 distribución seleccionada. Sin embargo, si posteriormente se decide
 modificar la distribución, estas variables dependientes continuan reteniendo
 los valores antiguos que, por supuesto, no son los adecuados para la nueva
@@ -31,32 +31,32 @@ Otro problema es que la ejecución de la orden #{lb config}# no se
 reejecutará correctamente si se realiza una actualización a una nueva
 versión de las herramientas live-build que modifique el nombre de alguna
 variable de configuración. Además solamente podrá ser descubierto mediante
-una revisión manual de los ficheros del directorio #{config/*} que se
+una revisión manual de los ficheros del directorio #{config/*}# que se
 deberán modificar para  asignar las variables de configuración a un nuevo
 valor apropiado.
 
-Todo esto sería un terrible embrollo si no fuese por los scripts auto/*,
-simples envoltorios para las ordenes #{lb config}#, #{lb build}# y #{lb
+Todo esto sería un terrible embrollo si no fuese por los scripts auto/*
+simples envoltorios para los comandos #{lb config}#, #{lb build}# y #{lb
 clean}# que están diseñados para ayudar a la gestión de la
 configuración. Simplemente se debe crear un script llamado auto/config que
-contenga la orden #{lb config}# con todas las opciones que se deseen y otro
-script llamado auto/clean  que elimine los ficheros que contienen los
+contenga el comando #{lb config}# con todas las opciones que se deseen y
+otro script llamado auto/clean  que elimine los ficheros que contienen los
 valores de las variables de configuración. Estos scripts se ejecutarán cada
-vez que se ejecuten las ordenes #{lb config}# o #{lb clean}# de manera
+vez que se ejecuten los comandos #{lb config}# o #{lb clean}# de manera
 automática. Esto asegurará que la configuración se mantendrá consistente
 desde una versión a otra y desde una versión de las herramientas live-build
 a otra. (Aunque esto no elimina la necesidad de leer la documentación cuando
-se instale una nueva version de las herramientas live-build y quizas
+se instale una nueva version de las herramientas live-build y quizás
 realizar algún ajuste manual en los ficheros de configuración).
 
 2~ Un ejemplo de scripts auto.
 
 Se debe utilizar scripts auto similares a los ejemplos que se muestran a
 continuación como punto de partida para nueva configuración de las
-herramientas live-build. Hay que hacer notar que, cuando se ejecuta una
-orden #{lb}# dentro del script auto, se debe especificar la opción
+herramientas live-build. Hay que hacer notar que, cuando se ejecuta el
+comando #{lb}# dentro del script auto, se debe especificar la opción
 #{noauto}# para asegurar que el script auto no es vuelto a ejecutar
-recursivamente. Tampoco se debe olvidar el asegurar que los scripts auto
+repetitivamente. Tampoco se debe olvidar el asegurar que los scripts auto
 deben ser ejecutables (por ejemplo #{chmod 755 auto/*}#). 
 
 #{auto/config}#
@@ -91,7 +91,7 @@ code{
 
 }code
 
-Estos auto scripts vienen de serie con las herramientas live-build. Bastaría
+Estos scripts auto vienen de serie con las herramientas live-build. Bastaría
 con copiar estos scripts como punto de partida.
 
 code{
@@ -102,7 +102,7 @@ code{
 
 Se puede editar el script #{auto/config}#, modificándolo o añadiendo
 cualquier opción que se acomode a las necesidades requeridas. En el ejemplo
-anterior, se asignará la opción #{--packages-lists standard} # como si fuese
+anterior, se asignará la opción #{--packages-lists standard}# como si fuese
 asignada por defecto. Se puede cambiar este valor a uno adecuado o
 simplemente eliminarlo si no es necesario añadiendo cualquier otra opción
 que se adecue a las necesidades requeridas por la imagen a crear, en líneas

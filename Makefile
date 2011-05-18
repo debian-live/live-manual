@@ -6,7 +6,7 @@ LANGUAGES = en $(shell cd manual/po && ls)
 
 DEBUG = 0
 
-all: test build
+all: build
 
 test:
 	@echo "Checking for syntax errors... [not implemented yet - FIXME]"
@@ -19,14 +19,14 @@ tidy:
 		sed -i -e 's|[ \t]*$$||' $${FILE}; \
 	done
 
-#FIXME: do a proper dependency-based build
-#FORMATS = epub html odf pdf txt
-#...
-#%.pdf: $(sisu_sources)
-#	sisu-pdf -v live-manual.ssm
-#etc.
-
 build:
+	#FIXME: do a proper dependency-based build
+	#FORMATS = epub html odf pdf txt
+	#...
+	#%.pdf: $(sisu_sources)
+	#	sisu-pdf -v live-manual.ssm
+	#etc.
+
 	@# FIXME: sisu-concordance sisu-pg sisu-sqlite
 	for LANGUAGE in $(LANGUAGES); \
 	do \
@@ -47,7 +47,7 @@ autobuild: clean build
 	rm -rf build
 	cp -a html build
 
-	for LANGUAGE in $(LANGUAGES); \
+	sed +e; for LANGUAGE in $(LANGUAGES); \
 	do \
 		FROMDIR=$(CURDIR)/manual/$${LANGUAGE}/build/$${LANGUAGE}; \
 		TODIR=$(CURDIR)/build/$${LANGUAGE}; \

@@ -48,11 +48,11 @@ informazioni.
 
 3~lb-config Il comando #{lb config}#
 
-As discussed in {live-build}#live-build, the scripts that make up live-build
-read their configuration with the #{source}# command from a single directory
-named #{config/}#. As constructing this directory by hand would be
-time-consuming and error-prone, the #{lb config}# command can be used to
-create skeleton configuration folders.
+Come discusso in {live-build}#live-build, gli script che compongono
+live-build attingono la loro configurazione con il comando #{source}# da una
+singola directory chiamata #{config/}#. Dal momento che crearla a mano
+sarebbe dispendioso in termini di tempo e soggetto a errori, si può usare il
+comando #{lb config}# per creare la directory scheletro di configurazione.
 
 L'esecuzione di #{lb config}# senza argomenti crea una sottodirectory di
 #{config/}# popolata con alcune impostazioni predefinite:
@@ -119,8 +119,7 @@ code{
 
 }code
 
-Una lista completa delle opzioni e' disponibile nel manuale di
-#{lb_config}#.
+Una lista completa delle opzioni è disponibile nel manuale di #{lb_config}#.
 
 3~lb-build Il comando #{lb build}#
 
@@ -130,9 +129,14 @@ live.
 
 3~lb-clean Il comando #{lb clean}#
 
-Il compito del comando #{lb clean}# è di rimuovere diverse parti di una
-compilazione affinché quelle successive possano iniziare in un ambiente
-pulito.
+È compito del comando #{lb clean}# rimuovere le varie parti di una
+compilazione in modo che le successive possano iniziare da uno stato
+pulito. Per impostazione predefinita, vengono pulite le fasi #{chroot}#,
+#{binary}# e #{source}# ma la cache viene lasciatta intatta. Le fasi possono
+inoltre essere pulite singolarmente; ad esempio se sono state fatte
+modifiche alla sola fase binaria, si usi #{lb clean --binary}# prima di
+compilare un nuovo binario. Per la lista completa delle opzioni vedere la
+pagina di manuale di #{lb_clean}#.
 
 2~live-boot Il pacchetto live-boot
 

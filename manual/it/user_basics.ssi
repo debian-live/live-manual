@@ -6,22 +6,26 @@ Questo capitolo contiene una breve panoramica del processo di generazione e
 le istruzioni per utilizzare i tre tipi di immagine più comunemente
 utilizzati. La tipologia di immagine più versatile, #{iso-hybrid}#, può
 essere usata su una macchina virtuale, supporto ottico o dispositivo di
-archiviazione portatile USB. In alcuni casi particolari, la #{usb-hdd}#
-potrebbe essere più adatta per i dispositivi USB. Il capitolo termina con le
-istruzioni per costruire e usare un'immagine di tipo #{net}#, che è un poco
-più complessa a causa del setup richiesto sul server. Si tratta di un
-argomento leggermente avanzato per chi non ha familiarità con l'avvio da
-rete, ma è incluso qui perché, una volta che il setup è stato fatto, è un
-modo molto comodo per collaudare e distribuire immagini facendo il boot
-nella rete locale senza la seccatura di doversi occupare dei mezzi di
-divulgazione dell'immagine.
+archiviazione portatile USB. In alcuni casi particolari, come l'utilizzo
+della persistenza, la #{usb-hdd}# potrebbe essere più adatta per i
+dispositivi USB. Il capitolo termina con le istruzioni per costruire e usare
+un'immagine di tipo #{net}#, che è un poco più complessa a causa del setup
+richiesto sul server. Si tratta di un argomento leggermente avanzato per chi
+non ha familiarità con l'avvio da rete, ma è incluso qui perché, una volta
+che il setup è stato fatto, è un modo molto comodo per collaudare e
+distribuire immagini facendo il boot nella rete locale senza la seccatura di
+doversi occupare dei mezzi di divulgazione dell'immagine.
 
-2~ Che cos'è un sistema live?
+Throughout the chapter, we will often refer to the default filenames
+produced by live-build. If you are downloading a prebuilt image instead, the
+actual filenames may vary.
+
+2~what-is-live Che cos'è un sistema live?
 
 Per sistema live generalmente si intende un sistema operativo che può essere
-avviato da un supporto rimovibile, come un CD-ROM o una chiavetta USB,
-oppure da una rete, pronto per l'uso senza alcuna installazione su hard
-disk, con una auto-configurazione fatta durante l'esecuzione (vedere
+avviato da un supporto rimovibile, come un CD-ROM o una chiavetta USB oppure
+da una rete, pronto per l'uso senza alcuna installazione su hard disk con
+una configurazione automatica fatta durante l'esecuzione (vedere
 {Glossario}#terms).
 
 Con Debian Live, si tratta di un sistema operativo Debian GNU/Linux,
@@ -58,14 +62,14 @@ proprie specifiche, scegliere un kernel Linux, il suo initrd ed un
 bootloader per avviarli, tutto in un unico formato che dipende dal mezzo
 (immagini ISO9660, immagine disco, ecc.)
 
-2~ Primi passi: creare un'immagine ISO
+2~building-iso-hybrid Primi passi: creare un'immagine ISO ibrida
 
-La seguente sequenza di comandi di live-build creerà un'immagine ISO ibrida
+Indipendentemente dal tipo di immagine, per crearne una è necessario
+eseguire ogni volta la stessa procedura. Come primo esempio si eseguirà la
+seguente sequenza di comandi di live-build per creare un'immagine ISO ibrida
 di base contenente soltanto il sistema Debian standard senza X.org. È adatta
 per essere masterizzata su CD o DVD e anche per essere copiata su una penna
-USB (come per {Copiare un'immagine USB/HDD su una penna
-USB}#copying-usb-hdd-image, specificando l'estensione ".iso" dove è indicato
-".img").
+USB.
 
 In primo luogo eseguire il comando #{lb config}#, il quale creerà una
 gerarchia "config/" nella directory corrente e che verrà utilizzata da altri
@@ -77,9 +81,9 @@ code{
 
 }code
 
-Non passando alcun parametro a #{lb config}#, si indica che si intende
-utilizzare le impostazione predefinite (vedere {Il comando lb
-config}#lb-config).
+Non viene passato alcun parametro a #{lb config}#, in modo da utilizzare le
+impostazioni predefinite per le varie opzioni, vedere {Il comando lb
+config}#lb-config) per maggiori dettagli.
 
 Ora che si ha una gerarchia "config/" si può generare l'immagine con il
 comando #{lb build}#:
@@ -91,23 +95,129 @@ code{
 }code
 
 Questo processo può richiedere tempo, a seconda della velocità della
-connessione di rete (vedere {Il comando lb build}#lb-build).
+connessione di rete. Una volta completato, nell'attuale directory ci sarà un
+file immagine #{binary-hybrid.iso}# pronto da usare.
 
-3~testing-iso-with-qemu Provare un'immagine ISO con Qemu
+2~using-iso-hybrid Utilizzare un'immagine ISO live ibrida
 
-Collaudare una ISO è semplice:
+Dopo aver costruito o scaricato un'immagine ISO ibrida, ottenibile
+all'indirizzo http://www.debian.org/CD/live/, il passo successivo è
+preparare il supporto per l'avvio, che sia esso un CD-R(W), un DVD-R(W) o
+una penna USB.
+
+3~burning-iso-image Masterizzare un'immagine ISO su un supporto fisico
+
+Burning an ISO image is easy. Just install wodim and use it from the
+command-line to burn the image. For instance:
 
 code{
 
- # apt-get install qemu
+ # apt-get install wodim
 
- $ qemu -cdrom binary.iso
+ $ wodim binary-hybrid.iso
 
 }code
 
+3~copying-iso-hybrid-to-usb Copiare un'immagine ISO ibrida su una penna USB
+
+Le immagini ISO preparate con il comando #{isohybrid}#, come quelle prodotte
+in modo predefinito da #{iso-hybrid}#, possono essere semplicemente copiate
+su una penna USB con il programma #{dd}# o suo equivalente. Inserire una
+penna USB con una dimensione sufficiente a contenere l'immagine e
+determinarequale device sia, alla quale in seguito si farà riferimento come
+#{${USBSTICK}}#.Questo è il device della penna, ad esempio #{/dev/sdb}#, non
+una partizione come #{/dev/sdb1}#! È possibile trovare il nome corretto
+controllando l'output di #{dmesg}# una volta inserita, o meglio ancora con
+il comando #{ls -l /dev/disk/by-id}#.
+
+Una volta che si è certi sul nome del device, usare il comando #{dd}# per
+copiare l'immagine sulla penna. *{Questo sovrascriverà qualsiasi dato
+presente su di essa!}*
+
+code{
+
+ $ dd if=binary-hybrid.iso of=${USBSTICK}
+
+}code
+
+
+3~booting-live-media Avviare il supporto live
+
+La prima volta che si avvia il supporto live, CD, DVD, penna USB o PXE, può
+essere necessario impostare il BIOS del computer, ma giacché questi variano
+parecchio in opzioni e scorciatoie, non siamo in grado di
+descriverli. Alcuni BIOS offrono un menu per selezionare il device in fase
+di boot, in caso sia disponibile nel vostro sistema è il modo più
+semplice. Altrimenti è necessario accedere alla sua configurazione e
+modificare l'ordine di avvio per posizionare la periferica di boot del
+sistema live prima di quella usuale.
+
+Avviando il supporto si otterrà un menu, premendo il tasto enter il sistema
+partirà utilizzando la voce #{Live}# e le opzioni predefinite. Per ulteriori
+informazioni sulle opzioni di boot, si veda la voce "help" nel menu e le
+pagine di manuale di #{live-boot}# e #{live-config}# all'interno del
+sistema.
+
+Supponendo di aver selezionato #{Live}# e avviato l'immagine desktop
+predefinita, dopo i messaggi di avvio si dovrebbe automaticamente accedere
+all'account #{user}# e avere il desktop pronto all'uso. Se invece si è
+avviata un'immagine per la sola console, come le preconfezionate
+#{standard}# o #{rescue}#, si accederà alla console dell'account #{user}# ed
+avere un prompt di shell pronto da usare.
+
+2~using-virtual-machine Utilizzare una macchina virtuale per le prove
+
+Per lo sviluppo delle immagini live, può essere un notevole risparmio di
+tempo eseguirle in una macchina virtuale (VM). Non senza qualche
+raccomandazione:
+
+_* Eseguire una VM richiede un quantitativo sufficiente di RAM sia per il
+sistema ospitato che per quello ospitante; è consigliato un processore che
+gestisca la virtualizzazione a livello hardware.
+
+_* Ci sono alcune limitazioni inerenti, quali uno scarso rendimento video e
+una scelta limitata di hardware emulato.
+
+_* Quando si sviluppa per un hardware specifico non vi è alcun sostituto
+migliore del proprio hardware.
+
+_* Occasionalmente possono esserci dei bug relativi al solo utilizzo di una
+VM. Nel dubbio si provi l'immagine direttamente sul proprio hardware.
+
+A condizione che si possa lavorare entro questi vincoli, cercare il software
+disponibile per la virtualizzazione e scegliere quello adatto alle proprie
+necessità.
+
+3~testing-iso-with-qemu Provare un'immagine ISO con QEMU
+
+Il programma più versatile in Debian è QEMU. Se il processore gestisce la
+virtualizzazione hardware utilizzare il pacchetto #{qemu-kvm}#; la
+descrizione elenca brevemente i requisiti.
+
+Per prima cosa installare #{qemu-kvm}# o altrimenti #{qemu}#, nel qual caso
+il nome del programma nei successivi sarà #{qemu}# invece di #{kvm}#. Il
+pacchetto #{qemu-utils}# è inoltre utile per creare immagini di dischi
+virtuali con #{qemu-img}#.
+
+code{
+
+ # apt-get install qemu-kvm qemu-utils
+
+}code
+
+Avviare un'immagine ISO è semplice:
+
+code{
+
+ $ kvm -cdrom binary-hybrid.iso
+
+}code
+
+Per maggiori dettagli si vedano le pagine di manuale.
+
 3~testing-iso-with-virtualbox Provare un'immagine ISO con virtualbox-ose
 
-Per provare la ISO con virtualbox-ose:
+Per provare la ISO con #{virtualbox-ose}#:
 
 code{
 
@@ -118,13 +228,13 @@ code{
 }code
 
 Creare una nuova macchina virtuale, modificare le impostazione di
-archiviazione in modo da usare binary.iso come dispositivo CD/DVD, ed
-avviare la macchina.
+archiviazione in modo da usare #{binary-hybrid.iso}# come dispositivo
+CD/DVD, e avviare la macchina.
 
 Nota: per sistemi live contenenti X.org che si vogliono provare con
-virtualbox-ose, si può voler includere il pacchetto dei driver per X.org di
-VirtualBox, virtualbox-ose-guest-x11, nella configurazione di
-live-build. Altrimenti, la risoluzione è limitata a 800x600.
+#{virtualbox-ose}#, si può voler includere il pacchetto dei driver per X.org
+di VirtualBox, #{virtualbox-ose-guest-x11}#, nella configurazione di
+live-build. In caso contrario la risoluzione è limitata a 800x600.
 
 code{
 
@@ -132,31 +242,21 @@ code{
 
 }code
 
-3~burning-iso-image Masterizzare un'immagine ISO su un supporto fisico
+2~building-usb-hdd Creare un'immagine USB/HDD
 
-Masterizzare un'immagine ISO è semplice:
+La creazione di un'immagine USB/HDD è simile alla ISO ibrida sotto tutti gli
+aspetti ad eccezione della necessità di specificare l'opzione #{-b usb-hdd}#
+e che il nome del file risultante è #{binary.img}# e non può essere
+masterizzato. È adatta per avviarsi da chiavette USB, dischi rigidi USB, e
+da svariati altri dispositivi di archiviazione portatili. In genere per
+questo scopo può essere usata un'immagine ISO ibrida, ma se si ha un BIOS
+che non supporta le immagini ibride, o si vuole usare lo spazio rimanente
+sul supporto per altri scopi, come una partizione persistente, allora
+occorre un'immagine USB/HDD.
 
-code{
-
- # apt-get install wodim
-
- $ wodim binary.iso
-
-}code
-
-2~ Creare un'immagine USB/HDD
-
-La seguente sequenza di comandi creerà un'immagine USB/HDD di base
-contenente solo un sistema Debian standard senza X.org. È adatta per
-avviarsi da chiavette USB, dischi rigidi USB, e da svariati altri
-dispositivi di archiviazione portatili. In genere per questo scopo può
-essere usata un'immagine ISO ibrida, ma se si ha un BIOS che non supporta le
-immagini ibride, o si vuole usare lo spazio rimanente sul supporto per una
-partizione persistente, allora occorre un'immagine USB/HDD.
-
-Nota: se si è creata un'immagine ISO con gli esempi precedenti, occorre
-pulire la directory di lavoro con il comando #{lb clean}# (vedere {Il
-comando lb clean}#lb-clean):
+Nota: se si è creata un'immagine ISO ibrida con gli esempi precedenti,
+occorre pulire la directory di lavoro con il comando #{lb clean}# (vedere
+{Il comando lb clean}#lb-clean):
 
 code{
 
@@ -164,8 +264,8 @@ code{
 
 }code
 
-Eseguire il comando #{lb config}# con i parametri atti a configurare la
-struttura #{config/}# per creare un'immagine di tipo USB/HDD:
+Eseguire il comando #{lb config}# come prima, questa volta specificando però
+il tipo di immagine USB/HDD:
 
 code{
 
@@ -181,46 +281,37 @@ code{
 
 }code
 
-3~copying-usb-hdd-image Copiare un'immagine USB/HDD su una penna USB
+Quando la costruzione è terminata dovrebbe essere presente un file
+#{binary.img}# nella directory corrente.
+
+2~using-usb-hdd-image Utilizzare un'immagine USB/HDD
 
 L'immagine binaria generata contiene una partizione VFAT e il bootloader
-syslinux, pronti per essere scritti direttamente su una penna USB. Inserire
-una chiavetta USB con una dimensione maggiore di quella di binary.img e
-digitare:
-
-code{
-
- $ dd if=binary.img of=${USBSTICK}
-
-}code
-
-dove #{${USBSTICK}}# è il nome del device, come #{/dev/sdb}# (non una
-partizione come #{/dev/sdb1}#!); si può trovare il nome corretto del device
-guardando l'output di #{dmesg}# dopo aver inserito la chiavetta USB, o
-meglio ancora #{ls -l /dev/disk/by-id}#.
-
-*{Questo sovrascriverà definitivamente qualsiasi dato in precedenza sulla chiavetta!}*
-
-Nota: come disquisito in precedenza, questo stesso processo può essere usato
-per immagini di tipo #{iso-hybrid}# (con suffisso #{-hybrid.iso}#), ma non
-per le immagini di tipo #{iso}#.
+syslinux, pronti per essere scritti direttamente su una penna USB. Dal
+momento che utilizzare un'immagine USB/HDD è come utilizzare un'immagine ISO
+ibrida via USB, seguire le istruzioni contenute in {Utilizzare un'immagine
+live ISO ibrida}#using-iso-hybrid tenendo però conto che il nome del file
+sarà #{binary.img}# invece di #{binary-hybrid.iso}#.
 
 3~testing-usb-hdd-with-qemu Provare un'immagine USB/HDD con Qemu
 
+Installare QEMU come descritto in {Provare un'immagine ISO con
+QEMU}#testing-iso-with-qemu; quindi eseguire #{kvm}# o #{qemu}#, a seconda
+di quale versione è necessaria al sistema ospitante, specificando
+#{binary.img}# come disco rigido principale.
+
 code{
 
- # apt-get install qemu
-
- $ qemu -hda binary.img
+ $ kvm -hda binary.img
 
 }code
 
-3~ Usare lo spazio rimanente su una penna USB
+3~using-usb-extra-space Usare lo spazio rimanente su una penna USB
 
-Se si vuole usare lo spazio libero che rimane dopo l'installazione di
-binary.img, si può usare uno strumento di partizionamento come #{gparted}# o
-#{parted}# per creare una nuova partizione sulla penna. La prima partizione
-verrà utilizzata dal sistema Debian Live.
+Per utilizzare lo spazio libero che rimane dopo aver copiato il file
+#{binary.img}# su una penna USB, usare uno strumento di partizionamento come
+#{gparted}# o #{parted}# per creare una nuova partizione. La prima
+partizione verrà utilizzata dal sistema Debian Live.
 
 code{
 
@@ -228,9 +319,9 @@ code{
 
 }code
 
-After the creation of the partition, where #{${PARTITION}}# is the name of
-the partition, like #{/dev/sdb2}#, you have to create a filesystem on
-it. One possible choice would be ext4.
+Dopo aver creato la partizione, dove #{${PARTITION}}# è il nome della
+partizione, ad esempio #{/dev/sdb2}#, si deve creare su di essa un
+filesystem. Una scelta possibile potrebbe essere ext4.
 
 code{
 
@@ -238,15 +329,12 @@ code{
 
 }code
 
-Usare FAT32 se si vuole usare questa partizione dati con Windows.
+Nota: se si desidera utilizzare lo spazio extra con Windows pare che questo
+sistema operativo non possa accedere a nessuna partizione eccetto la
+prima. Alcune soluzioni a questo problema sono state discusse sulla nostra
+{mailing list}#contact, ma non sembrano esserci risposte semplici.
 
-code{
-
- # mkfs.vfat -F 32
-
-}code
-
-*{Ricorda: ogni volta che si installa un nuovo file binary.img sulla penna, tutti i dati sulla chiavetta saranno persi perché la tabella delle partizioni viene sovrascritta con i contenuti dell'immagine.}*
+*{Ricorda: ogni volta che si installa un nuovo file binary.img sulla penna, tutti i dati sulla chiavetta saranno persi perché la tabella delle partizioni viene sovrascritta con i contenuti dell'immagine, per cui salvare prima la propria partizione extra in modo da ripristinarla dopo l'aggiornamento dell'immagine live.}*
 
 2~building-netboot-image Creare un'immagine netboot
 
@@ -451,8 +539,8 @@ code{
 
 }code
 
-_* Si può giocare con questo file di configurazione (ad esempio portando a
-256 il limite della memoria)
+_* Si può modificare a piacimento questo file di configurazione (ad esempio
+portando a 256 il limite della memoria)
 
 _* Fare doppio click su questo file (o avviare il player VMWare e
 selezionare questo file).

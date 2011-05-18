@@ -2,9 +2,9 @@
 
 1~customizing-contents Personalización de contenidos
 
-Este capítulo trata, no solamente de una mera descripción de como
+Este capítulo trata, no solamente de una mera descripción de cómo
 seleccionar los paquetes a incluir en el sistema en vivo, sino que además
-presenta como hacer el «ajuste fino» de la personalización de los contenidos
+presenta cómo hacer el «ajuste fino» de la personalización de los contenidos
 del propio sistema. Los «añadidos» (includes) permiten adjuntar o reemplazar
 cualquier fichero en la imagen Debian Live a crear, los scripts gancho
 (hooks) permiten ejecutar cualquier orden en las diferentes etapas de
@@ -12,7 +12,7 @@ creación y en el momento del arranque y por último, la preconfiguración
 permite configurar paquetes cuando son instalados, suministrando las
 respuestas a las preguntas de debconf.
 
-2~ Añadidos
+2~ Includes
 
 Idealmente, un sistema Debain Live debería incluir solamente ficheros que
 son obtenidos de paquetes Debian no modificados. Sin embargo, algunas veces
@@ -21,27 +21,27 @@ utilización de «añadidos» (includes) posibilita la inclusión, modificación
 cambio de cualquier fichero en la imagen Debian Live a crear. live-build
 tiene tres mecanismos:
 
-_* Añadidos locales en chroot : Estos añadidos permiten incluir o reemplazar
-ficheros del entorno chroot. Vease más información en {Añadidos locales en
+_* Includes locales en chroot : Estos includes permiten incluir o reemplazar
+ficheros del entorno chroot. Para más información ver {Includes locales en
 Live/chroot}#live-chroot-local-includes
 
-_* Añadidos locales en Binary: Estos añadidos permiten incluir o reemplazar
+_* Includes locales en Binary: Estos includes permiten incluir o reemplazar
 ficheros en la propia imagen binaria generada. Para más información ver
-{Añadidos locales en Binary}#binary-local-includes
+{Includes locales en Binary}#binary-local-includes
 
-_* Añadidos en Binary: Estos añadidos permiten incluir o reemplazar ficheros
+_* Includes en Binary: Estos includes permiten incluir o reemplazar ficheros
 específicos de Debian en la imagen binaria, como pueden ser plantillas o
-directorios de herramientas. Para más información ver {Añadidos en
+directorios de herramientas. Para más información ver {Includes en
 Binary}#binary-includes
 
 Para más infomación acerca de la diferencia entre las imágenes "Live" y
-"binary" ver {Terminos}#terms 
+"binary" ver {Términos}#terms 
 
-3~live-chroot-local-includes Añadidos locales en Live/chroot
+3~live-chroot-local-includes Includes locales en Live/chroot
 
-Los añadidos locales en chroot se utilizan para incluir o reemplazar
+Los includes locales en chroot se utilizan para incluir o reemplazar
 ficheros en el sistema de ficheros Live/chroot de manera que puedan ser
-utilizados en el sistema en vivo. Una utilización típica de estos añadidos
+utilizados en el sistema en vivo. Una utilización típica de estos Includes
 puede ser el rellenar el directorio (#{/etc/skel}#) del sistema en vivo para
 que sea utilizado en la creación del directorio home al dar de alta usuarios
 en el sistema en vivo. Otra utilización típica es suministrar ficheros de
@@ -80,22 +80,22 @@ code{
 
 }code
 
-Los añadidos locales en chroot serán instalados después de la instalación de
-los paquetes de manera que los añadidos sobreescribirán cualquier fichero
+Los includes locales en chroot serán instalados después de la instalación de
+los paquetes de manera que los includes sobreescribirán cualquier fichero
 que los paquetes puedan haber instalado.
 
-3~binary-local-includes Añadidos locales en Binary 
+3~binary-local-includes Includes locales en Binary 
 
 Se puede incluir material como documentación, videos, etc en el sistema de
 ficheros del medio de instalación (USB, CDROM, etc) donde se grabará la
 imagen de manera que sea accesible nada más insertar el medio sin necesidad
-de arrancar el sistema en vivo. Para esto se utilizan los añadidos locales
-en Binary. Funciona de manera similar a los añadidos locales en chroot
+de arrancar el sistema en vivo. Para esto se utilizan los includes locales
+en Binary. Funciona de manera similar a los includes locales en chroot
 comentados anteriormente. Por ejemplo, supongamos que en el medio de
 instalación se desea añadir unos ficheros con videos de demostración sobre
 el funcionamiento del sistema en vivo de manera que el usuario pueda acceder
 a ellos a través de la página de indice HTML. Simplemente se debe copiar el
-material en #{config/binary_local-includes/} de la siguiente manera:
+material en #{config/binary_local-includes/}# de la siguiente manera:
 
 code{
 
@@ -106,7 +106,7 @@ code{
 Los ficheros aparecerán en el directorio raiz del medio desde el que se
 instalará el sistema en vivo.
 
-3~binary-includes Añadidos al Binary 
+3~binary-includes Includes en Binary 
 
 live-build tiene algún fichero estandar, como puede ser la documentación,
 que se incluyen por defecto en el medio de instalación. Esto puede ser
@@ -137,12 +137,12 @@ del chroot después de que el resto de las tareas de preparación del chroot
 han sido realizadas. Se debe asegurar que previamente se han instalado en el
 entorno chroot cualquier paquete, fichero u órden que necesiten los scripts
 gancho. El paquete live-build instala en el directorio
-#{/usr/share/live/build/examples/hooks}#  del sistema huesped unos cuantos
+#{/usr/share/live/build/examples/hooks}#  del sistema huésped unos cuantos
 scripts gancho para realizar tareas habituales de personalización del
 entorno chroot que pueden ser copiados o referenciados mediante enlace
 simbólico en el directorio de configuración #{config/chroot_local-hooks}#.
 
-2~ Scripts gancho en tiempo de arranque
+3~ Scripts gancho en tiempo de arranque
 
 Para ejecutar ordenes en el arranque del sistema en vivo, se puede
 suministrar scripts gancho a live-config depositándolos en el directorio
@@ -173,9 +173,8 @@ enlaces simbólicos en #{config/binary_local-hooks}#.
 
 2~ Preconfiguración de las preguntas de Debconf
 
-Se considera que los ficheros en el directorio
-#{config/chroot_local-preseed}# son ficheros de preconfiguración para
-debconf. live-build instalará estos ficheros mediante
+Los ficheros del directorio #{config/chroot_local-preseed}# son ficheros de
+preconfiguración para debconf. live-build instalará estos ficheros mediante
 #{debconf-set-selections}#.
 
 Ver debconf(7) en el paquete #{debconf}# para obtener más información acerca

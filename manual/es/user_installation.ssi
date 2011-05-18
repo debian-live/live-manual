@@ -4,7 +4,7 @@
 
 2~requirements Requisitos
 
-Para generar las imágenes de Debian Live son necesarios los siguientes
+Para crear las imágenes de Debian Live son necesarios los siguientes
 requisitos:
 
 _* Acceso de superusuario (root)
@@ -18,7 +18,7 @@ _* /{debootstrap}/ o /{cdebootstrap}/
 
 _* Linux 2.6.x
 
-Tenga en cuenta que no es necesario el uso de Debian o una distribución
+Tener en cuenta que no es necesario el uso de Debian o una distribución
 derivada de Debian - live-build funcionará en casi cualquier distribución
 que cumpla con los requisitos anteriores.
 
@@ -57,7 +57,7 @@ code{
 
 live-build se desarrolla utilizando el sistema de control de versiones Git.
 El paquete /{git}/ está disponible en todos los sistemas Debian . Para ver
-el último código, ejecute:
+el último código, ejecutar:
 
 code{
 
@@ -65,7 +65,7 @@ code{
 
 }code
 
-Se puede generar e instalar el paquete Debian ejecutando:
+Se puede crear e instalar el paquete Debian ejecutando:
 
 code{
 
@@ -76,7 +76,7 @@ code{
 }code
 
 Si se desea, se podrá instalar cualquiera de los paquetes #{.deb}# recien
-creados con procedimiento anteror, p.ej.
+creados con el procedimiento anterior, p.ej.
 
 code{
 
@@ -84,7 +84,7 @@ code{
 
 }code
 
-También se puede instalar live-build directamente en su sistema ejecutando:
+También se puede instalar live-build directamente en el sistema ejecutando:
 
 code{
 
@@ -102,13 +102,13 @@ code{
 
 3~ A partir de «instantáneas» 
 
-Si no desea generar o instalar live-build a partir del código fuente, puede
-usar instantáneas. Estas se generan automáticamente a partir de la última
-versión de Git y están disponibles en http://live.debian.net/debian/.
+Si no se desea crear o instalar live-build a partir del código fuente, se
+puede usar instantáneas. Estas se generan automáticamente a partir de la
+última versión de Git y están disponibles en http://live.debian.net/debian/.
 
 2~ live-boot y live-config
 
-*{Nota:}* No es necesario instalar live-boot o live-config en su sistema para crear sistemas personalizados de Debian Live. Sin embargo, eso no causará ningún daño y es útil por motivos de referencia.
+*{Nota:}* No es necesario instalar live-boot o live-config en el sistema para crear sistemas personalizados de Debian Live. Sin embargo, eso no causará ningún daño y es útil por motivos de referencia.
 
 3~ Desde el repositorio Debian.
 
@@ -117,9 +117,9 @@ siguiendo la {Instalación de live-build}#installing-live-build.
 
 3~ A partir del código fuente
 
-Para utilizar el último código fuente desde git, se puede seguir el proceso
-siguiente. Asegurarse de estar familiarizado con los términos mencionados en
-{Términos}#terms.
+Para utilizar el último código fuente a partir de git, se puede seguir el
+proceso siguiente. Asegurarse de estar familiarizado con los términos
+mencionados en {Términos}#terms.
 
 _* Comprobar el código fuente de live-boot y live-config
 
@@ -132,21 +132,21 @@ code{
 
 Si se desea generar estos paquetes a partir del código fuente, se puede
 consultar las páginas del manual para más detalles sobre la personalización
-de live-boot y live-config .
+de live-boot y live-config.
 
-_* Creación de los archivos .deb de live-boot y live-config
+_* Creación de los paquetes .deb de live-boot y live-config
 
-Se debe generar ya sea en su distribución de destino o en un entorno chroot
-que contenga la plataforma de destino: es decir, si su objetivo es Squeeze
-entonces usted debe generar usando Squeeze.
+Se debe crear ya sea en la distribución de destino o en un entorno chroot
+que contenga la plataforma de destino: es decir, si el objetivo es Squeeze
+entonces se debe crear usando Squeeze.
 
-Utilice un generador personal como /{pbuilder}/ o /{sbuild}/ si necesita
-generar #{live-boot}# para una distribución de destino diferente de su
-sistema de generación. Por ejemplo, para las imágenes en vivo de Squeeze,
-generar #{live-boot}# en un entorno chroot. Si su distribución de destino
-coincide con su distribución actual, usted puede crearla directamente sobre
-el sistema de generación con #{dpkg-buildpackage}# (proporcionada por el
-paquete /{dpkg-dev}/ ):
+Utilizar un programa creador personal como /{pbuilder}/ o /{sbuild}/ si se
+necesita crear #{live-boot}# para una distribución de destino diferente del
+sistema de creación. Por ejemplo, para las imágenes en vivo de Squeeze,
+crear #{live-boot}# en un entorno chroot. Si la distribución de destino
+coincide con la distribución actual, se puede crear directamente sobre el
+sistema de creación con #{dpkg-buildpackage}# (proporcionada por el paquete
+/{dpkg-dev}/ ):
 
 code{
 
@@ -157,22 +157,23 @@ code{
 
 }code
 
-_* Usar todos los archivos .deb generados
+_* Utilizar todos los ficheros .deb generados
 
 Como live-boot y live-config son instalados por el sistema live-build, la
 instalación de estos paquetes en el sistema anfitrión no es suficiente: Se
 deben tratar los archivos .deb generados exáctamente igual que cualquier
-otro paquete personalizado. Véase {Instalación de paquetes
-personalizados}#customizing-package-installation para más información. Se
-debe prestar especial atención a los {Repositorios
+otro paquete personalizado. Véase {Personalización de la instalación de
+paquetes}#customizing-package-installation para más información. Se debe
+prestar especial atención a los {Repositorios
 adicionales}#additional-repositories.
 
 3~ A partir de «instantáneas» 
 
-Se puede dejar que live-build use automáticamente las últimas instantáneas
-de live-boot y live-config mediante la configuración de repósitorios de
-terceros en el directorio de configuración de live-build. Suponiendo que ya
-se haya creado una árbol de configuración con #{lb config}#:
+Se puede dejar que live-build utilice automáticamente las últimas
+instantáneas de live-boot y live-config mediante la configuración de
+repósitorios de terceros en el directorio de configuración de
+live-build. Suponiendo que ya se haya creado un árbol de configuración con
+#{lb config}#:
 
 code{
 

@@ -1,106 +1,116 @@
-:B~ About the Debian Live Project
+:B~ À propos du projet Debian Live
 
-1~about-project About the Debian Live Project
+1~about-project À propos du projet Debian Live
 
 2~ Motivation
 
-3~ What is wrong with current live systems
+3~ Quel est le problème avec les systèmes live actuels
 
-When Debian Live was initiated, there were already several Debian based live
-systems available and they are doing a great job. From the Debian
-perspective most of them have one or more of the following disadvantages:
+Lorsque Debian Live a été lancé, il y avait déjà plusieurs systèmes live
+basés sur debian et ils faisaient un excellent travail.  Du point de vue de
+Debian la plupart d'entre eux ont un ou plusieurs des inconvénients
+suivants:
 
-_* They are unofficial projects, developed outside of Debian.
+_* Ce sont des projets non officiels, développées en dehors de Debian.
 
-_* They mix different distributions, e.g. *{testing}* and *{unstable}*.
+_* Ils mélangent les différentes distributions p. ex *{testing}* et
+*{unstable}*.
 
-_* They support i386 only.
+_* Ils supportent seulement i386.
 
-_* They modify the behaviour and/or appearance of packages by stripping them
-down to save space.
+_* Ils modifient le comportement et/ou l'apparence des paquets en les
+dépouillant pour économiser l'espace.
 
-_* They include unofficial packages.
+_* Ils incluent paquets non officiels.
 
-_* They ship custom kernels with additional patches that are not part of
-Debian.
+_* Ils offrent kernels personnalisés avec des patches supplémentaires qui ne
+font pas partie de Debian.
 
-_* They are large and slow due to their sheer size and thus not suitable for
-rescue issues.
+_* Ils sont grands et lents en raison de leur dimension et donc pas
+recommandés comme systémes de sauvetage.
 
-_* They are not available in different flavours, e.g. CDs, DVDs, USB-stick
-and netboot images.
+_* Ils ne sont pas disponibles en différents formats, p. ex. CDs, DVDs, clés
+USB et images netboot.
 
-3~ Why create our own live system?
+3~ Pourquoi créer notre propre système live?
 
-Debian is the Universal Operating System: Debian has an official live system
-for showing around and to officially represent the true, one and only Debian
-system with the following main advantages:
+Debian est le système d'exploitation universel: Debian a un système officiel
+live pour afficher autour et pour représenter officiellement le vrai, seul
+et unique système Debian avec les principaux avantages suivants:
 
-_* It would be an official Debian subproject.
+_* Ce serait un sous-projet officiel Debian.
 
-_* It reflects the (current) state of one distribution.
+_* Il reflète l'état ​​(actuel) d'une distribution.
 
-_* It runs on as many architectures as possible.
+_* Il fonctionne sur le plus grand nombre d'architectures possible.
 
-_* It consists of unchanged Debian packages only.
+_* Il seulement se compose de paquets Debian inchangés.
 
-_* It does not contain any unofficial packages.
+_* Il ne contient pas de paquets non officiels.
 
-_* It uses an unaltered Debian kernel with no additional patches.
+_* Il utilise un kernel Debian inchangé sans patches supplémentaires.
 
-2~ Philosophy
+2~ Philosophie
 
-3~ Only unchanged, official packages
+3~ Seulement paquets officiels inchangés
 
-We will only use official packages from the Debian repository in the "main"
-section. The non-free section is not part of Debian and therefore cannot be
-used at all for official live system images.
+Nous seulement utiliserons les paquets officiels Debian du référentiel «main
+». La section non-free ne fait pas partie de Debian et ne peut donc pas être
+utilisée pour les images officiels du système live.
 
-We will not change any packages. Whenever we need to change something, we
-will do that in coordination with its package maintainer in Debian.
+Nous ne changerons pas les paquets. Chaque fois que nous avons besoin de
+changer quelque chose, nous le ferons en coordination avec le responsable du
+paquet dans Debian.
 
-As an exception, our own packages such as live-boot, live-build or
-live-config may temporarily be used from our own repository for development
-reasons (e.g. to create development snapshots). They will be uploaded to
-Debian on a regular basis.
+À titre d'exception, nos propres paquets tels que live-boot, live-build ou
+live-config peuvent être utilisés temporairement à partir de notre propre
+référentiel pour raisons de développement (par exemple pour créer des
+instantanés de développement). Ils seront téléchargés sur Debian
+régulièrement.
 
-3~ No package configuration of the live system
+3~ Pas de configuration des paquets du système live
 
-In this phase we will not ship or install sample or alternative
-configurations. All packages are used in their default configuration as they
-are after a regular installation of Debian.
+Dans cette phase, nous n'offerons configurations alternatives. Tous les
+paquets sont utilisés dans leur configuration par défaut comme ils sont
+après une installation standard de Debian.
 
-Whenever we need a different default configuration, we will do that in
-coordination with its package maintainer in Debian.
+Chaque fois que nous avons besoin d'une configuration par défaut différent,
+nous le ferons en coordination avec le responsable du paquet dans Debian.
 
-A system for configuring packages is provided using debconf in #{lb config}#
-(use --preseed FILE) allowing custom configured packages to be installed in
-your custom produced Debian Live images, but for official live images only
-default configuration will be used. For more information, please see
-{Customization overview}#customization-overview.
+Un système de configuration des paquets est fourni avec debconf dans #{lb
+config}# (utiliser --preseed FICHIER) permettant la personnalisation des
+paquets installés sur votre image Debian Live, mais pour les images
+officielles seulement sera utilisé une configuration par défaut. Pour plus
+d'informations, s'il vous plaît voir {Vue d'ensemble de la
+personnalisation}#customization-overview.
 
-Exception: There are a few essential changes needed to bring a live system
-to life (e.g. configuring pam to allow empty passwords). These essential
-changes have to be kept as minimal as possible and should be merged within
-the Debian repository if possible.
+Exception: Il y a quelques changements essentiels nécessaires pour mettre un
+système live en marche (par exemple la configuration de pam pour permettre
+des mots de passe vide). Ces changements essentiels doivent être maintenus
+aussi minimes que possible et devraient être fusionnées au sein du
+référentiel Debian s'il est possible.
 
 2~contact Contact
 
-_* *{Mailing list}*: The primary contact for the project is the mailing list
-at http://lists.debian.org/debian-live/. You can email the list directly by
-addressing your mail to debian-live@lists.debian.org. The list archives are
-available at http://lists.debian.org/debian-live/.
+_* *{Liste de diffusion}*: Le contact principal du projet est la liste de
+diffusion http://lists.debian.org/debian-live/. Vous pouvez envoyer un
+courriel à la liste directement en adressant votre courrier à
+debian-live@lists.debian.org. Les archives de la liste sont disponibles à
+http://lists.debian.org/debian-live/.
 
-_* *{IRC}*: A number of users and developers are present in the #debian-live
-channel on irc.debian.org (OFTC). When asking a question on IRC, please be
-patient for an answer. If no answer is forthcoming, please email the mailing
-list.
+_* *{IRC}*: Un certain nombre d'utilisateurs et les développeurs sont
+présents dans le canal #debian-live sur irc.debian.org (OFTC). Quand vous
+posez une question dans l'IRC, s'il vous plaît soyez patient en attendant
+une réponse. Si aucune réponse n'est donnée, s'il vous plaît envoyez un
+courriel à la liste de diffusion.
 
-_* *{BTS}*: The Debian Bug Tracking System (BTS) contains details of bugs
-reported by users and developers. Each bug is given a number, and is kept on
-file until it is marked as having been dealt with. For more information,
-please see {Reporting bugs}#bugs.
+_* *{BTS}*: Le Debian Bug Tracking System (BTS) contient les détails des
+bogues rapportés par les utilisateurs et les développeurs. Chaque bug reçoit
+un numéro, et il est conservé jusqu'à ce qu'il soit marqué comme
+traité. Pour plus d'informations, s'il vous plaît voir {Rapporter des
+bogues}#bugs.
 
-_* *{Wiki}*: The Debian Live wiki at http://wiki.debian.org/DebianLive is a
-place to gather information, discuss applied technologies, and document
-frameworks of Debian Live systems that go beyond the scope of this document.
+_* *{Wiki}*: Le wiki Debian Live à http://wiki.debian.org/DebianLive est un
+lieu pour recueillir des informations, discuter des technologies appliquées,
+et structures des systèmes Debian Live qui vont au-delà de la portée de ce
+document.

@@ -1,50 +1,54 @@
-:B~ Managing a configuration
+:B~ Gestion d'une configuration
 
-1~managing-a-configuration Managing a configuration
+1~managing-a-configuration Gestion d'une configuration
 
-This chapter explains how to manage a live configuration from initial
-creation, through successive revisions and successive releases of both the
-live-build software and the live image itself.
+Ce chapitre explique comment gérer une configuration d'un système live à
+partir d'une création initiale, à travers des révisions successives et des
+versions successives du logiciel live-build et de l'image live lui-même.
 
-2~ Use auto to manage configuration changes
+2~ Utilisez auto pour gérer les modifications de configuration
 
-Live configurations rarely are perfect on the first try. You'll likely need
-to make a series of revisions until you are satisfied. However,
-inconsistencies can creep into your configuration from one revision to the
-next if you aren't careful. The main problem is, once a variable is given a
-default value, that value will not be recomputed from other variables that
-may change in later revisions.
+Les configurations live sont rarement parfaites du premier coup. Vous aurez
+probablement besoin de faire une série de révisions jusqu'à ce que vous êtes
+satisfait. Cependant, des incohérences peuvent se glisser dans votre
+configuration d'une révision à la prochaine si vous ne faites pas
+attention. Le principal problème est, une fois qu'une variable est donné une
+valeur par défaut, cette valeur ne sera pas recalculé à partir d'autres
+variables qui peuvent changer dans les révisions ultérieures.
 
-For example, when the distribution is first set, many 'dependent' variables
-are given default values that suit that distribution. However, if you later
-decide to change the distribution, those dependent variables continue to
-retain old values that are no longer appropriate.
+Par exemple, lorsque la distribution est d'abord définie, nombreuses
+variables sont assignées des valeurs par défaut qui conviennent à cette
+distribution. Cependant, si vous décidez ultérieurement de modifier la
+distribution, ces variables dépendantes conservent les anciennes valeurs qui
+ne sont plus appropriés.
 
-A second, related problem is that if you run #{lb config}# and then upgrade
-to a new version of live-build that has changed one of the variable names,
-you will discover this only by manual review of the variables in your
-#{config/*}# files, which you will then need to use to set the appropriate
-option again.
+Un deuxième problème connexe est que si vous exécutez #{lb config}# et
+ensuite mettez à jour une nouvelle version de live-build qui a changé l'un
+des noms de variables, vous découvrirez ce que par un examen manuel des
+variables dans votre #{config/*}# fichiers, que vous devrez ensuite utiliser
+pour définir l'option appropriée à nouveau.
 
-All of this would be a terrible nuisance if it weren't for auto/* scripts,
-simple wrappers to the #{lb config}#, #{lb build}# and #{lb clean}# commands
-that are designed to help you manage your configuration. Simply create an
-auto/config script containing #{lb config}# command with all desired
-options, and an auto/clean that removes the files containing configuration
-variable values, and each time you #{lb config}# and #{lb clean}#, these
-files will be executed. This will ensure that your configuration is kept
-internally consistent from one revision to the next and from one live-build
-release to the next (though you will still have to take care and read the
-documentation when you upgrade live-build and make adjustments as needed).
+Tout cela serait une nuisance terrible si ce n'était pas pour les scripts
+auto/* simples emballages pour les commandes #{lb config}#, #{lb build}# et
+#{lb clean}# qui sont conçus pour vous aider gérer votre configuration. Il
+suffit de créer un script auto/config contenant la commande #{lb config}#
+avec toutes les options désirées, et un auto/clean qui supprime les fichiers
+contenant les valeurs des variables de configuration, et chaque fois que
+vous #{lb config}# et #{lb clean}#, ces fichiers seront exécutés. Cela
+permettra d'assurer que votre configuration a une cohérence interne d'une
+révision à l'autre et d'une version de live-build à la suivante (même si
+vous aurez encore de prendre soin et lire la documentation lorsque vous
+faites un mise à niveau et faites les ajustements nécessaires ).
 
-2~ Example auto scripts
+2~ Exemples de scripts auto
 
-Use auto script examples such as the following as the starting point for
-your new live-build configuration. Take note that when you call the #{lb}#
-command that the auto script wraps, you must specify #{noauto}# as its
-parameter to ensure that the auto script isn't called again,
-recursively. Also, don't forget to ensure the scripts are executable
-(e.g. #{chmod 755 auto/*}#).
+Utiliser des exemples de scripts auto tels que les suivants comme point de
+départ pour votre nouveau configuration de live-build. Prenez note que
+lorsque vous appelez la commande #{lb}# que votre script auto emballage vous
+devez spécifier #{noauto}# comme paramètre afin de s'assurer que le script
+automatique n'est pas appelé à nouveau, de façon récursive. Aussi, n'oubliez
+pas de s'assurer que les scripts sont exécutables (par exemple #{chmod 755
+auto/*}#).
 
 #{auto/config}#
 
@@ -78,8 +82,8 @@ code{
 
 }code
 
-We now ship example auto scripts with live-build based on the examples
-above. You may copy those as your starting point.
+Nous expédions maintenant scripts auto d'exemple avec live-build sur ​​la
+base des exemples ci-dessus. Vous pouvez copier ces comme point de départ.
 
 code{
 
@@ -87,8 +91,8 @@ code{
 
 }code
 
-Edit #{auto/config}#, changing or adding any options as you see fit. In the
-example above, #{--packages-lists standard}# is set to the default
-value. Change this to an appropriate value for your image (or delete it if
-you want to use the default) and add any additional options in continuation
-lines that follow.
+Editer #{auto/config}#, en changeant ou en ajoutant des options comme bon
+vous semble. Dans l'exemple ci-dessus, #{--packages-lists standard}# est
+fixé à la valeur par défaut. Changez ce à une valeur appropriée pour votre
+image (ou le supprimer si vous voulez utiliser par défaut) et ajouter des
+options supplémentaires dans les lignes de continuation qui suivent.

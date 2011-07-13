@@ -2,19 +2,20 @@
 # Copyright (C) 2010 Free Software Foundation, Inc.
 # This file is distributed under the same license as the live-manual package.
 # Automatically generated, 2010.
+# Carlos Zuferri «chals» <chals@altorricon.com>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 2.0.0\n"
-"POT-Creation-Date: 2011-04-14 18:03-0200\n"
-"PO-Revision-Date: 2010-10-20 06:53-0200\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"POT-Creation-Date: 2011-04-23 14:15+0300\n"
+"PO-Revision-Date: 2011-06-26 20:10+0200\n"
+"Last-Translator: Carlos Zuferri «chals» <chals@altorricon.com>\n"
+"Language-Team:  <debian-live@lists.debian.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. type: Plain text
 #: en/about_manual.ssi:84 en/about_manual.ssi:92 en/about_manual.ssi:100
@@ -147,12 +148,12 @@ msgstr "}code"
 #. type: Plain text
 #: en/user_basics.ssi:2
 msgid ":B~ The basics"
-msgstr ""
+msgstr ":B~ Les bases "
 
 #. type: Plain text
 #: en/user_basics.ssi:4
 msgid "1~the-basics The basics"
-msgstr ""
+msgstr "1~the-basics Les bases"
 
 #. type: Plain text
 #: en/user_basics.ssi:6
@@ -169,6 +170,19 @@ msgid ""
 "very convenient way to test and deploy images for booting on the local "
 "network without the hassle of dealing with image media."
 msgstr ""
+"Ce chapitre contient un bref aperçu du procès de construction et des "
+"instructions pour utiliser les trois types d'images les plus couramment "
+"utilisées. Le type d'image le plus polyvalent, #{iso-hybrid}#, peut être "
+"utilisé sur une machine virtuelle, supports optiques ou un périphérique USB "
+"de stockage portable. Dans certains cas particuliers, tels que l'utilisation "
+"de la persistance, le type #{usb-hdd}# peut être plus approprié pour les "
+"périphériques USB. Le chapitre se termine avec des instructions pour la "
+"construction et l'utilisation d'une image #{net}# , qui est un peu plus "
+"compliqué en raison de la configuration requise sur le serveur. C'est un "
+"sujet un peu avancée pour tous ceux qui ne connaissent pas déjà le démarrage "
+"par le réseau, mais est inclus ici car une fois la configuration est "
+"terminée, il est un moyen très pratique pour tester et déployer des images "
+"pour le démarrage sur le réseau local sans le tracas des supports de l'image."
 
 #. type: Plain text
 #: en/user_basics.ssi:8
@@ -177,11 +191,14 @@ msgid ""
 "produced by live-build. If you are downloading a prebuilt image instead, the "
 "actual filenames may vary."
 msgstr ""
+"Tout au long du chapitre, nous ferons souvent référence à la valeur par "
+"défaut des noms de fichiers produits par live-build. Si vous téléchargez une "
+"image précompilée les noms de fichiers peuvent varier."
 
 #. type: Plain text
 #: en/user_basics.ssi:10
 msgid "2~what-is-live What is a live system?"
-msgstr ""
+msgstr "2~what-is-live Qu'est-ce qu'un système live?"
 
 #. type: Plain text
 #: en/user_basics.ssi:12
@@ -191,6 +208,11 @@ msgid ""
 "use without any installation on the usual drive(s), with auto-configuration "
 "done at run time (see {Terms}#terms)."
 msgstr ""
+"Un système live signifie généralement un système d'exploitation démarré sur "
+"un ordinateur à partir d'un support amovible, tel qu'un CD-ROM ou une clé "
+"USB, ou d'un réseau prêt à l'emploi sans aucune installation sur le disque "
+"habituel(s), avec auto-configuration fait lors de l'exécution (voir {Termes}"
+"#terms)."
 
 #. type: Plain text
 #: en/user_basics.ssi:14
@@ -199,11 +221,14 @@ msgid ""
 "the supported architectures (currently amd64, i386, powerpc and sparc). It "
 "is made from the following parts:"
 msgstr ""
+"Avec Debian Live, c'est un système Debian GNU/Linux, construit pour une des "
+"architectures supportées (actuellement amd64, i386, PowerPC et SPARC). Il "
+"est fait à partir des éléments suivants:"
 
 #. type: Plain text
 #: en/user_basics.ssi:16
 msgid "_* *{Linux kernel image}*, usually named #{vmlinuz*}#"
-msgstr ""
+msgstr "_* *{Linux kernel image}*, d'habitude appelé #{vmlinuz*}#"
 
 #. type: Plain text
 #: en/user_basics.ssi:18
@@ -212,6 +237,9 @@ msgid ""
 "boot, containing modules possibly needed to mount the System image and some "
 "scripts to do it."
 msgstr ""
+"_* *{Initial RAM disk image (initrd)}*: Un disque virtuel RAM configuré pour "
+"le démarrage de Linux, contenant possiblement des modules nécessaires pour "
+"monter l'image du système et certains scripts pour le faire."
 
 #. type: Plain text
 #: en/user_basics.ssi:20
@@ -223,6 +251,14 @@ msgid ""
 "running system. However, all modifications will be lost upon shutdown unless "
 "optional persistence is used (see {Persistence}#persistence)."
 msgstr ""
+"_* *{System image}*: L'image du système de fichiers du système "
+"d'exploitation. Habituellement, un système de fichiers SquashFS comprimé est "
+"utilisé pour réduire au minimum la taille de l'image Debian Live. Notez "
+"qu'il est en lecture seulement. Ainsi, lors du démarrage du système Debian "
+"Live nous allons utiliser un disque RAM et un mécanisme  \"union\" pour "
+"permettre l'écriture de fichiers dans le système en marche. Cependant, "
+"toutes les modifications seront perdues lors de l'arrêt à moins que l'option "
+"persistance est utilisée (voir {Persistance}#persistence)."
 
 #. type: Plain text
 #: en/user_basics.ssi:22
@@ -237,6 +273,16 @@ msgid ""
 "ext2/3/4 and btrfs partitions, pxelinux for PXE netboot, GRUB for ext2/3/4 "
 "partitions, etc."
 msgstr ""
+"_* *{Bootloader}*: Un petit morceau de code conçu pour démarrer à partir du "
+"support choisi, il peut présenter un menu rapide ou permettre la sélection "
+"des options/configuration. Il charge le kernel Linux et son initrd pour "
+"fonctionner avec un système de fichiers associé. Différentes solutions "
+"peuvent être utilisées, selon le support de destination et le format du "
+"système de fichiers contenant les composants mentionnés précédemment: "
+"isolinux pour démarrer à partir d'un CD ou DVD au format ISO9660, syslinux "
+"pour démarrer le disque dur ou clé USB à partir d'une partition VFAT, "
+"extlinux pour ext2/3/4 et partitions btrfs, pxelinux pour netboot PXE, GRUB "
+"pour ext2/3/4 partitions, etc."
 
 #. type: Plain text
 #: en/user_basics.ssi:24
@@ -245,11 +291,17 @@ msgid ""
 "set up a Linux kernel, its initrd, and a bootloader to run them, all in one "
 "media-dependant format (ISO9660 image, disk image, etc.)."
 msgstr ""
+"Vous pouvez utiliser live-build pour construire l'image du système à partir "
+"de vos spécifications, configurer un kernel Linux, son initrd, et un "
+"chargeur de démarrage pour les exécuter, tout dans un format en fonction du "
+"support (image ISO9660,  disque image, etc.)"
 
 #. type: Plain text
 #: en/user_basics.ssi:26
 msgid "2~building-iso-hybrid First steps: building an ISO hybrid image"
 msgstr ""
+"2~building-iso-hybrid Premières étapes: la construction d'une image ISO "
+"hybride"
 
 #. type: Plain text
 #: en/user_basics.ssi:28
@@ -260,6 +312,12 @@ msgid ""
 "containing just the Debian standard system without X.org. It is suitable for "
 "burning to CD or DVD media, and also to copy onto a USB stick."
 msgstr ""
+"Quel que soit le type d'image, vous devrez effectuer les mêmes étapes de "
+"base pour créer une image chaque fois. Comme premier exemple, exécuter la "
+"séquence suivante de commandes  live-build pour créer une image ISO hybride "
+"de base contenant tout le système Debian standard sans X.org. Elle est "
+"appropriée pour être gravée sur CD ou DVD, et également peut être copiée sur "
+"une clé USB."
 
 #. type: Plain text
 #: en/user_basics.ssi:30
@@ -267,12 +325,15 @@ msgid ""
 "First, run the #{lb config}# command. This will create a \"config/\" "
 "hierarchy in the current directory for use by other commands:"
 msgstr ""
+"Tout d'abord, exécutez la commande #{lb config}#. Cela va créer une "
+"hiérarchie \"config /\" dans le répertoire courant pour l'utilisation par "
+"d'autres commandes:"
 
 #. type: Plain text
 #: en/user_basics.ssi:34
 #, no-wrap
 msgid " $ lb config\n"
-msgstr ""
+msgstr " $ lb config\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:38
@@ -281,6 +342,9 @@ msgid ""
 "various options will be used. See {The lb config command}#lb-config for more "
 "details."
 msgstr ""
+"Aucun paramètre n'est passé à #{lb config}#, donc défauts seront utilisés "
+"pour l'ensemble de ses diverses options. Voir {La commande lb config}#lb-"
+"config pour plus de détails."
 
 #. type: Plain text
 #: en/user_basics.ssi:40
@@ -288,6 +352,8 @@ msgid ""
 "Now that the \"config/\" hierarchy exists, build the image with the #{lb "
 "build}# command:"
 msgstr ""
+"Maintenant que la hiérarchie \"config /\" existe, créez l'image avec la "
+"commande #{lb build}# :"
 
 #. type: Plain text
 #: en/user_basics.ssi:44 en/user_basics.ssi:170 en/user_basics.ssi:238
@@ -303,11 +369,14 @@ msgid ""
 "connection. When it is complete, there should be a #{binary-hybrid.iso}# "
 "image file, ready to use, in the current directory."
 msgstr ""
+"Ce processus peut prendre un certain temps, en fonction de la vitesse de "
+"votre connexion réseau. Quand il est complet, il devrait y avoir un fichier "
+"image #{binary-hybrid.iso}# prêt à l'emploi, dans le répertoire courant."
 
 #. type: Plain text
 #: en/user_basics.ssi:50
 msgid "2~using-iso-hybrid Using an ISO hybrid live image"
-msgstr ""
+msgstr "2~using-iso-hybrid Utilisation d'une image ISO hybride live"
 
 #. type: Plain text
 #: en/user_basics.ssi:52
@@ -317,11 +386,15 @@ msgid ""
 "prepare your media for booting, either CD-R(W) or DVD-R(W) optical media or "
 "a USB stick."
 msgstr ""
+"Après la construction ou le téléchargement d'une image ISO hybride, qui peut "
+"être obtenue à http://www.debian.org/CD/live/, l'étape suivante est "
+"d'habitude préparer votre support pour le démarrage, soit sur CD-R(W) ou DVD "
+"-R(W) des supports optiques ou une clé USB."
 
 #. type: Plain text
 #: en/user_basics.ssi:54
 msgid "3~burning-iso-image Burning an ISO image to a physical medium"
-msgstr ""
+msgstr "3~burning-iso-image Graver une image ISO sur un support physique"
 
 #. type: Plain text
 #: en/user_basics.ssi:56
@@ -329,6 +402,8 @@ msgid ""
 "Burning an ISO image is easy. Just install wodim and use it from the command-"
 "line to burn the image. For instance:"
 msgstr ""
+"Graver une image ISO est facile. Il suffit d'installer wodim et l'utiliser à "
+"partir de la ligne de commande pour graver l'image. Par exemple:"
 
 #. type: Plain text
 #: en/user_basics.ssi:60
@@ -346,6 +421,7 @@ msgstr ""
 #: en/user_basics.ssi:66
 msgid "3~copying-iso-hybrid-to-usb Copying an ISO hybrid image to a USB stick"
 msgstr ""
+"3~copying-iso-hybrid-to-usb Copie d'un image ISO hybride sur une clé USB"
 
 #. type: Plain text
 #: en/user_basics.ssi:68
@@ -359,6 +435,15 @@ msgid ""
 "can find the right device name by looking in #{dmesg}#'s output after "
 "plugging in the stick, or better yet, #{ls -l /dev/disk/by-id}#."
 msgstr ""
+"Les images ISO préparées avec la commande #{isohybrid}# comme les images #"
+"{iso-hybrid}# produites par défaut, peuvent être simplement copiées sur une "
+"clé USB avec #{dd}# ou un programme équivalent. Brancher une clé USB avec "
+"une capacité suffisamment grande pour votre fichier image et déterminez quel "
+"dispositif il est, que nous appellons ci-dessous #{${USBSTICK}}#. C'est le "
+"fichier de périphérique de votre clé, tel que #{/dev/sdb}#, pas une "
+"partition, tel que #{/dev/sdb1}#! Vous pouvez trouver le nom du périphérique "
+"en regardant dans la sortie de #{dmesg}# après avoir branché le dispositif, "
+"ou mieux encore, #{ls -l /dev/disk/by-id}#."
 
 #. type: Plain text
 #: en/user_basics.ssi:71
@@ -367,6 +452,9 @@ msgid ""
 "command to copy the image to the stick.  *{This will definitely overwrite "
 "any previous contents on your stick!}*"
 msgstr ""
+"Une fois que vous êtes sûr d'avoir le nom correct de l'appareil, utilisez la "
+"commande #{dd}# pour copier l'image sur le clé. *{Ceci écrasera tout fichier "
+"déjà existant sur votre clé!}*"
 
 #. type: Plain text
 #: en/user_basics.ssi:75
@@ -377,7 +465,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:80
 msgid "3~booting-live-media Booting the live media"
-msgstr ""
+msgstr "3~booting-live-media Démarrer le support live"
 
 #. type: Plain text
 #: en/user_basics.ssi:82
@@ -391,6 +479,16 @@ msgid ""
 "order to place the boot device for the live system before your normal boot "
 "device."
 msgstr ""
+"La première fois que vous démarrez votre support live, qu'il s'agisse de CD, "
+"DVD, clé USB, ou le démarrage PXE, une certaine configuration dans le BIOS "
+"de votre ordinateur peut être d'abord nécessaire. Depuis les BIOS varient "
+"grandement en fonctionnalités et raccourcis clavier, on ne peut pas pénétrer "
+"dans le sujet en profondeur ici. Certains BIOS fournissent une clé pour "
+"ouvrir un menu d'amorçage au démarrage, qui est le moyen le plus facile si "
+"elle est disponible sur votre système. Sinon, vous avez besoin d'entrer dans "
+"le menu de configuration du BIOS et modifier l'ordre de démarrage pour "
+"placer le dispositif de démarrage pour le système live devant votre "
+"périphérique de démarrage normal."
 
 #. type: Plain text
 #: en/user_basics.ssi:84
@@ -401,6 +499,12 @@ msgid ""
 "\"help\" entry in the menu and also the #{live-boot}# and #{live-config}# "
 "man pages found within the live system."
 msgstr ""
+"Une fois que vous avez démarré le support, vous êtes présenté avec un menu "
+"de démarrage. Si vous appuyez simplement sur enter ici, le système va "
+"démarrer en utilisant l'entrée par défaut, #{Live}# Pour plus d'informations "
+"sur les options de démarrage, consultez l'entrée «Help» dans le menu et "
+"aussi les pages de manuel de #{live-boot}# et #{live-config}# dans le "
+"système live."
 
 #. type: Plain text
 #: en/user_basics.ssi:86
@@ -412,11 +516,18 @@ msgid ""
 "images, you should be automatically logged in on the console to the #{user}# "
 "account and see a shell prompt, ready to use."
 msgstr ""
+"En supposant que vous avez sélectionné #{Live}# et démarré une image de "
+"bureau live par défaut, après les messages de démarrage défilent, vous "
+"devriez être automatiquement connecté au compte #{user}# et voir un bureau, "
+"prêt à l'emploi. Si vous avez démarré une image de la console uniquement, "
+"tels que saveurs #{standard}# ou #{sauvetage}# des images prédéfinies, vous "
+"devriez être automatiquement connecté à la console pour le compte #{user}# "
+"et voir une invite du shell, prêt à l'emploi."
 
 #. type: Plain text
 #: en/user_basics.ssi:88
 msgid "2~using-virtual-machine Using a virtual machine for testing"
-msgstr ""
+msgstr "2~using-virtual-machine Utiliser une machine virtuelle pour les tests"
 
 #. type: Plain text
 #: en/user_basics.ssi:90
@@ -424,6 +535,9 @@ msgid ""
 "It can be a great time-saver for the development of live images to run them "
 "in a virtual machine (VM). This is not without its caveats:"
 msgstr ""
+"Il peut être un gain de temps important pour le développement des images "
+"live les faire fonctionner dans une machine virtuelle (VM). Ce n'est pas "
+"sans ses avertissements:"
 
 #. type: Plain text
 #: en/user_basics.ssi:92
@@ -431,6 +545,8 @@ msgid ""
 "_* Running a VM requires enough RAM for both the guest OS and the host and a "
 "CPU with hardware support for virtualization is recommended."
 msgstr ""
+"_* L'exécution d'une VM demande assez de RAM pour l'OS client et l'hôte et "
+"un CPU avec support matériel pour la virtualisation est recommandée."
 
 #. type: Plain text
 #: en/user_basics.ssi:94
@@ -438,6 +554,8 @@ msgid ""
 "_* There are some inherent limitations to running on a VM, e.g. poor video "
 "performance, limited choice of emulated hardware."
 msgstr ""
+"_* Il ya quelques limitations inhérentes à l'exécution sur une VM, par "
+"exemple performance de vidéo médiocre, ou choix limité de matériel émulé."
 
 #. type: Plain text
 #: en/user_basics.ssi:96
@@ -445,6 +563,8 @@ msgid ""
 "_* When developing for specific hardware, there is no substitute for running "
 "on the hardware itself."
 msgstr ""
+"_* Lors du développement d'un matériel spécifique, il n'existe aucun "
+"substitut pour l'exécution que le matériel lui-même."
 
 #. type: Plain text
 #: en/user_basics.ssi:98
@@ -452,6 +572,9 @@ msgid ""
 "_* Occasionally there are bugs that relate only to running in a VM. When in "
 "doubt, test your image directly on the hardware."
 msgstr ""
+"_* Parfois il ya des bogues que deviennent visibles uniquement pendant "
+"l'exécution dans une VM. En cas de doute, testez votre image directement sur "
+"le matériel."
 
 #. type: Plain text
 #: en/user_basics.ssi:100
@@ -459,11 +582,13 @@ msgid ""
 "Provided you can work within these constraints, survey the available VM "
 "software and choose one that is suitable for your needs."
 msgstr ""
+"À condition que vous pouvez travailler avec ces obstacles, examinez les "
+"logiciels VM disponibles et choisissez celui qui convient à vos besoins."
 
 #. type: Plain text
 #: en/user_basics.ssi:102
 msgid "3~testing-iso-with-qemu Testing an ISO image with QEMU"
-msgstr ""
+msgstr "3~testing-iso-with-qemu Test d'une image ISO avec QEMU"
 
 #. type: Plain text
 #: en/user_basics.ssi:104
@@ -472,6 +597,10 @@ msgid ""
 "support for virtualization, use the #{qemu-kvm}# package; the #{qemu-kvm}# "
 "package description briefly lists the requirements."
 msgstr ""
+"La VM la plus polyvalente de Debian est QEMU. Si votre processeur possède un "
+"support matériel pour la virtualisation, vouz pouvez utiliser le paquet #"
+"{qemu-kvm}#; La description du paquet #{qemu-kvm}# énumère brièvement les "
+"exigences."
 
 #. type: Plain text
 #: en/user_basics.ssi:106
@@ -481,6 +610,10 @@ msgid ""
 "the following examples. The #{qemu-utils}# package is also valuable for "
 "creating virtual disk images with #{qemu-img}#."
 msgstr ""
+"Tout d'abord, installez #{qemu-kvm}# si votre processeur le supporte. Sinon, "
+"installez #{qemu}#, dans ce cas, le nom du programme est #{qemu}# au lieu de "
+"#{kvm}# dans les exemples suivants. Le paquet #{qemu-utils}# est également "
+"valuable pour créer des images disque virtuels avec #{qemu-img}#."
 
 #. type: Plain text
 #: en/user_basics.ssi:110
@@ -491,7 +624,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:114
 msgid "Booting an ISO image is simple:"
-msgstr ""
+msgstr "Démarrer une image ISO est simple:"
 
 #. type: Plain text
 #: en/user_basics.ssi:118
@@ -502,17 +635,18 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:122
 msgid "See the man pages for more details."
-msgstr ""
+msgstr "Voir les pages de manuel pour plus de détails."
 
 #. type: Plain text
 #: en/user_basics.ssi:124
 msgid "3~testing-iso-with-virtualbox Testing an ISO image with virtualbox-ose"
 msgstr ""
+"3~testing-iso-with-virtualbox  Test d'une image ISO avec virtualbox-ose"
 
 #. type: Plain text
 #: en/user_basics.ssi:126
 msgid "In order to test the ISO with #{virtualbox-ose}#:"
-msgstr ""
+msgstr "Afin de tester l'ISO avec #{virtualbox-ose}#:"
 
 #. type: Plain text
 #: en/user_basics.ssi:130
@@ -532,6 +666,9 @@ msgid ""
 "Create a new virtual machine, change the storage settings to use #{binary-"
 "hybrid.iso}# as the CD/DVD device, and start the machine."
 msgstr ""
+"Créer une nouvelle machine virtuelle, modifiez les paramètres de stockage "
+"pour utiliser #{binary-hybrid.iso}# comme le périphérique CD/DVD et démarrer "
+"la machine."
 
 #. type: Plain text
 #: en/user_basics.ssi:138
@@ -541,6 +678,10 @@ msgid ""
 "package, #{virtualbox-ose-guest-x11}#, in your live-build configuration. "
 "Otherwise, the resolution is limited to 800x600."
 msgstr ""
+"Remarque: Pour les systèmes live contenant X.org que vous voulez essayer "
+"avec #{virtualbox-ose}#, vous pouvez inclure le paquet des pilotes "
+"VirtualBox X.org, #{virtualbox-ose-guest-x11}#, dans votre configuration de "
+"live-build. Sinon, la résolution est limitée à 800x600."
 
 #. type: Plain text
 #: en/user_basics.ssi:142
@@ -551,7 +692,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:146
 msgid "2~building-usb-hdd Building a USB/HDD image"
-msgstr ""
+msgstr "2~building-usb-hdd Construction d'une image USB/HDD"
 
 #. type: Plain text
 #: en/user_basics.ssi:148
@@ -565,6 +706,15 @@ msgid ""
 "the remaining space on the media for some purpose, such as a persistence "
 "partition, you need a USB/HDD image."
 msgstr ""
+"La construction d'une image USB/HDD est similaire à une ISO hybride à tous "
+"les égards, sauf que vous spécifiez #{-b usb-hdd}# et le nom du fichier "
+"résultant est #{binary.img}# qui ne peut être brûlé sur des supports "
+"optiques. Il convient pour le démarrage à partir de clés USB, disques durs "
+"USB, et divers autres dispositifs de stockage portables. Normalement, une "
+"image ISO hybride peut être utilisé à cette fin au lieu, mais si vous avez "
+"un BIOS qui ne gère pas correctement des images hybrides, ou si vous voulez "
+"utiliser l'espace disponible sur le support à certaines fins, tel que la "
+"persistance d'une partition, vous devez utiliser une image USB/HDD. "
 
 #. type: Plain text
 #: en/user_basics.ssi:150
@@ -573,6 +723,9 @@ msgid ""
 "need to clean up your working directory with the #{lb clean}# command (see "
 "{The lb clean command}#lb-clean):"
 msgstr ""
+"Remarque: si vous avez créé une image ISO hybride avec l'exemple précédent, "
+"vous devrez nettoyer votre répertoire de travail avec la commande #{lb clean}"
+"# (voir {La commande lb clean}#lb-clean):"
 
 #. type: Plain text
 #: en/user_basics.ssi:154 en/user_basics.ssi:220
@@ -586,6 +739,8 @@ msgid ""
 "Run the #{lb config}# command as before, except this time specifying the USB/"
 "HDD image type:"
 msgstr ""
+"Exécutez la commande #{lb config}# comme avant, sauf que cette fois en "
+"spécifiant le type d'image USB/HDD:"
 
 #. type: Plain text
 #: en/user_basics.ssi:162
@@ -596,7 +751,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:166 en/user_basics.ssi:234
 msgid "Now build the image with the #{lb build}# command:"
-msgstr ""
+msgstr "Maintenant construire l'image avec la commande #{lb build}#"
 
 #. type: Plain text
 #: en/user_basics.ssi:174
@@ -604,11 +759,13 @@ msgid ""
 "When the build finishes, a #{binary.img}# file should be present in the "
 "current directory."
 msgstr ""
+"Quand la création de l'image est finie, un fichier #{binary.img}# doit être "
+"présent dans le répertoire courant."
 
 #. type: Plain text
 #: en/user_basics.ssi:176
 msgid "2~using-usb-hdd-image Using a USB/HDD image"
-msgstr ""
+msgstr "2~using-usb-hdd-image Utiliser une image USB/HDD"
 
 #. type: Plain text
 #: en/user_basics.ssi:178
@@ -619,11 +776,17 @@ msgid ""
 "instructions in {Using an ISO hybrid live image}#using-iso-hybrid, except "
 "use the filename #{binary.img}# instead of #{binary-hybrid.iso}#."
 msgstr ""
+"L'image binaire générée contient une partition VFAT et le chargeur de "
+"démarrage syslinux, prêtes à être écrites directement sur une clé USB. Comme "
+"l'utilisation d'une image USB/HDD est juste comme l'utilisation d'une image "
+"ISO hybride sur USB, suivez les instructions {Utiliser une image live ISO "
+"hybride}#using-iso-hybrid, à l'exception du nom de fichier #{binary.img}# en "
+"lieu de #{binary-hybrid.iso}#."
 
 #. type: Plain text
 #: en/user_basics.ssi:180
 msgid "3~testing-usb-hdd-with-qemu Testing a USB/HDD image with Qemu"
-msgstr ""
+msgstr "3~testing-usb-hdd-with-qemu Test d'une image USB/HDD avec Qemu"
 
 #. type: Plain text
 #: en/user_basics.ssi:182
@@ -633,6 +796,10 @@ msgid ""
 "version your host system needs, specifying #{binary.img}# as the first hard "
 "drive."
 msgstr ""
+"D'abord, installer QEMU comme décrit ci-dessus dans {Test d'une image ISO "
+"avec QEMU}#testing-iso-with-qemu. Ensuite, exécutez #{kvm}# ou #{qemu}#, "
+"selon la version de vos besoins du système hôte, précisant #{binary.img}# "
+"comme le premier disque dur."
 
 #. type: Plain text
 #: en/user_basics.ssi:186
@@ -644,6 +811,7 @@ msgstr ""
 #: en/user_basics.ssi:190
 msgid "3~using-usb-extra-space Using the space left on a USB stick"
 msgstr ""
+"3~using-usb-extra-space Utilisation de l'espace disponible sur une clé USB"
 
 #. type: Plain text
 #: en/user_basics.ssi:192
@@ -653,6 +821,10 @@ msgid ""
 "partition on the stick. The first partition will be used by the Debian Live "
 "system."
 msgstr ""
+"Pour utiliser l'espace libre restant après avoir copié #{binary.img}# sur "
+"une clé USB, utilisez un outil de partitionnement tels que #{gparted}# ou #"
+"{parted}# afin de créer une nouvelle partition sur la clé. La première "
+"partition sera utilisée par le système Debian Live."
 
 #. type: Plain text
 #: en/user_basics.ssi:196
@@ -667,6 +839,9 @@ msgid ""
 "partition, such as #{/dev/sdb2}#, you have to create a filesystem on it. One "
 "possible choice would be ext4."
 msgstr ""
+"Après la partition est créée, où #{${PARTITION}}# est le nom de la "
+"partition, tel que #{/dev/sdb2}#, vous devez créer un système de fichiers "
+"sur elle. Un choix possible serait ext4."
 
 #. type: Plain text
 #: en/user_basics.ssi:204
@@ -682,17 +857,22 @@ msgid ""
 "problem have been discussed on our {mailing list}#contact, but it seems "
 "there are no easy answers."
 msgstr ""
+"Remarque: Si vous voulez utiliser l'espace supplémentaire avec Windows, "
+"apparemment cet OS ne peut normalement pas accéder à n'importe quel "
+"partition, mais la première. Certaines solutions à ce problème ont été "
+"discutés sur notre {liste de diffusion}#contact, mais il semble qu'il n'y a "
+"pas de réponses faciles."
 
 #. type: Plain text
 #: en/user_basics.ssi:210
 #, no-wrap
 msgid "*{Remember: Every time you install a new binary.img on the stick, all data on the stick will be lost because the partition table is overwritten by the contents of the image, so back up your extra partition first to restore again after updating the live image.}*\n"
-msgstr ""
+msgstr "*{Rappelez-vous: Chaque fois que vous installez une nouvelle binary.img sur la clé, toutes les données sur la clé seront perdues parce que la table de partition est écrasé par le contenu de l'image, vous devez sauvegarder votre partition supplémentaire d'abord la restaurer à nouveau après la mise à jour du live image.}*\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:212
 msgid "2~building-netboot-image Building a netboot image"
-msgstr ""
+msgstr "2~building-netboot-image Construction d'une image netboot"
 
 #. type: Plain text
 #: en/user_basics.ssi:214
@@ -701,6 +881,9 @@ msgid ""
 "containing the Debian standard system without X.org. It is suitable for "
 "booting over the network."
 msgstr ""
+"La séquence de commandes suivante va créer une image NetBoot de base "
+"contenant le système Debian standard sans X.org. Elle peur être démarrée sur "
+"le réseau."
 
 #. type: Plain text
 #: en/user_basics.ssi:216
@@ -708,6 +891,8 @@ msgid ""
 "Note: if you performed any previous examples, you will need to clean up your "
 "working directory with the #{lb clean}# command:"
 msgstr ""
+"Remarque: Si vous avez réalisé tous les exemples précédents, vous aurez "
+"besoin de nettoyer votre répertoire de travail avec la commande #{lb clean}#:"
 
 #. type: Plain text
 #: en/user_basics.ssi:224
@@ -715,6 +900,8 @@ msgid ""
 "Run the #{lb config}# command as follows to configure your image for "
 "netbooting:"
 msgstr ""
+"Exécutez la commande comme suit pour configurer votre image pour démarrer "
+"sur le réseau:"
 
 #. type: Plain text
 #: en/user_basics.ssi:228
@@ -732,6 +919,13 @@ msgid ""
 "image will be located at boot time. Make sure these are set to suitable "
 "values for your network and server."
 msgstr ""
+"Contrairement à les images ISO et USB/HDD netbooting ne serve pas l'image du "
+"système de fichiers pour le client, afin que les fichiers doivent être "
+"servis via NFS. Les options #{--net-root-path}# et #{--net-root-server}# "
+"spécifien l'emplacement et le serveur, respectivement, du serveur NFS sur "
+"lequel l'image système de fichiers sera situé au moment du démarrage. "
+"Assurez-vous que ce sont mis à des valeurs appropriées pour votre réseau et "
+"serveur."
 
 #. type: Plain text
 #: en/user_basics.ssi:242
@@ -743,6 +937,13 @@ msgid ""
 "could be pxelinux, GRUB, or even boot directly to an operating system like "
 "Linux."
 msgstr ""
+"Dans un démarrage réseau, le client exécute un petit morceau de logiciel qui "
+"réside habituellement sur l'EPROM de la carte Ethernet. Ce programme envoie "
+"une requête DHCP pour obtenir une adresse IP et les informations sur ce "
+"qu'il faut faire ensuite. Typiquement, la prochaine étape est obtenir un "
+"chargeur de démarrage de niveau supérieur via le protocole TFTP. Cela "
+"pourrait être pxelinux, GRUB, ou démarrer directement à un système "
+"d'exploitation comme Linux."
 
 #. type: Plain text
 #: en/user_basics.ssi:244
@@ -752,6 +953,10 @@ msgid ""
 "{live/filesystem.squashfs}# and the kernel, initrd and pxelinux bootloader "
 "in #{tftpboot/debian-live/i386}#."
 msgstr ""
+"Par exemple, si vous décompressez le fichier généré #{binary-net.tar.gz}# "
+"dans le répertoire #{/srv/debian-live}#, vous trouverez l'image du système "
+"de fichiers dans #{live/filesystem.squashfs}# et le kernel, initrd et le "
+"chargeur de démarrage pxelinux dans #{tftpboot/debian-live/i386}#."
 
 #. type: Plain text
 #: en/user_basics.ssi:246
@@ -759,11 +964,13 @@ msgid ""
 "We must now configure three services on the server to enable netboot: the "
 "DHCP server, the TFTP server and the NFS server."
 msgstr ""
+"Nous devons maintenant configurer trois services sur le serveur pour activer "
+"netboot: le serveur DHCP, serveur TFTP et le serveur NFS."
 
 #. type: Plain text
 #: en/user_basics.ssi:248
 msgid "3~ DHCP server"
-msgstr ""
+msgstr "3~ Serveur DHCP"
 
 #. type: Plain text
 #: en/user_basics.ssi:250
@@ -772,6 +979,9 @@ msgid ""
 "to the netbooting client system, and to advertise the location of the PXE "
 "bootloader."
 msgstr ""
+"Nous devons configurer le serveur DHCP de notre réseau pour être sûr de "
+"donner une adresse IP au système client netboot, et pour annoncer "
+"l'emplacement du chargeur de démarrage PXE."
 
 #. type: Plain text
 #: en/user_basics.ssi:252
@@ -779,6 +989,8 @@ msgid ""
 "Here is an example for inspiration, written for the ISC DHCP server #{isc-"
 "dhcp-server}# in the #{/etc/dhcp/dhcpd.conf}# configuration file:"
 msgstr ""
+"Voici un exemple source d'inspiration, écrit pour le serveur ISC DHCP #{isc-"
+"dhcp-server}# dans le fichier de configuration #{/etc/dhcp/dhcpd.conf}#:"
 
 #. type: Plain text
 #: en/user_basics.ssi:256
@@ -828,12 +1040,14 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:276
 msgid "3~ TFTP server"
-msgstr ""
+msgstr "3~ Serveur TFTP"
 
 #. type: Plain text
 #: en/user_basics.ssi:278
 msgid "This serves the kernel and initial ramdisk to the system at run time."
 msgstr ""
+"Cela sert le kernel et le ramdisk initial pour le système au moment de "
+"l'exécution."
 
 #. type: Plain text
 #: en/user_basics.ssi:280
@@ -842,6 +1056,10 @@ msgid ""
 "inside a root directory, usually #{/srv/tftp}#. To let it serve files inside "
 "#{/srv/debian-live/tftpboot}#, run as root the following command:"
 msgstr ""
+"Vous devriez installer le paquet tftpd-hpa. Il peut servir tous les fichiers "
+"contenus dans un répertoire racine, d'habitude #{/srv/tftp}#. Pour le "
+"laisser servir des fichiers dans #{/srv/debian-live/tftpboot}#, exécuter "
+"comme utilisateur root la commande suivante:"
 
 #. type: Plain text
 #: en/user_basics.ssi:284
@@ -852,12 +1070,12 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:288
 msgid "and fill in the new tftp server directory when being asked about it."
-msgstr ""
+msgstr "et remplissez le nuveau répertoire du serveur tftp"
 
 #. type: Plain text
 #: en/user_basics.ssi:290
 msgid "3~ NFS server"
-msgstr ""
+msgstr "3~ Serveur NFS"
 
 #. type: Plain text
 #: en/user_basics.ssi:292
@@ -866,11 +1084,14 @@ msgid ""
 "its initrd, it will try to mount the Live filesystem image through a NFS "
 "server."
 msgstr ""
+"Une fois l'ordinateur hôte a téléchargé et démarré un kernel Linux et chargé "
+"son initrd, il va essayer de monter l'image du système de fichiers live via "
+"un serveur NFS."
 
 #. type: Plain text
 #: en/user_basics.ssi:294
 msgid "You need to install the #{nfs-kernel-server}# package."
-msgstr ""
+msgstr "Vous devez installer le paquet #{nfs-kernel-server}#."
 
 #. type: Plain text
 #: en/user_basics.ssi:296
@@ -878,6 +1099,8 @@ msgid ""
 "Then, make the filesystem image available through NFS by adding a line like "
 "the following to #{/etc/exports}#:"
 msgstr ""
+"Ensuite, rendre l'image du système de fichiers disponible via NFS en "
+"ajoutant une ligne comme la suivante #{/etc/exports}#:"
 
 #. type: Plain text
 #: en/user_basics.ssi:300
@@ -890,6 +1113,7 @@ msgstr ""
 msgid ""
 "and tell the NFS server about this new export with the following command:"
 msgstr ""
+"et dire au serveur NFS sur cette exportation avec la commande suivante:"
 
 #. type: Plain text
 #: en/user_basics.ssi:308
@@ -907,11 +1131,17 @@ msgid ""
 "debian.org/manual/en.i386/ch04s05.html. They might help, as their processes "
 "are very similar."
 msgstr ""
+"Mise en place ces trois services peut être un peu délicat. Vous pourriez "
+"avoir besoin de patience pour obtenir que tous travaillent ensemble. Pour "
+"plus d'informations, consultez le wiki syslinux à http://syslinux.zytor.com/"
+"wiki/index.php/PXELINUX ou la section Debian Installer Manual's TFTP Net "
+"Booting à http://d-i.alioth.debian.org/manual/en.i386/ch04s05.html. Ils "
+"pourraient aider parce que leurs processus sont très semblables."
 
 #. type: Plain text
 #: en/user_basics.ssi:314
 msgid "3~ Netboot testing HowTo"
-msgstr ""
+msgstr "3~ Guide pratique pour expérimenter avec une image Netboot"
 
 #. type: Plain text
 #: en/user_basics.ssi:316
@@ -919,27 +1149,32 @@ msgid ""
 "Netboot image creation is made easy with live-build magic, but testing the "
 "images on physical machines can be really time consuming."
 msgstr ""
+"La création d'images NetBoot est facile avec la magie de live-build, mais "
+"les essais des images sur des machines physiques peuvent prendre vraiment "
+"beaucoup de temps. "
 
 #. type: Plain text
 #: en/user_basics.ssi:318
 msgid ""
 "To make our life easier, we can use virtualization. There are two solutions."
 msgstr ""
+"Afin de rendre notre vie plus facile, nous pouvons utiliser la "
+"virtualisation. Il ya deux solutions."
 
 #. type: Plain text
 #: en/user_basics.ssi:320
 msgid "3~ Qemu"
-msgstr ""
+msgstr "3~ Qemu"
 
 #. type: Plain text
 #: en/user_basics.ssi:322
 msgid "_* Install #{qemu}#, #{bridge-utils}#, #{sudo}#."
-msgstr ""
+msgstr "_* Installer #{qemu}#, #{bridge-utils}#, #{sudo}#."
 
 #. type: Plain text
 #: en/user_basics.ssi:324
 msgid "Edit #{/etc/qemu-ifup}#:"
-msgstr ""
+msgstr "Èditer #{/etc/qemu-ifup}#:"
 
 #. type: Plain text
 #: en/user_basics.ssi:335
@@ -958,23 +1193,24 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:339
 msgid "Get, or build a #{grub-floppy-netboot}# (in the svn)."
-msgstr ""
+msgstr "Obtenir, ou construire un #{grub-floppy-netboot}# (dans le svn)."
 
 #. type: Plain text
 #: en/user_basics.ssi:341
 msgid ""
 "Launch #{qemu}# with \"#{-net nic,vlan=0 -net tap,vlan=0,ifname=tun0}#\""
 msgstr ""
+"Lancer #{qemu}# avec \"#{-net nic,vlan=0 -net tap,vlan=0,ifname=tun0}#\""
 
 #. type: Plain text
 #: en/user_basics.ssi:343
 msgid "3~ VMWare Player"
-msgstr ""
+msgstr "3~ VMWare Player"
 
 #. type: Plain text
 #: en/user_basics.ssi:345
 msgid "_* Install VMWare Player (\"free as in beer\" edition)"
-msgstr ""
+msgstr "_* Installer VMWare Player (édition \"free as in beer\")"
 
 #. type: Plain text
 #: en/user_basics.ssi:347
@@ -982,11 +1218,13 @@ msgid ""
 "_* Create a PXETester directory, and create a text file called #{pxe.vwx}# "
 "inside"
 msgstr ""
+"_* Créer un répertoire PXETester, et créer un fichier texte appelé #{pxe.vwx}"
+"# à l'intérieur"
 
 #. type: Plain text
 #: en/user_basics.ssi:349
 msgid "_* Paste this text inside:"
-msgstr ""
+msgstr "_* Collez ce texte à l'intérieur:"
 
 #. type: Plain text
 #: en/user_basics.ssi:357
@@ -1042,14 +1280,19 @@ msgid ""
 "_* You can play with this configuration file (e.g. change memory limit to "
 "256)"
 msgstr ""
+"_* Vous pouvez jouer avec ce fichier de configuration (par exemple, changer "
+"la limite de mémoire à 256)"
 
 #. type: Plain text
 #: en/user_basics.ssi:380
 msgid ""
 "_* Double click on this file (or run VMWare player and select this file)."
 msgstr ""
+"_* Double-cliquez sur ce fichier (ou exécuter VMware Player et sélectionnez "
+"ce fichier)."
 
 #. type: Plain text
 #: en/user_basics.ssi:381
 msgid "_* When running just press space if that strange question comes up..."
 msgstr ""
+"_* Lors de l'exécution presse l'espace si cette question étrange arrive ..."

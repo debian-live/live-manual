@@ -2,19 +2,20 @@
 # Copyright (C) 2010 Free Software Foundation, Inc.
 # This file is distributed under the same license as the live-manual package.
 # Automatically generated, 2010.
+# Carlos Zuferri «chals» <chals@altorricon.com>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 2.0.0\n"
 "POT-Creation-Date: 2010-12-19 20:37-0400\n"
-"PO-Revision-Date: 2010-10-13 17:00+0300\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2011-07-09 19:30+0200\n"
+"Last-Translator: Carlos Zuferri «chals» <chals@altorricon.com>\n"
+"Language-Team:  <debian-live@lists.debian.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. type: Plain text
 #: en/about_manual.ssi:84 en/about_manual.ssi:92 en/about_manual.ssi:100
@@ -147,12 +148,12 @@ msgstr "}code"
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:2
 msgid ":B~ Managing a configuration"
-msgstr ""
+msgstr ":B~ Gestion d'une configuration"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:4
 msgid "1~managing-a-configuration Managing a configuration"
-msgstr ""
+msgstr "1~managing-a-configuration Gestion d'une configuration"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:6
@@ -161,11 +162,14 @@ msgid ""
 "creation, through successive revisions and successive releases of both the "
 "live-build software and the live image itself."
 msgstr ""
+"Ce chapitre explique comment gérer une configuration d'un système live à "
+"partir d'une création initiale, à travers des révisions successives et des "
+"versions successives du logiciel live-build et de l'image live lui-même."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:8
 msgid "2~ Use auto to manage configuration changes"
-msgstr ""
+msgstr "2~ Utilisez auto pour gérer les modifications de configuration"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:10
@@ -177,6 +181,13 @@ msgid ""
 "default value, that value will not be recomputed from other variables that "
 "may change in later revisions."
 msgstr ""
+"Les configurations live sont rarement parfaites du premier coup. Vous aurez "
+"probablement besoin de faire une série de révisions jusqu'à ce que vous êtes "
+"satisfait. Cependant, des incohérences peuvent se glisser dans votre "
+"configuration d'une révision à la prochaine si vous ne faites pas attention. "
+"Le principal problème est, une fois qu'une variable est donné une valeur par "
+"défaut, cette valeur ne sera pas recalculé à partir d'autres variables qui "
+"peuvent changer dans les révisions ultérieures."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:12
@@ -186,6 +197,11 @@ msgid ""
 "decide to change the distribution, those dependent variables continue to "
 "retain old values that are no longer appropriate."
 msgstr ""
+"Par exemple, lorsque la distribution est d'abord définie, nombreuses "
+"variables sont assignées des valeurs par défaut qui conviennent à cette "
+"distribution. Cependant, si vous décidez ultérieurement de modifier la "
+"distribution, ces variables dépendantes conservent les anciennes valeurs qui "
+"ne sont plus appropriés."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:14
@@ -196,6 +212,11 @@ msgid ""
 "{config/*}# files, which you will then need to use to set the appropriate "
 "option again."
 msgstr ""
+"Un deuxième problème connexe est que si vous exécutez #{lb config}# et "
+"ensuite mettez à jour une nouvelle version de live-build qui a changé l'un "
+"des noms de variables, vous découvrirez ce que par un examen manuel des "
+"variables dans votre #{config/*}# fichiers, que vous devrez ensuite utiliser "
+"pour définir l'option appropriée à nouveau."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:16
@@ -211,11 +232,22 @@ msgid ""
 "release to the next (though you will still have to take care and read the "
 "documentation when you upgrade live-build and make adjustments as needed)."
 msgstr ""
+"Tout cela serait une nuisance terrible si ce n'était pas pour les scripts "
+"auto/* simples emballages pour les commandes #{lb config}#, #{lb build}# et #"
+"{lb clean}# qui sont conçus pour vous aider gérer votre configuration. Il "
+"suffit de créer un script auto/config contenant la commande #{lb config}# "
+"avec toutes les options désirées, et un auto/clean qui supprime les fichiers "
+"contenant les valeurs des variables de configuration, et chaque fois que "
+"vous #{lb config}# et #{lb clean}#, ces fichiers seront exécutés. Cela "
+"permettra d'assurer que votre configuration a une cohérence interne d'une "
+"révision à l'autre et d'une version de live-build à la suivante (même si "
+"vous aurez encore de prendre soin et lire la documentation lorsque vous "
+"faites un mise à niveau et faites les ajustements nécessaires )."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:18
 msgid "2~ Example auto scripts"
-msgstr ""
+msgstr "2~ Exemples de scripts auto"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:20
@@ -227,6 +259,13 @@ msgid ""
 "Also, don't forget to ensure the scripts are executable (e.g. #{chmod 755 "
 "auto/*}#)."
 msgstr ""
+"Utiliser des exemples de scripts auto tels que les suivants comme point de "
+"départ pour votre nouveau configuration de live-build. Prenez note que "
+"lorsque vous appelez la commande #{lb}# que votre script auto emballage vous "
+"devez spécifier #{noauto}# comme paramètre afin de s'assurer que le script "
+"automatique n'est pas appelé à nouveau, de façon récursive. Aussi, n'oubliez "
+"pas de s'assurer que les scripts sont exécutables (par exemple #{chmod 755 "
+"auto/*}#)."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:22
@@ -278,6 +317,8 @@ msgid ""
 "We now ship example auto scripts with live-build based on the examples "
 "above. You may copy those as your starting point."
 msgstr ""
+"Nous expédions maintenant scripts auto d'exemple avec live-build sur ​​la base "
+"des exemples ci-dessus. Vous pouvez copier ces comme point de départ."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:58
@@ -294,3 +335,8 @@ msgid ""
 "to use the default) and add any additional options in continuation lines "
 "that follow."
 msgstr ""
+"Editer #{auto/config}#, en changeant ou en ajoutant des options comme bon "
+"vous semble. Dans l'exemple ci-dessus, #{--packages-lists standard}# est "
+"fixé à la valeur par défaut. Changez ce à une valeur appropriée pour votre "
+"image (ou le supprimer si vous voulez utiliser par défaut) et ajouter des "
+"options supplémentaires dans les lignes de continuation qui suivent."

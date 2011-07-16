@@ -2,29 +2,30 @@
 # Copyright (C) 2010 Free Software Foundation, Inc.
 # This file is distributed under the same license as the live-manual package.
 # Automatically generated, 2010.
+# Carlos Zuferri «chals» <chals@altorricon.com>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 2.0.0\n"
-"POT-Creation-Date: 2010-11-27 09:40-0400\n"
-"PO-Revision-Date: 2010-10-22 07:52-0200\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"POT-Creation-Date: 2011-04-23 14:15+0300\n"
+"PO-Revision-Date: 2011-07-16 17:27+0200\n"
+"Last-Translator: Carlos Zuferri «chals» <chals@altorricon.com>\n"
+"Language-Team:  <debian-live@lists.debian.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:2 en/user_customization-overview.ssi:2
 msgid ":B~ Customizing contents"
-msgstr ""
+msgstr ":B~ Personnalisation des contenus"
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:4
 msgid "1~customization-overview Customization overview"
-msgstr ""
+msgstr "1~customization-overview Vue d'ensemble de la personnalisation"
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:6
@@ -32,11 +33,13 @@ msgid ""
 "This chapter gives an overview of the various ways in which you may "
 "customize a Debian Live system."
 msgstr ""
+"Ce chapitre donne un aperçu des diverses façons dont vous pouvez "
+"personnaliser un système Debian Live."
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:8
 msgid "2~ Build time vs. boot time configuration"
-msgstr ""
+msgstr "2~ Configuration pendant la construction vs. le démarrage"
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:10
@@ -54,6 +57,21 @@ msgid ""
 "system, such as persistence, keyboard layouts, or timezone. See {Customizing "
 "locale and language}#customizing-locale-and-language, for example."
 msgstr ""
+"Les options de configuration d'un système live sont divisés en options au "
+"moment de la construction, ces options sont appliqués pendant la création et "
+"des options au moment du démarrage, qui sont appliqués au moment du "
+"démarrage. Les options au moment du démarrage sont divisées en celles qui "
+"surviennent au début, appliquées par le paquet live-boot, et ceux qui "
+"arrivent plus tard, appliquées par live-config. Toute option de démarrage "
+"peut être modifiée par l'utilisateur en le spécifiant à l'invite de "
+"démarrage. L'image peut également être construite avec les paramètres de "
+"démarrage par défaut et alors les utilisateurs peuvent normalement démarrer "
+"directement au système live sans spécifier aucune option lorsque toutes les "
+"valeurs par défaut sont appropriées. En particulier, l'argument #{lb --"
+"bootappend-live}# se compose de toutes les options de ligne de commande du "
+"kernel par défaut pour le système live, comme la persistance, claviers, ou "
+"de fuseau horaire. Voir {Personnalisation des paramètres régionaux et la "
+"langue}#customizing-locale-and-language, par exemple."
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:12
@@ -66,11 +84,19 @@ msgid ""
 "your configuration. It is safe to do so, as none of the scripts contained "
 "within them are executed unless the system is configured as a live system."
 msgstr ""
+"Les options de configuration pendant la construction sont décrites dans les "
+"pages de manuel pour live-boot and live-config. Bien que les paquets live-"
+"boot et live-config sont installés dans le système live que vous "
+"construisez, il est recommandé que vous les installez aussi sur votre "
+"système de construction pour référence facile lorsque vous travaillez sur "
+"votre configuration. On peut faire ça sans danger, car aucun des scripts "
+"contenus dans eux sont exécutés à moins que le système est configuré comme "
+"un système live."
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:14
 msgid "2~stages-of-the-build Stages of the build"
-msgstr ""
+msgstr "2~stages-of-the-build Étapes de la construction"
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:16
@@ -89,6 +115,20 @@ msgid ""
 "filesystem. After the live image is built, if enabled, the source tarball is "
 "built in the *{source}* stage."
 msgstr ""
+"Le processus de construction est divisé en étapes, avec des "
+"personnalisations différentes appliquées dans l'ordre dans chaque étape. La "
+"première étape à exécuter est l'étape *{bootstrap}*. C'est la phase initiale "
+"de peupler le répertoire chroot avec des paquets pour faire un système "
+"Debian de base. Il est suivi par l'étape *{chroot}*, qui complète la "
+"construction du répertoire chroot, le peuplant de tous les paquets listés "
+"dans la configuration, ainsi que tout autre matériel. La plupart de "
+"personnalisation de contenu se produit à ce stade. La dernière étape de la "
+"préparation de l'image live est l'étape *{binary}*, qui construit une image "
+"démarrable, en utilisant le contenu du répertoire chroot pour construire le "
+"système de fichiers racine pour le système Live, et dont l'installateur et "
+"tout autre matériel supplémentaire sur les supports objectif en dehors du "
+"système de fichiers du système live. Après l'image live est construite, s'il "
+"est activé, l'archive source est construit dans l'étape *{source}*."
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:18
@@ -101,11 +141,18 @@ msgid ""
 "patches are applied, and hooks are run later, after all of the materials are "
 "in place."
 msgstr ""
+"Dans chacune de ces étapes, il ya une séquence particulière dans laquelle "
+"les commandes sont appliquées. Ce sont disposées de telle manière à assurer "
+"que les personnalisations peuvent être superposées de manière raisonnable. "
+"Par exemple, dans l'étape *{chroot}*, preseeds sont appliqués avant tous les "
+"paquets sont installés, les paquets sont installés avant tout les fichiers "
+"localement inclus ou les patches sont appliqués, et les hooks sont exécutés "
+"plus tard, après que tous les matériaux sont en place."
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:20
 msgid "2~ Supplement lb config with files"
-msgstr ""
+msgstr "2~ Supplément lb config avec des fichiers"
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:22
@@ -121,14 +168,26 @@ msgid ""
 "boosting the already considerable flexibility of debian-live with code of "
 "your own."
 msgstr ""
+"Bien que #{lb config}# crée une configuration du squelette dans le "
+"répertoire config/, pour accomplir vos objectifs, vous pourriez avoir besoin "
+"de fournir des fichiers supplémentaires dans les sous-répertoires de "
+"config/. Selon l'endroit où les fichiers sont stockés dans la configuration, "
+"ils peuvent être copiés dans le système de fichiers du système live ou dans "
+"le système de fichiers de l'image binaire, ou peut fournir configurations du "
+"système au moment de la construction qui serait lourd de passer comme "
+"options de la ligne de commande. Vous pouvez inclure des choses telles que "
+"des listes personnalisées de paquets, art personnalisé, ou des scripts hook "
+"à exécuter, soit au temps de construction ou au moment du démarrage, "
+"augmentant la flexibilité déjà considérable de debian-live avec code de "
+"votre choix."
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:24
 msgid "2~ Customization tasks"
-msgstr ""
+msgstr "2~ Tâches de personnalisation"
 
 #. type: Plain text
-#: en/user_customization-overview.ssi:26
+#: en/user_customization-overview.ssi:25
 msgid ""
 "The following chapters are organized by the kinds of customization task "
 "users typically perform: {Customizing package installation}#customizing-"
@@ -136,3 +195,9 @@ msgid ""
 "{Customizing locale and language}#customizing-locale-and-language cover just "
 "a few of the things you might want to do."
 msgstr ""
+"Les chapitres suivants sont organisés par les types des tâches de "
+"personnalisation que les utilisateurs effectuent généralement: "
+"{Personnalisation de l'installation de paquets}#customizing-package-"
+"installation, {Personnalisation des contenus}#customizing-contents et "
+"{Personnalisation des paramètres régionaux et la langue}#customizing-locale-"
+"and-language couvrent quelques choses que vous pourriez vouloir faire."

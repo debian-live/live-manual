@@ -1,76 +1,83 @@
-:B~ Customizing contents
+:B~ Personnalisation des contenus
 
-1~customization-overview Customization overview
+1~customization-overview Vue d'ensemble de la personnalisation
 
-This chapter gives an overview of the various ways in which you may
-customize a Debian Live system.
+Ce chapitre donne un aperçu des diverses façons dont vous pouvez
+personnaliser un système Debian Live.
 
-2~ Build time vs. boot time configuration
+2~ Configuration pendant la construction vs. le démarrage
 
-Live system configuration options are divided into build-time options which
-are options that are applied at build time and boot-time options which are
-applied at boot time. Boot-time options are further divided into those
-occurring early in the boot, applied by the live-boot package, and those
-that happen later in the boot, applied by live-config. Any boot-time option
-may be modified by the user by specifying it at the boot prompt. The image
-may also be built with default boot parameters so users can normally just
-boot directly to the live system without specifying any options when all of
-the defaults are suitable. In particular, the argument to #{lb
---bootappend-live}# consists of any default kernel command line options for
-the Live system, such as persistence, keyboard layouts, or timezone. See
-{Customizing locale and language}#customizing-locale-and-language, for
-example.
+Les options de configuration d'un système live sont divisés en options au
+moment de la construction, ces options sont appliqués pendant la création et
+des options au moment du démarrage, qui sont appliqués au moment du
+démarrage. Les options au moment du démarrage sont divisées en celles qui
+surviennent au début, appliquées par le paquet live-boot, et ceux qui
+arrivent plus tard, appliquées par live-config. Toute option de démarrage
+peut être modifiée par l'utilisateur en le spécifiant à l'invite de
+démarrage. L'image peut également être construite avec les paramètres de
+démarrage par défaut et alors les utilisateurs peuvent normalement démarrer
+directement au système live sans spécifier aucune option lorsque toutes les
+valeurs par défaut sont appropriées. En particulier, l'argument #{lb
+--bootappend-live}# se compose de toutes les options de ligne de commande du
+kernel par défaut pour le système live, comme la persistance, claviers, ou
+de fuseau horaire. Voir {Personnalisation des paramètres régionaux et la
+langue}#customizing-locale-and-language, par exemple.
 
-Build-time configuration options are described in the #{lb config}# man
-page. Boot-time options are described in the man pages for live-boot and
-live-config. Although the live-boot and live-config packages are installed
-within the live system you are building, it is recommended that you also
-install them on your build system for easy reference when you are working on
-your configuration. It is safe to do so, as none of the scripts contained
-within them are executed unless the system is configured as a live system.
+Les options de configuration pendant la construction sont décrites dans les
+pages de manuel pour live-boot and live-config. Bien que les paquets
+live-boot et live-config sont installés dans le système live que vous
+construisez, il est recommandé que vous les installez aussi sur votre
+système de construction pour référence facile lorsque vous travaillez sur
+votre configuration. On peut faire ça sans danger, car aucun des scripts
+contenus dans eux sont exécutés à moins que le système est configuré comme
+un système live.
 
-2~stages-of-the-build Stages of the build
+2~stages-of-the-build Étapes de la construction
 
-The build process is divided into stages, with various customizations
-applied in sequence in each. The first stage to run is the *{bootstrap}*
-stage. This is the initial phase of populating the chroot directory with
-packages to make a barebones Debian system. This is followed by the
-*{chroot}* stage, which completes the construction of chroot directory,
-populating it with all of the packages listed in the configuration, along
-with any other materials. Most customization of content occurs in this
-stage. The final stage of preparing the live image is the *{binary}* stage,
-which builds a bootable image, using the contents of the chroot directory to
-construct the root filesystem for the Live system, and including the
-installer and any other additional material on the target media outside of
-the Live system's filesystem. After the live image is built, if enabled, the
-source tarball is built in the *{source}* stage.
+Le processus de construction est divisé en étapes, avec des
+personnalisations différentes appliquées dans l'ordre dans chaque étape. La
+première étape à exécuter est l'étape *{bootstrap}*. C'est la phase initiale
+de peupler le répertoire chroot avec des paquets pour faire un système
+Debian de base. Il est suivi par l'étape *{chroot}*, qui complète la
+construction du répertoire chroot, le peuplant de tous les paquets listés
+dans la configuration, ainsi que tout autre matériel. La plupart de
+personnalisation de contenu se produit à ce stade. La dernière étape de la
+préparation de l'image live est l'étape *{binary}*, qui construit une image
+démarrable, en utilisant le contenu du répertoire chroot pour construire le
+système de fichiers racine pour le système Live, et dont l'installateur et
+tout autre matériel supplémentaire sur les supports objectif en dehors du
+système de fichiers du système live. Après l'image live est construite, s'il
+est activé, l'archive source est construit dans l'étape *{source}*.
 
-Within each of these stages, there is a particular sequence in which
-commands are applied. These are arranged in such a way as to ensure
-customizations can be layered in a reasonable fashion. For example, within
-the *{chroot}* stage, preseeds are applied before any packages are
-installed, packages are installed before any locally included files or
-patches are applied, and hooks are run later, after all of the materials are
-in place.
+Dans chacune de ces étapes, il ya une séquence particulière dans laquelle
+les commandes sont appliquées. Ce sont disposées de telle manière à assurer
+que les personnalisations peuvent être superposées de manière
+raisonnable. Par exemple, dans l'étape *{chroot}*, preseeds sont appliqués
+avant tous les paquets sont installés, les paquets sont installés avant tout
+les fichiers localement inclus ou les patches sont appliqués, et les hooks
+sont exécutés plus tard, après que tous les matériaux sont en place.
 
-2~ Supplement lb config with files
+2~ Supplément lb config avec des fichiers
 
-Although #{lb config}# does create a skeletal configuration in the config/
-directory, to accomplish your goals, you may need to provide additional
-files in subdirectories of config/. Depending on where the files are stored
-in the configuration, they may be copied into the live system's filesystem
-or into the binary image filesystem, or may provide build-time
-configurations of the system that would be cumbersome to pass as
-command-line options. You may include things such as custom lists of
-packages, custom artwork, or hook scripts to run either at build time or at
-boot time, boosting the already considerable flexibility of debian-live with
-code of your own.
+Bien que #{lb config}# crée une configuration du squelette dans le
+répertoire config/, pour accomplir vos objectifs, vous pourriez avoir besoin
+de fournir des fichiers supplémentaires dans les sous-répertoires de
+config/. Selon l'endroit où les fichiers sont stockés dans la configuration,
+ils peuvent être copiés dans le système de fichiers du système live ou dans
+le système de fichiers de l'image binaire, ou peut fournir configurations du
+système au moment de la construction qui serait lourd de passer comme
+options de la ligne de commande. Vous pouvez inclure des choses telles que
+des listes personnalisées de paquets, art personnalisé, ou des scripts hook
+à exécuter, soit au temps de construction ou au moment du démarrage,
+augmentant la flexibilité déjà considérable de debian-live avec code de
+votre choix.
 
-2~ Customization tasks
+2~ Tâches de personnalisation
 
-The following chapters are organized by the kinds of customization task
-users typically perform: {Customizing package
-installation}#customizing-package-installation, {Customizing
-contents}#customizing-contents and {Customizing locale and
-language}#customizing-locale-and-language cover just a few of the things you
-might want to do.
+Les chapitres suivants sont organisés par les types des tâches de
+personnalisation que les utilisateurs effectuent généralement:
+{Personnalisation de l'installation de
+paquets}#customizing-package-installation, {Personnalisation des
+contenus}#customizing-contents et {Personnalisation des paramètres régionaux
+et la langue}#customizing-locale-and-language couvrent quelques choses que
+vous pourriez vouloir faire.

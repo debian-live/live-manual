@@ -65,7 +65,7 @@ utilizará el nombre de la distribución y las áreas de archivos específicas
 de la distribución derivada en lugar de los propios de Debian y live-build
 modificará su comportamiento para adecuarlo al modo seleccionado.
 
-*Nota:* La ayuda a los usuarios de las distribuciones añadidas con estos modos son responsabilidad de los desarrolladores de dichas distribuciones. El proyecto Debian Live proporciona ayuda al desarrollo de la mejor manera posible, basándose en la información recogida de dichas distribuciones derivadas a pesar de que no desarrolla ni da soporte a las mismas.
+*{Note:}* The projects for whom these modes were added are primarily responsible for supporting users of these options. The Debian live project, in turn, provides development support on a best-effort basis only, based on feedback from the derivative projects as we do not develop or support these derivatives ourselves.
 
 3~ Réplicas de Distribución Debian
 
@@ -153,10 +153,7 @@ Se debería también incluir en el fichero
 #{config/chroot_sources/your-repository.{binary,chroot}.gpg}# la clave GPG a
 utilizar para firmar dicho repositorio.
 
-Nota: Existen algunos repositorios de paquetes ya preconfigurados para
-facilitar la selección mediante la opción #{--repository}#. Por ejemplo,
-para utilizar las instantáneas del repositorio de Debian Live, sería
-suficiente con activarlo mediante:
+*{Note:}* some preconfigured package repositories are available for easy selection through the #{--repository}# option, e.g. for enabling live snapshots, a simple command is enough to enable it:
 
 code{
 
@@ -228,9 +225,7 @@ extensiva que corresponde con los valores por defecto del Instalador de
 Debian para estos entornos de escritorio. Para más información ver {Tareas
 de Escritorio e Idioma}#desktop-and-language-tasks .
 
-Nota: Existen imágenes listas para su descarga con los escritorios GNOME,
-KDE, LXDE y XFCE en http://live.debian.net. Estas imágenes han sido creadas
-utilizando la lista virtual #{*-desktop}# correspondiente.
+*{Note:}* The prebuilt GNOME, KDE, LXDE and XFCE images available for download at http://live.debian.net are built using the corresponding virtual #{*-desktop}# lists.
 
 La ubicación por defecto de las listas de los ficheros en el sistema huésped
 es #{/usr/share/live/build/lists/}#. Para determinar qué paquetes componen
@@ -599,19 +594,18 @@ creación de la imagen, creando el fichero #{config/chroot_apt/preferences}#
 o en tiempo de ejecución del sistema en vivo creando el fichero
 #{config/chroot_local-includes/etc/apt/preferences}#.
 
-Supongamos que se está creando un sistema en vivo basado en Squeeze pero se
-necesita instalar todos los paquetes #{live-*}# desde la versión inestable
-«Sid» en el momento de crear la imagen. Se deberá añadir Sid a los orígenes
-(sources) de APT y fijarlo (pin) de manera que solamente los paquetes
-#{live-*}# sean instalados desde Sid mientras que el resto será obtenido
-desde la distribución base, Squeeze. Esto se puede realizar de la siguiente
-forma:
+Let's say you are building a Squeeze live system but need all the live
+packages that end up in the binary image to be installed from Sid at build
+time. You need to add Sid to your APT sources and pin it so that only the
+packages you want are installed from it at build time and all others are
+taken from the target system distribution, Squeeze. The following will
+accomplish this:
 
 code{
 
  $ echo "deb http://mirror/debian sid main" > config/chroot_sources/sid.chroot
  $ cat >>config/chroot_apt/preferences <<END
- Package: live-*
+ Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit
  Pin: release n=sid
  Pin-Priority: 600
 
@@ -619,6 +613,14 @@ code{
  Pin: release n=sid
  Pin-Priority: 1
  END
+
+}code
+
+*{Note:}* Wildcards can be used in package names (e.g. *{Package: live-*}*) with Apt version 0.8.14 or higher. This means that it works with Wheezy using:
+
+code{
+
+$ lb config --distribution wheezy
 
 }code
 

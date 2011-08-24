@@ -42,11 +42,10 @@ code{
 
 }code
 
-All'interno dell'archivio della distribuzione, le aree d'archivio sono
-divisioni importanti. In Debian queste sono #{main}#, #{contrib}# e
-#{non-free}#; soltanto #{main}# contiene il software che è parte ufficiale
-della distribuzione Debian, perciò questa è la predefinita. Possono essere
-specificati uno o più valori:
+All'interno dell'archivio dei pacchetti, le aree sono le principali
+divisioni dello stesso. In Debian queste sono #{main}#, #{contrib}# e
+#{non-free}#; soltanto #{main}# contiene il software che è parte di Debian,
+perciò questa è la predefinita. Possono essere specificati uno o più valori:
 
 code{
 
@@ -62,7 +61,7 @@ gestiti i nomi della distribuzione e le aree di archivio per la derivata
 specificata e non quelli di Debian. La modalità cambia anche il
 comportamento di live-build per adattarlo alle derivate.
 
-*Nota:* I progetti per i quali sono state aggiunte tali modalità sono i principali responsabili nel supportare gli utenti di queste opzioni. Il progetto Debian Live, a sua volta, fornisce sostegno allo sviluppo solamente sulla base dell'impegno migliore, sui feedback dei progetti derivati così come non sviluppiamo o sosteniamo queste derivate.
+*{Nota:}* i progetti per i quali sono state aggiunte tali modalità sono i principali responsabili nel supportare gli utenti di queste opzioni. Il progetto Debian Live, a sua volta, fornisce sostegno allo sviluppo solamente sulla base dell'impegno migliore, sui feedback dei progetti derivati così come non sviluppiamo o sosteniamo queste derivate.
 
 3~ Mirror delle distribuzioni
 
@@ -147,9 +146,7 @@ Se il file esiste, saranno prelevati automaticamente.
 Bisogna inoltre inserire la chiave GPG usata per firmare il repository nei
 file #{config/chroot_sources/vostro-repository.{binary,chroot}.gpg}#.
 
-Nota: alcuni repository di pacchetti preconfigurati sono disponibili per una
-facile selezione attraverso l'opzione #{--repository}#, per abilitare gli
-snapshot live è sufficiente un semplice comando:
+*{Nota:}* alcuni repository di pacchetti preconfigurati sono disponibili per una facile selezione attraverso l'opzione #{--repository}#, per abilitare gli snapshot live è sufficiente un semplice comando:
 
 code{
 
@@ -216,9 +213,7 @@ corrisponde ai predefiniti dell'installatore Debian per ciascun ambiente
 desktop. Per ulteriori dettagli si veda {Task per desktop e
 lingua}#desktop-and-language-tasks.
 
-Nota: Le immagini pre-costruite di GNOME, KDE, LXDE e XFCE disponibili per
-essere scaricate da http://live.debian.net sono costruite usando i
-corrispondenti elenchi #{*-desktop}# virtuali.
+*{Nota:}* le immagini pre-costruite di GNOME, KDE, LXDE e XFCE disponibili per essere scaricate da http://live.debian.net sono costruite usando i corrispondenti elenchi #{*-desktop}# virtuali.
 
 Il percorso predefinito per i file elenco sul sistema è
 #{/usr/share/live/build/lists/}#. Per determinare i pacchetti in un dato
@@ -381,7 +376,7 @@ live-build pre-imposterà il corrispondente valore desktop per l'installatore
 Debian (se incluso) per garantire che segua le proprie regole per installare
 i vari tipi di desktop.
 
-*{Nota:}* Esiste anche l'opzione sperimentale #{--language}# con lo scopo di sovrapporsi ai task della lingua. Se #{--language}# è specificato, per ogni lingua per la quale sia nota la presenza di pacchetti #{*-l10n}# questi verranno installati. Inoltre se uno dei modelli #{syslinux}# corrisponde alla lingua trovata, questi saranno usati al posto di quello inglese predefinito. La selezione dei pacchetti fatta con #{--language}# è un'approssimazione dei task della lingua, in quanto richiede che l'elenco dei pacchetti da includere per ogni lingua sia mantenuta all'interno di live-build, oltretutto i task della lingua sono più completi e flessibili; per quanto l'aspetto di #{syslinux}# sia comunque utile. Quindi utilizzando #{--bootloader syslinux}#, e se i modelli per la lingua specificata esistono in #{/usr/share/live/build/templates/syslinux/}# o in #{config/templates/syslinux/}#, si può considerare questa opzione, eventualmente in combinazione con i task per garantire che vengano installati tutti i pacchetti interessati. Esempio:
+*{Nota:}* esiste anche l'opzione sperimentale #{--language}# con lo scopo di sovrapporsi ai task della lingua. Se #{--language}# è specificato, per ogni lingua per la quale sia nota la presenza di pacchetti #{*-l10n}# questi verranno installati. Inoltre se uno dei modelli #{syslinux}# corrisponde alla lingua trovata, questi saranno usati al posto di quello inglese predefinito. La selezione dei pacchetti fatta con #{--language}# è un'approssimazione dei task della lingua, in quanto richiede che l'elenco dei pacchetti da includere per ogni lingua sia mantenuta all'interno di live-build, oltretutto i task della lingua sono più completi e flessibili; per quanto l'aspetto di #{syslinux}# sia comunque utile. Quindi utilizzando #{--bootloader syslinux}#, e se i modelli per la lingua specificata esistono in #{/usr/share/live/build/templates/syslinux/}# o in #{config/templates/syslinux/}#, si può considerare questa opzione, eventualmente in combinazione con i task per garantire che vengano installati tutti i pacchetti interessati. Esempio:
 
 code{
 
@@ -559,16 +554,17 @@ prima creare #{config/chroot_apt/preferences}#, per quest'ultima creare
 #{config/chroot_local-includes/etc/apt/preferences}#.
 
 Nell'ipotesi di creare un sistema live Squeeze e avendo la necessità di
-installare tutti i pacchetti #{live-*}# da Sid in questa fase, bisogna
-aggiungere Sid alle fonti di APT e farne il pinning affinché verranno
-installati da lì solo i pacchetti voluti e per tutti gli altri attingerà
-dalla distribuzione principale, Squeeze. Quanto segue servirà allo scopo:
+installare da Sid tutti i pacchetti live destinati all'immagine binaria
+questa fase, bisogna aggiungere Sid alle fonti di APT e farne il pinning
+affinché verranno installati da lì solo i pacchetti voluti, mentre per tutti
+gli altri si attingerà dalla distribuzione principale, Squeeze. Quanto segue
+servirà allo scopo:
 
 code{
 
  $ echo "deb http://mirror/debian sid main" > config/chroot_sources/sid.chroot
  $ cat >>config/chroot_apt/preferences <<END
- Package: live-*
+ Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit
  Pin: release n=sid
  Pin-Priority: 600
 
@@ -576,6 +572,14 @@ code{
  Pin: release n=sid
  Pin-Priority: 1
  END
+
+}code
+
+*{Nota:}* con la versione 0.8.14 o superiore di Apt si possono utilizzare wildcard nei nomi dei pacchetti (*{Package: live-*}*). Ciò significa che funziona con Wheezy usando:
+
+code{
+
+$ lb config --distribution wheezy
 
 }code
 

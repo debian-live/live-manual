@@ -2,19 +2,20 @@
 # Copyright (C) 2010 Free Software Foundation, Inc.
 # This file is distributed under the same license as the live-manual package.
 # Automatically generated, 2010.
+# Carlos Zuferri «chals» <chals@altorricon.com>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 2.0.0\n"
 "POT-Creation-Date: 2011-06-19 16:45+0300\n"
-"PO-Revision-Date: 2010-11-30 11:40+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2011-08-20 16:07+0200\n"
+"Last-Translator: Carlos Zuferri «chals» <chals@altorricon.com>\n"
+"Language-Team:  <debian-live@lists.debian.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. type: Plain text
 #: en/about_manual.ssi:84 en/about_manual.ssi:92 en/about_manual.ssi:100
@@ -147,12 +148,14 @@ msgstr "}code"
 #. type: Plain text
 #: en/user_customization-runtime.ssi:2
 msgid ":B~ Customizing run time behaviours"
-msgstr ""
+msgstr ":B~ Personnalisation des comportements au moment de l'exécution"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:4
 msgid "1~customizing-run-time-behaviours Customizing run time behaviours"
 msgstr ""
+"1~customizing-run-time-behaviours Personnalisation des comportements au "
+"moment de l'exécution"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:6
@@ -161,11 +164,15 @@ msgid ""
 "are some most common options of live-config that users are interested in. A "
 "full list of all possibilities can be found in the manpage of live-config."
 msgstr ""
+"Toute la configuration qui est fait pendant l'exécution est fait par live-"
+"config. Voici quelques options les plus courantes de live-config d'intérêt "
+"pour les utilisateurs. Une liste complète de toutes les possibilités peut "
+"être trouvée dans la page de manuel de live-config."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:8
 msgid "2~ Customizing the live user"
-msgstr ""
+msgstr "2~ Personnalisation de l'utilisateur Live"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:10
@@ -176,6 +183,12 @@ msgid ""
 "discussed in {Live/chroot local includes}#live-chroot-local-includes, but "
 "also any groups and permissions associated with the live user."
 msgstr ""
+"Une considération importante est que l'utilisateur live est créé par live-"
+"boot au démarrage, non pas par live-config au moment de la construction. Ça "
+"influence non seulement là où les documents relatifs à l'utilisateur live "
+"sont introduits dans votre construction, tel que discuté dans {Live/chroot "
+"local includes}#live-chroot-local-includes, mais aussi tous les groupes et "
+"les autorisations associées à l'utilisateur live."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:12
@@ -185,6 +198,10 @@ msgid ""
 "add the live user to the #{fuse}# group, add the following to a file in the #"
 "{config/chroot_local-preseed}# directory:"
 msgstr ""
+"Vous pouvez spécifier d'autres groupes pour l'utilisateur live en "
+"préconfigurant la valeur debconf #{passwd/user-default-groups}#. Par "
+"exemple, pour ajouter l'utilisateur live au groupe #{fuse}# ajoutez la ligne "
+"suivante à un fichier dans le répertoire #{config/chroot_local-preseed}#:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:16
@@ -196,26 +213,29 @@ msgstr ""
 #: en/user_customization-runtime.ssi:20
 msgid "2~customizing-locale-and-language Customizing locale and language"
 msgstr ""
+"2~customizing-locale-and-language Personnalisation des paramètres régionaux "
+"et la langue"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:22
 msgid "When the live system boots, language is involved in three steps:"
 msgstr ""
+"Au démarrage du système live, la langue est impliqué dans trois étapes:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:24
 msgid "_* the locale generation"
-msgstr ""
+msgstr "_* la génération des paramètres régionaux"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:26
 msgid "_* setting the keyboard layout for the console"
-msgstr ""
+msgstr "_* réglage de la disposition du clavier pour la console"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:28
 msgid "_* setting the keyboard layout for X"
-msgstr ""
+msgstr "_* réglage de la disposition du clavier pour X"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:30
@@ -224,6 +244,10 @@ msgid ""
 "To define the locale that should be generated, use the #{locales}# parameter "
 "in the #{--bootappend-live}# option of #{lb config}#, e.g."
 msgstr ""
+"Les paramètres régionaux par défaut pendant la construction d'un système "
+"Live sont \"locales=en_US.UTF-8\". Pour définir les paramètres régionaux qui "
+"doivent être générés, utilisez le paramètre #{locales}# dans l'option #{--"
+"bootappend-live}# de #{lb config}#, par exemple"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:34
@@ -237,6 +261,9 @@ msgid ""
 "This parameter can also be used at the kernel command line. You can specify "
 "a locale by a full #{language_country.encoding}# word."
 msgstr ""
+"Ce paramètre peut également être utilisé à la ligne de commande du noyau. "
+"Vous pouvez spécifier des paramètres régionaux par #{language_country."
+"encoding}#."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:40
@@ -248,6 +275,13 @@ msgid ""
 "characters) corresponding to a language try searching for the english name "
 "of the nation where the language is spoken, e.g:"
 msgstr ""
+"Tant la console et la configuration du clavier X dépendent du paramètre #"
+"{keyboard-layouts}# de l'option #{--bootappend-live}#. Options valides pour "
+"les dispositions des claviers X peuvent être trouvés dans #{/usr/share/X11/"
+"xkb/rules/base.xml}# (plutôt limitées à des codes des pays à deux lettres). "
+"Pour trouver la valeur (les deux caractères), correspondant à une langue "
+"essayez de rechercher le nom anglais de la nation où la langue est parlée, "
+"par exemple:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:45
@@ -262,6 +296,8 @@ msgstr ""
 msgid ""
 "To get the locale files for German and Swiss German keyboard layout in X use:"
 msgstr ""
+"Pour obtenir les fichiers des paramètres régionaux pour les claviers "
+"allemand et suisse allemand dans X utiliser:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:53
@@ -275,6 +311,8 @@ msgid ""
 "A list of the valid values of the keyboards for the console can be figured "
 "with the following command:"
 msgstr ""
+"Une liste des valeurs valides des claviers pour la console peut être figuré "
+"avec la commande suivante:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:62
@@ -295,6 +333,14 @@ msgid ""
 "system with a French-Dvorak layout (called Bepo) on a TypeMatrix keyboard, "
 "both in console and X11, use:"
 msgstr ""
+"Alternativement, vous pouvez utiliser le paquet #{console-setup}#, un outil "
+"pour vous permettre de configurer la disposition de la console en utilisant "
+"définitions X (XKB), vous pouvez alors définir votre clavier plus "
+"précisément avec variables #{keyboard-layouts}#, #{keyboard-variant}#, #"
+"{keyboard-options}# et #{keyboard-model}#; live-boot pourra également "
+"utiliser ces paramètres pour la configuration de X. Par exemple, pour mettre "
+"en place un système français avec une disposition Français Dvorak (appelée "
+"Bepo) sur un clavier TypeMatrix, à la fois dans la console et X11, utilisez:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:71
@@ -307,7 +353,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_customization-runtime.ssi:75
 msgid "2~persistence Persistence"
-msgstr ""
+msgstr "2~persistence Persistance"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:77
@@ -316,6 +362,10 @@ msgid ""
 "media, like a cdrom, where writes and modifications do not survive reboots "
 "of the host hardware which runs it."
 msgstr ""
+"Un paradigme d'un Live CD est être un système pré-installé qui se démarre du "
+"support en lecture seule, comme un cdrom, où les données et les "
+"modifications ne survivent pas aux redémarrages du matériel hôte qui "
+"l'exécute."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:79
@@ -325,6 +375,10 @@ msgid ""
 "should be considered read-only and all the run-time evolutions of the system "
 "are lost at shutdown."
 msgstr ""
+"Un système Debian Live est une généralisation de ce paradigme et soutient "
+"ainsi autres supports, en plus de CDs, mais encore, dans son comportement "
+"par défaut, il doit être considéré en lecture seule et toutes les évolutions "
+"d'exécution du système sont perdus à l'arrêt."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:81
@@ -336,6 +390,14 @@ msgid ""
 "directories are written on writable media, typically a ram disk (tmpfs) and "
 "ram disks' data do not survive reboots."
 msgstr ""
+"La persistance est un nom commun pour les différents types de solutions pour "
+"sauver, après un redémarrage, certaines ou toutes les données, de cette "
+"évolution pendant l'exécution du système. Pour comprendre comment cela "
+"pourrait fonctionner il pourrait être utile de savoir que même si le système "
+"est démarré et exécuté à partir d'un support en lecture seule, la "
+"modification des fichiers et répertoires sont écrits sur des supports "
+"inscriptibles, typiquement un disque ram (tmpfs) et aux disques RAM les "
+"données ne survivent pas à un redémarrage."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:83
@@ -346,11 +408,17 @@ msgid ""
 "Live in different ways, and all but the last one require a special boot "
 "parameter to be specified at boot time: #{persistent}#."
 msgstr ""
+"Les données stockées sur ce disque virtuel doivent être enregistrées sur un "
+"support inscriptible persistant comme un disque dur, une clé USB, un partage "
+"réseau ou même une séance d'un CD/DVD multisession (ré)inscriptible. Tous "
+"ces supports sont pris en charge dans Debian Live de différentes manières, "
+"et tous mais le dernier nécessitent un paramètre de démarrage spéciale à "
+"préciser au moment du démarrage: #{persistent}#."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:85
 msgid "3~ Full persistence"
-msgstr ""
+msgstr "3~ Persistance pleine"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:87
@@ -363,6 +431,14 @@ msgid ""
 "boot parameter 'persistent'. This partition could be an ext2 partition on "
 "the hard disk or on a usb key created with, e.g.:"
 msgstr ""
+"Par «persistance pleine» on entend que plutôt que d'utiliser un tmpfs pour "
+"le stockage des modifications au support en lecture seule (avec le système "
+"copy-on-write, COW) une partition accessible en écriture est utilisée. Pour "
+"utiliser cette fonction une partition avec un système de fichiers accessible "
+"en écriture avec l'étiquette \"live-rw\" doit être fixé sur le système au "
+"moment du démarrage et le système doit être démarré avec le paramètre de "
+"démarrage \"persistent\". Cette partition peut être une partition ext2 du "
+"disque dur ou sur une clé USB créé avec, par exemple:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:91
@@ -374,6 +450,8 @@ msgstr ""
 #: en/user_customization-runtime.ssi:95
 msgid "See also {Using the space left on a USB stick}#using-usb-extra-space."
 msgstr ""
+"Voir aussi {Utilisation de l'espace disponible sur une clé USB}#using-usb-"
+"extra-space."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:97
@@ -381,6 +459,8 @@ msgid ""
 "If you already have a partition on your device, you could just change the "
 "label with one of the following:"
 msgstr ""
+"Si vous avez déjà une partition sur votre dispositif, vous pouvez simplement "
+"modifier l'étiquette avec l'un des suivants:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:101
@@ -397,6 +477,13 @@ msgid ""
 "representing a partition and put this image file even on a NTFS partition of "
 "a foreign OS, with something like:"
 msgstr ""
+"Mais puisque les utilisateurs du système live ne peuvent pas toujours "
+"utiliser une partition du disque dur, et considérant que la plupart des clés "
+"USB ont des vitesses d'écriture pauvres, «pleine» persistance pourrait "
+"également être utilisé avec des fichiers image, si vous pouviez créer un "
+"fichier qui représente une partition et mettre cette image fichier, même sur "
+"une partition NTFS d'un système d'exploitation étranger, avec quelque chose "
+"comme:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:110
@@ -412,11 +499,13 @@ msgid ""
 "Then copy the #{live-rw}# file to a writable partition and reboot with the "
 "boot parameter 'persistent'."
 msgstr ""
+"Ensuite, copiez le fichier #{live-rw}# sur une partition accessible en "
+"écriture et redémarrer avec le paramètre de démarrage \"persistent\"."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:116
 msgid "3~ Home automounting"
-msgstr ""
+msgstr "3~ Montage automatique de Home"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:118
@@ -426,11 +515,16 @@ msgid ""
 "as #{/home}#, thus permitting persistence of files that belong to e.g. the "
 "default user. It can be combined with full persistence."
 msgstr ""
+"Si lors de l'initialisation une partition (système de fichiers) un fichier "
+"image ou une partition étiquetée #{home-rw}# est découverte, ce système de "
+"fichiers sera monté directement comme #{/home}#, permettant ainsi la "
+"persistance des fichiers qui appartiennent à l'utilisateur par défaut. Elle "
+"peut être combinée avec la persistance complète."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:120
 msgid "3~ Snapshots"
-msgstr ""
+msgstr "3~ Instantanés"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:122
@@ -448,6 +542,21 @@ msgid ""
 "continuously to the persistent media, is the most flash-based device "
 "friendly and the fastest of all the persistence systems."
 msgstr ""
+"Les instantanés sont des collections de fichiers et de répertoires qui ne "
+"sont pas montés lors de l'exécution, mais qui sont copiés à partir d'un "
+"périphérique persistant à le système (tmpfs) au démarrage et qui sont "
+"resynchronisés au redémarrage/arrêt du système. Le contenu d'un instantané "
+"pourrait résider sur une partition ou un fichier image (comme les types "
+"mentionnés ci-dessus) étiquetés #{live-sn}#, mais il est par défaut à une "
+"archive cpio simple appelé #{live-sn.cpio.gz}#. Comme ci-dessus, au moment "
+"du démarrage, les périphériques connectés à le système sont examinés pour "
+"voir si une partition ou un fichier nommé comme ça pourrait être trouvé. Une "
+"coupure de courant pendant l'exécution pourrait conduire à la perte de "
+"données, donc un outil appelé #{live-snapshot --refresh}# pourrait être "
+"appelé à synchroniser des changements importants. Ce type de persistance, "
+"car elle n'écrit pas continuellement dans les supports persistants, est le "
+"plus respectueux avec les dispositifs flash et le plus rapide de tous les "
+"systèmes de persistance."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:124
@@ -455,6 +564,9 @@ msgid ""
 "A /home version of snapshot exists too and its label is #{home-sn.*}#; it "
 "works the same as the main snapshot but it is only applied to /home."
 msgstr ""
+"Une version instantané de /home existe aussi, et son étiquette est #{home-sn."
+"*}#; elle travaille le même que l'instantané principale, mais il est "
+"seulement appliquée à /home."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:126
@@ -462,11 +574,14 @@ msgid ""
 "Snapshots cannot currently handle file deletion but full persistence and "
 "home automounting can."
 msgstr ""
+"Les instantanés ne peuvent pas actuellement gérer la suppression de "
+"fichiers, mais la persistance pleine et le montage automatique de home si "
+"peuvent le faire."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:128
 msgid "3~ Persistent SubText"
-msgstr ""
+msgstr "3~ SubText persistant"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:130
@@ -479,11 +594,19 @@ msgid ""
 "partition labeled #{live-sn-subText}# they would use the boot parameters of: "
 "#{persistent}# #{persistent-subtext=subText}#."
 msgstr ""
+"Si un utilisateur a besoin de multiples stockages persistants du même type "
+"pour différents endroits ou l'essai, tel que #{live-rw-nonwork}# et #{live-"
+"rw-work}#, le paramètre de démarrage #{persistent-subtext}# utilisé en "
+"conjonction avec le paramètre de démarrage #{persistent}# permettra "
+"multiples mais uniques supports persistants. Un exemple serait le cas si un "
+"utilisateur voudrait utiliser une partition persistante étiqueté #{live-sn-"
+"subText}# il utiliserait les paramètres de démarrage: #{persistent}# #"
+"{persistent-subtext=subText}#."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:132
 msgid "3~ Partial remastering"
-msgstr ""
+msgstr "3~ Remasterisation partielle"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:133
@@ -493,3 +616,8 @@ msgid ""
 "case of cd-r or adding a session to multisession cd/dvd(rw); live-boot "
 "mounts all /live filesystem in order or with the module boot parameter."
 msgstr ""
+"Les modifications de l'exécution du tmpfs pourraient être recueillies à "
+"l'aide de live-snapshot dans une squashfs et ajoutés au CD en remasterisant "
+"l'ISO dans le cas des CD-R ou en ajoutant une session à un cd/dvd(rw) "
+"multisession; live-boot monte tous les systèmes de fichiers /live dans "
+"l'ordre ou avec le paramètre de démarrage du module."

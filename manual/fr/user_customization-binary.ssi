@@ -1,35 +1,38 @@
-B~ Customizing the binary image
+B~ Personnalisation de l'image binaire
 
-1~customizing-binary Customizing the binary image
+1~customizing-binary Personnalisation de l'image binaire
 
-2~ Bootloader
+2~ Chargeur de démarrage
 
-live-build uses syslinux as bootloader by default, which is by default
-configured to pause indefinitely at its splash screen. To adjust this, you
-can pass #{--syslinux-timeout TIMEOUT}# to #{lb config}#. The value is
-specified in units of seconds. A timeout of 0 (zero) disables the timeout
-completely. For more information please see syslinux(1).
+live-build utilise syslinux comme chargeur de démarrage par défaut, qui est
+configuré par défaut pour pauser indéfiniment à son écran splash. Pour
+régler cela, vous pouvez passer #{--syslinux-timeout TIMEOUT}# à #{lb
+config}#. La valeur est spécifiée en unités de secondes. Une valeur 0 (zéro)
+désactive le délai complètement. Pour plus d'informations s'il vous plaît
+voir syslinux(1).
 
-2~ ISO metadata
+2~ Métadonnées ISO
 
-When creating an ISO9660 binary image, you can use the following options to
-add various textual metadata for your image. This can help you easily
-identify the version or configuration of an image without booting it.
+En créant une image binaire ISO9660, vous pouvez utiliser les options
+suivantes pour ajouter différentes métadonnées textuelles pour votre
+image. Cela peut vous aider à facilement identifier la version ou la
+configuration d'une image sans la démarrer.
 
-_* #{LB_ISO_APPLICATION/--iso-application NAME}#: This should describe the
-application that will be on the image. The maximum length for this field is
-128 characters.
+_* #{LB_ISO_APPLICATION/--iso-application NAME}#: Cela devrait décrire
+l'application qui sera sur l'image. La longueur maximale de ce champ est de
+128 caractères.
 
-_* #{LB_ISO_PREPARER/--iso-preparer NAME}#: This should describe the
-preparer of the image, usually with some contact details. The default for
-this option is the live-build version you are using, which may help with
-debugging later. The maximum length for this field is 128 characters.
+_* #{LB_ISO_PREPARER/--iso-preparer NAME}#: Cela devrait décrire le
+préparateur de l'image, généralement avec certains détails de contact. Le
+défaut de cette option est la version de live-build que vous utilisez, ce
+qui peut faciliter le débogage plus tard. La longueur maximale de ce champ
+est de 128 caractères.
 
-_* #{LB_ISO_PUBLISHER/--iso-publisher NAME}#: This should describe the
-publisher of the image, usually with some contact details. The maximum
-length for this field is 128 characters.
+_* #{LB_ISO_PUBLISHER/--iso-publisher NAME}#: Ce doit décrire l'éditeur de
+l'image, généralement avec certains détails de contact. La longueur maximale
+de ce champ est de 128 caractères.
 
-_* #{LB_ISO_VOLUME/--iso-volume NAME}#: This should specify the volume ID of
-the image. This is used as a user-visible label on some platforms such as
-Windows and Apple Mac OS. The maximum length for this field is 32
-characters.
+_* #{LB_ISO_VOLUME/--iso-volume NAME}#: Cela devrait spécifier l'ID de
+volume de l'image. Il est utilisé comme une étiquette visible par
+l'utilisateur sur certaines plateformes comme Windows et Apple Mac OS. La
+longueur maximale de ce champ est de 128 caractères.

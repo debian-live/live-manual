@@ -3,8 +3,9 @@
 1~customizing-run-time-behaviours Customizing run time behaviours
 
 All configuration that is done during run time is done by live-config. Here
-are some most common options of live-config that users are interested in. A
-full list of all possibilities can be found in the manpage of live-config.
+are some of the most common options of live-config that users are interested
+in. A full list of all possibilities can be found in the manpage of
+live-config.
 
 2~ Customizing the live user
 
@@ -24,6 +25,24 @@ code{
  user-setup passwd/user-default-groups string audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse
 
 }code
+
+It is also possible to change the default username "user" and the default
+password "live". If you want to do that for any reason, you can easily
+achieve it as follows:
+
+To change the default username you can simply specify it in your config:
+
+code{
+
+$ lb config --bootappend-live "username=live-user"
+
+}code
+
+One possible way of changing the default password is by means of a hook as
+described in {Boot-time hooks}#boot-time-hooks. In order to do that you can
+use the "passwd" hook from #{/usr/share/doc/live-config/examples/hooks}#,
+prefix it accordingly (e.g. 200-passwd) and add it to
+#{config/chroot_local-includes/lib/live/config/}#
 
 2~customizing-locale-and-language Customizing locale and language
 

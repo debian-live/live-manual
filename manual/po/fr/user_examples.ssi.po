@@ -2,19 +2,20 @@
 # Copyright (C) 2010 Free Software Foundation, Inc.
 # This file is distributed under the same license as the live-manual package.
 # Automatically generated, 2010.
+# Carlos Zuferri «chals» <chals@altorricon.com>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 2.0.0\n"
 "POT-Creation-Date: 2011-04-23 14:15+0300\n"
-"PO-Revision-Date: 2010-11-04 16:34-0400\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2011-09-28 17:23+0200\n"
+"Last-Translator: Carlos Zuferri «chals» <chals@altorricon.com>\n"
+"Language-Team:  <debian-live@lists.debian.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. type: Plain text
 #: en/live-manual.ssm:61 en/user_examples.ssi:2
@@ -159,7 +160,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_examples.ssi:4
 msgid "1~examples Examples"
-msgstr ""
+msgstr "1~examples  Exemples"
 
 #. type: Plain text
 #: en/user_examples.ssi:6
@@ -169,11 +170,16 @@ msgid ""
 "first look at the three tutorials in sequence, as each one teaches new "
 "techniques that will help you use and understand the remaining examples."
 msgstr ""
+"Ce chapitre s'occupe d'exemples de constructions pour les cas d'utilisation "
+"spécifiques avec Debian Live. Si vous êtes nouveau avec la construction de "
+"vos propres images Debian Live, nous vous recommandons d'abord regarder les "
+"trois tutoriels en séquence, comme chacun apprend nouvelles techniques qui "
+"vous aideront à utiliser et à comprendre les exemples restants."
 
 #. type: Plain text
 #: en/user_examples.ssi:8
 msgid "2~using-the-examples Using the examples"
-msgstr ""
+msgstr "2~using-the-examples En utilisant les exemples"
 
 #. type: Plain text
 #: en/user_examples.ssi:10
@@ -182,6 +188,10 @@ msgid ""
 "requirements listed in {Requirements}#requirements and has live-build "
 "installed as described in {Installing live-build}#installing-live-build."
 msgstr ""
+"Pour utiliser ces exemples vous avez besoin d'un système pour les "
+"construire, lequel répond aux exigences énumérées dans {Exigences}"
+"#requirements et vous avez live-build installe comme décrit à {Installation "
+"de live-build}#installing-live-build."
 
 #. type: Plain text
 #: en/user_examples.ssi:12
@@ -195,6 +205,15 @@ msgid ""
 "and in it, set the corresponding #{LB_MIRROR_*}# variables to your preferred "
 "mirror. For example:"
 msgstr ""
+"Notez que, pour des raisons de concision, dans ces exemples, nous ne "
+"spécifions pas un miroir local à utiliser pour la construction. Vous pouvez "
+"accélérer considérablement les téléchargements si vous utilisez un miroir "
+"local. Vous pouvez spécifier les options lorsque vous utilisez #{lb config}"
+"#, tel que décrit dans {Miroirs de distribution utilisés au temps de "
+"construction}#distribution-mirrors-build-time, ou pour plus de commodité, "
+"fixez par défaut votre système de construction dans #{/etc/live/build.conf}"
+"#. Il suffit de créer ce fichier et de définir les variables #{LB_MIRROR_*}# "
+"correspondantes à votre miroir préféré. Par exemple:"
 
 #. type: Plain text
 #: en/user_examples.ssi:18
@@ -208,13 +227,13 @@ msgstr ""
 #. type: Plain text
 #: en/user_examples.ssi:22
 msgid "2~tutorial-1 Tutorial 1: A standard image"
-msgstr ""
+msgstr "2~tutorial-1 Tutorial 1: Une image standard"
 
 #. type: Plain text
 #: en/user_examples.ssi:24
 #, no-wrap
 msgid "*{Use case:}* Create a simple first image, learning the basics of live-build.\n"
-msgstr ""
+msgstr "*{Cas d'utilisation:}* Créer une image simple d'abord, apprenant les bases de live-build.\n"
 
 #. type: Plain text
 #: en/user_examples.ssi:26
@@ -223,11 +242,15 @@ msgid ""
 "containing only base packages (no Xorg) and some Debian Live support "
 "packages, as a first exercise in using live-build."
 msgstr ""
+"Dans ce tutoriel, nous construirons une image Debian Live ISO hybride par "
+"défaut contenant uniquement paquets de base (pas de Xorg) et quelques "
+"paquets Debian de soutien live, comme un premier exercice en utilisant live-"
+"build."
 
 #. type: Plain text
 #: en/user_examples.ssi:28
 msgid "You can't get much simpler than this:"
-msgstr ""
+msgstr "Vous ne pouvez pas obtenir beaucoup plus simple que cela:"
 
 #. type: Plain text
 #: en/user_examples.ssi:32
@@ -242,12 +265,17 @@ msgid ""
 "stored here a skeletal configuration, ready to customize or, in this case, "
 "use immediately to build a default image."
 msgstr ""
+"Examinez le contenu du répertoire #{config/}# si vous le souhaitez. Vous "
+"verrez stockés ici une configuration du squelette, pour être personnalise "
+"ou, dans ce cas, utiliser immédiatement pour construire une image par défaut."
 
 #. type: Plain text
 #: en/user_examples.ssi:38
 msgid ""
 "Now, as superuser, build the image, saving a log as you build with #{tee}#."
 msgstr ""
+"Maintenant, en tant que superutilisateur, construire l'image en enregistrant "
+"un journal avec #{tee}#."
 
 #. type: Plain text
 #: en/user_examples.ssi:42 en/user_examples.ssi:66 en/user_examples.ssi:231
@@ -267,17 +295,25 @@ msgid ""
 "and {Copying an ISO hybrid image to a USB stick}#copying-iso-hybrid-to-usb, "
 "respectively."
 msgstr ""
+"En supposant que tout se passe bien, après un certain temps, le répertoire "
+"courant contient #{binary-hybrid.iso}#. Cette image ISO hybride peut être "
+"démarré directement dans une machine virtuelle comme décrit dans {Test d'une "
+"image ISO avec QEMU}#testing-iso-with-qemu et {Test d'une image ISO avec "
+"virtualbox-ose}#testing-iso-with-virtualbox, ou bien copiés sur un support "
+"optique ou un périphérique USB comme décrit dans {Graver une image ISO sur "
+"un support physique}#burning-iso-image et {Copie d'un image ISO hybride sur "
+"une clé USB}#copying-iso-hybrid-to-usb, respectivement."
 
 #. type: Plain text
 #: en/user_examples.ssi:48
 msgid "2~tutorial-2 Tutorial 2: A web browser utility"
-msgstr ""
+msgstr "2~tutorial-2 Tutoriel 2: Un utilitaire de navigateur Web"
 
 #. type: Plain text
 #: en/user_examples.ssi:50
 #, no-wrap
 msgid "*{Use case:}* Create a web browser utility image, learning how to apply customizations.\n"
-msgstr ""
+msgstr "*{Cas d'utilisation:}* Créer une image d'un utilitaire de navigateur Web, en apprenant à appliquer des personnalisations. \n"
 
 #. type: Plain text
 #: en/user_examples.ssi:52
@@ -285,6 +321,9 @@ msgid ""
 "In this tutorial, we will create an image suitable for use as a web browser "
 "utility, serving as an introduction to customizing Debian Live images."
 msgstr ""
+"Dans ce tutoriel, nous allons créer une image utilisable comme un utilitaire "
+"de navigateur Web, en servant d'introduction à la personnalisation d'images "
+"Debian Live."
 
 #. type: Plain text
 #: en/user_examples.ssi:56
@@ -302,6 +341,13 @@ msgid ""
 "iceweasel/profile/}#, or additional support packages for viewing various "
 "kinds of web content, but we leave this as an exercise for the reader."
 msgstr ""
+"Notre choix de LXDE pour cet exemple reflète notre volonté de fournir un "
+"environnement de bureau minime, puisque le point de l'image est "
+"l'utilisation unique, nous avons à l'esprit, le navigateur web. On pourrait "
+"aller encore plus loin et offrir une configuration par défaut pour le "
+"navigateur web dans #{config/chroot_local-includes/etc/iceweasel/profile/}#, "
+"ou des paquets de soutien supplémentaires pour visualiser différents types "
+"de contenu web, mais nous laissons cela comme une exercice pour le lecteur."
 
 #. type: Plain text
 #: en/user_examples.ssi:62
@@ -309,22 +355,26 @@ msgid ""
 "Build the image, again as superuser, keeping a log as in {Tutorial 1}"
 "#tutorial-1:"
 msgstr ""
+"Construire l'image, encore une fois en tant que superutilisateur, tenir un "
+"journal comme dans {Tutoriel 1}#tutorial-1:"
 
 #. type: Plain text
 #: en/user_examples.ssi:70
 msgid "Again, verify the image is OK and test, as in {Tutorial 1}#tutorial-1."
 msgstr ""
+"Encore une fois, vérifiez que l'image est OK et faire un test, comme dans "
+"{Tutoriel 1}#tutorial-1:"
 
 #. type: Plain text
 #: en/user_examples.ssi:72
 msgid "2~tutorial-3 Tutorial 3: A personalized image"
-msgstr ""
+msgstr "2~tutorial-3 Tutoriel 3: Une image personnalisée"
 
 #. type: Plain text
 #: en/user_examples.ssi:74
 #, no-wrap
 msgid "*{Use case:}* Create a project to build a personalized image, containing your favourite software to take with you on a USB stick wherever you go, and evolving in successive revisions as your needs and preferences change.\n"
-msgstr ""
+msgstr "*{Cas d'utilisation:}* Créer un projet pour construire une image personnalisée, contenant vos logiciels préférés à emporter avec vous sur une clé USB où que vous alliez, et évoluant dans des révisions successives selon vos besoins et vos préférences changent.\n"
 
 #. type: Plain text
 #: en/user_examples.ssi:76
@@ -336,11 +386,18 @@ msgid ""
 "use the best practice of autoconfiguration via #{auto}# scripts as described "
 "in {Managing a configuration}#managing-a-configuration."
 msgstr ""
+"Puisque nous allons changer notre image personnalisée pendant un certain "
+"nombre de révisions, et nous voulons suivre ces changements, d'essayer des "
+"choses expérimentalement et éventuellement de les revenir si les choses ne "
+"fonctionnent pas, nous garderons notre configuration dans le populaire "
+"système de contrôle de version #{git}#. Nous allons également utiliser les "
+"meilleures pratiques d'autoconfiguration via #{auto}# scripts tel que décrit "
+"dans {Gestion d'une configuration}#managing-a-configuration."
 
 #. type: Plain text
 #: en/user_examples.ssi:78
 msgid "3~ First revision"
-msgstr ""
+msgstr "3~ Première révision"
 
 #. type: Plain text
 #: en/user_examples.ssi:84
@@ -354,7 +411,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_examples.ssi:88
 msgid "Edit #{auto/config}# to read as follows:"
-msgstr ""
+msgstr "Éditer #{auto/config}# pour lire comme suit: "
 
 #. type: Plain text
 #: en/user_examples.ssi:92 en/user_examples.ssi:141
@@ -384,11 +441,18 @@ msgid ""
 "minimal desktop. And finally, we have added two initial favourite packages: #"
 "{iceweasel}# and #{xchat}#."
 msgstr ""
+"Tout d'abord, #{--architecture i386}# assure que sur notre système de "
+"construction #{amd64}#, nous construisons une version 32 bits qui peut être "
+"utilisé sur la plupart des machines. Deuxièmement, nous utilisons #{--linux-"
+"flavours 686}# parce que nous ne prévoyons pas utiliser cette image sur des "
+"systèmes beaucoup plus anciens. Troisièmement, nous avons choisi la liste "
+"des paquets #{lxde}# pour nous donner un bureau minimal. Et enfin, nous "
+"avons ajouté deux premiers paquets préférés: #{iceweasel}# et #{xchat}#."
 
 #. type: Plain text
 #: en/user_examples.ssi:105
 msgid "Now, build the image:"
-msgstr ""
+msgstr "Maintenant, construire l'image:"
 
 #. type: Plain text
 #: en/user_examples.ssi:113
@@ -396,6 +460,9 @@ msgid ""
 "Note that unlike in the first two tutorials, we no longer have to type #"
 "{2>&1 | tee binary.log}# as that is now included in #{auto/build}#."
 msgstr ""
+"Notez que contrairement aux deux premiers tutoriels, nous n'avons plus "
+"besoin de taper #{2>&1 | tee binary.log}# parce que cela est maintenant "
+"inclus dans #{auto/build}#."
 
 #. type: Plain text
 #: en/user_examples.ssi:115
@@ -404,6 +471,10 @@ msgid ""
 "satisfied it works, it's time to initialize our #{git}# repository, adding "
 "only the auto scripts we just created, and then make the first commit:"
 msgstr ""
+"Une fois que vous avez testé l'image (comme dans {Tutoriel 1}#tutorial-1) et "
+"êtes satisfait avec son fonctionnement, il est temps pour initialiser notre "
+"référentiel #{git}#, ajoutant que les scripts d'auto que nous avons juste "
+"créé, et ensuite faire le premier commit: "
 
 #. type: Plain text
 #: en/user_examples.ssi:121
@@ -417,7 +488,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_examples.ssi:125
 msgid "3~ Second revision"
-msgstr ""
+msgstr "3~ Deuxième révision"
 
 #. type: Plain text
 #: en/user_examples.ssi:127
@@ -425,6 +496,9 @@ msgid ""
 "In this revision, we're going to clean up from the first build, add the #"
 "{vlc}# package to our configuration, rebuild, test and commit."
 msgstr ""
+"Dans cette révision, nous allons nettoyer à partir de la première "
+"construction, ajouter le paquet #{vlc}# à notre configuration, reconstruire, "
+"tester et faire le commit."
 
 #. type: Plain text
 #: en/user_examples.ssi:129
@@ -434,6 +508,11 @@ msgid ""
 "ensures that the subsequent #{lb build}# will re-run all stages to "
 "regenerate the files from our new configuration."
 msgstr ""
+"La commande #{lb clean}# va nettoyer tous les fichiers générés par la "
+"construction précédente à l'exception du cache, ça évite d'avoir à re-"
+"télécharger les paquets. Cela garantit que le #{lb build}# postérieure ré-"
+"exécutera toutes les étapes pour régénérer les fichiers de notre nouvelle "
+"configuration."
 
 #. type: Plain text
 #: en/user_examples.ssi:133
@@ -444,7 +523,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_examples.ssi:137
 msgid "Now edit #{auto/config}# to add the #{vlc}# package:"
-msgstr ""
+msgstr "Maintenant, éditez #{auto/config}# pour ajouter le paquet #{vlc}#:"
 
 #. type: Plain text
 #: en/user_examples.ssi:148
@@ -461,7 +540,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_examples.ssi:152
 msgid "Build again:"
-msgstr ""
+msgstr "Construire à nouveau:"
 
 #. type: Plain text
 #: en/user_examples.ssi:156
@@ -471,7 +550,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_examples.ssi:160
 msgid "Test, and when you're satisfied, commit the next revision:"
-msgstr ""
+msgstr "Tester, et quand vous êtes satisfaits, commit la prochaine révision:"
 
 #. type: Plain text
 #: en/user_examples.ssi:164
@@ -489,6 +568,13 @@ msgid ""
 "and are always cleaned up by #{lb clean}# and re-created with #{lb config}# "
 "via their respective #{auto}# scripts."
 msgstr ""
+"Bien sûr, des changements plus compliqués à la configuration sont possibles, "
+"peut-être l'ajout de fichiers dans les sous-répertoires de #{config/}#. "
+"Quand vous livrez des nouvelles révisions, il suffit de prendre soin de ne "
+"pas modifier à la main ou commit les fichiers de niveau supérieur dans #"
+"{config}# contenant variables #{LB_*}#, car ce sont des produits de "
+"creation, aussi, et sont toujours nettoyés par #{lb clean}# et re-créés avec "
+"#{lb config}# via leur respectives #{auto}# scripts."
 
 #. type: Plain text
 #: en/user_examples.ssi:170
@@ -499,17 +585,23 @@ msgid ""
 "created. The remaining examples in this section cover several other use "
 "cases drawn from the collected experiences of users of Debian Live."
 msgstr ""
+"Nous sommes arrivés à la fin de notre série de tutoriels. Alors que de "
+"nombreux types de personnalisations sont possibles, même juste en utilisant "
+"les fonctionnalités explorées dans ces exemples simples, une variété presque "
+"infinie d'images différentes peuvent être crées. Les autres exemples de "
+"cette section couvrent plusieurs autres cas d'utilisation tirés des "
+"expériences recueillies des utilisateurs de Debian Live."
 
 #. type: Plain text
 #: en/user_examples.ssi:172
 msgid "2~ A VNC Kiosk Client"
-msgstr ""
+msgstr "2~ Un client Kiosk VNC "
 
 #. type: Plain text
 #: en/user_examples.ssi:174
 #, no-wrap
 msgid "*{Use case:}* Create an image with live-build to boot directly to a VNC server.\n"
-msgstr ""
+msgstr "*{Cas d'utilisation:}* Créer une image avec live-build pour démarrer directement à un serveur VNC.\n"
 
 #. type: Plain text
 #: en/user_examples.ssi:176
@@ -518,6 +610,9 @@ msgid ""
 "around the standard-x11 list, including #{gdm3}#, #{metacity}# and #"
 "{xtightvncviewer}#, disabling recommends to make a minimal system:"
 msgstr ""
+"Faire un répertoire de construction et créer une configuration du squelette "
+"construit autour de la liste standard x11, avec #{gdm3}#, #{metacity}# et #"
+"{xtightvncviewer}#, désactivant «recommends» pour faire un système minimal:"
 
 #. type: Plain text
 #: en/user_examples.ssi:184
@@ -537,6 +632,9 @@ msgid ""
 "the default user that will launch metacity and start xvncviewer, connecting "
 "to port #{5901}# on a server at #{192.168.1.2}#:"
 msgstr ""
+"Créez le répertoire #{/etc/skel}# avec une #{.xsession}# personnalisée pour "
+"l'utilisateur par défaut qui va lancer metacity et commencer xvncviewer, en "
+"reliant le port #{5901}# sur un serveur à  #{192.168.1.2}#:"
 
 #. type: Plain text
 #: en/user_examples.ssi:194
@@ -566,23 +664,23 @@ msgstr ""
 #. type: Plain text
 #: en/user_examples.ssi:204
 msgid "Build the image:"
-msgstr ""
+msgstr "Construire l'image:"
 
 #. type: Plain text
 #: en/user_examples.ssi:212
 msgid "Enjoy."
-msgstr ""
+msgstr "Amusez-vous bien!"
 
 #. type: Plain text
 #: en/user_examples.ssi:214
 msgid "2~ A base image for a 128M USB key"
-msgstr ""
+msgstr "2~ Une image de base pour une clé USB de 128M"
 
 #. type: Plain text
 #: en/user_examples.ssi:216
 #, no-wrap
 msgid "*{Use case:}* Create a standard image with some components removed in order to fit on a 128M USB key with space left over to use as you see fit.\n"
-msgstr ""
+msgstr "*{Cas d'utilisation:}* Créer une image standard avec certains composants éliminés afin de s'adapter sur une clé USB avec 128M avec espace laissé pour l'utiliser à votre convenance.\n"
 
 #. type: Plain text
 #: en/user_examples.ssi:218
@@ -597,6 +695,16 @@ msgid ""
 "you really know what you're doing, as omitting priority #{important}# "
 "packages will most likely produce a broken live system."
 msgstr ""
+"Lorsque l'optimisation d'une image adaptée à une dimension des certains "
+"supports, vous avez besoin de comprendre le compromis que vous faites entre "
+"la taille et la fonctionnalité. Dans cet exemple, nous réduisons uniquement "
+"que pour faire place à du matériel supplémentaire au sein d'une taille de "
+"128M, mais sans rien faire pour détruire l'intégrité des paquets contenus, "
+"telles que la purge des données de localisation via le paquet #{localepurge}"
+"#, ou d'autres tels optimisations \"intrusives\". On notera en particulier, "
+"vous ne devriez pas utiliser #{--bootstrap-flavour minimal}# sauf si vous "
+"savez vraiment ce que vous faites, que l'omission de paquets de priorité #"
+"{importants}# produira probablement un système live cassé."
 
 #. type: Plain text
 #: en/user_examples.ssi:223
@@ -609,7 +717,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_examples.ssi:227
 msgid "Now, build the image in the usual way:"
-msgstr ""
+msgstr "Maintenant, construire l'image de la manière habituelle:"
 
 #. type: Plain text
 #: en/user_examples.ssi:235
@@ -618,6 +726,10 @@ msgid ""
 "a 78Mbyte image. This compares favourably with the 166Mbyte image produced "
 "by the default configuration in {Tutorial 1}#tutorial-1."
 msgstr ""
+"Sur le système de l'auteur au moment de l'écriture, la configuration ci-"
+"dessus produit une image de 78Mbyte. Cela se compare favorablement avec "
+"l'image de 166Mbyte produite par la configuration par défaut dans {Tutoriel "
+"1}#tutorial-1."
 
 #. type: Plain text
 #: en/user_examples.ssi:237
@@ -636,17 +748,31 @@ msgid ""
 "you to decide if the functionality that is sacrificed with each optimization "
 "is worth the loss in functionality."
 msgstr ""
+"Le plus grand espace-économiseur ici, par rapport à la construction d'une "
+"image standard sur une architecture #{i386}#, est de sélectionner uniquement "
+"le saveur du noyau #{486}# au lieu de la valeur par défaut #{-k \"486 686\"}"
+"#. Laissant hors indices APT avec #{--binary-indices false}# permet aussi "
+"d'économiser une bonne quantité d'espace, le compromis étant que vous devez "
+"faire  #{apt-get update}# avant d'utiliser apt dans le système live. Le "
+"choix de la liste #{minimal}# laisse de côté les grands paquets de #{locales}"
+"# et les services associés. Laissant hors les paquets recommandés économise "
+"de l'espace supplémentaire, au détriment d'omettre certains paquets vous "
+"pourriez autrement s'attendre à être là, tel que #{firmware-linux-free}# qui "
+"peuvent être nécessaires pour prise en charge matérielle de certains "
+"supports matériels. Les options restantes économisent petites quantités "
+"d'espace supplémentaires. C'est à vous de décider si la fonctionnalité qui "
+"est sacrifié avec chaque optimisation est en vaut la perte de fonctionnalité."
 
 #. type: Plain text
 #: en/user_examples.ssi:239
 msgid "2~ A localized KDE desktop and installer"
-msgstr ""
+msgstr "2~ Un bureau KDE localisé et installateur "
 
 #. type: Plain text
 #: en/user_examples.ssi:241
 #, no-wrap
 msgid "*{Use case:}* Create a KDE desktop image, localized for Brazilian Portuguese and including an installer.\n"
-msgstr ""
+msgstr "*{Cas d'utilisation:}* Créer une image de bureau KDE, localisé pour le portugais brésilien et incluant un installateur.\n"
 
 #. type: Plain text
 #: en/user_examples.ssi:243
@@ -655,6 +781,9 @@ msgid ""
 "preferred desktop, in this case KDE, containing all of the same packages "
 "that would be installed by the standard Debian installer for KDE."
 msgstr ""
+"Nous voulons faire une image iso-hybride pour l'architecture i386 en "
+"utilisant notre bureau préféré, dans ce cas, KDE, contenant tous les paquets "
+"mêmes qui seraient installés par l'installateur Debian standard pour KDE."
 
 #. type: Plain text
 #: en/user_examples.ssi:245
@@ -665,6 +794,12 @@ msgid ""
 "used to dig it out of the task descriptions in tasksel-data, so to prepare, "
 "make sure you have both of those things:"
 msgstr ""
+"Notre premier problème est la découverte des noms des tâches appropriées. "
+"Actuellement, live-build ne peut pas aider. Alors que nous pourrions être "
+"chanceux et trouver ce par essais et erreurs, il y a un outil, #{grep-dctrl}"
+"#, qui peut être utilisé pour découvrir des descriptions de tâche dans "
+"tasksel-data, de sorte à préparer, assurez-vous que vous avez ces deux "
+"choses:"
 
 #. type: Plain text
 #: en/user_examples.ssi:249
@@ -676,6 +811,7 @@ msgstr ""
 #: en/user_examples.ssi:253
 msgid "Now we can search for the appropriate tasks, first with:"
 msgstr ""
+"Maintenant, nous pouvons rechercher les tâches appropriées, d'abord avec:"
 
 #. type: Plain text
 #: en/user_examples.ssi:262
@@ -695,6 +831,8 @@ msgid ""
 "By this command, we discover the task is called, plainly enough, brazilian-"
 "portuguese. Now to find the related tasks:"
 msgstr ""
+"Par cette commande, nous découvrons la tâche est appelée, assez clairement, "
+"brazilian-portuguese. Maintenant, pour trouver les tâches liées:"
 
 #. type: Plain text
 #: en/user_examples.ssi:273
@@ -724,6 +862,12 @@ msgid ""
 "the pt_BR.UTF-8 locale and select the pt-latin1 keyboard layout. Now let's "
 "put the pieces together:"
 msgstr ""
+"Nous allons utiliser l'option expérimentale #{--language}#, comme live-build "
+"inclut #{syslinux}# pour pt_BR  (voir {Tâches de bureau et de la langue}"
+"#desktop-and-language-tasks pour plus de détails). Et au moment du démarrage "
+"nous allons générer les  paramètres régionaux pt_BR.UTF-8 et sélectionner la "
+"configuration du clavier pt-latin1. Maintenant, nous allons mettre les "
+"pièces ensemble:"
 
 #. type: Plain text
 #: en/user_examples.ssi:295
@@ -750,3 +894,8 @@ msgid ""
 "flavour kernel, as it is currently necessary to make the installer and live "
 "system kernels match for the launcher to work properly."
 msgstr ""
+"Notez que nous avons inclus le paquet #{debian-installer-launcher}# pour "
+"lancer l'installateur depuis le bureau live, et ont également précisé que le "
+"noyau 486, tel qu'il est actuellement nécessaire pour faire que "
+"l'installateur et le noyau du systéme live matchent pour que le lanceur "
+"fonctionne correctement."

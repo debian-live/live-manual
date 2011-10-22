@@ -7,29 +7,29 @@ les documents liés au projet Debian Live. Tandis qu'il est principalement
 sur vous aider à construire un système Live et non pas sur des sujets de
 l'utilisateur final, un utilisateur final peut trouver des informations
 utiles dans ces sections: {Les Bases}#the-basics couvrent la préparation des
-images pour être démarrées à partir des médias ou depuis le réseau, et
+images pour être démarrées à partir des supports ou depuis le réseau, et
 {Personnalisation des comportements au moment de
 l'exécution}#customizing-run-time-behaviours décrit certaines options qui
 peuvent être spécifiées à l'invite de démarrage, tels que la sélection d'un
 clavier, des paramètres régionaux, et la utilisation de la persistance.
 
 Certaines commandes mentionnées dans le texte doivent être exécutées avec
-les privilèges super-utilisateur, qui peuvent être obtenu en devenant root à
-l'aide de #{su}# ou en utilisant #{sudo}#. Afin de distinguer les commandes
-qui peuvent être exécutées par un utilisateur sans privilèges de celles
-nécessitant les privilèges super-utilisateur, les commandes sont précédées
-respectivement par #{$}# ou #{#}#. Ce symbole ne fait pas partie de la
-commande.
+les privilèges de super-utilisateur, qui peuvent être obtenus en devenant
+super-utilisateur à l'aide de #{su}# ou en utilisant #{sudo}#. Afin de
+distinguer les commandes qui peuvent être exécutées par un utilisateur sans
+privilèges de celles nécessitant les privilèges super-utilisateur, les
+commandes sont précédées respectivement par #{$}# ou #{#}#. Ce symbole ne
+fait pas partie de la commande.
 
 2~ Pour les impatients
 
 Même si nous croyons que tout dans ce manuel est important pour au moins
 certains de nos utilisateurs, nous nous rendons compte qu'il y a beaucoup de
-matière à couvrir et que vous pouvez expérimenter avant d'entrer dans les
-détails. Par conséquent, nous avons fourni trois tutoriels dans la section
-{Exemples}#examples destinée à vous apprendre la construction de l'image et
-les bases de la personnalisation. Lire en premier {En utilisant les
-exemples}#using-the-examples, suivie par {Tutoriel 1: Une image
+matière à couvrir et que vous pouvez vouloir expérimenter avant d'entrer
+dans les détails. Par conséquent, nous avons fourni trois tutoriels dans la
+section {Exemples}#examples destinée à vous apprendre la construction de
+l'image et les bases de la personnalisation. Lire en premier {En utilisant
+les exemples}#using-the-examples, suivie par {Tutoriel 1: Une image
 standard}#tutorial-1, {Tutoriel 2: Un logiciel de navigateur Web}#tutorial-2
 et finalement {Tutoriel 3: Une image personnalisée}#tutorial-3. À la fin de
 ces tutoriels, vous aurez un avant-goût de ce qui peut être fait avec Debian
@@ -39,7 +39,7 @@ la prochaine lecture peut-être {Les bases}#the-basics, passer pour
 lecture de la{Vue d'ensemble de la personnalisation}#customization-overview
 et les autres sections suivantes.  En ce point, nous espérons que vous êtes
 complètement excités par ce que on peut faire avec Debian Live et motivés
-pour lire le reste du manuel, du début à la fin
+pour lire le reste du manuel, du début à la fin.
 
 2~terms Terminologie
 
@@ -47,8 +47,9 @@ _* *{Système Live}*: Un système d'exploitation pouvant être démarré sans
 installation préalable sur disque dur. Les Systèmes Live ne modifient pas le
 système d'exploitation local ou les fichiers installés sur le disque dur
 sans qu'on leur en donne explicitement l'instruction. D'habitude, les
-systèmes Live sont démarrés à partir de media tels que des CD, DVD, ou des
-clés USB. Certains peuvent également être démarrés depuis le réseau.
+systèmes Live sont démarrés à partir des supports tels que des CD, DVD, ou
+des clés USB. Certains systèmes peuvent également être démarrés depuis le
+réseau.
 
 _* *{Debian Live}*: Le sous-projet Debian qui maintient les paquets
 live-boot, live-build, live-config, et live-manual.
@@ -81,7 +82,7 @@ _* *{Debian Installer (d-i)}*: Le système d'installation officiel pour la
 distribution Debian.
 
 _* *{Paramètres de démarrage}*: Les paramètres pouvant être entrés à
-l'invite de démarrage afin de modifier le kernel ou live-config.
+l'invite de démarrage afin de modifier le noyau ou live-config.
 
 _* *{chroot}*: Le programme chroot, #{chroot(8)}#, nous permet de faire
 tourner plusieurs instances concurrentes de l'environnement GNU/Linux sur un
@@ -168,8 +169,8 @@ code{
 
 }code
 
-Vous pouvez compiler live-manual depuis le répertoire racine de votre
-checkout git en exécutant:
+Vous pouvez compiler live-manual depuis le répertoire racine de votre Git
+checkout en exécutant:
 
 code{
 
@@ -187,10 +188,10 @@ code{
 
 }code
 
-3~ Appliquer des patches
+3~ Appliquer des correctifs
 
 Les contributions directes au référentiel sont possibles pour tout le
-monde. Cependant, nous vous demandons d'envoyer les changements conséquents
+monde. Cependant, nous vous demandons d'envoyer les changements importants
 sur la liste de diffusion au préalable. Afin de faire un push sur le
 référentiel, les étapes suivantes sont nécessaires.
 
@@ -275,6 +276,6 @@ au manuel (avec les fichiers po) et l'activer dans l'autobuild.
 _* Une fois la nouvelle langue est ajoutée, vous pouvez commencer à traduire
 de façon aléatoire tous les fichiers po dans #{manual/po/}#.
 
-_* N'oubliez pas que vous devez #{make commit}# pour assurer la traduction
-des manuels sont mis à jour à partir des fichiers po, avant #{git commit
--a}# et #{git push}#.
+_* N'oubliez pas que vous devez faire un #{make commit}# pour assurer que la
+traduction des manuels sont mis à jour à partir des fichiers po, avant #{git
+commit -a}# et #{git push}#.

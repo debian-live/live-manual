@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 2.0.0\n"
 "POT-Creation-Date: 2011-11-01 07:59-0200\n"
-"PO-Revision-Date: 2011-08-14 18:03+0200\n"
+"PO-Revision-Date: 2011-11-01 16:26+0100\n"
 "Last-Translator: Carlos Zuferri «chals» <chals@altorricon.com>\n"
 "Language-Team:  <debian-live@lists.debian.org>\n"
 "Language: fr\n"
@@ -289,19 +289,6 @@ msgstr "3~ Miroirs de distribution"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:34
-#, fuzzy
-#| msgid ""
-#| "The Debian archive is replicated across a large network of mirrors around "
-#| "the world so that people in each region can choose a nearby mirror for "
-#| "best download speed. Each of the #{--mirror-*}# options governs which "
-#| "distribution mirror is used at various stages of the build. Recall from "
-#| "{Stages of the build}#stages-of-the-build that the *bootstrap* stage is "
-#| "when the chroot is initially populated by debootstrap with a minimal "
-#| "system, and the *chroot* stage is when the chroot used to construct the "
-#| "live system's filesystem is built. Thus, the corresponding mirror "
-#| "switches are used for those stages, and later, in the *binary* stage, the "
-#| "#{--mirror-binary}# and #{--mirror-binary-security}# values are used, "
-#| "superceding any mirrors used in an earlier stage."
 msgid ""
 "The Debian archive is replicated across a large network of mirrors around "
 "the world so that people in each region can choose a nearby mirror for best "
@@ -317,16 +304,17 @@ msgid ""
 msgstr ""
 "L'archive Debian est répliqué à travers un large réseau de miroirs autour du "
 "monde pour que les gens dans chaque région peuvent choisir un miroir proche "
-"avec la meilleur vitesse de téléchargement. Chacune des options #{--mirror-*}"
-"# qui régit quel miroir de distribution est utilisée à différents stades de "
-"la construction. Rappelez-vous de {Etapes de la construction}#stages-of-the-"
-"build que l'étape *bootstrap* c'est quand le chroot est initialement peuplée "
-"par debootstrap avec un système minimal, et l'étape *chroot* c'est quand le "
-"chroot utilisé pour construire le système de fichiers du système live est "
-"construit. Ainsi, les commutateurs des miroirs correspondants sont utilisées "
-"pour ces étapes, et plus tard, dans le *binary* stade les valeurs #{--mirror-"
-"binary}# et #{--mirror-binary-security}# sont utilisées, remplaçant tout "
-"miroir utilisé dans une étape antérieure. "
+"avec la meilleur vitesse de téléchargement. Chacune des options #{--parent-"
+"mirror-*}# qui régit quel miroir de distribution est utilisée à différents "
+"stades de la construction. Rappelez-vous de {Etapes de la construction}"
+"#stages-of-the-build que l'étape *bootstrap* c'est quand le chroot est "
+"initialement peuplée par debootstrap avec un système minimal, et l'étape "
+"*chroot* c'est quand le chroot utilisé pour construire le système de "
+"fichiers du système live est construit. Ainsi, les commutateurs des miroirs "
+"correspondants sont utilisées pour ces étapes, et plus tard, dans le "
+"*binary* stade les valeurs #{--parent-mirror-binary}# et #{--parent-mirror-"
+"binary-security}# sont utilisées, remplaçant tout miroir utilisé dans une "
+"étape antérieure. "
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:36
@@ -338,19 +326,15 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:38
-#, fuzzy
-#| msgid ""
-#| "To set the distribution mirrors used at build time to point at a local "
-#| "mirror, it is sufficient to set #{--mirror-bootstrap}# and #{--mirror-"
-#| "chroot-security}# as follows."
 msgid ""
 "To set the distribution mirrors used at build time to point at a local "
 "mirror, it is sufficient to set #{--parent-mirror-bootstrap}#, #{--parent-"
 "mirror-chroot-security}# and #{--parent-mirror-chroot-backports}# as follows."
 msgstr ""
 "Pour définir les miroirs de distribution utilisés au temps de construction "
-"pour pointer vers un miroir local, il suffit de fixer #{--mirror-bootstrap}# "
-"et #{--mirror-chroot-security}# comme suit."
+"pour pointer vers un miroir local, il suffit de fixer #{--parent-mirror-"
+"bootstrap}# , #{--parent-mirror-chroot-security}# et #{--parent-mirror-"
+"chroot-backports}# comme suit."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:44
@@ -363,16 +347,12 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:48
-#, fuzzy
-#| msgid ""
-#| "The chroot mirror, specified by #{--mirror-chroot}#, defaults to the #{--"
-#| "mirror-bootstrap}# value."
 msgid ""
 "The chroot mirror, specified by #{--parent-mirror-chroot}#, defaults to the #"
 "{--parent-mirror-bootstrap}# value."
 msgstr ""
-"Le miroir chroot, spécifiée par #{--mirror-chroot}#,  par défaut, c'est la "
-"valeur #{--mirror-bootstrap}#."
+"Le miroir chroot, spécifiée par #{--parent-mirror-chroot}#,  par défaut, "
+"c'est la valeur #{--parent-mirror-bootstrap}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:50
@@ -381,16 +361,6 @@ msgstr "3~ Miroirs de distribution utilisés au moment de l'exécution"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:52
-#, fuzzy
-#| msgid ""
-#| "The #{--mirror-binary*}# options govern the distribution mirrors placed "
-#| "in the binary image. These may be used to install additional packages "
-#| "while running the live system. The defaults employ #{cdn.debian.net}#, a "
-#| "service that chooses a geographically close mirror based on the user's IP "
-#| "number. This is a suitable choice when you cannot predict which mirror "
-#| "will be best for all of your users. Or you may specify your own values as "
-#| "shown in the example below. An image built from this configuration would "
-#| "only be suitable for users on a network where \"#{mirror}#\" is reachable."
 msgid ""
 "The #{--parent-mirror-binary*}# options govern the distribution mirrors "
 "placed in the binary image. These may be used to install additional packages "
@@ -401,16 +371,16 @@ msgid ""
 "in the example below. An image built from this configuration would only be "
 "suitable for users on a network where \"#{mirror}#\" is reachable."
 msgstr ""
-"Les options #{--mirror-binary*}# régissent les miroirs de distribution "
-"placés dans l'image binaire. Ils peuvent être utilisés pour installer des "
-"paquets supplémentaires lors de l'exécution du système live. Les valeurs par "
-"défaut emploient #{cdn.debian.net}#, un service qui choisit un miroir "
-"géographiquement proche basé sur le numéro IP de l'utilisateur. C'est un "
-"choix approprié lorsque vous ne pouvez pas prédire quel miroir sera mieux "
-"pour tous vos utilisateurs. Ou vous pouvez spécifier vos propres valeurs, "
-"comme indiqué dans l'exemple ci-dessous. Une image construite avec cette "
-"configuration seulement serait approprié pour les utilisateurs sur un réseau "
-"où \"#{mirror}#\" est accessible."
+"Les options #{--parent-mirror-binary*}# régissent les miroirs de "
+"distribution placés dans l'image binaire. Ils peuvent être utilisés pour "
+"installer des paquets supplémentaires lors de l'exécution du système live. "
+"Les valeurs par défaut emploient #{cdn.debian.net}#, un service qui choisit "
+"un miroir géographiquement proche basé sur le numéro IP de l'utilisateur. "
+"C'est un choix approprié lorsque vous ne pouvez pas prédire quel miroir sera "
+"mieux pour tous vos utilisateurs. Ou vous pouvez spécifier vos propres "
+"valeurs, comme indiqué dans l'exemple ci-dessous. Une image construite avec "
+"cette configuration seulement serait approprié pour les utilisateurs sur un "
+"réseau où \"#{mirror}#\" est accessible."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:57
@@ -427,16 +397,6 @@ msgstr "3~additional-repositories Référentiels additionnels"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:63
-#, fuzzy
-#| msgid ""
-#| "You may add more repositories, broadening your package choices beyond "
-#| "what is available in your target distribution. These may be, for example, "
-#| "for backports, experimental or custom packages. To configure additional "
-#| "repositories, create #{config/chroot_sources/your-repository.chroot}#, "
-#| "and/or #{config/chroot_sources/your-repository.binary}# files. As with "
-#| "the #{--mirror-*}# options, these govern the repositories used in the "
-#| "*chroot* stage when building the image, and in the *binary* stage, i.e. "
-#| "for use when running the live system."
 msgid ""
 "You may add more repositories, broadening your package choices beyond what "
 "is available in your target distribution. These may be, for example, for "
@@ -452,10 +412,10 @@ msgstr ""
 "exemple, pour backports, expérimentaux ou des paquets personnalisés. Pour "
 "configurer des référentiels supplémentaires, créer les fichiers #{config/"
 "chroot_sources/your-repository.chroot}#, et/ou #{config/chroot_sources/your-"
-"repository.binary}#. Comme avec les options #{--mirror-*}#, elles gouvernent "
-"les référentiels utilisés dans l'étape *chroot* lors de la construction de "
-"l'image, et dans l'étape *binaire*, c'est à dire pour une utilisation au "
-"moment de l'exécution du système live."
+"repository.binary}#. Comme avec les options #{--parent-mirror-*}#, elles "
+"gouvernent les référentiels utilisés dans l'étape *chroot* lors de la "
+"construction de l'image, et dans l'étape *binaire*, c'est à dire pour une "
+"utilisation au moment de l'exécution du système live."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:65

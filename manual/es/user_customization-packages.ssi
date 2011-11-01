@@ -69,25 +69,29 @@ modificará su comportamiento para adecuarlo al modo seleccionado.
 
 3~ Réplicas de Distribución Debian
 
-The Debian archive is replicated across a large network of mirrors around
-the world so that people in each region can choose a nearby mirror for best
-download speed. Each of the #{--parent-mirror-*}# options governs which
-distribution mirror is used at various stages of the build. Recall from
-{Stages of the build}#stages-of-the-build that the *bootstrap* stage is when
-the chroot is initially populated by debootstrap with a minimal system, and
-the *chroot* stage is when the chroot used to construct the live system's
-filesystem is built. Thus, the corresponding mirror switches are used for
-those stages, and later, in the *binary* stage, the
-#{--parent-mirror-binary}# and #{--parent-mirror-binary-security}# values
-are used, superceding any mirrors used in an earlier stage.
+Los repositorios de Debian están replicados en una gran red alrededor del
+mundo, de manera que se puede seleccionar la réplica más cercana con el fin
+de obtener la mejor velocidad de descarga. Cada una de las opciones
+#{--parent-mirror-*}# gobierna qué réplica de repositorio Debian se utiliza
+en las diferentes etapas de creación. Si se recuerda de {Etapas de la
+creación}#stages-of-the-build, en la etapa de *preinstalación (bootstrap)*
+es cuando se crea el directorio chroot y se rellena con un sistema mínimo
+mediante  la herramienta debootstrap, y en la etapa *chroot* es cuando el
+directorio chroot es completado con los paquetes necesarios para crear el
+sistema de ficheros que será utilizado en el sistema en vivo. A cada una de
+estas etapas le corresponde su propia opción
+#{--parent-mirror-*}#. Posteriormente, en la etapa *binary* se utilizarán
+las réplicas Debian indicadas en los valores de las opciones
+#{--parent-mirror-binary}# y #{--parent-mirror-binary-security}# en lugar de
+utilizar los indicados para las etapas anteriores.
 
 3~distribution-mirrors-build-time Réplicas de Distribution utilizadas
 durante la creación
 
-To set the distribution mirrors used at build time to point at a local
-mirror, it is sufficient to set #{--parent-mirror-bootstrap}#,
-#{--parent-mirror-chroot-security}# and #{--parent-mirror-chroot-backports}#
-as follows.
+Para indicar qué réplicas deben ser utilizadas en el momento de crear la
+imagen es suficiente con utilizar las opciones #{--parent-mirror-bootstrap}#
+, #{--parent-mirror-chroot-security}# y #{--parent-mirror-chroot-backports}#
+como se muestra a continuación.
 
 code{
 
@@ -97,19 +101,21 @@ code{
 
 }code
 
-The chroot mirror, specified by #{--parent-mirror-chroot}#, defaults to the
-#{--parent-mirror-bootstrap}# value.
+El valor indicado en #{--parent-mirror-chroot}# es utilizado como valor por
+defecto para la opción #{--parent-mirror-bootstrap}# si esta no es indicada.
 
 3~ Réplicas de distribución Debian utilizadas en la ejecución.
 
-The #{--parent-mirror-binary*}# options govern the distribution mirrors
-placed in the binary image. These may be used to install additional packages
-while running the live system. The defaults employ #{cdn.debian.net}#, a
-service that chooses a geographically close mirror based on the user's IP
-number. This is a suitable choice when you cannot predict which mirror will
-be best for all of your users. Or you may specify your own values as shown
-in the example below. An image built from this configuration would only be
-suitable for users on a network where "#{mirror}#" is reachable.
+Las opciones #{--parent-mirror-binary*}# gobiernan las réplicas configuradas
+en la imagen binaria que serán utilizadas para instalar paquetes adicionales
+mientras se ejecuta el sistema en vivo. Por defecto se utiliza
+#{cdn.debian.net}#, que es un servicio que selecciona la réplica más cercana
+basándose en el número de IP. Es una elección bastante acertada siempre que
+no se pueda predecir que réplica será la mejor para todos los
+usuarios. También se puede especificar valores personalizados como se
+muestra en el siguiente ejemplo. Una imagen construida con esta
+configuración solamente sería accesible a los usuarios de una red donde
+"#{mirror}#" fuese alcanzable.
 
 code{
 
@@ -120,14 +126,15 @@ code{
 
 3~additional-repositories Repositorios adicionales
 
-You may add more repositories, broadening your package choices beyond what
-is available in your target distribution. These may be, for example, for
-backports, experimental or custom packages. To configure additional
-repositories, create #{config/chroot_sources/your-repository.chroot}#,
-and/or #{config/chroot_sources/your-repository.binary}# files. As with the
-#{--parent-mirror-*}# options, these govern the repositories used in the
-*chroot* stage when building the image, and in the *binary* stage, i.e. for
-use when running the live system.
+Se pueden añadir más repositorios, ampliando la lista de paquetes
+seleccionables más alla de aquellos disponibles para la distribución
+indicada, como pueden ser paquetes de backports, paquetes experimentales o
+personalizados. Para configurar repositorios adicionales se debe crear los
+ficheros #{config/chroot_sources/your-repository.chroot}#, y/o
+#{config/chroot_sources/your-repository.binary}#. Al igual que en las
+opciones #{--parent-mirror-*}#, estos ficheros gobiernan los repositorios
+utilizados en las etapas *chroot* y *binary* respectivamente, esto es, los
+repositorios que serán utilizados cuando se ejecute el sistema en vivo.
 
 Por ejemplo, #{config/chroot_sources/live.chroot}# permite instalar paquetes
 de la instantánea del repositorio Debian Live en el momento de crear la
@@ -245,7 +252,7 @@ de listas de paquetes predefinidas.
 3~ Listas de paquetes locales para binary
 
 En caso de que se desee incluir algún paquete .deb en el directorio
-#{pool/}# del medio de instalación sin instalarlo en la imágen del sistema
+#{pool/}# del medio de instalación sin instalarlo en la imagen del sistema
 en vivo se pueden utilizar las listas de paquetes locales para binary
 depositando dichas listas en el directoro
 #{config/binary_local-packageslists/}#, de manera que el medio de

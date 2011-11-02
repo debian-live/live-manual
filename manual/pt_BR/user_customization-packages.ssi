@@ -149,31 +149,10 @@ code{
 
 There are a number of ways to choose which packages live-build will install
 in your image, covering a variety of different needs. You can simply name
-individual packages to install, either with the #{--packages}# option for a
-few packages, or in a package list of your own for larger numbers. You can
-also choose larger predefined lists of packages, or use APT tasks. And
-finally, you may place package files in your #{config/}# tree, which is well
-suited to testing of new or experimental packages before they are available
-from a repository.
-
-3~ Choosing a few packages
-
-When the number of packages added is small, simply specify
-#{--packages}#. For example:
-
-code{
-
- $ lb config --packages "package1 package2 package3"
-
-}code
-
-The behaviour of live-build when specifying a package that does not exist is
-determined by your choice of APT utility. See {Choosing apt or
-aptitude}#choosing-apt-or-aptitude for more details.
-
-If you need to specify a large number of packages to be installed or you
-need flexibility regarding which packages to install, use package lists as
-discussed in the following section, {Package lists}#package-lists.
+individual packages to install in a package list. You can also choose
+predefined lists of packages, or use APT tasks. And finally, you may place
+package files in your #{config/}# tree, which is well suited to testing of
+new or experimental packages before they are available from a repository.
 
 3~package-lists Package lists
 
@@ -186,14 +165,16 @@ environments and some special purpose lists, as well as standard lists the
 others are based upon. You can also provide your own package lists, or use a
 combination of both.
 
+*{Note:}* The behaviour of live-build when specifying a package that does not exist is determined by your choice of APT utility. See {Choosing apt or aptitude}#choosing-apt-or-aptitude for more details.
+
 3~ Predefined package lists
 
 The simplest way to use lists is to specify one or more predefined lists
-with the #{--packages-lists}# option. For example:
+with the #{--package-lists}# option. For example:
 
 code{
 
- $ lb config --packages-lists "gnome-core rescue"
+ $ lb config --package-lists "gnome-core rescue"
 
 }code
 
@@ -207,44 +188,43 @@ for more details.
 *{Note:}* The prebuilt GNOME, KDE, LXDE and XFCE images available for download at http://live.debian.net are built using the corresponding virtual #{*-desktop}# lists.
 
 The default location for the list files on your system is
-#{/usr/share/live/build/lists/}#. To determine the packages in a given list,
-read the corresponding file, paying attention to included files and
-conditionals as described in the following sections.
+#{/usr/share/live/build/package-lists/}#. To determine the packages in a
+given list, read the corresponding file, paying attention to included files
+and conditionals as described in the following sections.
 
 3~ Local package lists
 
-You may supplement or replace entirely the supplied lists using local
-package lists stored in #{config/chroot_local-packageslists/}#.
+You may supplement the predefined lists using local package lists stored in
+#{config/package-lists/}#.
 
 Package lists that exist in this directory need to have a #{.list}# suffix
-in order to be processed. Local package lists always override package lists
-distributed with live-build. This can cause undesired effects, we therefore
-recommend to use unique names for local package lists.
+in order to be processed, and then an additional stage suffix, #{.chroot}#
+or #{.binary}# to indicate which stage the list is for.
+
+*{Note:}* If you don't specify the stage suffix, the list will be used for both stages. Normally, you want to specify #{.list.chroot}# so that the packages will only be installed in the live filesystem and not have an extra copy of the #{.deb} placed on the media.
 
 3~ Local binary package lists
 
-In case you want to include some required .deb packages to live media's
-#{pool/}# (without installing them onto the live image) you may need to use
-lists using binary local package lists stored in
-#{config/binary_local-packageslists/}#. Such media can be used as a
-customized Debian install image for offline installations.
-
-Package lists that exist in this directory need to have a #{.list}# suffix
-in order to be processed.
+To make a binary stage list, place a file suffixed with #{.list.binary}# in
+#{config/package-lists/}#. These packages are not installed in the live
+filesystem, but are included on the live media under #{pool/}#. You would
+typically use such a list with one of the non-live installer variants. As
+mentioned above, if you want this list to be the same as your chroot stage
+list, simply use the #{.list}# suffix by itself.
 
 3~ Extending a provided package list using includes
 
 The package lists that are included with live-build make extensive use of
-includes. Refer to these in the #{/usr/share/live/build/lists/}# directory,
-as they serve as good examples of how to write your own lists.
+includes. Refer to these in the #{/usr/share/live/build/package-lists/}#
+directory, as they serve as good examples of how to write your own lists.
 
-For example, to make a list that includes the predefined #{gnome}# list plus
-iceweasel, create #{config/chroot_local-packageslists/mygnome.list}# with
-the following contents:
+For example, to make a list that includes the predefined #{gnome-core}# list
+plus iceweasel, create #{config/package-lists/my.list.chroot}# with the
+following contents:
 
 code{
 
- #include <gnome>
+ #include <gnome-core>
  iceweasel
 
 }code
@@ -354,12 +334,14 @@ Second, live-build supports #{*-desktop}# virtual package lists for each of
 the desktop flavours mentioned above, which select the #{standard-x11}#
 predefined package list, the corresponding #{*-desktop}# task and three
 additional tasks: #{desktop}#, #{standard}# and #{laptop}#. So, for example,
-if you specify #{--packages-lists gnome-desktop}#, it is equivalent to
-specifying #{--packages debian-installer-launcher --packages-lists
-standard-x11 --tasks "gnome-desktop desktop standard laptop"}#.
+if you specify #{--package-lists gnome-desktop}#, it is equivalent to
+specifying #{lb config --package-lists standard-x11 ; echo
+debian-installer-launcher >> config/package-lists/my.list.chroot ; echo
+"gnome-desktop desktop standard laptop" >>
+config/task-lists/my.list.chroot}#.
 
 Third, if any of the tasks for these desktop flavours are selected, either
-explicitly through #{--tasks}# or implicitly by #{--packages-lists}#,
+explicitly through #{--tasks}# or implicitly by #{--package-lists}#,
 live-build will preseed the corresponding desktop value for Debian Installer
 (if it is included) to ensure it follows its own rules for installing
 different desktop flavours.
@@ -572,7 +554,7 @@ $ lb config --distribution wheezy
 
 Negative pin priorities will prevent a package from being installed, as in
 the case where you do not want a package that is recommended by another
-package. Suppose you are building an LXDE image using #{--packages-lists
+package. Suppose you are building an LXDE image using #{--package-lists
 lxde}# option, but don't want the user prompted to store wifi passwords in
 the keyring. This list includes #{gdm}#, which depends on #{gksu}#, which in
 turn recommends #{gnome-keyring}#. So you want to omit the recommended

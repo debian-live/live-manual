@@ -80,17 +80,20 @@ Live.
 
 code{
 
- $ mkdir tutorial2 ; cd tutorial2 ; lb config -p lxde --packages iceweasel
+ $ mkdir tutorial2
+ $ cd tutorial2
+ $ lb config -p lxde
+ $ echo iceweasel >> config/package-lists/my.list.chroot
 
 }code
 
-La scelta di LXDE per questo esempio riflette il desiderio di fornire un
-ambiente desktop minimale, dato che il punto focale dell'immagine è il
-singolo uso che abbiamo in mente, il browser web. Potremmo anche spingerci
-oltre e fornire una configurazione predefinita per il browser web in
-#{config/chroot_local-includes/etc/iceweasel/profile/}#, o pacchetti
-addizionali di supporto per la fruizione di vari tipi di contenuti web, ma
-lasciamo questo come esercizio per il lettore.
+Our choice of LXDE for this example reflects our desire to provide a minimal
+desktop environment, since the focus of the image is the single use we have
+in mind, the web browser. We could go even further and provide a default
+configuration for the web browser in
+#{config/includes.chroot/etc/iceweasel/profile/}#, or additional support
+packages for viewing various kinds of web content, but we leave this as an
+exercise for the reader.
 
 Si generi l'immagine, ancora come super-utente, conservando un log come in
 {Tutorial 1}#tutorial-1:
@@ -135,9 +138,16 @@ code{
  lb config noauto \
      --architecture i386 \
      --linux-flavours 686 \
-     --packages-lists lxde \
-     --packages "iceweasel xchat" \
+     --package-lists lxde \
      "${@}"
+
+}code
+
+Now populate your local package list:
+
+code{
+
+ $ echo "iceweasel xchat" >>config/package-lists/my.list.chroot
 
 }code
 
@@ -190,18 +200,12 @@ code{
 
 }code
 
-Si modifichi ora #{auto/config}# per aggiungere il pacchetto #{vlc}#:
+Now append the #{vlc}# package to our local package list in
+#{config/package-lists/my.list.chroot}#:
 
 code{
 
- #!/bin/sh
-
- lb config noauto \
-     --architecture i386 \
-     --linux-flavours 686 \
-     --packages-lists lxde \
-     --packages "iceweasel xchat vlc" \
-     "${@}"
+ $ echo vlc >>config/package-lists/my.list.chroot
 
 }code
 
@@ -251,8 +255,8 @@ code{
  $ mkdir vnc_kiosk_client
  $ cd vnc_kiosk_client
  $ lb config -a i386 -k 686 -p standard-x11 \
-     --packages "gdm3 metacity xvnc4viewer" \
      --apt-recommends false
+ $ echo "gdm3 metacity xvnc4viewer" >>config/package-lists/my.list.chroot
 
 }code
 
@@ -399,8 +403,8 @@ code{
      --language pt_BR \
      --tasks "brazilian-portuguese brazilian-portuguese-desktop brazilian-portuguese-kde-desktop" \
      --bootappend-live "locales=pt_BR.UTF-8 keyboard-layouts=pt-latin1" \
-     --debian-installer live \
-     --packages debian-installer-launcher
+     --debian-installer live
+ $ echo debian-installer-launcher >>config/package-lists/my.list.chroot
 
 }code
 

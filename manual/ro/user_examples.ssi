@@ -77,7 +77,10 @@ utility, serving as an introduction to customizing Debian Live images.
 
 code{
 
- $ mkdir tutorial2 ; cd tutorial2 ; lb config -p lxde --packages iceweasel
+ $ mkdir tutorial2
+ $ cd tutorial2
+ $ lb config -p lxde
+ $ echo iceweasel >> config/package-lists/my.list.chroot
 
 }code
 
@@ -85,9 +88,9 @@ Our choice of LXDE for this example reflects our desire to provide a minimal
 desktop environment, since the focus of the image is the single use we have
 in mind, the web browser. We could go even further and provide a default
 configuration for the web browser in
-#{config/chroot_local-includes/etc/iceweasel/profile/}#, or additional
-support packages for viewing various kinds of web content, but we leave this
-as an exercise for the reader.
+#{config/includes.chroot/etc/iceweasel/profile/}#, or additional support
+packages for viewing various kinds of web content, but we leave this as an
+exercise for the reader.
 
 Build the image, again as superuser, keeping a log as in {Tutorial
 1}#tutorial-1:
@@ -130,9 +133,16 @@ code{
  lb config noauto \
      --architecture i386 \
      --linux-flavours 686 \
-     --packages-lists lxde \
-     --packages "iceweasel xchat" \
+     --package-lists lxde \
      "${@}"
+
+}code
+
+Now populate your local package list:
+
+code{
+
+ $ echo "iceweasel xchat" >>config/package-lists/my.list.chroot
 
 }code
 
@@ -182,18 +192,12 @@ code{
 
 }code
 
-Now edit #{auto/config}# to add the #{vlc}# package:
+Now append the #{vlc}# package to our local package list in
+#{config/package-lists/my.list.chroot}#:
 
 code{
 
- #!/bin/sh
-
- lb config noauto \
-     --architecture i386 \
-     --linux-flavours 686 \
-     --packages-lists lxde \
-     --packages "iceweasel xchat vlc" \
-     "${@}"
+ $ echo vlc >>config/package-lists/my.list.chroot
 
 }code
 
@@ -239,8 +243,8 @@ code{
  $ mkdir vnc_kiosk_client
  $ cd vnc_kiosk_client
  $ lb config -a i386 -k 686 -p standard-x11 \
-     --packages "gdm3 metacity xvnc4viewer" \
      --apt-recommends false
+ $ echo "gdm3 metacity xvnc4viewer" >>config/package-lists/my.list.chroot
 
 }code
 
@@ -385,8 +389,8 @@ code{
      --language pt_BR \
      --tasks "brazilian-portuguese brazilian-portuguese-desktop brazilian-portuguese-kde-desktop" \
      --bootappend-live "locales=pt_BR.UTF-8 keyboard-layouts=pt-latin1" \
-     --debian-installer live \
-     --packages debian-installer-launcher
+     --debian-installer live
+ $ echo debian-installer-launcher >>config/package-lists/my.list.chroot
 
 }code
 

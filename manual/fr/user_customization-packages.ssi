@@ -161,12 +161,14 @@ code{
 
 2~choosing-packages-to-install Choisir les paquets à installer
 
-There are a number of ways to choose which packages live-build will install
-in your image, covering a variety of different needs. You can simply name
-individual packages to install in a package list. You can also choose
-predefined lists of packages, or use APT tasks. And finally, you may place
-package files in your #{config/}# tree, which is well suited to testing of
-new or experimental packages before they are available from a repository.
+Il y a un certain nombre de façons de choisir quels paquets live-build va
+installer dans votre image, couvrant une variété de besoins différents. Vous
+pouvez tout simplement nommer les paquets individuels à installer dans une
+liste de paquets. Vous pouvez également choisir grandes listes prédéfinies
+de paquets, ou utilisez des tâches APT. Et enfin, vous pouvez placer paquets
+dans votre arbre #{config/}# qui est bien adapté aux essais de nouveaux
+paquets ou expérimentaux avant qu'ils ne soient disponibles sur un
+référentiel.
 
 3~package-lists Listes de paquets
 
@@ -180,12 +182,13 @@ de bureau majeurs et certaines listes de but spécial, ainsi que les autres
 listes standard sont basées sur elles. Vous pouvez également fournir votre
 propre liste de paquets, ou utiliser une combinaison des deux.
 
-*{Note:}* The behaviour of live-build when specifying a package that does not exist is determined by your choice of APT utility. See {Choosing apt or aptitude}#choosing-apt-or-aptitude for more details.
+*{Remarque:}* Le comportement de live-build pour spécifier un paquet qui n'existe pas est déterminé par votre choix de l'utilité APT. Voir {Choisir apt ou aptitude}#choosing-apt-or-aptitude pour plus de détails.
 
 3~ Listes de paquets prédéfinies
 
-The simplest way to use lists is to specify one or more predefined lists
-with the #{--package-lists}# option. For example:
+La façon la plus simple d'utiliser des listes consiste à spécifier une ou
+plusieurs listes prédéfinies avec la option #{--package-lists}#. Par
+exemple:
 
 code{
 
@@ -202,19 +205,21 @@ langue}#desktop-and-language-tasks pour plus de détails.
 
 *{Remarque:}* Les images préconstruites GNOME, KDE, LXDE et XFCE disponibles pour téléchargement à http://live.debian.net sont construites en utilisant les listes virtuels correspondantes #{*-desktop}#.
 
-The default location for the list files on your system is
-#{/usr/share/live/build/package-lists/}#. To determine the packages in a
-given list, read the corresponding file, paying attention to included files
-and conditionals as described in the following sections.
+L'emplacement par défaut pour les fichiers liste sur votre système est
+#{/usr/share/live/build/package-lists/}#. Pour déterminer les paquets dans
+une liste donnée, lire le fichier correspondant, en accordant une attention
+aux fichiers inclus et les conditionnels tels que décrits dans les sections
+suivantes.
 
 3~ Listes de paquets locaux
 
-You may supplement the predefined lists using local package lists stored in
-#{config/package-lists/}#.
+Vous pouvez compléter ou remplacer entièrement les listes fournies en
+utilisant listes de paquets locaux stockées dans #{config/package-lists/}#.
 
-Package lists that exist in this directory need to have a #{.list}# suffix
-in order to be processed, and then an additional stage suffix, #{.chroot}#
-or #{.binary}# to indicate which stage the list is for.
+Les listes de paquets qui existent dans ce répertoire ont besoin d'avoir un
+suffixe #{.list}# pour être traitées, puis un suffixe d'étape
+supplémentaire#{.chroot}# ou #{.binary}# pour indiquer à quelle étape la
+liste est destinée.
 
 *{Note:}* If you don't specify the stage suffix, the list will be used for both stages. Normally, you want to specify #{.list.chroot}# so that the packages will only be installed in the live filesystem and not have an extra copy of the #{.deb} placed on the media.
 
@@ -229,13 +234,14 @@ list, simply use the #{.list}# suffix by itself.
 
 3~ Extension d'un liste de paquets fournis à l'aide de «includes»
 
-The package lists that are included with live-build make extensive use of
-includes. Refer to these in the #{/usr/share/live/build/package-lists/}#
-directory, as they serve as good examples of how to write your own lists.
+Les listes de paquets qui sont incluses avec live-build font un grand usage
+des «includes». Reportez-vous à ceux-ci dans le répertoire
+#{/usr/share/live/build/package-lists/}#, car ils servent d'exemples pour
+savoir comment écrire vos propres listes.
 
-For example, to make a list that includes the predefined #{gnome}# list plus
-iceweasel, create #{config/package-lists/my.list.chroot}# with the following
-contents:
+Par exemple, pour faire une liste qui comprend la liste prédéfinie
+#{gnome}#, plus iceweasel, créer #{config/package-lists/my.list.chroot}#
+avec le contenu suivant:
 
 code{
 
@@ -350,21 +356,22 @@ code{
 
 }code
 
-Second, live-build supports #{*-desktop}# virtual package lists for each of
-the desktop flavours mentioned above, which select the #{standard-x11}#
-predefined package list, the corresponding #{*-desktop}# task and three
-additional tasks: #{desktop}#, #{standard}# and #{laptop}#. So, for example,
-if you specify #{--package-lists gnome-desktop}#, it is equivalent to
-specifying #{lb config --package-lists standard-x11 ; echo
-debian-installer-launcher >> config/package-lists/my.list.chroot ; echo
-"gnome-desktop desktop standard laptop" >>
-config/task-lists/my.list.chroot}#.
+En second lieu, live-build supporte listes de paquets virtuels #{*-desktop}#
+pour chacune des saveurs de bureau mentionnés ci-dessus, qui sélectionnent
+la liste prédéfinie de paquets #{standard-x11}#, le correspondant
+#{*-desktop}# et trois tâches supplémentaires: #{desktop}#, #{standard}# et
+#{laptop}#. Ainsi, par exemple, si vous spécifiez #{--package-lists
+gnome-desktop}#, il est équivalent à spécifier #{lb config --package-lists
+standard-x11 ; echo debian-installer-launcher >>
+config/package-lists/my.list.chroot ; echo "gnome-desktop desktop standard
+laptop" >> config/task-lists/my.list.chroot}#.
 
-Third, if any of the tasks for these desktop flavours are selected, either
-explicitly through #{--tasks}# or implicitly by #{--package-lists}#,
-live-build will preseed the corresponding desktop value for Debian Installer
-(if it is included) to ensure it follows its own rules for installing
-different desktop flavours.
+En troisième lieu, si une des tâches de bureau pour ces saveurs sont
+sélectionnés, soit explicitement par #{--tasks}# ou implicitement par
+#{--package-lists}#, live-build préconfigurera la valeur de bureau
+correspondante pour l'installateur Debian (si elle est incluse) pour
+s'assurer qu'il suit ses propres règles pour l'installation de saveurs de
+bureau différents.
 
 *{Remarque:}* Il existe également une option expérimental #{--language}# qui a un objectif qui se chevauche avec des tâches des langues. Pour toute langue pour laquelle il est connu qu'il y a des paquets #{*-l10n}#, si #{--language}# est spécifié, ces paquets seront installés. Par ailleurs, si tous les modèles #{syslinux}# correspondants à la langue sont trouvés, ils seront utilisés au lieu des modèles par défaut en anglais. La sélection des paquets fait par #{--language}# est une mauvaise approximation aux tâches de langue, car elle exige que la liste des paquets à inclure par langue sera maintenu en interne en live-build, et d'ailleurs, des langues sont plus complets et flexibles. Cependant, l'aspect #{syslinux}# est encore utile. Ainsi, si vous utilisez #{--bootloader syslinux}# et des modèles pour la langue spécifiée existe, soit dans #{/usr/share/live/build/templates/syslinux/}# ou #{config/templates/syslinux/}#, pensez à utiliser cette option, éventuellement en combinaison avec des tâches pour s'assurer que tous les paquets concernés sont installés. Par exemple:
 
@@ -584,14 +591,15 @@ $ lb config --distribution wheezy
 
 }code
 
-Negative pin priorities will prevent a package from being installed, as in
-the case where you do not want a package that is recommended by another
-package. Suppose you are building an LXDE image using #{--package-lists
-lxde}# option, but don't want the user prompted to store wifi passwords in
-the keyring. This list includes #{gdm}#, which depends on #{gksu}#, which in
-turn recommends #{gnome-keyring}#. So you want to omit the recommended
-#{gnome-keyring}# package. This can be done by adding the following stanza
-to #{config/chroot_apt/preferences}#:
+Une priorité pin négative évitera installér un paquet, comme dans le cas où
+vous ne voulez pas un paquet qui est recommandé par un autre
+paquet. Supposons que vous construisez une image LXDE en utilisant l'option
+#{--package-lists lxde}# mais ne veulez pas que l'utilisateur soit invité à
+stocker les mots de passe wifi dans le trousseau de clés. Cette liste
+comprend #{gdm}#, que dépend de #{gksu}#, que à son tour recommends
+#{gnome-keyring}#. Donc, vous voulez omettre le paquet recommandé
+#{gnome-keyring}#. Cela peut être fait en ajoutant la strophe suivante à
+#{config/chroot_apt/preferences}#:
 
 code{
 

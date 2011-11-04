@@ -3,11 +3,11 @@
 %:
 	dh ${@}
 
-override_dh_install:
-	dh_install --fail-missing
+override_dh_builddeb:
+	dh_builddeb -- -Zgzip -z9
 
 override_dh_compress:
 	dh_compress -X.html -X.odt
 
-override_dh_builddeb:
-	dh_builddeb -- -Zgzip -z9
+override_dh_install:
+	dh_install --fail-missing

@@ -331,62 +331,50 @@ n'importe quelle tâche, y compris ceux non inclus dans cette liste, peuvent
 
 3~desktop-and-language-tasks Tâches de bureau et de la langue
 
-Les tâches de bureau et de la langue sont des cas particuliers. Dans
-l'installateur Debian, si le milieu a été préparé pour un environnement de
-bureau particulier, la tâche correspondante sera automatiquement
-installée. Ainsi, il y a tâches #{gnome-desktop}#, #{kde-desktop}#,
-#{lxde-desktop}# et #{xfce-desktop}#, dont aucun n'est offert dans le menu
-#{tasksel}#. De même, il n'y a pas entrées de menu pour les tâches de les
-langues, mais le choix de la langue de l'utilisateur lors de l'installation
-influence le choix des tâches de la langue correspondante.
+Desktop and language tasks are special cases that need some extra planning
+and configuration. Live images are different from Debian Installer images in
+this respect. In the Debian Installer, if the medium was prepared for a
+particular desktop environment flavour, the corresponding task will be
+automatically installed. Thus, there are internal #{gnome-desktop}#,
+#{kde-desktop}#, #{lxde-desktop}# and #{xfce-desktop}# tasks, none of which
+are offered in #{tasksel}#'s menu. Likewise, there are no menu entries for
+tasks for languages, but the user's language choice during the install
+influences the selection of corresponding language tasks.
 
-En live-build, par conséquent, ces cas particuliers sont également d'une
-attention particulière, mais avec trois différences notables au moment de
-l'écriture.
+When developing a desktop live image, the image typically boots directly to
+a working desktop, the choices of both desktop and default language having
+been made at build time, not at run time as in the case of the Debian
+Installer. That's not to say that a live image couldn't be built to support
+multiple desktops or multiple languages and offer the user a choice, but
+that is not live-build's default behaviour.
 
-D'abord, il n'existe aucune disposition fait encore automatiquement pour des
-tâches de la langue, même si un sous-ensemble de ces packages sont inclus si
-vous spécifiez #{lb config --language}#. Si vous avez besoin de ces tâches,
-qui comprennent des éléments tels que des polices spécifiques de la lange et
-des paquets de méthodes d'entrée, vous devez les spécifier dans votre
-configuration. Par exemple:
-
-code{
-
- $ lb config --tasks "japanese japanese-desktop japanese-gnome-desktop"
-
-}code
-
-En second lieu, live-build supporte listes de paquets virtuels #{*-desktop}#
-pour chacune des saveurs de bureau mentionnés ci-dessus, qui sélectionnent
-la liste prédéfinie de paquets #{standard-x11}#, le correspondant
-#{*-desktop}# et trois tâches supplémentaires: #{desktop}#, #{standard}# et
-#{laptop}#. Ainsi, par exemple, si vous spécifiez #{--package-lists
-gnome-desktop}#, il est équivalent à spécifier #{lb config --package-lists
-standard-x11 ; echo debian-installer-launcher >>
-config/package-lists/my.list.chroot ; echo "gnome-desktop desktop standard
-laptop" >> config/task-lists/my.list.chroot}#.
-
-En troisième lieu, si une des tâches de bureau pour ces saveurs sont
-sélectionnés, soit explicitement par #{--tasks}# ou implicitement par
-#{--package-lists}#, live-build préconfigurera la valeur de bureau
-correspondante pour l'installateur Debian (si elle est incluse) pour
-s'assurer qu'il suit ses propres règles pour l'installation de saveurs de
-bureau différents.
-
-*{Remarque:}* Il existe également une option expérimental #{--language}# qui a un objectif qui se chevauche avec des tâches des langues. Pour toute langue pour laquelle il est connu qu'il y a des paquets #{*-l10n}#, si #{--language}# est spécifié, ces paquets seront installés. Par ailleurs, si tous les modèles #{syslinux}# correspondants à la langue sont trouvés, ils seront utilisés au lieu des modèles par défaut en anglais. La sélection des paquets fait par #{--language}# est une mauvaise approximation aux tâches de langue, car elle exige que la liste des paquets à inclure par langue sera maintenu en interne en live-build, et d'ailleurs, des langues sont plus complets et flexibles. Cependant, l'aspect #{syslinux}# est encore utile. Ainsi, si vous utilisez #{--bootloader syslinux}# et des modèles pour la langue spécifiée existe, soit dans #{/usr/share/live/build/templates/syslinux/}# ou #{config/templates/syslinux/}#, pensez à utiliser cette option, éventuellement en combinaison avec des tâches pour s'assurer que tous les paquets concernés sont installés. Par exemple:
+Because there is no provision made automatically for language tasks, which
+include such things as language-specific fonts and input-method packages, if
+you want them, you need to specify them in your configuration. For example,
+a GNOME desktop image containing support for Japanese might include these
+tasks:
 
 code{
 
- $ lb config --language es
+ $ lb config
+ $ echo "gnome-desktop desktop standard laptop" >> config/task-lists/my.list.chroot
+ $ echo "japanese japanese-desktop japanese-gnome-desktop" >> config/tasks/my.list.chroot
 
 }code
 
-Même ainsi, elle est limitée en ce qu'elle ne supporte que d'une seule
-langue et un chargeur de démarrage unique. Par conséquent, pour toutes ces
-raisons, l'avenir de cette option est à l'étude, qui pourrait être remplacé
-par quelque chose d'entièrement différent dans la prochaine version majeure
-de live-build.
+Since desktop tasks are "internal" tasks, for every desktop flavour task
+included in the image, the corresponding value must be preseeded in the
+"tasksel/desktop" debconf variable or else tasksel will not recognize and
+install it. Thus:
+
+code{
+
+ $ lb config
+ $ echo 'tasksel tasksel/desktop multiselect kde' >> config/preseed/my.preseed.chroot
+
+}code
+
+This parameter can take multiple values, e.g. "lxde xfce" instead of "kde".
 
 2~installing-modified-or-third-party-packages Installation des paquets
 modifiés ou de tiers

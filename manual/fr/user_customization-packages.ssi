@@ -310,17 +310,18 @@ L'imbrication des conditionnels n'est pas supportée.
 
 3~ Tâches
 
-L'installateur Debian offre l'utilisateur le choix d'un certain nombre de
-listes présélectionnées de paquets, chacun centré sur un type particulier de
-système ou d'une tâche pour laquelle un système peut être utilisé, comme
-«environnement de bureau graphique», «serveur de messagerie» ou
-«portable». Ces listes sont appelés «tâches» et sont supportés par APT à
-travers l'option «Task:» Vous pouvez spécifier une ou plusieurs tâches en
-live-build via l'option #{--tasks}#, comme dans l'exemple ci-dessous.
+The Debian Installer offers the user choices of a number of preselected
+lists of packages, each one focused on a particular kind of system, or task
+a system may be used for, such as "Graphical desktop environment", "Mail
+server" or "Laptop". These lists are called "tasks" and are supported by APT
+through the "Task:" field. You can specify one or more tasks in live-build
+by putting them in a list in #{config/task-lists/}#, as in the example
+below.
 
 code{
 
- $ lb config --tasks "mail-server file-server"
+ $ lb config
+ $ echo "mail-server file-server" >> config/task-lists/my.list.chroot
 
 }code
 

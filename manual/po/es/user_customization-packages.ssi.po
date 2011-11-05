@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
 "POT-Creation-Date: 2011-11-05 14:22-0200\n"
-"PO-Revision-Date: 2011-11-02 21:08+0100\n"
+"PO-Revision-Date: 2011-11-05 18:59+0100\n"
 "Last-Translator: José Luis Zabalza and Carlos Zuferri «chals» "
 "<jlz.3008@gmail.com> <chals@altorricon.com>\n"
 "Language-Team:  <debian-live@lists.debian.org>\n"
@@ -856,16 +856,6 @@ msgstr "3~desktop-and-language-tasks Tareas de Escritorio e Idioma"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:198
-#, fuzzy
-#| msgid ""
-#| "Desktop and language tasks are special cases. In the Debian Installer, if "
-#| "the medium was prepared for a particular desktop environment flavour, the "
-#| "corresponding task will be automatically installed. Thus, there are #"
-#| "{gnome-desktop}#, #{kde-desktop}#, #{lxde-desktop}# and #{xfce-desktop}# "
-#| "tasks, none of which are offered in #{tasksel}#'s menu. Likewise, there "
-#| "are no menu entries for tasks for languages, but the user's language "
-#| "choice during the install influences the selection of corresponding "
-#| "language tasks."
 msgid ""
 "Desktop and language tasks are special cases that need some extra planning "
 "and configuration. Live images are different from Debian Installer images in "
@@ -877,15 +867,16 @@ msgid ""
 "for languages, but the user's language choice during the install influences "
 "the selection of corresponding language tasks."
 msgstr ""
-"Las tareas de escritorio y de idioma son casos especiales. Si el medio de "
-"instalación fue preparado para una clase particular de entorno de "
-"escritorio, el Instalador de Debian instalará automáticamente la tarea de "
-"entorno de escritorio correspondiente. Para ello existen las tareas  #{gnome-"
-"desktop}#, #{kde-desktop}#, #{lxde-desktop}# y #{xfce-desktop}# pero ninguna "
-"de ellas son presentadas en el menú de #{tasksel}#. De igual forma, las "
-"tareas para idiomas tampoco son presentadas en el menú de #{tasksel}#, pero "
-"la selección del idioma, al inicio de la instalación repercute en la "
-"selección de las correspondientes tareas del idioma."
+"Las tareas de escritorio y de idioma son casos especiales que necesitan un "
+"poco de planificación y configuración extra. Si el medio de instalación fue "
+"preparado para una clase particular de entorno de escritorio, el Instalador "
+"de Debian instalará automáticamente la tarea de entorno de escritorio "
+"correspondiente. Para ello existen las tareas  internas #{gnome-desktop}#, #"
+"{kde-desktop}#, #{lxde-desktop}# y #{xfce-desktop}# pero ninguna de ellas "
+"son presentadas en el menú de #{tasksel}#. De igual forma, las tareas para "
+"idiomas tampoco son presentadas en el menú de #{tasksel}#, pero la selección "
+"del idioma, al inicio de la instalación repercute en la selección de las "
+"correspondientes tareas del idioma."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:200
@@ -897,16 +888,16 @@ msgid ""
 "multiple desktops or multiple languages and offer the user a choice, but "
 "that is not live-build's default behaviour."
 msgstr ""
+"Cuando se desarolla una imagen de escritorio, la imagen normalmente arranca "
+"directamente a un escritorio de trabajo, las opciones de escritorio y de "
+"idioma por defecto han sido elegidas en tiempo de creación, no en tiempo de "
+"ejecución como en el caso del instalador de Debian. Eso no quiere decir que "
+"una imagen en vivo no pueda ser creada para admitir múltiples escritorios o "
+"varios idiomas y ofrecer al usuario una elección, pero ese no es un "
+"comportamiento por defecto de live-build."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:202
-#, fuzzy
-#| msgid ""
-#| "First, there is no provision made yet automatically for language tasks, "
-#| "although a subset of those packages are included if you specify #{lb "
-#| "config --language}#. If you need those tasks, which include such things "
-#| "as language-specific fonts and input-method packages, you need to specify "
-#| "them in your configuration. For example:"
 msgid ""
 "Because there is no provision made automatically for language tasks, which "
 "include such things as language-specific fonts and input-method packages, if "
@@ -914,12 +905,12 @@ msgid ""
 "a GNOME desktop image containing support for Japanese might include these "
 "tasks:"
 msgstr ""
-"Primero, no se ha previsto, todavía, la instalación automática de tareas de "
-"idiomas, aunque se incluye un subconjunto de estos paquetes si se especifica "
-"un idioma mediante #{lb config --language}#. Se puede especificar en la "
-"configuración de live-build la utilización de estas tareas, que incluyen "
-"cosas específicas del idioma, como pueden ser paquetes tipos de letra y "
-"métodos de introducción. Por ejemplo:"
+"Ya que no se ha previsto la instalación automática de tareas de idiomas, que "
+"incluyen cosas tales como tipos de letra específicos de cada lengua o "
+"paquetes de métodos de entrada, si se quiere incluirlos, es necesario "
+"especificarlo en la configuración. Por ejemplo, una imagen de escritorio "
+"GNOME que contenga soporte para el japonés podría incluir las siguientes "
+"tareas:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:208
@@ -929,6 +920,9 @@ msgid ""
 " $ echo \"gnome-desktop desktop standard laptop\" >> config/task-lists/my.list.chroot\n"
 " $ echo \"japanese japanese-desktop japanese-gnome-desktop\" >> config/tasks/my.list.chroot\n"
 msgstr ""
+" $ lb config\n"
+" $ echo \"gnome-desktop desktop standard laptop\" >> config/task-lists/my.list.chroot\n"
+" $ echo \"japanese japanese-desktop japanese-gnome-desktop\" >> config/tasks/my.list.chroot\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:212
@@ -938,6 +932,10 @@ msgid ""
 "\"tasksel/desktop\" debconf variable or else tasksel will not recognize and "
 "install it. Thus:"
 msgstr ""
+"Ya que las tareas de escritorio son \"internas\", para cada tarea de sabor "
+"de escritorio incluido en la imagen, el valor correspondiente tiene que ser "
+"preconfigurado en la variable \"tasksel/desktop\" de lo contrario tasksel no "
+"lo va a reconocer e instalar. Por lo tanto:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:217
@@ -946,6 +944,8 @@ msgid ""
 " $ lb config\n"
 " $ echo 'tasksel tasksel/desktop multiselect kde' >> config/preseed/my.preseed.chroot\n"
 msgstr ""
+" $ lb config\n"
+" $ echo 'tasksel tasksel/desktop multiselect kde' >> config/preseed/my.preseed.chroot\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:221
@@ -953,6 +953,8 @@ msgid ""
 "This parameter can take multiple values, e.g. \"lxde xfce\" instead of \"kde"
 "\"."
 msgstr ""
+"Este parámetro puede tener varios valores, por ejemplo, \"lxde xfce\" en "
+"lugar de \"kde\"."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:223

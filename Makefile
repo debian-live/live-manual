@@ -47,7 +47,7 @@ autobuild: clean build
 	rm -rf build
 	cp -a html build
 
-	sed +e; for LANGUAGE in $(LANGUAGES); \
+	set +e; for LANGUAGE in $(LANGUAGES); \
 	do \
 		FROMDIR=$(CURDIR)/manual/$${LANGUAGE}/build/$${LANGUAGE}; \
 		TODIR=$(CURDIR)/build/$${LANGUAGE}; \

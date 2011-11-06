@@ -196,15 +196,6 @@ code{
 
 }code
 
-En plus de ces listes, live-build soutient quatre listes de paquets
-virtuels: #{gnome-desktop}#, #{kde-desktop}#, #{lxde-desktop}# et
-#{xfce-desktop}#, chacun d'entre eux offrent une sélection plus grande de
-paquets qui correspond à valeurs par défaut de l'installateur Debian pour
-ces environnements de bureau. Voir {Tâches de bureau et de la
-langue}#desktop-and-language-tasks pour plus de détails.
-
-*{Remarque:}* Les images préconstruites GNOME, KDE, LXDE et XFCE disponibles pour téléchargement à http://live.debian.net sont construites en utilisant les listes virtuels correspondantes #{*-desktop}#.
-
 L'emplacement par défaut pour les fichiers liste sur votre système est
 #{/usr/share/live/build/package-lists/}#. Pour déterminer les paquets dans
 une liste donnée, lire le fichier correspondant, en accordant une attention
@@ -367,10 +358,10 @@ code{
 
 }code
 
-Comme les tâches de bureau sont des tâches «internes», pour chaque tâche de
-saveur de bureau inclus dans l'image, la valeur correspondante doit être
-préconfiguré dans la variable debconf «tasksel/desktop", ou bien tasksel ne
-la reconnaîtra pas et ne l'installera pas. Ainsi:
+Since desktop tasks are "internal" tasks, for every desktop flavour task
+included in the image, the corresponding value, if it differs from the
+default, "gnome", must be preseeded in the "tasksel/desktop" debconf
+variable or else tasksel will not recognize and install it. Thus:
 
 code{
 

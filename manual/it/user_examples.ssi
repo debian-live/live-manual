@@ -345,11 +345,11 @@ nostro desktop preferito, in questo caso KDE, contenente tutti gli stessi
 pacchetti che verrebbero installati dall'installatore Debian standard per
 KDE.
 
-Il problema iniziale è di scoprire i nomi dei task appropriati, attualmente,
-live-build non aiuta in questo. Si può essere fortunati o arrivarci con vari
-tentativi, ma c'è uno strumento #{grep-dctrl}# il quale può essere
-utilizzato per scavare nelle descrizioni in tasksel-data, perciò assicursi
-di avere entrambi questi pacchetti:
+Our initial problem is the discovery of the names of the appropriate
+language tasks. Currently, live-build cannot help with this. While we might
+get lucky and find this by trial-and-error, there is a tool, #{grep-dctrl}#,
+which can be used to dig it out of the task descriptions in tasksel-data, so
+to prepare, make sure you have both of those things:
 
 code{
 
@@ -386,11 +386,11 @@ code{
 
 }code
 
-Si userà l'opzione sperimentale #{--language}#, poiché live-build contempla
-i template #{syslinux}# per pt_BR (vedere {Task per desktop e
-lingua}#desktop-and-language-tasks per i dettagli). All'avvio verrà generata
-la lingua pt_BR.UTF-8 e selezionato pt-latin1 come layout della
-tastiera. Ora mettiamo insieme i pezzi:
+At boot time we will generate the pt_BR.UTF-8 locale and select the
+pt-latin1 keyboard layout. We will also need to preseed our desktop choice,
+"kde" so that tasksel will install the correct desktop task, as it differs
+from the default (see {Desktop and languages
+tasks}#desktop-and-language-tasks). Now let's put the pieces together:
 
 code{
 
@@ -399,13 +399,12 @@ code{
  $ lb config \
      -a i386 \
      -k 486 \
-     -p kde-desktop \
-     --language pt_BR \
      --bootappend-live "locales=pt_BR.UTF-8 keyboard-layouts=pt-latin1" \
      --debian-installer live
- $ echo "brazilian-portuguese brazilian-portuguese-desktop brazilian-portuguese-kde-desktop" >> \
-     config/task-lists/my.list.chroot
+ $ echo kde-desktop brazilian-portuguese brazilian-portuguese-desktop \
+     brazilian-portuguese-kde-desktop >> config/task-lists/my.list.chroot
  $ echo debian-installer-launcher >> config/package-lists/my.list.chroot
+ $ echo tasksel tasksel/desktop multiselect kde >> config/preseed/my.preseed.chroot
 
 }code
 

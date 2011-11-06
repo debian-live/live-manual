@@ -354,11 +354,11 @@ escritorio preferido, en este caso el KDE, que contiene todos los mismos
 paquetes que serían instalados por el programa de instalación estándar de
 Debian para KDE.
 
-Our initial problem is the discovery of the names of the appropriate
-language tasks. Currently, live-build cannot help with this. While we might
-get lucky and find this by trial-and-error, there is a tool, #{grep-dctrl}#,
-which can be used to dig it out of the task descriptions in tasksel-data, so
-to prepare, make sure you have both of those things:
+El primer problema es descubrir los nombres de las tareas adecuadas. En la
+actualidad, live-build no puede ayudar en esto. Aunque podríamos tener
+suerte y encontrarlos a base de pruebas, hay una herramienta,
+#{grep-dctrl}#, para extraerlos de las descripciones de tareas en
+tasksel-data, para proceder, asegurarse de tener ambas cosas:
 
 code{
 
@@ -395,11 +395,12 @@ $ grep-dctrl -FEnhances brazilian-portuguese /usr/share/tasksel/debian-tasks.des
 
 }code
 
-At boot time we will generate the pt_BR.UTF-8 locale and select the
-pt-latin1 keyboard layout. We will also need to preseed our desktop choice,
-"kde" so that tasksel will install the correct desktop task, as it differs
-from the default (see {Desktop and languages
-tasks}#desktop-and-language-tasks). Now let's put the pieces together:
+En el momento del arranque se van a generar las variantes locales
+pt_BR.UTF-8 y seleccionar la distribución del teclado pt-latin1. También
+será necesario preconfigurar la opción de escritorio, "kde" para que tasksel
+instale la tarea de escritorio correcta, ya que difiere de la de por defecto
+(Ver {Tareas de Escritorio e Idioma}#desktop-and-language-tasks). Ahora
+vamos a poner las piezas juntas:
 
 code{
 

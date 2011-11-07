@@ -55,9 +55,9 @@ live-build obtienen su configuración desde un único directorio llamado
 propenso a errores, se puede utilizar el comando #{lb config}# para crear el
 esqueleto de directorios de configuración.
 
-Issuing #{lb config}# without any arguments creates a #{config/}#
-subdirectory which it populates with some default settings, and a skeleton
-#{auto/}# subdirectory tree.
+Ejecutar #{lb config}# sin argumentos crea un subdirectorio #{config/}# que
+se completa con algunas opciones por defecto y un árbol de subdirectorios en
+forma de esqueleto #{auto/}#:
 
 code{
 
@@ -67,10 +67,10 @@ code{
 
 }code
 
-Using #{lb config}# without any arguments would be suitable for users who
-need a very basic image, or who intend to later provide a more complete
-configuration via #{auto/config}# (see {Managing a
-configuration}#managing-a-configuration for details).
+Usar #{lb config}# sin ningún argumento sería conveniente para los usuarios
+que necesitan una imagen muy básica, o que tienen intención de proporcionar
+más tarde una configuración más completa a través de #{auto/config}# (ver
+{Gestionar una configuración}#managing-a-configuration para más detalles).
 
 Normalmente, se tendrá que especificar algunas opciones. Por ejemplo, para
 incluir la lista del paquete 'gnome' en la configuración:
@@ -94,9 +94,9 @@ Una lista completa de opciones está disponible en la página del manual
 
 3~lb-build El comando #{lb build}#
 
-The #{lb build}# command reads in your configuration from the #{config/}#
-directory. It then runs the lower level commands needed to build your Live
-system.
+El comando #{lb build}# lee la configuración del directorio #{config/}#. A
+continuación, ejecuta los comandos del nivel inferior más bajo necesarios
+para crear el sistema en vivo.
 
 3~lb-clean El comando #{lb clean}#
 
@@ -117,10 +117,11 @@ arrancar los sistemas en vivo, tales como los creados por live-build. Ésto
 incluye las ISOs de Debian Live, archivos comprimidos en tar de netboot, e
 imágenes para llaves USB.
 
-At boot time it will look for read-only media containing a #{/live/}#
-directory where a root filesystem (often a compressed filesystem image like
-squashfs) is stored. If found, it will create a writable environment, using
-aufs, for Debian like systems to boot from.
+En el momento del arranque, buscará en los medios de almacenamiento de sólo
+lectura un directorio #{/live/}# donde se encuentra un sistema de ficheros
+raíz (a menudo una imagen del sistema de ficheros comprimidos como
+squashfs). Si lo encuentra, creará un entorno de escritura, utilizando aufs,
+para que arranquen los sistemas tipo Debian.
 
 Se puede encontrar más información sobre ramfs inicial en Debian en el
 Manual del kernel Debian Linux en http://kernel-handbook.alioth.debian.org/

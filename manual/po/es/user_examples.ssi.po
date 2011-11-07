@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
 "POT-Creation-Date: 2011-11-07 08:16-0400\n"
-"PO-Revision-Date: 2011-11-06 16:42+0100\n"
+"PO-Revision-Date: 2011-11-07 14:44+0100\n"
 "Last-Translator: José Luis Zabalza and Carlos Zuferri «chals» "
 "<jlz.3008@gmail.com> <chals@altorricon.com>\n"
 "Language-Team: Debian live Spanish translation team <debian-live@lists."
@@ -445,13 +445,7 @@ msgstr " #!/bin/sh\n"
 
 #. type: Plain text
 #: en/user_examples.ssi:101
-#, fuzzy, no-wrap
-#| msgid ""
-#| " lb config noauto \\\n"
-#| "     --architecture i386 \\\n"
-#| "     --linux-flavours 686 \\\n"
-#| "     --package-lists lxde \\\n"
-#| "     \"${@}\"\n"
+#, no-wrap
 msgid ""
 " lb config noauto \\\n"
 "     --architecture i386 \\\n"
@@ -461,7 +455,7 @@ msgid ""
 msgstr ""
 " lb config noauto \\\n"
 "     --architecture i386 \\\n"
-"     --linux-flavours 686 \\\n"
+"     --linux-flavours 686-pae \\\n"
 "     --package-lists lxde \\\n"
 "     \"${@}\"\n"
 
@@ -478,14 +472,6 @@ msgstr " $ echo \"iceweasel xchat\" >> config/package-lists/my.list.chroot\n"
 
 #. type: Plain text
 #: en/user_examples.ssi:113
-#, fuzzy
-#| msgid ""
-#| "First, #{--architecture i386}# ensures that on our #{amd64}# build "
-#| "system, we build a 32-bit version suitable for use on most machines. "
-#| "Second, we use #{--linux-flavours 686}# because we don't anticipate using "
-#| "this image on much older systems. Third, we've chosen the #{lxde}# "
-#| "package list to give us a minimal desktop. And finally, we have added two "
-#| "initial favourite packages: #{iceweasel}# and #{xchat}#."
 msgid ""
 "First, #{--architecture i386}# ensures that on our #{amd64}# build system, "
 "we build a 32-bit version suitable for use on most machines. Second, we use #"
@@ -497,8 +483,8 @@ msgstr ""
 "En primer lugar con #{--architecture i386}# se asegura de que en nuestro "
 "sistema de creación #{amd64}# se crea una versión de 32-bits adecuada para "
 "ser usada en la mayoría de máquinas. En segundo lugar, se usa #{--linux-"
-"flavours 686}# porque no se espera usar esta imagen en sistemas mucho más "
-"viejos. En tercer lugar se elige la lista de paquetes #{lxde}# para "
+"flavours 686-pae}# porque no se espera usar esta imagen en sistemas mucho "
+"más viejos. En tercer lugar se elige la lista de paquetes #{lxde}# para "
 "proporcionar un escritorio mínimo. Y, por último, se añaden dos paquetes "
 "iniciales favoritos: #{iceweasel}# y #{xchat}#."
 
@@ -671,13 +657,7 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_examples.ssi:187
-#, fuzzy, no-wrap
-#| msgid ""
-#| " $ mkdir vnc_kiosk_client\n"
-#| " $ cd vnc_kiosk_client\n"
-#| " $ lb config -a i386 -k 686 -p standard-x11 \\\n"
-#| "     --apt-recommends false\n"
-#| " $ echo \"gdm3 metacity xvnc4viewer\" >> config/package-lists/my.list.chroot\n"
+#, no-wrap
 msgid ""
 " $ mkdir vnc_kiosk_client\n"
 " $ cd vnc_kiosk_client\n"
@@ -687,7 +667,7 @@ msgid ""
 msgstr ""
 " $ mkdir vnc_kiosk_client\n"
 " $ cd vnc_kiosk_client\n"
-" $ lb config -a i386 -k 686 -p standard-x11 \\\n"
+" $ lb config -a i386 -k 686-pae -p standard-x11 \\\n"
 "     --apt-recommends false\n"
 " $ echo \"gdm3 metacity xvnc4viewer\" >> config/package-lists/my.list.chroot\n"
 
@@ -705,18 +685,14 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_examples.ssi:197
-#, fuzzy, no-wrap
-#| msgid ""
-#| " $ mkdir -p config/chroot_local-includes/etc/skel\n"
-#| " $ cat >config/chroot_local-includes/etc/skel/.xsession <<END\n"
-#| " #!/bin/sh\n"
+#, no-wrap
 msgid ""
 " $ mkdir -p config/includes.chroot/etc/skel\n"
 " $ cat >config/includes.chroot/etc/skel/.xsession <<END\n"
 " #!/bin/sh\n"
 msgstr ""
-" $ mkdir -p config/chroot_local-includes/etc/skel\n"
-" $ cat >config/chroot_local-includes/etc/skel/.xsession <<END\n"
+" $ mkdir -p config/includes.chroot/etc/skel\n"
+" $ cat >config/includes.chroot/etc/skel/.xsession <<END\n"
 " #!/bin/sh\n"
 
 #. type: Plain text
@@ -786,15 +762,12 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_examples.ssi:226
-#, fuzzy, no-wrap
-#| msgid ""
-#| " $ lb config -k 486 -p minimal --binary-indices false \\\n"
-#| "     --memtest none --apt-recommends false --includes none\n"
+#, no-wrap
 msgid ""
 " $ lb config -k 486 -p minimal --apt-indices false \\\n"
 "     --memtest none --apt-recommends false --includes none\n"
 msgstr ""
-" $ lb config -k 486 -p minimal --binary-indices false \\\n"
+" $ lb config -k 486 -p minimal --apt-indices false \\\n"
 "     --memtest none --apt-recommends false --includes none\n"
 
 #. type: Plain text
@@ -816,22 +789,6 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_examples.ssi:240
-#, fuzzy
-#| msgid ""
-#| "The biggest space-saver here, compared to building a standard image on an "
-#| "#{i386}# architecture system, is to select only the #{486}# kernel "
-#| "flavour instead of the default #{-k \"486 686\"}#. Leaving off APT's "
-#| "indices with #{--binary-indices false}# also saves a fair amount of "
-#| "space, the tradeoff being that you need to #{apt-get update}# before "
-#| "using apt in the live system. Choosing the #{minimal}# package list "
-#| "leaves out the large #{locales}# package and associated utilities. "
-#| "Dropping recommended packages with #{--apt-recommends false}# saves some "
-#| "additional space, at the expense of omitting some packages you might "
-#| "otherwise expect to be there, such as #{firmware-linux-free}# which may "
-#| "be needed to support certain hardware. The remaining options shave off "
-#| "additional small amounts of space. It's up to you to decide if the "
-#| "functionality that is sacrificed with each optimization is worth the loss "
-#| "in functionality."
 msgid ""
 "The biggest space-saver here, compared to building a standard image on an #"
 "{i386}# architecture system, is to select only the #{486}# kernel flavour "
@@ -849,8 +806,8 @@ msgid ""
 msgstr ""
 "El mayor ahorro de espacio aquí, en comparación con la creación de una "
 "imagen estándar en un sistema de arquitectura #{i386}# es seleccionar sólo "
-"la versión del kernel #{486}# en lugar de la de por defecto #{-k \"486 686\"}"
-"#. Dejar fuera los índices de APT con #{--binary-indices false}# también "
+"la versión del kernel #{486}# en lugar de la de por defecto #{-k \"486 686-"
+"pae\"}#. Dejar fuera los índices de APT con #{--apt-indices false}# también "
 "ahorra una cantidad importante de espacio, la desventaja es que es necesario "
 "hacer un #{apt-get update}# antes de usar apt en el sistema en vivo. Elegir "
 "la lista del paquete #{minimal}# deja fuera el gran paquete de #{locales}# y "
@@ -918,6 +875,8 @@ msgid ""
 " $ grep-dctrl -FTest-lang pt_BR /usr/share/tasksel/descs/debian-tasks.desc -sTask\n"
 " Task: brazilian-portuguese\n"
 msgstr ""
+" $ grep-dctrl -FTest-lang pt_BR /usr/share/tasksel/descs/debian-tasks.desc -sTask\n"
+" Task: brazilian-portuguese\n"
 
 #. type: Plain text
 #: en/user_examples.ssi:265
@@ -930,21 +889,15 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_examples.ssi:271
-#, fuzzy, no-wrap
-#| msgid ""
-#| " $ grep-dctrl -FEnhances brazilian-portuguese /usr/share/tasksel/debian-tasks.desc -sTask,Description\n"
-#| " Task: brazilian-portuguese-desktop\n"
-#| " Description: Brazilian Portuguese desktop\n"
-#| "  This task localises the desktop in Brasilian Portuguese.\n"
+#, no-wrap
 msgid ""
 " $ grep-dctrl -FEnhances brazilian-portuguese /usr/share/tasksel/descs/debian-tasks.desc -sTask\n"
 " Task: brazilian-portuguese-desktop\n"
 " Task: brazilian-portuguese-kde-desktop\n"
 msgstr ""
-"$ grep-dctrl -FEnhances brazilian-portuguese /usr/share/tasksel/debian-tasks.desc -sTask,Description\n"
+" $ grep-dctrl -FEnhances brazilian-portuguese /usr/share/tasksel/descs/debian-tasks.desc -sTask\n"
 " Task: brazilian-portuguese-desktop\n"
-" Description: Brazilian Portuguese desktop\n"
-"  This task localises the desktop in Brasilian Portuguese.\n"
+" Task: brazilian-portuguese-kde-desktop\n"
 
 #. type: Plain text
 #: en/user_examples.ssi:275

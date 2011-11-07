@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
 "POT-Creation-Date: 2011-11-07 08:16-0400\n"
-"PO-Revision-Date: 2011-04-04 14:27+0100\n"
+"PO-Revision-Date: 2011-11-07 14:38+0100\n"
 "Last-Translator: José Luis Zabalza and Carlos Zuferri «chals» "
 "<jlz.3008@gmail.com> <chals@altorricon.com>\n"
 "Language-Team: none\n"
@@ -272,12 +272,6 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:24
-#, fuzzy
-#| msgid ""
-#| "To include files, simply add them to your #{config/chroot_local-includes}"
-#| "# directory. This directory corresponds to the root directory (#{/}#) of "
-#| "the live system. For example, to add a file #{/var/www/index.html}# in "
-#| "the live system, use:"
 msgid ""
 "To include files, simply add them to your #{config/includes.chroot}# "
 "directory. This directory corresponds to the root directory (#{/}#) of the "
@@ -285,23 +279,20 @@ msgid ""
 "system, use:"
 msgstr ""
 "Para incluir ficheros solamente hace falta añadirlos al directorio de "
-"configuración #{config/chroot_local-includes}#. Habrá una relación directa "
-"entre este directorio y el directorio raiz (#{/}#) del sistema en vivo. Por "
+"configuración #{config/includes.chroot}#. Habrá una relación directa entre "
+"este directorio y el directorio raiz (#{/}#) del sistema en vivo. Por "
 "ejemplo, si se desea añadir un fichero para que sea el fichero #{/var/www/"
 "index.html}# del sistema en vivo se puede hacer lo siguiente:"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:29
-#, fuzzy, no-wrap
-#| msgid ""
-#| " $ mkdir -p config/chroot_local-includes/var/www\n"
-#| " $ cp /path/to/my/index.html config/chroot_local-includes/var/www\n"
+#, no-wrap
 msgid ""
 " $ mkdir -p config/includes.chroot/var/www\n"
 " $ cp /path/to/my/index.html config/includes.chroot/var/www\n"
 msgstr ""
-"$ mkdir -p config/chroot_local-includes/var/www\n"
-"$ cp /donde/esté/el/fichero/original/index.html config/chroot_local-includes/var/www\n"
+" $ mkdir -p config/includes.chroot/var/www\n"
+" $ cp /path/to/my/index.html config/includes.chroot/var/www\n"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:33
@@ -310,16 +301,7 @@ msgstr "El directorio de configuración presentará la siguiente jerarquía:"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:44
-#, fuzzy, no-wrap
-#| msgid ""
-#| " -- config\n"
-#| "    [...]\n"
-#| "     |-- chroot_local-includes\n"
-#| "     |   `-- var\n"
-#| "     |       `-- www\n"
-#| "     |           `-- index.html\n"
-#| "    [...]\n"
-#| "     `-- templates\n"
+#, no-wrap
 msgid ""
 " -- config\n"
 "    [...]\n"
@@ -332,7 +314,7 @@ msgid ""
 msgstr ""
 " -- config\n"
 "    [...]\n"
-"     |-- chroot_local-includes\n"
+"     |-- includes.chroot\n"
 "     |   `-- var\n"
 "     |       `-- www\n"
 "     |           `-- index.html\n"
@@ -356,15 +338,6 @@ msgstr "3~binary-local-includes Includes locales en Binary "
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:52
-#, fuzzy
-#| msgid ""
-#| "To include material such as documentation or videos on the media "
-#| "filesystem so that it is accessible immediately upon insertion of the "
-#| "media without booting the Live system, you can use binary local includes. "
-#| "This works in a similar fashion to chroot local includes. For example, "
-#| "suppose the files #{~/video_demo.*}# are demo videos of the live system "
-#| "described by and linked to by an HTML index page. Simply copy the "
-#| "material to #{config/binary_local-includes/}# as follows:"
 msgid ""
 "To include material such as documentation or videos on the media filesystem "
 "so that it is accessible immediately upon insertion of the media without "
@@ -380,17 +353,17 @@ msgstr ""
 "de arrancar el sistema en vivo. Para esto se utilizan los includes locales "
 "en Binary. Funciona de manera similar a los includes locales en chroot "
 "comentados anteriormente. Por ejemplo, supongamos que en el medio de "
-"instalación se desea añadir unos ficheros con videos de demostración sobre "
-"el funcionamiento del sistema en vivo de manera que el usuario pueda acceder "
-"a ellos a través de la página de indice HTML. Simplemente se debe copiar el "
-"material en #{config/binary_local-includes/}# de la siguiente manera:"
+"instalación se desea añadir unos ficheros con videos de demostración #{~/"
+"video_demo.*}# sobre el funcionamiento del sistema en vivo de manera que el "
+"usuario pueda acceder a ellos a través de la página de indice HTML. "
+"Simplemente se debe copiar el material en #{config/includes.binary/}# de la "
+"siguiente manera:"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:56
-#, fuzzy, no-wrap
-#| msgid " $ cp ~/video_demo.* config/binary_local-includes/\n"
+#, no-wrap
 msgid " $ cp ~/video_demo.* config/includes.binary/\n"
-msgstr " $ cp ~/video_demo.* config/binary_local-includes/\n"
+msgstr " $ cp ~/video_demo.* config/includes.binary/\n"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:60
@@ -482,16 +455,6 @@ msgstr "3~boot-time-hooks Scripts gancho en tiempo de arranque"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:84
-#, fuzzy
-#| msgid ""
-#| "To execute commands at boot time, you can supply live-config hooks as "
-#| "explained in the \"Customization\" section of its man page. Examine live-"
-#| "config's own hooks provided in #{/lib/live/config/}#, noting the sequence "
-#| "numbers. Then provide your own hook prefixed with an appropriate sequence "
-#| "number, either as a chroot local include in #{config/chroot_local-"
-#| "includes/lib/live/config/}#, or as a custom package as discussed in "
-#| "{Installing modified or third-party packages}#installing-modified-or-"
-#| "third-party-packages."
 msgid ""
 "To execute commands at boot time, you can supply live-config hooks as "
 "explained in the \"Customization\" section of its man page. Examine live-"
@@ -503,8 +466,8 @@ msgid ""
 msgstr ""
 "Para ejecutar ordenes en el arranque del sistema en vivo, se puede "
 "suministrar scripts gancho a live-config depositándolos en el directorio #"
-"{config/chroot_local-includes/lib/live/config/}#, tal y como se explica en "
-"la sección de \"Personalización\" de la página de manual de live-config. Es "
+"{config/includes.chroot/lib/live/config/}#, tal y como se explica en la "
+"sección de \"Personalización\" de la página de manual de live-config. Es "
 "interesante examinar los scripts gancho que trae de serie live-config que "
 "pueden verse en #{/lib/live/config/}# y fijarse en la secuencia de números. "
 "Cuando se vaya a utilizar scripts propios deben ser prefijados con un número "

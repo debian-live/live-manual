@@ -52,10 +52,11 @@ concreto. N. del T); Si se necesita realizar algún procesado de estos
 ficheros ver la sección {Scripts gancho locales en
 Live/chroot}#live-chroot-local-hooks
 
-To include files, simply add them to your #{config/includes.chroot}#
-directory. This directory corresponds to the root directory (#{/}#) of the
-live system. For example, to add a file #{/var/www/index.html}# in the live
-system, use:
+Para incluir ficheros solamente hace falta añadirlos al directorio de
+configuración #{config/includes.chroot}#. Habrá una relación directa entre
+este directorio y el directorio raiz (#{/}#) del sistema en vivo. Por
+ejemplo, si se desea añadir un fichero para que sea el fichero
+#{/var/www/index.html}# del sistema en vivo se puede hacer lo siguiente:
 
 code{
 
@@ -85,13 +86,17 @@ que los paquetes puedan haber instalado.
 
 3~binary-local-includes Includes locales en Binary 
 
-To include material such as documentation or videos on the media filesystem
-so that it is accessible immediately upon insertion of the media without
-booting the Live system, you can use binary local includes. This works in a
-similar fashion to chroot local includes. For example, suppose the files
-#{~/video_demo.*}# are demo videos of the live system described by and
-linked to by an HTML index page. Simply copy the material to
-#{config/includes.binary/}# as follows:
+Se puede incluir material como documentación, videos, etc en el sistema de
+ficheros del medio de instalación (USB, CDROM, etc) donde se grabará la
+imagen de manera que sea accesible nada más insertar el medio sin necesidad
+de arrancar el sistema en vivo. Para esto se utilizan los includes locales
+en Binary. Funciona de manera similar a los includes locales en chroot
+comentados anteriormente. Por ejemplo, supongamos que en el medio de
+instalación se desea añadir unos ficheros con videos de demostración
+#{~/video_demo.*}# sobre el funcionamiento del sistema en vivo de manera que
+el usuario pueda acceder a ellos a través de la página de indice
+HTML. Simplemente se debe copiar el material en #{config/includes.binary/}#
+de la siguiente manera:
 
 code{
 
@@ -140,14 +145,17 @@ simbólico en el directorio de configuración #{config/chroot_local-hooks}#.
 
 3~boot-time-hooks Scripts gancho en tiempo de arranque
 
-To execute commands at boot time, you can supply live-config hooks as
-explained in the "Customization" section of its man page. Examine
-live-config's own hooks provided in #{/lib/live/config/}#, noting the
-sequence numbers. Then provide your own hook prefixed with an appropriate
-sequence number, either as a chroot local include in
-#{config/includes.chroot/lib/live/config/}#, or as a custom package as
-discussed in {Installing modified or third-party
-packages}#installing-modified-or-third-party-packages.
+Para ejecutar ordenes en el arranque del sistema en vivo, se puede
+suministrar scripts gancho a live-config depositándolos en el directorio
+#{config/includes.chroot/lib/live/config/}#, tal y como se explica en la
+sección de "Personalización" de la página de manual de live-config. Es
+interesante examinar los scripts gancho que trae de serie live-config que
+pueden verse en #{/lib/live/config/}# y fijarse en la secuencia de
+números. Cuando se vaya a utilizar scripts propios deben ser prefijados con
+un número para indicar el orden de ejecución. Otra posibilidad es utilizar
+un paquete personalizado tal y como se describe en {Instalar paquetes de
+terceros o paquetes
+modificados}#installing-modified-or-third-party-packages.
 
 3~ Scripts gancho locales en Binary
 

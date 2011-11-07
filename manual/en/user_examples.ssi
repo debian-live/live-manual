@@ -221,7 +221,7 @@ When optimizing an image to fit a certain media size, you need to understand the
 
 code{
 
- $ lb config -k 486 -p minimal --binary-indices false \
+ $ lb config -k 486 -p minimal --apt-indices false \
      --memtest none --apt-recommends false --includes none
 
 }code
@@ -236,7 +236,7 @@ code{
 
 On the author's system at time of writing, the above configuration produced a 78Mbyte image. This compares favourably with the 166Mbyte image produced by the default configuration in {Tutorial 1}#tutorial-1.
 
-The biggest space-saver here, compared to building a standard image on an #{i386}# architecture system, is to select only the #{486}# kernel flavour instead of the default #{-k "486 686-pae"}#. Leaving off APT's indices with #{--binary-indices false}# also saves a fair amount of space, the tradeoff being that you need to #{apt-get update}# before using apt in the live system. Choosing the #{minimal}# package list leaves out the large #{locales}# package and associated utilities. Dropping recommended packages with #{--apt-recommends false}# saves some additional space, at the expense of omitting some packages you might otherwise expect to be there, such as #{firmware-linux-free}# which may be needed to support certain hardware. The remaining options shave off additional small amounts of space. It's up to you to decide if the functionality that is sacrificed with each optimization is worth the loss in functionality.
+The biggest space-saver here, compared to building a standard image on an #{i386}# architecture system, is to select only the #{486}# kernel flavour instead of the default #{-k "486 686-pae"}#. Leaving off APT's indices with #{--apt-indices false}# also saves a fair amount of space, the tradeoff being that you need to #{apt-get update}# before using apt in the live system. Choosing the #{minimal}# package list leaves out the large #{locales}# package and associated utilities. Dropping recommended packages with #{--apt-recommends false}# saves some additional space, at the expense of omitting some packages you might otherwise expect to be there, such as #{firmware-linux-free}# which may be needed to support certain hardware. The remaining options shave off additional small amounts of space. It's up to you to decide if the functionality that is sacrificed with each optimization is worth the loss in functionality.
 
 2~ A localized KDE desktop and installer
 

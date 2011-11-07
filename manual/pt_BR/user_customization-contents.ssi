@@ -42,15 +42,15 @@ files that can be simply added or replaced in the image without processing;
 see {Live/chroot local hooks}#live-chroot-local-hooks if processing is
 needed.
 
-To include files, simply add them to your #{config/chroot_local-includes}#
+To include files, simply add them to your #{config/includes.chroot}#
 directory. This directory corresponds to the root directory (#{/}#) of the
 live system. For example, to add a file #{/var/www/index.html}# in the live
 system, use:
 
 code{
 
- $ mkdir -p config/chroot_local-includes/var/www
- $ cp /path/to/my/index.html config/chroot_local-includes/var/www
+ $ mkdir -p config/includes.chroot/var/www
+ $ cp /path/to/my/index.html config/includes.chroot/var/www
 
 }code
 
@@ -60,7 +60,7 @@ code{
 
  -- config
     [...]
-     |-- chroot_local-includes
+     |-- includes.chroot
      |   `-- var
      |       `-- www
      |           `-- index.html
@@ -80,11 +80,11 @@ booting the Live system, you can use binary local includes. This works in a
 similar fashion to chroot local includes. For example, suppose the files
 #{~/video_demo.*}# are demo videos of the live system described by and
 linked to by an HTML index page. Simply copy the material to
-#{config/binary_local-includes/}# as follows:
+#{config/includes.binary/}# as follows:
 
 code{
 
- $ cp ~/video_demo.* config/binary_local-includes/
+ $ cp ~/video_demo.* config/includes.binary/
 
 }code
 
@@ -128,7 +128,7 @@ explained in the "Customization" section of its man page. Examine
 live-config's own hooks provided in #{/lib/live/config/}#, noting the
 sequence numbers. Then provide your own hook prefixed with an appropriate
 sequence number, either as a chroot local include in
-#{config/chroot_local-includes/lib/live/config/}#, or as a custom package as
+#{config/includes.chroot/lib/live/config/}#, or as a custom package as
 discussed in {Installing modified or third-party
 packages}#installing-modified-or-third-party-packages.
 

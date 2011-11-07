@@ -132,7 +132,7 @@ code{
 
  lb config noauto \
      --architecture i386 \
-     --linux-flavours 686 \
+     --linux-flavours 686-pae \
      --package-lists lxde \
      "${@}"
 
@@ -148,7 +148,7 @@ code{
 
 First, #{--architecture i386}# ensures that on our #{amd64}# build system,
 we build a 32-bit version suitable for use on most machines. Second, we use
-#{--linux-flavours 686}# because we don't anticipate using this image on
+#{--linux-flavours 686-pae}# because we don't anticipate using this image on
 much older systems. Third, we've chosen the #{lxde}# package list to give us
 a minimal desktop. And finally, we have added two initial favourite
 packages: #{iceweasel}# and #{xchat}#.
@@ -242,7 +242,7 @@ code{
 
  $ mkdir vnc_kiosk_client
  $ cd vnc_kiosk_client
- $ lb config -a i386 -k 686 -p standard-x11 \
+ $ lb config -a i386 -k 686-pae -p standard-x11 \
      --apt-recommends false
  $ echo "gdm3 metacity xvnc4viewer" >> config/package-lists/my.list.chroot
 
@@ -254,8 +254,8 @@ to port #{5901}# on a server at #{192.168.1.2}#:
 
 code{
 
- $ mkdir -p config/chroot_local-includes/etc/skel
- $ cat >config/chroot_local-includes/etc/skel/.xsession <<END
+ $ mkdir -p config/includes.chroot/etc/skel
+ $ cat >config/includes.chroot/etc/skel/.xsession <<END
  #!/bin/sh
 
  /usr/bin/metacity &
@@ -292,7 +292,7 @@ packages will most likely produce a broken live system.
 
 code{
 
- $ lb config -k 486 -p minimal --binary-indices false \
+ $ lb config -k 486 -p minimal --apt-indices false \
      --memtest none --apt-recommends false --includes none
 
 }code
@@ -311,8 +311,8 @@ by the default configuration in {Tutorial 1}#tutorial-1.
 
 The biggest space-saver here, compared to building a standard image on an
 #{i386}# architecture system, is to select only the #{486}# kernel flavour
-instead of the default #{-k "486 686"}#. Leaving off APT's indices with
-#{--binary-indices false}# also saves a fair amount of space, the tradeoff
+instead of the default #{-k "486 686-pae"}#. Leaving off APT's indices with
+#{--apt-indices false}# also saves a fair amount of space, the tradeoff
 being that you need to #{apt-get update}# before using apt in the live
 system. Choosing the #{minimal}# package list leaves out the large
 #{locales}# package and associated utilities. Dropping recommended packages
@@ -347,12 +347,8 @@ Now we can search for the appropriate tasks, first with:
 
 code{
 
- $ grep-dctrl -FTest-lang pt_BR /usr/share/tasksel/debian-tasks.desc -sTask,Description
+ $ grep-dctrl -FTest-lang pt_BR /usr/share/tasksel/descs/debian-tasks.desc -sTask
  Task: brazilian-portuguese
- Description: Brazilian Portuguese environment
-  This task installs programs, data files, and
-  documentation that make it easier for Brazilian Portuguese speakers
-  to use Debian.
 
 }code
 
@@ -361,14 +357,9 @@ brazilian-portuguese. Now to find the related tasks:
 
 code{
 
- $ grep-dctrl -FEnhances brazilian-portuguese /usr/share/tasksel/debian-tasks.desc -sTask,Description
+ $ grep-dctrl -FEnhances brazilian-portuguese /usr/share/tasksel/descs/debian-tasks.desc -sTask
  Task: brazilian-portuguese-desktop
- Description: Brazilian Portuguese desktop
-  This task localises the desktop in Brasilian Portuguese.
-
  Task: brazilian-portuguese-kde-desktop
- Description: Brazilian Portuguese KDE desktop
-  This task localises the KDE desktop in Brazilian Portuguese.
 
 }code
 

@@ -56,54 +56,22 @@ répertoire à la main serait fastidieux et source d'erreurs, la commande #{lb
 config}# peut être utilisée pour créer des répertoires de configuration de
 squelette.
 
-Exécuter #{lb config}# sans aucun argument crée un sous-répertoire
-#{config/}# dont il remplit avec certains paramètres par défaut:
+Issuing #{lb config}# without any arguments creates a #{config/}#
+subdirectory which it populates with some default settings, and a skeleton
+#{auto/}# subdirectory tree.
 
 code{
 
  $ lb config
+ P: Considering defaults defined in /etc/live/build.conf
  P: Creating config tree
-
- $ ls -l
- total 8
- drwxr-xr-x  3 user user 4096 Sep  7 13:02 auto
- drwxr-xr-x 22 user user 4096 Sep  7 13:02 config
-
- $ ls -l config/
- total 104
- -rw-r--r-- 1 user user 4197 Sep  7 13:02 binary
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_debian-installer
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_debian-installer-includes
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_grub
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-debs
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-hooks
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-includes
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-packageslists
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-udebs
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_rootfs
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_syslinux
- -rw-r--r-- 1 user user 2051 Sep  7 13:02 bootstrap
- -rw-r--r-- 1 user user 1647 Sep  7 13:02 chroot
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_apt
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-hooks
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-includes
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-packages
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-packageslists
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-patches
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-preseed
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_sources
- -rw-r--r-- 1 user user 2954 Sep  7 13:02 common
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 includes
- -rw-r--r-- 1 user user  205 Sep  7 13:02 source
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 templates
 
 }code
 
-L'utilisation de #{lb config}# sans aucun argument serait approprié pour les
-utilisateurs qui ont besoin d'une image de base, ou qui ont l'intention
-d'offrir plus tard, une configuration plus complète via auto/config (voir
-{Gestion d'une configuration}#managing-a-configuration pour plus de
-détails).
+Using #{lb config}# without any arguments would be suitable for users who
+need a very basic image, or who intend to later provide a more complete
+configuration via #{auto/config}# (see {Managing a
+configuration}#managing-a-configuration for details).
 
 Normalement, vous voulez spécifier certaines options. Par exemple, pour
 inclure la liste du paquet «gnome» dans votre configuration:
@@ -127,9 +95,9 @@ Une liste complète des options est disponible dans la page de manuel de
 
 3~lb-build La commande #{lb build}#
 
-La commande #{lb build}# lit dans votre configuration à partir du répertoire
-config/. Il exécute alors les commandes de niveau inférieur nécessaires pour
-construire votre système Live.
+The #{lb build}# command reads in your configuration from the #{config/}#
+directory. It then runs the lower level commands needed to build your Live
+system.
 
 3~lb-clean La commande #{lb clean}#
 
@@ -149,11 +117,10 @@ initramfs-tools, utilisé pour générer un initramfs capable de démarrer des
 systèmes live, comme ceux créés par live-build. Cela inclut les ISOs de
 Debian Live, netboot tarballs, et les images clé USB.
 
-Au démarrage il va chercher un support en lecture seule qui contient un
-répertoire «/live» où un système de fichiers racine (souvent une image de
-système de fichiers compressé comme squashfs) est stocké. S'il est trouvé,
-il va créer un environnement accessible en écriture, en utilisant aufs, afin
-que systémes similaires à Debian puissent démarrer à partir de ça.
+At boot time it will look for read-only media containing a #{/live/}#
+directory where a root filesystem (often a compressed filesystem image like
+squashfs) is stored. If found, it will create a writable environment, using
+aufs, for Debian like systems to boot from.
 
 Plus d'information sur ramfs initial dans Debian peut être trouvé dans le
 Debian Linux Kernel Handbook à  http://kernel-handbook.alioth.debian.org/

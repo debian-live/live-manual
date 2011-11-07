@@ -52,51 +52,20 @@ time-consuming and error-prone, the #{lb config}# command can be used to
 create skeleton configuration folders.
 
 Issuing #{lb config}# without any arguments creates a #{config/}#
-subdirectory which it populates with some default settings:
+subdirectory which it populates with some default settings, and a skeleton
+#{auto/}# subdirectory tree.
 
 code{
 
  $ lb config
+ P: Considering defaults defined in /etc/live/build.conf
  P: Creating config tree
-
- $ ls -l
- total 8
- drwxr-xr-x  3 user user 4096 Sep  7 13:02 auto
- drwxr-xr-x 22 user user 4096 Sep  7 13:02 config
-
- $ ls -l config/
- total 104
- -rw-r--r-- 1 user user 4197 Sep  7 13:02 binary
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_debian-installer
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_debian-installer-includes
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_grub
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-debs
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-hooks
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-includes
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-packageslists
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-udebs
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_rootfs
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_syslinux
- -rw-r--r-- 1 user user 2051 Sep  7 13:02 bootstrap
- -rw-r--r-- 1 user user 1647 Sep  7 13:02 chroot
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_apt
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-hooks
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-includes
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-packages
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-packageslists
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-patches
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-preseed
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_sources
- -rw-r--r-- 1 user user 2954 Sep  7 13:02 common
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 includes
- -rw-r--r-- 1 user user  205 Sep  7 13:02 source
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 templates
 
 }code
 
 Using #{lb config}# without any arguments would be suitable for users who
 need a very basic image, or who intend to later provide a more complete
-configuration via auto/config (see {Managing a
+configuration via #{auto/config}# (see {Managing a
 configuration}#managing-a-configuration for details).
 
 Normally, you will want to specify some options. For example, to include the
@@ -120,7 +89,7 @@ A full list of options is available in the #{lb_config}# man page.
 
 3~lb-build The #{lb build}# command
 
-The #{lb build}# command reads in your configuration from the config/
+The #{lb build}# command reads in your configuration from the #{config/}#
 directory. It then runs the lower level commands needed to build your Live
 system.
 
@@ -141,10 +110,10 @@ initramfs-tools, used to generate an initramfs capable of booting live
 systems, such as those created by live-build. This includes the Debian Live
 ISOs, netboot tarballs, and USB stick images.
 
-At boot time it will look for read-only media containing a "/live" directory
-where a root filesystem (often a compressed filesystem image like squashfs)
-is stored. If found, it will create a writable environment, using aufs, for
-Debian like systems to boot from.
+At boot time it will look for read-only media containing a #{/live/}#
+directory where a root filesystem (often a compressed filesystem image like
+squashfs) is stored. If found, it will create a writable environment, using
+aufs, for Debian like systems to boot from.
 
 More information on initial ramfs in Debian can be found in the Debian Linux
 Kernel Handbook at http://kernel-handbook.alioth.debian.org/ in the chapter

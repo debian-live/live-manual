@@ -43,15 +43,15 @@ possono essere semplicemente aggiunti o sostituiti nell'immagine senza
 elaborazione; si veda {Live/chroot hook locali}#live-chroot-local-hooks se è
 necessaria l'elaborazione.
 
-Per includere i file si aggiungano semplicemente alla directory
-#{config/chroot_local-includes}#. Questa corrisponde alla directory root
-(#{/}#) del sistema live. Per esempio, per aggiungere un file
-#{/var/www/index.html}# nel sistema live, si usi:
+To include files, simply add them to your #{config/includes.chroot}#
+directory. This directory corresponds to the root directory (#{/}#) of the
+live system. For example, to add a file #{/var/www/index.html}# in the live
+system, use:
 
 code{
 
- $ mkdir -p config/chroot_local-includes/var/www
- $ cp /path/to/my/index.html config/chroot_local-includes/var/www
+ $ mkdir -p config/includes.chroot/var/www
+ $ cp /path/to/my/index.html config/includes.chroot/var/www
 
 }code
 
@@ -61,7 +61,7 @@ code{
 
  -- config
     [...]
-     |-- chroot_local-includes
+     |-- includes.chroot
      |   `-- var
      |       `-- www
      |           `-- index.html
@@ -75,17 +75,17 @@ pacchetti in modo che tali file vengano in seguito sovrascitti.
 
 3~binary-local-includes Include locali binari
 
-Si possono utilizzare include locali binari per inserire sul filesystem del
-supporto materiale come documentazione o video affinché sia immediatamente
-accessibile dopo l'inserimento dello stesso senza avviare il sistema
-live. Ciò funziona in modo simile agli include locali del chroot; supponendo
-che i file #{~/video_demo.*}# siano video dimostrativi del sistema descritti
-da e collegati a una pagina HTML indice, basta copiare il materiale in
-#{config/binary_local-includes/}# come segue:
+To include material such as documentation or videos on the media filesystem
+so that it is accessible immediately upon insertion of the media without
+booting the Live system, you can use binary local includes. This works in a
+similar fashion to chroot local includes. For example, suppose the files
+#{~/video_demo.*}# are demo videos of the live system described by and
+linked to by an HTML index page. Simply copy the material to
+#{config/includes.binary/}# as follows:
 
 code{
 
- $ cp ~/video_demo.* config/binary_local-includes/
+ $ cp ~/video_demo.* config/includes.binary/
 
 }code
 
@@ -126,14 +126,14 @@ propria configurazione.
 
 3~boot-time-hooks Hook in fase di avvio
 
-Per eseguire comandi all'avvio, è possibile fornire degli hook a live-config
-come spiegato nella sezione "Customization" del suo manuale. Controllare gli
-hook di live-config in #{/lib/live/config/}# e notare i numeri sequenziali;
-fornire quindi i propri hook con una sequenza numerica appropriata, sia come
-include locali del chroot in
-#{config/chroot_local-includes/lib/live/config/}#, sia come pacchetto
-personalizzato come discusso in {Installare pacchetti modificati o di terze
-parti}#installing-modified-or-third-party-packages.
+To execute commands at boot time, you can supply live-config hooks as
+explained in the "Customization" section of its man page. Examine
+live-config's own hooks provided in #{/lib/live/config/}#, noting the
+sequence numbers. Then provide your own hook prefixed with an appropriate
+sequence number, either as a chroot local include in
+#{config/includes.chroot/lib/live/config/}#, or as a custom package as
+discussed in {Installing modified or third-party
+packages}#installing-modified-or-third-party-packages.
 
 3~ Hook binari locali
 

@@ -95,7 +95,7 @@ code{
 
  lb config noauto \
      --architecture i386 \
-     --linux-flavours 686 \
+     --linux-flavours 686-pae \
      --package-lists lxde \
      "${@}"
 
@@ -109,7 +109,7 @@ code{
 
 }code
 
-First, #{--architecture i386}# ensures that on our #{amd64}# build system, we build a 32-bit version suitable for use on most machines. Second, we use #{--linux-flavours 686}# because we don't anticipate using this image on much older systems. Third, we've chosen the #{lxde}# package list to give us a minimal desktop. And finally, we have added two initial favourite packages: #{iceweasel}# and #{xchat}#.
+First, #{--architecture i386}# ensures that on our #{amd64}# build system, we build a 32-bit version suitable for use on most machines. Second, we use #{--linux-flavours 686-pae}# because we don't anticipate using this image on much older systems. Third, we've chosen the #{lxde}# package list to give us a minimal desktop. And finally, we have added two initial favourite packages: #{iceweasel}# and #{xchat}#.
 
 Now, build the image:
 
@@ -181,7 +181,7 @@ code{
 
  $ mkdir vnc_kiosk_client
  $ cd vnc_kiosk_client
- $ lb config -a i386 -k 686 -p standard-x11 \
+ $ lb config -a i386 -k 686-pae -p standard-x11 \
      --apt-recommends false
  $ echo "gdm3 metacity xvnc4viewer" >> config/package-lists/my.list.chroot
 
@@ -236,7 +236,7 @@ code{
 
 On the author's system at time of writing, the above configuration produced a 78Mbyte image. This compares favourably with the 166Mbyte image produced by the default configuration in {Tutorial 1}#tutorial-1.
 
-The biggest space-saver here, compared to building a standard image on an #{i386}# architecture system, is to select only the #{486}# kernel flavour instead of the default #{-k "486 686"}#. Leaving off APT's indices with #{--binary-indices false}# also saves a fair amount of space, the tradeoff being that you need to #{apt-get update}# before using apt in the live system. Choosing the #{minimal}# package list leaves out the large #{locales}# package and associated utilities. Dropping recommended packages with #{--apt-recommends false}# saves some additional space, at the expense of omitting some packages you might otherwise expect to be there, such as #{firmware-linux-free}# which may be needed to support certain hardware. The remaining options shave off additional small amounts of space. It's up to you to decide if the functionality that is sacrificed with each optimization is worth the loss in functionality.
+The biggest space-saver here, compared to building a standard image on an #{i386}# architecture system, is to select only the #{486}# kernel flavour instead of the default #{-k "486 686-pae"}#. Leaving off APT's indices with #{--binary-indices false}# also saves a fair amount of space, the tradeoff being that you need to #{apt-get update}# before using apt in the live system. Choosing the #{minimal}# package list leaves out the large #{locales}# package and associated utilities. Dropping recommended packages with #{--apt-recommends false}# saves some additional space, at the expense of omitting some packages you might otherwise expect to be there, such as #{firmware-linux-free}# which may be needed to support certain hardware. The remaining options shave off additional small amounts of space. It's up to you to decide if the functionality that is sacrificed with each optimization is worth the loss in functionality.
 
 2~ A localized KDE desktop and installer
 

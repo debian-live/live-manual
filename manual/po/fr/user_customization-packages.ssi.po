@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 2.0.0\n"
 "POT-Creation-Date: 2011-11-07 17:40-0400\n"
-"PO-Revision-Date: 2011-11-06 17:04+0100\n"
+"PO-Revision-Date: 2011-11-07 23:07+0100\n"
 "Last-Translator: Carlos Zuferri «chals» <chals@altorricon.com>\n"
 "Language-Team:  <debian-live@lists.debian.org>\n"
 "Language: fr\n"
@@ -395,16 +395,6 @@ msgstr "3~additional-repositories Référentiels additionnels"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:63
-#, fuzzy
-#| msgid ""
-#| "You may add more repositories, broadening your package choices beyond "
-#| "what is available in your target distribution. These may be, for example, "
-#| "for backports, experimental or custom packages. To configure additional "
-#| "repositories, create #{config/chroot_sources/your-repository.chroot}#, "
-#| "and/or #{config/chroot_sources/your-repository.binary}# files. As with "
-#| "the #{--parent-mirror-*}# options, these govern the repositories used in "
-#| "the *chroot* stage when building the image, and in the *binary* stage, i."
-#| "e. for use when running the live system."
 msgid ""
 "You may add more repositories, broadening your package choices beyond what "
 "is available in your target distribution. These may be, for example, for "
@@ -419,24 +409,19 @@ msgstr ""
 "delà ceux disponibles dans votre distribution objectif. Il peut être, par "
 "exemple, pour backports, expérimentaux ou des paquets personnalisés. Pour "
 "configurer des référentiels supplémentaires, créer les fichiers #{config/"
-"chroot_sources/your-repository.chroot}#, et/ou #{config/chroot_sources/your-"
-"repository.binary}#. Comme avec les options #{--parent-mirror-*}#, elles "
-"gouvernent les référentiels utilisés dans l'étape *chroot* lors de la "
+"archives/your-repository.list.chroot}#, et/ou #{config/archives/your-"
+"repository.list.binary}#. Comme avec les options #{--parent-mirror-*}#, "
+"elles gouvernent les référentiels utilisés dans l'étape *chroot* lors de la "
 "construction de l'image, et dans l'étape *binaire*, c'est à dire pour une "
 "utilisation au moment de l'exécution du système live."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:65
-#, fuzzy
-#| msgid ""
-#| "For example, #{config/chroot_sources/live.chroot}# allows you to install "
-#| "packages from the debian live snapshot repository at live system build "
-#| "time."
 msgid ""
 "For example, #{config/archives/live.list.chroot}# allows you to install "
 "packages from the debian live snapshot repository at live system build time."
 msgstr ""
-"Par exemple, #{config/chroot_sources/live.chroot}# vous permet d'installer "
+"Par exemple, #{config/archives/live.list.chroot}# vous permet d'installer "
 "des paquets du référentiel des instantanés debian live au moment de la "
 "construction du système live."
 
@@ -448,19 +433,14 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:73
-#, fuzzy
-#| msgid ""
-#| "If you add the same line to #{config/chroot_sources/live.binary}#, the "
-#| "repository will be added to your live system's #{/etc/apt/sources.list.d/}"
-#| "# directory."
 msgid ""
 "If you add the same line to #{config/archives/live.list.binary}#, the "
 "repository will be added to your live system's #{/etc/apt/sources.list.d/}# "
 "directory."
 msgstr ""
-"Si vous ajoutez la même ligne à #{config/chroot_sources/live.binary}#, le "
-"référentiel sera ajouté à le répertoire #{/etc/apt/sources.list.d/}# de "
-"votre système live."
+"Si vous ajoutez la même ligne à #{config/archives/live.list.binary}#, le "
+"référentiel sera ajouté au répertoire #{/etc/apt/sources.list.d/}# de votre "
+"système live."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:75
@@ -469,23 +449,18 @@ msgstr "Si ces fichiers existent, ils seront sélectionnés automatiquement."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:77
-#, fuzzy
-#| msgid ""
-#| "You should also put the GPG key used to sign the repository into #{config/"
-#| "chroot_sources/your-repository.{binary,chroot}.gpg}# files."
 msgid ""
 "You should also put the GPG key used to sign the repository into #{config/"
 "archives/your-repository.gpg.{binary,chroot}}# files."
 msgstr ""
 "Vous devriez également mettre la clé GPG utilisée pour signer le référentiel "
-"dans fichiers #{config/chroot_sources/your-repository.{binary,chroot}.gpg}#"
+"dans fichiers #{config/archives/your-repository.gpg.{binary,chroot}}#"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:79
-#, fuzzy, no-wrap
-#| msgid "*{Note:}* some preconfigured package repositories are available for easy selection through the #{--repository}# option, e.g. for enabling live snapshots, a simple command is enough to enable it:\n"
+#, no-wrap
 msgid "*{Note:}* some preconfigured package repositories are available for easy selection through the #{--archives}# option, e.g. for enabling live snapshots, a simple command is enough to enable it:\n"
-msgstr "*{Remarque:}* certains référentiels de paquets préconfigurés sont disponibles pour une sélection facile grâce à l'option #{--repository}#, par exemple pour permettre des instantanés live, une simple commande suffit pour l'activer:\n"
+msgstr "*{Remarque:}* certains référentiels de paquets préconfigurés sont disponibles pour une sélection facile grâce à l'option #{--archives}#, par exemple pour permettre des instantanés live, une simple commande suffit pour l'activer:\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:83 en/user_installation.ssi:148
@@ -1317,12 +1292,6 @@ msgstr "3~apt-pinning APT pinning"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:312
-#, fuzzy
-#| msgid ""
-#| "For background, please first read the #{apt_preferences(5)}# man page. "
-#| "APT pinning can be configured either for build time, or else for run "
-#| "time. For the former, create #{config/chroot_apt/preferences}#. For the "
-#| "latter, create #{config/chroot_local-includes/etc/apt/preferences}#."
 msgid ""
 "For background, please first read the #{apt_preferences(5)}# man page. APT "
 "pinning can be configured either for build time, or else for run time. For "
@@ -1332,8 +1301,8 @@ msgstr ""
 "Pour le contexte, s'il vous plaît lire d'abord la page de manuel #"
 "{apt_preferences(5)}#. APT pinning peut être configuré soit pour le temps de "
 "construction, ou encore pendant l'exécution. Pour le premier, créez #{config/"
-"chroot_apt/preferences}#.  Pour ce dernier, créez #{config/chroot_local-"
-"includes/etc/apt/preferences}#."
+"chroot_apt/preferences}#.  Pour ce dernier, créez #{config/includes.chroot/"
+"etc/apt/preferences}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:314

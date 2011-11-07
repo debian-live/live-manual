@@ -121,17 +121,20 @@ code{
 
 3~additional-repositories Référentiels additionnels
 
-You may add more repositories, broadening your package choices beyond what
-is available in your target distribution. These may be, for example, for
-backports, experimental or custom packages. To configure additional
-repositories, create #{config/archives/your-repository.list.chroot}#, and/or
-#{config/archives/your-repository.list.binary}# files. As with the
-#{--parent-mirror-*}# options, these govern the repositories used in the
-*chroot* stage when building the image, and in the *binary* stage, i.e. for
-use when running the live system.
+Vous pouvez ajouter plus de référentiels, élargir vos choix de paquets
+au-delà ceux disponibles dans votre distribution objectif. Il peut être, par
+exemple, pour backports, expérimentaux ou des paquets personnalisés. Pour
+configurer des référentiels supplémentaires, créer les fichiers
+#{config/archives/your-repository.list.chroot}#, et/ou
+#{config/archives/your-repository.list.binary}#. Comme avec les options
+#{--parent-mirror-*}#, elles gouvernent les référentiels utilisés dans
+l'étape *chroot* lors de la construction de l'image, et dans l'étape
+*binaire*, c'est à dire pour une utilisation au moment de l'exécution du
+système live.
 
-For example, #{config/archives/live.list.chroot}# allows you to install
-packages from the debian live snapshot repository at live system build time.
+Par exemple, #{config/archives/live.list.chroot}# vous permet d'installer
+des paquets du référentiel des instantanés debian live au moment de la
+construction du système live.
 
 code{
 
@@ -139,16 +142,16 @@ code{
 
 }code
 
-If you add the same line to #{config/archives/live.list.binary}#, the
-repository will be added to your live system's #{/etc/apt/sources.list.d/}#
-directory.
+Si vous ajoutez la même ligne à #{config/archives/live.list.binary}#, le
+référentiel sera ajouté au répertoire #{/etc/apt/sources.list.d/}# de votre
+système live.
 
 Si ces fichiers existent, ils seront sélectionnés automatiquement.
 
-You should also put the GPG key used to sign the repository into
-#{config/archives/your-repository.gpg.{binary,chroot}}# files.
+Vous devriez également mettre la clé GPG utilisée pour signer le référentiel
+dans fichiers #{config/archives/your-repository.gpg.{binary,chroot}}#
 
-*{Note:}* some preconfigured package repositories are available for easy selection through the #{--archives}# option, e.g. for enabling live snapshots, a simple command is enough to enable it:
+*{Remarque:}* certains référentiels de paquets préconfigurés sont disponibles pour une sélection facile grâce à l'option #{--archives}#, par exemple pour permettre des instantanés live, une simple commande suffit pour l'activer:
 
 code{
 
@@ -539,9 +542,10 @@ détails
 
 3~apt-pinning APT pinning
 
-For background, please first read the #{apt_preferences(5)}# man page. APT
-pinning can be configured either for build time, or else for run time. For
-the former, create #{config/chroot_apt/preferences}#. For the latter, create
+Pour le contexte, s'il vous plaît lire d'abord la page de manuel
+#{apt_preferences(5)}#. APT pinning peut être configuré soit pour le temps
+de construction, ou encore pendant l'exécution. Pour le premier, créez
+#{config/chroot_apt/preferences}#.  Pour ce dernier, créez
 #{config/includes.chroot/etc/apt/preferences}#.
 
 Imaginons que vous voulez construire un système live Wheezy mais il faut

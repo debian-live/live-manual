@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
-"POT-Creation-Date: 2011-11-07 17:49+0100\n"
+"POT-Creation-Date: 2011-11-07 17:40-0400\n"
 "PO-Revision-Date: 2011-11-07 22:12+0100\n"
 "Last-Translator: José Luis Zabalza and Carlos Zuferri «chals» "
 "<jlz.3008@gmail.com> <chals@altorricon.com>\n"
@@ -410,12 +410,22 @@ msgstr "3~additional-repositories Repositorios adicionales"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:63
+#, fuzzy
+#| msgid ""
+#| "You may add more repositories, broadening your package choices beyond "
+#| "what is available in your target distribution. These may be, for example, "
+#| "for backports, experimental or custom packages. To configure additional "
+#| "repositories, create #{config/chroot_sources/your-repository.chroot}#, "
+#| "and/or #{config/chroot_sources/your-repository.binary}# files. As with "
+#| "the #{--parent-mirror-*}# options, these govern the repositories used in "
+#| "the *chroot* stage when building the image, and in the *binary* stage, i."
+#| "e. for use when running the live system."
 msgid ""
 "You may add more repositories, broadening your package choices beyond what "
 "is available in your target distribution. These may be, for example, for "
 "backports, experimental or custom packages. To configure additional "
-"repositories, create #{config/chroot_sources/your-repository.chroot}#, and/"
-"or #{config/chroot_sources/your-repository.binary}# files. As with the #{--"
+"repositories, create #{config/archives/your-repository.list.chroot}#, and/or "
+"#{config/archives/your-repository.list.binary}# files. As with the #{--"
 "parent-mirror-*}# options, these govern the repositories used in the "
 "*chroot* stage when building the image, and in the *binary* stage, i.e. for "
 "use when running the live system."
@@ -432,8 +442,13 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:65
+#, fuzzy
+#| msgid ""
+#| "For example, #{config/chroot_sources/live.chroot}# allows you to install "
+#| "packages from the debian live snapshot repository at live system build "
+#| "time."
 msgid ""
-"For example, #{config/chroot_sources/live.chroot}# allows you to install "
+"For example, #{config/archives/live.list.chroot}# allows you to install "
 "packages from the debian live snapshot repository at live system build time."
 msgstr ""
 "Por ejemplo, #{config/chroot_sources/live.chroot}# permite instalar paquetes "
@@ -448,8 +463,13 @@ msgstr " deb http://live.debian.net/ sid-snapshots main contrib non-free\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:73
+#, fuzzy
+#| msgid ""
+#| "If you add the same line to #{config/chroot_sources/live.binary}#, the "
+#| "repository will be added to your live system's #{/etc/apt/sources.list.d/}"
+#| "# directory."
 msgid ""
-"If you add the same line to #{config/chroot_sources/live.binary}#, the "
+"If you add the same line to #{config/archives/live.list.binary}#, the "
 "repository will be added to your live system's #{/etc/apt/sources.list.d/}# "
 "directory."
 msgstr ""
@@ -464,9 +484,13 @@ msgstr "Estos ficheros serán seleccionados automáticamente si existen."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:77
+#, fuzzy
+#| msgid ""
+#| "You should also put the GPG key used to sign the repository into #{config/"
+#| "chroot_sources/your-repository.{binary,chroot}.gpg}# files."
 msgid ""
 "You should also put the GPG key used to sign the repository into #{config/"
-"chroot_sources/your-repository.{binary,chroot}.gpg}# files."
+"archives/your-repository.gpg.{binary,chroot}}# files."
 msgstr ""
 "Se debería también incluir en el fichero #{config/chroot_sources/your-"
 "repository.{binary,chroot}.gpg}# la clave GPG a utilizar para firmar dicho "
@@ -474,15 +498,16 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:79
-#, no-wrap
-msgid "*{Note:}* some preconfigured package repositories are available for easy selection through the #{--repository}# option, e.g. for enabling live snapshots, a simple command is enough to enable it:\n"
+#, fuzzy, no-wrap
+#| msgid "*{Note:}* some preconfigured package repositories are available for easy selection through the #{--repository}# option, e.g. for enabling live snapshots, a simple command is enough to enable it:\n"
+msgid "*{Note:}* some preconfigured package repositories are available for easy selection through the #{--archives}# option, e.g. for enabling live snapshots, a simple command is enough to enable it:\n"
 msgstr "*{Nota:}* Existen algunos repositorios de paquetes ya preconfigurados para facilitar la selección mediante la opción #{--repository}#. Por ejemplo, para utilizar las instantáneas del repositorio de Debian Live, sería suficiente con activarlo mediante:\n"
 
 #. type: Plain text
-#: en/user_customization-packages.ssi:83
+#: en/user_customization-packages.ssi:83 en/user_installation.ssi:148
 #, no-wrap
-msgid " $ lb config --repository live.debian.net\n"
-msgstr " $ lb config --repository live.debian.net\n"
+msgid " $ lb config --archives live.debian.net\n"
+msgstr " $ lb config --archives live.debian.net\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:87
@@ -1369,9 +1394,15 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:322
-#, no-wrap
+#, fuzzy, no-wrap
+#| msgid ""
+#| " $ echo \"deb http://mirror/debian sid main\" > config/chroot_sources/sid.chroot\n"
+#| " $ cat >> config/chroot_apt/preferences <<END\n"
+#| " Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit\n"
+#| " Pin: release n=sid\n"
+#| " Pin-Priority: 600\n"
 msgid ""
-" $ echo \"deb http://mirror/debian sid main\" > config/chroot_sources/sid.chroot\n"
+" $ echo \"deb http://mirror/debian sid main\" > config/archives/sid.list.chroot\n"
 " $ cat >> config/chroot_apt/preferences <<END\n"
 " Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit\n"
 " Pin: release n=sid\n"

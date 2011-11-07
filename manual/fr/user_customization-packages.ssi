@@ -121,20 +121,17 @@ code{
 
 3~additional-repositories Référentiels additionnels
 
-Vous pouvez ajouter plus de référentiels, élargir vos choix de paquets
-au-delà ceux disponibles dans votre distribution objectif. Il peut être, par
-exemple, pour backports, expérimentaux ou des paquets personnalisés. Pour
-configurer des référentiels supplémentaires, créer les fichiers
-#{config/chroot_sources/your-repository.chroot}#, et/ou
-#{config/chroot_sources/your-repository.binary}#. Comme avec les options
-#{--parent-mirror-*}#, elles gouvernent les référentiels utilisés dans
-l'étape *chroot* lors de la construction de l'image, et dans l'étape
-*binaire*, c'est à dire pour une utilisation au moment de l'exécution du
-système live.
+You may add more repositories, broadening your package choices beyond what
+is available in your target distribution. These may be, for example, for
+backports, experimental or custom packages. To configure additional
+repositories, create #{config/archives/your-repository.list.chroot}#, and/or
+#{config/archives/your-repository.list.binary}# files. As with the
+#{--parent-mirror-*}# options, these govern the repositories used in the
+*chroot* stage when building the image, and in the *binary* stage, i.e. for
+use when running the live system.
 
-Par exemple, #{config/chroot_sources/live.chroot}# vous permet d'installer
-des paquets du référentiel des instantanés debian live au moment de la
-construction du système live.
+For example, #{config/archives/live.list.chroot}# allows you to install
+packages from the debian live snapshot repository at live system build time.
 
 code{
 
@@ -142,20 +139,20 @@ code{
 
 }code
 
-Si vous ajoutez la même ligne à #{config/chroot_sources/live.binary}#, le
-référentiel sera ajouté à le répertoire #{/etc/apt/sources.list.d/}# de
-votre système live.
+If you add the same line to #{config/archives/live.list.binary}#, the
+repository will be added to your live system's #{/etc/apt/sources.list.d/}#
+directory.
 
 Si ces fichiers existent, ils seront sélectionnés automatiquement.
 
-Vous devriez également mettre la clé GPG utilisée pour signer le référentiel
-dans fichiers #{config/chroot_sources/your-repository.{binary,chroot}.gpg}#
+You should also put the GPG key used to sign the repository into
+#{config/archives/your-repository.gpg.{binary,chroot}}# files.
 
-*{Remarque:}* certains référentiels de paquets préconfigurés sont disponibles pour une sélection facile grâce à l'option #{--repository}#, par exemple pour permettre des instantanés live, une simple commande suffit pour l'activer:
+*{Note:}* some preconfigured package repositories are available for easy selection through the #{--archives}# option, e.g. for enabling live snapshots, a simple command is enough to enable it:
 
 code{
 
- $ lb config --repository live.debian.net
+ $ lb config --archives live.debian.net
 
 }code
 
@@ -556,7 +553,7 @@ distribution du système cible, Wheezy. Ce qui suit devrait accomplir ça:
 
 code{
 
- $ echo "deb http://mirror/debian sid main" > config/chroot_sources/sid.chroot
+ $ echo "deb http://mirror/debian sid main" > config/archives/sid.list.chroot
  $ cat >> config/chroot_apt/preferences <<END
  Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit
  Pin: release n=sid

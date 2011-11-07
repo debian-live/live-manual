@@ -119,15 +119,14 @@ code{
 You may add more repositories, broadening your package choices beyond what
 is available in your target distribution. These may be, for example, for
 backports, experimental or custom packages. To configure additional
-repositories, create #{config/chroot_sources/your-repository.chroot}#,
-and/or #{config/chroot_sources/your-repository.binary}# files. As with the
+repositories, create #{config/archives/your-repository.list.chroot}#, and/or
+#{config/archives/your-repository.list.binary}# files. As with the
 #{--parent-mirror-*}# options, these govern the repositories used in the
 *chroot* stage when building the image, and in the *binary* stage, i.e. for
 use when running the live system.
 
-Per esempio, #{config/chroot_sources/live.chroot}# permette di installare
-pacchetti dal repository snapshot di debian live al momento della creazione
-del sistema live.
+For example, #{config/archives/live.list.chroot}# allows you to install
+packages from the debian live snapshot repository at live system build time.
 
 code{
 
@@ -135,20 +134,20 @@ code{
 
 }code
 
-Se si aggiunge la stessa riga in #{config/chroot_sources/live.binary}#, il
-repository verrà aggiunto alla directory #{/etc/apt/sources.list.d/}# del
-sistema live.
+If you add the same line to #{config/archives/live.list.binary}#, the
+repository will be added to your live system's #{/etc/apt/sources.list.d/}#
+directory.
 
 Se il file esiste, saranno prelevati automaticamente.
 
-Bisogna inoltre inserire la chiave GPG usata per firmare il repository nei
-file #{config/chroot_sources/vostro-repository.{binary,chroot}.gpg}#.
+You should also put the GPG key used to sign the repository into
+#{config/archives/your-repository.gpg.{binary,chroot}}# files.
 
-*{Nota:}* alcuni repository di pacchetti preconfigurati sono disponibili per una facile selezione attraverso l'opzione #{--repository}#, per abilitare gli snapshot live è sufficiente un semplice comando:
+*{Note:}* some preconfigured package repositories are available for easy selection through the #{--archives}# option, e.g. for enabling live snapshots, a simple command is enough to enable it:
 
 code{
 
- $ lb config --repository live.debian.net
+ $ lb config --archives live.debian.net
 
 }code
 
@@ -526,7 +525,7 @@ servirà allo scopo:
 
 code{
 
- $ echo "deb http://mirror/debian sid main" > config/chroot_sources/sid.chroot
+ $ echo "deb http://mirror/debian sid main" > config/archives/sid.list.chroot
  $ cat >> config/chroot_apt/preferences <<END
  Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit
  Pin: release n=sid

@@ -126,19 +126,17 @@ code{
 
 3~additional-repositories Repositorios adicionales
 
-Se pueden añadir más repositorios, ampliando la lista de paquetes
-seleccionables más alla de aquellos disponibles para la distribución
-indicada, como pueden ser paquetes de backports, paquetes experimentales o
-personalizados. Para configurar repositorios adicionales se debe crear los
-ficheros #{config/chroot_sources/your-repository.chroot}#, y/o
-#{config/chroot_sources/your-repository.binary}#. Al igual que en las
-opciones #{--parent-mirror-*}#, estos ficheros gobiernan los repositorios
-utilizados en las etapas *chroot* y *binary* respectivamente, esto es, los
-repositorios que serán utilizados cuando se ejecute el sistema en vivo.
+You may add more repositories, broadening your package choices beyond what
+is available in your target distribution. These may be, for example, for
+backports, experimental or custom packages. To configure additional
+repositories, create #{config/archives/your-repository.list.chroot}#, and/or
+#{config/archives/your-repository.list.binary}# files. As with the
+#{--parent-mirror-*}# options, these govern the repositories used in the
+*chroot* stage when building the image, and in the *binary* stage, i.e. for
+use when running the live system.
 
-Por ejemplo, #{config/chroot_sources/live.chroot}# permite instalar paquetes
-de la instantánea del repositorio Debian Live en el momento de crear la
-imagen.
+For example, #{config/archives/live.list.chroot}# allows you to install
+packages from the debian live snapshot repository at live system build time.
 
 code{
 
@@ -146,21 +144,20 @@ code{
 
 }code
 
-Si se añade la misma línea a #{config/chroot_sources/live.binary}#, el
-repositorio será añadido al directorio #{/etc/apt/sources.list.d/}# del
-sistema en vivo.
+If you add the same line to #{config/archives/live.list.binary}#, the
+repository will be added to your live system's #{/etc/apt/sources.list.d/}#
+directory.
 
 Estos ficheros serán seleccionados automáticamente si existen.
 
-Se debería también incluir en el fichero
-#{config/chroot_sources/your-repository.{binary,chroot}.gpg}# la clave GPG a
-utilizar para firmar dicho repositorio.
+You should also put the GPG key used to sign the repository into
+#{config/archives/your-repository.gpg.{binary,chroot}}# files.
 
-*{Nota:}* Existen algunos repositorios de paquetes ya preconfigurados para facilitar la selección mediante la opción #{--repository}#. Por ejemplo, para utilizar las instantáneas del repositorio de Debian Live, sería suficiente con activarlo mediante:
+*{Note:}* some preconfigured package repositories are available for easy selection through the #{--archives}# option, e.g. for enabling live snapshots, a simple command is enough to enable it:
 
 code{
 
- $ lb config --repository live.debian.net
+ $ lb config --archives live.debian.net
 
 }code
 
@@ -569,7 +566,7 @@ se puede realizar de la siguiente forma:
 
 code{
 
- $ echo "deb http://mirror/debian sid main" > config/chroot_sources/sid.chroot
+ $ echo "deb http://mirror/debian sid main" > config/archives/sid.list.chroot
  $ cat >> config/chroot_apt/preferences <<END
  Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit
  Pin: release n=sid

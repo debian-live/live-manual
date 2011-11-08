@@ -224,29 +224,29 @@ This section does not cover advice regarding building or maintaining modified pa
 
 There are two ways of installing modified custom packages:
 
-_* #{chroot_local-packages}#
+_* #{packages.chroot}#
 
 _* Using a custom APT repository
 
-Using #{chroot_local-packages}# is simpler to achieve and useful for "one-off" customizations but has a number of drawbacks, whilst using a custom APT repository is more time-consuming to set up.
+Using #{packages.chroot}# is simpler to achieve and useful for "one-off" customizations but has a number of drawbacks, whilst using a custom APT repository is more time-consuming to set up.
 
-3~ Using #{chroot_local-packages}# to install custom packages
+3~ Using #{packages.chroot}# to install custom packages
 
-To install a custom package, simply copy it to the #{config/chroot_local-packages/}# directory. Packages that are inside this directory will be automatically installed into the live system during build - you do not need to specify them elsewhere.
+To install a custom package, simply copy it to the #{config/packages.chroot/}# directory. Packages that are inside this directory will be automatically installed into the live system during build - you do not need to specify them elsewhere.
 
 Packages *{must}* be named in the prescribed way. One simple way to do this is to use #{dpkg-name}#.
 
-Using #{chroot_local-packages}# for installation of custom packages has disadvantages:
+Using #{packages.chroot}# for installation of custom packages has disadvantages:
 
 _* It is not possible to use secure APT.
 
-_* You must install all appropriate packages in the #{config/chroot_local-packages/}# directory.
+_* You must install all appropriate packages in the #{config/packages.chroot/}# directory.
 
 _* It does not lend itself to storing Debian Live configurations in revision control.
 
 3~ Using an APT repository to install custom packages
 
-Unlike using #{chroot_local-packages}#, when using a custom APT repository you must ensure that you specify the packages elsewhere. See {Choosing packages to install}#choosing-packages-to-install for details.
+Unlike using #{packages.chroot}#, when using a custom APT repository you must ensure that you specify the packages elsewhere. See {Choosing packages to install}#choosing-packages-to-install for details.
 
 Whilst it may seem unnecessary effort to create an APT repository to install custom packages, the infrastructure can be easily re-used at a later date to offer updates of the modified packages.
 
@@ -258,7 +258,7 @@ Because of this, you may wish to increment the version number in your custom pac
 
 2~ Configuring APT at build time
 
-You can configure APT through a number of options applied only at build time. (APT configuration used in the running live system may be configured in the normal way for live system contents, that is, by including the appropriate configurations through #{config/chroot_local_includes/}#.) For a complete list, look for options starting with #{apt}# in the #{lb_config}# man page.
+You can configure APT through a number of options applied only at build time. (APT configuration used in the running live system may be configured in the normal way for live system contents, that is, by including the appropriate configurations through #{config/includes.chroot/}#.) For a complete list, look for options starting with #{apt}# in the #{lb_config}# man page.
 
 3~choosing-apt-or-aptitude Choosing apt or aptitude
 

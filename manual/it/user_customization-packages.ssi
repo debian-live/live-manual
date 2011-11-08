@@ -371,42 +371,40 @@ Maintainer" all'indirizzo http://www.debian.org/doc/maint-guide/ e altrove.
 
 Ci sono due modi per installare pacchetti personalizzati:
 
-_* #{chroot_local-packages}#
+_* #{packages.chroot}#
 
 _* Utilizzare repository APT personalizzati
 
-Usando #{chroot_local-packages}# è più semplice da ottenere e utile per una
-personalizzazione "una tantum" ma ha una serie di svantaggi, mentre un
-repository APT personalizzato è più laborioso da configurare.
+Using #{packages.chroot}# is simpler to achieve and useful for "one-off"
+customizations but has a number of drawbacks, whilst using a custom APT
+repository is more time-consuming to set up.
 
-3~ Utilizzare #{chroot_local-packages}# per installare pacchetti
-personalizzati
+3~ Using #{packages.chroot}# to install custom packages
 
-Per installare un pacchetto personalizzato copiarlo nella directory
-#{config/chroot_local-packages/}#; i pacchetti al suo interno verranno
-installati automaticamente durante la creazione del sistema live, non è
-necessario specificarli altrove.
+To install a custom package, simply copy it to the
+#{config/packages.chroot/}# directory. Packages that are inside this
+directory will be automatically installed into the live system during build
+- you do not need to specify them elsewhere.
 
 I pacchetti *{devono}* essere nominati nel modo prescritto, un metodo
 semplice per farlo è usare #{dpkg-name}#.
 
-L'utilizzo di #{chroot_local-packages}# per l'installazione di pacchetti
-personalizzati presenta degli svantaggi:
+Using #{packages.chroot}# for installation of custom packages has
+disadvantages:
 
 _* non è possibile usare secure APT
 
-_* è necessario installare i pacchetti adeguati nella directory
-#{config/chroot_local-packages/}#.
+_* You must install all appropriate packages in the
+#{config/packages.chroot/}# directory.
 
 _* non si presta a salvare le configurazioni di Debian Live nel controllo di
 versione.
 
 3~ Utilizzare un repository APT per installare pacchetti personalizzati
 
-A differenza di #{chroot_local-packages}#, quando si usa un repository APT
-personalizzato è necessario assicurarsi di specificare altrove i
-pacchetti. Per i dettagli si veda {Scegliere i pacchetti da
-installare}#choosing-packages-to-install.
+Unlike using #{packages.chroot}#, when using a custom APT repository you
+must ensure that you specify the packages elsewhere. See {Choosing packages
+to install}#choosing-packages-to-install for details.
 
 Sebbene creare un repository APT possa sembrare uno sforzo inutile,
 l'infrastruttura può facilmente essere riutilizzata in un secondo momento
@@ -428,12 +426,12 @@ veda {APT pinning}#apt-pinning per maggiori informazioni.
 
 2~ Configurare APT in fase di costruzione
 
-APT è configurabile tramite una serie di opzioni applicate solo in fase di
-costruzione (la configurazione di APT utilizzata nel sistema live in
-esecuzione può essere configurata nel solito modo, ovvero includendo le
-impostazioni appropriate attraverso #{config/chroot_local_includes/}#). Per
-un elenco completo, cercare nel manuale di #{lb_config}# le opzioni che
-iniziano con #{apt}#.
+You can configure APT through a number of options applied only at build
+time. (APT configuration used in the running live system may be configured
+in the normal way for live system contents, that is, by including the
+appropriate configurations through #{config/includes.chroot/}#.) For a
+complete list, look for options starting with #{apt}# in the #{lb_config}#
+man page.
 
 3~choosing-apt-or-aptitude Scegliere apt o aptitude
 

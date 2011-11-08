@@ -403,43 +403,40 @@ medida.
 
 Existen dos formas de instalar paquetes personalizados:
 
-_* #{chroot_local-packages}#
+_* #{packages.chroot}#
 
 _* Utilizando un repositorio APT personalizado
 
-El método #{chroot_local-packages}# es el más simple para añadir paquetes
-personalizados. Es muy útil para personalizaciones «rápidas» (one-off) pero
-tiene unos cuantos inconvenientes mientras que la utilización de un
-repositorio APT personalizado es más lento de poner en marcha.
+Using #{packages.chroot}# is simpler to achieve and useful for "one-off"
+customizations but has a number of drawbacks, whilst using a custom APT
+repository is more time-consuming to set up.
 
-3~ Método #{chroot_local-packages}# para instalar paquetes personalizados
+3~ Using #{packages.chroot}# to install custom packages
 
-Para instalar paquetes personalizados solamente hay que copiar el paquete en
-el directorio #{config/chroot_local-packages/}#. Los paquetes contenidos en
-este directorio serán automáticamente instalados en el sistema en vivo
-durante el proceso de creación. No es necesario especificar de dónde se
-deben obtener los paquetes.
+To install a custom package, simply copy it to the
+#{config/packages.chroot/}# directory. Packages that are inside this
+directory will be automatically installed into the live system during build
+- you do not need to specify them elsewhere.
 
 Los paquetes *{deben}* nombrarse de la forma prescrita. La forma más simple
 es usar #{dpkg-name}#.
 
-El método #{chroot_local-packages}# para la instalación de paquetes
-personalizados tiene desventajas:
+Using #{packages.chroot}# for installation of custom packages has
+disadvantages:
 
 _* No es posible utilizar APT seguro.
 
-_* Se deben depositar todos los paquetes necesarios para cumplir
-dependencias en el directorio #{config/chroot_local-packages/}#.
+_* You must install all appropriate packages in the
+#{config/packages.chroot/}# directory.
 
 _* No es adecuado para almacenar configuraciones de Debian Live en un
 control de versiones.
 
 3~ Método de repositorio APT para instalar paquetes personalizados
 
-Al contrario del método #{chroot_local-packages}#, cuando se utiliza el
-método de repositorio APT personalizado se debe asegurar que se especifica
-dónde se deben buscar los paquetes a instalar. Para más información ver
-{Selección de los paquetes a instalar}#choosing-packages-to-install.
+Unlike using #{packages.chroot}#, when using a custom APT repository you
+must ensure that you specify the packages elsewhere. See {Choosing packages
+to install}#choosing-packages-to-install for details.
 
 Aunque crear un repositorio APT para instalar paquetes personalizados puede
 parecer un esfuerzo innecesaro, la infraestructurar puede ser fácilmente
@@ -462,14 +459,12 @@ preferencias de pinning de APT del sistema en vivo. Para más información ver
 
 2~ Configurar APT en la creación
 
-Se puede configurar APT mediante varias opciones que se aplicarán en el
-momento de crear la imagen. (La configuración que APT utilizará cuando se
-ejecute el sistema en vivo puede ser configurada de la manera que
-habitualmente se utiliza para introducir contenidos del sistema en vivo,
-esto es, incluyendo las configuraciones apropiadas en el directorio
-#{config/chroot_local_includes/}#.) Se puede encontrar una lista completa de
-las opciones para configurar APT en la página de manual de
-#{lb_config}#. Son aquellas opciones que comienzan con #{apt}#.
+You can configure APT through a number of options applied only at build
+time. (APT configuration used in the running live system may be configured
+in the normal way for live system contents, that is, by including the
+appropriate configurations through #{config/includes.chroot/}#.) For a
+complete list, look for options starting with #{apt}# in the #{lb_config}#
+man page.
 
 3~choosing-apt-or-aptitude Utilizar apt o aptitude
 

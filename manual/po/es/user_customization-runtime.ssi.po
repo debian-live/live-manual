@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
-"POT-Creation-Date: 2011-11-07 08:16-0400\n"
+"POT-Creation-Date: 2011-11-07 21:01-0400\n"
 "PO-Revision-Date: 2011-11-07 14:39+0100\n"
 "Last-Translator: José Luis Zabalza and Carlos Zuferri «chals» "
 "<jlz.3008@gmail.com> <chals@altorricon.com>\n"
@@ -61,11 +61,11 @@ msgstr ""
 #: en/user_customization-packages.ssi:316
 #: en/user_customization-packages.ssi:333
 #: en/user_customization-packages.ssi:341 en/user_customization-runtime.ssi:14
-#: en/user_customization-runtime.ssi:24 en/user_customization-runtime.ssi:44
-#: en/user_customization-runtime.ssi:54 en/user_customization-runtime.ssi:63
-#: en/user_customization-runtime.ssi:71 en/user_customization-runtime.ssi:80
-#: en/user_customization-runtime.ssi:101 en/user_customization-runtime.ssi:111
-#: en/user_customization-runtime.ssi:119 en/user_examples.ssi:14
+#: en/user_customization-runtime.ssi:27 en/user_customization-runtime.ssi:47
+#: en/user_customization-runtime.ssi:57 en/user_customization-runtime.ssi:66
+#: en/user_customization-runtime.ssi:74 en/user_customization-runtime.ssi:83
+#: en/user_customization-runtime.ssi:104 en/user_customization-runtime.ssi:114
+#: en/user_customization-runtime.ssi:122 en/user_examples.ssi:14
 #: en/user_examples.ssi:30 en/user_examples.ssi:40 en/user_examples.ssi:54
 #: en/user_examples.ssi:67 en/user_examples.ssi:83 en/user_examples.ssi:93
 #: en/user_examples.ssi:107 en/user_examples.ssi:117 en/user_examples.ssi:127
@@ -125,12 +125,12 @@ msgstr "code{"
 #: en/user_customization-packages.ssi:302
 #: en/user_customization-packages.ssi:329
 #: en/user_customization-packages.ssi:337
-#: en/user_customization-packages.ssi:346 en/user_customization-runtime.ssi:18
-#: en/user_customization-runtime.ssi:28 en/user_customization-runtime.ssi:48
-#: en/user_customization-runtime.ssi:59 en/user_customization-runtime.ssi:67
-#: en/user_customization-runtime.ssi:76 en/user_customization-runtime.ssi:85
-#: en/user_customization-runtime.ssi:105 en/user_customization-runtime.ssi:115
-#: en/user_customization-runtime.ssi:124 en/user_examples.ssi:20
+#: en/user_customization-packages.ssi:346 en/user_customization-runtime.ssi:21
+#: en/user_customization-runtime.ssi:31 en/user_customization-runtime.ssi:51
+#: en/user_customization-runtime.ssi:62 en/user_customization-runtime.ssi:70
+#: en/user_customization-runtime.ssi:79 en/user_customization-runtime.ssi:88
+#: en/user_customization-runtime.ssi:108 en/user_customization-runtime.ssi:118
+#: en/user_customization-runtime.ssi:127 en/user_examples.ssi:20
 #: en/user_examples.ssi:34 en/user_examples.ssi:44 en/user_examples.ssi:61
 #: en/user_examples.ssi:71 en/user_examples.ssi:89 en/user_examples.ssi:103
 #: en/user_examples.ssi:111 en/user_examples.ssi:121 en/user_examples.ssi:133
@@ -200,11 +200,17 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:12
+#, fuzzy
+#| msgid ""
+#| "You can specify additional groups that the live user will belong to by "
+#| "preseeding the #{passwd/user-default-groups}# debconf value. For example, "
+#| "to add the live user to the #{fuse}# group, add the following to a file "
+#| "in the #{config/chroot_local-preseed}# directory:"
 msgid ""
 "You can specify additional groups that the live user will belong to by "
 "preseeding the #{passwd/user-default-groups}# debconf value. For example, to "
-"add the live user to the #{fuse}# group, add the following to a file in the #"
-"{config/chroot_local-preseed}# directory:"
+"add the live user to the #{fuse}# group, add the following preseed under #"
+"{config/preseed/}# for the chroot stage:"
 msgstr ""
 "Se puede especificar grupos adicionales a los que pertenecerá el usuario por "
 "defecto del sistema en vivo preconfigurando el valor debconf #{passwd/user-"
@@ -213,13 +219,18 @@ msgstr ""
 "chroot_local-preseed}#."
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:16
-#, no-wrap
-msgid " user-setup passwd/user-default-groups string audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse\n"
+#: en/user_customization-runtime.ssi:19
+#, fuzzy, no-wrap
+#| msgid " user-setup passwd/user-default-groups string audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse\n"
+msgid ""
+" $ lb config\n"
+" $ echo user-setup passwd/user-default-groups string audio cdrom \\\n"
+"   dip floppy video plugdev netdev powerdev scanner bluetooth fuse \\\n"
+"   >> config/preseed/my.preseed.chroot\n"
 msgstr " user-setup passwd/user-default-groups string audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse\n"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:20
+#: en/user_customization-runtime.ssi:23
 msgid ""
 "It is also possible to change the default username \"user\" and the default "
 "password \"live\". If you want to do that for any reason, you can easily "
@@ -230,7 +241,7 @@ msgstr ""
 "conseguir de forma sencilla tal y como se explica a continuación:"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:22
+#: en/user_customization-runtime.ssi:25
 msgid ""
 "To change the default username you can simply specify it in your config:"
 msgstr ""
@@ -238,12 +249,12 @@ msgstr ""
 "en la configuración:"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:26
+#: en/user_customization-runtime.ssi:29
 msgid "$ lb config --bootappend-live \"username=live-user\""
 msgstr "$ lb config --bootappend-live \"username=live-user\""
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:30
+#: en/user_customization-runtime.ssi:33
 msgid ""
 "One possible way of changing the default password is by means of a hook as "
 "described in {Boot-time hooks}#boot-time-hooks. In order to do that you can "
@@ -259,35 +270,35 @@ msgstr ""
 "lib/live/config/}#"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:32
+#: en/user_customization-runtime.ssi:35
 msgid "2~customizing-locale-and-language Customizing locale and language"
 msgstr ""
 "2~customizing-locale-and-language Personalización de las variantes locales e "
 "idioma"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:34
+#: en/user_customization-runtime.ssi:37
 msgid "When the live system boots, language is involved in three steps:"
 msgstr ""
 "Cuando el sistema en vivo arranca, el idioma está implicado en tres pasos:"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:36
+#: en/user_customization-runtime.ssi:39
 msgid "_* the locale generation"
 msgstr "_* Generar las variantes locales"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:38
+#: en/user_customization-runtime.ssi:41
 msgid "_* setting the keyboard layout for the console"
 msgstr "_* Establecer la distribución del teclado para el consola"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:40
+#: en/user_customization-runtime.ssi:43
 msgid "_* setting the keyboard layout for X"
 msgstr "_* Establecer la distribución del teclado para el entorno gráfico X"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:42
+#: en/user_customization-runtime.ssi:45
 msgid ""
 "The default locale when building a Live system is \"locales=en_US.UTF-8\". "
 "To define the locale that should be generated, use the #{locales}# parameter "
@@ -299,13 +310,13 @@ msgstr ""
 "# de #{lb config}#, p.ej."
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:46
+#: en/user_customization-runtime.ssi:49
 #, no-wrap
 msgid " $ lb config --bootappend-live \"locales=de_CH.UTF-8\"\n"
 msgstr " $ lb config --bootappend-live \"locales=de_CH.UTF-8\"\n"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:50
+#: en/user_customization-runtime.ssi:53
 msgid ""
 "This parameter can also be used at the kernel command line. You can specify "
 "a locale by a full #{language_country.encoding}# word."
@@ -315,7 +326,7 @@ msgstr ""
 "{language_country.encoding}#."
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:52
+#: en/user_customization-runtime.ssi:55
 msgid ""
 "Both the console and X keyboard configuration depend on the #{keyboard-"
 "layouts}# parameter of the #{--bootappend-live}# option. Valid options for X "
@@ -333,7 +344,7 @@ msgstr ""
 "idioma, por ejemplo:"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:57
+#: en/user_customization-runtime.ssi:60
 #, no-wrap
 msgid ""
 " $ grep -i sweden -C3 /usr/share/X11/xkb/rules/base.xml | grep name\n"
@@ -343,7 +354,7 @@ msgstr ""
 " <name>se</name>\n"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:61
+#: en/user_customization-runtime.ssi:64
 msgid ""
 "To get the locale files for German and Swiss German keyboard layout in X use:"
 msgstr ""
@@ -351,13 +362,13 @@ msgstr ""
 "disposición del teclado alemán y suizo-alemán en X usar:"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:65
+#: en/user_customization-runtime.ssi:68
 #, no-wrap
 msgid " $ lb config --bootappend-live \"locales=de_CH.UTF-8 keyboard-layouts=ch\"\n"
 msgstr " $ lb config --bootappend-live \"locales=de_CH.UTF-8 keyboard-layouts=ch\"\n"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:69
+#: en/user_customization-runtime.ssi:72
 msgid ""
 "A list of the valid values of the keyboards for the console can be figured "
 "with the following command:"
@@ -366,7 +377,7 @@ msgstr ""
 "con el siguiente comando:"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:74
+#: en/user_customization-runtime.ssi:77
 #, no-wrap
 msgid ""
 " $ for i in $(find /usr/share/keymaps/ -iname \"*kmap.gz\"); \\\n"
@@ -376,7 +387,7 @@ msgstr ""
 "     do basename $i | head -c -9; echo; done | sort | less\n"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:78
+#: en/user_customization-runtime.ssi:81
 msgid ""
 "Alternatively, you can use the #{console-setup}# package, a tool to let you "
 "configure console layout using X (XKB) definitions; you can then set your "
@@ -396,7 +407,7 @@ msgstr ""
 "TypeMatrix, tanto en consola X como X11, se puede utilizar:"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:83
+#: en/user_customization-runtime.ssi:86
 #, no-wrap
 msgid ""
 " $ lb config --bootappend-live \\\n"
@@ -406,12 +417,12 @@ msgstr ""
 "     \"locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variant=bepo keyboard-model=tm2030usb\"\n"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:87
+#: en/user_customization-runtime.ssi:90
 msgid "2~persistence Persistence"
 msgstr "2~persistence  Persistencia (Modo guardar cambios)"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:89
+#: en/user_customization-runtime.ssi:92
 msgid ""
 "A live cd paradigm is a pre-installed system which runs from read-only "
 "media, like a cdrom, where writes and modifications do not survive reboots "
@@ -423,7 +434,7 @@ msgstr ""
 "reiniciar el sistema en que se ejecuta."
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:91
+#: en/user_customization-runtime.ssi:94
 msgid ""
 "A Debian Live system is a generalization of this paradigm and thus supports "
 "other media in addition to CDs; but still, in its default behaviour, it "
@@ -437,7 +448,7 @@ msgstr ""
 "apagar el equipo."
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:93
+#: en/user_customization-runtime.ssi:96
 msgid ""
 "Persistence is a common name for different kinds of solutions for saving "
 "across reboots some, or all, of this run-time evolution of the system. To "
@@ -456,7 +467,7 @@ msgstr ""
 "guardan tras reiniciar."
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:95
+#: en/user_customization-runtime.ssi:98
 msgid ""
 "The data stored on this ramdisk should be saved on a writable persistent "
 "medium like a Hard Disk, a USB key, a network share or even a session of a "
@@ -472,12 +483,12 @@ msgstr ""
 "el momento del arranque: #{persistent}#."
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:97
+#: en/user_customization-runtime.ssi:100
 msgid "3~ Full persistence"
 msgstr "3~ Persistencia total"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:99
+#: en/user_customization-runtime.ssi:102
 msgid ""
 "By 'full persistence' it is meant that instead of using a tmpfs for storing "
 "modifications to the read-only media (with the copy-on-write, COW, system) a "
@@ -499,19 +510,19 @@ msgstr ""
 "ejemplo:"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:103
+#: en/user_customization-runtime.ssi:106
 #, no-wrap
 msgid " # mkfs.ext2 -L live-rw /dev/sdb1\n"
 msgstr " # mkfs.ext2 -L live-rw /dev/sdb1\n"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:107
+#: en/user_customization-runtime.ssi:110
 msgid "See also {Using the space left on a USB stick}#using-usb-extra-space."
 msgstr ""
 "Ver {Usar el espacio libre en el dispositivo USB}#using-usb-extra-space."
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:109
+#: en/user_customization-runtime.ssi:112
 msgid ""
 "If you already have a partition on your device, you could just change the "
 "label with one of the following:"
@@ -520,13 +531,13 @@ msgstr ""
 "etiqueta con uno de los siguientes:"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:113
+#: en/user_customization-runtime.ssi:116
 #, no-wrap
 msgid " # tune2fs -L live-rw /dev/sdb1 # for ext2,3,4 filesystems\n"
 msgstr " # tune2fs -L live-rw /dev/sdb1 # for ext2,3,4 filesystems\n"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:117
+#: en/user_customization-runtime.ssi:120
 msgid ""
 "But since live system users cannot always use a hard drive partition, and "
 "considering that most USB keys have poor write speeds, 'full' persistence "
@@ -543,7 +554,7 @@ msgstr ""
 "esto:"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:122
+#: en/user_customization-runtime.ssi:125
 #, no-wrap
 msgid ""
 " $ dd if=/dev/null of=live-rw bs=1G seek=1 # for a 1GB sized image file\n"
@@ -553,7 +564,7 @@ msgstr ""
 " $ /sbin/mkfs.ext2 -F live-rw\n"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:126
+#: en/user_customization-runtime.ssi:129
 msgid ""
 "Then copy the #{live-rw}# file to a writable partition and reboot with the "
 "boot parameter 'persistent'."
@@ -562,12 +573,12 @@ msgstr ""
 "reiniciar el sistema con el parámetro de arranque «persistent»."
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:128
+#: en/user_customization-runtime.ssi:131
 msgid "3~ Home automounting"
 msgstr "3~ Montar Home de forma automática"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:130
+#: en/user_customization-runtime.ssi:133
 msgid ""
 "If during the boot a partition (filesystem) image file or a partition "
 "labeled #{home-rw}# is discovered, this filesystem will be directly mounted "
@@ -581,12 +592,12 @@ msgstr ""
 "defecto. Se puede combinar con persistencia total."
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:132
+#: en/user_customization-runtime.ssi:135
 msgid "3~ Snapshots"
 msgstr "3~ Instantáneas"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:134
+#: en/user_customization-runtime.ssi:137
 msgid ""
 "Snapshots are collections of files and directories which are not mounted "
 "while running but which are copied from a persistent device to the system "
@@ -618,7 +629,7 @@ msgstr ""
 "almacenamiento."
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:136
+#: en/user_customization-runtime.ssi:139
 msgid ""
 "A /home version of snapshot exists too and its label is #{home-sn.*}#; it "
 "works the same as the main snapshot but it is only applied to /home."
@@ -628,7 +639,7 @@ msgstr ""
 "a /home."
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:138
+#: en/user_customization-runtime.ssi:141
 msgid ""
 "Snapshots cannot currently handle file deletion but full persistence and "
 "home automounting can."
@@ -637,12 +648,12 @@ msgstr ""
 "la persistencia total y el montaje automático sí pueden."
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:140
+#: en/user_customization-runtime.ssi:143
 msgid "3~ Persistent SubText"
 msgstr "3~ SubText persistente"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:142
+#: en/user_customization-runtime.ssi:145
 msgid ""
 "If a user would need multiple persistent storage of the same type for "
 "different locations or testing, such as #{live-rw-nonwork}# and #{live-rw-"
@@ -661,12 +672,12 @@ msgstr ""
 "parámetros de arranque de: #{persistent}# #{persistent-subtext=subText}#."
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:144
+#: en/user_customization-runtime.ssi:147
 msgid "3~ Partial remastering"
 msgstr "3~ Remasterización parcial"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:145
+#: en/user_customization-runtime.ssi:148
 msgid ""
 "The run-time modification of the tmpfs could be collected using live-"
 "snapshot in a squashfs and added to the cd by remastering the iso in the "

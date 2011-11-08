@@ -17,12 +17,15 @@ also any groups and permissions associated with the live user.
 
 You can specify additional groups that the live user will belong to by
 preseeding the #{passwd/user-default-groups}# debconf value. For example, to
-add the live user to the #{fuse}# group, add the following to a file in the
-#{config/chroot_local-preseed}# directory:
+add the live user to the #{fuse}# group, add the following preseed under
+#{config/preseed/}# for the chroot stage:
 
 code{
 
- user-setup passwd/user-default-groups string audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse
+ $ lb config
+ $ echo user-setup passwd/user-default-groups string audio cdrom \
+   dip floppy video plugdev netdev powerdev scanner bluetooth fuse \
+   >> config/preseed/my.preseed.chroot
 
 }code
 

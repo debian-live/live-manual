@@ -37,7 +37,7 @@ build:
 		sisu-pdf -v live-manual.ssm; \
 		sisu-txt -v live-manual.ssm; \
 	done
-#		for FILE in build/$${LANGUAGE}/live-manual/*.html; \
+#               for FILE in build/manual/live-manual/*.$${LANGUAGE}.html; \
 #		do \
 #			../bin/fix-sisu-html.rb $${FILE}; \
 #			([ $(DEBUG) -gt 0 ] || rm -f $${FILE}~); \
@@ -46,32 +46,32 @@ build:
 autobuild: clean build
 	rm -rf build
 	cp -a html build
+	cp -a manual/en/_sisu build
 
 	set +e; for LANGUAGE in $(LANGUAGES); \
 	do \
-		FROMDIR=$(CURDIR)/manual/$${LANGUAGE}/build/$${LANGUAGE}; \
-		TODIR=$(CURDIR)/build/$${LANGUAGE}; \
+		FROMDIR=$(CURDIR)/manual/$${LANGUAGE}/build/manual; \
+		TODIR=$(CURDIR)/build; \
 		mkdir -p $${TODIR}; \
 		cd $${TODIR}; \
 		mkdir -p epub; \
-		cp $${FROMDIR}/epub/live-manual.epub epub; \
+		cp $${FROMDIR}/epub/live-manual.$${LANGUAGE}.epub epub; \
 		mkdir -p html; \
-		cp $${FROMDIR}/live-manual/*.html html; \
-		mv html/doc.html html/live-manual.html; \
-		cp -a $${FROMDIR}/_sisu .; \
-		rm -f html/toc.html html/sisu_manifest.html html/metadata.html; \
+		cp $${FROMDIR}/live-manual/*.$${LANGUAGE}.html html; \
+		mv html/scroll.$${LANGUAGE}.html html/live-manual.$${LANGUAGE}.html; \
+		rm -f html/toc.$${LANGUAGE}.html html/sisu_manifest.$${LANGUAGE}.html html/metadata.$${LANGUAGE}.html; \
 		mkdir -p odf; \
-		cp $${FROMDIR}/live-manual/opendocument.odt odf/live-manual.odt; \
+		cp $${FROMDIR}/live-manual/opendocument.$${LANGUAGE}.odt odf/live-manual.$${LANGUAGE}.odt; \
 		mkdir -p pdf; \
-		cp $${FROMDIR}/live-manual/landscape.a4.pdf pdf/live-manual.landscape-a4.pdf; \
-		cp $${FROMDIR}/live-manual/portrait.a4.pdf pdf/live-manual.portrait-a4.pdf; \
-		cp $${FROMDIR}/live-manual/landscape.letter.pdf pdf/live-manual.landscape-letter.pdf; \
-		cp $${FROMDIR}/live-manual/portrait.letter.pdf pdf/live-manual.portrait-letter.pdf; \
+		cp $${FROMDIR}/live-manual/landscape.$${LANGUAGE}.a4.pdf pdf/live-manual.landscape-a4.$${LANGUAGE}.pdf; \
+		cp $${FROMDIR}/live-manual/portrait.$${LANGUAGE}.a4.pdf pdf/live-manual.portrait-a4.$${LANGUAGE}.pdf; \
+		cp $${FROMDIR}/live-manual/landscape.$${LANGUAGE}.letter.pdf pdf/live-manual.landscape-letter.$${LANGUAGE}.pdf; \
+		cp $${FROMDIR}/live-manual/portrait.$${LANGUAGE}.letter.pdf pdf/live-manual.portrait-letter.$${LANGUAGE}.pdf; \
 		mkdir -p txt; \
-		cp $${FROMDIR}/live-manual/plain.txt txt/live-manual.txt; \
+		cp $${FROMDIR}/live-manual/plain.$${LANGUAGE}.txt txt/live-manual.$${LANGUAGE}.txt; \
 		sed -e "s|@DATE_BUILD@|$(shell LC_ALL=C date -R)|" \
 		    -e "s|@DATE_CHANGE@|$(shell LC_ALL=C git log | grep -m1 Date | awk -FDate: '{ print $2 }' | sed -e 's|  ||g')|" \
-		    $${FROMDIR}/../../index.html.in > index.html; \
+		    $${FROMDIR}/../../index.html.in > index.$${LANGUAGE}.html; \
 	done
 
 commit: tidy test
@@ -94,28 +94,28 @@ install:
 
 	for LANGUAGE in $(LANGUAGES); \
 	do \
-		FROMDIR=$(CURDIR)/manual/$${LANGUAGE}/build/$${LANGUAGE}; \
+		FROMDIR=$(CURDIR)/manual/$${LANGUAGE}/build/manual; \
 		TODIR=$(DESTDIR)/usr/share/doc/live-manual; \
 		mkdir -p $${TODIR}; \
 		cd $${TODIR}; \
 		mkdir -p epub; \
-		cp $${FROMDIR}/epub/live-manual.epub epub/live-manual.$${LANGUAGE}.epub; \
-		mkdir -p html/$${LANGUAGE}; \
-		cp $${FROMDIR}/live-manual/*.html html/$${LANGUAGE}; \
-		mv html/$${LANGUAGE}/doc.html html/live-manual.$${LANGUAGE}.html; \
-		rm -f html/$${LANGUAGE}/toc.html html/$${LANGUAGE}/sisu_manifest.html html/$${LANGUAGE}/metadata.html; \
+		cp $${FROMDIR}/epub/live-manual.$${LANGUAGE}.epub epub; \
+		mkdir -p html; \
+		cp $${FROMDIR}/live-manual/*.$${LANGUAGE}.html html; \
+		mv html/scroll.$${LANGUAGE}.html html/live-manual.$${LANGUAGE}.html; \
+		rm -f html/toc.$${LANGUAGE}.html html/sisu_manifest.$${LANGUAGE}.html html/metadata.$${LANGUAGE}.html; \
 		mkdir -p odf; \
-		cp $${FROMDIR}/live-manual/opendocument.odt odf/live-manual.$${LANGUAGE}.odt; \
+		cp $${FROMDIR}/live-manual/opendocument.$${LANGUAGE}.odt odf/live-manual.$${LANGUAGE}.odt; \
 		mkdir -p txt; \
-		cp $${FROMDIR}/live-manual/plain.txt txt/live-manual.$${LANGUAGE}.txt; \
+		cp $${FROMDIR}/live-manual/plain.$${LANGUAGE}.txt txt/live-manual.$${LANGUAGE}.txt; \
 		mkdir -p pdf; \
-		cp $${FROMDIR}/live-manual/landscape.a4.pdf pdf/live-manual.landscape-a4.$${LANGUAGE}.pdf; \
-		cp $${FROMDIR}/live-manual/portrait.a4.pdf pdf/live-manual.portrait-a4.$${LANGUAGE}.pdf; \
-		cp $${FROMDIR}/live-manual/landscape.letter.pdf pdf/live-manual.landscape-letter.$${LANGUAGE}.pdf; \
-		cp $${FROMDIR}/live-manual/portrait.letter.pdf pdf/live-manual.portrait-letter.$${LANGUAGE}.pdf; \
+		cp $${FROMDIR}/live-manual/landscape.$${LANGUAGE}.a4.pdf pdf/live-manual.landscape-a4.$${LANGUAGE}.pdf; \
+		cp $${FROMDIR}/live-manual/portrait.$${LANGUAGE}.a4.pdf pdf/live-manual.portrait-a4.$${LANGUAGE}.pdf; \
+		cp $${FROMDIR}/live-manual/landscape.$${LANGUAGE}.letter.pdf pdf/live-manual.landscape-letter.$${LANGUAGE}.pdf; \
+		cp $${FROMDIR}/live-manual/portrait.$${LANGUAGE}.letter.pdf pdf/live-manual.portrait-letter.$${LANGUAGE}.pdf; \
 	done
 
-	cp -a manual/en/build/en/_sisu $(DESTDIR)/usr/share/doc/live-manual
+	cp -a manual/en/_sisu $(DESTDIR)/usr/share/doc/live-manual
 
 uninstall:
 	rm -rf $(DESTDIR)/usr/share/doc/live-manual

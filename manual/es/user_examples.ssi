@@ -251,10 +251,9 @@ experiencias recogidas de los usuarios de Debian Live.
 
 *{Caso Práctico:}* Crear una imagen con live-build para arrancar directamente un servidor VNC.
 
-Hacer un directorio de creación y crear una configuración en esqueleto según
-la lista estándar-x11, incluyendo #{gdm3}#, #{metacity}# y
-#{xtightvncviewer}#, desactivando los paquetes recomendados para conseguir
-un sistema mínimo:
+Make a build directory and create a skeletal configuration in it built
+around the standard-x11 list, including #{gdm3}#, #{metacity}# and
+#{xvnc4viewer}#, disabling recommends to make a minimal system:
 
 code{
 
@@ -274,7 +273,7 @@ el xvncviewer, conectándo al puerto #{5901}# de un servidor en
 code{
 
  $ mkdir -p config/includes.chroot/etc/skel
- $ cat >config/includes.chroot/etc/skel/.xsession <<END
+ $ cat > config/includes.chroot/etc/skel/.xsession <<END
  #!/bin/sh
 
  /usr/bin/metacity &

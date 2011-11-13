@@ -244,10 +244,9 @@ utenti Debian Live.
 
 *{Caso d'uso:}* creazione di un'immagine con live-build per avviare direttamente un server VNC.
 
-Creare una directory con al suo interno una configurazione scheletrica
-costruita sulla base dell'elenco di standard-x11, tra cui #{gdm3}#,
-#{metacity}# e #{xtightvncviewer}#, disabilitando i raccomandati per
-ottenere un sistema minimale:
+Make a build directory and create a skeletal configuration in it built
+around the standard-x11 list, including #{gdm3}#, #{metacity}# and
+#{xvnc4viewer}#, disabling recommends to make a minimal system:
 
 code{
 
@@ -267,7 +266,7 @@ xvncviewer, connesso alla porta #{5901}# su un server all'indirizzo
 code{
 
  $ mkdir -p config/includes.chroot/etc/skel
- $ cat >config/includes.chroot/etc/skel/.xsession <<END
+ $ cat > config/includes.chroot/etc/skel/.xsession <<END
  #!/bin/sh
 
  /usr/bin/metacity &

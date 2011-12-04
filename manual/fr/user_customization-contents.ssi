@@ -48,14 +48,14 @@ ajoutés ou remplacés à l'image sans traitement, voir {Live/chroot local
 hooks}#live-chroot-local-hooks si le traitement est nécessaire.
 
 Pour inclure des fichiers, il suffit de les ajouter à votre répertoire
-#{config/chroot_local-includes}#. Ce répertoire correspond au répertoire
-racine (#{/}#) du système live. Par exemple, pour ajouter un fichier
+#{config/includes.chroot}#. Ce répertoire correspond au répertoire racine
+(#{/}#) du système live. Par exemple, pour ajouter un fichier
 #{/var/www/index.html}# dans le système live, utilisez:
 
 code{
 
- $ mkdir -p config/chroot_local-includes/var/www
- $ cp /path/to/my/index.html config/chroot_local-includes/var/www
+ $ mkdir -p config/includes.chroot/var/www
+ $ cp /path/to/my/index.html config/includes.chroot/var/www
 
 }code
 
@@ -65,7 +65,7 @@ code{
 
  -- config
     [...]
-     |-- chroot_local-includes
+     |-- includes.chroot
      |   `-- var
      |       `-- www
      |           `-- index.html
@@ -85,12 +85,12 @@ du support sans avoir à démarrer le système live, vous pouvez utiliser
 binary local includes. Cela fonctionne de façon similaire aux chroot local
 includes. Par exemple, supposons que les fichiers #{~/video_demo.*}# sont
 des vidéos de démonstration du système live décrit par et lié par une page
-d'index HTML. Copiez simplement le matériel à
-#{config/binary_local-includes/}# comme suit:
+d'index HTML. Copiez simplement le matériel dans #{config/includes.binary/}#
+comme suit:
 
 code{
 
- $ cp ~/video_demo.* config/binary_local-includes/
+ $ cp ~/video_demo.* config/includes.binary/
 
 }code
 
@@ -120,13 +120,13 @@ et binaire de la construction afin de personnaliser l'image.
 
 3~live-chroot-local-hooks Live/chroot local hooks
 
-Pour exécuter des commandes à l'étape chroot, créer un script hook contenant
-les commandes dans le répertoire #{config/chroot_local-hooks}#. Le hook
-s'exécutera dans le chroot après le reste de votre configuration chroot a
-été appliquée, donc n'oubliez pas de vous assurer que votre configuration
-inclut tous les paquets et les fichiers que votre hook a besoin pour
-fonctionner. Voir les exemples de scripts chroot hook pour diverses tâches
-courantes de personnalisation chroot fournis dans
+Pour exécuter des commandes à l'étape chroot, créer un script hook avec le
+suffixe #{.chroot}# contenant les commandes dans le répertoire
+#{config/hooks/}#. Le hook s'exécutera dans le chroot après le reste de
+votre configuration chroot a été appliquée, donc n'oubliez pas de vous
+assurer que votre configuration inclut tous les paquets et les fichiers que
+votre hook a besoin pour fonctionner. Voir les exemples de scripts chroot
+hook pour diverses tâches courantes de personnalisation chroot fournis dans
 #{/usr/share/live/build/examples/hooks}# que vous pouvez copier ou symlink
 pour les utiliser dans votre propre configuration.
 
@@ -137,28 +137,30 @@ live-config hooks comme expliqué dans la section "Personnalisation" de sa
 page de manuel. Examiner les hooks de live-config fournis dans
 #{/lib/live/config/}#, en notant les numéros de séquence. Puis fournir votre
 propre hook préfixée avec un numéro de séquence appropriée, soit comme un
-chroot local include dans #{config/chroot_local-includes/lib/live/config/}#,
-ou comme un paquet personnalisé tel que discuté dans {Installation des
-paquets modifiés ou de tiers}#installing-modified-or-third-party-packages.
+chroot local include dans #{config/includes.chroot/lib/live/config/}#, ou
+comme un paquet personnalisé tel que discuté dans {Installation des paquets
+modifiés ou de tiers}#installing-modified-or-third-party-packages.
 
 3~ Binary local hooks
 
-Pour exécuter des commandes à l'étape binaire, créer un script hook
-contenant les commandes dans #{config/binary_local-hooks}#. Le hook sera
-exécuté après toutes les autres commandes binaires sont exécutées, mais
-avant binary_checksums, les dernièrs commandes binaires.  Les commandes de
-votre hook ne s'exécutent pas dans le chroot, afin de prendre soin de ne pas
-modifier les fichiers en dehors de l'arbre de construction, ou vous pourriez
-endommager votre système de construction! Voir les exemples de scripts hook
-binaires pour diverses tâches courantes de personnalisation binaires fournis
-dans #{/usr/share/live/build/examples/hooks}# que vous pouvez copier ou
-symlink pour les utiliser dans votre propre configuration.
+Pour exécuter des commandes à l'étape binaire, créer un script hook avec le
+suffixe #{.binary}# contenant les commandes dans le répertoire
+#{config/hooks/}#. Le hook sera exécuté après toutes les autres commandes
+binaires sont exécutées, mais avant binary_checksums, les dernièrs commandes
+binaires.  Les commandes de votre hook ne s'exécutent pas dans le chroot,
+afin de prendre soin de ne pas modifier les fichiers en dehors de l'arbre de
+construction, ou vous pourriez endommager votre système de construction!
+Voir les exemples de scripts hook binaires pour diverses tâches courantes de
+personnalisation binaires fournis dans
+#{/usr/share/live/build/examples/hooks}# que vous pouvez copier ou symlink
+pour les utiliser dans votre propre configuration.
 
 2~ Préconfigurer questions de debconf
 
-Les fichiers dans le répertoire #{config/chroot_local-preseed}# sont
-considérés comme des fichiers de préconfiguration debconf et sont installés
-par live-build en utilisant #{debconf-set-selections}#.
+Les fichiers dans le répertoire #{config/preseed/}# avec le suffixe
+#{.preseed}# suivi de l'étape (#{.chroot}# or #{.binary}#) sont considérés
+comme des fichiers de préconfiguration debconf et sont installés par
+live-build en utilisant #{debconf-set-selections}#.
 
 Pour plus d'informations sur debconf, s'il vous plaît voir debconf(7) dans
 le paquet #{debconf}#.

@@ -29,7 +29,7 @@ nombrar algunas posibilidades.
 
 La distribución seleccionada tiene gran impacto en qué paquetes están
 disponibles para incluir en la imagen. Se debe indicar el nombre en clave de
-la distribución, que por defecto es #{squeeze}# para la versión Squeeze de
+la distribución, que por defecto es #{wheezy}# para la versión Wheezy de
 live-build. Se puede especificar cualquier nombre de distribución disponible
 en los repositorios Debian indicando su nombre en clave. (Para más detalles
 ver {Términos}#terms). La opción #{--distribution}# no solamente influencia
@@ -72,52 +72,55 @@ modificará su comportamiento para adecuarlo al modo seleccionado.
 Los repositorios de Debian están replicados en una gran red alrededor del
 mundo, de manera que se puede seleccionar la réplica más cercana con el fin
 de obtener la mejor velocidad de descarga. Cada una de las opciones
-#{--mirror-*}# gobierna qué réplica de repositorio Debian se utiliza en las
-diferentes etapas de creación. Si se recuerda de {Etapas de la
+#{--parent-mirror-*}# gobierna qué réplica de repositorio Debian se utiliza
+en las diferentes etapas de creación. Si se recuerda de {Etapas de la
 creación}#stages-of-the-build, en la etapa de *preinstalación (bootstrap)*
 es cuando se crea el directorio chroot y se rellena con un sistema mínimo
 mediante  la herramienta debootstrap, y en la etapa *chroot* es cuando el
 directorio chroot es completado con los paquetes necesarios para crear el
 sistema de ficheros que será utilizado en el sistema en vivo. A cada una de
-estas etapas le corresponde su propia opción #{--mirror-*}#. Posteriormente,
-en la etapa *binary* se utilizarán las réplicas Debian indicadas en los
-valores de las opciones #{--mirror-binary}# y #{--mirror-binary-security}#
-en lugar de utilizar los indicados para las etapas anteriores.
+estas etapas le corresponde su propia opción
+#{--parent-mirror-*}#. Posteriormente, en la etapa *binary* se utilizarán
+las réplicas Debian indicadas en los valores de las opciones
+#{--parent-mirror-binary}# y #{--parent-mirror-binary-security}# en lugar de
+utilizar los indicados para las etapas anteriores.
 
 3~distribution-mirrors-build-time Réplicas de Distribution utilizadas
 durante la creación
 
 Para indicar qué réplicas deben ser utilizadas en el momento de crear la
-imágen es suficiente con utilizar las opciones #{--mirror-bootstrap}# y
-#{--mirror-chroot-security}# como se muestra a continuación.
+imagen es suficiente con utilizar las opciones #{--parent-mirror-bootstrap}#
+, #{--parent-mirror-chroot-security}# y #{--parent-mirror-chroot-backports}#
+como se muestra a continuación.
 
 code{
 
- $ lb config --mirror-bootstrap http://localhost/debian/ \
-             --mirror-chroot-security http://localhost/debian-security/
+ $ lb config --parent-mirror-bootstrap http://localhost/debian/ \
+             --parent-mirror-chroot-security http://localhost/debian-security/ \
+	     --parent-mirror-chroot-backports http://localhost/debian-backports/
 
 }code
 
-El valor indicado en #{--mirror-chroot}# es utilizado como valor por defecto
-para la opción #{--mirror-bootstrap}# si esta no es indicada.
+El valor indicado en #{--parent-mirror-chroot}# es utilizado como valor por
+defecto para la opción #{--parent-mirror-bootstrap}# si esta no es indicada.
 
 3~ Réplicas de distribución Debian utilizadas en la ejecución.
 
-Las opciones #{--mirror-binary*}# gobiernan las réplicas configuradas en la
-imagen binaria que serán utilizadas para instalar paquetes adicionales
+Las opciones #{--parent-mirror-binary*}# gobiernan las réplicas configuradas
+en la imagen binaria que serán utilizadas para instalar paquetes adicionales
 mientras se ejecuta el sistema en vivo. Por defecto se utiliza
 #{cdn.debian.net}#, que es un servicio que selecciona la réplica más cercana
 basándose en el número de IP. Es una elección bastante acertada siempre que
 no se pueda predecir que réplica será la mejor para todos los
 usuarios. También se puede especificar valores personalizados como se
-muestra en el siguiente ejemplo. Una imágen construida con esta
+muestra en el siguiente ejemplo. Una imagen construida con esta
 configuración solamente sería accesible a los usuarios de una red donde
 "#{mirror}#" fuese alcanzable.
 
 code{
 
- $ lb config --mirror-binary http://mirror/debian/ \
-             --mirror-binary-security http://mirror/debian-security/
+ $ lb config --parent-mirror-binary http://mirror/debian/ \
+             --parent-mirror-binary-security http://mirror/debian-security/
 
 }code
 
@@ -127,14 +130,14 @@ Se pueden añadir más repositorios, ampliando la lista de paquetes
 seleccionables más alla de aquellos disponibles para la distribución
 indicada, como pueden ser paquetes de backports, paquetes experimentales o
 personalizados. Para configurar repositorios adicionales se debe crear los
-ficheros #{config/chroot_sources/your-repository.chroot}#, y/o
-#{config/chroot_sources/your-repository.binary}#. Al igual que en las
-opciones #{--mirror-*}#, estos ficheros gobiernan los repositorios
+ficheros #{config/archives/your-repository.list.chroot}# y/o
+#{config/archives/your-repository.list.binary}#. Al igual que en las
+opciones #{--parent-mirror-*}#, estos ficheros gobiernan los repositorios
 utilizados en las etapas *chroot* y *binary* respectivamente, esto es, los
 repositorios que serán utilizados cuando se ejecute el sistema en vivo.
 
-Por ejemplo, #{config/chroot_sources/live.chroot}# permite instalar paquetes
-de la instantánea del repositorio Debian Live en el momento de crear la
+Por ejemplo, #{config/archives/live.list.chroot}# permite instalar paquetes
+de las instantáneas del repositorio Debian Live en el momento de crear la
 imagen.
 
 code{
@@ -143,21 +146,21 @@ code{
 
 }code
 
-Si se añade la misma línea a #{config/chroot_sources/live.binary}#, el
+Si se añade la misma línea a #{config/archives/live.list.binary}#, el
 repositorio será añadido al directorio #{/etc/apt/sources.list.d/}# del
 sistema en vivo.
 
 Estos ficheros serán seleccionados automáticamente si existen.
 
 Se debería también incluir en el fichero
-#{config/chroot_sources/your-repository.{binary,chroot}.gpg}# la clave GPG a
+#{config/archives/your-repository.gpg.{binary,chroot}}# la clave GPG a
 utilizar para firmar dicho repositorio.
 
-*{Nota:}* Existen algunos repositorios de paquetes ya preconfigurados para facilitar la selección mediante la opción #{--repository}#. Por ejemplo, para utilizar las instantáneas del repositorio de Debian Live, sería suficiente con activarlo mediante:
+*{Nota:}* Existen algunos repositorios de paquetes ya preconfigurados para facilitar la selección mediante la opción #{--archives}#. Por ejemplo, para utilizar las instantáneas del repositorio de Debian Live, sería suficiente con activarlo mediante:
 
 code{
 
- $ lb config --repository live.debian.net
+ $ lb config --archives live.debian.net
 
 }code
 
@@ -165,35 +168,12 @@ code{
 
 Hay varias maneras de seleccionar qué paquetes serán instalados por
 live-build en la imagen que cubren una variedad de necesidades diversas. Se
-puede nombrar un paquete individual para que sea instalado o se pueden
-nombrar unos pocos paquetes mediante la opción #{--packages}#, o incluso se
-puede indicar un gran número de paquetes mediante una lista. También se
-puede seleccionar listas de paquetes predefinidos o incluso utilizar tareas
-de APT. Por último, también se pueden utilizar ficheros de paquetes de
-prueba o experimentales obtenidos antes de que aparezcan en los repositorios
-oficiales simplemente depositando estos ficheros directamente en el árbol de
-directorios #{config/}#.
-
-3~ Selección de unos pocos paquetes
-
-Cuando el número de paquetes a añadir es pequeño pueden indicarse mediante
-la opción #{--packages}#. Por ejemplo:
-
-code{
-
- $ lb config --packages "package1 package2 package3"
-
-}code
-
-El comportamiento de live-build cuando se especifica un paquete que no
-existe es determinado por lo que se haya configurado en la utilidad
-APT. Para más detalles ver {Utilizar apt o
-aptitude}#choosing-apt-or-aptitude .
-
-Si se necesita especificar un gran número de paquetes o se necesita cierta
-flexibilidad a la hora de indicar qué paquetes hay que instalar se puede
-utilizar las listas de paquetes tal y como se indica en la sección, {Listas
-de paquetes}#package-lists.
+puede nombrar paquetes individuales para instalar en una lista de
+paquetes. También se puede seleccionar listas de paquetes predefinidos o
+incluso utilizar tareas de APT. Por último, también se pueden utilizar
+ficheros de paquetes de prueba o experimentales obtenidos antes de que
+aparezcan en los repositorios oficiales simplemente depositando estos
+ficheros directamente en el árbol de directorios #{config/}#.
 
 3~package-lists Listas de paquetes
 
@@ -207,69 +187,58 @@ diferentes entornos de escritorios y algunas listas de propósito especial
 basadas en otras listas de propósito general. Puede utilizarse listas
 propias o una combinación de listas propias y listas predefinidas.
 
+*{Nota:}* El comportamiento de live-build cuando se especifica un paquete que no existe es determinado por lo que se haya configurado en la utilidad APT. Para más detalles ver {Utilizar apt o aptitude}#choosing-apt-or-aptitude .
 3~ Listas de paquetes predefinidas
 
 La forma más simple de utilizar listas de paquetes es especificar una o más
-listas predefinidas mediante la opción #{--packages-lists}#, por ejemplo:
+listas predefinidas mediante la opción #{--package-lists}#, por ejemplo:
 
 code{
 
- $ lb config --packages-lists "gnome-core rescue"
+ $ lb config --package-lists "gnome rescue"
 
 }code
 
-Además de estas listas, live-build soporta cuatro listas de paquetes
-virtuales, #{gnome-desktop}#, #{kde-desktop}#, #{lxde-desktop}# y
-#{xfce-desktop}#, cada una de las cuales provee una selección de paquetes
-extensiva que corresponde con los valores por defecto del Instalador de
-Debian para estos entornos de escritorio. Para más información ver {Tareas
-de Escritorio e Idioma}#desktop-and-language-tasks .
-
-*{Nota:}* Existen imágenes listas para su descarga con los escritorios GNOME, KDE, LXDE y XFCE en http://live.debian.net. Estas imágenes han sido creadas utilizando la lista virtual #{*-desktop}# correspondiente.
-
 La ubicación por defecto de las listas de los ficheros en el sistema huésped
-es #{/usr/share/live/build/lists/}#. Para determinar qué paquetes componen
-una lista dada se debe leer el correspondiente fichero poniendo atención en
-los ficheros incluidos y en las secciones condicionales como se describen a
-continuación.
+es #{/usr/share/live/build/package-lists/}#. Para determinar qué paquetes
+componen una lista dada se debe leer el correspondiente fichero poniendo
+atención en los ficheros incluidos y en las secciones condicionales como se
+describen a continuación.
 
 3~ Listas de paquetes locales
 
 Se pueden añadir o reemplazar completamente las listas predefinidas
 depositando listas de paquetes locales en el directorio
-#{config/chroot_local-packageslists/}#.
+#{config/package-lists/}#.
 
-Para que sean procesadas, las listas de paquetes que existan en dicho
-directorio deben tener la extensión #{.list}#. Las listas de paquetes
-locales se superponen a las listas predefinidas por live-build. Esto puede
-causar efectos no deseados de manera que se recomienda utilizar nombres
-únicos para las listas de paquetes locales, que no coincidan con los nombres
-de listas de paquetes predefinidas.
+Para que sean procesadas, las listas de paquetes que se depositen en este
+directorio deben tener la extensión #{.list}# además de la extensión de la
+etapa #{.chroot}# o #{.binary}# para indicar a qué etapa corresponde la
+lista.
+
+*{Nota:}* Si no se especifica el sufijo, la lista será usada en las dos etapas. En consecuencia, es conveniente especificar #{.list.chroot}# de modo que los paquetes se instalen únicamente en el sistema en vivo y no exista otra copia extra del paquete #{.deb}# 
 
 3~ Listas de paquetes locales para binary
 
-En caso de que se desee incluir algún paquete .deb en el directorio
-#{pool/}# del medio de instalación sin instalarlo en la imágen del sistema
-en vivo se pueden utilizar las listas de paquetes locales para binary
-depositando dichas listas en el directoro
-#{config/binary_local-packageslists/}#, de manera que el medio de
-instalación pueda ser utilizado como un medio de instalación personalizado
-para instalaciones sin red local (modo offline).
-
-Para que sean procesadas, las listas de paquetes que se depositen en este
-directorio deben tener la extensión #{.list}#.
+Para crear una lista para la etapa «binary» crear un fichero con el sufijo
+#{.list.binary}# en #{config/package-lists/}#. Estos paquetes no son
+instalados en el sistema en vivo, pero son incluidos en él en #{pool/}#. El
+uso típico de una de estas lista sería para una de las variantes de
+instalador normal («non-live» N.del T.). Tal y como se mencionaba
+anteriormente, si se desea usar la misma lista para la etapa «chroot» basta
+con solamente añadir el sufijo #{.list}#
 
 3~ Extensión de una lista de paquetes dada mediante «includes»
 
 Las listas de paquetes predefinidas en live-build hacen un uso intensivo de
-las directivas «include». Los ficheros existentes en el directorio
-#{/usr/share/live/build/lists/}# pueden servir como buen ejemplo de como
-escribir listas de paquetes.
+las directivas «includes». Los ficheros existentes en el directorio
+#{/usr/share/live/build/package-lists/}# pueden servir como buen ejemplo de
+como escribir listas de paquetes.
 
 Por ejemplo, para hacer una lista de paquetes que incluya la lista de
 paquetes predefinida #{gnome}# y añadir el paquete iceweasel se puede crear
-un fichero llamado #{config/chroot_local-packageslists/mygnome.list}# con el
-siguiente contenido:
+un fichero llamado #{config/package-lists/my.list.chroot}# con el siguiente
+contenido:
 
 code{
 
@@ -344,13 +313,14 @@ El Instalador de Debian ofrece al usuario un conjunto de opciones con una
 lista de paquetes preseleccionada enfocadas a configurar un tipo de sistema
 o configurar el sistema para realizar una tarea como puede ser «Entorno de
 escritorio gráfico», «Servidor de correo», «Portátil», etc. Estas listas son
-llamadas «tareas» y son soportadas por APT mediante el campo «Task:». Se
-puede especificar a live-build que seleccione estas tareas mediante la
-opción #{--task}# tal y como se muestra en el siguiente ejemplo:
+llamadas «tareas» ("Tasks") y son soportadas por APT mediante el campo
+«Task:». Se puede especificar una o más tareas a live-build poniéndolas en
+una lista en #{config/task-lists/}#, como en el ejemplo siguiente.
 
 code{
 
- $ lb config --tasks "mail-server file-server"
+ $ lb config
+ $ echo "mail-server file-server" >> config/task-lists/my.list.chroot
 
 }code
 
@@ -362,60 +332,55 @@ obtenerse mediante la orden #{tasksel --task-packages}#.
 
 3~desktop-and-language-tasks Tareas de Escritorio e Idioma
 
-Las tareas de escritorio y de idioma son casos especiales. Si el medio de
-instalación fue preparado para una clase particular de entorno de
-escritorio, el Instalador de Debian instalará automáticamente la tarea de
-entorno de escritorio correspondiente. Para ello existen las tareas
-#{gnome-desktop}#, #{kde-desktop}#, #{lxde-desktop}# y #{xfce-desktop}# pero
-ninguna de ellas son presentadas en el menú de #{tasksel}#. De igual forma,
-las tareas para idiomas tampoco son presentadas en el menú de #{tasksel}#,
-pero la selección del idioma, al inicio de la instalación repercute en la
-selección de las correspondientes tareas del idioma.
+Las tareas de escritorio y de idioma son casos especiales que necesitan un
+poco de planificación y configuración extra. Si el medio de instalación fue
+preparado para una clase particular de entorno de escritorio, el Instalador
+de Debian instalará automáticamente la tarea de entorno de escritorio
+correspondiente. Para ello existen las tareas  internas #{gnome-desktop}#,
+#{kde-desktop}#, #{lxde-desktop}# y #{xfce-desktop}# pero ninguna de ellas
+son presentadas en el menú de #{tasksel}#. De igual forma, las tareas para
+idiomas tampoco son presentadas en el menú de #{tasksel}#, pero la selección
+del idioma, al inicio de la instalación repercute en la selección de las
+correspondientes tareas del idioma.
 
-En live-build estos casos especiales también son tratados de manera
-especial, pero en el momento de escribir este manual, hay tres notables
-diferencias.
+Cuando se desarolla una imagen de escritorio, la imagen normalmente arranca
+directamente a un escritorio de trabajo, las opciones de escritorio y de
+idioma por defecto han sido elegidas en tiempo de creación, no en tiempo de
+ejecución como en el caso del instalador de Debian. Eso no quiere decir que
+una imagen en vivo no pueda ser creada para admitir múltiples escritorios o
+varios idiomas y ofrecer al usuario una elección, pero ese no es un
+comportamiento por defecto de live-build.
 
-Primero, no se ha previsto, todavía, la instalación automática de tareas de
-idiomas, aunque se incluye un subconjunto de estos paquetes si se especifica
-un idioma mediante #{lb config --language}#. Se puede especificar en la
-configuración de live-build la utilización de estas tareas, que incluyen
-cosas específicas del idioma, como pueden ser paquetes tipos de letra y
-métodos de introducción. Por ejemplo:
-
-code{
-
- $ lb config --tasks "japanese japanese-desktop japanese-gnome-desktop"
-
-}code
-
-Segundo, live-build soporta la lista de paquetes virtuales #{*-desktop}#
-para cada clase de escritorio mencionado anteriormente. Esto seleccionará la
-lista de paquetes predefinida #{standard-x11}#, la correspondiente tarea de
-escritorio #{*-desktop}#  y tres tareas adicionales #{desktop}#,
-#{standard}# y #{laptop}#. Así, por ejemplo, si se especifica
-#{--packages-lists gnome-desktop}#, será equivalente a especificar
-#{--packages debian-installer-launcher --packages-lists standard-x11 --tasks
-"gnome-desktop desktop standard laptop"}#.
-
-Tercero, si se selecciona cualquier tarea de escritorio, explícitamente a
-través de #{--tasks}# o implícitamente mediante #{--packages-lists}#,
-live-build preconfigurará (preseed) en el Instalador de Debian (si es
-incluido) el escritorio correspondiente para asegurar que sigue sus propias
-reglas cuando sea instalado.
-
-*{Nota:}* Existe también la opción experimental #{--language}# cuyo propósito se solapa con las tareas de idioma. Se instalarán los paquetes de soporte #{*-l10n}# siempre que existan y que se especifique un idioma mediante la opción #{--language}#. Además, si existe, se utilizará, en lugar de las plantillas por defecto en ingles, cualquier plantilla para #{syslinux}# del idioma indicado mediante esta opción. La selección de paquetes realizada mediante la opción #{--language}# es una pobre aproximación a las tareas de idiomas. Las tareas de idiomas son un método más completo y flexible que la utilización de la opción #{--language}# que requiere que la lista de paquetes a incluir por idioma sea mantenida internamente en live-build. Sin embargo el tratamiento de las plantillas de #{syslinux}# es útil. Por esto, si se utiliza la opción #{--bootloader syslinux}# y plantillas para un idioma existente en #{/usr/share/live/build/templates/syslinux/}# o #{config/templates/syslinux/}#, esta opción es un punto a tener en cuenta, posiblemente en combinación con las tareas de idiomas para asegurar la instalación de los paquetes adecuados. Por ejemplo:
+Ya que no se ha previsto la instalación automática de tareas de idiomas, que
+incluyen cosas tales como tipos de letra específicos de cada lengua o
+paquetes de métodos de entrada, si se quiere incluirlos, es necesario
+especificarlo en la configuración. Por ejemplo, una imagen de escritorio
+GNOME que contenga soporte para el japonés podría incluir las siguientes
+tareas:
 
 code{
 
- $ lb config --language es
+ $ lb config
+ $ echo "gnome-desktop desktop standard laptop" >> config/task-lists/my.list.chroot
+ $ echo "japanese japanese-desktop japanese-gnome-desktop" >> config/task-lists/my.list.chroot
 
 }code
 
-Esta opción solamente soporta un idioma y un gestor de arranque. Por todas
-estas razones, el futuro de esta opción está bajo revisión y posiblemente
-será reemplazada por algo completamente diferente en la proxima revisión
-general de live-build.
+Ya que las tareas de escritorio son "internas", para cada tarea de sabor de
+escritorio incluido en la imagen, el valor correspondiente (si es diferente
+del predeterminado "gnome"), tiene que ser preconfigurado en la variable
+"tasksel/desktop" de lo contrario tasksel no lo va a reconocer e
+instalar. Por lo tanto:
+
+code{
+
+ $ lb config
+ $ echo 'tasksel tasksel/desktop multiselect kde' >> config/preseed/my.preseed.chroot
+
+}code
+
+Este parámetro puede tener varios valores, por ejemplo, "lxde xfce" en lugar
+de "kde".
 
 2~installing-modified-or-third-party-packages Instalar paquetes de terceros
 o paquetes modificados
@@ -438,43 +403,43 @@ medida.
 
 Existen dos formas de instalar paquetes personalizados:
 
-_* #{chroot_local-packages}#
+_* #{packages.chroot}#
 
 _* Utilizando un repositorio APT personalizado
 
-El método #{chroot_local-packages}# es el más simple para añadir paquetes
+El método #{packages.chroot}# es el más simple para añadir paquetes
 personalizados. Es muy útil para personalizaciones «rápidas» (one-off) pero
 tiene unos cuantos inconvenientes mientras que la utilización de un
 repositorio APT personalizado es más lento de poner en marcha.
 
-3~ Método #{chroot_local-packages}# para instalar paquetes personalizados
+3~ Método #{packages.chroot}# para instalar paquetes personalizados
 
 Para instalar paquetes personalizados solamente hay que copiar el paquete en
-el directorio #{config/chroot_local-packages/}#. Los paquetes contenidos en
-este directorio serán automáticamente instalados en el sistema en vivo
-durante el proceso de creación. No es necesario especificar de dónde se
-deben obtener los paquetes.
+el directorio #{config/packages.chroot/}#. Los paquetes contenidos en este
+directorio serán automáticamente instalados en el sistema en vivo durante el
+proceso de creación. No es necesario especificar de dónde se deben obtener
+los paquetes.
 
 Los paquetes *{deben}* nombrarse de la forma prescrita. La forma más simple
 es usar #{dpkg-name}#.
 
-El método #{chroot_local-packages}# para la instalación de paquetes
-personalizados tiene desventajas:
+El método #{packages.chroot}# para la instalación de paquetes personalizados
+tiene desventajas:
 
 _* No es posible utilizar APT seguro.
 
 _* Se deben depositar todos los paquetes necesarios para cumplir
-dependencias en el directorio #{config/chroot_local-packages/}#.
+dependencias en el directorio #{config/packages.chroot/}#.
 
 _* No es adecuado para almacenar configuraciones de Debian Live en un
 control de versiones.
 
 3~ Método de repositorio APT para instalar paquetes personalizados
 
-Al contrario del método #{chroot_local-packages}#, cuando se utiliza el
-método de repositorio APT personalizado se debe asegurar que se especifica
-dónde se deben buscar los paquetes a instalar. Para más información ver
-{Selección de los paquetes a instalar}#choosing-packages-to-install.
+Al contrario del método #{packages.chroot}#, cuando se utiliza el método de
+repositorio APT personalizado se debe asegurar que se especifica dónde se
+deben buscar los paquetes a instalar. Para más información ver {Selección de
+los paquetes a instalar}#choosing-packages-to-install.
 
 Aunque crear un repositorio APT para instalar paquetes personalizados puede
 parecer un esfuerzo innecesaro, la infraestructurar puede ser fácilmente
@@ -502,9 +467,9 @@ momento de crear la imagen. (La configuración que APT utilizará cuando se
 ejecute el sistema en vivo puede ser configurada de la manera que
 habitualmente se utiliza para introducir contenidos del sistema en vivo,
 esto es, incluyendo las configuraciones apropiadas en el directorio
-#{config/chroot_local_includes/}#.) Se puede encontrar una lista completa de
-las opciones para configurar APT en la página de manual de
-#{lb_config}#. Son aquellas opciones que comienzan con #{apt}#.
+#{config/includes.chroot/}#.) Se puede encontrar una lista completa de las
+opciones para configurar APT en la página de manual de #{lb_config}#. Son
+aquellas opciones que comienzan con #{apt}#.
 
 3~choosing-apt-or-aptitude Utilizar apt o aptitude
 
@@ -543,7 +508,7 @@ utilizar la siguiente opción:
 
 code{
 
- $ lb config --binary-indices false
+ $ lb config --apt-indices false
 
 }code
 
@@ -592,20 +557,20 @@ Como información básica, sería recomendable leer la página de manual
 #{apt_preferences(5)}#. APT pinning puede ser configurado o en tiempo de
 creación de la imagen, creando el fichero #{config/chroot_apt/preferences}#
 o en tiempo de ejecución del sistema en vivo creando el fichero
-#{config/chroot_local-includes/etc/apt/preferences}#.
+#{config/includes.chroot/etc/apt/preferences}#.
 
-Supongamos que se está creando un sistema en vivo basado en Squeeze pero se
+Supongamos que se está creando un sistema en vivo basado en Wheezy pero se
 necesita instalar todos los paquetes "live" que terminan instalados en la
 imagen binaria final desde la versión inestable «Sid» en el momento de crear
 la imagen. Se deberá añadir Sid a los orígenes (sources) de APT y fijarlo
 (pin) de manera que solamente los paquetes fijados sean instalados desde Sid
-mientras que el resto será obtenido desde la distribución base,
-Squeeze. Esto se puede realizar de la siguiente forma:
+mientras que el resto será obtenido desde la distribución base, Wheezy. Esto
+se puede realizar de la siguiente forma:
 
 code{
 
- $ echo "deb http://mirror/debian sid main" > config/chroot_sources/sid.chroot
- $ cat >>config/chroot_apt/preferences <<END
+ $ echo "deb http://mirror/debian sid main" > config/archives/sid.list.chroot
+ $ cat >> config/chroot_apt/preferences <<END
  Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit
  Pin: release n=sid
  Pin-Priority: 600
@@ -628,12 +593,12 @@ $ lb config --distribution wheezy
 Una prioridad pin negativa previene la instalación de un paquete, como puede
 ser el caso de que no se desee que un paquete recomendado por otro sea
 instalado al instalar el primero. Supongamos que se está creando una imagen
-LXDE mediante la opción #{--packages-lists lxde}#, pero no se desea
-preguntar al usuario si desea almacenar las claves wifi en el almacen de
-claves. La lista lxde incluye #{gdm}#, la cual depende de #{gksu}# que a su
-vez recomienda #{gnome-keyring}#. Así que el objetivo es omitir la
-instalación del paquete #{gnome-keyring}#, que puede conseguirse añadiendo
-un fichero con el siguiente contenido a #{config/chroot_apt/preferences}#:
+LXDE mediante la opción #{--package-lists lxde}#, pero no se desea preguntar
+al usuario si desea almacenar las claves wifi en el almacen de claves. La
+lista lxde incluye #{gdm}#, la cual depende de #{gksu}# que a su vez
+recomienda #{gnome-keyring}#. Así que el objetivo es omitir la instalación
+del paquete #{gnome-keyring}#, que puede conseguirse añadiendo un fichero
+con el siguiente contenido a #{config/chroot_apt/preferences}#:
 
 code{
 

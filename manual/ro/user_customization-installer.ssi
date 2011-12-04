@@ -53,7 +53,8 @@ architecture. For example:
 code{
 
  $ lb config --architecture i386 --linux-flavours 486 \
-     --debian-installer live --packages debian-installer-launcher
+     --debian-installer live
+ $ echo debian-installer-launcher >> config/package-lists/my.list.chroot
 
 }code
 
@@ -81,7 +82,7 @@ code{
 
 For experimental or debugging purposes, you might want to include locally
 built #{d-i}# component udeb packages. Place these in
-#{config/binary_local-udebs/}# to include them in the image. Additional or
+#{config/packages.binary/}# to include them in the image. Additional or
 replacement files and directories may be included in the installer initrd as
 well, in a similar fashion to {Live/chroot local
 includes}#live-chroot-local-includes, by placing the material in

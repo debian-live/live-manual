@@ -8,13 +8,13 @@ This chapter covers example builds for specific use cases with Debian Live. If y
 
 To use these examples you need a system to build them on that meets the requirements listed in {Requirements}#requirements and has live-build installed as described in {Installing live-build}#installing-live-build.
 
-Note that, for the sake of brevity, in these examples we do not specify a local mirror to use for the build. You can speed up downloads considerably if you use a local mirror. You may specify the options when you use #{lb config}#, as described in {Distribution mirrors used at build time}#distribution-mirrors-build-time, or for more convenience, set the default for your build system in #{/etc/live/build.conf}#. Simply create this file and in it, set the corresponding #{LB_MIRROR_*}# variables to your preferred mirror. For example:
+Note that, for the sake of brevity, in these examples we do not specify a local mirror to use for the build. You can speed up downloads considerably if you use a local mirror. You may specify the options when you use #{lb config}#, as described in {Distribution mirrors used at build time}#distribution-mirrors-build-time, or for more convenience, set the default for your build system in #{/etc/live/build.conf}#. Simply create this file and in it, set the corresponding #{LB_PARENT_MIRROR_*}# variables to your preferred mirror. All other mirrors used in the build will be defaulted from these values. For example:
 
 code{
 
- LB_MIRROR_BOOTSTRAP="http://mirror/debian"
- LB_MIRROR_CHROOT="http://mirror/debian"
- LB_MIRROR_CHROOT_SECURITY="http://mirror/debian-security"
+ LB_PARENT_MIRROR_BOOTSTRAP="http://mirror/debian"
+ LB_PARENT_MIRROR_CHROOT_SECURITY="http://mirror/debian-security"
+ LB_PARENT_MIRROR_CHROOT_BACKPORTS="http://mirror/debian-updates"
 
 }code
 
@@ -52,11 +52,14 @@ In this tutorial, we will create an image suitable for use as a web browser util
 
 code{
 
- $ mkdir tutorial2 ; cd tutorial2 ; lb config -p lxde --packages iceweasel
+ $ mkdir tutorial2
+ $ cd tutorial2
+ $ lb config -p lxde
+ $ echo iceweasel >> config/package-lists/my.list.chroot
 
 }code
 
-Our choice of LXDE for this example reflects our desire to provide a minimal desktop environment, since the focus of the image is the single use we have in mind, the web browser. We could go even further and provide a default configuration for the web browser in #{config/chroot_local-includes/etc/iceweasel/profile/}#, or additional support packages for viewing various kinds of web content, but we leave this as an exercise for the reader.
+Our choice of LXDE for this example reflects our desire to provide a minimal desktop environment, since the focus of the image is the single use we have in mind, the web browser. We could go even further and provide a default configuration for the web browser in #{config/includes.chroot/etc/iceweasel/profile/}#, or additional support packages for viewing various kinds of web content, but we leave this as an exercise for the reader.
 
 Build the image, again as superuser, keeping a log as in {Tutorial 1}#tutorial-1:
 
@@ -92,14 +95,21 @@ code{
 
  lb config noauto \
      --architecture i386 \
-     --linux-flavours 686 \
-     --packages-lists lxde \
-     --packages "iceweasel xchat" \
+     --linux-flavours 686-pae \
+     --package-lists lxde \
      "${@}"
 
 }code
 
-First, #{--architecture i386}# ensures that on our #{amd64}# build system, we build a 32-bit version suitable for use on most machines. Second, we use #{--linux-flavours 686}# because we don't anticipate using this image on much older systems. Third, we've chosen the #{lxde}# package list to give us a minimal desktop. And finally, we have added two initial favourite packages: #{iceweasel}# and #{xchat}#.
+Now populate your local package list:
+
+code{
+
+ $ echo "iceweasel xchat" >> config/package-lists/my.list.chroot
+
+}code
+
+First, #{--architecture i386}# ensures that on our #{amd64}# build system, we build a 32-bit version suitable for use on most machines. Second, we use #{--linux-flavours 686-pae}# because we don't anticipate using this image on much older systems. Third, we've chosen the #{lxde}# package list to give us a minimal desktop. And finally, we have added two initial favourite packages: #{iceweasel}# and #{xchat}#.
 
 Now, build the image:
 
@@ -133,18 +143,11 @@ code{
 
 }code
 
-Now edit #{auto/config}# to add the #{vlc}# package:
+Now append the #{vlc}# package to our local package list in #{config/package-lists/my.list.chroot}#:
 
 code{
 
- #!/bin/sh
-
- lb config noauto \
-     --architecture i386 \
-     --linux-flavours 686 \
-     --packages-lists lxde \
-     --packages "iceweasel xchat vlc" \
-     "${@}"
+ $ echo vlc >> config/package-lists/my.list.chroot
 
 }code
 
@@ -172,15 +175,15 @@ We've come to the end of our tutorial series. While many more kinds of customiza
 
 *{Use case:}* Create an image with live-build to boot directly to a VNC server.
 
-Make a build directory and create a skeletal configuration in it built around the standard-x11 list, including #{gdm3}#, #{metacity}# and #{xtightvncviewer}#, disabling recommends to make a minimal system:
+Make a build directory and create a skeletal configuration in it built around the standard-x11 list, including #{gdm3}#, #{metacity}# and #{xvnc4viewer}#, disabling recommends to make a minimal system:
 
 code{
 
  $ mkdir vnc_kiosk_client
  $ cd vnc_kiosk_client
- $ lb config -a i386 -k 686 -p standard-x11 \
-     --packages "gdm3 metacity xvnc4viewer" \
+ $ lb config -a i386 -k 686-pae -p standard-x11 \
      --apt-recommends false
+ $ echo "gdm3 metacity xvnc4viewer" >> config/package-lists/my.list.chroot
 
 }code
 
@@ -188,8 +191,8 @@ Create the directory #{/etc/skel}# and put a custom #{.xsession}# in it for the 
 
 code{
 
- $ mkdir -p config/chroot_local-includes/etc/skel
- $ cat >config/chroot_local-includes/etc/skel/.xsession <<END
+ $ mkdir -p config/includes.chroot/etc/skel
+ $ cat > config/includes.chroot/etc/skel/.xsession <<END
  #!/bin/sh
 
  /usr/bin/metacity &
@@ -218,7 +221,7 @@ When optimizing an image to fit a certain media size, you need to understand the
 
 code{
 
- $ lb config -k 486 -p minimal --binary-indices false \
+ $ lb config -k 486 -p minimal --apt-indices false \
      --memtest none --apt-recommends false --includes none
 
 }code
@@ -233,7 +236,7 @@ code{
 
 On the author's system at time of writing, the above configuration produced a 78Mbyte image. This compares favourably with the 166Mbyte image produced by the default configuration in {Tutorial 1}#tutorial-1.
 
-The biggest space-saver here, compared to building a standard image on an #{i386}# architecture system, is to select only the #{486}# kernel flavour instead of the default #{-k "486 686"}#. Leaving off APT's indices with #{--binary-indices false}# also saves a fair amount of space, the tradeoff being that you need to #{apt-get update}# before using apt in the live system. Choosing the #{minimal}# package list leaves out the large #{locales}# package and associated utilities. Dropping recommended packages with #{--apt-recommends false}# saves some additional space, at the expense of omitting some packages you might otherwise expect to be there, such as #{firmware-linux-free}# which may be needed to support certain hardware. The remaining options shave off additional small amounts of space. It's up to you to decide if the functionality that is sacrificed with each optimization is worth the loss in functionality.
+The biggest space-saver here, compared to building a standard image on an #{i386}# architecture system, is to select only the #{486}# kernel flavour instead of the default #{-k "486 686-pae"}#. Leaving off APT's indices with #{--apt-indices false}# also saves a fair amount of space, the tradeoff being that you need to #{apt-get update}# before using apt in the live system. Choosing the #{minimal}# package list leaves out the large #{locales}# package and associated utilities. Dropping recommended packages with #{--apt-recommends false}# saves some additional space, at the expense of omitting some packages you might otherwise expect to be there, such as #{firmware-linux-free}# which may be needed to support certain hardware. The remaining options shave off additional small amounts of space. It's up to you to decide if the functionality that is sacrificed with each optimization is worth the loss in functionality.
 
 2~ A localized KDE desktop and installer
 
@@ -241,7 +244,7 @@ The biggest space-saver here, compared to building a standard image on an #{i386
 
 We want to make an iso-hybrid image for i386 architecture using our preferred desktop, in this case KDE, containing all of the same packages that would be installed by the standard Debian installer for KDE.
 
-Our initial problem is the discovery of the names of the appropriate tasks. Currently, live-build cannot help with this. While we might get lucky and find this by trial-and-error, there is a tool, #{grep-dctrl}#, which can be used to dig it out of the task descriptions in tasksel-data, so to prepare, make sure you have both of those things:
+Our initial problem is the discovery of the names of the appropriate language tasks. Currently, live-build cannot help with this. While we might get lucky and find this by trial-and-error, there is a tool, #{grep-dctrl}#, which can be used to dig it out of the task descriptions in tasksel-data, so to prepare, make sure you have both of those things:
 
 code{
 
@@ -253,12 +256,8 @@ Now we can search for the appropriate tasks, first with:
 
 code{
 
- $ grep-dctrl -FTest-lang pt_BR /usr/share/tasksel/debian-tasks.desc -sTask,Description
+ $ grep-dctrl -FTest-lang pt_BR /usr/share/tasksel/descs/debian-tasks.desc -sTask
  Task: brazilian-portuguese
- Description: Brazilian Portuguese environment
-  This task installs programs, data files, and
-  documentation that make it easier for Brazilian Portuguese speakers
-  to use Debian.
 
 }code
 
@@ -266,18 +265,13 @@ By this command, we discover the task is called, plainly enough, brazilian-portu
 
 code{
 
- $ grep-dctrl -FEnhances brazilian-portuguese /usr/share/tasksel/debian-tasks.desc -sTask,Description
+ $ grep-dctrl -FEnhances brazilian-portuguese /usr/share/tasksel/descs/debian-tasks.desc -sTask
  Task: brazilian-portuguese-desktop
- Description: Brazilian Portuguese desktop
-  This task localises the desktop in Brasilian Portuguese.
-
  Task: brazilian-portuguese-kde-desktop
- Description: Brazilian Portuguese KDE desktop
-  This task localises the KDE desktop in Brazilian Portuguese.
 
 }code
 
-We will use the experimental #{--language}# option, as live-build happens to include #{syslinux}# templates for pt_BR (see {Desktop and language tasks}#desktop-and-language-tasks for details). And at boot time we will generate the pt_BR.UTF-8 locale and select the pt-latin1 keyboard layout. Now let's put the pieces together:
+At boot time we will generate the pt_BR.UTF-8 locale and select the pt-latin1 keyboard layout. We will also need to preseed our desktop choice, "kde" so that tasksel will install the correct desktop task, as it differs from the default (see {Desktop and languages tasks}#desktop-and-language-tasks). Now let's put the pieces together:
 
 code{
 
@@ -286,12 +280,12 @@ code{
  $ lb config \
      -a i386 \
      -k 486 \
-     -p kde-desktop \
-     --language pt_BR \
-     --tasks "brazilian-portuguese brazilian-portuguese-desktop brazilian-portuguese-kde-desktop" \
      --bootappend-live "locales=pt_BR.UTF-8 keyboard-layouts=pt-latin1" \
-     --debian-installer live \
-     --packages debian-installer-launcher
+     --debian-installer live
+ $ echo kde-desktop brazilian-portuguese brazilian-portuguese-desktop \
+     brazilian-portuguese-kde-desktop >> config/task-lists/my.list.chroot
+ $ echo debian-installer-launcher >> config/package-lists/my.list.chroot
+ $ echo tasksel tasksel/desktop multiselect kde >> config/preseed/my.preseed.chroot
 
 }code
 

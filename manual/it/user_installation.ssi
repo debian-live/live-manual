@@ -108,7 +108,7 @@ presente su Git e disponibili su http://live.debian.net/debian/.
 
 2~ live-boot e live-config
 
-*{Nota:}* non è necessario installare live-boot o live-config sul proprio sistema per creare sistemi Debian Live personalizzati. Tuttavia, farlo non nuoce.
+*{Nota:}* non è necessario installare live-boot o live-config sul proprio sistema per creare sistemi Debian Live personalizzati. Tuttavia, farlo non nuoce. Se si vuole la documentazione è possibile installare i pacchetti live-boot-doc e live-config-doc separatamente.
 
 3~ Dal repository Debian
 
@@ -138,12 +138,12 @@ _* Costruire un .deb di live-boot e live-config
 
 È necessario compilare sulla distribuzione di destinazione, oppure in un
 chroot contenente la piattaforma di destinazione: significa che se
-l'obiettivo è Squeeze allora bisogna compilare su Squeeze.
+l'obiettivo è Wheezy allora bisogna compilare su Wheezy.
 
 Se si deve compilare #{live-boot}# per una distribuzione di destinazione
 diversa dal proprio sistema, utilizzare un compilatore tipo /{pbuilder}/ o
-/{sbuild}/. Ad esempio, per immagini live Squeeze, si generi #{live-boot}#
-in un chroot Squeeze. Se la distribuzione di destinazione corrisponde con la
+/{sbuild}/. Ad esempio, per immagini live Wheezy, si generi #{live-boot}# in
+un chroot Wheezy. Se la distribuzione di destinazione corrisponde con la
 distribuzione del proprio sistema, si può costruire direttamente sul sistema
 usando #{dpkg-buildpackage}# (fornito dal pacchetto /{dpkg-dev}/):
 
@@ -170,10 +170,10 @@ attenzione a {Repository aggiuntivi}#additional-repositories.
 Si può lasciare che live-build usi automaticamente l'ultima istantanea di
 live-boot e live-config configurando un repository esterno nella directory
 di configurazione di live-build. Assumendo che si sia già creato un albero
-di configurazione con #{lb config}#:
+di configurazione nell'attuale directory con #{lb config}#:
 
 code{
 
- $ lb config --repository live.debian.net
+ $ lb config --archives live.debian.net
 
 }code

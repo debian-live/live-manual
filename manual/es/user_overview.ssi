@@ -56,51 +56,20 @@ propenso a errores, se puede utilizar el comando #{lb config}# para crear el
 esqueleto de directorios de configuración.
 
 Ejecutar #{lb config}# sin argumentos crea un subdirectorio #{config/}# que
-se completa con algunas opciones por defecto:
+se completa con algunas opciones por defecto y un árbol de subdirectorios en
+forma de esqueleto #{auto/}#:
 
 code{
 
  $ lb config
+ P: Considering defaults defined in /etc/live/build.conf
  P: Creating config tree
-
- $ ls -l
- total 8
- drwxr-xr-x  3 user user 4096 Sep  7 13:02 auto
- drwxr-xr-x 22 user user 4096 Sep  7 13:02 config
-
- $ ls -l config/
- total 104
- -rw-r--r-- 1 user user 4197 Sep  7 13:02 binary
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_debian-installer
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_debian-installer-includes
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_grub
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-debs
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-hooks
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-includes
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-packageslists
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_local-udebs
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_rootfs
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 binary_syslinux
- -rw-r--r-- 1 user user 2051 Sep  7 13:02 bootstrap
- -rw-r--r-- 1 user user 1647 Sep  7 13:02 chroot
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_apt
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-hooks
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-includes
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-packages
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-packageslists
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-patches
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_local-preseed
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 chroot_sources
- -rw-r--r-- 1 user user 2954 Sep  7 13:02 common
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 includes
- -rw-r--r-- 1 user user  205 Sep  7 13:02 source
- drwxr-xr-x 2 user user 4096 Sep  7 13:02 templates
 
 }code
 
 Usar #{lb config}# sin ningún argumento sería conveniente para los usuarios
 que necesitan una imagen muy básica, o que tienen intención de proporcionar
-más tarde una configuración más completa a través de auto/config (ver
+más tarde una configuración más completa a través de #{auto/config}# (ver
 {Gestionar una configuración}#managing-a-configuration para más detalles).
 
 Normalmente, se tendrá que especificar algunas opciones. Por ejemplo, para
@@ -125,7 +94,7 @@ Una lista completa de opciones está disponible en la página del manual
 
 3~lb-build El comando #{lb build}#
 
-El comando #{lb build}# lee la configuración del directorio config/ A
+El comando #{lb build}# lee la configuración del directorio #{config/}#. A
 continuación, ejecuta los comandos del nivel inferior más bajo necesarios
 para crear el sistema en vivo.
 
@@ -149,7 +118,7 @@ incluye las ISOs de Debian Live, archivos comprimidos en tar de netboot, e
 imágenes para llaves USB.
 
 En el momento del arranque, buscará en los medios de almacenamiento de sólo
-lectura un directorio  "/ live" donde se encuentra un sistema de ficheros
+lectura un directorio #{/live/}# donde se encuentra un sistema de ficheros
 raíz (a menudo una imagen del sistema de ficheros comprimidos como
 squashfs). Si lo encuentra, creará un entorno de escritura, utilizando aufs,
 para que arranquen los sistemas tipo Debian.

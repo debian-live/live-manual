@@ -19,12 +19,16 @@ tous les groupes et les autorisations associées à l'utilisateur live.
 
 Vous pouvez spécifier d'autres groupes pour l'utilisateur live en
 préconfigurant la valeur debconf #{passwd/user-default-groups}#. Par
-exemple, pour ajouter l'utilisateur live au groupe #{fuse}# ajoutez la ligne
-suivante à un fichier dans le répertoire #{config/chroot_local-preseed}#:
+exemple, pour ajouter l'utilisateur live au groupe #{fuse}# pendant l'étape
+chroot, ajoutez la ligne suivante à un fichier dans le répertoire
+#{config/chroot_local-preseed}#:
 
 code{
 
- user-setup passwd/user-default-groups string audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse
+ $ lb config
+ $ echo user-setup passwd/user-default-groups string audio cdrom \
+   dip floppy video plugdev netdev powerdev scanner bluetooth fuse \
+   >> config/preseed/my.preseed.chroot
 
 }code
 
@@ -46,7 +50,7 @@ hook comme décrit dans {Hooks au moment du démarrage}#boot-time-hooks. Pour
 ce faire vous pouvez utiliser le hook "passwd" de
 #{/usr/share/doc/live-config/examples/hooks}#, ajouter un préfixe correct
 (par exemple 200-passwd) et l'ajouter à
-#{config/chroot_local-includes/lib/live/config/}#
+#{config/includes.chroot/lib/live/config/}#
 
 2~customizing-locale-and-language Personnalisation des paramètres régionaux
 et la langue

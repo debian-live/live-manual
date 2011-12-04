@@ -8,7 +8,7 @@ Perhaps the most basic customization of a Debian live system is the selection of
 
 3~ Distribution, archive areas and mode
 
-The distribution you choose has the broadest impact on which packages are available to include in your live image. Specify the codename, which defaults to #{squeeze}# for the Squeeze version of live-build. Any current distribution carried in the Debian archive may be specified by its codename here. (See {Terms}#terms for more details.) The #{--distribution}# option not only influences the source of packages within the archive, but also instructs #{live-build}# to behave as needed to build each supported distribution. For example, to build against the *unstable* release, Sid, specify:
+The distribution you choose has the broadest impact on which packages are available to include in your live image. Specify the codename, which defaults to #{wheezy}# for the Wheezy version of live-build. Any current distribution carried in the Debian archive may be specified by its codename here. (See {Terms}#terms for more details.) The #{--distribution}# option not only influences the source of packages within the archive, but also instructs #{live-build}# to behave as needed to build each supported distribution. For example, to build against the *unstable* release, Sid, specify:
 
 code{
 
@@ -30,37 +30,38 @@ Experimental support is available for some Debian derivatives through a #{--mode
 
 3~ Distribution mirrors
 
-The Debian archive is replicated across a large network of mirrors around the world so that people in each region can choose a nearby mirror for best download speed. Each of the #{--mirror-*}# options governs which distribution mirror is used at various stages of the build. Recall from {Stages of the build}#stages-of-the-build that the *bootstrap* stage is when the chroot is initially populated by debootstrap with a minimal system, and the *chroot* stage is when the chroot used to construct the live system's filesystem is built. Thus, the corresponding mirror switches are used for those stages, and later, in the *binary* stage, the #{--mirror-binary}# and #{--mirror-binary-security}# values are used, superceding any mirrors used in an earlier stage.
+The Debian archive is replicated across a large network of mirrors around the world so that people in each region can choose a nearby mirror for best download speed. Each of the #{--parent-mirror-*}# options governs which distribution mirror is used at various stages of the build. Recall from {Stages of the build}#stages-of-the-build that the *bootstrap* stage is when the chroot is initially populated by debootstrap with a minimal system, and the *chroot* stage is when the chroot used to construct the live system's filesystem is built. Thus, the corresponding mirror switches are used for those stages, and later, in the *binary* stage, the #{--parent-mirror-binary}# and #{--parent-mirror-binary-security}# values are used, superceding any mirrors used in an earlier stage.
 
 3~distribution-mirrors-build-time Distribution mirrors used at build time
 
-To set the distribution mirrors used at build time to point at a local mirror, it is sufficient to set #{--mirror-bootstrap}# and #{--mirror-chroot-security}# as follows.
+To set the distribution mirrors used at build time to point at a local mirror, it is sufficient to set #{--parent-mirror-bootstrap}#, #{--parent-mirror-chroot-security}# and #{--parent-mirror-chroot-backports}# as follows.
 
 code{
 
- $ lb config --mirror-bootstrap http://localhost/debian/ \
-             --mirror-chroot-security http://localhost/debian-security/
+ $ lb config --parent-mirror-bootstrap http://localhost/debian/ \
+             --parent-mirror-chroot-security http://localhost/debian-security/ \
+	     --parent-mirror-chroot-backports http://localhost/debian-backports/
 
 }code
 
-The chroot mirror, specified by #{--mirror-chroot}#, defaults to the #{--mirror-bootstrap}# value.
+The chroot mirror, specified by #{--parent-mirror-chroot}#, defaults to the #{--parent-mirror-bootstrap}# value.
 
 3~ Distribution mirrors used at run time
 
-The #{--mirror-binary*}# options govern the distribution mirrors placed in the binary image. These may be used to install additional packages while running the live system. The defaults employ #{cdn.debian.net}#, a service that chooses a geographically close mirror based on the user's IP number. This is a suitable choice when you cannot predict which mirror will be best for all of your users. Or you may specify your own values as shown in the example below. An image built from this configuration would only be suitable for users on a network where "#{mirror}#" is reachable.
+The #{--parent-mirror-binary*}# options govern the distribution mirrors placed in the binary image. These may be used to install additional packages while running the live system. The defaults employ #{cdn.debian.net}#, a service that chooses a geographically close mirror based on the user's IP number. This is a suitable choice when you cannot predict which mirror will be best for all of your users. Or you may specify your own values as shown in the example below. An image built from this configuration would only be suitable for users on a network where "#{mirror}#" is reachable.
 
 code{
 
- $ lb config --mirror-binary http://mirror/debian/ \
-             --mirror-binary-security http://mirror/debian-security/
+ $ lb config --parent-mirror-binary http://mirror/debian/ \
+             --parent-mirror-binary-security http://mirror/debian-security/
 
 }code
 
 3~additional-repositories Additional repositories
 
-You may add more repositories, broadening your package choices beyond what is available in your target distribution. These may be, for example, for backports, experimental or custom packages. To configure additional repositories, create #{config/chroot_sources/your-repository.chroot}#, and/or #{config/chroot_sources/your-repository.binary}# files. As with the #{--mirror-*}# options, these govern the repositories used in the *chroot* stage when building the image, and in the *binary* stage, i.e. for use when running the live system.
+You may add more repositories, broadening your package choices beyond what is available in your target distribution. These may be, for example, for backports, experimental or custom packages. To configure additional repositories, create #{config/archives/your-repository.list.chroot}#, and/or #{config/archives/your-repository.list.binary}# files. As with the #{--parent-mirror-*}# options, these govern the repositories used in the *chroot* stage when building the image, and in the *binary* stage, i.e. for use when running the live system.
 
-For example, #{config/chroot_sources/live.chroot}# allows you to install packages from the debian live snapshot repository at live system build time.
+For example, #{config/archives/live.list.chroot}# allows you to install packages from the debian live snapshot repository at live system build time.
 
 code{
 
@@ -68,75 +69,59 @@ code{
 
 }code
 
-If you add the same line to #{config/chroot_sources/live.binary}#, the repository will be added to your live system's #{/etc/apt/sources.list.d/}# directory.
+If you add the same line to #{config/archives/live.list.binary}#, the repository will be added to your live system's #{/etc/apt/sources.list.d/}# directory.
 
 If such files exist, they will be picked up automatically.
 
-You should also put the GPG key used to sign the repository into #{config/chroot_sources/your-repository.{binary,chroot}.gpg}# files.
+You should also put the GPG key used to sign the repository into #{config/archives/your-repository.gpg.{binary,chroot}}# files.
 
-*{Note:}* some preconfigured package repositories are available for easy selection through the #{--repository}# option, e.g. for enabling live snapshots, a simple command is enough to enable it:
+*{Note:}* some preconfigured package repositories are available for easy selection through the #{--archives}# option, e.g. for enabling live snapshots, a simple command is enough to enable it:
 
 code{
 
- $ lb config --repository live.debian.net
+ $ lb config --archives live.debian.net
 
 }code
 
 2~choosing-packages-to-install Choosing packages to install
 
-There are a number of ways to choose which packages live-build will install in your image, covering a variety of different needs. You can simply name individual packages to install, either with the #{--packages}# option for a few packages, or in a package list of your own for larger numbers. You can also choose larger predefined lists of packages, or use APT tasks. And finally, you may place package files in your #{config/}# tree, which is well suited to testing of new or experimental packages before they are available from a repository.
-
-3~ Choosing a few packages
-
-When the number of packages added is small, simply specify #{--packages}#. For example:
-
-code{
-
- $ lb config --packages "package1 package2 package3"
-
-}code
-
-The behaviour of live-build when specifying a package that does not exist is determined by your choice of APT utility. See {Choosing apt or aptitude}#choosing-apt-or-aptitude for more details.
-
-If you need to specify a large number of packages to be installed or you need flexibility regarding which packages to install, use package lists as discussed in the following section, {Package lists}#package-lists.
+There are a number of ways to choose which packages live-build will install in your image, covering a variety of different needs. You can simply name individual packages to install in a package list. You can also choose predefined lists of packages, or use APT tasks. And finally, you may place package files in your #{config/}# tree, which is well suited to testing of new or experimental packages before they are available from a repository.
 
 3~package-lists Package lists
 
 Package lists are a powerful way of expressing which packages should be installed. The list syntax supports included files and conditional sections which makes it easy to build lists from other lists and adapt them for use in multiple configurations. You can use predefined package lists, providing in a modular fashion package selections from each of the major desktop environments and some special purpose lists, as well as standard lists the others are based upon. You can also provide your own package lists, or use a combination of both.
 
+*{Note:}* The behaviour of live-build when specifying a package that does not exist is determined by your choice of APT utility. See {Choosing apt or aptitude}#choosing-apt-or-aptitude for more details.
+
 3~ Predefined package lists
 
-The simplest way to use lists is to specify one or more predefined lists with the #{--packages-lists}# option. For example:
+The simplest way to use lists is to specify one or more predefined lists with the #{--package-lists}# option. For example:
 
 code{
 
- $ lb config --packages-lists "gnome-core rescue"
+ $ lb config --package-lists "gnome rescue"
 
 }code
 
-In addition to these lists, live-build supports four virtual package lists: #{gnome-desktop}#, #{kde-desktop}#, #{lxde-desktop}# and #{xfce-desktop}#, each of which provide a more extensive selection of packages that corresponds with Debian Installer defaults for these desktop environments. See {Desktop and language tasks}#desktop-and-language-tasks for more details.
-
-*{Note:}* The prebuilt GNOME, KDE, LXDE and XFCE images available for download at http://live.debian.net are built using the corresponding virtual #{*-desktop}# lists.
-
-The default location for the list files on your system is #{/usr/share/live/build/lists/}#. To determine the packages in a given list, read the corresponding file, paying attention to included files and conditionals as described in the following sections.
+The default location for the list files on your system is #{/usr/share/live/build/package-lists/}#. To determine the packages in a given list, read the corresponding file, paying attention to included files and conditionals as described in the following sections.
 
 3~ Local package lists
 
-You may supplement or replace entirely the supplied lists using local package lists stored in #{config/chroot_local-packageslists/}#.
+You may supplement the predefined lists using local package lists stored in #{config/package-lists/}#.
 
-Package lists that exist in this directory need to have a #{.list}# suffix in order to be processed. Local package lists always override package lists distributed with live-build. This can cause undesired effects, we therefore recommend to use unique names for local package lists.
+Package lists that exist in this directory need to have a #{.list}# suffix in order to be processed, and then an additional stage suffix, #{.chroot}# or #{.binary}# to indicate which stage the list is for.
+
+*{Note:}* If you don't specify the stage suffix, the list will be used for both stages. Normally, you want to specify #{.list.chroot}# so that the packages will only be installed in the live filesystem and not have an extra copy of the #{.deb}# placed on the media.
 
 3~ Local binary package lists
 
-In case you want to include some required .deb packages to live media's #{pool/}# (without installing them onto the live image) you may need to use lists using binary local package lists stored in #{config/binary_local-packageslists/}#. Such media can be used as a customized Debian install image for offline installations.
-
-Package lists that exist in this directory need to have a #{.list}# suffix in order to be processed.
+To make a binary stage list, place a file suffixed with #{.list.binary}# in #{config/package-lists/}#. These packages are not installed in the live filesystem, but are included on the live media under #{pool/}#. You would typically use such a list with one of the non-live installer variants. As mentioned above, if you want this list to be the same as your chroot stage list, simply use the #{.list}# suffix by itself.
 
 3~ Extending a provided package list using includes
 
-The package lists that are included with live-build make extensive use of includes. Refer to these in the #{/usr/share/live/build/lists/}# directory, as they serve as good examples of how to write your own lists.
+The package lists that are included with live-build make extensive use of includes. Refer to these in the #{/usr/share/live/build/package-lists/}# directory, as they serve as good examples of how to write your own lists.
 
-For example, to make a list that includes the predefined #{gnome}# list plus iceweasel, create #{config/chroot_local-packageslists/mygnome.list}# with the following contents:
+For example, to make a list that includes the predefined #{gnome}# list plus iceweasel, create #{config/package-lists/my.list.chroot}# with the following contents:
 
 code{
 
@@ -193,11 +178,12 @@ The nesting of conditionals is not supported.
 
 3~ Tasks
 
-The Debian Installer offers the user choices of a number of preselected lists of packages, each one focused on a particular kind of system, or task a system may be used for, such as "Graphical desktop environment", "Mail server" or "Laptop". These lists are called "tasks" and are supported by APT through the "Task:" field. You can specify one or more tasks in live-build via the #{--tasks}# option, as in the example below.
+The Debian Installer offers the user choices of a number of preselected lists of packages, each one focused on a particular kind of system, or task a system may be used for, such as "Graphical desktop environment", "Mail server" or "Laptop". These lists are called "tasks" and are supported by APT through the "Task:" field. You can specify one or more tasks in live-build by putting them in a list in #{config/task-lists/}#, as in the example below.
 
 code{
 
- $ lb config --tasks "mail-server file-server"
+ $ lb config
+ $ echo "mail-server file-server" >> config/task-lists/my.list.chroot
 
 }code
 
@@ -205,31 +191,30 @@ The primary tasks available in the Debian Installer can be listed with #{tasksel
 
 3~desktop-and-language-tasks Desktop and language tasks
 
-Desktop and language tasks are special cases. In the Debian Installer, if the medium was prepared for a particular desktop environment flavour, the corresponding task will be automatically installed. Thus, there are #{gnome-desktop}#, #{kde-desktop}#, #{lxde-desktop}# and #{xfce-desktop}# tasks, none of which are offered in #{tasksel}#'s menu. Likewise, there are no menu entries for tasks for languages, but the user's language choice during the install influences the selection of corresponding language tasks.
+Desktop and language tasks are special cases that need some extra planning and configuration. Live images are different from Debian Installer images in this respect. In the Debian Installer, if the medium was prepared for a particular desktop environment flavour, the corresponding task will be automatically installed. Thus, there are internal #{gnome-desktop}#, #{kde-desktop}#, #{lxde-desktop}# and #{xfce-desktop}# tasks, none of which are offered in #{tasksel}#'s menu. Likewise, there are no menu entries for tasks for languages, but the user's language choice during the install influences the selection of corresponding language tasks.
 
-In live-build, therefore, these special cases are also given special consideration, but with three notable differences at the time of writing.
+When developing a desktop live image, the image typically boots directly to a working desktop, the choices of both desktop and default language having been made at build time, not at run time as in the case of the Debian Installer. That's not to say that a live image couldn't be built to support multiple desktops or multiple languages and offer the user a choice, but that is not live-build's default behaviour.
 
-First, there is no provision made yet automatically for language tasks, although a subset of those packages are included if you specify #{lb config --language}#. If you need those tasks, which include such things as language-specific fonts and input-method packages, you need to specify them in your configuration. For example:
-
-code{
-
- $ lb config --tasks "japanese japanese-desktop japanese-gnome-desktop"
-
-}code
-
-Second, live-build supports #{*-desktop}# virtual package lists for each of the desktop flavours mentioned above, which select the #{standard-x11}# predefined package list, the corresponding #{*-desktop}# task and three additional tasks: #{desktop}#, #{standard}# and #{laptop}#. So, for example, if you specify #{--packages-lists gnome-desktop}#, it is equivalent to specifying #{--packages debian-installer-launcher --packages-lists standard-x11 --tasks "gnome-desktop desktop standard laptop"}#.
-
-Third, if any of the tasks for these desktop flavours are selected, either explicitly through #{--tasks}# or implicitly by #{--packages-lists}#, live-build will preseed the corresponding desktop value for Debian Installer (if it is included) to ensure it follows its own rules for installing different desktop flavours.
-
-*{Note:}* There is also an experimental #{--language}# option that has an overlapping purpose with language tasks. For any language for which it is known that there are #{*-l10n}# packages, if #{--language}# is specified, those packages will be installed. Furthermore, if any #{syslinux}# templates matching the language are found, they will be used instead of the default English templates. The package selection done by #{--language}# is a poor approximation of language tasks, as it requires that the list of packages to include per language be maintained internally in live-build, and besides, language tasks are more comprehensive and flexible. However, the #{syslinux}# aspect is still useful. Thus, if you use #{--bootloader syslinux}# and templates for the specified language exist either in #{/usr/share/live/build/templates/syslinux/}# or #{config/templates/syslinux/}#, consider using this option, possibly in combination with tasks to ensure all relevant packages are installed. For example:
+Because there is no provision made automatically for language tasks, which include such things as language-specific fonts and input-method packages, if you want them, you need to specify them in your configuration. For example, a GNOME desktop image containing support for Japanese might include these tasks:
 
 code{
 
- $ lb config --language es
+ $ lb config
+ $ echo "gnome-desktop desktop standard laptop" >> config/task-lists/my.list.chroot
+ $ echo "japanese japanese-desktop japanese-gnome-desktop" >> config/task-lists/my.list.chroot
 
 }code
 
-Even so, it is limited in that it only supports a single language and a single bootloader. Therefore, for all of these reasons, the future of this option is under review, possibly to be replaced with something entirely different in the next major release of live-build.
+Since desktop tasks are "internal" tasks, for every desktop flavour task included in the image, the corresponding value, if it differs from the default, "gnome", must be preseeded in the "tasksel/desktop" debconf variable or else tasksel will not recognize and install it. Thus:
+
+code{
+
+ $ lb config
+ $ echo 'tasksel tasksel/desktop multiselect kde' >> config/preseed/my.preseed.chroot
+
+}code
+
+This parameter can take multiple values, e.g. "lxde xfce" instead of "kde".
 
 2~installing-modified-or-third-party-packages Installing modified or third-party packages
 
@@ -239,29 +224,29 @@ This section does not cover advice regarding building or maintaining modified pa
 
 There are two ways of installing modified custom packages:
 
-_* #{chroot_local-packages}#
+_* #{packages.chroot}#
 
 _* Using a custom APT repository
 
-Using #{chroot_local-packages}# is simpler to achieve and useful for "one-off" customizations but has a number of drawbacks, whilst using a custom APT repository is more time-consuming to set up.
+Using #{packages.chroot}# is simpler to achieve and useful for "one-off" customizations but has a number of drawbacks, whilst using a custom APT repository is more time-consuming to set up.
 
-3~ Using #{chroot_local-packages}# to install custom packages
+3~ Using #{packages.chroot}# to install custom packages
 
-To install a custom package, simply copy it to the #{config/chroot_local-packages/}# directory. Packages that are inside this directory will be automatically installed into the live system during build - you do not need to specify them elsewhere.
+To install a custom package, simply copy it to the #{config/packages.chroot/}# directory. Packages that are inside this directory will be automatically installed into the live system during build - you do not need to specify them elsewhere.
 
 Packages *{must}* be named in the prescribed way. One simple way to do this is to use #{dpkg-name}#.
 
-Using #{chroot_local-packages}# for installation of custom packages has disadvantages:
+Using #{packages.chroot}# for installation of custom packages has disadvantages:
 
 _* It is not possible to use secure APT.
 
-_* You must install all appropriate packages in the #{config/chroot_local-packages/}# directory.
+_* You must install all appropriate packages in the #{config/packages.chroot/}# directory.
 
 _* It does not lend itself to storing Debian Live configurations in revision control.
 
 3~ Using an APT repository to install custom packages
 
-Unlike using #{chroot_local-packages}#, when using a custom APT repository you must ensure that you specify the packages elsewhere. See {Choosing packages to install}#choosing-packages-to-install for details.
+Unlike using #{packages.chroot}#, when using a custom APT repository you must ensure that you specify the packages elsewhere. See {Choosing packages to install}#choosing-packages-to-install for details.
 
 Whilst it may seem unnecessary effort to create an APT repository to install custom packages, the infrastructure can be easily re-used at a later date to offer updates of the modified packages.
 
@@ -273,7 +258,7 @@ Because of this, you may wish to increment the version number in your custom pac
 
 2~ Configuring APT at build time
 
-You can configure APT through a number of options applied only at build time. (APT configuration used in the running live system may be configured in the normal way for live system contents, that is, by including the appropriate configurations through #{config/chroot_local_includes/}#.) For a complete list, look for options starting with #{apt}# in the #{lb_config}# man page.
+You can configure APT through a number of options applied only at build time. (APT configuration used in the running live system may be configured in the normal way for live system contents, that is, by including the appropriate configurations through #{config/includes.chroot/}#.) For a complete list, look for options starting with #{apt}# in the #{lb_config}# man page.
 
 3~choosing-apt-or-aptitude Choosing apt or aptitude
 
@@ -301,7 +286,7 @@ If you don't want to include APT indices in the image, you can omit those with:
 
 code{
 
- $ lb config --binary-indices false
+ $ lb config --apt-indices false
 
 }code
 
@@ -323,14 +308,14 @@ If there is not an #{lb config}# option to alter APT's behaviour in the way you 
 
 3~apt-pinning APT pinning
 
-For background, please first read the #{apt_preferences(5)}# man page. APT pinning can be configured either for build time, or else for run time. For the former, create #{config/chroot_apt/preferences}#. For the latter, create #{config/chroot_local-includes/etc/apt/preferences}#.
+For background, please first read the #{apt_preferences(5)}# man page. APT pinning can be configured either for build time, or else for run time. For the former, create #{config/chroot_apt/preferences}#. For the latter, create #{config/includes.chroot/etc/apt/preferences}#.
 
-Let's say you are building a Squeeze live system but need all the live packages that end up in the binary image to be installed from Sid at build time. You need to add Sid to your APT sources and pin it so that only the packages you want are installed from it at build time and all others are taken from the target system distribution, Squeeze. The following will accomplish this:
+Let's say you are building a Wheezy live system but need all the live packages that end up in the binary image to be installed from Sid at build time. You need to add Sid to your APT sources and pin it so that only the packages you want are installed from it at build time and all others are taken from the target system distribution, Wheezy. The following will accomplish this:
 
 code{
 
- $ echo "deb http://mirror/debian sid main" > config/chroot_sources/sid.chroot
- $ cat >>config/chroot_apt/preferences <<END
+ $ echo "deb http://mirror/debian sid main" > config/archives/sid.list.chroot
+ $ cat >> config/chroot_apt/preferences <<END
  Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit
  Pin: release n=sid
  Pin-Priority: 600
@@ -350,7 +335,7 @@ $ lb config --distribution wheezy
 
 }code
 
-Negative pin priorities will prevent a package from being installed, as in the case where you do not want a package that is recommended by another package. Suppose you are building an LXDE image using #{--packages-lists lxde}# option, but don't want the user prompted to store wifi passwords in the keyring. This list includes #{gdm}#, which depends on #{gksu}#, which in turn recommends #{gnome-keyring}#. So you want to omit the recommended #{gnome-keyring}# package. This can be done by adding the following stanza to #{config/chroot_apt/preferences}#:
+Negative pin priorities will prevent a package from being installed, as in the case where you do not want a package that is recommended by another package. Suppose you are building an LXDE image using #{--package-lists lxde}# option, but don't want the user prompted to store wifi passwords in the keyring. This list includes #{gdm}#, which depends on #{gksu}#, which in turn recommends #{gnome-keyring}#. So you want to omit the recommended #{gnome-keyring}# package. This can be done by adding the following stanza to #{config/chroot_apt/preferences}#:
 
 code{
 

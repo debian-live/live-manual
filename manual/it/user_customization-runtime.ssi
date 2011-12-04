@@ -17,14 +17,17 @@ creazione, come discusso in {Live/chroot include
 locali}#live-chroot-local-includes, ma anche ogni gruppo e permesso
 associato all'utente live.
 
-È possibile specificare gruppi aggiuntivi ai quali l'utente live apparterrà
-preconfigurando il valore #{passwd/user-default-groups}# di debconf. Ad
-esempio, per aggiungere l'utente al gruppo #{fuse}#, inserire quanto segue
-ad un file nella directory #{config/chroot_local-preseed}#:
+You can specify additional groups that the live user will belong to by
+preseeding the #{passwd/user-default-groups}# debconf value. For example, to
+add the live user to the #{fuse}# group, add the following preseed under
+#{config/preseed/}# for the chroot stage:
 
 code{
 
- user-setup passwd/user-default-groups string audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse
+ $ lb config
+ $ echo user-setup passwd/user-default-groups string audio cdrom \
+   dip floppy video plugdev netdev powerdev scanner bluetooth fuse \
+   >> config/preseed/my.preseed.chroot
 
 }code
 
@@ -44,7 +47,7 @@ One possible way of changing the default password is by means of a hook as
 described in {Boot-time hooks}#boot-time-hooks. In order to do that you can
 use the "passwd" hook from #{/usr/share/doc/live-config/examples/hooks}#,
 prefix it accordingly (e.g. 200-passwd) and add it to
-#{config/chroot_local-includes/lib/live/config/}#
+#{config/includes.chroot/lib/live/config/}#
 
 2~customizing-locale-and-language Personalizzare la localizzazione e la
 lingua

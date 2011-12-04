@@ -108,7 +108,7 @@ puede usar instantáneas. Estas se generan automáticamente a partir de la
 
 2~ live-boot y live-config
 
-*{Nota:}* No es necesario instalar live-boot o live-config en el sistema para crear sistemas personalizados de Debian Live. Sin embargo, eso no causará ningún daño y es útil por motivos de referencia.
+*{Nota:}* No es necesario instalar live-boot o live-config en el sistema para crear sistemas personalizados de Debian Live. Sin embargo, eso no causará ningún daño y es útil por motivos de referencia. Si únicamente se desea tener la documentación, es posible instalar los paquetes live-boot-doc y live-config-doc de forma independiente.
 
 3~ Desde el repositorio Debian.
 
@@ -137,15 +137,15 @@ de live-boot y live-config.
 _* Creación de los paquetes .deb de live-boot y live-config
 
 Se debe crear ya sea en la distribución de destino o en un entorno chroot
-que contenga la plataforma de destino: es decir, si el objetivo es Squeeze
-entonces se debe crear usando Squeeze.
+que contenga la plataforma de destino: es decir, si el objetivo es Wheezy
+entonces se debe crear usando Wheezy.
 
 Utilizar un programa creador personal como /{pbuilder}/ o /{sbuild}/ si se
 necesita crear #{live-boot}# para una distribución de destino diferente del
-sistema de creación. Por ejemplo, para las imágenes en vivo de Squeeze,
-crear #{live-boot}# en un entorno chroot. Si la distribución de destino
-coincide con la distribución actual, se puede crear directamente sobre el
-sistema de creación con #{dpkg-buildpackage}# (proporcionada por el paquete
+sistema de creación. Por ejemplo, para las imágenes en vivo de Wheezy, crear
+#{live-boot}# en un entorno chroot. Si la distribución de destino coincide
+con la distribución actual, se puede crear directamente sobre el sistema de
+creación con #{dpkg-buildpackage}# (proporcionada por el paquete
 /{dpkg-dev}/ ):
 
 code{
@@ -172,11 +172,11 @@ adicionales}#additional-repositories.
 Se puede dejar que live-build utilice automáticamente las últimas
 instantáneas de live-boot y live-config mediante la configuración de
 repósitorios de terceros en el directorio de configuración de
-live-build. Suponiendo que ya se haya creado un árbol de configuración con
-#{lb config}#:
+live-build. Suponiendo que ya se haya creado un árbol de configuración en el
+directorio actual con #{lb config}#:
 
 code{
 
- $ lb config --repository live.debian.net
+ $ lb config --archives live.debian.net
 
 }code

@@ -21,12 +21,15 @@ los permisos asociados con el usuario por defecto del sistema en vivo.
 Se puede especificar grupos adicionales a los que pertenecerá el usuario por
 defecto del sistema en vivo preconfigurando el valor debconf
 #{passwd/user-default-groups}#. Por ejemplo, para agregar el usuario al
-grupo #{fuse}# añadir el siguiente código en un fichero en el directorio
-#{config/chroot_local-preseed}#.
+grupo #{fuse}# durante la etapa chroot, añadir el siguiente código en un
+fichero en el directorio #{config/preseed/}#.
 
 code{
 
- user-setup passwd/user-default-groups string audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse
+ $ lb config
+ $ echo user-setup passwd/user-default-groups string audio cdrom \
+   dip floppy video plugdev netdev powerdev scanner bluetooth fuse \
+   >> config/preseed/my.preseed.chroot
 
 }code
 
@@ -48,7 +51,7 @@ gancho (hook) tal y como se describe en {Scripts gancho en tiempo de
 arranque}#boot-time-hooks. Para conseguirlo se puede usar el script gancho
 «passwd» de #{/usr/share/doc/live-config/examples/hooks}#, ponerle un
 prefijo adecuado (p.ej. 200-passwd) y añadirlo a
-#{config/chroot_local-includes/lib/live/config/}#
+#{config/includes.chroot/lib/live/config/}#
 
 2~customizing-locale-and-language Personalización de las variantes locales e
 idioma

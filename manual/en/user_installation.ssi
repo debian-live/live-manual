@@ -98,7 +98,7 @@ If you do not wish to build or install live-build from source, you can use snaps
 
 2~ live-boot and live-config
 
-*{Note:}* You do not need to install live-boot or live-config on your system to create customized Debian Live systems. However, doing so will do no harm and is useful for reference purposes.
+*{Note:}* You do not need to install live-boot or live-config on your system to create customized Debian Live systems. However, doing so will do no harm and is useful for reference purposes. If you only want the documentation, you may now install the live-boot-doc and live-config-doc packages separately.
 
 3~ From the Debian repository
 
@@ -121,9 +121,9 @@ Consult the live-boot and live-config man pages for details on customizing if th
 
 _* Build live-boot and live-config .deb files
 
-You must build either on your target distribution or in a chroot containing your target platform: this means if your target is Squeeze then you should build against Squeeze.
+You must build either on your target distribution or in a chroot containing your target platform: this means if your target is Wheezy then you should build against Wheezy.
 
-Use a personal builder such as /{pbuilder}/ or /{sbuild}/ if you need to build #{live-boot}# for a target distribution that differs from your build system. For example, for Squeeze live images, build #{live-boot}# in a Squeeze chroot. If your target distribution happens to match your build system distribution, you may build directly on the build system using #{dpkg-buildpackage}# (provided by the /{dpkg-dev}/ package):
+Use a personal builder such as /{pbuilder}/ or /{sbuild}/ if you need to build #{live-boot}# for a target distribution that differs from your build system. For example, for Wheezy live images, build #{live-boot}# in a Wheezy chroot. If your target distribution happens to match your build system distribution, you may build directly on the build system using #{dpkg-buildpackage}# (provided by the /{dpkg-dev}/ package):
 
 code{
 
@@ -140,10 +140,10 @@ As live-boot and live-config are installed by live-build system, installing the 
 
 3~ From 'snapshots'
 
-You can let live-build automatically use the latest snapshots of live-boot and live-config by configuring a third-party repository in your live-build configuration directory. Assuming you have already created a configuration tree with #{lb config}#:
+You can let live-build automatically use the latest snapshots of live-boot and live-config by configuring a third-party repository in your live-build configuration directory. Assuming you have already created a configuration tree in the current directory with #{lb config}#:
 
 code{
 
- $ lb config --repository live.debian.net
+ $ lb config --archives live.debian.net
 
 }code

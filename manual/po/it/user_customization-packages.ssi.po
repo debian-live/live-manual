@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 2.0~a12\n"
 "POT-Creation-Date: 2011-11-07 21:01-0400\n"
-"PO-Revision-Date: 2011-08-02 00:53+0200\n"
+"PO-Revision-Date: 2011-12-06 01:39+0100\n"
 "Last-Translator: skizzhg <skizzhg@gmx.com>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -287,19 +287,6 @@ msgstr "3~ Mirror delle distribuzioni"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:34
-#, fuzzy
-#| msgid ""
-#| "The Debian archive is replicated across a large network of mirrors around "
-#| "the world so that people in each region can choose a nearby mirror for "
-#| "best download speed. Each of the #{--mirror-*}# options governs which "
-#| "distribution mirror is used at various stages of the build. Recall from "
-#| "{Stages of the build}#stages-of-the-build that the *bootstrap* stage is "
-#| "when the chroot is initially populated by debootstrap with a minimal "
-#| "system, and the *chroot* stage is when the chroot used to construct the "
-#| "live system's filesystem is built. Thus, the corresponding mirror "
-#| "switches are used for those stages, and later, in the *binary* stage, the "
-#| "#{--mirror-binary}# and #{--mirror-binary-security}# values are used, "
-#| "superceding any mirrors used in an earlier stage."
 msgid ""
 "The Debian archive is replicated across a large network of mirrors around "
 "the world so that people in each region can choose a nearby mirror for best "
@@ -316,15 +303,15 @@ msgstr ""
 "L'archivio Debian è replicato attraverso una vasta rete di mirror in tutto "
 "il mondo cosicché chiunque in ogni nazione può selezionare il mirror più "
 "vicino per la migliore velocità di scaricamento. Ciascuna delle opzioni #{--"
-"mirror-*}# determina quale mirror della distribuzione è usato nei vari stadi "
-"della compilazione. Ricordando dalle {Fasi della creazione}#stages-of-the-"
-"build che la fase di *avvio* è quando il chroot è inizialmente popolato da "
-"debootstrap con un sistema minimale e quella di *chroot* è quando viene "
-"creato il chroot usato per costruire il file system del sistema live. Perciò "
-"per queste fasi vengono usati i corrispondenti cambi di mirror, e in "
-"seguito, nella fase *binaria* vengono usati i valori di #{--mirror-binary}# "
-"e #{--mirror-binary-security}# sostituendo qualsiasi altro mirror usato "
-"nelle fasi iniziali."
+"parent-mirror-*}# determina quale mirror della distribuzione è usato nei "
+"vari stadi della compilazione. Ricordando dalle {Fasi della creazione}"
+"#stages-of-the-build che la fase di *avvio* è quando il chroot è "
+"inizialmente popolato da debootstrap con un sistema minimale e quella di "
+"*chroot* è quando viene creato il chroot usato per costruire il file system "
+"del sistema live. Perciò per queste fasi vengono usati i corrispondenti "
+"cambi di mirror, e in seguito, nella fase *binaria* vengono usati i valori "
+"di #{--parent-mirror-binary}# e #{--parent-mirror-binary-security}# "
+"sostituendo qualsiasi altro mirror usato nelle fasi iniziali."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:36
@@ -336,19 +323,15 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:38
-#, fuzzy
-#| msgid ""
-#| "To set the distribution mirrors used at build time to point at a local "
-#| "mirror, it is sufficient to set #{--mirror-bootstrap}# and #{--mirror-"
-#| "chroot-security}# as follows."
 msgid ""
 "To set the distribution mirrors used at build time to point at a local "
 "mirror, it is sufficient to set #{--parent-mirror-bootstrap}#, #{--parent-"
 "mirror-chroot-security}# and #{--parent-mirror-chroot-backports}# as follows."
 msgstr ""
 "Per impostare i mirror delle distribuzioni usati in fase di compilazione ad "
-"uno locale, è sufficiente impostare #{--mirror-bootstrap}# e #{--mirror-"
-"chroot-security}# come segue."
+"uno locale, è sufficiente impostare #{--parent-mirror-bootstrap}#, #{--"
+"parent-mirror-chroot-security}# e #{--parent-mirror-chroot-backports}# come "
+"segue."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:44
@@ -361,16 +344,12 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:48
-#, fuzzy
-#| msgid ""
-#| "The chroot mirror, specified by #{--mirror-chroot}#, defaults to the #{--"
-#| "mirror-bootstrap}# value."
 msgid ""
 "The chroot mirror, specified by #{--parent-mirror-chroot}#, defaults to the #"
 "{--parent-mirror-bootstrap}# value."
 msgstr ""
-"Il mirror chroot, specificato da #{--mirror-chroot}#, è impostato al valore "
-"di #{--mirror-bootstrap}#."
+"Il mirror chroot, specificato da #{--parent-mirror-chroot}#, è impostato al "
+"valore di #{--parent-mirror-bootstrap}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:50
@@ -379,16 +358,6 @@ msgstr "3~ Mirror delle distribuzioni usate durante l'esecuzione"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:52
-#, fuzzy
-#| msgid ""
-#| "The #{--mirror-binary*}# options govern the distribution mirrors placed "
-#| "in the binary image. These may be used to install additional packages "
-#| "while running the live system. The defaults employ #{cdn.debian.net}#, a "
-#| "service that chooses a geographically close mirror based on the user's IP "
-#| "number. This is a suitable choice when you cannot predict which mirror "
-#| "will be best for all of your users. Or you may specify your own values as "
-#| "shown in the example below. An image built from this configuration would "
-#| "only be suitable for users on a network where \"#{mirror}#\" is reachable."
 msgid ""
 "The #{--parent-mirror-binary*}# options govern the distribution mirrors "
 "placed in the binary image. These may be used to install additional packages "
@@ -399,16 +368,16 @@ msgid ""
 "in the example below. An image built from this configuration would only be "
 "suitable for users on a network where \"#{mirror}#\" is reachable."
 msgstr ""
-"Le opzioni #{--mirror-binary*}# determinano i mirror delle distribuzioni "
-"inseriti nell'immagine binaria. Questi possono essere usati per installare "
-"pacchetti aggiuntivi mentre il sistema live è in funzione. Le impostazioni "
-"predefinite impiegano #{cdn.debian.net}#, un servizio che sceglie un mirror "
-"geograficamente vicino basandosi sul numero IP dell'utente. Questo è una "
-"scelta conveniente quando non si può pronosticare quale sarà il mirror "
-"migliore per tutti gli utenti. Oppure si può specificare il proprio valore "
-"come mostrato nell'esempio qui sotto. Un'immagine compilata con questa "
-"configurazione sarebbe adatta solamente ad utenti di una rete dove sia "
-"raggiungibile il \"#{mirror}#\"."
+"Le opzioni #{--parent-mirror-binary*}# determinano i mirror delle "
+"distribuzioni inseriti nell'immagine binaria. Questi possono essere usati "
+"per installare pacchetti aggiuntivi mentre il sistema live è in funzione. Le "
+"impostazioni predefinite impiegano #{cdn.debian.net}#, un servizio che "
+"sceglie un mirror geograficamente vicino basandosi sul numero IP "
+"dell'utente. Questo è una scelta conveniente quando non si può pronosticare "
+"quale sarà il mirror migliore per tutti gli utenti. Oppure si può "
+"specificare il proprio valore come mostrato nell'esempio qui sotto. "
+"Un'immagine compilata con questa configurazione sarebbe adatta solamente ad "
+"utenti di una rete dove sia raggiungibile il \"#{mirror}#\"."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:57
@@ -425,16 +394,6 @@ msgstr "3~additional-repositories Repository addizionali"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:63
-#, fuzzy
-#| msgid ""
-#| "You may add more repositories, broadening your package choices beyond "
-#| "what is available in your target distribution. These may be, for example, "
-#| "for backports, experimental or custom packages. To configure additional "
-#| "repositories, create #{config/chroot_sources/your-repository.chroot}#, "
-#| "and/or #{config/chroot_sources/your-repository.binary}# files. As with "
-#| "the #{--mirror-*}# options, these govern the repositories used in the "
-#| "*chroot* stage when building the image, and in the *binary* stage, i.e. "
-#| "for use when running the live system."
 msgid ""
 "You may add more repositories, broadening your package choices beyond what "
 "is available in your target distribution. These may be, for example, for "
@@ -449,24 +408,19 @@ msgstr ""
 "pacchetti al di là di quelli disponibili nella distribuzione di "
 "destinazione. Questi possono essere, per esempio, pacchetti di backport, "
 "sperimentali o personalizzati. Per configurare repository aggiuntivi, creare "
-"i file #{config/chroot_sources/vostro-repository.chroot}#, o #{config/"
-"chroot_sources/vostro-repository.binary}#. Come per le opzioni #{--mirror-*}"
-"#, queste controlleranno i repository usati nella fase *chroot* quando si "
-"compila l'immagine, e nella fase *binary*, ad esempio per usarli quando il "
-"sistema live è avviato."
+"i file #{config/archives/vostro-repository.list.chroot}#, o #{config/"
+"archives/vostro-repository.list.binary}#. Come per le opzioni #{--parent-"
+"mirror-*}#, queste controlleranno i repository usati nella fase *chroot* "
+"quando si compila l'immagine, e nella fase *binary*, ad esempio per usarli "
+"quando il sistema live è avviato."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:65
-#, fuzzy
-#| msgid ""
-#| "For example, #{config/chroot_sources/live.chroot}# allows you to install "
-#| "packages from the debian live snapshot repository at live system build "
-#| "time."
 msgid ""
 "For example, #{config/archives/live.list.chroot}# allows you to install "
 "packages from the debian live snapshot repository at live system build time."
 msgstr ""
-"Per esempio, #{config/chroot_sources/live.chroot}# permette di installare "
+"Per esempio, #{config/archives/live.list.chroot}# permette di installare "
 "pacchetti dal repository snapshot di debian live al momento della creazione "
 "del sistema live."
 
@@ -478,17 +432,12 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:73
-#, fuzzy
-#| msgid ""
-#| "If you add the same line to #{config/chroot_sources/live.binary}#, the "
-#| "repository will be added to your live system's #{/etc/apt/sources.list.d/}"
-#| "# directory."
 msgid ""
 "If you add the same line to #{config/archives/live.list.binary}#, the "
 "repository will be added to your live system's #{/etc/apt/sources.list.d/}# "
 "directory."
 msgstr ""
-"Se si aggiunge la stessa riga in #{config/chroot_sources/live.binary}#, il "
+"Se si aggiunge la stessa riga in #{config/archives/live.list.binary}#, il "
 "repository verrà aggiunto alla directory #{/etc/apt/sources.list.d/}# del "
 "sistema live."
 
@@ -499,23 +448,18 @@ msgstr "Se il file esiste, saranno prelevati automaticamente."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:77
-#, fuzzy
-#| msgid ""
-#| "You should also put the GPG key used to sign the repository into #{config/"
-#| "chroot_sources/your-repository.{binary,chroot}.gpg}# files."
 msgid ""
 "You should also put the GPG key used to sign the repository into #{config/"
 "archives/your-repository.gpg.{binary,chroot}}# files."
 msgstr ""
 "Bisogna inoltre inserire la chiave GPG usata per firmare il repository nei "
-"file #{config/chroot_sources/vostro-repository.{binary,chroot}.gpg}#."
+"file #{config/archives/vostro-repository.gpg.{binary,chroot}}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:79
-#, fuzzy, no-wrap
-#| msgid "*{Note:}* some preconfigured package repositories are available for easy selection through the #{--repository}# option, e.g. for enabling live snapshots, a simple command is enough to enable it:\n"
+#, no-wrap
 msgid "*{Note:}* some preconfigured package repositories are available for easy selection through the #{--archives}# option, e.g. for enabling live snapshots, a simple command is enough to enable it:\n"
-msgstr "*{Nota:}* alcuni repository di pacchetti preconfigurati sono disponibili per una facile selezione attraverso l'opzione #{--repository}#, per abilitare gli snapshot live è sufficiente un semplice comando:\n"
+msgstr "*{Nota:}* alcuni repository di pacchetti preconfigurati sono disponibili per una facile selezione attraverso l'opzione #{--archives}#, per abilitare gli snapshot live è sufficiente un semplice comando:\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:83 en/user_installation.ssi:148
@@ -530,16 +474,6 @@ msgstr "2~choosing-packages-to-install Scegliere i pacchetti da installare"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:89
-#, fuzzy
-#| msgid ""
-#| "There are a number of ways to choose which packages live-build will "
-#| "install in your image, covering a variety of different needs. You can "
-#| "simply name individual packages to install, either with the #{--packages}"
-#| "# option for a few packages, or in a package list of your own for larger "
-#| "numbers. You can also choose larger predefined lists of packages, or use "
-#| "APT tasks. And finally, you may place package files in your #{config/}# "
-#| "tree, which is well suited to testing of new or experimental packages "
-#| "before they are available from a repository."
 msgid ""
 "There are a number of ways to choose which packages live-build will install "
 "in your image, covering a variety of different needs. You can simply name "
@@ -549,13 +483,11 @@ msgid ""
 "new or experimental packages before they are available from a repository."
 msgstr ""
 "Ci sono diversi modi per scegliere quali pacchetti live-build installerà "
-"nell'immagine, coprendo una gamma di esigenze diverse. Si possono scegliere "
-"i pacchetti singolarmente, con l'opzione #{--packages}# per un numero "
-"limitato, o da un elenco per una quantità maggiore di pacchetti. È inoltre "
-"possibile selezionare elenchi predefiniti più grandi o utilizzare i task di "
-"APT. E infine inserire i file dei pacchetti nell'albero #{config/}#, che ben "
-"si adatta alla alle prove di pacchetti nuovi o sperimentali prima che siano "
-"disponibili in un repository."
+"nell'immagine, coprendo una gamma di esigenze diverse. Si possono richiamare "
+"i singoli pacchetti da un elenco o scegliere elenchi predefiniti di "
+"pacchetti oppure utilizzare i task di APT. E infine inserire i file dei "
+"pacchetti nell'albero #{config/}#, che ben si adatta a provare pacchetti "
+"nuovi o sperimentali prima che siano disponibili in un repository."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:91
@@ -585,10 +517,9 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:95
-#, fuzzy, no-wrap
-#| msgid "The behaviour of live-build when specifying a package that does not exist is determined by your choice of APT utility. See {Choosing apt or aptitude}#choosing-apt-or-aptitude for more details."
+#, no-wrap
 msgid "*{Note:}* The behaviour of live-build when specifying a package that does not exist is determined by your choice of APT utility. See {Choosing apt or aptitude}#choosing-apt-or-aptitude for more details.\n"
-msgstr "Quando si specifica un pacchetto che non esiste, il comportamento di live-build è determinato dalla scelta delle utilità di APT. Per ulteriori dettagli si veda {Scegliere apt o aptitude}#choosing-apt-or-aptitude."
+msgstr "*{Nota:}* quando si specifica un pacchetto che non esiste, il comportamento di live-build è determinato dalla scelta delle utilità di APT. Per ulteriori dettagli si veda {Scegliere apt o aptitude}#choosing-apt-or-aptitude."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:97
@@ -597,16 +528,12 @@ msgstr "3~ Elenchi predefiniti di pacchetti"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:99
-#, fuzzy
-#| msgid ""
-#| "The simplest way to use lists is to specify one or more predefined lists "
-#| "with the #{--packages-lists}# option. For example:"
 msgid ""
 "The simplest way to use lists is to specify one or more predefined lists "
 "with the #{--package-lists}# option. For example:"
 msgstr ""
 "Il modo più semplice per usare gli elenchi è di specificarne uno o più con "
-"l'opzione #{--packages-lists}#. Per esempio:"
+"l'opzione #{--package-lists}#. Per esempio:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:103
@@ -616,12 +543,6 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:107
-#, fuzzy
-#| msgid ""
-#| "The default location for the list files on your system is #{/usr/share/"
-#| "live/build/lists/}#. To determine the packages in a given list, read the "
-#| "corresponding file, paying attention to included files and conditionals "
-#| "as described in the following sections."
 msgid ""
 "The default location for the list files on your system is #{/usr/share/live/"
 "build/package-lists/}#. To determine the packages in a given list, read the "
@@ -629,9 +550,9 @@ msgid ""
 "described in the following sections."
 msgstr ""
 "Il percorso predefinito per i file elenco sul sistema è #{/usr/share/live/"
-"build/lists/}#. Per determinare i pacchetti in un dato elenco, si legga il "
-"file corrispondente, prestando attenzione ai file inclusi e condizionali "
-"come descritto nella sezioni seguenti."
+"build/package-lists/}#. Per determinare i pacchetti in un dato elenco, si "
+"legga il file corrispondente, prestando attenzione ai file inclusi e "
+"condizionali come descritto nella sezioni seguenti."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:109
@@ -640,30 +561,23 @@ msgstr "3~ Elenchi locali dei pacchetti"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:111
-#, fuzzy
-#| msgid ""
-#| "You may supplement or replace entirely the supplied lists using local "
-#| "package lists stored in #{config/chroot_local-packageslists/}#."
 msgid ""
 "You may supplement the predefined lists using local package lists stored in #"
 "{config/package-lists/}#."
 msgstr ""
-"Gli elenchi si possono integrare o sostituire interamente usando quelli "
-"locali dei pacchetti in #{config/chroot_local-packageslists/}#."
+"Gli elenchi predefiniti si possono integrare usando quelli locali dei "
+"pacchetti in #{config/package-lists/}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:113
-#, fuzzy
-#| msgid ""
-#| "Package lists that exist in this directory need to have a #{.list}# "
-#| "suffix in order to be processed."
 msgid ""
 "Package lists that exist in this directory need to have a #{.list}# suffix "
 "in order to be processed, and then an additional stage suffix, #{.chroot}# "
 "or #{.binary}# to indicate which stage the list is for."
 msgstr ""
-"Per essere processate le liste dei pacchetti che si trovano nella directory "
-"deve avere un suffisso #{.list}#."
+"Per essere processate, gli elenchi dei pacchetti che si trovano in questa "
+"directory devono avere un suffisso #{.list}# e un suffisso #{.chroot}# o #{."
+"binary}# aggiuntivo per indicare per quale fase sia l'elenco."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:115
@@ -694,11 +608,6 @@ msgstr "3~ Estendere un'elenco di pacchetti usando gli include"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:123
-#, fuzzy
-#| msgid ""
-#| "The package lists that are included with live-build make extensive use of "
-#| "includes. Refer to these in the #{/usr/share/live/build/lists/}# "
-#| "directory, as they serve as good examples of how to write your own lists."
 msgid ""
 "The package lists that are included with live-build make extensive use of "
 "includes. Refer to these in the #{/usr/share/live/build/package-lists/}# "
@@ -706,23 +615,19 @@ msgid ""
 msgstr ""
 "Gli elenchi di pacchetti inclusi in live-build fanno un notevole uso di "
 "include. Far riferimento a questi nella directory #{/usr/share/live/build/"
-"lists/}#, in quanto portano ottimi esempi su come scrivere i propri."
+"package-lists/}#, in quanto portano ottimi esempi su come scriverne di "
+"propri."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:125
-#, fuzzy
-#| msgid ""
-#| "For example, to make a list that includes the predefined #{gnome}# list "
-#| "plus iceweasel, create #{config/chroot_local-packageslists/mygnome.list}# "
-#| "with the following contents:"
 msgid ""
 "For example, to make a list that includes the predefined #{gnome}# list plus "
 "iceweasel, create #{config/package-lists/my.list.chroot}# with the following "
 "contents:"
 msgstr ""
 "Per esempio, per creare un elenco che includa quello predefinito di #{gnome}"
-"# più iceweasel, creare #{config/chroot_local-packageslists/mygnome.list}# "
-"con i seguenti contenuti:"
+"#più iceweasel, creare #{config/package-lists/mio.elenco.chroot}# con i "
+"seguenti contenuti:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:130
@@ -837,14 +742,6 @@ msgstr "3~ Task"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:182
-#, fuzzy
-#| msgid ""
-#| "The Debian Installer offers the user choices of a number of preselected "
-#| "lists of packages, each one focused on a particular kind of system, or "
-#| "task a system may be used for, such as \"Graphical desktop environment\", "
-#| "\"Mail server\" or \"Laptop\". These lists are called \"tasks\" and are "
-#| "supported by APT through the \"Task:\" field. You can specify one or more "
-#| "tasks in live-build via the #{--tasks}# option, as in the example below."
 msgid ""
 "The Debian Installer offers the user choices of a number of preselected "
 "lists of packages, each one focused on a particular kind of system, or task "
@@ -858,9 +755,9 @@ msgstr ""
 "pacchetti pre-selezionati, ognuno dei quali focalizzato su un particolare "
 "tipo di sistema, o il tipo di attività per cui utilizzarlo, come \"Graphical "
 "desktop environment\", \"Mail server\" o \"Laptop\". Questi elenchi sono "
-"chiamati \"task\" e sono gestiti da APT atraverso il campo\"Task:\". In live-"
-"build si possono specificare uno o più task per mezzo dell'opzione #{--tasks}"
-"#, come nell'esempio seguente."
+"chiamati \"task\" e sono gestiti da APT attraverso il campo\"Task:\". In "
+"live-build si possono specificare uno o più task inserendoli in una lista in "
+"#{config/task-lists/}#, come nell'esempio seguente."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:187
@@ -890,16 +787,6 @@ msgstr "3~desktop-and-language-tasks Task per desktop e lingua"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:195
-#, fuzzy
-#| msgid ""
-#| "Desktop and language tasks are special cases. In the Debian Installer, if "
-#| "the medium was prepared for a particular desktop environment flavour, the "
-#| "corresponding task will be automatically installed. Thus, there are #"
-#| "{gnome-desktop}#, #{kde-desktop}#, #{lxde-desktop}# and #{xfce-desktop}# "
-#| "tasks, none of which are offered in #{tasksel}#'s menu. Likewise, there "
-#| "are no menu entries for tasks for languages, but the user's language "
-#| "choice during the install influences the selection of corresponding "
-#| "language tasks."
 msgid ""
 "Desktop and language tasks are special cases that need some extra planning "
 "and configuration. Live images are different from Debian Installer images in "
@@ -911,11 +798,13 @@ msgid ""
 "for languages, but the user's language choice during the install influences "
 "the selection of corresponding language tasks."
 msgstr ""
-"I task per i desktop e la lingua sono un caso speciale. Nell'installatore "
-"Debian, se il supporto è stato preparato per un particolare ambiente "
-"desktop, il corrispondente task verrà automaticamente installato. Perciò ci "
-"sono i task #{gnome-desktop}#, #{kde-desktop}#, #{lxde-desktop}# e #{xfce-"
-"desktop}#, nessuno dei quali è offerto nel menu di #{tasksel}#. Allo stesso "
+"I task per i desktop e la lingua sono un caso particolare che necessita di "
+"ulteriori pianificazioni e configurazioni e in questo senso le immagini live "
+"sono diverse da quelle dell'Installatore Debian. Nell'Installatore Debian, "
+"se il supporto è stato preparato per un particolare ambiente desktop, il "
+"corrispondente task verrà automaticamente installato. Perciò ci sono task #"
+"{gnome-desktop}#, #{kde-desktop}#, #{lxde-desktop}# e #{xfce-desktop}# "
+"interni, nessuno dei quali è offerto nel menu di #{tasksel}#. Allo stesso "
 "modo, non c'è nessuna voce nel menu per i task delle lingue, ma la scelta "
 "della lingua dell'utente durante l'installazione influenza la selezione dei "
 "corrispondenti task della lingua."
@@ -933,13 +822,6 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:199
-#, fuzzy
-#| msgid ""
-#| "First, there is no provision made yet automatically for language tasks, "
-#| "although a subset of those packages are included if you specify #{lb "
-#| "config --language}#. If you need those tasks, which include such things "
-#| "as language-specific fonts and input-method packages, you need to specify "
-#| "them in your configuration. For example:"
 msgid ""
 "Because there is no provision made automatically for language tasks, which "
 "include such things as language-specific fonts and input-method packages, if "
@@ -947,11 +829,11 @@ msgid ""
 "a GNOME desktop image containing support for Japanese might include these "
 "tasks:"
 msgstr ""
-"Primo, non è stata fatta ancora alcuna previsione sui task della lingua, "
-"sebbene sia incluso un sottoinsieme di questi pacchetti specificando #{lb "
-"config --language}#. Se servono questi task, i quali includono cose come "
-"caratteri specifici per la lingua e pacchetti dei metodi di input, vanno "
-"specificati nella configurazione. Per esempio:"
+"Poiché automaticamente non viene fatta alcuna preparazione sui task della "
+"lingua, i quali includono cose come caratteri specifici per la lingua e "
+"pacchetti per i metodi di input, se li si vogliono, vanno specificati nella "
+"configurazione. Per esempio, un'immagine del desktop GNOME contenente il "
+"supporto per il giapponese può includere questi task:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:205
@@ -1046,37 +928,23 @@ msgstr "_* Utilizzare repository APT personalizzati"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:232
-#, fuzzy
-#| msgid ""
-#| "Using #{chroot_local-packages}# is simpler to achieve and useful for "
-#| "\"one-off\" customizations but has a number of drawbacks, whilst using a "
-#| "custom APT repository is more time-consuming to set up."
 msgid ""
 "Using #{packages.chroot}# is simpler to achieve and useful for \"one-off\" "
 "customizations but has a number of drawbacks, whilst using a custom APT "
 "repository is more time-consuming to set up."
 msgstr ""
-"Usando #{chroot_local-packages}# è più semplice da ottenere e utile per una "
+"Usando #{packages.chroot}# è più semplice da ottenere e utile per una "
 "personalizzazione \"una tantum\" ma ha una serie di svantaggi, mentre un "
 "repository APT personalizzato è più laborioso da configurare."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:234
-#, fuzzy
-#| msgid "3~ Using #{chroot_local-packages}# to install custom packages"
 msgid "3~ Using #{packages.chroot}# to install custom packages"
 msgstr ""
-"3~ Utilizzare #{chroot_local-packages}# per installare pacchetti "
-"personalizzati"
+"3~ Utilizzare #{packages.chroot}# per installare pacchetti personalizzati"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:236
-#, fuzzy
-#| msgid ""
-#| "To install a custom package, simply copy it to the #{config/chroot_local-"
-#| "packages/}# directory. Packages that are inside this directory will be "
-#| "automatically installed into the live system during build - you do not "
-#| "need to specify them elsewhere."
 msgid ""
 "To install a custom package, simply copy it to the #{config/packages.chroot/}"
 "# directory. Packages that are inside this directory will be automatically "
@@ -1084,7 +952,7 @@ msgid ""
 "them elsewhere."
 msgstr ""
 "Per installare un pacchetto personalizzato copiarlo nella directory #{config/"
-"chroot_local-packages/}#; i pacchetti al suo interno verranno installati "
+"packages.chroot/}#; i pacchetti al suo interno verranno installati "
 "automaticamente durante la creazione del sistema live, non è necessario "
 "specificarli altrove."
 
@@ -1099,15 +967,11 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:240
-#, fuzzy
-#| msgid ""
-#| "Using #{chroot_local-packages}# for installation of custom packages has "
-#| "disadvantages:"
 msgid ""
 "Using #{packages.chroot}# for installation of custom packages has "
 "disadvantages:"
 msgstr ""
-"L'utilizzo di #{chroot_local-packages}# per l'installazione di pacchetti "
+"L'utilizzo di #{packages.chroot}# per l'installazione di pacchetti "
 "personalizzati presenta degli svantaggi:"
 
 #. type: Plain text
@@ -1117,16 +981,12 @@ msgstr "_* non è possibile usare secure APT"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:244
-#, fuzzy
-#| msgid ""
-#| "_* You must install all appropriate packages in the #{config/chroot_local-"
-#| "packages/}# directory."
 msgid ""
 "_* You must install all appropriate packages in the #{config/packages."
 "chroot/}# directory."
 msgstr ""
 "_* è necessario installare i pacchetti adeguati nella directory #{config/"
-"chroot_local-packages/}#."
+"packages.chroot/}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:246
@@ -1145,17 +1005,12 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:250
-#, fuzzy
-#| msgid ""
-#| "Unlike using #{chroot_local-packages}#, when using a custom APT "
-#| "repository you must ensure that you specify the packages elsewhere. See "
-#| "{Choosing packages to install}#choosing-packages-to-install for details."
 msgid ""
 "Unlike using #{packages.chroot}#, when using a custom APT repository you "
 "must ensure that you specify the packages elsewhere. See {Choosing packages "
 "to install}#choosing-packages-to-install for details."
 msgstr ""
-"A differenza di #{chroot_local-packages}#, quando si usa un repository APT "
+"A differenza di #{packages.chroot}#, quando si usa un repository APT "
 "personalizzato è necessario assicurarsi di specificare altrove i pacchetti. "
 "Per i dettagli si veda {Scegliere i pacchetti da installare}#choosing-"
 "packages-to-install."
@@ -1213,14 +1068,6 @@ msgstr "2~ Configurare APT in fase di costruzione"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:262
-#, fuzzy
-#| msgid ""
-#| "You can configure APT through a number of options applied only at build "
-#| "time. (APT configuration used in the running live system may be "
-#| "configured in the normal way for live system contents, that is, by "
-#| "including the appropriate configurations through #{config/"
-#| "chroot_local_includes/}#.) For a complete list, look for options starting "
-#| "with #{apt}# in the #{lb_config}# man page."
 msgid ""
 "You can configure APT through a number of options applied only at build "
 "time. (APT configuration used in the running live system may be configured "
@@ -1232,8 +1079,8 @@ msgstr ""
 "APT è configurabile tramite una serie di opzioni applicate solo in fase di "
 "costruzione (la configurazione di APT utilizzata nel sistema live in "
 "esecuzione può essere configurata nel solito modo, ovvero includendo le "
-"impostazioni appropriate attraverso #{config/chroot_local_includes/}#). Per "
-"un elenco completo, cercare nel manuale di #{lb_config}# le opzioni che "
+"impostazioni appropriate attraverso #{config/includes.chroot/}#). Per un "
+"elenco completo, cercare nel manuale di #{lb_config}# le opzioni che "
 "iniziano con #{apt}#."
 
 #. type: Plain text
@@ -1406,12 +1253,6 @@ msgstr "3~apt-pinning APT pinning"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:312
-#, fuzzy
-#| msgid ""
-#| "For background, please first read the #{apt_preferences(5)}# man page. "
-#| "APT pinning can be configured either for build time, or else for run "
-#| "time. For the former, create #{config/chroot_apt/preferences}#. For the "
-#| "latter, create #{config/chroot_local-includes/etc/apt/preferences}#."
 msgid ""
 "For background, please first read the #{apt_preferences(5)}# man page. APT "
 "pinning can be configured either for build time, or else for run time. For "
@@ -1420,8 +1261,8 @@ msgid ""
 msgstr ""
 "Si prega di leggere prima il manuale di #{apt_preferences(5)}#. Il pinning "
 "può essere configurato sia in fase di costruzione sia di esecuzione; per la "
-"prima creare #{config/chroot_apt/preferences}#, per quest'ultima creare #"
-"{config/chroot_local-includes/etc/apt/preferences}#."
+"prima creare #{config/chroot_apt/preferences}# mentre per l'ultima creare #"
+"{config/includes.chroot/etc/apt/preferences}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:314
@@ -1474,16 +1315,6 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:339
-#, fuzzy
-#| msgid ""
-#| "Negative pin priorities will prevent a package from being installed, as "
-#| "in the case where you do not want a package that is recommended by "
-#| "another package. Suppose you are building an LXDE image using #{--"
-#| "packages-lists lxde}# option, but don't want the user prompted to store "
-#| "wifi passwords in the keyring. This list includes #{gdm}#, which depends "
-#| "on #{gksu}#, which in turn recommends #{gnome-keyring}#. So you want to "
-#| "omit the recommended #{gnome-keyring}# package. This can be done by "
-#| "adding the following stanza to #{config/chroot_apt/preferences}#:"
 msgid ""
 "Negative pin priorities will prevent a package from being installed, as in "
 "the case where you do not want a package that is recommended by another "
@@ -1496,7 +1327,7 @@ msgid ""
 msgstr ""
 "Un valore negativo della priorità evita che un pacchetto venga installato, "
 "come nel caso in cui non se ne voglia uno raccomandato da un altro. Si "
-"suppone di costruire un'immagine di LXDE utilizzando l'opzione #{--packages-"
+"suppone di costruire un'immagine di LXDE utilizzando l'opzione #{--package-"
 "lists lxde}# ma non si desidera che all'utente venga richiesto di salvare la "
 "password del wifi nel portachiavi. L'elenco include #{gdm}# che dipende da #"
 "{gksu}# che a sua volta raccomanda #{gnome-keyring}#, in questo caso si "

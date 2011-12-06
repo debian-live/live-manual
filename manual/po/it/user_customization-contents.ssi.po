@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 2.0.0\n"
 "POT-Creation-Date: 2011-11-07 21:01-0400\n"
-"PO-Revision-Date: 2011-09-10 23:07+0200\n"
+"PO-Revision-Date: 2011-12-06 00:57+0100\n"
 "Last-Translator: skizzhg <skizzhg@gmx.com>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -263,12 +263,6 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:24
-#, fuzzy
-#| msgid ""
-#| "To include files, simply add them to your #{config/chroot_local-includes}"
-#| "# directory. This directory corresponds to the root directory (#{/}#) of "
-#| "the live system. For example, to add a file #{/var/www/index.html}# in "
-#| "the live system, use:"
 msgid ""
 "To include files, simply add them to your #{config/includes.chroot}# "
 "directory. This directory corresponds to the root directory (#{/}#) of the "
@@ -276,7 +270,7 @@ msgid ""
 "system, use:"
 msgstr ""
 "Per includere i file si aggiungano semplicemente alla directory #{config/"
-"chroot_local-includes}#. Questa corrisponde alla directory root (#{/}#) del "
+"includes.chroot}#. Questa corrisponde alla directory root (#{/}#) del "
 "sistema live. Per esempio, per aggiungere un file #{/var/www/index.html}# "
 "nel sistema live, si usi:"
 
@@ -323,15 +317,6 @@ msgstr "3~binary-local-includes Include locali binari"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:52
-#, fuzzy
-#| msgid ""
-#| "To include material such as documentation or videos on the media "
-#| "filesystem so that it is accessible immediately upon insertion of the "
-#| "media without booting the Live system, you can use binary local includes. "
-#| "This works in a similar fashion to chroot local includes. For example, "
-#| "suppose the files #{~/video_demo.*}# are demo videos of the live system "
-#| "described by and linked to by an HTML index page. Simply copy the "
-#| "material to #{config/binary_local-includes/}# as follows:"
 msgid ""
 "To include material such as documentation or videos on the media filesystem "
 "so that it is accessible immediately upon insertion of the media without "
@@ -347,7 +332,7 @@ msgstr ""
 "Ciò funziona in modo simile agli include locali del chroot; supponendo che i "
 "file #{~/video_demo.*}# siano video dimostrativi del sistema descritti da e "
 "collegati a una pagina HTML indice, basta copiare il materiale in #{config/"
-"binary_local-includes/}# come segue:"
+"includes.binary/}# come segue:"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:56
@@ -413,16 +398,6 @@ msgstr "3~live-chroot-local-hooks Live/chroot hook locali"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:80
-#, fuzzy
-#| msgid ""
-#| "To run commands in the chroot stage, create a hook script containing the "
-#| "commands in the #{config/chroot_local-hooks}# directory. The hook will "
-#| "run in the chroot after the rest of your chroot configuration has been "
-#| "applied, so remember to ensure your configuration includes all packages "
-#| "and files your hook needs in order to run. See the example chroot hook "
-#| "scripts for various common chroot customization tasks provided in #{/usr/"
-#| "share/live/build/examples/hooks}# which you can copy or symlink to use "
-#| "them in your own configuration."
 msgid ""
 "To run commands in the chroot stage, create a hook script with a #{.chroot}# "
 "suffix containing the commands in the #{config/hooks/}# directory. The hook "
@@ -433,14 +408,14 @@ msgid ""
 "build/examples/hooks}# which you can copy or symlink to use them in your own "
 "configuration."
 msgstr ""
-"Per eseguire comandi nella fase chroot, creare uno script hook contenente i "
-"comandi nella directory #{config/chroot_local-hooks}#. L'hook verrà eseguito "
-"nel chroot dopo che verrà applicata il resto della configurazione del "
-"chroot, ricordare quindi di garantire che la propria configurazione includa "
-"tutti i pacchetti e i file che l'hook necessita per funzionare. Vedere gli "
-"script d'esempio degli hook di chroot per i vari compiti di "
-"personalizzazione del chroot contenuti in #{/usr/share/live/build/examples/"
-"hooks}# da copiare o collegare nella propria configurazione."
+"Per eseguire comandi nella fase chroot, creare uno script hook con suffisso #"
+"{.chroot}# contenente i comandi nella directory #{config/hooks/}#. L'hook "
+"verrà eseguito nel chroot dopo che verrà applicata il resto della "
+"configurazione del chroot, ricordare quindi di garantire che la propria "
+"configurazione includa tutti i pacchetti e i file che l'hook necessita per "
+"funzionare. Vedere gli script d'esempio degli hook di chroot per i vari "
+"compiti di personalizzazione del chroot contenuti in #{/usr/share/live/build/"
+"examples/hooks}# da copiare o collegare nella propria configurazione."
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:82
@@ -449,16 +424,6 @@ msgstr "3~boot-time-hooks Hook in fase di avvio"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:84
-#, fuzzy
-#| msgid ""
-#| "To execute commands at boot time, you can supply live-config hooks as "
-#| "explained in the \"Customization\" section of its man page. Examine live-"
-#| "config's own hooks provided in #{/lib/live/config/}#, noting the sequence "
-#| "numbers. Then provide your own hook prefixed with an appropriate sequence "
-#| "number, either as a chroot local include in #{config/chroot_local-"
-#| "includes/lib/live/config/}#, or as a custom package as discussed in "
-#| "{Installing modified or third-party packages}#installing-modified-or-"
-#| "third-party-packages."
 msgid ""
 "To execute commands at boot time, you can supply live-config hooks as "
 "explained in the \"Customization\" section of its man page. Examine live-"
@@ -472,9 +437,9 @@ msgstr ""
 "come spiegato nella sezione \"Customization\" del suo manuale. Controllare "
 "gli hook di live-config in #{/lib/live/config/}# e notare i numeri "
 "sequenziali; fornire quindi i propri hook con una sequenza numerica "
-"appropriata, sia come include locali del chroot in #{config/chroot_local-"
-"includes/lib/live/config/}#, sia come pacchetto personalizzato come discusso "
-"in {Installare pacchetti modificati o di terze parti}#installing-modified-or-"
+"appropriata, sia come include locali del chroot in #{config/includes.chroot/"
+"lib/live/config/}#, sia come pacchetto personalizzato come discusso in"
+"{Installare pacchetti modificati o di terze parti}#installing-modified-or-"
 "third-party-packages."
 
 #. type: Plain text
@@ -484,17 +449,6 @@ msgstr "3~ Hook binari locali"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:88
-#, fuzzy
-#| msgid ""
-#| "To run commands in the binary stage, create a hook script containing the "
-#| "commands in the #{config/binary_local-hooks}#. The hook will run after "
-#| "all other binary commands are run, but before binary_checksums, the very "
-#| "last binary commands The commands in your hook do not run in the chroot, "
-#| "so take care to not modify any files outside of the build tree, or you "
-#| "may damage your build system! See the example binary hook scripts for "
-#| "various common binary customization tasks provided in #{/usr/share/live/"
-#| "build/examples/hooks}# which you can copy or symlink to use them in your "
-#| "own configuration."
 msgid ""
 "To run commands in the binary stage, create a hook script with a #{.binary}# "
 "suffix containing the commands in the #{config/hooks/}# directory. The hook "
@@ -506,15 +460,15 @@ msgid ""
 "share/live/build/examples/hooks}# which you can copy or symlink to use them "
 "in your own configuration."
 msgstr ""
-"Per eseguire comandi nella fase binaria, creare uno script hook che contenga "
-"i comandi in #{config/binary_local-hooks}#. L'hook verrà eseguito dopo tutti "
-"gli altri comandi binari, ma prima del binary_checksums, l'ultimo definitivo "
-"comando. I comandi nel proprio hook non vengono eseguiti nel chroot, perciò "
-"si faccia attenzione a non modificare nessun file al di fuori dell'albero di "
-"costruzione o si danneggerà il sistema! Vedere gli script d'esempio per gli "
-"hook binari per i vari compiti di personalizzazione dei binari in #{/usr/"
-"share/live/build/examples/hooks}# da copiare o collegare nella propria "
-"configurazione."
+"Per eseguire comandi nella fase binaria, creare uno script hook con suffisso "
+"#{.binary}# che contenga i comandi nella directory #{config/hooks/}#. L'hook "
+"verrà eseguito dopo tutti gli altri comandi binari, ma prima di "
+"binary_checksums, l'ultimo comando. I comandi nel proprio hook non vengono "
+"eseguiti nel chroot, perciò si faccia attenzione a non modificare nessun "
+"file al di fuori dell'albero di compilazione o si danneggerà il sistema! "
+"Vedere gli script d'esempio per gli hook binari per i vari compiti di "
+"personalizzazione dei binari in #{/usr/share/live/build/examples/hooks}# da "
+"copiare o collegare nella propria configurazione."
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:90
@@ -523,20 +477,16 @@ msgstr "2~ Preconfigurare le domande di Debconf"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:92
-#, fuzzy
-#| msgid ""
-#| "Files in the #{config/chroot_local-preseed}# directory are considered to "
-#| "be debconf preseed files and are installed by live-build using #{debconf-"
-#| "set-selections}#."
 msgid ""
 "Files in the #{config/preseed/}# directory suffixed with #{.preseed}# "
 "followed by the stage (#{.chroot}# or #{.binary}#) are considered to be "
 "debconf preseed files and are installed by live-build using #{debconf-set-"
 "selections}# during the corresponding stage."
 msgstr ""
-"I file nella directory #{config/chroot_local-preseed}# sono considerati file "
-"di preconfigurazione di debconf e sono installati da live-build usando #"
-"{debconf-set-selections}#."
+"I file nella directory #{config/preseed/}# con suffisso #{.preseed}# seguiti "
+"dalla fase (#{.chroot}# o #{.binary}#) sono considerati file di "
+"preconfigurazione di debconf e sono installati da live-build usando #"
+"{debconf-set-selections}# durante la fase corrispondente."
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:93

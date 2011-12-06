@@ -65,25 +65,26 @@ comportamento di live-build per adattarlo alle derivate.
 
 3~ Mirror delle distribuzioni
 
-The Debian archive is replicated across a large network of mirrors around
-the world so that people in each region can choose a nearby mirror for best
-download speed. Each of the #{--parent-mirror-*}# options governs which
-distribution mirror is used at various stages of the build. Recall from
-{Stages of the build}#stages-of-the-build that the *bootstrap* stage is when
-the chroot is initially populated by debootstrap with a minimal system, and
-the *chroot* stage is when the chroot used to construct the live system's
-filesystem is built. Thus, the corresponding mirror switches are used for
-those stages, and later, in the *binary* stage, the
-#{--parent-mirror-binary}# and #{--parent-mirror-binary-security}# values
-are used, superceding any mirrors used in an earlier stage.
+L'archivio Debian è replicato attraverso una vasta rete di mirror in tutto
+il mondo cosicché chiunque in ogni nazione può selezionare il mirror più
+vicino per la migliore velocità di scaricamento. Ciascuna delle opzioni
+#{--parent-mirror-*}# determina quale mirror della distribuzione è usato nei
+vari stadi della compilazione. Ricordando dalle {Fasi della
+creazione}#stages-of-the-build che la fase di *avvio* è quando il chroot è
+inizialmente popolato da debootstrap con un sistema minimale e quella di
+*chroot* è quando viene creato il chroot usato per costruire il file system
+del sistema live. Perciò per queste fasi vengono usati i corrispondenti
+cambi di mirror, e in seguito, nella fase *binaria* vengono usati i valori
+di #{--parent-mirror-binary}# e #{--parent-mirror-binary-security}#
+sostituendo qualsiasi altro mirror usato nelle fasi iniziali.
 
 3~distribution-mirrors-build-time Mirror delle distribuzioni usati in fase
 di compilazione
 
-To set the distribution mirrors used at build time to point at a local
-mirror, it is sufficient to set #{--parent-mirror-bootstrap}#,
-#{--parent-mirror-chroot-security}# and #{--parent-mirror-chroot-backports}#
-as follows.
+Per impostare i mirror delle distribuzioni usati in fase di compilazione ad
+uno locale, è sufficiente impostare #{--parent-mirror-bootstrap}#,
+#{--parent-mirror-chroot-security}# e #{--parent-mirror-chroot-backports}#
+come segue.
 
 code{
 
@@ -93,19 +94,21 @@ code{
 
 }code
 
-The chroot mirror, specified by #{--parent-mirror-chroot}#, defaults to the
-#{--parent-mirror-bootstrap}# value.
+Il mirror chroot, specificato da #{--parent-mirror-chroot}#, è impostato al
+valore di #{--parent-mirror-bootstrap}#.
 
 3~ Mirror delle distribuzioni usate durante l'esecuzione
 
-The #{--parent-mirror-binary*}# options govern the distribution mirrors
-placed in the binary image. These may be used to install additional packages
-while running the live system. The defaults employ #{cdn.debian.net}#, a
-service that chooses a geographically close mirror based on the user's IP
-number. This is a suitable choice when you cannot predict which mirror will
-be best for all of your users. Or you may specify your own values as shown
-in the example below. An image built from this configuration would only be
-suitable for users on a network where "#{mirror}#" is reachable.
+Le opzioni #{--parent-mirror-binary*}# determinano i mirror delle
+distribuzioni inseriti nell'immagine binaria. Questi possono essere usati
+per installare pacchetti aggiuntivi mentre il sistema live è in funzione. Le
+impostazioni predefinite impiegano #{cdn.debian.net}#, un servizio che
+sceglie un mirror geograficamente vicino basandosi sul numero IP
+dell'utente. Questo è una scelta conveniente quando non si può pronosticare
+quale sarà il mirror migliore per tutti gli utenti. Oppure si può
+specificare il proprio valore come mostrato nell'esempio qui
+sotto. Un'immagine compilata con questa configurazione sarebbe adatta
+solamente ad utenti di una rete dove sia raggiungibile il "#{mirror}#".
 
 code{
 
@@ -116,17 +119,19 @@ code{
 
 3~additional-repositories Repository addizionali
 
-You may add more repositories, broadening your package choices beyond what
-is available in your target distribution. These may be, for example, for
-backports, experimental or custom packages. To configure additional
-repositories, create #{config/archives/your-repository.list.chroot}#, and/or
-#{config/archives/your-repository.list.binary}# files. As with the
-#{--parent-mirror-*}# options, these govern the repositories used in the
-*chroot* stage when building the image, and in the *binary* stage, i.e. for
-use when running the live system.
+Si possono aggiungere altri repository, ampliando così la scelta dei
+pacchetti al di là di quelli disponibili nella distribuzione di
+destinazione. Questi possono essere, per esempio, pacchetti di backport,
+sperimentali o personalizzati. Per configurare repository aggiuntivi, creare
+i file #{config/archives/vostro-repository.list.chroot}#, o
+#{config/archives/vostro-repository.list.binary}#. Come per le opzioni
+#{--parent-mirror-*}#, queste controlleranno i repository usati nella fase
+*chroot* quando si compila l'immagine, e nella fase *binary*, ad esempio per
+usarli quando il sistema live è avviato.
 
-For example, #{config/archives/live.list.chroot}# allows you to install
-packages from the debian live snapshot repository at live system build time.
+Per esempio, #{config/archives/live.list.chroot}# permette di installare
+pacchetti dal repository snapshot di debian live al momento della creazione
+del sistema live.
 
 code{
 
@@ -134,16 +139,16 @@ code{
 
 }code
 
-If you add the same line to #{config/archives/live.list.binary}#, the
-repository will be added to your live system's #{/etc/apt/sources.list.d/}#
-directory.
+Se si aggiunge la stessa riga in #{config/archives/live.list.binary}#, il
+repository verrà aggiunto alla directory #{/etc/apt/sources.list.d/}# del
+sistema live.
 
 Se il file esiste, saranno prelevati automaticamente.
 
-You should also put the GPG key used to sign the repository into
-#{config/archives/your-repository.gpg.{binary,chroot}}# files.
+Bisogna inoltre inserire la chiave GPG usata per firmare il repository nei
+file #{config/archives/vostro-repository.gpg.{binary,chroot}}#.
 
-*{Note:}* some preconfigured package repositories are available for easy selection through the #{--archives}# option, e.g. for enabling live snapshots, a simple command is enough to enable it:
+*{Nota:}* alcuni repository di pacchetti preconfigurati sono disponibili per una facile selezione attraverso l'opzione #{--archives}#, per abilitare gli snapshot live è sufficiente un semplice comando:
 
 code{
 
@@ -153,12 +158,12 @@ code{
 
 2~choosing-packages-to-install Scegliere i pacchetti da installare
 
-There are a number of ways to choose which packages live-build will install
-in your image, covering a variety of different needs. You can simply name
-individual packages to install in a package list. You can also choose
-predefined lists of packages, or use APT tasks. And finally, you may place
-package files in your #{config/}# tree, which is well suited to testing of
-new or experimental packages before they are available from a repository.
+Ci sono diversi modi per scegliere quali pacchetti live-build installerà
+nell'immagine, coprendo una gamma di esigenze diverse. Si possono richiamare
+i singoli pacchetti da un elenco o scegliere elenchi predefiniti di
+pacchetti oppure utilizzare i task di APT. E infine inserire i file dei
+pacchetti nell'albero #{config/}#, che ben si adatta a provare pacchetti
+nuovi o sperimentali prima che siano disponibili in un repository.
 
 3~package-lists Elenchi di pacchetti
 
@@ -171,12 +176,11 @@ principali ambienti desktop e alcuni elenchi per uso speciale, così come
 elenchi standard sui quali vi si basano altri. È inoltre possibile fornire i
 propri elenchi o usare una combinazione di entrambi.
 
-*{Note:}* The behaviour of live-build when specifying a package that does not exist is determined by your choice of APT utility. See {Choosing apt or aptitude}#choosing-apt-or-aptitude for more details.
-
+*{Nota:}* quando si specifica un pacchetto che non esiste, il comportamento di live-build è determinato dalla scelta delle utilità di APT. Per ulteriori dettagli si veda {Scegliere apt o aptitude}#choosing-apt-or-aptitude.
 3~ Elenchi predefiniti di pacchetti
 
-The simplest way to use lists is to specify one or more predefined lists
-with the #{--package-lists}# option. For example:
+Il modo più semplice per usare gli elenchi è di specificarne uno o più con
+l'opzione #{--package-lists}#. Per esempio:
 
 code{
 
@@ -184,19 +188,19 @@ code{
 
 }code
 
-The default location for the list files on your system is
-#{/usr/share/live/build/package-lists/}#. To determine the packages in a
-given list, read the corresponding file, paying attention to included files
-and conditionals as described in the following sections.
+Il percorso predefinito per i file elenco sul sistema è
+#{/usr/share/live/build/package-lists/}#. Per determinare i pacchetti in un
+dato elenco, si legga il file corrispondente, prestando attenzione ai file
+inclusi e condizionali come descritto nella sezioni seguenti.
 
 3~ Elenchi locali dei pacchetti
 
-You may supplement the predefined lists using local package lists stored in
-#{config/package-lists/}#.
+Gli elenchi predefiniti si possono integrare usando quelli locali dei
+pacchetti in #{config/package-lists/}#.
 
-Package lists that exist in this directory need to have a #{.list}# suffix
-in order to be processed, and then an additional stage suffix, #{.chroot}#
-or #{.binary}# to indicate which stage the list is for.
+Per essere processate, gli elenchi dei pacchetti che si trovano in questa
+directory devono avere un suffisso #{.list}# e un suffisso #{.chroot}# o
+#{.binary}# aggiuntivo per indicare per quale fase sia l'elenco.
 
 *{Note:}* If you don't specify the stage suffix, the list will be used for both stages. Normally, you want to specify #{.list.chroot}# so that the packages will only be installed in the live filesystem and not have an extra copy of the #{.deb}# placed on the media.
 
@@ -211,13 +215,14 @@ list, simply use the #{.list}# suffix by itself.
 
 3~ Estendere un'elenco di pacchetti usando gli include
 
-The package lists that are included with live-build make extensive use of
-includes. Refer to these in the #{/usr/share/live/build/package-lists/}#
-directory, as they serve as good examples of how to write your own lists.
+Gli elenchi di pacchetti inclusi in live-build fanno un notevole uso di
+include. Far riferimento a questi nella directory
+#{/usr/share/live/build/package-lists/}#, in quanto portano ottimi esempi su
+come scriverne di propri.
 
-For example, to make a list that includes the predefined #{gnome}# list plus
-iceweasel, create #{config/package-lists/my.list.chroot}# with the following
-contents:
+Per esempio, per creare un elenco che includa quello predefinito di
+#{gnome}#più iceweasel, creare #{config/package-lists/mio.elenco.chroot}#
+con i seguenti contenuti:
 
 code{
 
@@ -285,13 +290,13 @@ Le condizioni nidificate non sono supportate.
 
 3~ Task
 
-The Debian Installer offers the user choices of a number of preselected
-lists of packages, each one focused on a particular kind of system, or task
-a system may be used for, such as "Graphical desktop environment", "Mail
-server" or "Laptop". These lists are called "tasks" and are supported by APT
-through the "Task:" field. You can specify one or more tasks in live-build
-by putting them in a list in #{config/task-lists/}#, as in the example
-below.
+L'installatore Debian offre all'utente la scelta di vari elenchi di
+pacchetti pre-selezionati, ognuno dei quali focalizzato su un particolare
+tipo di sistema, o il tipo di attività per cui utilizzarlo, come "Graphical
+desktop environment", "Mail server" o "Laptop". Questi elenchi sono chiamati
+"task" e sono gestiti da APT attraverso il campo"Task:". In live-build si
+possono specificare uno o più task inserendoli in una lista in
+#{config/task-lists/}#, come nell'esempio seguente.
 
 code{
 
@@ -307,15 +312,16 @@ con #{tasksel --task-packages}#.
 
 3~desktop-and-language-tasks Task per desktop e lingua
 
-Desktop and language tasks are special cases that need some extra planning
-and configuration. Live images are different from Debian Installer images in
-this respect. In the Debian Installer, if the medium was prepared for a
-particular desktop environment flavour, the corresponding task will be
-automatically installed. Thus, there are internal #{gnome-desktop}#,
-#{kde-desktop}#, #{lxde-desktop}# and #{xfce-desktop}# tasks, none of which
-are offered in #{tasksel}#'s menu. Likewise, there are no menu entries for
-tasks for languages, but the user's language choice during the install
-influences the selection of corresponding language tasks.
+I task per i desktop e la lingua sono un caso particolare che necessita di
+ulteriori pianificazioni e configurazioni e in questo senso le immagini live
+sono diverse da quelle dell'Installatore Debian. Nell'Installatore Debian,
+se il supporto è stato preparato per un particolare ambiente desktop, il
+corrispondente task verrà automaticamente installato. Perciò ci sono task
+#{gnome-desktop}#, #{kde-desktop}#, #{lxde-desktop}# e #{xfce-desktop}#
+interni, nessuno dei quali è offerto nel menu di #{tasksel}#. Allo stesso
+modo, non c'è nessuna voce nel menu per i task delle lingue, ma la scelta
+della lingua dell'utente durante l'installazione influenza la selezione dei
+corrispondenti task della lingua.
 
 When developing a desktop live image, the image typically boots directly to
 a working desktop, the choices of both desktop and default language having
@@ -324,11 +330,11 @@ Installer. That's not to say that a live image couldn't be built to support
 multiple desktops or multiple languages and offer the user a choice, but
 that is not live-build's default behaviour.
 
-Because there is no provision made automatically for language tasks, which
-include such things as language-specific fonts and input-method packages, if
-you want them, you need to specify them in your configuration. For example,
-a GNOME desktop image containing support for Japanese might include these
-tasks:
+Poiché automaticamente non viene fatta alcuna preparazione sui task della
+lingua, i quali includono cose come caratteri specifici per la lingua e
+pacchetti per i metodi di input, se li si vogliono, vanno specificati nella
+configurazione. Per esempio, un'immagine del desktop GNOME contenente il
+supporto per il giapponese può includere questi task:
 
 code{
 
@@ -375,36 +381,37 @@ _* #{packages.chroot}#
 
 _* Utilizzare repository APT personalizzati
 
-Using #{packages.chroot}# is simpler to achieve and useful for "one-off"
-customizations but has a number of drawbacks, whilst using a custom APT
-repository is more time-consuming to set up.
+Usando #{packages.chroot}# è più semplice da ottenere e utile per una
+personalizzazione "una tantum" ma ha una serie di svantaggi, mentre un
+repository APT personalizzato è più laborioso da configurare.
 
-3~ Using #{packages.chroot}# to install custom packages
+3~ Utilizzare #{packages.chroot}# per installare pacchetti personalizzati
 
-To install a custom package, simply copy it to the
-#{config/packages.chroot/}# directory. Packages that are inside this
-directory will be automatically installed into the live system during build
-- you do not need to specify them elsewhere.
+Per installare un pacchetto personalizzato copiarlo nella directory
+#{config/packages.chroot/}#; i pacchetti al suo interno verranno installati
+automaticamente durante la creazione del sistema live, non è necessario
+specificarli altrove.
 
 I pacchetti *{devono}* essere nominati nel modo prescritto, un metodo
 semplice per farlo è usare #{dpkg-name}#.
 
-Using #{packages.chroot}# for installation of custom packages has
-disadvantages:
+L'utilizzo di #{packages.chroot}# per l'installazione di pacchetti
+personalizzati presenta degli svantaggi:
 
 _* non è possibile usare secure APT
 
-_* You must install all appropriate packages in the
-#{config/packages.chroot/}# directory.
+_* è necessario installare i pacchetti adeguati nella directory
+#{config/packages.chroot/}#.
 
 _* non si presta a salvare le configurazioni di Debian Live nel controllo di
 versione.
 
 3~ Utilizzare un repository APT per installare pacchetti personalizzati
 
-Unlike using #{packages.chroot}#, when using a custom APT repository you
-must ensure that you specify the packages elsewhere. See {Choosing packages
-to install}#choosing-packages-to-install for details.
+A differenza di #{packages.chroot}#, quando si usa un repository APT
+personalizzato è necessario assicurarsi di specificare altrove i
+pacchetti. Per i dettagli si veda {Scegliere i pacchetti da
+installare}#choosing-packages-to-install.
 
 Sebbene creare un repository APT possa sembrare uno sforzo inutile,
 l'infrastruttura può facilmente essere riutilizzata in un secondo momento
@@ -426,12 +433,12 @@ veda {APT pinning}#apt-pinning per maggiori informazioni.
 
 2~ Configurare APT in fase di costruzione
 
-You can configure APT through a number of options applied only at build
-time. (APT configuration used in the running live system may be configured
-in the normal way for live system contents, that is, by including the
-appropriate configurations through #{config/includes.chroot/}#.) For a
-complete list, look for options starting with #{apt}# in the #{lb_config}#
-man page.
+APT è configurabile tramite una serie di opzioni applicate solo in fase di
+costruzione (la configurazione di APT utilizzata nel sistema live in
+esecuzione può essere configurata nel solito modo, ovvero includendo le
+impostazioni appropriate attraverso #{config/includes.chroot/}#). Per un
+elenco completo, cercare nel manuale di #{lb_config}# le opzioni che
+iniziano con #{apt}#.
 
 3~choosing-apt-or-aptitude Scegliere apt o aptitude
 
@@ -509,9 +516,9 @@ di #{apt}# e #{aptitude}# per i dettagli.
 
 3~apt-pinning APT pinning
 
-For background, please first read the #{apt_preferences(5)}# man page. APT
-pinning can be configured either for build time, or else for run time. For
-the former, create #{config/chroot_apt/preferences}#. For the latter, create
+Si prega di leggere prima il manuale di #{apt_preferences(5)}#. Il pinning
+può essere configurato sia in fase di costruzione sia di esecuzione; per la
+prima creare #{config/chroot_apt/preferences}# mentre per l'ultima creare
 #{config/includes.chroot/etc/apt/preferences}#.
 
 Nell'ipotesi di creare un sistema live Wheezy e avendo la necessità di
@@ -544,14 +551,14 @@ $ lb config --distribution wheezy
 
 }code
 
-Negative pin priorities will prevent a package from being installed, as in
-the case where you do not want a package that is recommended by another
-package. Suppose you are building an LXDE image using #{--package-lists
-lxde}# option, but don't want the user prompted to store wifi passwords in
-the keyring. This list includes #{gdm}#, which depends on #{gksu}#, which in
-turn recommends #{gnome-keyring}#. So you want to omit the recommended
-#{gnome-keyring}# package. This can be done by adding the following stanza
-to #{config/chroot_apt/preferences}#:
+Un valore negativo della priorità evita che un pacchetto venga installato,
+come nel caso in cui non se ne voglia uno raccomandato da un altro. Si
+suppone di costruire un'immagine di LXDE utilizzando l'opzione
+#{--package-lists lxde}# ma non si desidera che all'utente venga richiesto
+di salvare la password del wifi nel portachiavi. L'elenco include #{gdm}#
+che dipende da #{gksu}# che a sua volta raccomanda #{gnome-keyring}#, in
+questo caso si vorrà omettere il pacchetto #{gnome-keyring}# aggiungendo a
+#{config/chroot_apt/preferences}# la seguente definizione:
 
 code{
 

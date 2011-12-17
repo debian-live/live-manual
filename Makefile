@@ -19,7 +19,7 @@ tidy:
 		sed -i -e 's|[ \t]*$$||' $${FILE}; \
 	done
 
-build:
+build: clean
 	#FIXME: do a proper dependency-based build
 	#FORMATS = epub html odf pdf txt
 	#...
@@ -28,52 +28,41 @@ build:
 	#etc.
 
 	@# FIXME: sisu-concordance sisu-pg sisu-sqlite
+	cd $(CURDIR)/manual; \
+	sisu --configure
 	for LANGUAGE in $(LANGUAGES); \
 	do \
-		cd $(CURDIR)/manual/$${LANGUAGE}; \
-		sisu-epub -v live-manual.ssm; \
-		sisu-html -v live-manual.ssm; \
-		sisu-odf -v live-manual.ssm; \
-		sisu-pdf -v live-manual.ssm; \
-		sisu-txt -v live-manual.ssm; \
-	done
+		cd $(CURDIR)/manual; \
+		sisu-epub -v $${LANGUAGE}/live-manual.ssm; \
+		sisu-html -v $${LANGUAGE}/live-manual.ssm; \
+		sisu-odf -v $${LANGUAGE}/live-manual.ssm; \
+		sisu-pdf -v $${LANGUAGE}/live-manual.ssm; \
+		sisu-txt -v $${LANGUAGE}/live-manual.ssm; \
+	done; \
+	sisu --manifest -v $${LANGUAGE}/live-manual.ssm
 #               for FILE in build/manual/live-manual/*.$${LANGUAGE}.html; \
 #		do \
 #			../bin/fix-sisu-html.rb $${FILE}; \
 #			([ $(DEBUG) -gt 0 ] || rm -f $${FILE}~); \
 #		done; \
 
-autobuild: clean build
-	rm -rf build
-	cp -a html build
-	cp -a manual/en/_sisu build
-
+autobuild: build
+	
+	cp -a html/index.html build/manual;\
+	cd build/manual && rm -f toc.html; \
+	
 	set +e; for LANGUAGE in $(LANGUAGES); \
 	do \
-		FROMDIR=$(CURDIR)/manual/$${LANGUAGE}/build/manual; \
-		TODIR=$(CURDIR)/build; \
-		mkdir -p $${TODIR}; \
+		FROMDIR=$(CURDIR)/manual/$${LANGUAGE}; \
+		TODIR=$(CURDIR)/build/manual/$${LANGUAGE}; \
+		rm -rf manifest;\
+		cp $${FROMDIR}/index.html.in $${TODIR};\
 		cd $${TODIR}; \
-		mkdir -p epub; \
-		cp $${FROMDIR}/epub/live-manual.$${LANGUAGE}.epub epub; \
-		mkdir -p html; \
-		cp $${FROMDIR}/live-manual/*.$${LANGUAGE}.html html; \
-		mv html/scroll.$${LANGUAGE}.html html/live-manual.$${LANGUAGE}.html; \
-		rm -f html/toc.$${LANGUAGE}.html html/sisu_manifest.$${LANGUAGE}.html html/metadata.$${LANGUAGE}.html; \
-		mkdir -p odf; \
-		cp $${FROMDIR}/live-manual/opendocument.$${LANGUAGE}.odt odf/live-manual.$${LANGUAGE}.odt; \
-		mkdir -p pdf; \
-		cp $${FROMDIR}/live-manual/landscape.$${LANGUAGE}.a4.pdf pdf/live-manual.landscape-a4.$${LANGUAGE}.pdf; \
-		cp $${FROMDIR}/live-manual/portrait.$${LANGUAGE}.a4.pdf pdf/live-manual.portrait-a4.$${LANGUAGE}.pdf; \
-		cp $${FROMDIR}/live-manual/landscape.$${LANGUAGE}.letter.pdf pdf/live-manual.landscape-letter.$${LANGUAGE}.pdf; \
-		cp $${FROMDIR}/live-manual/portrait.$${LANGUAGE}.letter.pdf pdf/live-manual.portrait-letter.$${LANGUAGE}.pdf; \
-		mkdir -p txt; \
-		cp $${FROMDIR}/live-manual/plain.$${LANGUAGE}.txt txt/live-manual.$${LANGUAGE}.txt; \
 		sed -e "s|@DATE_BUILD@|$(shell LC_ALL=C date -R)|" \
 		    -e "s|@DATE_CHANGE@|$(shell LC_ALL=C git log | grep -m1 Date | awk -FDate: '{ print $2 }' | sed -e 's|  ||g')|" \
-		    $${FROMDIR}/../../index.html.in > index.$${LANGUAGE}.html; \
+		    $${TODIR}/index.html.in > index.html && rm $${TODIR}/index.html.in; \
 	done
-
+	
 commit: tidy test
 	$(MAKE) -C manual rebuild
 
@@ -91,37 +80,24 @@ commit: tidy test
 	@echo "  * git push"
 
 install:
-
-	for LANGUAGE in $(LANGUAGES); \
-	do \
-		FROMDIR=$(CURDIR)/manual/$${LANGUAGE}/build/manual; \
+		FROMDIR=$(CURDIR)/build/manual; \
 		TODIR=$(DESTDIR)/usr/share/doc/live-manual; \
-		mkdir -p $${TODIR}; \
-		cd $${TODIR}; \
-		mkdir -p epub; \
-		cp $${FROMDIR}/epub/live-manual.$${LANGUAGE}.epub epub; \
-		mkdir -p html; \
-		cp $${FROMDIR}/live-manual/*.$${LANGUAGE}.html html; \
-		mv html/scroll.$${LANGUAGE}.html html/live-manual.$${LANGUAGE}.html; \
-		rm -f html/toc.$${LANGUAGE}.html html/sisu_manifest.$${LANGUAGE}.html html/metadata.$${LANGUAGE}.html; \
-		mkdir -p odf; \
-		cp $${FROMDIR}/live-manual/opendocument.$${LANGUAGE}.odt odf/live-manual.$${LANGUAGE}.odt; \
-		mkdir -p txt; \
-		cp $${FROMDIR}/live-manual/plain.$${LANGUAGE}.txt txt/live-manual.$${LANGUAGE}.txt; \
-		mkdir -p pdf; \
-		cp $${FROMDIR}/live-manual/landscape.$${LANGUAGE}.a4.pdf pdf/live-manual.landscape-a4.$${LANGUAGE}.pdf; \
-		cp $${FROMDIR}/live-manual/portrait.$${LANGUAGE}.a4.pdf pdf/live-manual.portrait-a4.$${LANGUAGE}.pdf; \
-		cp $${FROMDIR}/live-manual/landscape.$${LANGUAGE}.letter.pdf pdf/live-manual.landscape-letter.$${LANGUAGE}.pdf; \
-		cp $${FROMDIR}/live-manual/portrait.$${LANGUAGE}.letter.pdf pdf/live-manual.portrait-letter.$${LANGUAGE}.pdf; \
+		DESTDIR=/usr/share/doc/live-manual; \
+	cp -ra $${FROMDIR} $${DESTDIR}; \
+	cd $${DESTDIR}; \
+	rm -f index.html toc.html; \
+	set +e; for LANGUAGE in $(LANGUAGES); \
+	do \
+		cd $${DESTDIR}/$${LANGUAGE} && rm -rf manifest; \
 	done
+		
 
-	cp -a manual/en/_sisu $(DESTDIR)/usr/share/doc/live-manual
 
 uninstall:
 	rm -rf $(DESTDIR)/usr/share/doc/live-manual
 
 clean:
-	rm -rf manual/*/build
+	rm -rf build
 
 distclean: clean
 	rm -rf build

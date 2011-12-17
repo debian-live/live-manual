@@ -41,14 +41,15 @@ build: po4a.cfg
 	fi
 
 	po4a --keep 0 --no-backups --package-name live-manual $(PO4A_FLAGS) po4a.cfg
-
-	for LANGUAGE in $(LANGUAGES); \
-	do \
-		cp -a en/_sisu $${LANGUAGE}; \
-	done
+	#Somebody please delete these commented lines when cleaning the file.
+	#for LANGUAGE in $(LANGUAGES); \
+	#do \
+	#	cp -a en/_sisu $${LANGUAGE}; \
+	#done
 
 clean:
 	rm -f po/*/*.po~
+	rm -rf ../build
 
 distclean: clean
 	rm -f po4a.cfg

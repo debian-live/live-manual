@@ -46,21 +46,19 @@ build: clean
 #			([ $(DEBUG) -gt 0 ] || rm -f $${FILE}~); \
 #		done; \
 
-autobuild: build
+autobuild: build	
 	
-	cp -a html/index.html build/manual;\
-	cd build/manual && rm -f toc.html; \
+	cd build/manual && rm -rf manifest toc.html; \
 	
 	set +e; for LANGUAGE in $(LANGUAGES); \
 	do \
 		FROMDIR=$(CURDIR)/manual/$${LANGUAGE}; \
-		TODIR=$(CURDIR)/build/manual/$${LANGUAGE}; \
-		rm -rf manifest;\
-		cp $${FROMDIR}/index.html.in $${TODIR};\
-		cd $${TODIR}; \
+		TODIR=$(CURDIR)/build/manual; \
+		cp $${FROMDIR}/index.html.in $${TODIR}; \
 		sed -e "s|@DATE_BUILD@|$(shell LC_ALL=C date -R)|" \
 		    -e "s|@DATE_CHANGE@|$(shell LC_ALL=C git log | grep -m1 Date | awk -FDate: '{ print $2 }' | sed -e 's|  ||g')|" \
-		    $${TODIR}/index.html.in > index.html && rm $${TODIR}/index.html.in; \
+		$${TODIR}/index.html.in > $${TODIR}/index.$${LANGUAGE}.html; \
+		rm $${TODIR}/index.html.in; \
 	done
 	
 commit: tidy test
@@ -82,15 +80,9 @@ commit: tidy test
 install:
 		FROMDIR=$(CURDIR)/build/manual; \
 		TODIR=$(DESTDIR)/usr/share/doc/live-manual; \
-		DESTDIR=/usr/share/doc/live-manual; \
-	cp -ra $${FROMDIR} $${DESTDIR}; \
-	cd $${DESTDIR}; \
-	rm -f index.html toc.html; \
-	set +e; for LANGUAGE in $(LANGUAGES); \
-	do \
-		cd $${DESTDIR}/$${LANGUAGE} && rm -rf manifest; \
-	done
-		
+	cd $${FROMDIR} && rm -rf manifest index.html toc.html; \
+	cp -ra $${FROMDIR} $${TODIR}; \
+	
 
 
 uninstall:

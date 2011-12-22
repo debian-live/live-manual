@@ -81,7 +81,8 @@ install:
 		FROMDIR=$(CURDIR)/build/manual; \
 		TODIR=$(DESTDIR)/usr/share/doc/live-manual; \
 	cd $${FROMDIR} && rm -rf manifest index.html toc.html; \
-	cp -ra $${FROMDIR} $${TODIR}; \
+	mkdir -p $${TODIR}; \
+	cp -a $(CURDIR)/build/manual/* $(DESTDIR)/usr/share/doc/live-manual	
 	
 
 

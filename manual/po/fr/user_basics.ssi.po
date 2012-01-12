@@ -159,20 +159,6 @@ msgstr "1~the-basics Les bases"
 
 #. type: Plain text
 #: en/user_basics.ssi:6
-#, fuzzy
-#| msgid ""
-#| "This chapter contains a brief overview of the build process and "
-#| "instructions for using the three most commonly used image types. The most "
-#| "versatile image type, #{iso-hybrid}#, may be used on a virtual machine, "
-#| "optical media or USB portable storage device. In certain special cases, "
-#| "such as the use of persistence, #{usb-hdd}# may be more suitable for USB "
-#| "devices. The chapter finishes with instructions for building and using a #"
-#| "{net}# type image, which is a bit more involved due to the setup required "
-#| "on the server. This is a slightly advanced topic for anyone who is not "
-#| "familiar already with netbooting, but is included here because once the "
-#| "setup is done, it is a very convenient way to test and deploy images for "
-#| "booting on the local network without the hassle of dealing with image "
-#| "media."
 msgid ""
 "This chapter contains a brief overview of the build process and instructions "
 "for using the three most commonly used image types. The most versatile image "
@@ -191,7 +177,7 @@ msgstr ""
 "utilisées. Le type d'image le plus polyvalent, #{iso-hybrid}#, peut être "
 "utilisé sur une machine virtuelle, supports optiques ou un périphérique USB "
 "de stockage portable. Dans certains cas particuliers, tels que l'utilisation "
-"de la persistance, le type #{usb-hdd}# peut être plus approprié pour les "
+"de la persistance, le type #{hdd}# peut être plus approprié pour les "
 "périphériques USB. Le chapitre se termine avec des instructions pour la "
 "construction et l'utilisation d'une image #{net}# , qui est un peu plus "
 "compliqué en raison de la configuration requise sur le serveur. C'est un "
@@ -707,23 +693,11 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_basics.ssi:146
-#, fuzzy
-#| msgid "2~building-usb-hdd Building a USB/HDD image"
 msgid "2~building-hdd Building an HDD image"
-msgstr "2~building-usb-hdd Construction d'une image USB/HDD"
+msgstr "2~building-hdd Construction d'une image HDD"
 
 #. type: Plain text
 #: en/user_basics.ssi:148
-#, fuzzy
-#| msgid ""
-#| "Building a USB/HDD image is similar to ISO hybrid in all respects except "
-#| "you specify #{-b usb-hdd}# and the resulting filename is #{binary.img}# "
-#| "which cannot be burnt to optical media. It is suitable for booting from "
-#| "USB sticks, USB hard drives, and various other portable storage devices. "
-#| "Normally, an ISO hybrid image can be used for this purpose instead, but "
-#| "if you have a BIOS which does not handle hybrid images properly, or want "
-#| "to use the remaining space on the media for some purpose, such as a "
-#| "persistence partition, you need a USB/HDD image."
 msgid ""
 "Building an HDD image is similar to ISO hybrid in all respects except you "
 "specify #{-b hdd}# and the resulting filename is #{binary.img}# which cannot "
@@ -734,15 +708,15 @@ msgid ""
 "space on the media for some purpose, such as a persistence partition, you "
 "need an HDD image."
 msgstr ""
-"La construction d'une image USB/HDD est similaire à une ISO hybride à tous "
-"les égards, sauf que vous spécifiez #{-b usb-hdd}# et le nom du fichier "
-"résultant est #{binary.img}# qui ne peut être brûlé sur des supports "
-"optiques. Il convient pour le démarrage à partir de clés USB, disques durs "
-"USB, et divers autres dispositifs de stockage portables. Normalement, une "
-"image ISO hybride peut être utilisé à cette fin au lieu, mais si vous avez "
-"un BIOS qui ne gère pas correctement des images hybrides, ou si vous voulez "
-"utiliser l'espace disponible sur le support à certaines fins, tel que la "
-"persistance d'une partition, vous devez utiliser une image USB/HDD. "
+"La construction d'une image HDD est similaire à une ISO hybride à tous les "
+"régards, sauf que vous spécifiez #{-b hdd}# et le nom du fichier résultant "
+"est #{binary.img}# qui ne peut être brûlé sur des supports optiques. Il "
+"convient pour le démarrage à partir de clés USB, disques durs USB, et divers "
+"autres dispositifs de stockage portables. Normalement, une image ISO hybride "
+"peut être utilisé à cette fin au lieu, mais si vous avez un BIOS qui ne gère "
+"pas correctement des images hybrides, ou si vous voulez utiliser l'espace "
+"disponible sur le support à certaines fins, tel que la persistance d'une "
+"partition, vous devez utiliser une image HDD. "
 
 #. type: Plain text
 #: en/user_basics.ssi:150
@@ -763,23 +737,18 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_basics.ssi:158
-#, fuzzy
-#| msgid ""
-#| "Run the #{lb config}# command as before, except this time specifying the "
-#| "USB/HDD image type:"
 msgid ""
 "Run the #{lb config}# command as before, except this time specifying the HDD "
 "image type:"
 msgstr ""
 "Exécutez la commande #{lb config}# comme avant, sauf que cette fois en "
-"spécifiant le type d'image USB/HDD:"
+"spécifiant le type d'image HDD:"
 
 #. type: Plain text
 #: en/user_basics.ssi:162
-#, fuzzy, no-wrap
-#| msgid " $ lb config\n"
+#, no-wrap
 msgid " $ lb config -b hdd\n"
-msgstr " $ lb config\n"
+msgstr ""
 
 #. type: Plain text
 #: en/user_basics.ssi:166 en/user_basics.ssi:234
@@ -797,20 +766,11 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_basics.ssi:176
-#, fuzzy
-#| msgid "2~using-usb-hdd-image Using a USB/HDD image"
 msgid "2~using-hdd-image Using an HDD image"
-msgstr "2~using-usb-hdd-image Utiliser une image USB/HDD"
+msgstr "2~using-hdd-image Utiliser une image HDD"
 
 #. type: Plain text
 #: en/user_basics.ssi:178
-#, fuzzy
-#| msgid ""
-#| "The generated binary image contains a VFAT partition and the syslinux "
-#| "bootloader, ready to be directly written on a USB stick. Since using a "
-#| "USB/HDD image is just like using an ISO hybrid image on USB, follow the "
-#| "instructions in {Using an ISO hybrid live image}#using-iso-hybrid, except "
-#| "use the filename #{binary.img}# instead of #{binary-hybrid.iso}#."
 msgid ""
 "The generated binary image contains a VFAT partition and the syslinux "
 "bootloader, ready to be directly written on a USB stick. Since using an HDD "
@@ -820,17 +780,15 @@ msgid ""
 msgstr ""
 "L'image binaire générée contient une partition VFAT et le chargeur de "
 "démarrage syslinux, prêtes à être écrites directement sur une clé USB. Comme "
-"l'utilisation d'une image USB/HDD est juste comme l'utilisation d'une image "
-"ISO hybride sur USB, suivez les instructions {Utiliser une image live ISO "
+"l'utilisation d'une image HDD est juste comme l'utilisation d'une image ISO "
+"hybride sur USB, suivez les instructions {Utiliser une image live ISO "
 "hybride}#using-iso-hybrid, à l'exception du nom de fichier #{binary.img}# en "
 "lieu de #{binary-hybrid.iso}#."
 
 #. type: Plain text
 #: en/user_basics.ssi:180
-#, fuzzy
-#| msgid "3~testing-usb-hdd-with-qemu Testing a USB/HDD image with Qemu"
 msgid "3~testing-hdd-with-qemu Testing an HDD image with Qemu"
-msgstr "3~testing-usb-hdd-with-qemu Test d'une image USB/HDD avec Qemu"
+msgstr "3~testing-hdd-with-qemu Test d'une image HDD avec Qemu"
 
 #. type: Plain text
 #: en/user_basics.ssi:182
@@ -955,14 +913,6 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_basics.ssi:232
-#, fuzzy
-#| msgid ""
-#| "In contrast with the ISO and USB/HDD images, netbooting does not, itself, "
-#| "serve the filesystem image to the client, so the files must be served via "
-#| "NFS. The #{--net-root-path}# and #{--net-root-server}# options specify "
-#| "the location and server, respectively, of the NFS server where the "
-#| "filesytem image will be located at boot time. Make sure these are set to "
-#| "suitable values for your network and server."
 msgid ""
 "In contrast with the ISO and HDD images, netbooting does not, itself, serve "
 "the filesystem image to the client, so the files must be served via NFS. The "
@@ -971,7 +921,7 @@ msgid ""
 "be located at boot time. Make sure these are set to suitable values for your "
 "network and server."
 msgstr ""
-"Contrairement à les images ISO et USB/HDD netbooting ne serve pas l'image du "
+"Contrairement à les images ISO et HDD netbooting ne serve pas l'image du "
 "système de fichiers pour le client, afin que les fichiers doivent être "
 "servis via NFS. Les options #{--net-root-path}# et #{--net-root-server}# "
 "spécifien l'emplacement et le serveur, respectivement, du serveur NFS sur "

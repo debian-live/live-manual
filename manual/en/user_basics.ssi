@@ -2,7 +2,7 @@
 
 1~the-basics The basics
 
-This chapter contains a brief overview of the build process and instructions for using the three most commonly used image types. The most versatile image type, #{iso-hybrid}#, may be used on a virtual machine, optical media or USB portable storage device. In certain special cases, such as the use of persistence, #{usb-hdd}# may be more suitable for USB devices. The chapter finishes with instructions for building and using a #{net}# type image, which is a bit more involved due to the setup required on the server. This is a slightly advanced topic for anyone who is not familiar already with netbooting, but is included here because once the setup is done, it is a very convenient way to test and deploy images for booting on the local network without the hassle of dealing with image media.
+This chapter contains a brief overview of the build process and instructions for using the three most commonly used image types. The most versatile image type, #{iso-hybrid}#, may be used on a virtual machine, optical media or USB portable storage device. In certain special cases, such as the use of persistence, #{hdd}# may be more suitable for USB devices. The chapter finishes with instructions for building and using a #{net}# type image, which is a bit more involved due to the setup required on the server. This is a slightly advanced topic for anyone who is not familiar already with netbooting, but is included here because once the setup is done, it is a very convenient way to test and deploy images for booting on the local network without the hassle of dealing with image media.
 
 Throughout the chapter, we will often refer to the default filenames produced by live-build. If you are downloading a prebuilt image instead, the actual filenames may vary.
 
@@ -142,9 +142,9 @@ code{
 
 }code
 
-2~building-usb-hdd Building a USB/HDD image
+2~building-hdd Building an HDD image
 
-Building a USB/HDD image is similar to ISO hybrid in all respects except you specify #{-b usb-hdd}# and the resulting filename is #{binary.img}# which cannot be burnt to optical media. It is suitable for booting from USB sticks, USB hard drives, and various other portable storage devices. Normally, an ISO hybrid image can be used for this purpose instead, but if you have a BIOS which does not handle hybrid images properly, or want to use the remaining space on the media for some purpose, such as a persistence partition, you need a USB/HDD image.
+Building an HDD image is similar to ISO hybrid in all respects except you specify #{-b hdd}# and the resulting filename is #{binary.img}# which cannot be burnt to optical media. It is suitable for booting from USB sticks, USB hard drives, and various other portable storage devices. Normally, an ISO hybrid image can be used for this purpose instead, but if you have a BIOS which does not handle hybrid images properly, or want to use the remaining space on the media for some purpose, such as a persistence partition, you need an HDD image.
 
 Note: if you created an ISO hybrid image with the previous example, you will need to clean up your working directory with the #{lb clean}# command (see {The lb clean command}#lb-clean):
 
@@ -154,11 +154,11 @@ code{
 
 }code
 
-Run the #{lb config}# command as before, except this time specifying the USB/HDD image type:
+Run the #{lb config}# command as before, except this time specifying the HDD image type:
 
 code{
 
- $ lb config -b usb-hdd
+ $ lb config -b hdd
 
 }code
 
@@ -172,11 +172,11 @@ code{
 
 When the build finishes, a #{binary.img}# file should be present in the current directory.
 
-2~using-usb-hdd-image Using a USB/HDD image
+2~using-hdd-image Using an HDD image
 
-The generated binary image contains a VFAT partition and the syslinux bootloader, ready to be directly written on a USB stick. Since using a USB/HDD image is just like using an ISO hybrid image on USB, follow the instructions in {Using an ISO hybrid live image}#using-iso-hybrid, except use the filename #{binary.img}# instead of #{binary-hybrid.iso}#.
+The generated binary image contains a VFAT partition and the syslinux bootloader, ready to be directly written on a USB stick. Since using an HDD image is just like using an ISO hybrid image on USB, follow the instructions in {Using an ISO hybrid live image}#using-iso-hybrid, except use the filename #{binary.img}# instead of #{binary-hybrid.iso}#.
 
-3~testing-usb-hdd-with-qemu Testing a USB/HDD image with Qemu
+3~testing-hdd-with-qemu Testing an HDD image with Qemu
 
 First, install QEMU as described above in {Testing an ISO image with QEMU}#testing-iso-with-qemu. Then run #{kvm}# or #{qemu}#, depending on which version your host system needs, specifying #{binary.img}# as the first hard drive.
 
@@ -228,7 +228,7 @@ code{
 
 }code
 
-In contrast with the ISO and USB/HDD images, netbooting does not, itself, serve the filesystem image to the client, so the files must be served via NFS. The #{--net-root-path}# and #{--net-root-server}# options specify the location and server, respectively, of the NFS server where the filesytem image will be located at boot time. Make sure these are set to suitable values for your network and server.
+In contrast with the ISO and HDD images, netbooting does not, itself, serve the filesystem image to the client, so the files must be served via NFS. The #{--net-root-path}# and #{--net-root-server}# options specify the location and server, respectively, of the NFS server where the filesytem image will be located at boot time. Make sure these are set to suitable values for your network and server.
 
 Now build the image with the #{lb build}# command:
 

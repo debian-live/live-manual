@@ -62,40 +62,39 @@ also modifies live-build behaviour to suit the derivatives.
 
 The Debian archive is replicated across a large network of mirrors around
 the world so that people in each region can choose a nearby mirror for best
-download speed. Each of the #{--parent-mirror-*}# options governs which
+download speed. Each of the #{--mirror-*}# options governs which
 distribution mirror is used at various stages of the build. Recall from
 {Stages of the build}#stages-of-the-build that the *bootstrap* stage is when
 the chroot is initially populated by debootstrap with a minimal system, and
 the *chroot* stage is when the chroot used to construct the live system's
 filesystem is built. Thus, the corresponding mirror switches are used for
-those stages, and later, in the *binary* stage, the
-#{--parent-mirror-binary}# and #{--parent-mirror-binary-security}# values
-are used, superceding any mirrors used in an earlier stage.
+those stages, and later, in the *binary* stage, the #{--mirror-binary}# and
+#{--mirror-binary-security}# values are used, superceding any mirrors used
+in an earlier stage.
 
 3~distribution-mirrors-build-time Distribution mirrors used at build time
 
 To set the distribution mirrors used at build time to point at a local
-mirror, it is sufficient to set #{--parent-mirror-bootstrap}#,
-#{--parent-mirror-chroot-security}# and #{--parent-mirror-chroot-backports}#
-as follows.
+mirror, it is sufficient to set #{--mirror-bootstrap}#,
+#{--mirror-chroot-security}# and #{--mirror-chroot-backports}# as follows.
 
 code{
 
- $ lb config --parent-mirror-bootstrap http://localhost/debian/ \
-             --parent-mirror-chroot-security http://localhost/debian-security/ \
-	     --parent-mirror-chroot-backports http://localhost/debian-backports/
+ $ lb config --mirror-bootstrap http://localhost/debian/ \
+             --mirror-chroot-security http://localhost/debian-security/ \
+	     --mirror-chroot-backports http://localhost/debian-backports/
 
 }code
 
-The chroot mirror, specified by #{--parent-mirror-chroot}#, defaults to the
-#{--parent-mirror-bootstrap}# value.
+The chroot mirror, specified by #{--mirror-chroot}#, defaults to the
+#{--mirror-bootstrap}# value.
 
 3~ Distribution mirrors used at run time
 
-The #{--parent-mirror-binary*}# options govern the distribution mirrors
-placed in the binary image. These may be used to install additional packages
-while running the live system. The defaults employ #{cdn.debian.net}#, a
-service that chooses a geographically close mirror based on the user's IP
+The #{--mirror-binary*}# options govern the distribution mirrors placed in
+the binary image. These may be used to install additional packages while
+running the live system. The defaults employ #{cdn.debian.net}#, a service
+that chooses a geographically close mirror based on the user's IP
 number. This is a suitable choice when you cannot predict which mirror will
 be best for all of your users. Or you may specify your own values as shown
 in the example below. An image built from this configuration would only be
@@ -103,8 +102,8 @@ suitable for users on a network where "#{mirror}#" is reachable.
 
 code{
 
- $ lb config --parent-mirror-binary http://mirror/debian/ \
-             --parent-mirror-binary-security http://mirror/debian-security/
+ $ lb config --mirror-binary http://mirror/debian/ \
+             --mirror-binary-security http://mirror/debian-security/
 
 }code
 
@@ -115,9 +114,9 @@ is available in your target distribution. These may be, for example, for
 backports, experimental or custom packages. To configure additional
 repositories, create #{config/archives/your-repository.list.chroot}#, and/or
 #{config/archives/your-repository.list.binary}# files. As with the
-#{--parent-mirror-*}# options, these govern the repositories used in the
-*chroot* stage when building the image, and in the *binary* stage, i.e. for
-use when running the live system.
+#{--mirror-*}# options, these govern the repositories used in the *chroot*
+stage when building the image, and in the *binary* stage, i.e. for use when
+running the live system.
 
 For example, #{config/archives/live.list.chroot}# allows you to install
 packages from the debian live snapshot repository at live system build time.

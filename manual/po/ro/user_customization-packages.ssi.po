@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 2.0.0\n"
-"POT-Creation-Date: 2012-01-07 15:40+0100\n"
+"POT-Creation-Date: 2012-01-18 18:00-0400\n"
 "PO-Revision-Date: 2010-10-22 08:58-0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -35,6 +35,7 @@ msgstr ""
 #: en/user_basics.ssi:218 en/user_basics.ssi:226 en/user_basics.ssi:236
 #: en/user_basics.ssi:254 en/user_basics.ssi:282 en/user_basics.ssi:298
 #: en/user_basics.ssi:306 en/user_basics.ssi:326 en/user_basics.ssi:351
+#: en/user_customization-binary.ssi:16 en/user_customization-binary.ssi:27
 #: en/user_customization-contents.ssi:26 en/user_customization-contents.ssi:35
 #: en/user_customization-contents.ssi:54 en/user_customization-contents.ssi:66
 #: en/user_customization-installer.ssi:32
@@ -100,6 +101,7 @@ msgstr "code{"
 #: en/user_basics.ssi:222 en/user_basics.ssi:230 en/user_basics.ssi:240
 #: en/user_basics.ssi:274 en/user_basics.ssi:286 en/user_basics.ssi:302
 #: en/user_basics.ssi:310 en/user_basics.ssi:337 en/user_basics.ssi:376
+#: en/user_customization-binary.ssi:23 en/user_customization-binary.ssi:33
 #: en/user_customization-contents.ssi:31 en/user_customization-contents.ssi:46
 #: en/user_customization-contents.ssi:58 en/user_customization-contents.ssi:70
 #: en/user_customization-installer.ssi:38
@@ -249,15 +251,15 @@ msgstr ""
 msgid ""
 "The Debian archive is replicated across a large network of mirrors around "
 "the world so that people in each region can choose a nearby mirror for best "
-"download speed. Each of the #{--parent-mirror-*}# options governs which "
+"download speed. Each of the #{--mirror-*}# options governs which "
 "distribution mirror is used at various stages of the build. Recall from "
 "{Stages of the build}#stages-of-the-build that the *bootstrap* stage is when "
 "the chroot is initially populated by debootstrap with a minimal system, and "
 "the *chroot* stage is when the chroot used to construct the live system's "
 "filesystem is built. Thus, the corresponding mirror switches are used for "
-"those stages, and later, in the *binary* stage, the #{--parent-mirror-binary}"
-"# and #{--parent-mirror-binary-security}# values are used, superceding any "
-"mirrors used in an earlier stage."
+"those stages, and later, in the *binary* stage, the #{--mirror-binary}# and #"
+"{--mirror-binary-security}# values are used, superceding any mirrors used in "
+"an earlier stage."
 msgstr ""
 
 #. type: Plain text
@@ -270,24 +272,24 @@ msgstr ""
 #: en/user_customization-packages.ssi:38
 msgid ""
 "To set the distribution mirrors used at build time to point at a local "
-"mirror, it is sufficient to set #{--parent-mirror-bootstrap}#, #{--parent-"
-"mirror-chroot-security}# and #{--parent-mirror-chroot-backports}# as follows."
+"mirror, it is sufficient to set #{--mirror-bootstrap}#, #{--mirror-chroot-"
+"security}# and #{--mirror-chroot-backports}# as follows."
 msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:44
 #, no-wrap
 msgid ""
-" $ lb config --parent-mirror-bootstrap http://localhost/debian/ \\\n"
-"             --parent-mirror-chroot-security http://localhost/debian-security/ \\\n"
-"\t     --parent-mirror-chroot-backports http://localhost/debian-backports/\n"
+" $ lb config --mirror-bootstrap http://localhost/debian/ \\\n"
+"             --mirror-chroot-security http://localhost/debian-security/ \\\n"
+"\t     --mirror-chroot-backports http://localhost/debian-backports/\n"
 msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:48
 msgid ""
-"The chroot mirror, specified by #{--parent-mirror-chroot}#, defaults to the #"
-"{--parent-mirror-bootstrap}# value."
+"The chroot mirror, specified by #{--mirror-chroot}#, defaults to the #{--"
+"mirror-bootstrap}# value."
 msgstr ""
 
 #. type: Plain text
@@ -298,22 +300,22 @@ msgstr ""
 #. type: Plain text
 #: en/user_customization-packages.ssi:52
 msgid ""
-"The #{--parent-mirror-binary*}# options govern the distribution mirrors "
-"placed in the binary image. These may be used to install additional packages "
-"while running the live system. The defaults employ #{cdn.debian.net}#, a "
-"service that chooses a geographically close mirror based on the user's IP "
-"number. This is a suitable choice when you cannot predict which mirror will "
-"be best for all of your users. Or you may specify your own values as shown "
-"in the example below. An image built from this configuration would only be "
-"suitable for users on a network where \"#{mirror}#\" is reachable."
+"The #{--mirror-binary*}# options govern the distribution mirrors placed in "
+"the binary image. These may be used to install additional packages while "
+"running the live system. The defaults employ #{cdn.debian.net}#, a service "
+"that chooses a geographically close mirror based on the user's IP number. "
+"This is a suitable choice when you cannot predict which mirror will be best "
+"for all of your users. Or you may specify your own values as shown in the "
+"example below. An image built from this configuration would only be suitable "
+"for users on a network where \"#{mirror}#\" is reachable."
 msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:57
 #, no-wrap
 msgid ""
-" $ lb config --parent-mirror-binary http://mirror/debian/ \\\n"
-"             --parent-mirror-binary-security http://mirror/debian-security/\n"
+" $ lb config --mirror-binary http://mirror/debian/ \\\n"
+"             --mirror-binary-security http://mirror/debian-security/\n"
 msgstr ""
 
 #. type: Plain text
@@ -329,9 +331,9 @@ msgid ""
 "backports, experimental or custom packages. To configure additional "
 "repositories, create #{config/archives/your-repository.list.chroot}#, and/or "
 "#{config/archives/your-repository.list.binary}# files. As with the #{--"
-"parent-mirror-*}# options, these govern the repositories used in the "
-"*chroot* stage when building the image, and in the *binary* stage, i.e. for "
-"use when running the live system."
+"mirror-*}# options, these govern the repositories used in the *chroot* stage "
+"when building the image, and in the *binary* stage, i.e. for use when "
+"running the live system."
 msgstr ""
 
 #. type: Plain text

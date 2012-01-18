@@ -66,24 +66,26 @@ des dérivés.
 
 3~ Miroirs de distribution
 
-The Debian archive is replicated across a large network of mirrors around
-the world so that people in each region can choose a nearby mirror for best
-download speed. Each of the #{--mirror-*}# options governs which
-distribution mirror is used at various stages of the build. Recall from
-{Stages of the build}#stages-of-the-build that the *bootstrap* stage is when
-the chroot is initially populated by debootstrap with a minimal system, and
-the *chroot* stage is when the chroot used to construct the live system's
-filesystem is built. Thus, the corresponding mirror switches are used for
-those stages, and later, in the *binary* stage, the #{--mirror-binary}# and
-#{--mirror-binary-security}# values are used, superceding any mirrors used
-in an earlier stage.
+L'archive Debian est répliqué à travers un large réseau de miroirs autour du
+monde pour que les gens dans chaque région peuvent choisir un miroir proche
+avec la meilleur vitesse de téléchargement. Chacune des options
+#{--mirror-*}# qui régit quel miroir de distribution est utilisée à
+différents stades de la construction. Rappelez-vous de {Etapes de la
+construction}#stages-of-the-build que l'étape *bootstrap* c'est quand le
+chroot est initialement peuplée par debootstrap avec un système minimal, et
+l'étape *chroot* c'est quand le chroot utilisé pour construire le système de
+fichiers du système live est construit. Ainsi, les commutateurs des miroirs
+correspondants sont utilisées pour ces étapes, et plus tard, dans le
+*binary* stade les valeurs #{--mirror-binary}# et
+#{--mirror-binary-security}# sont utilisées, remplaçant tout miroir utilisé
+dans une étape antérieure. 
 
 3~distribution-mirrors-build-time Miroirs de distribution utilisés au temps
 de construction
 
-To set the distribution mirrors used at build time to point at a local
-mirror, it is sufficient to set #{--mirror-bootstrap}#,
-#{--mirror-chroot-security}# and #{--mirror-chroot-backports}# as follows.
+Pour définir les miroirs de distribution utilisés au temps de construction
+pour pointer vers un miroir local, il suffit de fixer #{--mirror-bootstrap}#
+, #{--mirror-chroot-security}# et #{--mirror-chroot-backports}# comme suit.
 
 code{
 
@@ -93,19 +95,21 @@ code{
 
 }code
 
-The chroot mirror, specified by #{--mirror-chroot}#, defaults to the
-#{--mirror-bootstrap}# value.
+Le miroir chroot, spécifiée par #{--mirror-chroot}#,  par défaut, c'est la
+valeur #{--mirror-bootstrap}#.
 
 3~ Miroirs de distribution utilisés au moment de l'exécution
 
-The #{--mirror-binary*}# options govern the distribution mirrors placed in
-the binary image. These may be used to install additional packages while
-running the live system. The defaults employ #{cdn.debian.net}#, a service
-that chooses a geographically close mirror based on the user's IP
-number. This is a suitable choice when you cannot predict which mirror will
-be best for all of your users. Or you may specify your own values as shown
-in the example below. An image built from this configuration would only be
-suitable for users on a network where "#{mirror}#" is reachable.
+Les options #{--mirror-binary*}# régissent les miroirs de distribution
+placés dans l'image binaire. Ils peuvent être utilisés pour installer des
+paquets supplémentaires lors de l'exécution du système live. Les valeurs par
+défaut emploient #{cdn.debian.net}#, un service qui choisit un miroir
+géographiquement proche basé sur le numéro IP de l'utilisateur. C'est un
+choix approprié lorsque vous ne pouvez pas prédire quel miroir sera mieux
+pour tous vos utilisateurs. Ou vous pouvez spécifier vos propres valeurs,
+comme indiqué dans l'exemple ci-dessous. Une image construite avec cette
+configuration seulement serait approprié pour les utilisateurs sur un réseau
+où "#{mirror}#" est accessible.
 
 code{
 
@@ -116,14 +120,15 @@ code{
 
 3~additional-repositories Référentiels additionnels
 
-You may add more repositories, broadening your package choices beyond what
-is available in your target distribution. These may be, for example, for
-backports, experimental or custom packages. To configure additional
-repositories, create #{config/archives/your-repository.list.chroot}#, and/or
-#{config/archives/your-repository.list.binary}# files. As with the
-#{--mirror-*}# options, these govern the repositories used in the *chroot*
-stage when building the image, and in the *binary* stage, i.e. for use when
-running the live system.
+Vous pouvez ajouter plus de référentiels, élargir vos choix de paquets
+au-delà ceux disponibles dans votre distribution objectif. Il peut être, par
+exemple, pour backports, expérimentaux ou des paquets personnalisés. Pour
+configurer des référentiels supplémentaires, créer les fichiers
+#{config/archives/your-repository.list.chroot}#, et/ou
+#{config/archives/your-repository.list.binary}#. Comme avec les options
+#{--mirror-*}#, elles gouvernent les référentiels utilisés dans l'étape
+*chroot* lors de la construction de l'image, et dans l'étape *binaire*,
+c'est à dire pour une utilisation au moment de l'exécution du système live.
 
 Par exemple, #{config/archives/live.list.chroot}# vous permet d'installer
 des paquets du référentiel des instantanés debian live au moment de la

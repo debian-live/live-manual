@@ -91,6 +91,7 @@ uninstall:
 
 clean:
 	rm -rf build
+	rm -f manual/en/*~
 
 distclean: clean
 	rm -rf build

@@ -4,6 +4,8 @@ SHELL := sh -e
 
 LANGUAGES = en $(shell cd manual/po && ls)
 
+FORMATS = epub html odf pdf txt
+
 DEBUG = 0
 
 all: build
@@ -28,18 +30,19 @@ build: clean
 	#etc.
 
 	@# FIXME: sisu-concordance sisu-pg sisu-sqlite
+
 	cd $(CURDIR)/manual; \
 	sisu --configure
 	for LANGUAGE in $(LANGUAGES); \
 	do \
+		for FORMAT in $(FORMATS); \
+		do \
 		cd $(CURDIR)/manual; \
-		sisu-epub -v $${LANGUAGE}/live-manual.ssm; \
-		sisu-html -v $${LANGUAGE}/live-manual.ssm; \
-		sisu-odf -v $${LANGUAGE}/live-manual.ssm; \
-		sisu-pdf -v $${LANGUAGE}/live-manual.ssm; \
-		sisu-txt -v $${LANGUAGE}/live-manual.ssm; \
+		sisu-$${FORMAT} -v $${LANGUAGE}/live-manual.ssm; \
+		done; \
 	done; \
 	sisu --manifest -v $${LANGUAGE}/live-manual.ssm
+
 #               for FILE in build/manual/live-manual/*.$${LANGUAGE}.html; \
 #		do \
 #			../bin/fix-sisu-html.rb $${FILE}; \

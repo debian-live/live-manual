@@ -37,17 +37,19 @@ build: clean
 	do \
 		for FORMAT in $(FORMATS); \
 		do \
-		cd $(CURDIR)/manual; \
-		sisu-$${FORMAT} -v $${LANGUAGE}/live-manual.ssm; \
+			cd $(CURDIR)/manual; \
+			sisu-$${FORMAT} -v $${LANGUAGE}/live-manual.ssm; \
+			if [ "$${FORMAT}" = "html" ] ; \
+			then \
+			    for FILE in ../build/manual/html/*.$${LANGUAGE}.html ../build/manual/html/live-manual/*.$${LANGUAGE}.html; \
+			    do \
+				    bin/fix-sisu-html.rb $${FILE}; \
+				    ([ $(DEBUG) -gt 0 ] || rm -f $${FILE}~); \
+			    done; \
+			fi ; \
 		done; \
 	done; \
-	sisu --manifest -v $${LANGUAGE}/live-manual.ssm
 
-#               for FILE in build/manual/live-manual/*.$${LANGUAGE}.html; \
-#		do \
-#			../bin/fix-sisu-html.rb $${FILE}; \
-#			([ $(DEBUG) -gt 0 ] || rm -f $${FILE}~); \
-#		done; \
 
 autobuild: build	
 	

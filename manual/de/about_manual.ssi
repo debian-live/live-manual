@@ -293,4 +293,8 @@ _* Once the new language is added, you can randomly start translating all po
 files in #{manual/po/}#.
 
 _* Don't forget you need #{make commit}# to ensure the translated manuals
-are updated from the po files, before #{git commit -a}# and #{git push}#.
+are updated from the po files and then you can review your changes launching
+#{make build}# before #{git add .}#, #{git commit -a -m "Translating..."}#
+and #{git push}#.
+
+*{Note:}* Please be aware that even though both #{make commit}# and #{make build}# remove your build directory, if you build the manual to review your changes as recommended, you may want to clean your git tree before pushing. In order to do that, you can use #{make clean}#. This last step is not compulsory thanks to the .gitignore file but it is a good practice to avoid committing files involuntarily.

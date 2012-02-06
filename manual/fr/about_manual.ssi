@@ -26,7 +26,10 @@ fait pas partie de la commande.
 Même si nous croyons que tout dans ce manuel est important pour au moins
 certains de nos utilisateurs, nous nous rendons compte qu'il y a beaucoup de
 matière à couvrir et que vous pouvez vouloir expérimenter avant d'entrer
-dans les détails. Par conséquent, nous avons fourni trois tutoriels dans la
+dans les détails. Par conséquent, nous vous suggérons de lire dans l'ordre
+suivant. Tout d'abord, lisez ce chapitre {À propos de ce
+manuel}#about-manual dès le début et finissant avec la section
+{Terminologie}#terms. Ensuite, sautez aux trois tutoriels à l'avant de la
 section {Exemples}#examples destinée à vous apprendre la construction de
 l'image et les bases de la personnalisation. Lire en premier {En utilisant
 les exemples}#using-the-examples, suivie par {Tutoriel 1: Une image
@@ -188,7 +191,23 @@ code{
 
 }code
 
-3~ Appliquer des correctifs
+Il est également possible de construire par type de document, par exemple,
+
+code{
+
+ $ make build FORMATS=pdf
+
+}code
+
+Ou combiner les deux, par exemple:
+
+code{
+
+ $ make build FORMATS=html LANGUAGES=it
+
+}code
+
+3~ Appliquer des modifications
 
 Les contributions directes au référentiel sont possibles pour tout le
 monde. Cependant, nous vous demandons d'envoyer les changements importants
@@ -243,10 +262,19 @@ code{
 
 }code
 
-_* Après nettoyage, soumettre les modifications. Veuillez écrire les
-commentaires de commit à l'aide de phrases complètes, en commençant par une
-majuscule et en terminant par un point, et en commençant par
-'Fixing/Adding/Removing/Correcting/Translating', par exemple
+_* Alors
+
+code{
+
+ $ git add .
+
+}code
+
+_* Après le nettoyage et d'ajouter les fichiers, soumettre les
+modifications. Veuillez écrire les commentaires de commit à l'aide de
+phrases complètes, en commençant par une majuscule et en terminant par un
+point, et en commençant par 'Fixing/Adding/Removing/Correcting/Translating',
+par exemple
 
 code{
 
@@ -277,5 +305,8 @@ _* Une fois la nouvelle langue est ajoutée, vous pouvez commencer à traduire
 de façon aléatoire tous les fichiers po dans #{manual/po/}#.
 
 _* N'oubliez pas que vous devez faire un #{make commit}# pour assurer que la
-traduction des manuels sont mis à jour à partir des fichiers po, avant #{git
-commit -a}# et #{git push}#.
+traduction des manuels sont mis à jour à partir des fichiers po, alors vous
+pouvez réviser vos modifications avec #{make build}# avant #{git add .}#,
+#{git commit -a -m "Translating..."}# et #{git push}#.
+
+*{Remarque:}* S'il vous plaît soyez conscient que même si les deux #{make commit}#  et  #{make build}# suppriment votre répertoire de construction, si vous construisez le manuel pour examiner vos modifications comme il est recommandé, et vous voulez nettoyer votre arbre git avant de les envoyer, vous pouvez utiliser #{make clean}#. Cette dernière étape n'est pas obligatoire grâce au fichier .gitignore mais il est une bonne pratique pour éviter d'envoyer certains fichiers involontairement.

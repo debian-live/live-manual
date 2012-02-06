@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 2.0.0\n"
-"POT-Creation-Date: 2011-11-07 21:01-0400\n"
+"POT-Creation-Date: 2012-01-18 18:00-0400\n"
 "PO-Revision-Date: 2010-10-22 08:58-0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -20,7 +20,7 @@ msgstr ""
 #: en/about_manual.ssi:84 en/about_manual.ssi:92 en/about_manual.ssi:100
 #: en/about_manual.ssi:108 en/about_manual.ssi:120 en/about_manual.ssi:133
 #: en/about_manual.ssi:146 en/about_manual.ssi:157 en/about_manual.ssi:165
-#: en/about_manual.ssi:173 en/project_bugs.ssi:60
+#: en/about_manual.ssi:173 en/about_manual.ssi:181 en/project_bugs.ssi:60
 #: en/project_coding-style.ssi:28 en/project_coding-style.ssi:38
 #: en/project_coding-style.ssi:51 en/project_coding-style.ssi:61
 #: en/project_coding-style.ssi:92 en/project_coding-style.ssi:100
@@ -34,6 +34,7 @@ msgstr ""
 #: en/user_basics.ssi:218 en/user_basics.ssi:226 en/user_basics.ssi:236
 #: en/user_basics.ssi:254 en/user_basics.ssi:282 en/user_basics.ssi:298
 #: en/user_basics.ssi:306 en/user_basics.ssi:326 en/user_basics.ssi:351
+#: en/user_customization-binary.ssi:16 en/user_customization-binary.ssi:27
 #: en/user_customization-contents.ssi:26 en/user_customization-contents.ssi:35
 #: en/user_customization-contents.ssi:54 en/user_customization-contents.ssi:66
 #: en/user_customization-installer.ssi:32
@@ -85,7 +86,7 @@ msgstr "code{"
 #: en/about_manual.ssi:88 en/about_manual.ssi:96 en/about_manual.ssi:104
 #: en/about_manual.ssi:112 en/about_manual.ssi:129 en/about_manual.ssi:142
 #: en/about_manual.ssi:151 en/about_manual.ssi:161 en/about_manual.ssi:169
-#: en/about_manual.ssi:177 en/project_bugs.ssi:64
+#: en/about_manual.ssi:177 en/about_manual.ssi:185 en/project_bugs.ssi:64
 #: en/project_coding-style.ssi:34 en/project_coding-style.ssi:45
 #: en/project_coding-style.ssi:57 en/project_coding-style.ssi:68
 #: en/project_coding-style.ssi:96 en/project_coding-style.ssi:104
@@ -99,6 +100,7 @@ msgstr "code{"
 #: en/user_basics.ssi:222 en/user_basics.ssi:230 en/user_basics.ssi:240
 #: en/user_basics.ssi:274 en/user_basics.ssi:286 en/user_basics.ssi:302
 #: en/user_basics.ssi:310 en/user_basics.ssi:337 en/user_basics.ssi:376
+#: en/user_customization-binary.ssi:23 en/user_customization-binary.ssi:33
 #: en/user_customization-contents.ssi:31 en/user_customization-contents.ssi:46
 #: en/user_customization-contents.ssi:58 en/user_customization-contents.ssi:70
 #: en/user_customization-installer.ssi:38
@@ -248,15 +250,15 @@ msgstr ""
 msgid ""
 "The Debian archive is replicated across a large network of mirrors around "
 "the world so that people in each region can choose a nearby mirror for best "
-"download speed. Each of the #{--parent-mirror-*}# options governs which "
+"download speed. Each of the #{--mirror-*}# options governs which "
 "distribution mirror is used at various stages of the build. Recall from "
 "{Stages of the build}#stages-of-the-build that the *bootstrap* stage is when "
 "the chroot is initially populated by debootstrap with a minimal system, and "
 "the *chroot* stage is when the chroot used to construct the live system's "
 "filesystem is built. Thus, the corresponding mirror switches are used for "
-"those stages, and later, in the *binary* stage, the #{--parent-mirror-binary}"
-"# and #{--parent-mirror-binary-security}# values are used, superceding any "
-"mirrors used in an earlier stage."
+"those stages, and later, in the *binary* stage, the #{--mirror-binary}# and #"
+"{--mirror-binary-security}# values are used, superceding any mirrors used in "
+"an earlier stage."
 msgstr ""
 
 #. type: Plain text
@@ -269,24 +271,24 @@ msgstr ""
 #: en/user_customization-packages.ssi:38
 msgid ""
 "To set the distribution mirrors used at build time to point at a local "
-"mirror, it is sufficient to set #{--parent-mirror-bootstrap}#, #{--parent-"
-"mirror-chroot-security}# and #{--parent-mirror-chroot-backports}# as follows."
+"mirror, it is sufficient to set #{--mirror-bootstrap}#, #{--mirror-chroot-"
+"security}# and #{--mirror-chroot-backports}# as follows."
 msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:44
 #, no-wrap
 msgid ""
-" $ lb config --parent-mirror-bootstrap http://localhost/debian/ \\\n"
-"             --parent-mirror-chroot-security http://localhost/debian-security/ \\\n"
-"\t     --parent-mirror-chroot-backports http://localhost/debian-backports/\n"
+" $ lb config --mirror-bootstrap http://localhost/debian/ \\\n"
+"             --mirror-chroot-security http://localhost/debian-security/ \\\n"
+"\t     --mirror-chroot-backports http://localhost/debian-backports/\n"
 msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:48
 msgid ""
-"The chroot mirror, specified by #{--parent-mirror-chroot}#, defaults to the #"
-"{--parent-mirror-bootstrap}# value."
+"The chroot mirror, specified by #{--mirror-chroot}#, defaults to the #{--"
+"mirror-bootstrap}# value."
 msgstr ""
 
 #. type: Plain text
@@ -297,22 +299,22 @@ msgstr ""
 #. type: Plain text
 #: en/user_customization-packages.ssi:52
 msgid ""
-"The #{--parent-mirror-binary*}# options govern the distribution mirrors "
-"placed in the binary image. These may be used to install additional packages "
-"while running the live system. The defaults employ #{cdn.debian.net}#, a "
-"service that chooses a geographically close mirror based on the user's IP "
-"number. This is a suitable choice when you cannot predict which mirror will "
-"be best for all of your users. Or you may specify your own values as shown "
-"in the example below. An image built from this configuration would only be "
-"suitable for users on a network where \"#{mirror}#\" is reachable."
+"The #{--mirror-binary*}# options govern the distribution mirrors placed in "
+"the binary image. These may be used to install additional packages while "
+"running the live system. The defaults employ #{cdn.debian.net}#, a service "
+"that chooses a geographically close mirror based on the user's IP number. "
+"This is a suitable choice when you cannot predict which mirror will be best "
+"for all of your users. Or you may specify your own values as shown in the "
+"example below. An image built from this configuration would only be suitable "
+"for users on a network where \"#{mirror}#\" is reachable."
 msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:57
 #, no-wrap
 msgid ""
-" $ lb config --parent-mirror-binary http://mirror/debian/ \\\n"
-"             --parent-mirror-binary-security http://mirror/debian-security/\n"
+" $ lb config --mirror-binary http://mirror/debian/ \\\n"
+"             --mirror-binary-security http://mirror/debian-security/\n"
 msgstr ""
 
 #. type: Plain text
@@ -328,9 +330,9 @@ msgid ""
 "backports, experimental or custom packages. To configure additional "
 "repositories, create #{config/archives/your-repository.list.chroot}#, and/or "
 "#{config/archives/your-repository.list.binary}# files. As with the #{--"
-"parent-mirror-*}# options, these govern the repositories used in the "
-"*chroot* stage when building the image, and in the *binary* stage, i.e. for "
-"use when running the live system."
+"mirror-*}# options, these govern the repositories used in the *chroot* stage "
+"when building the image, and in the *binary* stage, i.e. for use when "
+"running the live system."
 msgstr ""
 
 #. type: Plain text
@@ -363,7 +365,7 @@ msgstr ""
 #: en/user_customization-packages.ssi:77
 msgid ""
 "You should also put the GPG key used to sign the repository into #{config/"
-"archives/your-repository.gpg.{binary,chroot}}# files."
+"archives/your-repository.key.{binary,chroot}}# files."
 msgstr ""
 
 #. type: Plain text
@@ -1025,7 +1027,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 " $ echo \"deb http://mirror/debian sid main\" > config/archives/sid.list.chroot\n"
-" $ cat >> config/chroot_apt/preferences <<END\n"
+" $ cat >> config/chroot_apt/preferences << END\n"
 " Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit\n"
 " Pin: release n=sid\n"
 " Pin-Priority: 600\n"

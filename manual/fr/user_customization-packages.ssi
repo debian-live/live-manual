@@ -69,53 +69,52 @@ des dérivés.
 L'archive Debian est répliqué à travers un large réseau de miroirs autour du
 monde pour que les gens dans chaque région peuvent choisir un miroir proche
 avec la meilleur vitesse de téléchargement. Chacune des options
-#{--parent-mirror-*}# qui régit quel miroir de distribution est utilisée à
+#{--mirror-*}# qui régit quel miroir de distribution est utilisée à
 différents stades de la construction. Rappelez-vous de {Etapes de la
 construction}#stages-of-the-build que l'étape *bootstrap* c'est quand le
 chroot est initialement peuplée par debootstrap avec un système minimal, et
 l'étape *chroot* c'est quand le chroot utilisé pour construire le système de
 fichiers du système live est construit. Ainsi, les commutateurs des miroirs
 correspondants sont utilisées pour ces étapes, et plus tard, dans le
-*binary* stade les valeurs #{--parent-mirror-binary}# et
-#{--parent-mirror-binary-security}# sont utilisées, remplaçant tout miroir
-utilisé dans une étape antérieure. 
+*binary* stade les valeurs #{--mirror-binary}# et
+#{--mirror-binary-security}# sont utilisées, remplaçant tout miroir utilisé
+dans une étape antérieure. 
 
 3~distribution-mirrors-build-time Miroirs de distribution utilisés au temps
 de construction
 
 Pour définir les miroirs de distribution utilisés au temps de construction
-pour pointer vers un miroir local, il suffit de fixer
-#{--parent-mirror-bootstrap}# , #{--parent-mirror-chroot-security}# et
-#{--parent-mirror-chroot-backports}# comme suit.
+pour pointer vers un miroir local, il suffit de fixer #{--mirror-bootstrap}#
+, #{--mirror-chroot-security}# et #{--mirror-chroot-backports}# comme suit.
 
 code{
 
- $ lb config --parent-mirror-bootstrap http://localhost/debian/ \
-             --parent-mirror-chroot-security http://localhost/debian-security/ \
-	     --parent-mirror-chroot-backports http://localhost/debian-backports/
+ $ lb config --mirror-bootstrap http://localhost/debian/ \
+             --mirror-chroot-security http://localhost/debian-security/ \
+	     --mirror-chroot-backports http://localhost/debian-backports/
 
 }code
 
-Le miroir chroot, spécifiée par #{--parent-mirror-chroot}#,  par défaut,
-c'est la valeur #{--parent-mirror-bootstrap}#.
+Le miroir chroot, spécifiée par #{--mirror-chroot}#,  par défaut, c'est la
+valeur #{--mirror-bootstrap}#.
 
 3~ Miroirs de distribution utilisés au moment de l'exécution
 
-Les options #{--parent-mirror-binary*}# régissent les miroirs de
-distribution placés dans l'image binaire. Ils peuvent être utilisés pour
-installer des paquets supplémentaires lors de l'exécution du système
-live. Les valeurs par défaut emploient #{cdn.debian.net}#, un service qui
-choisit un miroir géographiquement proche basé sur le numéro IP de
-l'utilisateur. C'est un choix approprié lorsque vous ne pouvez pas prédire
-quel miroir sera mieux pour tous vos utilisateurs. Ou vous pouvez spécifier
-vos propres valeurs, comme indiqué dans l'exemple ci-dessous. Une image
-construite avec cette configuration seulement serait approprié pour les
-utilisateurs sur un réseau où "#{mirror}#" est accessible.
+Les options #{--mirror-binary*}# régissent les miroirs de distribution
+placés dans l'image binaire. Ils peuvent être utilisés pour installer des
+paquets supplémentaires lors de l'exécution du système live. Les valeurs par
+défaut emploient #{cdn.debian.net}#, un service qui choisit un miroir
+géographiquement proche basé sur le numéro IP de l'utilisateur. C'est un
+choix approprié lorsque vous ne pouvez pas prédire quel miroir sera mieux
+pour tous vos utilisateurs. Ou vous pouvez spécifier vos propres valeurs,
+comme indiqué dans l'exemple ci-dessous. Une image construite avec cette
+configuration seulement serait approprié pour les utilisateurs sur un réseau
+où "#{mirror}#" est accessible.
 
 code{
 
- $ lb config --parent-mirror-binary http://mirror/debian/ \
-             --parent-mirror-binary-security http://mirror/debian-security/
+ $ lb config --mirror-binary http://mirror/debian/ \
+             --mirror-binary-security http://mirror/debian-security/
 
 }code
 
@@ -127,10 +126,9 @@ exemple, pour backports, expérimentaux ou des paquets personnalisés. Pour
 configurer des référentiels supplémentaires, créer les fichiers
 #{config/archives/your-repository.list.chroot}#, et/ou
 #{config/archives/your-repository.list.binary}#. Comme avec les options
-#{--parent-mirror-*}#, elles gouvernent les référentiels utilisés dans
-l'étape *chroot* lors de la construction de l'image, et dans l'étape
-*binaire*, c'est à dire pour une utilisation au moment de l'exécution du
-système live.
+#{--mirror-*}#, elles gouvernent les référentiels utilisés dans l'étape
+*chroot* lors de la construction de l'image, et dans l'étape *binaire*,
+c'est à dire pour une utilisation au moment de l'exécution du système live.
 
 Par exemple, #{config/archives/live.list.chroot}# vous permet d'installer
 des paquets du référentiel des instantanés debian live au moment de la
@@ -149,7 +147,7 @@ système live.
 Si ces fichiers existent, ils seront sélectionnés automatiquement.
 
 Vous devriez également mettre la clé GPG utilisée pour signer le référentiel
-dans fichiers #{config/archives/your-repository.gpg.{binary,chroot}}#
+dans fichiers #{config/archives/your-repository.key.{binary,chroot}}#
 
 *{Remarque:}* certains référentiels de paquets préconfigurés sont disponibles pour une sélection facile grâce à l'option #{--archives}#, par exemple pour permettre des instantanés live, une simple commande suffit pour l'activer:
 
@@ -558,7 +556,7 @@ distribution du système cible, Wheezy. Ce qui suit devrait accomplir ça:
 code{
 
  $ echo "deb http://mirror/debian sid main" > config/archives/sid.list.chroot
- $ cat >> config/chroot_apt/preferences <<END
+ $ cat >> config/chroot_apt/preferences << END
  Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit
  Pin: release n=sid
  Pin-Priority: 600

@@ -2,14 +2,46 @@ B~ Personnalisation de l'image binaire
 
 1~customizing-binary Personnalisation de l'image binaire
 
-2~ Chargeur de démarrage
+2~ Chargeur d'amorçage
 
-live-build utilise syslinux comme chargeur de démarrage par défaut, qui est
-configuré par défaut pour pauser indéfiniment à son écran splash. Pour
-régler cela, vous pouvez passer #{--syslinux-timeout TIMEOUT}# à #{lb
-config}#. La valeur est spécifiée en unités de secondes. Une valeur 0 (zéro)
-désactive le délai complètement. Pour plus d'informations s'il vous plaît
-voir syslinux(1).
+live-build utilise syslinux et certains de ses dérivés (selon le type
+d'image) comme chargeurs d'amorçage par défaut. Vous pouvez facilement
+modifier leurs options en utilisant différentes méthodes, comme
+{includes}#includes ou {hooks}#hooks.
+
+Par exemple, ces dérivés sont configurés par défaut avec un timeout de 0
+(zéro) qui signifie qu'ils se mettront en pause indéfiniment à leur écran de
+démarrage jusqu'à ce que vous pressez une touche.
+
+Pour modifier le délai de démarrage d'une image iso-hybrid, vous pouvez
+éditer un fichier *{isolinux.cfg}* précisant le timeout dans les unités de
+secondes et l'ajouter à #{config/includes.binary/isolinux/}#
+
+Un *{isolinux.cfg}* modifié pour démarrer après cinq secondes ressemblerait
+à ceci:
+
+code{
+
+ include menu.cfg
+ default vesamenu.c32
+ prompt 0
+ timeout 5
+
+}code
+
+Une autre façon d'atteindre le même objectif pourrait être écrire un hook et
+l'ajouter à #{config/hooks/}# N'oubliez pas d'ajouter le suffixe #{.binary}#
+pour l'exécuter dans l’étape binaire. Un exemple proposé:
+
+code{
+
+ #!/bin/sh
+
+ sed -i 's/timeout 0/timeout 5/' binary/isolinux/isolinux.cfg
+
+}code
+
+Pour plus d'informations s'il vous plaît voir man syslinux(1).
 
 2~ Métadonnées ISO
 

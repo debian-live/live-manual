@@ -27,12 +27,15 @@ la orden.
 Aunque se cree que todo lo descrito en este manual es importante para la
 mayoría de los usuarios, es cierto que hay mucho material a interiorizar y
 que los usuarios desean experimentar con las herramientas de forma rápida y
-satisfactoria antes de entrar en detalles. Ésta es la razón por la que se
-presentan tres tutoriales en la sección {Ejemplos}#examples pensados para
-aprender a configurar y construir imágenes de sistemas en vivo de forma
-básica. Se deberá leer primero {Uso de ejemplos}#using-the-examples, seguido
-de {Tutorial 1: Una imagen estándar}#tutorial-1 y {Tutorial 2: Una utilidad
-de navegador web}#tutorial-2, para finalizar con {Tutorial 3: Una imagen
+satisfactoria antes de entrar en detalles. Por lo tanto, se sugiere leer
+siguiendo el siguiente orden. Primero leer el capítulo {Acerca de este
+manual}#about-manual, desde el principio y terminando en la sección
+{Términos}#terms. Después saltar hasta los tres tutoriales que están al
+principio de la sección {Ejemplos}#examples pensados para aprender a
+configurar y construir imágenes de sistemas en vivo de forma básica. Se
+deberá leer primero {Uso de ejemplos}#using-the-examples, seguido de
+{Tutorial 1: Una imagen estándar}#tutorial-1 y {Tutorial 2: Una utilidad de
+navegador web}#tutorial-2, para finalizar con {Tutorial 3: Una imagen
 personalizada}#tutorial-3. Al final de estos tutoriales, el lector tendrá
 una visión de lo que se puede hacer con Debian Live. Se anima a profundizar
 en el estudio del manual con la lectura detenida del siguiente capítulo,
@@ -202,7 +205,23 @@ $ make build LANGUAGES=en
 
 }code
 
-3~ Aplicación de parches
+Es posible generar el documento por formato:
+
+code{
+
+ $ make build FORMATS=pdf
+
+}code
+
+O combinar ambos, por ejemplo:
+
+code{
+
+ $ make build FORMATS=html LANGUAGES=it
+
+}code
+
+3~ Aplicar cambios
 
 Cualquiera puede hacer una entrega en el repositorio. Sin embargo, a la hora
 de hacer grandes cambios, es conveniente enviarlos a la lista de correo para
@@ -263,10 +282,18 @@ code{
 
 }code
 
-_* Una vez se ha saneado, se deberán entregar los cambios. Se deberá
-escribir un mensaje de entrega que consistirá en una o varias frases en
-ingles, comenzando con una letra mayúscula y acabando con un punto final. Es
-habitual comenzar estas frases con la forma
+_* Entonces
+
+code{
+
+ $ git add .
+
+}code
+
+_* Una vez se han saneado y se han añadido los ficheros, se deberán entregar
+los cambios. Se deberá escribir un mensaje de entrega que consistirá en una
+o varias frases en ingles, comenzando con una letra mayúscula y acabando con
+un punto final. Es habitual comenzar estas frases con la forma
 'Fixing/Adding/Removing/Correcting/Translating', por ejemplo:
 
 
@@ -301,5 +328,9 @@ traducción de todos los ficheros .po exisitentes en #{manual/po/}# de manera
 aleatoria.
 
 _* No se debe olvidar la ejecución del comando #{make commit}# para asegurar
-que los manuales traducidos son actualizados desde los ficheros .po, antes
-de realizar la entrega mediante #{git commit -a}# y #{git push}#.
+que los manuales traducidos son actualizados desde los ficheros
+.po. Entonces se puede revisar los cambios ejecutando #{make build}# antes
+de realizar la entrega mediante #{git add .}#, #{git commit -a -m
+"Translating..."}# y #{git push}#.
+
+*{Nota:}* Tener en cuenta que a pesar de que tanto #{make commit}# como #{make build}# borran el directorio «build», si se crea el manual para revisar los cambios tal y como se recomienda, es posible que se desee limpiar el árbol git antes de enviar los cambios. Para hacer esto, se puede usar #{make clean}#. Este último paso no es obligatorio, gracias al fichero .gitignore pero es una buena práctica para evitar enviar ficheros involuntariamente.

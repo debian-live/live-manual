@@ -7,14 +7,14 @@ le istruzioni per utilizzare i tre tipi di immagine più comunemente
 utilizzati. La tipologia di immagine più versatile, #{iso-hybrid}#, può
 essere usata su una macchina virtuale, supporto ottico o dispositivo di
 archiviazione portatile USB. In alcuni casi particolari, come l'utilizzo
-della persistenza, la #{usb-hdd}# potrebbe essere più adatta per i
-dispositivi USB. Il capitolo termina con le istruzioni per costruire e usare
-un'immagine di tipo #{net}#, che è un poco più complessa a causa del setup
-richiesto sul server. Si tratta di un argomento leggermente avanzato per chi
-non ha familiarità con l'avvio da rete, ma è incluso qui perché, una volta
-che il setup è stato fatto, è un modo molto comodo per collaudare e
-distribuire immagini facendo il boot nella rete locale senza la seccatura di
-doversi occupare dei mezzi di divulgazione dell'immagine.
+della persistenza, la #{hdd}# potrebbe essere più adatta per i dispositivi
+USB. Il capitolo termina con le istruzioni per costruire e usare un'immagine
+di tipo #{net}#, che è un poco più complessa a causa del setup richiesto sul
+server. Si tratta di un argomento leggermente avanzato per chi non ha
+familiarità con l'avvio da rete, ma è incluso qui perché, una volta che il
+setup è stato fatto, è un modo molto comodo per collaudare e distribuire
+immagini facendo il boot nella rete locale senza la seccatura di doversi
+occupare dei mezzi di divulgazione dell'immagine.
 
 Throughout the chapter, we will often refer to the default filenames
 produced by live-build. If you are downloading a prebuilt image instead, the
@@ -242,17 +242,17 @@ code{
 
 }code
 
-2~building-usb-hdd Creare un'immagine USB/HDD
+2~building-hdd Creare un'immagine HDD
 
-La creazione di un'immagine USB/HDD è simile alla ISO ibrida sotto tutti gli
-aspetti ad eccezione della necessità di specificare l'opzione #{-b usb-hdd}#
-e che il nome del file risultante è #{binary.img}# e non può essere
+La creazione di un'immagine HDD è simile alla ISO ibrida sotto tutti gli
+aspetti ad eccezione della necessità di specificare l'opzione #{-b hdd}# e
+che il nome del file risultante è #{binary.img}# e non può essere
 masterizzato. È adatta per avviarsi da chiavette USB, dischi rigidi USB, e
 da svariati altri dispositivi di archiviazione portatili. In genere per
 questo scopo può essere usata un'immagine ISO ibrida, ma se si ha un BIOS
 che non supporta le immagini ibride, o si vuole usare lo spazio rimanente
 sul supporto per altri scopi, come una partizione persistente, allora
-occorre un'immagine USB/HDD.
+occorre un'immagine HDD.
 
 Nota: se si è creata un'immagine ISO ibrida con gli esempi precedenti,
 occorre pulire la directory di lavoro con il comando #{lb clean}# (vedere
@@ -265,11 +265,11 @@ code{
 }code
 
 Eseguire il comando #{lb config}# come prima, questa volta specificando però
-il tipo di immagine USB/HDD:
+il tipo di immagine HDD:
 
 code{
 
- $ lb config -b usb-hdd
+ $ lb config -b hdd
 
 }code
 
@@ -284,16 +284,16 @@ code{
 Quando la costruzione è terminata dovrebbe essere presente un file
 #{binary.img}# nella directory corrente.
 
-2~using-usb-hdd-image Utilizzare un'immagine USB/HDD
+2~using-hdd-image Utilizzare un'immagine HDD
 
 L'immagine binaria generata contiene una partizione VFAT e il bootloader
 syslinux, pronti per essere scritti direttamente su una penna USB. Dal
-momento che utilizzare un'immagine USB/HDD è come utilizzare un'immagine ISO
+momento che utilizzare un'immagine HDD è come utilizzare un'immagine ISO
 ibrida via USB, seguire le istruzioni contenute in {Utilizzare un'immagine
 live ISO ibrida}#using-iso-hybrid tenendo però conto che il nome del file
 sarà #{binary.img}# invece di #{binary-hybrid.iso}#.
 
-3~testing-usb-hdd-with-qemu Provare un'immagine USB/HDD con Qemu
+3~testing-hdd-with-qemu Provare un'immagine HDD con Qemu
 
 Installare QEMU come descritto in {Provare un'immagine ISO con
 QEMU}#testing-iso-with-qemu; quindi eseguire #{kvm}# o #{qemu}#, a seconda
@@ -360,7 +360,7 @@ code{
 
 }code
 
-Diversamente dalle immagini ISO e USB/HDD, il boot via rete non fornisce
+Diversamente dalle immagini ISO e HDD, il boot via rete non fornisce
 un'immagine del filesytem al client, perciò i file devono essere forniti via
 NFS. Le opzioni net-root-path e net-root-server specificano,
 rispettivamente, il percorso e il server del server NFS dove l'immagine del

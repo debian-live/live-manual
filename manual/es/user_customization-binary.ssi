@@ -4,12 +4,45 @@ B~ Personalización de la imagen binaria
 
 2~ Gestor de arranque
 
-live-build utiliza syslinux como gestor de arranque por defecto, el cual
-está configurado de forma predeterminada para hacer una pausa indefinida en
-su pantalla de bienvenida. Para modificar esto, se puede pasar
-#{--syslinux-timeout TIMEOUT}# a #{lb config}#. El valor se especifica en
-segundos. Un tiempo de espera de 0 (cero) desactiva el tiempo de espera por
-completo. Para obtener más información, consultar syslinux (1).
+live-build  usa syslinux y algunos de sus derivados (en función del tipo de
+imagen) como gestores de arranque por defecto. Se puede modificar fácilmente
+algunas opciones utilizando distintos métodos, como {includes}#includes o
+{scripts gancho (hooks)}#hooks.
+
+Por ejemplo, estos derivados están configurados por defecto con un tiempo de
+espera de 0 (cero) lo que significa que harán una pausa indefinida en su
+pantalla de inicio hasta que se pulse una tecla.
+
+Para modificar el tiempo de espera de arranque de una imagen #{iso-hybrid}#
+se puede editar un fichero *{isolinux.cfg}* especificando el tiempo de
+espera en unidades de segundo y agregarlo a
+#{config/includes.binary/isolinux/}#
+
+Un fichero *{isolinux.cfg}* modificado para arrancar después de cinco
+segundos sería así:
+
+code{
+
+ include menu.cfg
+ default vesamenu.c32
+ prompt 0
+ timeout 5
+
+}code
+
+Una forma alternativa de lograr el mismo objetivo podría ser escribiendo un
+script gancho y agregarlo a #{config/hooks/}# Recordar añadir el sufijo
+.binary para que sea ejecutado en la etapa binary. Un ejemplo podría ser:
+
+code{
+
+ #!/bin/sh
+
+ sed -i 's/timeout 0/timeout 5/' binary/isolinux/isolinux.cfg
+
+}code
+
+Para más información ver la página del manual de syslinux(1).
 
 2~ Metadatos ISO
 

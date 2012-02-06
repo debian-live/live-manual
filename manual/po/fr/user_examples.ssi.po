@@ -2,20 +2,20 @@
 # Copyright (C) 2010 Free Software Foundation, Inc.
 # This file is distributed under the same license as the live-manual package.
 # Automatically generated, 2010.
-# Carlos Zuferri «chals» <chals@altorricon.com>, 2011.
+# Carlos Zuferri «chals» <chals@altorricon.com>, 2011, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 2.0.0\n"
-"POT-Creation-Date: 2011-11-13 17:12+0100\n"
-"PO-Revision-Date: 2011-11-13 17:42+0100\n"
+"POT-Creation-Date: 2012-01-18 18:00-0400\n"
+"PO-Revision-Date: 2012-01-18 23:35+0100\n"
 "Last-Translator: Carlos Zuferri «chals» <chals@altorricon.com>\n"
 "Language-Team:  <debian-live@lists.debian.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #. type: Plain text
 #: en/live-manual.ssm:61 en/user_examples.ssi:2
@@ -26,7 +26,7 @@ msgstr ":B~ Exemples"
 #: en/about_manual.ssi:84 en/about_manual.ssi:92 en/about_manual.ssi:100
 #: en/about_manual.ssi:108 en/about_manual.ssi:120 en/about_manual.ssi:133
 #: en/about_manual.ssi:146 en/about_manual.ssi:157 en/about_manual.ssi:165
-#: en/about_manual.ssi:173 en/project_bugs.ssi:60
+#: en/about_manual.ssi:173 en/about_manual.ssi:181 en/project_bugs.ssi:60
 #: en/project_coding-style.ssi:28 en/project_coding-style.ssi:38
 #: en/project_coding-style.ssi:51 en/project_coding-style.ssi:61
 #: en/project_coding-style.ssi:92 en/project_coding-style.ssi:100
@@ -40,6 +40,7 @@ msgstr ":B~ Exemples"
 #: en/user_basics.ssi:218 en/user_basics.ssi:226 en/user_basics.ssi:236
 #: en/user_basics.ssi:254 en/user_basics.ssi:282 en/user_basics.ssi:298
 #: en/user_basics.ssi:306 en/user_basics.ssi:326 en/user_basics.ssi:351
+#: en/user_customization-binary.ssi:16 en/user_customization-binary.ssi:27
 #: en/user_customization-contents.ssi:26 en/user_customization-contents.ssi:35
 #: en/user_customization-contents.ssi:54 en/user_customization-contents.ssi:66
 #: en/user_customization-installer.ssi:32
@@ -91,7 +92,7 @@ msgstr "code{"
 #: en/about_manual.ssi:88 en/about_manual.ssi:96 en/about_manual.ssi:104
 #: en/about_manual.ssi:112 en/about_manual.ssi:129 en/about_manual.ssi:142
 #: en/about_manual.ssi:151 en/about_manual.ssi:161 en/about_manual.ssi:169
-#: en/about_manual.ssi:177 en/project_bugs.ssi:64
+#: en/about_manual.ssi:177 en/about_manual.ssi:185 en/project_bugs.ssi:64
 #: en/project_coding-style.ssi:34 en/project_coding-style.ssi:45
 #: en/project_coding-style.ssi:57 en/project_coding-style.ssi:68
 #: en/project_coding-style.ssi:96 en/project_coding-style.ssi:104
@@ -105,6 +106,7 @@ msgstr "code{"
 #: en/user_basics.ssi:222 en/user_basics.ssi:230 en/user_basics.ssi:240
 #: en/user_basics.ssi:274 en/user_basics.ssi:286 en/user_basics.ssi:302
 #: en/user_basics.ssi:310 en/user_basics.ssi:337 en/user_basics.ssi:376
+#: en/user_customization-binary.ssi:23 en/user_customization-binary.ssi:33
 #: en/user_customization-contents.ssi:31 en/user_customization-contents.ssi:46
 #: en/user_customization-contents.ssi:58 en/user_customization-contents.ssi:70
 #: en/user_customization-installer.ssi:38
@@ -160,6 +162,12 @@ msgid " # lb build\n"
 msgstr ""
 
 #. type: Plain text
+#: en/user_customization-binary.ssi:29 en/user_examples.ssi:95
+#, no-wrap
+msgid " #!/bin/sh\n"
+msgstr ""
+
+#. type: Plain text
 #: en/user_examples.ssi:4
 msgid "1~examples Examples"
 msgstr "1~examples  Exemples"
@@ -204,9 +212,9 @@ msgid ""
 "config}#, as described in {Distribution mirrors used at build time}"
 "#distribution-mirrors-build-time, or for more convenience, set the default "
 "for your build system in #{/etc/live/build.conf}#. Simply create this file "
-"and in it, set the corresponding #{LB_PARENT_MIRROR_*}# variables to your "
-"preferred mirror. All other mirrors used in the build will be defaulted from "
-"these values. For example:"
+"and in it, set the corresponding #{LB_MIRROR_*}# variables to your preferred "
+"mirror. All other mirrors used in the build will be defaulted from these "
+"values. For example:"
 msgstr ""
 "Notez que, pour des raisons de concision, dans ces exemples, nous ne "
 "spécifions pas un miroir local à utiliser pour la construction. Vous pouvez "
@@ -215,18 +223,17 @@ msgstr ""
 "#, tel que décrit dans {Miroirs de distribution utilisés au temps de "
 "construction}#distribution-mirrors-build-time, ou pour plus de commodité, "
 "fixez par défaut votre système de construction dans #{/etc/live/build.conf}"
-"#. Il suffit de créer ce fichier et de définir les variables #"
-"{LB_PARENT_MIRROR_*}# correspondantes à votre miroir préféré. Tous les "
-"autres miroirs utilisés dans la construction seront par défaut à partir de "
-"ces valeurs. Par exemple:"
+"#. Il suffit de créer ce fichier et de définir les variables #{LB_MIRROR_*}# "
+"correspondantes à votre miroir préféré. Tous les autres miroirs utilisés "
+"dans la construction seront par défaut à partir de ces valeurs. Par exemple:"
 
 #. type: Plain text
 #: en/user_examples.ssi:18
 #, no-wrap
 msgid ""
-" LB_PARENT_MIRROR_BOOTSTRAP=\"http://mirror/debian\"\n"
-" LB_PARENT_MIRROR_CHROOT_SECURITY=\"http://mirror/debian-security\"\n"
-" LB_PARENT_MIRROR_CHROOT_BACKPORTS=\"http://mirror/debian-updates\"\n"
+" LB_MIRROR_BOOTSTRAP=\"http://mirror/debian\"\n"
+" LB_MIRROR_CHROOT_SECURITY=\"http://mirror/debian-security\"\n"
+" LB_MIRROR_CHROOT_BACKPORTS=\"http://mirror/debian-updates\"\n"
 msgstr ""
 
 #. type: Plain text
@@ -421,12 +428,6 @@ msgstr ""
 #: en/user_examples.ssi:91
 msgid "Edit #{auto/config}# to read as follows:"
 msgstr "Éditer #{auto/config}# pour lire comme suit: "
-
-#. type: Plain text
-#: en/user_examples.ssi:95
-#, no-wrap
-msgid " #!/bin/sh\n"
-msgstr ""
 
 #. type: Plain text
 #: en/user_examples.ssi:101
@@ -658,7 +659,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 " $ mkdir -p config/includes.chroot/etc/skel\n"
-" $ cat > config/includes.chroot/etc/skel/.xsession <<END\n"
+" $ cat > config/includes.chroot/etc/skel/.xsession << END\n"
 " #!/bin/sh\n"
 msgstr ""
 

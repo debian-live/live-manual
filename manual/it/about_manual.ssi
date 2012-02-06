@@ -25,11 +25,13 @@ di super-utente, i comandi sono preceduti rispettivamente da #{$}# o
 Sebbene crediamo che ogni cosa in questo manuale sia importante almeno per
 alcuni dei nostri utenti, ci rendiamo conto che c'è tanto materiale da
 trattare e che si potrebbe voler provare il software prima di entrare nei
-dettagli. Pertanto, abbiamo messo a disposizione nella sezione
-{Esempi}#examples tre tutorial progettati per insegnarvi le basi della
-costruzione e della personalizzazione delle immagini. Si legga innanzitutto
-{Usare gli esempi}#using-the-examples, seguito da {Tutorial 1: un'immagine
-standard}#tutorial-1, {Tutorial 2: un programma di utilità web
+dettagli; pertanto suggeriamo di leggerlo nel seguente ordine. Per iniziare
+leggere questo capitolo, {A proposito di questo manuale}#about-manual, da
+cima a fondo insieme alla sezione {Glossario}#terms, quindi passare ai tre
+tutorial all'inizio della sezione {Esempi}#examples progettati per insegnare
+le basi della costruzione e della personalizzazione delle immagini. Si legga
+innanzitutto {Usare gli esempi}#using-the-examples, seguito da {Tutorial 1:
+un'immagine standard}#tutorial-1, {Tutorial 2: un programma di utilità web
 browser}#tutorial-2 e, infine, {Tutorial 3: un'immagine
 personalizzata}#tutorial-3. Alla fine di queste esercitazioni, si avrà un
 assaggio di ciò che si può fare con Debian Live. Ti invitiamo ad uno studio
@@ -184,7 +186,23 @@ code{
 
 }code
 
-3~ Applicare le patch
+È inoltre possibile compilare in base al tipo di documento, esempio:
+
+code{
+
+ $ make build FORMATS=pdf
+
+}code
+
+Or combine both, e.g:
+
+code{
+
+ $ make build FORMATS=html LANGUAGES=it
+
+}code
+
+3~ Applicare le modifiche
 
 Chiunque può eseguire il commit direttamente sul repository; tuttavia
 chiediamo di inviare le modifiche più corpose in mailing list, per poterne
@@ -240,11 +258,19 @@ code{
 
 }code
 
-_* Dopo la pulizia è possibile eseguire il commit delle modifiche. Si
-scrivano messaggi costituiti da frasi in inglese esaurienti ed utili,
-inizianti con una lettera maiuscola e terminanti con un punto. Solitamente
-cominceranno con la forma "Fixing/Adding/Removing/Correcting/Translating",
-ad esempio.
+_* Then
+
+code{
+
+ $ git add .
+
+}code
+
+_* Dopo aver pulito e aggiunto i file è possibile eseguire il commit delle
+modifiche. Si scrivano messaggi costituiti da frasi in inglese esaurienti e
+utili, inizianti con una lettera maiuscola e terminanti con un
+punto. Solitamente cominceranno con la forma
+"Fixing/Adding/Removing/Correcting/Translating", ad esempio.
 
 code{
 
@@ -274,6 +300,9 @@ _* Una volta che la nuova lingua è stata aggiunta, si può iniziare a
 tradurre tutti i file po situati in #{manual/po/}#, nell'ordine che si
 preferisce.
 
-_* Non si dimentichi che è necessario dare un #{make commit}# per
-assicurarsi che i manuali tradotti siano aggiornati partendo dai file po,
-prima di #{git commit -a}# e #{git push}#.
+_* Non dimenticare che è necessario usare #{make commit}# per assicurarsi
+che i manuali tradotti siano aggiornati partendo dai file po, quindi si
+possono verificare le modifiche con #{make build}# prima di #{git add .}#,
+#{git commit -a -m "Traduzione..."}# e #{git push}#.
+
+*{Note:}* Please be aware that even though both #{make commit}# and #{make build}# remove your build directory, if you build the manual to review your changes as recommended, you may want to clean your git tree before pushing. In order to do that, you can use #{make clean}#. This last step is not compulsory thanks to the .gitignore file but it is a good practice to avoid committing files involuntarily.

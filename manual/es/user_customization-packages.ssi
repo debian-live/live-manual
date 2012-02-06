@@ -72,42 +72,41 @@ modificará su comportamiento para adecuarlo al modo seleccionado.
 Los repositorios de Debian están replicados en una gran red alrededor del
 mundo, de manera que se puede seleccionar la réplica más cercana con el fin
 de obtener la mejor velocidad de descarga. Cada una de las opciones
-#{--parent-mirror-*}# gobierna qué réplica de repositorio Debian se utiliza
-en las diferentes etapas de creación. Si se recuerda de {Etapas de la
+#{--mirror-*}# gobierna qué réplica de repositorio Debian se utiliza en las
+diferentes etapas de creación. Si se recuerda de {Etapas de la
 creación}#stages-of-the-build, en la etapa de *preinstalación (bootstrap)*
 es cuando se crea el directorio chroot y se rellena con un sistema mínimo
 mediante  la herramienta debootstrap, y en la etapa *chroot* es cuando el
 directorio chroot es completado con los paquetes necesarios para crear el
 sistema de ficheros que será utilizado en el sistema en vivo. A cada una de
-estas etapas le corresponde su propia opción
-#{--parent-mirror-*}#. Posteriormente, en la etapa *binary* se utilizarán
-las réplicas Debian indicadas en los valores de las opciones
-#{--parent-mirror-binary}# y #{--parent-mirror-binary-security}# en lugar de
-utilizar los indicados para las etapas anteriores.
+estas etapas le corresponde su propia opción #{--mirror-*}#. Posteriormente,
+en la etapa *binary* se utilizarán las réplicas Debian indicadas en los
+valores de las opciones #{--mirror-binary}# y #{--mirror-binary-security}#
+en lugar de utilizar los indicados para las etapas anteriores.
 
 3~distribution-mirrors-build-time Réplicas de Distribution utilizadas
 durante la creación
 
 Para indicar qué réplicas deben ser utilizadas en el momento de crear la
-imagen es suficiente con utilizar las opciones #{--parent-mirror-bootstrap}#
-, #{--parent-mirror-chroot-security}# y #{--parent-mirror-chroot-backports}#
-como se muestra a continuación.
+imagen es suficiente con utilizar las opciones #{--mirror-bootstrap}# ,
+#{--mirror-chroot-security}# y #{--mirror-chroot-backports}# como se muestra
+a continuación.
 
 code{
 
- $ lb config --parent-mirror-bootstrap http://localhost/debian/ \
-             --parent-mirror-chroot-security http://localhost/debian-security/ \
-	     --parent-mirror-chroot-backports http://localhost/debian-backports/
+ $ lb config --mirror-bootstrap http://localhost/debian/ \
+             --mirror-chroot-security http://localhost/debian-security/ \
+	     --mirror-chroot-backports http://localhost/debian-backports/
 
 }code
 
-El valor indicado en #{--parent-mirror-chroot}# es utilizado como valor por
-defecto para la opción #{--parent-mirror-bootstrap}# si esta no es indicada.
+El valor indicado en #{--mirror-chroot}# es utilizado como valor por defecto
+para la opción #{--mirror-bootstrap}# si esta no es indicada.
 
 3~ Réplicas de distribución Debian utilizadas en la ejecución.
 
-Las opciones #{--parent-mirror-binary*}# gobiernan las réplicas configuradas
-en la imagen binaria que serán utilizadas para instalar paquetes adicionales
+Las opciones #{--mirror-binary*}# gobiernan las réplicas configuradas en la
+imagen binaria que serán utilizadas para instalar paquetes adicionales
 mientras se ejecuta el sistema en vivo. Por defecto se utiliza
 #{cdn.debian.net}#, que es un servicio que selecciona la réplica más cercana
 basándose en el número de IP. Es una elección bastante acertada siempre que
@@ -119,8 +118,8 @@ configuración solamente sería accesible a los usuarios de una red donde
 
 code{
 
- $ lb config --parent-mirror-binary http://mirror/debian/ \
-             --parent-mirror-binary-security http://mirror/debian-security/
+ $ lb config --mirror-binary http://mirror/debian/ \
+             --mirror-binary-security http://mirror/debian-security/
 
 }code
 
@@ -132,7 +131,7 @@ indicada, como pueden ser paquetes de backports, paquetes experimentales o
 personalizados. Para configurar repositorios adicionales se debe crear los
 ficheros #{config/archives/your-repository.list.chroot}# y/o
 #{config/archives/your-repository.list.binary}#. Al igual que en las
-opciones #{--parent-mirror-*}#, estos ficheros gobiernan los repositorios
+opciones #{--mirror-*}#, estos ficheros gobiernan los repositorios
 utilizados en las etapas *chroot* y *binary* respectivamente, esto es, los
 repositorios que serán utilizados cuando se ejecute el sistema en vivo.
 
@@ -153,7 +152,7 @@ sistema en vivo.
 Estos ficheros serán seleccionados automáticamente si existen.
 
 Se debería también incluir en el fichero
-#{config/archives/your-repository.gpg.{binary,chroot}}# la clave GPG a
+#{config/archives/your-repository.key.{binary,chroot}}# la clave GPG a
 utilizar para firmar dicho repositorio.
 
 *{Nota:}* Existen algunos repositorios de paquetes ya preconfigurados para facilitar la selección mediante la opción #{--archives}#. Por ejemplo, para utilizar las instantáneas del repositorio de Debian Live, sería suficiente con activarlo mediante:
@@ -570,7 +569,7 @@ se puede realizar de la siguiente forma:
 code{
 
  $ echo "deb http://mirror/debian sid main" > config/archives/sid.list.chroot
- $ cat >> config/chroot_apt/preferences <<END
+ $ cat >> config/chroot_apt/preferences << END
  Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit
  Pin: release n=sid
  Pin-Priority: 600

@@ -23,15 +23,15 @@ config}#, tel que décrit dans {Miroirs de distribution utilisés au temps de
 construction}#distribution-mirrors-build-time, ou pour plus de commodité,
 fixez par défaut votre système de construction dans
 #{/etc/live/build.conf}#. Il suffit de créer ce fichier et de définir les
-variables #{LB_PARENT_MIRROR_*}# correspondantes à votre miroir
-préféré. Tous les autres miroirs utilisés dans la construction seront par
-défaut à partir de ces valeurs. Par exemple:
+variables #{LB_MIRROR_*}# correspondantes à votre miroir préféré. Tous les
+autres miroirs utilisés dans la construction seront par défaut à partir de
+ces valeurs. Par exemple:
 
 code{
 
- LB_PARENT_MIRROR_BOOTSTRAP="http://mirror/debian"
- LB_PARENT_MIRROR_CHROOT_SECURITY="http://mirror/debian-security"
- LB_PARENT_MIRROR_CHROOT_BACKPORTS="http://mirror/debian-updates"
+ LB_MIRROR_BOOTSTRAP="http://mirror/debian"
+ LB_MIRROR_CHROOT_SECURITY="http://mirror/debian-security"
+ LB_MIRROR_CHROOT_BACKPORTS="http://mirror/debian-updates"
 
 }code
 
@@ -273,7 +273,7 @@ reliant le port #{5901}# sur un serveur à  #{192.168.1.2}#:
 code{
 
  $ mkdir -p config/includes.chroot/etc/skel
- $ cat > config/includes.chroot/etc/skel/.xsession <<END
+ $ cat > config/includes.chroot/etc/skel/.xsession << END
  #!/bin/sh
 
  /usr/bin/metacity &

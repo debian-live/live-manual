@@ -4,7 +4,34 @@ B~ Customizing the binary image
 
 2~ Bootloader
 
-live-build uses syslinux as bootloader by default, which is by default configured to pause indefinitely at its splash screen. To adjust this, you can pass #{--syslinux-timeout TIMEOUT}# to #{lb config}#. The value is specified in units of seconds. A timeout of 0 (zero) disables the timeout completely. For more information please see syslinux(1).
+live-build uses syslinux and some of its derivatives (depending on the image type) as bootloaders by default. You can easily modify their options using different methods, like {includes}#includes or {hooks}#hooks.
+
+For example, these derivatives are configured by default with a timeout of 0 (zero) which means that they will pause indefinitely at their splash screen until you press a key.
+
+To modify the boot timeout of a default #{iso-hybrid}# image you can edit a default *{isolinux.cfg}* file specifying the timeout in units of seconds and add it to #{config/includes.binary/isolinux/}#
+
+A modified *{isolinux.cfg}* to boot after five seconds would be similar to this:
+
+code{
+
+ include menu.cfg
+ default vesamenu.c32
+ prompt 0
+ timeout 5
+
+}code
+
+An alternative way of achieving the same goal could be writing a hook and adding it to #{config/hooks/}# Remember to add the #{.binary}# suffix to run in the binary stage. A proposed example:
+
+code{
+
+ #!/bin/sh
+
+ sed -i 's/timeout 0/timeout 5/' binary/isolinux/isolinux.cfg
+
+}code
+
+For more information please see man syslinux(1).
 
 2~ ISO metadata
 

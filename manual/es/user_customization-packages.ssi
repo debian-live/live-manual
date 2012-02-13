@@ -248,15 +248,17 @@ code{
 
 3~ Utilización de condiciones dentro de las listas de paquetes
 
-Any of the live-build configuration variables stored in #{config/*}# (minus
-the #{LB_}# prefix) may be used in conditional statements in package
-lists. Generally, this means any #{lb config}# option uppercased and with
-dashes changed to underscores. But in practice, it is only the ones that
-influence package selection that make sense, such as #{DISTRIBUTION}#,
-#{ARCHITECTURES}# or #{ARCHIVE_AREAS}#.
+En las sentencias condicionales de las listas de paquetes pueden utilizarse
+cualquier variable disponible en #{config/*}# (excepto las que tienen el
+prefijo #{LB_}#). En general esto significa que puede utilizarse cualquier
+opción válida para #{lb config}# cambiando las letras minúsculas por
+mayúsculas y los guiones por subrayados. En la práctica solamente tiene
+sentido utilizar aquellas variables relacionadas con la selección de
+paquetes, como pueden ser #{DISTRIBUTION}#, #{ARCHITECTURES}# o
+#{ARCHIVE_AREAS}#.
 
-For example, to install #{ia32-libs}# if the #{--architectures amd64}# is
-specified:
+Por ejemplo, para instalar el paquete #{ia32-libs}# si se ha especificado la
+arquitectura amd64 (#{--architectures amd64}#) se puede utilizar:
 
 code{
 
@@ -266,9 +268,10 @@ code{
 
 }code
 
-You may test for any one of a number of values, e.g. to install
-#{memtest86+}# if either #{--architectures i386}# or #{--architectures
-amd64}# is specified:
+En la expresión condicional pueden utilizarse varios valores. Por ejemplo
+para instalar el paquete #{memtest86+}# si la arquitectura es i386
+(#{--architectures i386}#) o es amd64 (#{--architectures amd64}#) se puede
+especificar:
 
 code{
 

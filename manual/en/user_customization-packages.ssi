@@ -132,23 +132,23 @@ code{
 
 3~ Using conditionals inside package lists
 
-Any of the live-build configuration variables stored in #{config/*}# (minus the #{LB_}# prefix) may be used in conditional statements in package lists. Generally, this means any #{lb config}# option uppercased and with dashes changed to underscores. But in practice, it is only the ones that influence package selection that make sense, such as #{DISTRIBUTION}#, #{ARCHITECTURE}# or #{ARCHIVE_AREAS}#.
+Any of the live-build configuration variables stored in #{config/*}# (minus the #{LB_}# prefix) may be used in conditional statements in package lists. Generally, this means any #{lb config}# option uppercased and with dashes changed to underscores. But in practice, it is only the ones that influence package selection that make sense, such as #{DISTRIBUTION}#, #{ARCHITECTURES}# or #{ARCHIVE_AREAS}#.
 
-For example, to install #{ia32-libs}# if the #{--architecture amd64}# is specified:
+For example, to install #{ia32-libs}# if the #{--architectures amd64}# is specified:
 
 code{
 
- #if ARCHITECTURE amd64
+ #if ARCHITECTURES amd64
  ia32-libs
  #endif
 
 }code
 
-You may test for any one of a number of values, e.g. to install #{memtest86+}# if either #{--architecture i386}# or #{--architecture amd64}# is specified:
+You may test for any one of a number of values, e.g. to install #{memtest86+}# if either #{--architectures i386}# or #{--architectures amd64}# is specified:
 
 code{
 
- #if ARCHITECTURE i386 amd64
+ #if ARCHITECTURES i386 amd64
  memtest86+
  #endif
 
@@ -168,7 +168,7 @@ A conditional may surround an #{#include}# directive:
 
 code{
 
- #if ARCHITECTURE amd64
+ #if ARCHITECTURES amd64
  #include <gnome-full>
  #endif
 

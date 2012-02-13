@@ -141,7 +141,7 @@ code{
  #!/bin/sh
 
  lb config noauto \
-     --architecture i386 \
+     --architectures i386 \
      --linux-flavours 686-pae \
      --package-lists lxde \
      "${@}"
@@ -156,14 +156,12 @@ code{
 
 }code
 
-Tout d'abord, #{--architecture i386}# assure que sur notre système de
-construction #{amd64}#, nous construisons une version 32 bits qui peut être
-utilisé sur la plupart des machines. Deuxièmement, nous utilisons
-#{--linux-flavours 686-pae}# parce que nous ne prévoyons pas utiliser cette
-image sur des systèmes beaucoup plus anciens. Troisièmement, nous avons
-choisi la liste des paquets #{lxde}# pour nous donner un bureau minimal. Et
-enfin, nous avons ajouté deux premiers paquets préférés: #{iceweasel}# et
-#{xchat}#.
+First, #{--architectures i386}# ensures that on our #{amd64}# build system,
+we build a 32-bit version suitable for use on most machines. Second, we use
+#{--linux-flavours 686-pae}# because we don't anticipate using this image on
+much older systems. Third, we've chosen the #{lxde}# package list to give us
+a minimal desktop. And finally, we have added two initial favourite
+packages: #{iceweasel}# and #{xchat}#.
 
 Maintenant, construire l'image:
 

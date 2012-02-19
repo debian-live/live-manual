@@ -5,25 +5,25 @@
 Este capítulo trata, no solamente de una mera descripción de cómo
 seleccionar los paquetes a incluir en el sistema en vivo, sino que además
 presenta cómo hacer el «ajuste fino» de la personalización de los contenidos
-del propio sistema. Los «añadidos» (includes) permiten adjuntar o reemplazar
-cualquier fichero en la imagen Debian Live a crear, los scripts gancho
-(hooks) permiten ejecutar cualquier orden en las diferentes etapas de
-creación y en el momento del arranque y por último, la preconfiguración
-permite configurar paquetes cuando son instalados, suministrando las
-respuestas a las preguntas de debconf.
+del propio sistema. Los includes permiten adjuntar o reemplazar cualquier
+fichero en la imagen Debian Live a crear, los scripts gancho (hooks)
+permiten ejecutar cualquier orden en las diferentes etapas de creación y en
+el momento del arranque y por último, la preconfiguración permite configurar
+paquetes cuando son instalados, suministrando las respuestas a las preguntas
+de debconf.
 
 2~includes Includes
 
 Idealmente, un sistema Debain Live debería incluir solamente ficheros que
 son obtenidos de paquetes Debian no modificados. Sin embargo, algunas veces
 es conveniente incluir o modificar algún contenido mediante ficheros. La
-utilización de «añadidos» (includes) posibilita la inclusión, modificación o
-cambio de cualquier fichero en la imagen Debian Live a crear. live-build
-tiene tres mecanismos:
+utilización de includes posibilita la inclusión, modificación o cambio de
+cualquier fichero en la imagen Debian Live a crear. live-build tiene tres
+mecanismos:
 
 _* Includes locales en chroot : Estos includes permiten incluir o reemplazar
-ficheros del entorno chroot. Para más información ver {Includes locales en
-Live/chroot}#live-chroot-local-includes
+ficheros en el sistema de ficheros chroot. Para más información ver
+{Includes locales en Live/chroot}#live-chroot-local-includes
 
 _* Includes locales en Binary: Estos includes permiten incluir o reemplazar
 ficheros en la propia imagen binaria generada. Para más información ver
@@ -41,16 +41,13 @@ Para más infomación acerca de la diferencia entre las imágenes "Live" y
 
 Los includes locales en chroot se utilizan para incluir o reemplazar
 ficheros en el sistema de ficheros Live/chroot de manera que puedan ser
-utilizados en el sistema en vivo. Una utilización típica de estos Includes
-puede ser el rellenar el directorio (#{/etc/skel}#) del sistema en vivo para
-que sea utilizado en la creación del directorio home al dar de alta usuarios
-en el sistema en vivo. Otra utilización típica es suministrar ficheros de
-configuración que puedan ser incluidos o reemplazados en la imagen sin
-necesidad de realizar proceso alguno (Los ficheros son simplemente copiados
-sin realizar ningún proceso de los mismos para adecuarlos al sistema
-concreto. N. del T); Si se necesita realizar algún procesado de estos
-ficheros ver la sección {Scripts gancho locales en
-Live/chroot}#live-chroot-local-hooks
+utilizados en el sistema en vivo. Una utilización típica de estos includes
+puede ser rellenar el directorio (#{/etc/skel}#) usado por el sistema Live
+para crear el directorio home del usuario. Otra utilización típica es
+suministrar ficheros de configuración que pueden ser incluidos o
+reemplazados en la imagen sin necesidad de realizar procesado alguno; Si se
+necesita realizar algún procesado de estos ficheros ver la sección {Scripts
+gancho locales en Live/chroot}#live-chroot-local-hooks
 
 Para incluir ficheros solamente hace falta añadirlos al directorio de
 configuración #{config/includes.chroot}#. Habrá una relación directa entre

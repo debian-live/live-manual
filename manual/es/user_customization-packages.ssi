@@ -11,17 +11,17 @@ seleccionan la distribucion base y las áreas del archivo Debian a utilizar
 son las que más influyen a la hora de conocer qué paquetes estarán
 disponibles para su instalación en la imagen. Para asegurar una buena
 velocidad de descarga de paquetes, se debería elegir el repositorio Debian
-más cercano. Se pueden añadir repositorios para paquetes backports,
-experimentales, paquetes personalizados o incluir ficheros de paquetes
-directamente. Se pueden definir listas de paquetes a incluir personalizadas,
-utilizar listas predefinidas en live-build, seleccionar tareas de
-#{tasksel}# o una combinación de los tres métodos. Por último existen varias
-opciones que dan algún control sobre cuando son instalados los paquetes por
-la herramienta apt o la herramienta aptitude, según sea la elegida. Estas
-opciones pueden ser útiles si se utiliza un proxy, se quiere desactivar la
-instalación de paquetes recomendados para ahorrar espacio o se necesita
-controlar las versiones de los paquetes a instalar mediante APT pinning, por
-nombrar algunas posibilidades.
+más cercano. Se pueden añadir repositorios para backports, experimentales,
+paquetes personalizados o incluir ficheros de paquetes directamente. Se
+pueden definir listas de paquetes personalizadas, utilizar listas
+predefinidas en live-build, seleccionar tareas de #{tasksel}# o una
+combinación de los tres métodos. Por último existen varias opciones que dan
+algún control sobre cuando son instalados los paquetes por la herramienta
+apt o la herramienta aptitude, según sea la elegida. Estas opciones pueden
+ser útiles si se utiliza un proxy, se quiere desactivar la instalación de
+paquetes recomendados para ahorrar espacio o se necesita controlar las
+versiones de los paquetes a instalar mediante APT pinning, por nombrar
+algunas posibilidades.
 
 2~ Origen de los paquetes
 
@@ -221,11 +221,11 @@ lista.
 
 Para crear una lista para la etapa «binary» crear un fichero con el sufijo
 #{.list.binary}# en #{config/package-lists/}#. Estos paquetes no son
-instalados en el sistema en vivo, pero son incluidos en él en #{pool/}#. El
-uso típico de una de estas lista sería para una de las variantes de
-instalador normal («non-live» N.del T.). Tal y como se mencionaba
-anteriormente, si se desea usar la misma lista para la etapa «chroot» basta
-con solamente añadir el sufijo #{.list}#
+instalados en el sistema en vivo, pero son incluidos en #{pool/}#. El uso
+típico de una de estas lista sería para una de las variantes de instalador
+normal («non-live» N.del T.). Tal y como se mencionaba anteriormente, si se
+desea usar la misma lista para la etapa «chroot» basta con solamente añadir
+el sufijo #{.list}#
 
 3~ Extensión de una lista de paquetes dada mediante «includes»
 
@@ -298,10 +298,7 @@ Es habitual que una condición incluya una directiva «include»:
 
 code{
 
- #if ARCHITECTURES amd64
- #include <gnome-full>
- #endif
-
+ 
 }code
 
 No se permite el anidamiento de estructuras condicionales.
@@ -425,10 +422,10 @@ es usar #{dpkg-name}#.
 El método #{packages.chroot}# para la instalación de paquetes personalizados
 tiene desventajas:
 
-_* No es posible utilizar APT seguro.
+_* No es posible utilizar secure APT.
 
-_* Se deben depositar todos los paquetes necesarios para cumplir
-dependencias en el directorio #{config/packages.chroot/}#.
+_* Se deben depositar todos los paquetes apropiados en el directorio
+#{config/packages.chroot/}#.
 
 _* No es adecuado para almacenar configuraciones de Debian Live en un
 control de versiones.
@@ -498,7 +495,7 @@ code{
 
 3~ Ajuste de APT para ahorrar espacio
 
-En ocasiones será necesario ahorrar algún espacio en el medio de
+En ocasiones es necesario ahorrar un poco de espacio en el medio de
 instalación. Las dos opciones descritas a continuación pueden ser de
 interes.
 

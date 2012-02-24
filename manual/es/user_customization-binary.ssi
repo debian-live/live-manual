@@ -4,20 +4,21 @@ B~ Personalización de la imagen binaria
 
 2~ Gestor de arranque
 
-live-build uses syslinux and some of its derivatives (depending on the image
-type) as bootloaders by default. You can easily customize them to several
-degrees that range from providing a full theme to changing the boot timeout
-or simply adding a personalized splash image. Some of the following examples
-of customization make use of different methods, like {includes}#includes or
-{hooks}#hooks.
+live-build  usa /{syslinux}/  y algunos de sus derivados (en función del
+tipo de imagen) como gestores de arranque por defecto. Se pueden
+personalizar fácilmente a distintos niveles que varían desde usar un tema
+completo a cambiar el tiempo de arranque por defecto o simplemente añadir
+una imagen splash. Algunos de los siguientes ejemplos de personalización
+usan distintos métodos, como {includes}#includes o {scripts gancho
+(hooks)}#hooks.
 
-If you want to use a full theme you can specify the #{--syslinux-theme}#
-option (see man #{lb_config}#). live-build will then retrieve the theme from
-the mirror and install it.
+Si se quiere usar un tema completo se puede especificar la opción
+#{--syslinux-theme}# (ver man #{lb_config}#). live-build lo descargará de la
+réplica  y lo instalará. 
 
-Imagine that you want to build a progress client but want to include the
-server's theme because you want to have the help menu. Then you would build
-as follows:
+Si se desea crear un cliente progress pero se quiere usar el tema del
+servidor que incluye el menú de ayuda. Se puede hacer tal y como se explica
+a continuación:
 
 code{
 
@@ -25,15 +26,15 @@ code{
 
 }code
 
-You can also create your own theme or modify an already existing one and if
-you do not have a mirror, you can add the package to
-#{config/packages.chroot}#. In this case it is not necessary to specify any
-option.
+También se puede crear un tema propio o modificar uno que ya exista y si no
+se dispone de una réplica, se puede añadir el paquete a
+#{config/packages.chroot}#. En este caso no es necesario especificar ninguna
+opción.
 
-There is also the possibility of making smaller changes. For instance,
-syslinux derivatives are configured by default with a timeout of 0 (zero)
-which means that they will pause indefinitely at their splash screen until
-you press a key.
+Se pueden hacer cambios más pequeños. Por ejemplo, los derivados de syslinux
+están configurados por defecto con un tiempo de espera de 0 (cero) lo que
+significa que harán una pausa indefinida en su pantalla de inicio hasta que
+se pulse una tecla.
 
 Para modificar el tiempo de espera de arranque de una imagen #{iso-hybrid}#
 se puede editar un fichero *{isolinux.cfg}* especificando el tiempo de
@@ -67,8 +68,9 @@ code{
 
 Para más información ver la página del manual de syslinux(1).
 
-Likewise, if you want to use a personalized /{splash.png}/ image you can add
-a picture of 640x480 pixels to #{config/includes.binary/isolinux/}#
+Del mismo modo, si se quiere usar una /{splash.png}/  personalizada basta
+con añadir una imagen de 640x480 píxeles en
+#{config/includes.binary/isolinux/}#
 
 2~ Metadatos ISO
 

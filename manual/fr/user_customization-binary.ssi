@@ -4,14 +4,36 @@ B~ Personnalisation de l'image binaire
 
 2~ Chargeur d'amorçage
 
-live-build utilise syslinux et certains de ses dérivés (selon le type
-d'image) comme chargeurs d'amorçage par défaut. Vous pouvez facilement
-modifier leurs options en utilisant différentes méthodes, comme
-{includes}#includes ou {hooks}#hooks.
+live-build uses syslinux and some of its derivatives (depending on the image
+type) as bootloaders by default. You can easily customize them to several
+degrees that range from providing a full theme to changing the boot timeout
+or simply adding a personalized splash image. Some of the following examples
+of customization make use of different methods, like {includes}#includes or
+{hooks}#hooks.
 
-Par exemple, ces dérivés sont configurés par défaut avec un timeout de 0
-(zéro) qui signifie qu'ils se mettront en pause indéfiniment à leur écran de
-démarrage jusqu'à ce que vous pressez une touche.
+If you want to use a full theme you can specify the #{--syslinux-theme}#
+option (see man #{lb_config}#). live-build will then retrieve the theme from
+the mirror and install it.
+
+Imagine that you want to build a progress client but want to include the
+server's theme because you want to have the help menu. Then you would build
+as follows:
+
+code{
+
+ $ lb config --mode progress --syslinux-theme progress-server
+
+}code
+
+You can also create your own theme or modify an already existing one and if
+you do not have a mirror, you can add the package to
+#{config/packages.chroot}#. In this case it is not necessary to specify any
+option.
+
+There is also the possibility of making smaller changes. For instance,
+syslinux derivatives are configured by default with a timeout of 0 (zero)
+which means that they will pause indefinitely at their splash screen until
+you press a key.
 
 Pour modifier le délai de démarrage d'une image iso-hybrid, vous pouvez
 éditer un fichier *{isolinux.cfg}* précisant le timeout dans les unités de
@@ -29,6 +51,7 @@ code{
 
 }code
 
+
 Une autre façon d'atteindre le même objectif pourrait être écrire un hook et
 l'ajouter à #{config/hooks/}# N'oubliez pas d'ajouter le suffixe #{.binary}#
 pour l'exécuter dans l’étape binaire. Un exemple proposé:
@@ -42,6 +65,9 @@ code{
 }code
 
 Pour plus d'informations s'il vous plaît voir man syslinux(1).
+
+Likewise, if you want to use a personalized /{splash.png}/ image you can add
+a picture of 640x480 pixels to #{config/includes.binary/isolinux/}#
 
 2~ Métadonnées ISO
 

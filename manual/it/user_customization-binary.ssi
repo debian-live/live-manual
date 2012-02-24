@@ -5,12 +5,35 @@ B~ Personalizzare l'immagine binaria
 2~ Bootloader
 
 live-build uses syslinux and some of its derivatives (depending on the image
-type) as bootloaders by default. You can easily modify their options using
-different methods, like {includes}#includes or {hooks}#hooks.
+type) as bootloaders by default. You can easily customize them to several
+degrees that range from providing a full theme to changing the boot timeout
+or simply adding a personalized splash image. Some of the following examples
+of customization make use of different methods, like {includes}#includes or
+{hooks}#hooks.
 
-For example, these derivatives are configured by default with a timeout of 0
-(zero) which means that they will pause indefinitely at their splash screen
-until you press a key.
+If you want to use a full theme you can specify the #{--syslinux-theme}#
+option (see man #{lb_config}#). live-build will then retrieve the theme from
+the mirror and install it.
+
+Imagine that you want to build a progress client but want to include the
+server's theme because you want to have the help menu. Then you would build
+as follows:
+
+code{
+
+ $ lb config --mode progress --syslinux-theme progress-server
+
+}code
+
+You can also create your own theme or modify an already existing one and if
+you do not have a mirror, you can add the package to
+#{config/packages.chroot}#. In this case it is not necessary to specify any
+option.
+
+There is also the possibility of making smaller changes. For instance,
+syslinux derivatives are configured by default with a timeout of 0 (zero)
+which means that they will pause indefinitely at their splash screen until
+you press a key.
 
 To modify the boot timeout of a default #{iso-hybrid}# image you can edit a
 default *{isolinux.cfg}* file specifying the timeout in units of seconds and
@@ -28,6 +51,7 @@ code{
 
 }code
 
+
 An alternative way of achieving the same goal could be writing a hook and
 adding it to #{config/hooks/}# Remember to add the #{.binary}# suffix to run
 in the binary stage. A proposed example:
@@ -41,6 +65,9 @@ code{
 }code
 
 For more information please see man syslinux(1).
+
+Likewise, if you want to use a personalized /{splash.png}/ image you can add
+a picture of 640x480 pixels to #{config/includes.binary/isolinux/}#
 
 2~ Metadati ISO
 

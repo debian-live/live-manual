@@ -5,8 +5,8 @@ B~ Personalizzare l'immagine binaria
 2~ Bootloader
 
 live-build uses /{syslinux}/ and some of its derivatives (depending on the
-image type) as bootloaders by default. You can easily customize them to
-several degrees that range from providing a full theme to changing the boot
+image type) as bootloaders by default. You can easily customize them in a
+number of ways that range from providing a full theme to changing the boot
 timeout or simply adding a personalized splash image. Some of the following
 examples of customization make use of different methods, like
 {includes}#includes or {hooks}#hooks.
@@ -15,9 +15,9 @@ If you want to use a full theme you can specify the #{--syslinux-theme}#
 option (see man #{lb_config}#). live-build will then retrieve the theme from
 the mirror and install it.
 
-Imagine that you want to build a progress client but want to include the
-server's theme because you want to have the help menu. Then you would build
-as follows:
+Imagine that you want to build a progress client but you prefer to include
+the server's theme because you want to have the help menu. Then you would
+launch #{lb config}# as follows:
 
 code{
 
@@ -51,7 +51,6 @@ code{
 
 }code
 
-
 An alternative way of achieving the same goal could be writing a hook and
 adding it to #{config/hooks/}# Remember to add the #{.binary}# suffix to run
 in the binary stage. A proposed example:
@@ -64,10 +63,8 @@ code{
 
 }code
 
-For more information please see man syslinux(1).
-
-Likewise, if you want to use a personalized /{splash.png}/ image you can add
-a picture of 640x480 pixels to #{config/includes.binary/isolinux/}#
+Likewise, if you want to use a personalized splash.png image you can add a
+picture of 640x480 pixels to #{config/includes.binary/isolinux/}#
 
 2~ Metadati ISO
 

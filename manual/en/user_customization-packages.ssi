@@ -104,6 +104,8 @@ If you need to specify a large number of packages to be installed or you need fl
 
 Package lists are a powerful way of expressing which packages should be installed. The list syntax supports included files and conditional sections which makes it easy to build lists from other lists and adapt them for use in multiple configurations. You can use predefined package lists, providing in a modular fashion package selections from each of the major desktop environments and some special purpose lists, as well as standard lists the others are based upon. You can also provide your own package lists, or use a combination of both.
 
+*{Note:}* The behaviour of live-build when specifying a package that does not exist is determined by your choice of APT utility. See {Choosing apt or aptitude}#choosing-apt-or-aptitude for more details.
+
 3~ Predefined package lists
 
 The simplest way to use lists is to specify one or more predefined lists with the #{--packages-lists}# option. For example:
@@ -323,15 +325,15 @@ If there is not an #{lb config}# option to alter APT's behaviour in the way you 
 
 3~apt-pinning APT pinning
 
-For background, please first read the #{apt_preferences(5)}# man page. APT pinning can be configured either for build time, or else for run time. For the former, create #{config/chroot_apt/preferences}#. For the latter, create #{config/chroot_local-includes/etc/apt/preferences}#.
+For background, please first read the #{apt_preferences(5)}# man page. APT pinning can be configured either for build time, or else for run time. For the former, create #{config/chroot_apt/preferences}#. For the latter, create #{config/chroot_local-includes/etc/apt/preferences}#..
 
-Let's say you are building a Squeeze live system but need all #{live-*}# packages to be installed from Sid at build time. You need to add Sid to your APT sources and pin it so that only the packages you want are installed from it at build time and all others are taken from the target system distribution, Squeeze. The following will accomplish this:
+Let's say you are building a Squeeze live system but need all the live packages that end up in the binary image to be installed from Sid at build time. You need to add Sid to your APT sources and pin it so that only the packages you want are installed from it at build time and all others are taken from the target system distribution, Squeeze. The following will accomplish this:
 
 code{
 
- $ echo "deb http://mirror/debian sid main" > config/chroot_sources/sid.chroot
- $ cat >>config/chroot_apt/preferences <<END
- Package: live-*
+ $ echo "deb http://mirror/debian sid main" > config/archives/sid.list.chroot
+ $ cat >> config/chroot_apt/preferences << END
+ Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit
  Pin: release n=sid
  Pin-Priority: 600
 

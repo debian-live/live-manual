@@ -198,6 +198,7 @@ principali ambienti desktop e alcuni elenchi per uso speciale, così come
 elenchi standard sui quali vi si basano altri. È inoltre possibile fornire i
 propri elenchi o usare una combinazione di entrambi.
 
+*{Nota:}*Quando si specifica un pacchetto che non esiste, il comportamento di live-build è determinato dalla scelta delle utilità di APT. Per ulteriori dettagli si veda {Scegliere apt o aptitude}#choosing-apt-or-aptitude.
 3~ Elenchi predefiniti di pacchetti
 
 Il modo più semplice per usare gli elenchi è di specificarne uno o più con
@@ -558,17 +559,18 @@ può essere configurato sia in fase di costruzione sia di esecuzione; per la
 prima creare #{config/chroot_apt/preferences}#, per quest'ultima creare
 #{config/chroot_local-includes/etc/apt/preferences}#.
 
-Nell'ipotesi di creare un sistema live Squeeze e avendo la necessità di
-installare tutti i pacchetti #{live-*}# da Sid in questa fase, bisogna
-aggiungere Sid alle fonti di APT e farne il pinning affinché verranno
-installati da lì solo i pacchetti voluti e per tutti gli altri attingerà
-dalla distribuzione principale, Squeeze. Quanto segue servirà allo scopo:
+Let's say you are building a Squeeze live system but need all the live
+packages that end up in the binary image to be installed from Sid at build
+time. You need to add Sid to your APT sources and pin it so that only the
+packages you want are installed from it at build time and all others are
+taken from the target system distribution, Squeeze. The following will
+accomplish this:
 
 code{
 
- $ echo "deb http://mirror/debian sid main" > config/chroot_sources/sid.chroot
- $ cat >>config/chroot_apt/preferences <<END
- Package: live-*
+ $ echo "deb http://mirror/debian sid main" > config/archives/sid.list.chroot
+ $ cat >> config/chroot_apt/preferences << END
+ Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit
  Pin: release n=sid
  Pin-Priority: 600
 

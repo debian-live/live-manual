@@ -2,10 +2,16 @@
 
 1~about-manual About this manual
 
-The main goal of this manual is to serve as a single access point to all
-documentation related to the Debian Live project. It does not include
-end-user documentation for using a Debian Live system as far as things are
-live specific.
+This manual serves as a single access point to all documentation related to
+the Debian Live project and in particular applies to the software produced
+by the project for the Debian 6.0 "Squeeze" release. While it is primarily
+focused on helping you build a live system and not on end-user topics, an
+end-user may find some useful information in these sections: {The
+Basics}#the-basics covers preparing images to be booted from media or the
+network, and {Customizing run time
+behaviours}#customizing-run-time-behaviours describes some options that may
+be specified at the boot prompt, such as selecting a keyboard layout and
+locale, and using persistence.
 
 Some of the commands mentioned in the text must be executed with superuser
 privileges which can be obtained by becoming the root user via #{su}# or by
@@ -19,19 +25,21 @@ command.
 While we believe that everything in this manual is important to at least
 some of our users, we realize it is a lot of material to cover and that you
 may wish to experience early success using the software before delving into
-the details. Therefore, we have provided three tutorials in the
-{Examples}#examples section designed to teach you image building and
-customization basics. Read {Using the examples}#using-the-examples first,
-followed by {Tutorial 1: A standard image}#tutorial-1, {Tutorial 2: A web
-browser utility}#tutorial-2 and finally {Tutorial 3: A personalized
-image}#tutorial-3. By the end of these tutorials, you will have a taste of
-what can be done with Debian Live. We encourage you to return to more
-in-depth study of the manual, perhaps next reading {The basics}#the-basics,
-skimming or skipping {Building a netboot image}#building-netboot-image, and
-finishing by reading the {Customization overview}#customization-overview and
-the chapters that follow it. By this point, we hope you are thoroughly
-excited by what can be done with Debian Live and motivated to read the rest
-of the manual, cover-to-cover.
+the details. Therefore, we suggest reading in the following order. First,
+read this chapter, {About this manual}#about-manual, from the beginning and
+ending with the {Terms}#terms section. Next, skip to the three tutorials at
+the front of the {Examples}#examples section designed to teach you image
+building and customization basics. Read {Using the
+examples}#using-the-examples first, followed by {Tutorial 1: A standard
+image}#tutorial-1, {Tutorial 2: A web browser utility}#tutorial-2 and
+finally {Tutorial 3: A personalized image}#tutorial-3. By the end of these
+tutorials, you will have a taste of what can be done with Debian Live. We
+encourage you to return to more in-depth study of the manual, perhaps next
+reading {The basics}#the-basics, skimming or skipping {Building a netboot
+image}#building-netboot-image, and finishing by reading the {Customization
+overview}#customization-overview and the chapters that follow it. By this
+point, we hope you are thoroughly excited by what can be done with Debian
+Live and motivated to read the rest of the manual, cover-to-cover.
 
 2~terms Terms
 
@@ -125,7 +133,7 @@ _* Richard Nelson
 
 _* Trent W. Buck
 
-2~ Contributing to this document
+2~how-to-contribute Contributing to this document
 
 This manual is intended as a community project and all proposals for
 improvements and contributions are extremely welcome. The preferred way to
@@ -175,7 +183,7 @@ code{
 
 }code
 
-3~ Applying patches
+3~ Applying changes
 
 Anyone can directly commit to the repository. However, we ask you to send
 bigger changes to the mailing list to discuss them first. To push to the
@@ -186,11 +194,11 @@ _* Fetch the public commit key:
 code{
 
  $ mkdir -p ~/.ssh/identity.d
- $ wget http://live.debian.net/other/keys/gitosis@live.debian.net \
-     -O ~/.ssh/identity.d/gitosis@live.debian.net
- $ wget http://live.debian.net/other/keys/gitosis@live.debian.net.pub \
-     -O ~/.ssh/identity.d/gitosis@live.debian.net.pub
- $ chmod 0600 ~/.ssh/identity.d/gitosis@live.debian.net*
+ $ wget http://live.debian.net/other/keys/git@live.debian.net \
+     -O ~/.ssh/identity.d/git@live.debian.net
+ $ wget http://live.debian.net/other/keys/git@live.debian.net.pub \
+     -O ~/.ssh/identity.d/git@live.debian.net.pub
+ $ chmod 0600 ~/.ssh/identity.d/git@live.debian.net*
 
 }code
 
@@ -201,8 +209,8 @@ code{
  $ cat >> ~/.ssh/config << EOF
  Host live.debian.net
      Hostname live.debian.net
-     User gitosis
-     IdentityFile ~/.ssh/identity.d/gitosis@live.debian.net
+     User git
+     IdentityFile ~/.ssh/identity.d/git@live.debian.net
  EOF
 
 }code
@@ -211,9 +219,11 @@ _* Check out a clone of the manual through ssh:
 
 code{
 
- $ git clone gitosis@live.debian.net:/live-manual.git
+ $ git clone git@live.debian.net:/live-manual.git
+ $ cd live-manual && git checkout debian-next
 
-}code
+}code _* Note that you should commit any changes on the debian-next branch,
+not on the debian branch.
 
 _* After editing the files in #{manual/en/}#, please call the 'commit'
 target in the top level directory to sanitize the files and update the
@@ -225,10 +235,18 @@ code{
 
 }code
 
-_* After sanitizing, commit the changes. Write commit messages that consist
-of full, useful sentences in English, starting with a capital letter and
-ending with a full stop. Usually, these will start with the form
-'Fixing/Adding/Removing/Correcting/Translating', e.g.
+_* Then
+
+code{
+
+ $ git add .
+
+}code
+
+_* After sanitizing and adding the files, commit the changes. Write commit
+messages that consist of full, useful sentences in English, starting with a
+capital letter and ending with a full stop. Usually, these will start with
+the form 'Fixing/Adding/Removing/Correcting/Translating', e.g.
 
 code{
 
@@ -244,7 +262,7 @@ code{
 
 }code
 
-3~ Translation
+3~translation Translation
 
 To submit a translation for a new language, follow these three steps:
 
@@ -258,5 +276,8 @@ _* Once the new language is added, you can randomly start translating all po
 files in #{manual/po/}#.
 
 _* Don't forget you need #{make commit}# to ensure the translated manuals
-are updated from the po files, before #{git commit -a}# and #{git push}#.
+are updated from the po files and then you can review your changes launching
+#{make build}# before #{git add .}#, #{git commit -a -m "Translating..."}#
+and #{git push}#.
 
+*{Note:}* Please be aware that even though both #{make commit}# and #{make build}# remove your build directory, if you build the manual to review your changes as recommended, you may want to clean your git tree before pushing. In order to do that, you can use #{make clean}#. This last step is not compulsory thanks to the .gitignore file but it is a good practice to avoid committing files involuntarily.

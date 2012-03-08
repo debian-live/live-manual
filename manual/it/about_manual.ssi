@@ -2,10 +2,16 @@
 
 1~about-manual A proposito di questo manuale
 
-L'obiettivo di questo manuale è quello di servire da punto di accesso
-centralizzato per tutta la documentazione relativa al progetto Debian Live;
-non include documentazione rivolta agli utenti finali sul come usare un
-sistema Debian Live, se non quella specifica per un sistema live.
+This manual serves as a single access point to all documentation related to
+the Debian Live project and in particular applies to the software produced
+by the project for the Debian 6.0 "Squeeze" release. While it is primarily
+focused on helping you build a live system and not on end-user topics, an
+end-user may find some useful information in these sections: {The
+Basics}#the-basics covers preparing images to be booted from media or the
+network, and {Customizing run time
+behaviours}#customizing-run-time-behaviours describes some options that may
+be specified at the boot prompt, such as selecting a keyboard layout and
+locale, and using persistence.
 
 Alcuni dei comandi menzionati nel testo devono essere eseguiti con i
 privilegi di super-utente che possono essere ottenuti diventando utente root
@@ -16,24 +22,24 @@ di super-utente, i comandi sono preceduti rispettivamente da #{$}# o
 
 2~ Per gli impazienti
 
-Sebbene crediamo che ogni cosa in questo manuale sia importante almeno per
-alcuni dei nostri utenti, ci rendiamo conto che c'è tanto materiale da
-trattare e che si potrebbe voler provare il software prima di entrare nei
-dettagli. Pertanto, abbiamo messo a disposizione nella sezione
-{Esempi}#examples tre tutorial progettati per insegnarvi le basi della
-costruzione e della personalizzazione delle immagini. Si legga innanzitutto
-{Usare gli esempi}#using-the-examples, seguito da {Tutorial 1: un'immagine
-standard}#tutorial-1, {Tutorial 2: un programma di utilità web
-browser}#tutorial-2 e, infine, {Tutorial 3: un'immagine
-personalizzata}#tutorial-3. Alla fine di queste esercitazioni, si avrà un
-assaggio di ciò che si può fare con Debian Live. Ti invitiamo ad uno studio
-più approfondito del manuale, magari leggendo in seguito {Nozioni di
-base}#the-basics, sfogliando o saltando {Creare un'immagine
-netboot}#building-netboot-image, e finendo con la lettura di {Panoramica
-sulla personalizzazione}#customization-overview e dei capitoli che lo
-seguono. A questo punto, ci auguriamo che tu sia davvero eccitato da ciò che
-si può fare con Debian Live e motivato a leggere il resto del manuale, da
-cima a fondo.
+While we believe that everything in this manual is important to at least
+some of our users, we realize it is a lot of material to cover and that you
+may wish to experience early success using the software before delving into
+the details. Therefore, we suggest reading in the following order. First,
+read this chapter, {About this manual}#about-manual, from the beginning and
+ending with the {Terms}#terms section. Next, skip to the three tutorials at
+the front of the {Examples}#examples section designed to teach you image
+building and customization basics. Read {Using the
+examples}#using-the-examples first, followed by {Tutorial 1: A standard
+image}#tutorial-1, {Tutorial 2: A web browser utility}#tutorial-2 and
+finally {Tutorial 3: A personalized image}#tutorial-3. By the end of these
+tutorials, you will have a taste of what can be done with Debian Live. We
+encourage you to return to more in-depth study of the manual, perhaps next
+reading {The basics}#the-basics, skimming or skipping {Building a netboot
+image}#building-netboot-image, and finishing by reading the {Customization
+overview}#customization-overview and the chapters that follow it. By this
+point, we hope you are thoroughly excited by what can be done with Debian
+Live and motivated to read the rest of the manual, cover-to-cover.
 
 2~terms Glossario
 
@@ -128,7 +134,7 @@ _* Richard Nelson
 
 _* Trent W. Buck
 
-2~ Contribuire a questo documento
+2~how-to-contribute Contribuire a questo documento
 
 Questo manuale è pensato come un progetto comunitario e ogni suggerimento e
 contributo è benvenuto. Il modo migliore per apportare un contributo è di
@@ -178,7 +184,7 @@ code{
 
 }code
 
-3~ Applicare le patch
+3~ Applicare le modifiche
 
 Chiunque può eseguire il commit direttamente sul repository; tuttavia
 chiediamo di inviare le modifiche più corpose in mailing list, per poterne
@@ -190,11 +196,11 @@ _* Prelevare la chiave pubblica:
 code{
 
  $ mkdir -p ~/.ssh/identity.d
- $ wget http://live.debian.net/other/keys/gitosis@live.debian.net \
-     -O ~/.ssh/identity.d/gitosis@live.debian.net
- $ wget http://live.debian.net/other/keys/gitosis@live.debian.net.pub \
-     -O ~/.ssh/identity.d/gitosis@live.debian.net.pub
- $ chmod 0600 ~/.ssh/identity.d/gitosis@live.debian.net*
+ $ wget http://live.debian.net/other/keys/git@live.debian.net \
+     -O ~/.ssh/identity.d/git@live.debian.net
+ $ wget http://live.debian.net/other/keys/git@live.debian.net.pub \
+     -O ~/.ssh/identity.d/git@live.debian.net.pub
+ $ chmod 0600 ~/.ssh/identity.d/git@live.debian.net*
 
 }code
 
@@ -206,8 +212,8 @@ code{
  $ cat >> ~/.ssh/config << EOF
  Host live.debian.net
      Hostname live.debian.net
-     User gitosis
-     IdentityFile ~/.ssh/identity.d/gitosis@live.debian.net
+     User git
+     IdentityFile ~/.ssh/identity.d/git@live.debian.net
  EOF
 
 }code
@@ -216,9 +222,11 @@ _* Scaricare tramite ssh un clone del manuale:
 
 code{
 
- $ git clone gitosis@live.debian.net:/live-manual.git
+ $ git clone git@live.debian.net:/live-manual.git
+ $ cd live-manual && git checkout debian-next
 
-}code
+}code _* Note that you should commit any changes on the debian-next branch,
+not on the debian branch.
 
 _* Dopo aver modificato i file in #{manual/en/}#, chiamare il target
 'commit' nella directory superiore per bonificare i file ed aggiornare i
@@ -230,11 +238,19 @@ code{
 
 }code
 
-_* Dopo la pulizia è possibile eseguire il commit delle modifiche. Si
-scrivano messaggi costituiti da frasi in inglese esaurienti ed utili,
-inizianti con una lettera maiuscola e terminanti con un punto. Solitamente
-cominceranno con la forma 'Fixing/Adding/Removing/Correcting/Translating',
-ad esempio.
+_* Then
+
+code{
+
+ $ git add .
+
+}code
+
+_* Dopo aver pulito e aggiunto i file è possibile eseguire il commit delle
+modifiche. Si scrivano messaggi costituiti da frasi in inglese esaurienti e
+utili, inizianti con una lettera maiuscola e terminanti con un
+punto. Solitamente cominceranno con la forma
+"Fixing/Adding/Removing/Correcting/Translating", ad esempio. 
 
 code{
 
@@ -250,7 +266,7 @@ code{
 
 }code
 
-3~ Traduzione
+3~translation Traduzione
 
 Per inviare una traduzione per una nuova lingua, seguire questi tre passi:
 
@@ -264,7 +280,9 @@ _* Una volta che la nuova lingua è stata aggiunta, si può iniziare a
 tradurre tutti i file po situati in #{manual/po/}#, nell'ordine che si
 preferisce.
 
-_* Non si dimentichi che è necessario dare un #{make commit}# per
-assicurarsi che i manuali tradotti siano aggiornati partendo dai file po,
-prima di #{git commit -a}# e #{git push}#.
+_* Non dimenticare che è necessario usare #{make commit}# per assicurarsi
+che i manuali tradotti siano aggiornati partendo dai file po, quindi si
+possono verificare le modifiche con #{make build}# prima di #{git add .}#,
+#{git commit -a -m "Traduzione..." }#e #{git push}#.
 
+*{Note:}* Please be aware that even though both #{make commit}# and #{make build}# remove your build directory, if you build the manual to review your changes as recommended, you may want to clean your git tree before pushing. In order to do that, you can use #{make clean}#. This last step is not compulsory thanks to the .gitignore file but it is a good practice to avoid committing files involuntarily.

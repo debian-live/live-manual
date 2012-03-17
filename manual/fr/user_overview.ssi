@@ -14,8 +14,8 @@ L'idée derrière live-build est de constituer un cadre qui utilise un
 répertoire de configuration pour automatiser et personnaliser complètement
 tous les aspects de la construction d'une image Live.
 
-Plusieurs concepts sont similaires à celles dans les outils de le paquet
-Debian debhelper écrit par Joey Hess:
+Plusieurs concepts sont similaires à celles ceux dans le paquet Debian
+debhelper écrit par Joey Hess:
 
 _* Les scripts ont un emplacement central pour la configuration de leur
 fonctionnement. Avec debhelper, c'est le sous-répertoire #{debian/}# d'un
@@ -29,7 +29,7 @@ _* Les scripts sont indépendants - c'est-à-dire, il est toujours sûr
 d'exécuter chaque commande.
 
 Contrairement à debhelper, live-build contient un outil pour générer un
-répertoire de configuration de squelette, #{lb config}#. Cela pourrait être
+répertoire de configuration en squelette, #{lb config}#. Cela pourrait être
 considéré comme similaire à des outils tels que #{dh-make}#.  Pour plus
 d'informations à propos de #{lb config}#, s'il vous plaît voir {La commande
 lb config}#lb-config.
@@ -97,15 +97,15 @@ Une liste complète des options est disponible dans la page de manuel de
 3~lb-build La commande #{lb build}#
 
 La commande #{lb build}# lit dans votre configuration à partir du répertoire
-#{config/}#. Il exécute alors les commandes de niveau inférieur nécessaires
-pour construire votre système Live.
+#{config/}#. Elle exécute alors les commandes de niveau inférieur
+nécessaires pour construire votre système Live.
 
 3~lb-clean La commande #{lb clean}#
 
 Le travail de la commande #{lb clean}# est enlever les différentes parties
 d'une construction afin que autres compilations ultérieures puissent
-commencer à partir d'un état propre. Par défaut, les stades #{chroot}#,
-#{binary}# et #{source}# sont nettoyées, mais la cache est laissé intact. En
+commencer à partir d'un état propre. Par défaut, les étapes #{chroot}#,
+#{binary}# et #{source}# sont nettoyées, mais le cache est laissé intact. En
 outre, les étapes individuelles peuvent être nettoyées. Par exemple, si vous
 avez effectué des changements qui affectent uniquement la phase binaire,
 utilisez #{lb clean --binary}# avant de construire un nouveau binaire. Voir
@@ -116,10 +116,10 @@ la page de manuel de #{lb_clean}# pour une liste complète des options.
 live-boot est une collection de scripts fournissant hooks pour
 initramfs-tools, utilisé pour générer un initramfs capable de démarrer des
 systèmes live, comme ceux créés par live-build. Cela inclut les ISOs de
-Debian Live, netboot tarballs, et les images clé USB.
+Debian Live, netboot tarballs, et les images pour clés USB.
 
 Au démarrage il va chercher un support en lecture seule qui contient un
-répertoire #{/live/}# où un système de fichiers racine (souvent une image de
+répertoire #{/live/}# où un système de fichiers racine (souvent une image du
 système de fichiers compressé comme squashfs) est stocké. S'il est trouvé,
 il va créer un environnement accessible en écriture, en utilisant aufs, afin
 que systémes similaires à Debian puissent démarrer à partir de ça.

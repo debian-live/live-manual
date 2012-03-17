@@ -21,7 +21,7 @@ Tout au long du chapitre, nous ferons souvent référence à la valeur par
 défaut des noms de fichiers produits par live-build. Si vous téléchargez une
 image précompilée les noms de fichiers peuvent varier.
 
-2~what-is-live Qu'est-ce qu'un système live?
+2~what-is-live Qu'est-ce c'est un système live?
 
 Un système live signifie généralement un système d'exploitation démarré sur
 un ordinateur à partir d'un support amovible, tel qu'un CD-ROM ou une clé
@@ -121,7 +121,7 @@ code{
 
 }code
 
-3~copying-iso-hybrid-to-usb Copie d'un image ISO hybride sur une clé USB
+3~copying-iso-hybrid-to-usb Copie d'une image ISO hybride sur une clé USB
 
 Les images ISO préparées avec la commande #{isohybrid}# comme les images
 #{iso-hybrid}# produites par défaut, peuvent être simplement copiées sur une
@@ -130,11 +130,11 @@ une capacité suffisamment grande pour votre fichier image et déterminez quel
 dispositif il est, que nous appellons ci-dessous #{${USBSTICK}}#. C'est le
 fichier de périphérique de votre clé, tel que #{/dev/sdb}#, pas une
 partition, tel que #{/dev/sdb1}#! Vous pouvez trouver le nom du périphérique
-en regardant dans la sortie de #{dmesg}# après avoir branché le dispositif,
-ou mieux encore, #{ls -l /dev/disk/by-id}#.
+en regardant la sortie de #{dmesg}# après avoir branché le dispositif, ou
+mieux encore, #{ls -l /dev/disk/by-id}#.
 
 Une fois que vous êtes sûr d'avoir le nom correct de l'appareil, utilisez la
-commande #{dd}# pour copier l'image sur le clé. *{Ceci écrasera tout fichier
+commande #{dd}# pour copier l'image sur la clé. *{Ceci écrasera tout fichier
 déjà existant sur votre clé!}*
 
 code{
@@ -147,15 +147,15 @@ code{
 3~booting-live-media Démarrer le support live
 
 La première fois que vous démarrez votre support live, qu'il s'agisse de CD,
-DVD, clé USB, ou le démarrage PXE, une certaine configuration dans le BIOS
-de votre ordinateur peut être d'abord nécessaire. Depuis les BIOS varient
-grandement en fonctionnalités et raccourcis clavier, on ne peut pas pénétrer
-dans le sujet en profondeur ici. Certains BIOS fournissent une clé pour
-ouvrir un menu d'amorçage au démarrage, qui est le moyen le plus facile si
-elle est disponible sur votre système. Sinon, vous avez besoin d'entrer dans
-le menu de configuration du BIOS et modifier l'ordre de démarrage pour
-placer le dispositif de démarrage pour le système live devant votre
-périphérique de démarrage normal.
+DVD, clé USB, ou le démarrage par PXE, une certaine configuration dans le
+BIOS de votre ordinateur peut être d'abord nécessaire. Puisque les BIOS
+varient grandement en fonctionnalités et raccourcis clavier, on ne peut pas
+pénétrer dans le sujet en profondeur ici. Certains BIOS fournissent une
+touche pour ouvrir un menu d'amorçage au démarrage, qui est le moyen le plus
+facile si elle est disponible sur votre système. Sinon, vous avez besoin
+d'entrer dans le menu de configuration du BIOS et modifier l'ordre de
+démarrage pour placer le dispositif de démarrage pour le système live devant
+votre périphérique de démarrage normal.
 
 Une fois que vous avez démarré le support, vous êtes présenté avec un menu
 de démarrage. Si vous appuyez simplement sur enter ici, le système va
@@ -187,7 +187,7 @@ exemple performance de vidéo médiocre, ou choix limité de matériel émulé.
 _* Lors du développement d'un matériel spécifique, il n'existe aucun
 substitut pour l'exécution que le matériel lui-même.
 
-_* Parfois il ya des bogues que deviennent visibles uniquement pendant
+_* Parfois il y a des bogues que deviennent visibles uniquement pendant
 l'exécution dans une VM. En cas de doute, testez votre image directement sur
 le matériel.
 
@@ -201,7 +201,7 @@ support matériel pour la virtualisation, vouz pouvez utiliser le paquet
 #{qemu-kvm}#; La description du paquet #{qemu-kvm}# énumère brièvement les
 exigences.
 
-Tout d'abord, installez #{qemu-kvm}# si votre processeur le supporte. Sinon,
+Tout d'abord, installez #{qemu-kvm}# si votre processeur le soutient. Sinon,
 installez #{qemu}#, dans ce cas, le nom du programme est #{qemu}# au lieu de
 #{kvm}# dans les exemples suivants. Le paquet #{qemu-utils}# est également
 valuable pour créer des images disque virtuels avec #{qemu-img}#.
@@ -347,7 +347,7 @@ pas de réponses faciles.
 2~building-netboot-image Construction d'une image netboot
 
 La séquence de commandes suivante va créer une image NetBoot de base
-contenant le système Debian standard sans X.org. Elle peur être démarrée sur
+contenant le système Debian standard sans X.org. Elle peut être démarrée sur
 le réseau.
 
 Remarque: Si vous avez réalisé tous les exemples précédents, vous aurez
@@ -369,13 +369,13 @@ code{
 
 }code
 
-Contrairement à les images ISO et HDD netbooting ne serve pas l'image du
-système de fichiers pour le client, afin que les fichiers doivent être
-servis via NFS. Les options #{--net-root-path}# et #{--net-root-server}#
-spécifien l'emplacement et le serveur, respectivement, du serveur NFS sur
-lequel l'image système de fichiers sera situé au moment du
-démarrage. Assurez-vous que ce sont mis à des valeurs appropriées pour votre
-réseau et serveur.
+Contrairement à les images ISO et HDD le démarrage sur le réseau ne serve
+pas l'image du système de fichiers pour le client, afin que les fichiers
+doivent être servis via NFS. Les options #{--net-root-path}# et
+#{--net-root-server}# spécifien l'emplacement et le serveur, respectivement,
+du serveur NFS sur lequel l'image système de fichiers sera situé au moment
+du démarrage. Assurez-vous que ce sont mis à des valeurs appropriées pour
+votre réseau et serveur.
 
 Maintenant construire l'image avec la commande #{lb build}#
 
@@ -399,13 +399,13 @@ de fichiers dans #{live/filesystem.squashfs}# et le kernel, initrd et le
 chargeur de démarrage pxelinux dans #{tftpboot/debian-live/i386}#.
 
 Nous devons maintenant configurer trois services sur le serveur pour activer
-netboot: le serveur DHCP, serveur TFTP et le serveur NFS.
+le démarrage sur le réseau: le serveur DHCP, serveur TFTP et le serveur NFS.
 
 3~ Serveur DHCP
 
 Nous devons configurer le serveur DHCP de notre réseau pour être sûr de
-donner une adresse IP au système client netboot, et pour annoncer
-l'emplacement du chargeur de démarrage PXE.
+donner une adresse IP au client du système du démarrage sur le réseau, et
+pour annoncer l'emplacement du chargeur de démarrage PXE.
 
 Voici un exemple source d'inspiration, écrit pour le serveur ISC DHCP
 #{isc-dhcp-server}# dans le fichier de configuration
@@ -491,7 +491,7 @@ les essais des images sur des machines physiques peuvent prendre vraiment
 beaucoup de temps. 
 
 Afin de rendre notre vie plus facile, nous pouvons utiliser la
-virtualisation. Il ya deux solutions.
+virtualisation. Il y a deux solutions.
 
 3~ Qemu
 

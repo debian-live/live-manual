@@ -25,16 +25,15 @@ installate con il pinning, giusto per citare alcune possibilità.
 
 3~ Distribuzione, le aree di archivio e le modalità
 
-La distribuzione che viene scelta ha un ampio impatto su quali pacchetti
-siano disponibili per essere inclusi nell'immagine live. Specificare il nome
-in codice, il predefinito per la versione Wheezy di live-build è #{wheezy}#;
-qualsiasi attuale distribuzione mantenuta negli archivi Debian può essere
-qui specificata con il suo nome in codice. (Per ulteriori dettagli
-consultare il {Glossario}#terms). L'opzione #{--distribution}# non solo
-influenza la sorgente dei pacchetti nell'archivio, ma indica a
-#{live-build}# di comportarsi secondo la necessità per compilare ciascuna
-distribuzione supportata. Ad esempio se si vuole costruire un rilascio
-*unstable*, Sid, specificare:
+The distribution you choose has the broadest impact on which packages are
+available to include in your live image. Specify the codename, which
+defaults to #{wheezy}# for the Wheezy version of live-build. Any current
+distribution carried in the Debian archive may be specified by its codename
+here. (See {Terms}#terms for more details.) The #{--distribution}# option
+not only influences the source of packages within the archive, but also
+instructs #{live-build}# to behave as needed to build each supported
+distribution. For example, to build against the *{unstable}* release, Sid,
+specify:
 
 code{
 
@@ -65,18 +64,17 @@ comportamento di live-build per adattarlo alle derivate.
 
 3~ Mirror delle distribuzioni
 
-L'archivio Debian è replicato attraverso una vasta rete di mirror in tutto
-il mondo cosicché chiunque in ogni nazione può selezionare il mirror più
-vicino per la migliore velocità di scaricamento. Ciascuna delle opzioni
-#{--mirror-*}# determina quale mirror della distribuzione è usato nei vari
-stadi della compilazione. Ricordando dalle {Fasi della
-creazione}#stages-of-the-build che la fase di *avvio* è quando il chroot è
-inizialmente popolato da debootstrap con un sistema minimale e quella di
-*chroot* è quando viene creato il chroot usato per costruire il file system
-del sistema live. Perciò per queste fasi vengono usati i corrispondenti
-cambi di mirror, e in seguito, nella fase *binaria* vengono usati i valori
-di #{--mirror-binary}# e #{--mirror-binary-security}# sostituendo qualsiasi
-altro mirror usato nelle fasi iniziali.
+The Debian archive is replicated across a large network of mirrors around
+the world so that people in each region can choose a nearby mirror for best
+download speed. Each of the #{--mirror-*}# options governs which
+distribution mirror is used at various stages of the build. Recall from
+{Stages of the build}#stages-of-the-build that the *{bootstrap}* stage is
+when the chroot is initially populated by debootstrap with a minimal system,
+and the *{chroot}* stage is when the chroot used to construct the live
+system's filesystem is built. Thus, the corresponding mirror switches are
+used for those stages, and later, in the *{binary}* stage, the
+#{--mirror-binary}# and #{--mirror-binary-security}# values are used,
+superceding any mirrors used in an earlier stage.
 
 3~distribution-mirrors-build-time Mirror delle distribuzioni usati in fase
 di compilazione
@@ -118,15 +116,14 @@ code{
 
 3~additional-repositories Repository addizionali
 
-Si possono aggiungere altri repository, ampliando così la scelta dei
-pacchetti al di là di quelli disponibili nella distribuzione di
-destinazione. Questi possono essere, per esempio, pacchetti di backport,
-sperimentali o personalizzati. Per configurare repository aggiuntivi, creare
-i file #{config/archives/vostro-repository.list.chroot}#, o
-#{config/archives/vostro-repository.list.binary}#. Come per le opzioni
-#{--mirror-*}#, queste controlleranno i repository usati nella fase *chroot*
-quando si compila l'immagine, e nella fase *binary*, ad esempio per usarli
-quando il sistema live è avviato.
+You may add more repositories, broadening your package choices beyond what
+is available in your target distribution. These may be, for example, for
+backports, experimental or custom packages. To configure additional
+repositories, create #{config/archives/your-repository.list.chroot}#, and/or
+#{config/archives/your-repository.list.binary}# files. As with the
+#{--mirror-*}# options, these govern the repositories used in the *{chroot}*
+stage when building the image, and in the *{binary}* stage, i.e. for use
+when running the live system.
 
 Per esempio, #{config/archives/live.list.chroot}# permette di installare
 pacchetti dal repository snapshot di debian live al momento della creazione
@@ -507,10 +504,10 @@ spiegato in {APT pinning}#apt-pinning.
 
 3~ Passare opzioni ad apt o aptitude
 
-Se non c'è un'opzione di #{lb config}# per modificare il comportamento di
-APT nel modo desiderato, si usi #{--apt-options}# o #{--aptitude-options}#
-per passare opzioni tramite il proprio strumento APT. Consultare il manuale
-di #{apt}# e #{aptitude}# per i dettagli.
+If there is not a #{lb config}# option to alter APT's behaviour in the way
+you need, use #{--apt-options}# or #{--aptitude-options}# to pass any
+options through to your configured APT tool. See the man pages for #{apt}#
+and #{aptitude}# for details.
 
 3~apt-pinning APT pinning
 

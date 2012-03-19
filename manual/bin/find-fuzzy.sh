@@ -3,9 +3,9 @@
 # Script to assist translators in finding and fixing fuzzy strings in live-manual.
 
 echo ""
-echo "This script can help you find and fix fuzzy strings. What is your language?."
-echo "Type de, es, fr, it, pt_BR or ro" 
-echo "['q' to quit]."
+echo "There are $(grep -w 'fuzzy' manual/po/*/* | wc -l) fuzzy strings altogether in live-manual."
+echo "This script can help you find and fix them. What is your language?."
+echo "Type: de, es, fr, it, pt_BR or ro ['q' to quit]" 
 
 # Editor defaults to vim unless otherwise specified in preferences.
 
@@ -38,7 +38,7 @@ find_fuzzy()
 			read OPENEDITOR
 			case $OPENEDITOR in
 
-				y*|Y*)	$EDITOR $(grep -w 'fuzzy' manual/po/$ANSWER/* | uniq | sed 's|:#, fuzzy||')
+				y*|Y*)	$EDITOR $(grep -w 'fuzzy' manual/po/$ANSWER/* | uniq | sed 's|:#, fuzzy.*||')
 				;;
 				n*|N*)	exit 0
 				;;

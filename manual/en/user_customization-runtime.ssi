@@ -25,7 +25,7 @@ To change the default username you can simply specify it in your config:
 
 code{
 
-$ lb config --bootappend-live "username=live-user"
+ $ lb config --bootappend-live "username=live-user"
 
 }code
 
@@ -108,11 +108,11 @@ It is possible to restrict which types of persistent volumes to use by specifyin
 
 _* #{full-ov}# for full persistent overlays.
 
--* #{custom-ov}# for custom overlays.
+_* #{custom-ov}# for custom overlays.
 
--* #{live-sn}# for full system snapshots.
+_* #{live-sn}# for full system snapshots.
 
--* #{home-sn}# for /home snapshots.
+_* #{home-sn}# for /home snapshots.
 
 3~ Full persistent overlays
 
@@ -151,14 +151,14 @@ A volume with the label #{custom-ov}# can be configured to make arbitrary direct
 
 How custom overlay mounts are configured is described in full detail in the live.persist(5) man page, but a simple example should be sufficient for most uses. Let's say we want to make our home directory and APT cache persistent in an ext3 filesystem on the /dev/sdb1 partition:
 
-code {
+code{
 
  $ mkfs.ext3 -L custom-ov /dev/sdb1
  $ mount -t ext3 /dev/sdb1 /mnt
  $ echo "/home" >> /mnt/live.persist
  $ echo "/var/cache/apt" >> /mnt/live.persist
 
-}
+}code
 
 Then we reboot. During the first boot the contents of /home and /var/cache/apt will be copied into the persistent volume, and from then on all changes to these directories will live in the persistent volume. Please note that any paths listed in the #{live.persist}# file cannot contain white spaces or the special "." and ".." path components. Also, neither "/live" (or any of its sub-directories) nor "/" can be made persistent using custom mounts (for the latter, use the #{full-ov}# type persistence described above).
 

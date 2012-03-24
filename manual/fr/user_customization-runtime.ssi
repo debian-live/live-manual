@@ -138,7 +138,7 @@ l'exécute.
 Un système Debian Live est une généralisation de ce paradigme et soutient
 ainsi autres supports, en plus de CDs, mais encore, dans son comportement
 par défaut, il doit être considéré en lecture seule et toutes les évolutions
-d'exécution du système sont perdus à l'arrêt.
+pendant l'exécution du système sont perdus à l'arrêt.
 
 La persistance est un nom commun pour les différents types de solutions pour
 sauver, après un redémarrage, certaines ou toutes les données, de cette
@@ -149,46 +149,50 @@ modification des fichiers et répertoires sont écrits sur des supports
 inscriptibles, typiquement un disque ram (tmpfs) et aux disques RAM les
 données ne survivent pas à un redémarrage.
 
-The data stored on this ramdisk should be saved on a writable persistent
-medium like local storage media, a network share or even a session of a
-multisession (re)writable CD/DVD. All these media are supported in Debian
-Live in different ways, and all but the last one require a special boot
-parameter to be specified at boot time: #{persistent}#.
+Les données stockées sur ce disque virtuel doivent être enregistrées sur un
+support inscriptible persistant comme supports de stockage locaux, un
+partage réseau ou même une séance d'un CD/DVD multisession
+(ré)inscriptible. Tous ces supports sont pris en charge dans Debian Live de
+différentes manières, et tous, moins le dernier, nécessitent un paramètre
+d'amorçáge spéciale à préciser au moment du démarrage: #{persistent}#.
 
-If the boot parameter #{persistent}# is set (and #{nopersistent}# is not
-set), local storage media (e.g. hard disks, USB drives) will be probed for
-persistent volumes during boot. A persistent volumes is any of the
-following:
+Si le paramètre de démarrage #{persistent}# est réglé (et #{nopersistent}#
+n'est pas utilisé), les supports de stockage locaux (par exemple les disques
+durs, clés USB) seront examinés pour trouver des volumes persistants pendant
+le démarrage. Un volume persistant est un des éléments suivants:
 
-_* a partition, identified by its GPT name.
+_* une partition, identifiée par son nom GPT.
 
-_* a filesystem, identified by its filesystem label.
+_* un système de fichiers, identifié par son étiquette de système de
+fichiers.
 
-_* an image/archive file located on the root of any readable filesystem
-(even an NTFS partition of a foreign OS), identified by its file name. In
-this case the file name must also use the containing filesystem as the file
-extension, e.g. "<label>.ext3".
+_* un fichier image/archive situé sur la racine de tout système de fichiers
+en lecture (même une partition NTFS d'un système d'exploitation étranger),
+identifié par son nom de fichier. Dans ce cas, le nom du fichier doit
+également utiliser le système de fichiers contenant l'extension de fichier,
+par exemple, "<label>.ext3".
 
-It is possible to restrict which types of persistent volumes to use by
-specifying certain boot parameters described in the live-boot(7) man
-page. The "identifying labels" referred to above can be any of the
-following:
+Il est possible de limiter les types de volumes persistants à utiliser en
+spécifiant certains paramètres de démarrage décrits dans la page de manuel
+live-boot(7). Les "étiquettes d'identification" mentionnées ci-dessus
+peuvent être un des éléments suivants:
 
-_* #{full-ov}# for full persistent overlays.
+_* #{full-ov}# pour couches de persistance pleine.
 
-_* #{custom-ov}# for custom overlays.
+_* #{custom-ov}# pour couches personalisées
 
-_* #{live-sn}# for full system snapshots.
+_* #{live-sn}# pour instantanés du système complet.
 
-_* #{home-sn}# for /home snapshots.
+_* #{home-sn}# pour instantanés du /home.
 
-3~ Full persistent overlays
+3~ Couches de persistance pleine
 
-By 'full persistence' it is meant that instead of using a tmpfs for storing
-modifications to the read-only media (with the copy-on-write, COW, system) a
-persistent volume is used. For this type of persistence the volume label
-must be #{full-ov}#. This could, for instance, be an ext2 partition on a
-hard disk or on a usb key created with, e.g.:
+Par «persistance pleine» on entend que au lieu d'utiliser un tmpfs pour le
+stockage des modifications au support en lecture seule (avec le système
+copy-on-write, COW) une partition accessible en écriture est utilisée. Pour
+ce type de persistance le nom du volume doit être #{full-ov}#. Cela
+pourrait, par exemple, être une partition ext2 sur un disque dur ou sur une
+clé usb créée avec, par exemple:
 
 code{
 
@@ -208,8 +212,8 @@ code{
 
 }code
 
-Here's an example of how to create an ext2-based image file used for full
-persistence:
+Voici un exemple de comment créer un fichier image ext2 utilisé pour la
+persistance pleine:
 
 code{
 
@@ -218,20 +222,21 @@ code{
 
 }code
 
-Then copy the #{full-ov}# file to the root of a writable partition and
-reboot.
+Ensuite, copiez le fichier #{full-ov}# sur une partition accessible en
+écriture et redémarrer.
 
-3~ Custom overlays
+3~ Couches personnalisées
 
-A volume with the label #{custom-ov}# can be configured to make arbitrary
-directories persistent. The file #{live.persist}#, located on the volume's
-filesystem root, controls which directories it makes persistent, and in
-which way.
+Un volume avec l'étiquette #{custom-ov}# peut être configuré pour créer des
+répertoires arbitraires persistants. Le fichier #{live.persist}#, situé sur
+le système de fichiers racine du volume, contrôle quels répertoires il fait
+persistants, et de quelle manière.
 
-How custom overlay mounts are configured is described in full detail in the
-live.persist(5) man page, but a simple example should be sufficient for most
-uses. Let's say we want to make our home directory and APT cache persistent
-in an ext3 filesystem on the /dev/sdb1 partition:
+Comment on configure monter des couches personnalisés est décrit en détail
+dans la page de manuel live.persist(5), mais un simple exemple devrait être
+suffisant pour la plupart des utilisations. Imaginons que nous voulons faire
+notre répertoire personnel et APT cache persistants dans un système de
+fichiers ext3 sur la partition /dev/sdb1:
 
 code{
 
@@ -242,52 +247,59 @@ code{
 
 }code
 
-Then we reboot. During the first boot the contents of /home and
-/var/cache/apt will be copied into the persistent volume, and from then on
-all changes to these directories will live in the persistent volume. Please
-note that any paths listed in the #{live.persist}# file cannot contain white
-spaces or the special "." and ".." path components. Also, neither "/live"
-(or any of its sub-directories) nor "/" can be made persistent using custom
-mounts (for the latter, use the #{full-ov}# type persistence described
-above).
+Alors nous redémarrons. Lors du premier démarrage les contenus du /home et
+/var/cache/apt seront copiés dans le volume persistant, et à partir de ce
+moment tous les changements dans ces répertoires seront stockés dans le
+volume persistant. S'il vous plaît souligner que les chemins d'accès aux
+répertoriés dans le fichier #{live.persist}# ne peuvent pas contenir
+d'espaces blancs ou les éléments spéciaux "." et "..". En outre, ni "/live"
+(ou un de ses sous-répertoires), ni "/" peuvent être rendus persistants en
+utilisant custom mounts (pour ce dernier, utilisez la persistance
+#{full-ov}# décrite ci-dessus).
 
-Several different custom overlay volumes (with their own #{live.persist}#
-files) can be used at the same time, but if several volumes make the same
-directory persistent, only one of them will be used. If any two mounts are
-"nested" (i.e. one is a sub-directory of the other) the parent will be
-mounted before the child so no mount will be hidden by the other. Nested
-custom mounts are problematic if they are listed in the same
-#{live.persist}# file. See the live.persist(5) man page for how to handle
-that case if you really need it (hint: you usually don't).
+Plusieurs différents volumes de couches personnalisés (avec leurs propres
+fichiers #{live.persist}#) peuvent être utilisés au même temps, mais si
+plusieurs volumes font le même répertoire persistant, un seul d'entre eux
+sera utilisé. Si les deux sont «imbriqués» (un est un sous-répertoire de
+l'autre) le premier sera monté avant que le secondaire de sorte que aucun
+sera caché par l'autre. Monter  des éléments personnalisés imbriqués est
+problématique s'ils sont énumérés dans le même fichier
+#{live.persist}#. Voir la page de manuel live.persist(5) pour savoir comment
+gérer ce cas, si vous avez vraiment besoin (remarque: vous n'avez
+généralement pas).
 
 3~ Instantanés
 
-Snapshots are collections of files and directories which are not mounted
-while running but which are copied from a persistent volume to the system
-(tmpfs) at boot and which are resynced at reboot/shutdown of the system. The
-volume must be labeled #{live-sn}#, and it defaults to a simple cpio archive
-named #{live-sn.cpio.gz}#. A power interruption during run time could lead
-to data loss, hence, if you have important changes, invoke #{live-snapshot
---refresh}# as often as needed. This type of persistence, since it does not
-write continuously to the persistent media, is the most flash-based device
-friendly and the fastest of all the persistence systems, but it occupies as
-much RAM as the size of the uncompressed snapshot.
+Les instantanés sont des collections de fichiers et de répertoires qui ne
+sont pas montés lors de l'exécution, mais qui sont copiés à partir d'un
+périphérique persistant à le système (tmpfs) au démarrage et qui sont
+resynchronisés au redémarrage/arrêt du système. Le volume doit être étiqueté
+#{live-sn}#. Il est par défaut une simple archive cpio appelé
+#{live-sn.cpio.gz}#.  Une coupure de courant pendant l'exécution pourrait
+conduire à la perte de données, donc un outil appelé #{live-snapshot
+--refresh}# pourrait être appelé pour synchroniser des changements
+importants. Ce type de persistance, car elle n'écrit pas continuellement
+dans les supports persistants, est la plus respectuese avec les dispositifs
+flash et la plus rapide de tous les systèmes de persistance, mais elle
+occupe autant RAM que la taille de l'instantané non compressé.
 
-Une version instantané de /home existe aussi, et son étiquette est
+Une version d'instantané de /home existe aussi, et son étiquette est
 #{home-sn.*}#; elle travaille le même que l'instantané principale, mais il
 est seulement appliquée à /home.
 
-Snapshots cannot currently handle file deletion.
+Les instantanés ne peuvent pas actuellement gérer la suppression de
+fichiers.
 
 3~ SubText persistant
 
-If a user would need multiple persistent storage of the same type for
-different locations or testing, such as #{full-ov-nonwork}# and
-#{full-ov-work}#, the boot parameter #{persistent-subtext}# used in
-conjunction with the boot parameter #{persistent}# will allow for multiple
-but unique persistent media. An example would be if a user wanted to use a
-persistent partition labeled #{live-sn-subText}# they would use the boot
-parameters of: #{persistent}# #{persistent-subtext=subText}#.
+Si un utilisateur a besoin de multiples stockages persistants du même type
+pour différents endroits ou l'essai, tel que #{full-ov-nonwork}# et
+#{full-ov-work}#, le paramètre de démarrage #{persistent-subtext}# utilisé
+en conjonction avec le paramètre de démarrage #{persistent}# permettra
+multiples mais uniques supports persistants. Un exemple serait le cas si un
+utilisateur voudrait utiliser une partition persistante étiqueté
+#{live-sn-subText}# il utiliserait les paramètres de démarrage:
+#{persistent}# #{persistent-subtext=subText}#.
 
 3~ Remasterisation partielle
 

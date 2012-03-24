@@ -6,7 +6,7 @@ tiempo de ejecución.
 Toda la configuración que se hace en tiempo de ejecución es realizada por
 live-config. Éstas son algunas de las opciones más comunes de live-config en
 las que los usuarios están más interesados. Se puede encontrar una lista
-completa de todas las posibilidades en la página del manual de live-config.
+completa de todas las posibilidades en la página de manual de live-config.
 
 2~ Personalización del usuario por defecto del sistema en vivo
 
@@ -178,15 +178,15 @@ especificando ciertos parámetros de arranque descritos en la página del
 manual de live-boot(7). Las "etiquetas identificadoras" referidas
 anteriormente pueden ser cualquiera de las siguientes:
 
-_* #{full-ov}# para overlays con persistencia total.
+_* #{full-ov}# para capas de persistencia total.
 
-_* #{custom-ov}# para overlays personalizadas.
+_* #{custom-ov}# para capas personalizadas.
 
-_* #{live-sn}# para instantáneas de sistemas completos.
+_* #{live-sn}# para instantáneas del sistema entero.
 
 _* #{home-sn}# para instantáneas de /home.
 
-3~ Overlays de persistencia total 
+3~ Capas de persistencia total 
 
 Por «Persistencia total» se entiende la utilización de una partición de
 escritura en lugar de usar un tmpfs (sistema de ficheros temporal) para
@@ -226,15 +226,15 @@ code{
 A continuación, copiar el fichero #{full-ov}# en una partición grabable y
 reiniciar el sistema.
 
-3~ Overlays personalizadas
+3~ Capas personalizadas
 
 Un volumen con la etiqueta #{custom-ov}# puede ser personalizado para crear
 arbitrariamente directorios persistentes. El fichero #{live.persist}#,
 situado en el sistema de ficheros raiz del volumen, controla que directorios
 hace persistentes y también de que manera.
 
-En la página del manual de live.persist(5) se explica en detalle cómo se
-configura el montaje de las overlays, pero un sencillo ejemplo es suficiente
+En la página de manual de live.persist(5) se explica en detalle cómo se
+configura el montaje de las capas, pero un sencillo ejemplo es suficiente
 para la mayoría de los casos. Supongamos que queremos crear nuestro
 directorio home y APT cache persistentes en un sistema de ficheros ext3 en
 la partición /dev/sdb1:
@@ -257,14 +257,14 @@ ni "/live" (o ninguno de sus sub-directorios) ni "/" pueden hacerse
 persistentes montándolos de forma personalizada. Para este último, usar el
 tipo de persistencia #{full-ov}# descrito anteriormente.
 
-Se puede usar diferentes volúmenes ovelay personalizados al mismo tiempo
+Se puede usar diferentes volúmenes de capas personalizados al mismo tiempo
 (con sus propios ficheros #{live.persist}#) pero si varios volúmenes hacen
 que un mismo directorio sea persistente, sólo uno de ellos será usado. Si
 dos unidades montadas están "anidadas" (es decir, una es un sub-directorio
 de la otra) el directorio superior será montado antes que el inferior de
 este modo no quedará uno escondido por el otro. La personalización de los
 montajes anidadados es problemática si están listados en el mismo fichero
-#{live.persist}#. Consultar la página del manual de live.persist(5) para ver
+#{live.persist}#. Consultar la página de manual de live.persist(5) para ver
 como manejar ese caso si realmente es necesario. (aclaración: normalmente no
 lo es).
 

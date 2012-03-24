@@ -5,7 +5,7 @@
 echo ""
 echo "There are $(grep -w 'fuzzy' manual/po/*/* | wc -l) fuzzy strings altogether in live-manual."
 echo "This script can help you find and fix them. What is your language?."
-echo "Type: de, es, fr, it, pt_BR or ro ['q' to quit]" 
+echo "Type: de, es, fr, it, pt_BR or ro ['a' to see all]['q' to quit]" 
 
 # Editor defaults to vim unless otherwise specified in preferences.
 
@@ -40,8 +40,10 @@ find_fuzzy()
 
 				y*|Y*)	$EDITOR $(grep -w 'fuzzy' manual/po/$ANSWER/* | uniq | sed 's|:#, fuzzy.*||')
 				;;
+
 				n*|N*)	exit 0
 				;;
+
 				*)	echo "You didn't type 'yes'. Exiting..."
 					exit 0
 
@@ -76,6 +78,27 @@ case "$ANSWER" in
 		;;
 
 	ro)	find_fuzzy
+		;;
+
+	a)	grep -w 'fuzzy' manual/po/*/*
+
+		echo ""
+		echo "Do you want to launch your text editor to start fixing them? [yes/no]"
+
+			read OPENEDITOR
+			case $OPENEDITOR in
+
+				y*|Y*)	$EDITOR $(grep -w 'fuzzy' manual/po/*/* | uniq | sed 's|:#, fuzzy.*||')
+				;;
+
+				n*|N*)	exit 0
+				;;
+
+				*)	echo "You didn't type 'yes'. Exiting..."
+					exit 0
+
+			esac
+
 		;;
 
 	q)	exit

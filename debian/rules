@@ -3,6 +3,17 @@
 %:
 	dh ${@}
 
+override_dh_auto_build:
+	mkdir -p debian/build/locale
+	localdef -f UTF-8 -i en_US debian/build/locale/en_US.UTF-8
+
+	LOCPATH=$(CURDIR)/debian/build/locale LC_ALL=en_US.UTF-8 dh_auto_build
+
+override_dh_auto_clean:
+	dh_auto_clean
+
+	rm -rf debian/build
+
 override_dh_builddeb:
 	dh_builddeb -- -Zgzip -z9
 

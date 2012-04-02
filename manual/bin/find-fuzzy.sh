@@ -36,7 +36,7 @@ find_fuzzy()
 		echo "Do you want to launch your text editor to start fixing them? [yes/no]"
 
 			read OPENEDITOR
-			case $OPENEDITOR in
+			case "$OPENEDITOR" in
 
 				y*|Y*)	$EDITOR $(grep -w 'fuzzy' manual/po/$ANSWER/* | uniq | sed 's|:#, fuzzy.*||')
 				;;
@@ -86,7 +86,7 @@ case "$ANSWER" in
 		echo "Do you want to launch your text editor to start fixing them? [yes/no]"
 
 			read OPENEDITOR
-			case $OPENEDITOR in
+			case "$OPENEDITOR" in
 
 				y*|Y*)	$EDITOR $(grep -w 'fuzzy' manual/po/*/* | uniq | sed 's|:#, fuzzy.*||')
 				;;

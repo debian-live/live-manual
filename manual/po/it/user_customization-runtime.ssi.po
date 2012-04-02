@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 2.0.0\n"
 "POT-Creation-Date: 2012-03-24 15:08+0100\n"
-"PO-Revision-Date: 2012-04-02 20:15+0100\n"
+"PO-Revision-Date: 2012-04-02 23:25+0100\n"
 "Last-Translator: skizzhg <skizzhg@gmx.com>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -230,12 +230,15 @@ msgid ""
 "password \"live\". If you want to do that for any reason, you can easily "
 "achieve it as follows:"
 msgstr ""
+"È inoltre possibile modificare facilmente il nome utente \"user\" e la "
+"password \"live\" predefiniti."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:25
 msgid ""
 "To change the default username you can simply specify it in your config:"
 msgstr ""
+"Per cambiare il nome utente specificare quanto segue nella configurazione:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:29
@@ -252,6 +255,11 @@ msgid ""
 "prefix it accordingly (e.g. 200-passwd) and add it to #{config/includes."
 "chroot/lib/live/config/}#"
 msgstr ""
+"Un modo per cambiare la password è tramite un hook come descritto in {Hook "
+"in fase di avvio}#boot-time-hooks. Si può usare l'hook \"passwd\" da #{/usr/"
+"share/doc/live-config/examples/hooks}#, anteponendolo di conseguenza (ad "
+"esempio, 200-passwd) e aggiungerlo al file #{config/includes.chroot/lib/live/"
+"config/}#"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:35
@@ -460,16 +468,21 @@ msgid ""
 "set), local storage media (e.g. hard disks, USB drives) will be probed for "
 "persistent volumes during boot. A persistent volume is any of the following:"
 msgstr ""
+"Se il parametro di boot #{persistent}# è impostato (e non lo è #"
+"{nopersistent}#), i supporti di memorizzazione locali (hard disk, "
+"dispositivi USB) saranno rilevati come volumi persistenti durante l'avvio. "
+"Un volume persistente è uno dei seguenti:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:102
 msgid "_* a partition, identified by its GPT name."
 msgstr ""
+"_* una partizione, identificata dal suo nome GPT (GUID Partition Table)."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:104
 msgid "_* a filesystem, identified by its filesystem label."
-msgstr ""
+msgstr "_* un filesystem, identificato dalla sua label."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:106
@@ -479,6 +492,11 @@ msgid ""
 "this case the file name must also use the containing filesystem as the file "
 "extension, e.g. \"<label>.ext3\"."
 msgstr ""
+"_* un file immagine o archivio situato nella directory radice di un "
+"qualsiasi filesystem leggibile (anche una partizione NTFS di un sistema "
+"estraneo), identificato dal nome del file. In questo caso il nome del file "
+"deve contenere anche il tipo di filesystem come estensione, ad esempio "
+"\"<label>.ext3\"."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:108
@@ -487,45 +505,37 @@ msgid ""
 "specifying certain boot parameters described in the live-boot(7) man page. "
 "The \"identifying labels\" referred to above can be any of the following:"
 msgstr ""
+"È possibile limitare i tipi di volume persistenti da usare specificando "
+"certi parametri di boot descritti nella manpage di live-boot(7). Le \"label "
+"identificative\" di cui sopra possono essere una delle seguenti:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:110
 msgid "_* #{full-ov}# for full persistent overlays."
-msgstr ""
+msgstr "_* #{full-ov}# per strati di persistenza completa."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:112
 msgid "_* #{custom-ov}# for custom overlays."
-msgstr ""
+msgstr "_* #{custom-ov}# per strati personalizzati."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:114
 msgid "_* #{live-sn}# for full system snapshots."
-msgstr ""
+msgstr "_* #{live-sn}# per istantanee del sistema completo."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:116
 msgid "_* #{home-sn}# for /home snapshots."
-msgstr "_* #{home-sn}# per istantanee in /home."
+msgstr "_* #{home-sn}# per istantanee della /home."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:118
-#, fuzzy
-#| msgid "3~ Full persistence"
 msgid "3~ Full persistent overlays"
-msgstr "3~ Persistenza completa"
+msgstr "3~ Strati di persistenza completa"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:120
-#, fuzzy
-#| msgid ""
-#| "By 'full persistence' it is meant that instead of using a tmpfs for "
-#| "storing modifications to the read-only media (with the copy-on-write, "
-#| "COW, system) a writable partition is used. In order to use this feature a "
-#| "partition with a clean writable supported filesystem on it labeled \"live-"
-#| "rw\" must be attached on the system at boot time and the system must be "
-#| "started with the boot parameter 'persistent'. This partition could be an "
-#| "ext2 partition on the hard disk or on a usb key created with, e.g.:"
 msgid ""
 "By 'full persistence' it is meant that instead of using a tmpfs for storing "
 "modifications to the read-only media (with the copy-on-write, COW, system) a "
@@ -533,14 +543,12 @@ msgid ""
 "must be #{full-ov}#. This could, for instance, be an ext2 partition on a "
 "hard disk or on a usb key created with, e.g.:"
 msgstr ""
-"Con \"persistenza completa\" si intende l'uso di una partizione scrivibile "
+"Con \"persistenza completa\" si intende l'uso di un volume persistente "
 "invece di un filesystem temporaneo (tmpfs) per salvare le modifiche al "
-"supporto in sola lettura (con il sistema COW, copy-on-write). Per utilizzare "
-"questa caratteristica, una partizione con un filesystem scrivibile e "
-"supportato ed etichettata come \"live-rw\" deve essere collegata al sistema "
-"in fase di avvio e il sistema va fatto partire con il parametro \"persistent"
-"\". Questa partizione potrebbe essere di tipo ext2 su un hard disk o una "
-"penna usb creata ad esempio con:"
+"supporto in sola lettura (con il sistema COW, copy-on-write). Per questo "
+"tipo di persistenza la label deve essere #{full-ov}#, che potrebbe essere "
+"una partizione di tipo ext2 su un hard disk o una penna USB creata ad "
+"esempio con:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:124
@@ -552,7 +560,7 @@ msgstr ""
 #: en/user_customization-runtime.ssi:128
 msgid "See also {Using the space left on a USB stick}#using-usb-extra-space."
 msgstr ""
-"Si veda anche {Usare lo spazio rimanente su una penna USB}#using-usb-extra-"
+"Vedee anche {Usare lo spazio rimanente su una penna USB}#using-usb-extra-"
 "space."
 
 #. type: Plain text
@@ -568,7 +576,7 @@ msgstr ""
 #: en/user_customization-runtime.ssi:134
 #, no-wrap
 msgid " $ tune2fs -L full-ov /dev/sdb1 # for ext2,3,4 filesystems\n"
-msgstr ""
+msgstr " $ tune2fs -L full-ov /dev/sdb1 # per filesystems ext2,3,4\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:138
@@ -576,6 +584,8 @@ msgid ""
 "Here's an example of how to create an ext2-based image file used for full "
 "persistence:"
 msgstr ""
+"Ecco un esempio di come creare un file immagine ext2 da utilizzare per la "
+"persistenza completa:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:143
@@ -584,24 +594,22 @@ msgid ""
 " $ dd if=/dev/null of=full-ov bs=1G seek=1 # for a 1GB sized image file\n"
 " $ /sbin/mkfs.ext2 -F full-ov\n"
 msgstr ""
+" $ dd if=/dev/null of=full-ov bs=1G seek=1 # per un file immagine da 1GB\n"
+" $ /sbin/mkfs.ext2 -F full-ov\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:147
-#, fuzzy
-#| msgid ""
-#| "Then copy the #{live-rw}# file to a writable partition and reboot with "
-#| "the boot parameter 'persistent'."
 msgid ""
 "Then copy the #{full-ov}# file to the root of a writable partition and "
 "reboot."
 msgstr ""
-"Quindi copiare il file #{live-rw}# su una partizione scrivibile e riavviare "
-"con il parametro d'avvio \"persistent\"."
+"Quindi copiare il file #{full-ov}# nella directory radice di una partizione "
+"scrivibile e riavviare."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:149
 msgid "3~ Custom overlays"
-msgstr ""
+msgstr "3~ Strati personalizzati"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:151
@@ -611,6 +619,10 @@ msgid ""
 "filesystem root, controls which directories it makes persistent, and in "
 "which way."
 msgstr ""
+"Un volume con una label #{custom-ov}# può essere configurato per creare "
+"directory persistenti arbitrarie. Il file #{live.persist}#, situato nella "
+"directory radice del filesystem del volume, controlla quali rendere "
+"persistenti e in che modo."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:153
@@ -620,6 +632,11 @@ msgid ""
 "uses. Let's say we want to make our home directory and APT cache persistent "
 "in an ext3 filesystem on the /dev/sdb1 partition:"
 msgstr ""
+"Nella manpage di live.persist(5) è descritto dettagliatamente come è "
+"configurato il mount degli strati personalizzati, ma un semplice esempio "
+"dovrebbe essere sufficiente per la maggior parte degli usi. Supponendo di "
+"voler creare la directory home e quella della cache di APT in modo "
+"persistente in un filesystem ext3 sulla partizione /dev/sdb1:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:160
@@ -643,6 +660,14 @@ msgid ""
 "mounts (for the latter, use the #{full-ov}# type persistence described "
 "above)."
 msgstr ""
+"Quindi riavviare. Durante il primo avvio il contenuto di /home e /var/cache/"
+"apt saranno copiati nel volume persistente e da allora tutte le modifiche a "
+"queste directory risiederanno in modo persistente sul volume. C'è da "
+"considerare che tutti i path elencati nel file #{live.persist}# non possono "
+"contenere spazi o i caratteri speciali \".\" e \"..\"; inoltre, né \"/live"
+"\" (o nessuna delle sue sottodirectory) né \"/\" può essere resa persistente "
+"tramite i mount personalizzati (per l'ultimo usare la tipologia #{full-ov}# "
+"descritta prima)."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:166
@@ -656,6 +681,15 @@ msgid ""
 "# file. See the live.persist(5) man page for how to handle that case if you "
 "really need it (hint: you usually don't)."
 msgstr ""
+"Possono essere utilizzati svariati volumi di stratificazione personalizzati "
+"(con i rispettivi file #{live.persist}#) allo stesso tempo ma se questi "
+"creano la stessa directory persistente, ne verrà usata solo una. Se due "
+"directory montate sono \"nidificate\" (una è la sottodirectory dell'altra), "
+"la superiore sarà montata per prima, per cui nessuna operazione di mount "
+"verrà sovrastata dall'altra. I mount nidificati personalizzati sono "
+"problematici se sono elencati nello stesso file #{live.persist}. Se si ha "
+"davvero la necessità (in genere non si dovrebbe averla :), consultare la "
+"manpage di live.persist(5) per sapere come gestire questo caso."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:168
@@ -664,21 +698,6 @@ msgstr "3~ Istantanee"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:170
-#, fuzzy
-#| msgid ""
-#| "Snapshots are collections of files and directories which are not mounted "
-#| "while running but which are copied from a persistent device to the system "
-#| "(tmpfs) at boot and which are resynced at reboot/shutdown of the system. "
-#| "The content of a snapshot could reside on a partition or an image file "
-#| "(like the above mentioned types) labeled #{live-sn}#, but it defaults to "
-#| "a simple cpio archive named #{live-sn.cpio.gz}#. As above, at boot time, "
-#| "the block devices connected to the system are traversed to see if a "
-#| "partition or a file named like that could be found. A power interruption "
-#| "during run time could lead to data loss, hence a tool invoked #{live-"
-#| "snapshot --refresh}# could be called to sync important changes. This type "
-#| "of persistence, since it does not write continuously to the persistent "
-#| "media, is the most flash-based device friendly and the fastest of all the "
-#| "persistence systems."
 msgid ""
 "Snapshots are collections of files and directories which are not mounted "
 "while running but which are copied from a persistent volume to the system "
@@ -692,18 +711,16 @@ msgid ""
 "much RAM as the size of the uncompressed snapshot."
 msgstr ""
 "Le istantanee sono raccolte di file e directory che non vengono montate "
-"durante l'esecuzione ma copiate all'avvio da un dispositivo persistente al "
-"sistema (tmpfs) e risincronizzate al riavvio e spegnimento. Il contenuto di "
-"un'istantanea può risiedere su una partizione o file immagine (come i tipi "
-"menzionati poc'anzi) etichettati come #{live-sn}#, ma sotto forma di un "
-"semplice archivio cpio nominato #{live-sn.cpio.gz}#. Come sopra, all'avvio, "
-"i device a blocchi collegati al sistema vengono analizzati alla ricerca di "
-"una partizione o file così nominati. Un'interruzione di corrente durante "
-"l'esecuzione potrebbe portare ad una perdita di dati, per cui si può usare "
-"uno strumento che richiama #{live-snapshot --refresh}# per sincronizzare i "
-"cambiamenti importanti. Giacché non scrive continuamente sul dispositivo, "
+"durante l'esecuzione ma copiate all'avvio da un volume persistente al "
+"sistema (tmpfs) e risincronizzate al riavvio e spegnimento. Il volume deve "
+"essere etichettato come #{live-sn}# sotto forma di un semplice archivio cpio "
+"nominato #{live-sn.cpio.gz}#. Un'interruzione di corrente durante "
+"l'esecuzione potrebbe portare ad una perdita di dati, se son state fatte "
+"modifiche importanti si può usare usare #{live-snapshot --refresh}# tante "
+"volte quanto necessario.Giacché non scrive continuamente sul dispositivo, "
 "questo tipo di persistenza è il sistema più comodo e veloce per dispositivi "
-"basati su memoria flash."
+"basati su memoria flash ma occupa tanta RAM quanta è la dimensione "
+"dell'istantanea decompressa."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:172
@@ -716,14 +733,9 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:174
-#, fuzzy
-#| msgid ""
-#| "Snapshots cannot currently handle file deletion but full persistence and "
-#| "home automounting can."
 msgid "Snapshots cannot currently handle file deletion."
 msgstr ""
-"Attualmente le istantanee non possono gestire la cancellazione dei file, al "
-"contrario della persistenza completa e il mount automatico della home. "
+"Attualmente le istantanee non possono gestire la cancellazione dei file."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:176
@@ -732,15 +744,6 @@ msgstr "3~ Sottotesto persistente"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:178
-#, fuzzy
-#| msgid ""
-#| "If a user would need multiple persistent storage of the same type for "
-#| "different locations or testing, such as #{live-rw-nonwork}# and #{live-rw-"
-#| "work}#, the boot parameter #{persistent-subtext}# used in conjunction "
-#| "with the boot parameter #{persistent}# will allow for multiple but unique "
-#| "persistent media. An example would be if a user wanted to use a "
-#| "persistent partition labeled #{live-sn-subText}# they would use the boot "
-#| "parameters of: #{persistent}# #{persistent-subtext=subText}#."
 msgid ""
 "If a user would need multiple persistent storage of the same type for "
 "different locations or testing, such as #{full-ov-nonwork}# and #{full-ov-"
@@ -751,7 +754,7 @@ msgid ""
 "#{persistent}# #{persistent-subtext=subText}#."
 msgstr ""
 "Se un utente avesse bisogno di archiviazioni multiple dello stesso tipo per "
-"differenti posti o per test, come #{live-rw-casa}# e #{live-rw-lavoro}#, il "
+"differenti posti o per test, come #{full-ov-casa}# e #{full-ov-lavoro}#, il "
 "parametro d'avvio #{persistent-subtext}# usato in congiunzione con #"
 "{persistent}# permetterà supporti persistenti multipli ma univoci. Un "
 "esempio potrebbe essere un utente che vuole usare una partizione etichettata "

@@ -51,10 +51,8 @@ build: clean
 	done; \
 
 
-autobuild: build	
-	
+autobuild: build
 	cd build/manual && rm -rf manifest toc.html; \
-	
 	set +e; for LANGUAGE in $(LANGUAGES); \
 	do \
 		FROMDIR=$(CURDIR)/manual/$${LANGUAGE}; \
@@ -65,7 +63,7 @@ autobuild: build
 		$${TODIR}/index.html.in > $${TODIR}/index.$${LANGUAGE}.html; \
 		rm $${TODIR}/index.html.in; \
 	done
-	
+
 commit: tidy test
 	$(MAKE) -C manual rebuild
 
@@ -88,9 +86,7 @@ install:
 		TODIR=$(DESTDIR)/usr/share/doc/live-manual; \
 	cd $${FROMDIR} && rm -rf manifest index.html toc.html; \
 	mkdir -p $${TODIR}; \
-	cp -a $(CURDIR)/build/manual/* $(DESTDIR)/usr/share/doc/live-manual	
-	
-
+	cp -a $(CURDIR)/build/manual/* $(DESTDIR)/usr/share/doc/live-manual
 
 uninstall:
 	rm -rf $(DESTDIR)/usr/share/doc/live-manual
@@ -111,4 +107,3 @@ translate:
 	else \
 		echo "There are no fuzzy strings to translate." ; \
 	fi
-

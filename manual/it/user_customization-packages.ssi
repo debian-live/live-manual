@@ -197,20 +197,20 @@ inclusi e condizionali come descritto nella sezioni seguenti.
 Gli elenchi predefiniti si possono integrare usando quelli locali dei
 pacchetti in #{config/package-lists/}#.
 
-Per essere processate, gli elenchi dei pacchetti che si trovano in questa
+Per essere processati, gli elenchi dei pacchetti che si trovano in questa
 directory devono avere un suffisso #{.list}# e un suffisso #{.chroot}# o
 #{.binary}# aggiuntivo per indicare per quale fase sia l'elenco.
 
-*{Note:}* If you don't specify the stage suffix, the list will be used for both stages. Normally, you want to specify #{.list.chroot}# so that the packages will only be installed in the live filesystem and not have an extra copy of the #{.deb}# placed on the media.
+*{Nota:}* se non si specifica il suffisso l'elenco sarà usato per entrambe le fasi. Normalmente è preferibile specificare #{.list.chroot}# in modo che i pacchetti vengono installati solo nel filesystem live evitando di avere una copia extra del #{.deb}# sul dispositivo.
 
 3~ Elenchi locali di pacchetti binari
 
-To make a binary stage list, place a file suffixed with #{.list.binary}# in
-#{config/package-lists/}#. These packages are not installed in the live
-filesystem, but are included on the live media under #{pool/}#. You would
-typically use such a list with one of the non-live installer variants. As
-mentioned above, if you want this list to be the same as your chroot stage
-list, simply use the #{.list}# suffix by itself.
+Per creare un elenco di binari inserire un file con suffisso
+#{.list.binary}# in #{config/package-lists/}#; questi pacchetti non sono
+installati nel filesystem ma inclusi sul dispositivo live sotto
+#{pool/}#. Solitamente questo elenco si usa con una delle varianti non-live
+dell'installatore; come detto sopra, se si vuole che questo sia identico
+all'elenco della fase chroot, usare semplicemente il suffisso #{.list}#.
 
 3~ Estendere un'elenco di pacchetti usando gli include
 
@@ -322,12 +322,13 @@ modo, non c'è nessuna voce nel menu per i task delle lingue, ma la scelta
 della lingua dell'utente durante l'installazione influenza la selezione dei
 corrispondenti task della lingua.
 
-When developing a desktop live image, the image typically boots directly to
-a working desktop, the choices of both desktop and default language having
-been made at build time, not at run time as in the case of the Debian
-Installer. That's not to say that a live image couldn't be built to support
-multiple desktops or multiple languages and offer the user a choice, but
-that is not live-build's default behaviour.
+Sviluppando un'immagine live per desktop, questa si avvia direttamente su
+un'area di lavoro, le scelte del desktop e della lingua predefinita sono
+state fatte al momento della compilazione e non al volo come nel caso
+dell'installatore Debian. Questo non per dire che un'immagine live non possa
+essere creata con un supporto per desktop o lingue multipli per offrire
+all'utente una scelta, ma che non è il comportamento predefinito nella
+creazione di una live.
 
 Poiché automaticamente non viene fatta alcuna preparazione sui task della
 lingua, i quali includono cose come caratteri specifici per la lingua e
@@ -343,10 +344,10 @@ code{
 
 }code
 
-Since desktop tasks are "internal" tasks, for every desktop flavour task
-included in the image, the corresponding value, if it differs from the
-default, "gnome", must be preseeded in the "tasksel/desktop" debconf
-variable or else tasksel will not recognize and install it. Thus:
+Dal momento che i task desktop sono "interni", bisogna preconfigurare ogni
+altro desktop da includere nell'immagine e diverso dal predefinito "gnome"
+nella variabile debconf "tasksel/desktop", altrimenti tasksel non li
+installerà:
 
 code{
 
@@ -355,7 +356,8 @@ code{
 
 }code
 
-This parameter can take multiple values, e.g. "lxde xfce" instead of "kde".
+Questo parametro supporta valori multipli, ad esempio "lxde xfce" invece di
+"kde".
 
 2~installing-modified-or-third-party-packages Installare pacchetti
 modificati o di terze parti

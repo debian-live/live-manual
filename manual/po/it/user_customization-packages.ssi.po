@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 2.0~a12\n"
 "POT-Creation-Date: 2012-03-19 20:50+0100\n"
-"PO-Revision-Date: 2012-02-06 18:35+0100\n"
+"PO-Revision-Date: 2012-04-03 18:01+0200\n"
 "Last-Translator: skizzhg <skizzhg@gmx.com>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -580,7 +580,7 @@ msgid ""
 "in order to be processed, and then an additional stage suffix, #{.chroot}# "
 "or #{.binary}# to indicate which stage the list is for."
 msgstr ""
-"Per essere processate, gli elenchi dei pacchetti che si trovano in questa "
+"Per essere processati, gli elenchi dei pacchetti che si trovano in questa "
 "directory devono avere un suffisso #{.list}# e un suffisso #{.chroot}# o #{."
 "binary}# aggiuntivo per indicare per quale fase sia l'elenco."
 
@@ -588,7 +588,7 @@ msgstr ""
 #: en/user_customization-packages.ssi:115
 #, no-wrap
 msgid "*{Note:}* If you don't specify the stage suffix, the list will be used for both stages. Normally, you want to specify #{.list.chroot}# so that the packages will only be installed in the live filesystem and not have an extra copy of the #{.deb}# placed on the media.\n"
-msgstr ""
+msgstr "*{Nota:}* se non si specifica il suffisso l'elenco sarà usato per entrambe le fasi. Normalmente è preferibile specificare #{.list.chroot}# in modo che i pacchetti vengono installati solo nel filesystem live evitando di avere una copia extra del #{.deb}# sul dispositivo.\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:117
@@ -605,6 +605,12 @@ msgid ""
 "mentioned above, if you want this list to be the same as your chroot stage "
 "list, simply use the #{.list}# suffix by itself."
 msgstr ""
+"Per creare un elenco di binari inserire un file con suffisso #{.list.binary}"
+"# in #{config/package-lists/}#; questi pacchetti non sono installati nel "
+"filesystem ma inclusi sul dispositivo live sotto #{pool/}#. Solitamente "
+"questo elenco si usa con una delle varianti non-live dell'installatore; come "
+"detto sopra, se si vuole che questo sia identico all'elenco della fase "
+"chroot, usare semplicemente il suffisso #{.list}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:121
@@ -825,6 +831,13 @@ msgid ""
 "multiple desktops or multiple languages and offer the user a choice, but "
 "that is not live-build's default behaviour."
 msgstr ""
+"Sviluppando un'immagine live per desktop, questa si avvia direttamente su "
+"un'area di lavoro, le scelte del desktop e della lingua predefinita sono "
+"state fatte al momento della compilazione e non al volo come nel caso "
+"dell'installatore Debian. Questo non per dire che un'immagine live non possa "
+"essere creata con un supporto per desktop o lingue multipli per offrire "
+"all'utente una scelta, ma che non è il comportamento predefinito nella "
+"creazione di una live."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:199
@@ -858,6 +871,10 @@ msgid ""
 "default, \"gnome\", must be preseeded in the \"tasksel/desktop\" debconf "
 "variable or else tasksel will not recognize and install it. Thus:"
 msgstr ""
+"Dal momento che i task desktop sono \"interni\", bisogna preconfigurare ogni "
+"altro desktop da includere nell'immagine e diverso dal predefinito \"gnome\" "
+"nella variabile debconf \"tasksel/desktop\", altrimenti tasksel non li "
+"installerà:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:214
@@ -873,6 +890,8 @@ msgid ""
 "This parameter can take multiple values, e.g. \"lxde xfce\" instead of \"kde"
 "\"."
 msgstr ""
+"Questo parametro supporta valori multipli, ad esempio \"lxde xfce\" invece "
+"di \"kde\"."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:220

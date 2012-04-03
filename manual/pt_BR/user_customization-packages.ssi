@@ -29,7 +29,7 @@ distribution carried in the Debian archive may be specified by its codename
 here. (See {Terms}#terms for more details.) The #{--distribution}# option
 not only influences the source of packages within the archive, but also
 instructs #{live-build}# to behave as needed to build each supported
-distribution. For example, to build against the *unstable* release, Sid,
+distribution. For example, to build against the *{unstable}* release, Sid,
 specify:
 
 code{
@@ -64,13 +64,13 @@ The Debian archive is replicated across a large network of mirrors around
 the world so that people in each region can choose a nearby mirror for best
 download speed. Each of the #{--mirror-*}# options governs which
 distribution mirror is used at various stages of the build. Recall from
-{Stages of the build}#stages-of-the-build that the *bootstrap* stage is when
-the chroot is initially populated by debootstrap with a minimal system, and
-the *chroot* stage is when the chroot used to construct the live system's
-filesystem is built. Thus, the corresponding mirror switches are used for
-those stages, and later, in the *binary* stage, the #{--mirror-binary}# and
-#{--mirror-binary-security}# values are used, superceding any mirrors used
-in an earlier stage.
+{Stages of the build}#stages-of-the-build that the *{bootstrap}* stage is
+when the chroot is initially populated by debootstrap with a minimal system,
+and the *{chroot}* stage is when the chroot used to construct the live
+system's filesystem is built. Thus, the corresponding mirror switches are
+used for those stages, and later, in the *{binary}* stage, the
+#{--mirror-binary}# and #{--mirror-binary-security}# values are used,
+superceding any mirrors used in an earlier stage.
 
 3~distribution-mirrors-build-time Distribution mirrors used at build time
 
@@ -114,9 +114,9 @@ is available in your target distribution. These may be, for example, for
 backports, experimental or custom packages. To configure additional
 repositories, create #{config/archives/your-repository.list.chroot}#, and/or
 #{config/archives/your-repository.list.binary}# files. As with the
-#{--mirror-*}# options, these govern the repositories used in the *chroot*
-stage when building the image, and in the *binary* stage, i.e. for use when
-running the live system.
+#{--mirror-*}# options, these govern the repositories used in the *{chroot}*
+stage when building the image, and in the *{binary}* stage, i.e. for use
+when running the live system.
 
 For example, #{config/archives/live.list.chroot}# allows you to install
 packages from the debian live snapshot repository at live system build time.
@@ -226,26 +226,26 @@ the #{LB_}# prefix) may be used in conditional statements in package
 lists. Generally, this means any #{lb config}# option uppercased and with
 dashes changed to underscores. But in practice, it is only the ones that
 influence package selection that make sense, such as #{DISTRIBUTION}#,
-#{ARCHITECTURE}# or #{ARCHIVE_AREAS}#.
+#{ARCHITECTURES}# or #{ARCHIVE_AREAS}#.
 
-For example, to install #{ia32-libs}# if the #{--architecture amd64}# is
+For example, to install #{ia32-libs}# if the #{--architectures amd64}# is
 specified:
 
 code{
 
- #if ARCHITECTURE amd64
+ #if ARCHITECTURES amd64
  ia32-libs
  #endif
 
 }code
 
 You may test for any one of a number of values, e.g. to install
-#{memtest86+}# if either #{--architecture i386}# or #{--architecture amd64}#
-is specified:
+#{memtest86+}# if either #{--architectures i386}# or #{--architectures
+amd64}# is specified:
 
 code{
 
- #if ARCHITECTURE i386 amd64
+ #if ARCHITECTURES i386 amd64
  memtest86+
  #endif
 
@@ -267,7 +267,7 @@ A conditional may surround an #{#include}# directive:
 
 code{
 
- #if ARCHITECTURE amd64
+ #if ARCHITECTURES amd64
  #include <gnome-full>
  #endif
 
@@ -495,7 +495,7 @@ as explained in {APT pinning}#apt-pinning.
 
 3~ Passing options to apt or aptitude
 
-If there is not an #{lb config}# option to alter APT's behaviour in the way
+If there is not a #{lb config}# option to alter APT's behaviour in the way
 you need, use #{--apt-options}# or #{--aptitude-options}# to pass any
 options through to your configured APT tool. See the man pages for #{apt}#
 and #{aptitude}# for details.

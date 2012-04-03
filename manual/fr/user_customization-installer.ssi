@@ -2,25 +2,25 @@
 
 1~customizing-installer Personnalisation de l'installateur Debian
 
-Les images du système Debian Live peuvent être intégrées à l'installateur
+Les images du système Debian Live peuvent être intégrées avec l'installateur
 Debian. Il y a un certain nombre de différents types d'installation, variant
 en ce qui est inclus et comment fonctionne l'installateur.
 
 S'il vous plaît noter l'utilisation prudente des lettres majuscules pour
 désigner «l'Installateur Debian» dans cette section - lorsqu'il est utilisé
 comme cela, nous faisons explicitement référence à l'installateur officiel
-pour le système Debian, rien d'autre. On le voit souvent abrégé en «d-i».
+pour le système Debian, pas autre chose. On le voit souvent abrégé en «d-i».
 
 2~ Types de l'installateur Debian
 
 Les trois principaux types de programme d'installation sont:
 
-*{Installateur Debian «Régulière»}*: C'est une image de Debian Live normale avec un noyau séparé et initrd qui (lorsqu'il est sélectionné à partir du chargeur de démarrage approprié) se lance dans une instance d'installateur Debian standard, exactement comme si vous aviez téléchargé une image CD de Debian et la démarré.
+*{Installateur Debian «Régulière»}*: C'est une image de Debian Live normale avec un noyau et initrd séparés qui (lorsqu'ils sont sélectionnés à partir du chargeur d'amorçage approprié) se lancen dans une instance d'installateur Debian standard, exactement comme si vous aviez téléchargé une image CD de Debian et la auriez démarrée. Les images contenant un système live et un installateur indépendant sont souvent appelés «images combinées".
 
 Sur ces images, Debian est installé par l'extraction et l'installation de
-paquets .deb à l'aide de #{debootstrap}# ou #{cdebootstrap}#, Depuis des
-supports locaux ou à partir du réseau basé sur le réseau, résultant en un
-système Debian standard en cours d'installation sur le disque dur.
+paquets .deb à l'aide de #{debootstrap}# ou #{cdebootstrap}#, à partir des
+supports locaux ou à partir du réseau, résultant en un système Debian
+standard en cours d'installation sur le disque dur.
 
 Tout ce processus peut être préconfiguré et personnalisé dans un certain
 nombre de façons, voir les pages correspondantes dans le manuel de
@@ -28,7 +28,7 @@ l'Installateur Debian pour plus d'informations. Une fois que vous avez un
 fichier de préconfiguration qui fonctionne live-build peut automatiquement
 le mettre à l'image et l'activer pour vous.
 
-*{Installateur Debian "Live" }*: C'est une image de Debian Live avec un noyau séparé et initrd qui (lorsqu'il est sélectionné à partir du chargeur de démarrage approprié) se lance dans une instance de l'installateur Debian.
+*{Installateur Debian "Live" }*: C'est une image de Debian Live avec un noyau et initrd séparés qui (lorsqu'ils sont sélectionnés à partir du chargeur d'amorçage approprié) se lancen dans une instance de l'installateur Debian.
 
 L'installation se poursuit de manière identique à l'installation "régulière"
 décrite ci-dessus, mais à l'étape de l'installation des paquets, au lieu
@@ -40,11 +40,12 @@ Après cette étape, l'installateur Debian se poursuit normalement, en
 installant et configurant des éléments tels que chargeurs de démarrage et
 les utilisateurs locaux, etc
 
-Remarque: Pour soutenir les deux entrées installateur normal et live dans le
-chargeur de démarrage du même support live, vous devez désactiver
-«live-installer» en préconfiguration #{live-installer/enable=false}#.
+Remarque: Pour soutenir les deux options: installateur normal et live dans
+le chargeur d'amorçage du même support live, vous devez désactiver
+«live-installer» en utilisant la préconfiguration
+#{live-installer/enable=false}#.
 
-*{Installateur Debian "de bureau"}*: Indépendamment du type d'installateur Debian inclus, #{d-i}# peut être lancé depuis le Bureau en cliquant sur une icône. C'est facile à utiliser dans certaines situations. Afin de faire usage de cela, le paquet debian-installer-launcher doit être inclus.
+*{Installateur Debian "de bureau"}*: Indépendamment du type d'installateur Debian inclus, #{d-i}# peut être lancé à partir du Bureau en cliquant sur une icône. C'est facile à utiliser dans certaines situations. Afin de faire usage de cela, le paquet debian-installer-launcher doit être inclus.
 
 Notez que par défaut, live-build n'inclut pas les images de l'installateur
 Debian dans les images, il doit être spécifiquement activée avec #{lb
@@ -54,7 +55,7 @@ bureau" fonctionne le noyau du système live doit correspondre au noyau que
 
 code{
 
- $ lb config --architecture i386 --linux-flavours 486 \
+ $ lb config --architectures i386 --linux-flavours 486 \
      --debian-installer live
  $ echo debian-installer-launcher >> config/package-lists/my.list.chroot
 

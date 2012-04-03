@@ -4,14 +4,37 @@ B~ Personalización de la imagen binaria
 
 2~ Gestor de arranque
 
-live-build  usa syslinux y algunos de sus derivados (en función del tipo de
-imagen) como gestores de arranque por defecto. Se puede modificar fácilmente
-algunas opciones utilizando distintos métodos, como {includes}#includes o
-{scripts gancho (hooks)}#hooks.
+live-build  usa /{syslinux}/  y algunos de sus derivados (en función del
+tipo de imagen) como gestores de arranque por defecto. Se pueden
+personalizar fácilmente de formas diferentes que varían desde usar un tema
+completo a cambiar el tiempo de arranque por defecto o simplemente añadir
+una imagen splash. Algunos de los siguientes ejemplos de personalización
+usan distintos métodos, como {includes}#includes o {scripts gancho
+(hooks)}#hooks.
 
-Por ejemplo, estos derivados están configurados por defecto con un tiempo de
-espera de 0 (cero) lo que significa que harán una pausa indefinida en su
-pantalla de inicio hasta que se pulse una tecla.
+Si se quiere usar un tema completo se puede especificar la opción
+#{--syslinux-theme}# (ver man #{lb_config}#). live-build lo descargará de la
+réplica  y lo instalará. 
+
+Si se desea crear un cliente progress pero se quiere usar el tema del
+servidor que incluye el menú de ayuda. Se puede configurar como se explica a
+continuación:
+
+code{
+
+ $ lb config --mode progress --syslinux-theme progress-server
+
+}code
+
+También se puede crear un tema propio o modificar uno que ya exista y si no
+se dispone de una réplica, se puede añadir el paquete a
+#{config/packages.chroot}#. En este caso no es necesario especificar ninguna
+opción.
+
+Se pueden hacer cambios más pequeños. Por ejemplo, los derivados de syslinux
+están configurados por defecto con un tiempo de espera de 0 (cero) lo que
+significa que harán una pausa indefinida en su pantalla de inicio hasta que
+se pulse una tecla.
 
 Para modificar el tiempo de espera de arranque de una imagen #{iso-hybrid}#
 se puede editar un fichero *{isolinux.cfg}* especificando el tiempo de
@@ -42,7 +65,8 @@ code{
 
 }code
 
-Para más información ver la página del manual de syslinux(1).
+Del mismo modo, si se quiere usar una splash.png personalizada basta con
+añadir una imagen de 640x480 píxeles en #{config/includes.binary/isolinux/}#
 
 2~ Metadatos ISO
 

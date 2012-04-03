@@ -71,16 +71,17 @@ commit: tidy test
 
 	@if grep -qs fuzzy manual/po/*/*; \
 	then \
-		echo "Please fix fuzzy in manual/po/* first."; \
-		exit 1; \
+		echo "" ; \
+		echo "There are some fuzzy strings. You can run 'make translate' to fix them." ; \
+		exit 1 ; \
 	fi
 
 	@echo
-	@echo "Successful... please do:"
+	@echo "You may now proceed...please do:"
 	@echo
 	@echo "  * git add ."
 	@echo "  * git commit -a -m \"Your commit message.\""
-	@echo "  * git push"
+	@echo "  * git push "
 
 install:
 		FROMDIR=$(CURDIR)/build/manual; \
@@ -102,3 +103,12 @@ distclean: clean
 	rm -rf build
 
 rebuild: distclean build
+
+translate:
+	@if grep -qs fuzzy manual/po/*/*; \
+	then \
+		./manual/bin/find-fuzzy.sh ; \
+	else \
+		echo "There are no fuzzy strings to translate." ; \
+	fi
+

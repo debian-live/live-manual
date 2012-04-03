@@ -34,7 +34,7 @@ consultare il {Glossario}#terms). L'opzione #{--distribution}# non solo
 influenza la sorgente dei pacchetti nell'archivio, ma indica a
 #{live-build}# di comportarsi secondo la necessità per compilare ciascuna
 distribuzione supportata. Ad esempio se si vuole costruire un rilascio
-*unstable*, Sid, specificare:
+*{unstable}*, Sid, specificare:
 
 code{
 
@@ -70,13 +70,13 @@ il mondo cosicché chiunque in ogni nazione può selezionare il mirror più
 vicino per la migliore velocità di scaricamento. Ciascuna delle opzioni
 #{--mirror-*}# determina quale mirror della distribuzione è usato nei vari
 stadi della compilazione. Ricordando dalle {Fasi della
-creazione}#stages-of-the-build che la fase di *avvio* è quando il chroot è
+creazione}#stages-of-the-build che la fase di *{avvio}* è quando il chroot è
 inizialmente popolato da debootstrap con un sistema minimale e quella di
-*chroot* è quando viene creato il chroot usato per costruire il file system
-del sistema live. Perciò per queste fasi vengono usati i corrispondenti
-cambi di mirror, e in seguito, nella fase *binaria* vengono usati i valori
-di #{--mirror-binary}# e #{--mirror-binary-security}# sostituendo qualsiasi
-altro mirror usato nelle fasi iniziali.
+*{chroot}* è quando viene creato il chroot usato per costruire il file
+system del sistema live. Perciò per queste fasi vengono usati i
+corrispondenti cambi di mirror, e in seguito, nella fase *{binaria}* vengono
+usati i valori di #{--mirror-binary}# e #{--mirror-binary-security}#
+sostituendo qualsiasi altro mirror usato nelle fasi iniziali.
 
 3~distribution-mirrors-build-time Mirror delle distribuzioni usati in fase
 di compilazione
@@ -124,9 +124,9 @@ destinazione. Questi possono essere, per esempio, pacchetti di backport,
 sperimentali o personalizzati. Per configurare repository aggiuntivi, creare
 i file #{config/archives/vostro-repository.list.chroot}#, o
 #{config/archives/vostro-repository.list.binary}#. Come per le opzioni
-#{--mirror-*}#, queste controlleranno i repository usati nella fase *chroot*
-quando si compila l'immagine, e nella fase *binary*, ad esempio per usarli
-quando il sistema live è avviato.
+#{--mirror-*}#, queste controlleranno i repository usati nella fase
+*{chroot}* quando si compila l'immagine, e nella fase *{binary}*, ad esempio
+per usarli quando il sistema live è avviato.
 
 Per esempio, #{config/archives/live.list.chroot}# permette di installare
 pacchetti dal repository snapshot di debian live al momento della creazione
@@ -238,26 +238,26 @@ istruzioni condizionali nell'elenco dei pacchetti. In genere questo
 significa qualsiasi opzione di #{lb config}# in maiuscolo e con trattini
 cambiati in trattini bassi; ma in pratica è la sola ad influenzare la
 selezione dei pacchetti che abbia senso, come #{DISTRIBUTION}#,
-#{ARCHITECTURE}# o #{ARCHIVE_AREAS}#.
+#{ARCHITECTURES}# o #{ARCHIVE_AREAS}#.
 
-Per esempio, per installare #{ia32-libs}# se è specificata #{--architecture
+Per esempio, per installare #{ia32-libs}# se è specificata #{--architectures
 amd64}#:
 
 code{
 
- #if ARCHITECTURE amd64
+ #if ARCHITECTURES amd64
  ia32-libs
  #endif
 
 }code
 
 Si può verificare per ognuna di una serie di valori, ad esempio per
-installare #{memtest86+}# specificando sia #{--architecture i386}# sia
-#{--architecture amd64}#:
+installare #{memtest86+}# specificando sia #{--architectures i386}# sia
+#{--architectures amd64}#:
 
 code{
 
- #if ARCHITECTURE i386 amd64
+ #if ARCHITECTURES i386 amd64
  memtest86+
  #endif
 
@@ -279,7 +279,7 @@ Una condizione può coinvolegere una direttiva #{#include}#:
 
 code{
 
- #if ARCHITECTURE amd64
+ #if ARCHITECTURES amd64
  #include <gnome-full>
  #endif
 

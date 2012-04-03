@@ -6,7 +6,7 @@ Ce chapitre explique comment gérer une configuration d'un système live à
 partir d'une création initiale, à travers des révisions successives et des
 versions successives du logiciel live-build et de l'image live lui-même.
 
-2~ Utilisez auto pour gérer les modifications de configuration
+2~ Utiliser auto pour gérer les modifications de configuration
 
 Les configurations live sont rarement parfaites du premier coup. Vous aurez
 probablement besoin de faire une série de révisions jusqu'à ce que vous êtes
@@ -20,13 +20,13 @@ Par exemple, lorsque la distribution est d'abord définie, nombreuses
 variables sont assignées des valeurs par défaut qui conviennent à cette
 distribution. Cependant, si vous décidez ultérieurement de modifier la
 distribution, ces variables dépendantes conservent les anciennes valeurs qui
-ne sont plus appropriés.
+ne sont plus appropriées.
 
-Un deuxième problème connexe est que si vous exécutez #{lb config}# et
-ensuite mettez à jour une nouvelle version de live-build qui a changé l'un
-des noms de variables, vous découvrirez ce que par un examen manuel des
-variables dans votre #{config/*}# fichiers, que vous devrez ensuite utiliser
-pour définir l'option appropriée à nouveau.
+Un deuxième problème lié est que si vous exécutez #{lb config}# et ensuite
+mettez à jour une nouvelle version de live-build qui a changé l'un des noms
+de variables, vous découvrirez ce que par un examen manuel des variables
+dans votre fichiers dans #{config/*}#, que vous devrez ensuite utiliser pour
+définir l'option appropriée à nouveau.
 
 Tout cela serait une nuisance terrible si ce n'était pas pour les scripts
 auto/* simples emballages pour les commandes #{lb config}#, #{lb build}# et
@@ -34,11 +34,12 @@ auto/* simples emballages pour les commandes #{lb config}#, #{lb build}# et
 suffit de créer un script auto/config contenant la commande #{lb config}#
 avec toutes les options désirées, et un auto/clean qui supprime les fichiers
 contenant les valeurs des variables de configuration, et chaque fois que
-vous #{lb config}# et #{lb clean}#, ces fichiers seront exécutés. Cela
-permettra d'assurer que votre configuration a une cohérence interne d'une
-révision à l'autre et d'une version de live-build à la suivante (même si
-vous aurez encore de prendre soin et lire la documentation lorsque vous
-faites un mise à niveau et faites les ajustements nécessaires ).
+vous lancez #{lb config}# et #{lb clean}#, ces fichiers seront
+exécutés. Cela permettra d'assurer que votre configuration a une cohérence
+interne d'une révision à l'autre et d'une version de live-build à la
+suivante (bien que vous aurez encore de prendre soin et lire la
+documentation lorsque vous mettez live-build à niveau pour faire les
+ajustements nécessaires ).
 
 2~ Exemples de scripts auto
 
@@ -95,4 +96,4 @@ Editer #{auto/config}#, en changeant ou en ajoutant des options comme bon
 vous semble. Dans l'exemple ci-dessus, #{--package-lists standard}# est fixé
 à la valeur par défaut. Changez ce à une valeur appropriée pour votre image
 (ou le supprimer si vous voulez utiliser par défaut) et ajouter des options
-supplémentaires dans les lignes de continuation qui suivent.
+supplémentaires dans les lignes suivantes.

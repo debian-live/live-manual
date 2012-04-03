@@ -6,7 +6,7 @@ tiempo de ejecución.
 Toda la configuración que se hace en tiempo de ejecución es realizada por
 live-config. Éstas son algunas de las opciones más comunes de live-config en
 las que los usuarios están más interesados. Se puede encontrar una lista
-completa de todas las posibilidades en la página del manual de live-config.
+completa de todas las posibilidades en la página de manual de live-config.
 
 2~ Personalización del usuario por defecto del sistema en vivo
 
@@ -42,7 +42,7 @@ en la configuración:
 
 code{
 
-$ lb config --bootappend-live "username=live-user"
+ $ lb config --bootappend-live "username=live-user"
 
 }code
 
@@ -76,7 +76,7 @@ code{
 }code
 
 Este parámetro también se puede utilizar en la línea de comandos del
-kernel. Se puede especificar una variante local usando una palabra completa
+kernel. Se puede especificar una variante local de esta forma:
 #{language_country.encoding}#.
 
 Tanto la configuración del teclado de la consola y del entorno gráfico X
@@ -129,7 +129,7 @@ code{
 
 }code
 
-2~persistence  Persistencia (Modo guardar cambios)
+2~persistence  Persistencia
 
 Un paradigma de un cd en vivo («live cd» N. del T.) es ser un sistema
 pre-instalado que funciona desde medios de almacenamiento de sólo lectura,
@@ -142,38 +142,63 @@ su comportamiento predeterminado, se debe considerar un sistema de sólo
 lectura y todos los cambios en tiempo de ejecución del sistema se pierden al
 apagar el equipo.
 
-La persistencia (o modo guardar cambios) es un nombre común que se dá a los
-diferentes tipos de soluciones para guardar algunos o todos los cambios
-realizados durante la ejecución tras reiniciar el sistema. Para entender
-cómo funciona es útil saber que incluso si el sistema se inicia y se ejecuta
-desde los medios de almacenamiento de sólo lectura, las modificaciones de
-los ficheros y directorios se escriben en medios de escritura, por lo
-general en la memoria ram (tmpfs) y los datos guardados en la ram no se
-guardan tras reiniciar.
+La persistencia es un nombre común que se dá a los diferentes tipos de
+soluciones para guardar algunos o todos los cambios realizados durante la
+ejecución tras reiniciar el sistema. Para entender cómo funciona es útil
+saber que incluso si el sistema se inicia y se ejecuta desde los medios de
+almacenamiento de sólo lectura, las modificaciones de los ficheros y
+directorios se escriben en medios de escritura, por lo general en la memoria
+ram (tmpfs) y los datos guardados en la ram no se guardan tras reiniciar.
 
 Los datos almacenados en esta memoria ram se pueden guardar en un soporte
-grabable como un disco duro, una memoria USB, un recurso compartido de red o
-incluso en una sesión de un CD/DVD regrabable en multisesión. Todos estos
+grabable como un medio de almacenamiento local, un recurso compartido en red
+o incluso en una sesión de un CD/DVD regrabable en multisesión. Todos estos
 medios son compatibles con Debian Live de diferentes maneras, y todos menos
 el último requieren un parámetro de arranque especial que se especificará en
 el momento del arranque: #{persistent}#.
 
-3~ Persistencia total
+Si se usa el parámetro de arranque #{persistent}# (y no se usa la opción
+#{nopersistent}#), se busca en los medios de almacenamiento locales
+(p.ej. discos duros, llaves USB) volúmenes con persistencia durante el
+arranque. Un volumen persistente es cualquiera de los siguientes: 
+
+_* una partición, identificada por su nombre GPT.
+
+_* Un sistema de ficheros, identificado por su etiqueta de sistema de
+ficheros.
+
+_* una fichero imagen/archivo situado en el sistema raiz de cualquier
+sistema de ficheros que pueda ser leido (incluso una partición NTFS de otro
+sistema operativo), identificado por su nombre de fichero. En este caso el
+nombre del fichero debe contener el nombre el sistema de ficheros como
+extensión, p.ej. "<label>.ext3".
+
+Es posible restringir qué tipos de volúmenes persistentes se pueden usar
+especificando ciertos parámetros de arranque descritos en la página del
+manual de live-boot(7). Las "etiquetas identificadoras" referidas
+anteriormente pueden ser cualquiera de las siguientes:
+
+_* #{full-ov}# para capas de persistencia total.
+
+_* #{custom-ov}# para capas personalizadas.
+
+_* #{live-sn}# para instantáneas del sistema entero.
+
+_* #{home-sn}# para instantáneas de /home.
+
+3~ Capas de persistencia total 
 
 Por «Persistencia total» se entiende la utilización de una partición de
 escritura en lugar de usar un tmpfs (sistema de ficheros temporal) para
-guardar los cambios realizados a los medios de sólo lectura (con el sistema
-copiar-al-escribir o COW «copy-on-write» N. del T.). Para utilizar esta
-función se debe crear una partición grabable vacía con la etiqueta «live-rw»
-formateada con un sistema de ficheros compatible en el medio usado para
-arracar el sistema en vivo. En el momento de arrancar se debe iniciar el
-sistema con el parámetro de arranque 'persistent'. Esta partición puede ser
-una partición ext2 en el disco duro o en una memoria USB creada con, por
-ejemplo:
+guardar los cambios realizados en los medios de sólo lectura (con el sistema
+copiar-al-escribir o COW «copy-on-write» N. del T.). Para utilizar este tipo
+de persistencia la etiqueta del volumen debe ser #{full-ov}#. Esta podría
+ser, por ejemplo, una partición ext2 o un disco duro o una llave usb creada
+con. p.ej:
 
 code{
 
- # mkfs.ext2 -L live-rw /dev/sdb1
+ # mkfs.ext2 -L full-ov /dev/sdb1
 
 }code
 
@@ -184,70 +209,95 @@ etiqueta con uno de los siguientes:
 
 code{
 
- # tune2fs -L live-rw /dev/sdb1 # for ext2,3,4 filesystems
+ $ tune2fs -L full-ov /dev/sdb1 # for ext2,3,4 filesystems
 
 }code
 
-Pero ya que los usuarios de un sistema en vivo no siempre pueden utilizar
-una partición del disco duro, y teniendo en cuenta que la mayoría de
-memorias USB tienen velocidades de escritura lentas, la persistencia total
-también puede ser usada con ficheros imagen, de este modo se puede crear un
-fichero que represente una partición y poner ese fichero imagen incluso en
-una partición NTFS de un sistema operativo no nativo, con algo similar a
-esto:
+Un ejemplo de cómo crear un fichero imagen basado en ext2 usando
+persistencia total.
 
 code{
 
- $ dd if=/dev/null of=live-rw bs=1G seek=1 # for a 1GB sized image file
- $ /sbin/mkfs.ext2 -F live-rw
+ $ dd if=/dev/null of=full-ov bs=1G seek=1 # for a 1GB sized image file
+ $ /sbin/mkfs.ext2 -F full-ov
 
 }code
 
-A continuación, copiar el fichero #{live-rw}# a un partición grabable y
-reiniciar el sistema con el parámetro de arranque «persistent».
+A continuación, copiar el fichero #{full-ov}# en una partición grabable y
+reiniciar el sistema.
 
-3~ Montar Home de forma automática
+3~ Capas personalizadas
 
-Si durante el arranque se encuentra una partición (sistema de ficheros) con
-un fichero imagen o una partición con la etiqueta #{home-rw}# el sistema de
-ficheros será montado de forma automática como #{/home}#, lo que permite la
-persistencia de los ficheros que pertenecen a, por ejemplo, el usuario por
-defecto. Se puede combinar con persistencia total.
+Un volumen con la etiqueta #{custom-ov}# puede ser personalizado para crear
+arbitrariamente directorios persistentes. El fichero #{live.persist}#,
+situado en el sistema de ficheros raiz del volumen, controla que directorios
+hace persistentes y también de que manera.
+
+En la página de manual de live.persist(5) se explica en detalle cómo se
+configura el montaje de las capas, pero un sencillo ejemplo es suficiente
+para la mayoría de los casos. Supongamos que queremos crear nuestro
+directorio home y APT cache persistentes en un sistema de ficheros ext3 en
+la partición /dev/sdb1:
+
+code{
+
+ $ mkfs.ext3 -L custom-ov /dev/sdb1
+ $ mount -t ext3 /dev/sdb1 /mnt
+ $ echo "/home" >> /mnt/live.persist
+ $ echo "/var/cache/apt" >> /mnt/live.persist
+
+}code
+
+Entonces reiniciamos. Durante el primer arranque los contenidos de /home y
+/var/cache/apt se copiarán en el volumen persistente y a partir de ese
+momento todos los cambios en esos directorios se guardarán allí. Tener en
+cuenta que los rutas listadas en el fichero #{live.persist}# no pueden
+contener espacios en blanco o los componentes especiales "." y  "..". Además
+ni "/live" (o ninguno de sus sub-directorios) ni "/" pueden hacerse
+persistentes montándolos de forma personalizada. Para este último, usar el
+tipo de persistencia #{full-ov}# descrito anteriormente.
+
+Se puede usar diferentes volúmenes de capas personalizados al mismo tiempo
+(con sus propios ficheros #{live.persist}#) pero si varios volúmenes hacen
+que un mismo directorio sea persistente, sólo uno de ellos será usado. Si
+dos unidades montadas están "anidadas" (es decir, una es un sub-directorio
+de la otra) el directorio superior será montado antes que el inferior de
+este modo no quedará uno escondido por el otro. La personalización de los
+montajes anidadados es problemática si están listados en el mismo fichero
+#{live.persist}#. Consultar la página de manual de live.persist(5) para ver
+como manejar ese caso si realmente es necesario. (aclaración: normalmente no
+lo es).
 
 3~ Instantáneas
 
 Las instantáneas son colecciones de ficheros y directorios que no se montan
-durante la ejecución, pero que se copian desde un dispositivo persistente al
+durante la ejecución, pero que se copian desde un volumen persistente al
 sistema (tmpfs) en el arranque y que se resincroniza en el reinicio/apagado
-del sistema.  El contenido de una instantánea puede residir en una partición
-o en un fichero imagen (como los tipos mencionados anteriormente) con la
-etiqueta #{live-sn}#, pero el valor predeterminado es un archivo cpio simple
-denominado #{live-sn.cpio.gz}#. Como en el caso anterior, en el momento del
-arranque los dispositivos conectados al sistema se recorren buscando una
-partición o un fichero llamado así. Una interrupción de la alimentación en
-tiempo de ejecución podría conducir a la pérdida de datos, por lo tanto, se
-puede usar la herramienta #{live-snapshot --refresh}# para sincronizar
-cambios importantes. Este tipo de persistencia es la menos agresiva con
-dispositivos tipo flash y el más rápido de todos los sistemas de
-persistencia, ya que no escribe continuamente en los medios de
-almacenamiento.
+del sistema.  El volumen debe tener la etiqueta #{live-sn}#, y su valor
+predeterminado es un simple archivo cpio denominado #{live-sn.cpio.gz}#. Una
+interrupción del suministro eléctrico en tiempo de ejecución podría conducir
+a la pérdida de datos, por lo tanto, se puede usar la herramienta
+#{live-snapshot --refresh}# para sincronizar cambios importantes. Este tipo
+de persistencia es la menos agresiva con los dispositivos tipo flash y el
+más rápido de todos los sistemas de persistencia, ya que no escribe
+continuamente en los medios de almacenamiento, pero ocupa tanta RAM como el
+tamaño de la instantánea sin comprimir.
 
 Existe también una versión de la instantánea /home y su etiqueta es
 #{home-sn.*}#; que funciona igual que la instantánea principal, pero sólo se
 aplica a /home.
 
-Las instantáneas actualmente no pueden manejar el borrado de ficheros pero
-la persistencia total y el montaje automático sí pueden.
+Las instantáneas no pueden manejar el borrado de ficheros.
 
 3~ SubText persistente
 
 Si un usuario necesita un almacenamiento persistente múltiple del mismo tipo
-para diferentes lugares o pruebas, tales como #{live-rw-nonwork}# y
-#{live-rw-work}#, el parámetro de arranque #{persistent-subtext}# usado
+para diferentes lugares o pruebas, tales como #{full-ov-nonwork}# y
+#{full-ov-work}#, el parámetro de arranque #{persistent-subtext}# usado
 junto con el parámetro de arranque #{persistent}# permitirá medios de
-almacenamiento persistentes múltiples pero únicos. Un ejemplo sería si un
+almacenamiento persistentes múltiples pero únicos. Un ejemplo sería, si un
 usuario desea utilizar una partición persistente etiquetada
-#{live-sn-subText}# usaría los parámetros de arranque de: #{persistent}#
+#{live-sn-subText}# usaría los parámetros de arranque: #{persistent}#
 #{persistent-subtext=subText}#.
 
 3~ Remasterización parcial

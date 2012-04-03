@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
 "POT-Creation-Date: 2012-01-15 16:28+0100\n"
-"PO-Revision-Date: 2012-01-15 16:53+0100\n"
+"PO-Revision-Date: 2012-02-19 18:05+0100\n"
 "Last-Translator: José Luis Zabalza and Carlos Zuferri «chals» "
 "<jlz.3008@gmail.com> <chals@altorricon.com>\n"
 "Language-Team: none\n"
@@ -172,12 +172,12 @@ msgstr ""
 "Este capítulo trata, no solamente de una mera descripción de cómo "
 "seleccionar los paquetes a incluir en el sistema en vivo, sino que además "
 "presenta cómo hacer el «ajuste fino» de la personalización de los contenidos "
-"del propio sistema. Los «añadidos» (includes) permiten adjuntar o reemplazar "
-"cualquier fichero en la imagen Debian Live a crear, los scripts gancho "
-"(hooks) permiten ejecutar cualquier orden en las diferentes etapas de "
-"creación y en el momento del arranque y por último, la preconfiguración "
-"permite configurar paquetes cuando son instalados, suministrando las "
-"respuestas a las preguntas de debconf."
+"del propio sistema. Los includes permiten adjuntar o reemplazar cualquier "
+"fichero en la imagen Debian Live a crear, los scripts gancho (hooks) "
+"permiten ejecutar cualquier orden en las diferentes etapas de creación y en "
+"el momento del arranque y por último, la preconfiguración permite configurar "
+"paquetes cuando son instalados, suministrando las respuestas a las preguntas "
+"de debconf."
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:8
@@ -196,9 +196,9 @@ msgstr ""
 "Idealmente, un sistema Debain Live debería incluir solamente ficheros que "
 "son obtenidos de paquetes Debian no modificados. Sin embargo, algunas veces "
 "es conveniente incluir o modificar algún contenido mediante ficheros. La "
-"utilización de «añadidos» (includes) posibilita la inclusión, modificación o "
-"cambio de cualquier fichero en la imagen Debian Live a crear. live-build "
-"tiene tres mecanismos:"
+"utilización de includes posibilita la inclusión, modificación o cambio de "
+"cualquier fichero en la imagen Debian Live a crear. live-build tiene tres "
+"mecanismos:"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:12
@@ -208,8 +208,8 @@ msgid ""
 "local-includes for more information."
 msgstr ""
 "_* Includes locales en chroot : Estos includes permiten incluir o reemplazar "
-"ficheros del entorno chroot. Para más información ver {Includes locales en "
-"Live/chroot}#live-chroot-local-includes"
+"ficheros en el sistema de ficheros chroot. Para más información ver "
+"{Includes locales en Live/chroot}#live-chroot-local-includes"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:14
@@ -261,16 +261,13 @@ msgid ""
 msgstr ""
 "Los includes locales en chroot se utilizan para incluir o reemplazar "
 "ficheros en el sistema de ficheros Live/chroot de manera que puedan ser "
-"utilizados en el sistema en vivo. Una utilización típica de estos Includes "
-"puede ser el rellenar el directorio (#{/etc/skel}#) del sistema en vivo para "
-"que sea utilizado en la creación del directorio home al dar de alta usuarios "
-"en el sistema en vivo. Otra utilización típica es suministrar ficheros de "
-"configuración que puedan ser incluidos o reemplazados en la imagen sin "
-"necesidad de realizar proceso alguno (Los ficheros son simplemente copiados "
-"sin realizar ningún proceso de los mismos para adecuarlos al sistema "
-"concreto. N. del T); Si se necesita realizar algún procesado de estos "
-"ficheros ver la sección {Scripts gancho locales en Live/chroot}#live-chroot-"
-"local-hooks"
+"utilizados en el sistema en vivo. Una utilización típica de estos includes "
+"puede ser rellenar el directorio (#{/etc/skel}#) usado por el sistema Live "
+"para crear el directorio home del usuario. Otra utilización típica es "
+"suministrar ficheros de configuración que pueden ser incluidos o "
+"reemplazados en la imagen sin necesidad de realizar procesado alguno; Si se "
+"necesita realizar algún procesado de estos ficheros ver la sección {Scripts "
+"gancho locales en Live/chroot}#live-chroot-local-hooks"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:24
@@ -293,8 +290,6 @@ msgid ""
 " $ mkdir -p config/includes.chroot/var/www\n"
 " $ cp /path/to/my/index.html config/includes.chroot/var/www\n"
 msgstr ""
-" $ mkdir -p config/includes.chroot/var/www\n"
-" $ cp /path/to/my/index.html config/includes.chroot/var/www\n"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:33
@@ -314,14 +309,6 @@ msgid ""
 "    [...]\n"
 "     `-- templates\n"
 msgstr ""
-" -- config\n"
-"    [...]\n"
-"     |-- includes.chroot\n"
-"     |   `-- var\n"
-"     |       `-- www\n"
-"     |           `-- index.html\n"
-"    [...]\n"
-"     `-- templates\n"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:48
@@ -365,7 +352,7 @@ msgstr ""
 #: en/user_customization-contents.ssi:56
 #, no-wrap
 msgid " $ cp ~/video_demo.* config/includes.binary/\n"
-msgstr " $ cp ~/video_demo.* config/includes.binary/\n"
+msgstr ""
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:60
@@ -393,7 +380,7 @@ msgstr ""
 #: en/user_customization-contents.ssi:68
 #, no-wrap
 msgid " $ lb config --includes none\n"
-msgstr " $ lb config --includes none\n"
+msgstr ""
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:72

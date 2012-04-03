@@ -3,7 +3,7 @@
 1~customizing-run-time-behaviours Personnalisation des comportements au
 moment de l'exécution
 
-Toute la configuration qui est fait pendant l'exécution est fait par
+Toute la configuration qui est faite pendant l'exécution est faite par
 live-config. Voici quelques options les plus courantes de live-config
 d'intérêt pour les utilisateurs. Une liste complète de toutes les
 possibilités peut être trouvée dans la page de manuel de live-config.
@@ -41,7 +41,7 @@ spécifier dans votre config:
 
 code{
 
-$ lb config --bootappend-live "username=live-user"
+ $ lb config --bootappend-live "username=live-user"
 
 }code
 
@@ -93,8 +93,8 @@ code{
 
 }code
 
-Pour obtenir les fichiers des paramètres régionaux pour les claviers
-allemand et suisse allemand dans X utiliser:
+Pour obtenir les fichiers des paramètres régionaux de l'allemand et la
+disposition du clavier suisse allemand dans X utiliser:
 
 code{
 
@@ -130,7 +130,7 @@ code{
 
 2~persistence Persistance
 
-Un paradigme d'un Live CD est être un système pré-installé qui se démarre du
+Un paradigme d'un Live CD est être un système pré-installé qui amorce sur un
 support en lecture seule, comme un cdrom, où les données et les
 modifications ne survivent pas aux redémarrages du matériel hôte qui
 l'exécute.
@@ -138,7 +138,7 @@ l'exécute.
 Un système Debian Live est une généralisation de ce paradigme et soutient
 ainsi autres supports, en plus de CDs, mais encore, dans son comportement
 par défaut, il doit être considéré en lecture seule et toutes les évolutions
-d'exécution du système sont perdus à l'arrêt.
+pendant l'exécution du système sont perdus à l'arrêt.
 
 La persistance est un nom commun pour les différents types de solutions pour
 sauver, après un redémarrage, certaines ou toutes les données, de cette
@@ -150,26 +150,53 @@ inscriptibles, typiquement un disque ram (tmpfs) et aux disques RAM les
 données ne survivent pas à un redémarrage.
 
 Les données stockées sur ce disque virtuel doivent être enregistrées sur un
-support inscriptible persistant comme un disque dur, une clé USB, un partage
-réseau ou même une séance d'un CD/DVD multisession (ré)inscriptible. Tous
-ces supports sont pris en charge dans Debian Live de différentes manières,
-et tous mais le dernier nécessitent un paramètre de démarrage spéciale à
-préciser au moment du démarrage: #{persistent}#.
+support inscriptible persistant comme supports de stockage locaux, un
+partage réseau ou même une séance d'un CD/DVD multisession
+(ré)inscriptible. Tous ces supports sont pris en charge dans Debian Live de
+différentes manières, et tous, moins le dernier, nécessitent un paramètre
+d'amorçáge spéciale à préciser au moment du démarrage: #{persistent}#.
 
-3~ Persistance pleine
+Si le paramètre de démarrage #{persistent}# est réglé (et #{nopersistent}#
+n'est pas utilisé), les supports de stockage locaux (par exemple les disques
+durs, clés USB) seront examinés pour trouver des volumes persistants pendant
+le démarrage. Un volume persistant est un des éléments suivants:
 
-Par «persistance pleine» on entend que plutôt que d'utiliser un tmpfs pour
-le stockage des modifications au support en lecture seule (avec le système
+_* une partition, identifiée par son nom GPT.
+
+_* un système de fichiers, identifié par son étiquette de système de
+fichiers.
+
+_* un fichier image/archive situé sur la racine de tout système de fichiers
+en lecture (même une partition NTFS d'un système d'exploitation étranger),
+identifié par son nom de fichier. Dans ce cas, le nom du fichier doit
+également utiliser le système de fichiers contenant l'extension de fichier,
+par exemple, "<label>.ext3".
+
+Il est possible de limiter les types de volumes persistants à utiliser en
+spécifiant certains paramètres de démarrage décrits dans la page de manuel
+live-boot(7). Les "étiquettes d'identification" mentionnées ci-dessus
+peuvent être un des éléments suivants:
+
+_* #{full-ov}# pour couches de persistance pleine.
+
+_* #{custom-ov}# pour couches personalisées
+
+_* #{live-sn}# pour instantanés du système complet.
+
+_* #{home-sn}# pour instantanés du /home.
+
+3~ Couches de persistance pleine
+
+Par «persistance pleine» on entend que au lieu d'utiliser un tmpfs pour le
+stockage des modifications au support en lecture seule (avec le système
 copy-on-write, COW) une partition accessible en écriture est utilisée. Pour
-utiliser cette fonction une partition avec un système de fichiers accessible
-en écriture avec l'étiquette "live-rw" doit être fixé sur le système au
-moment du démarrage et le système doit être démarré avec le paramètre de
-démarrage "persistent". Cette partition peut être une partition ext2 du
-disque dur ou sur une clé USB créé avec, par exemple:
+ce type de persistance le nom du volume doit être #{full-ov}#. Cela
+pourrait, par exemple, être une partition ext2 sur un disque dur ou sur une
+clé usb créée avec, par exemple:
 
 code{
 
- # mkfs.ext2 -L live-rw /dev/sdb1
+ # mkfs.ext2 -L full-ov /dev/sdb1
 
 }code
 
@@ -181,67 +208,93 @@ modifier l'étiquette avec l'un des suivants:
 
 code{
 
- # tune2fs -L live-rw /dev/sdb1 # for ext2,3,4 filesystems
+ $ tune2fs -L full-ov /dev/sdb1 # for ext2,3,4 filesystems
 
 }code
 
-Mais puisque les utilisateurs du système live ne peuvent pas toujours
-utiliser une partition du disque dur, et considérant que la plupart des clés
-USB ont des vitesses d'écriture pauvres, «pleine» persistance pourrait
-également être utilisé avec des fichiers image, si vous pouviez créer un
-fichier qui représente une partition et mettre cette image fichier, même sur
-une partition NTFS d'un système d'exploitation étranger, avec quelque chose
-comme:
+Voici un exemple de comment créer un fichier image ext2 utilisé pour la
+persistance pleine:
 
 code{
 
- $ dd if=/dev/null of=live-rw bs=1G seek=1 # for a 1GB sized image file
- $ /sbin/mkfs.ext2 -F live-rw
+ $ dd if=/dev/null of=full-ov bs=1G seek=1 # for a 1GB sized image file
+ $ /sbin/mkfs.ext2 -F full-ov
 
 }code
 
-Ensuite, copiez le fichier #{live-rw}# sur une partition accessible en
-écriture et redémarrer avec le paramètre de démarrage "persistent".
+Ensuite, copiez le fichier #{full-ov}# sur une partition accessible en
+écriture et redémarrer.
 
-3~ Montage automatique de Home
+3~ Couches personnalisées
 
-Si lors de l'initialisation une partition (système de fichiers) un fichier
-image ou une partition étiquetée #{home-rw}# est découverte, ce système de
-fichiers sera monté directement comme #{/home}#, permettant ainsi la
-persistance des fichiers qui appartiennent à l'utilisateur par défaut. Elle
-peut être combinée avec la persistance complète.
+Un volume avec l'étiquette #{custom-ov}# peut être configuré pour créer des
+répertoires arbitraires persistants. Le fichier #{live.persist}#, situé sur
+le système de fichiers racine du volume, contrôle quels répertoires il fait
+persistants, et de quelle manière.
+
+Comment on configure monter des couches personnalisés est décrit en détail
+dans la page de manuel live.persist(5), mais un simple exemple devrait être
+suffisant pour la plupart des utilisations. Imaginons que nous voulons faire
+notre répertoire personnel et APT cache persistants dans un système de
+fichiers ext3 sur la partition /dev/sdb1:
+
+code{
+
+ $ mkfs.ext3 -L custom-ov /dev/sdb1
+ $ mount -t ext3 /dev/sdb1 /mnt
+ $ echo "/home" >> /mnt/live.persist
+ $ echo "/var/cache/apt" >> /mnt/live.persist
+
+}code
+
+Alors nous redémarrons. Lors du premier démarrage les contenus du /home et
+/var/cache/apt seront copiés dans le volume persistant, et à partir de ce
+moment tous les changements dans ces répertoires seront stockés dans le
+volume persistant. S'il vous plaît souligner que les chemins d'accès aux
+répertoriés dans le fichier #{live.persist}# ne peuvent pas contenir
+d'espaces blancs ou les éléments spéciaux "." et "..". En outre, ni "/live"
+(ou un de ses sous-répertoires), ni "/" peuvent être rendus persistants en
+utilisant custom mounts (pour ce dernier, utilisez la persistance
+#{full-ov}# décrite ci-dessus).
+
+Plusieurs différents volumes de couches personnalisés (avec leurs propres
+fichiers #{live.persist}#) peuvent être utilisés au même temps, mais si
+plusieurs volumes font le même répertoire persistant, un seul d'entre eux
+sera utilisé. Si les deux sont «imbriqués» (un est un sous-répertoire de
+l'autre) le premier sera monté avant que le secondaire de sorte que aucun
+sera caché par l'autre. Monter  des éléments personnalisés imbriqués est
+problématique s'ils sont énumérés dans le même fichier
+#{live.persist}#. Voir la page de manuel live.persist(5) pour savoir comment
+gérer ce cas, si vous avez vraiment besoin (remarque: vous n'avez
+généralement pas).
 
 3~ Instantanés
 
 Les instantanés sont des collections de fichiers et de répertoires qui ne
 sont pas montés lors de l'exécution, mais qui sont copiés à partir d'un
 périphérique persistant à le système (tmpfs) au démarrage et qui sont
-resynchronisés au redémarrage/arrêt du système. Le contenu d'un instantané
-pourrait résider sur une partition ou un fichier image (comme les types
-mentionnés ci-dessus) étiquetés #{live-sn}#, mais il est par défaut à une
-archive cpio simple appelé #{live-sn.cpio.gz}#. Comme ci-dessus, au moment
-du démarrage, les périphériques connectés à le système sont examinés pour
-voir si une partition ou un fichier nommé comme ça pourrait être trouvé. Une
-coupure de courant pendant l'exécution pourrait conduire à la perte de
-données, donc un outil appelé #{live-snapshot --refresh}# pourrait être
-appelé à synchroniser des changements importants. Ce type de persistance,
-car elle n'écrit pas continuellement dans les supports persistants, est le
-plus respectueux avec les dispositifs flash et le plus rapide de tous les
-systèmes de persistance.
+resynchronisés au redémarrage/arrêt du système. Le volume doit être étiqueté
+#{live-sn}#. Il est par défaut une simple archive cpio appelé
+#{live-sn.cpio.gz}#.  Une coupure de courant pendant l'exécution pourrait
+conduire à la perte de données, donc un outil appelé #{live-snapshot
+--refresh}# pourrait être appelé pour synchroniser des changements
+importants. Ce type de persistance, car elle n'écrit pas continuellement
+dans les supports persistants, est la plus respectuese avec les dispositifs
+flash et la plus rapide de tous les systèmes de persistance, mais elle
+occupe autant RAM que la taille de l'instantané non compressé.
 
-Une version instantané de /home existe aussi, et son étiquette est
+Une version d'instantané de /home existe aussi, et son étiquette est
 #{home-sn.*}#; elle travaille le même que l'instantané principale, mais il
 est seulement appliquée à /home.
 
 Les instantanés ne peuvent pas actuellement gérer la suppression de
-fichiers, mais la persistance pleine et le montage automatique de home si
-peuvent le faire.
+fichiers.
 
 3~ SubText persistant
 
 Si un utilisateur a besoin de multiples stockages persistants du même type
-pour différents endroits ou l'essai, tel que #{live-rw-nonwork}# et
-#{live-rw-work}#, le paramètre de démarrage #{persistent-subtext}# utilisé
+pour différents endroits ou l'essai, tel que #{full-ov-nonwork}# et
+#{full-ov-work}#, le paramètre de démarrage #{persistent-subtext}# utilisé
 en conjonction avec le paramètre de démarrage #{persistent}# permettra
 multiples mais uniques supports persistants. Un exemple serait le cas si un
 utilisateur voudrait utiliser une partition persistante étiqueté

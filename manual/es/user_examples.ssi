@@ -4,7 +4,7 @@
 
 Este capítulo ofrece ejemplos de creación de imágenes para casos de uso
 específicos de Debian Live. Si se es nuevo en la creación de una imagen
-propia de Debian Live, se recomienda mirar primero a los tres tutoriales en
+propia de Debian Live, se recomienda leer primero los tres tutoriales en
 secuencia, ya que cada uno enseña nuevas técnicas que ayudan a utilizar y
 entender los ejemplos restantes.
 
@@ -141,7 +141,7 @@ code{
  #!/bin/sh
 
  lb config noauto \
-     --architecture i386 \
+     --architectures i386 \
      --linux-flavours 686-pae \
      --package-lists lxde \
      "${@}"
@@ -156,7 +156,7 @@ code{
 
 }code
 
-En primer lugar con #{--architecture i386}# se asegura de que en nuestro
+En primer lugar con #{--architectures i386}# se asegura de que en nuestro
 sistema de creación #{amd64}# se crea una versión de 32-bits adecuada para
 ser usada en la mayoría de máquinas. En segundo lugar, se usa
 #{--linux-flavours 686-pae}# porque no se espera usar esta imagen en
@@ -212,8 +212,7 @@ Añadir ahora el paquete #{vlc}# a nuestra lista de paquetes local en
 
 code{
 
- $ echo vlc >> config/package-lists/my.list.chroot
-
+ 
 }code
 
 Crear de nuevo:
@@ -292,7 +291,7 @@ code{
 
 }code
 
-Disfrutar.
+Disfrutarlo.
 
 2~ Una imagen básica para un pendrive USB de 128M
 
@@ -361,8 +360,7 @@ tasksel-data, para proceder, asegurarse de tener ambas cosas:
 
 code{
 
- # apt-get install dctrl-tools tasksel-data
-
+ 
 }code
 
 Ahora podemos buscar las tareas apropiadas, primero con:

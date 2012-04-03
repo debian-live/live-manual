@@ -31,22 +31,21 @@ code{
 
 }code
 
-It is also possible to change the default username "user" and the default
-password "live". If you want to do that for any reason, you can easily
-achieve it as follows:
+È inoltre possibile modificare facilmente il nome utente "user" e la
+password "live" predefiniti.
 
-To change the default username you can simply specify it in your config:
+Per cambiare il nome utente specificare quanto segue nella configurazione:
 
 code{
 
-$ lb config --bootappend-live "username=live-user"
+ $ lb config --bootappend-live "username=live-user"
 
 }code
 
-One possible way of changing the default password is by means of a hook as
-described in {Boot-time hooks}#boot-time-hooks. In order to do that you can
-use the "passwd" hook from #{/usr/share/doc/live-config/examples/hooks}#,
-prefix it accordingly (e.g. 200-passwd) and add it to
+Un modo per cambiare la password è tramite un hook come descritto in {Hook
+in fase di avvio}#boot-time-hooks. Si può usare l'hook "passwd" da
+#{/usr/share/doc/live-config/examples/hooks}#, anteponendolo di conseguenza
+(ad esempio, 200-passwd) e aggiungerlo al file
 #{config/includes.chroot/lib/live/config/}#
 
 2~customizing-locale-and-language Personalizzare la localizzazione e la
@@ -142,30 +141,55 @@ vengono scritte su uno scrivibile, tipicamente un ram disk (tmpfs) e i dati
 sui ram disk non sopravvivono ai riavvii.
 
 I dati immagazzinati su questo ramdisk andrebbero salvati un supporto
-scrivibile persistente come un hard disk, una chiave USB, una condivisione
-di rete o anche una sessione di un CD/DVD riscrivibile multisessione. Tutti
-questi supporti sono gestiti in Debian Live in modi differenti, e tutti
-tranne l'ultimo richiedono un parametro d'avvio speciale da specificare
-all'avvio: #{persistent}#.
+scrivibile persistente come un supporto di memorizzazione locale, una
+condivisione di rete o anche una sessione di un CD/DVD riscrivibile
+multisessione. Tutti questi supporti sono gestiti in Debian Live in modi
+differenti, e tutti tranne l'ultimo richiedono un parametro d'avvio speciale
+da specificare all'avvio: #{persistent}#.
 
-3~ Persistenza completa
+Se il parametro di boot #{persistent}# è impostato (e non lo è
+#{nopersistent}#), i supporti di memorizzazione locali (hard disk,
+dispositivi USB) saranno rilevati come volumi persistenti durante
+l'avvio. Un volume persistente è uno dei seguenti:
 
-Con "persistenza completa" si intende l'uso di una partizione scrivibile
-invece di un filesystem temporaneo (tmpfs) per salvare le modifiche al
-supporto in sola lettura (con il sistema COW, copy-on-write). Per utilizzare
-questa caratteristica, una partizione con un filesystem scrivibile e
-supportato ed etichettata come "live-rw" deve essere collegata al sistema in
-fase di avvio e il sistema va fatto partire con il parametro
-"persistent". Questa partizione potrebbe essere di tipo ext2 su un hard disk
-o una penna usb creata ad esempio con:
+_* una partizione, identificata dal suo nome GPT (GUID Partition Table).
+
+_* un filesystem, identificato dalla sua label.
+
+_* un file immagine o archivio situato nella directory radice di un
+qualsiasi filesystem leggibile (anche una partizione NTFS di un sistema
+estraneo), identificato dal nome del file. In questo caso il nome del file
+deve contenere anche il tipo di filesystem come estensione, ad esempio
+"<label>.ext3".
+
+È possibile limitare i tipi di volume persistenti da usare specificando
+certi parametri di boot descritti nella manpage di live-boot(7). Le "label
+identificative" di cui sopra possono essere una delle seguenti:
+
+_* #{full-ov}# per strati di persistenza completa.
+
+_* #{custom-ov}# per strati personalizzati.
+
+_* #{live-sn}# per istantanee del sistema completo.
+
+_* #{home-sn}# per istantanee della /home.
+
+3~ Strati di persistenza completa
+
+Con "persistenza completa" si intende l'uso di un volume persistente invece
+di un filesystem temporaneo (tmpfs) per salvare le modifiche al supporto in
+sola lettura (con il sistema COW, copy-on-write). Per questo tipo di
+persistenza la label deve essere #{full-ov}#, che potrebbe essere una
+partizione di tipo ext2 su un hard disk o una penna USB creata ad esempio
+con:
 
 code{
 
- # mkfs.ext2 -L live-rw /dev/sdb1
+ # mkfs.ext2 -L full-ov /dev/sdb1
 
 }code
 
-Si veda anche {Usare lo spazio rimanente su una penna
+Vedee anche {Usare lo spazio rimanente su una penna
 USB}#using-usb-extra-space.
 
 Se si possiede già una partizione sul dispositivo basta solo cambiare
@@ -173,61 +197,87 @@ l'etichetta con una delle seguenti:
 
 code{
 
- # tune2fs -L live-rw /dev/sdb1 # for ext2,3,4 filesystems
+ $ tune2fs -L full-ov /dev/sdb1 # per filesystems ext2,3,4
 
 }code
 
-Ma siccome gli utenti dei sistemi live non hanno sempre la possibilità di
-utilizzare una partizione su disco rigido, e considerando che la maggior
-parte delle chiavi USB hanno scarse velocità di scrittura, la persistenza
-"completa" può anche essere usata con dei file immagine, è possibile creare
-un file che rappresenta una partizione e inserire questo file immagine anche
-su una partizione NTFS di un sistema operativo estraneo, qualcosa come:
+Ecco un esempio di come creare un file immagine ext2 da utilizzare per la
+persistenza completa:
 
 code{
 
- $ dd if=/dev/null of=live-rw bs=1G seek=1 # for a 1GB sized image file
- $ /sbin/mkfs.ext2 -F live-rw
+ $ dd if=/dev/null of=full-ov bs=1G seek=1 # per un file immagine da 1GB
+ $ /sbin/mkfs.ext2 -F full-ov
 
 }code
 
-Quindi copiare il file #{live-rw}# su una partizione scrivibile e riavviare
-con il parametro d'avvio "persistent".
+Quindi copiare il file #{full-ov}# nella directory radice di una partizione
+scrivibile e riavviare.
 
-3~ Mount automatico della home
+3~ Strati personalizzati
 
-Se durante l'avvio viene trovata una partizione (filesystem) su file
-immagine o una partizione etichettata come #{home-rw}#, questa verrà montata
-direttamente come #{/home}#, permettendo quindi la persistenza dei file che
-appartengono ad esempio all'utente predefinito. Può essere unita alla
-persistenza completa.
+Un volume con una label #{custom-ov}# può essere configurato per creare
+directory persistenti arbitrarie. Il file #{live.persist}#, situato nella
+directory radice del filesystem del volume, controlla quali rendere
+persistenti e in che modo.
+
+Nella manpage di live.persist(5) è descritto dettagliatamente come è
+configurato il mount degli strati personalizzati, ma un semplice esempio
+dovrebbe essere sufficiente per la maggior parte degli usi. Supponendo di
+voler creare la directory home e quella della cache di APT in modo
+persistente in un filesystem ext3 sulla partizione /dev/sdb1:
+
+code{
+
+ $ mkfs.ext3 -L custom-ov /dev/sdb1
+ $ mount -t ext3 /dev/sdb1 /mnt
+ $ echo "/home" >> /mnt/live.persist
+ $ echo "/var/cache/apt" >> /mnt/live.persist
+
+}code
+
+Quindi riavviare. Durante il primo avvio il contenuto di /home e
+/var/cache/apt saranno copiati nel volume persistente e da allora tutte le
+modifiche a queste directory risiederanno in modo persistente sul
+volume. C'è da considerare che tutti i path elencati nel file
+#{live.persist}# non possono contenere spazi o i caratteri speciali "." e
+".."; inoltre, né "/live" (o nessuna delle sue sottodirectory) né "/" può
+essere resa persistente tramite i mount personalizzati (per l'ultimo usare
+la tipologia #{full-ov}# descritta prima).
+
+Possono essere utilizzati svariati volumi di stratificazione personalizzati
+(con i rispettivi file #{live.persist}#) allo stesso tempo ma se questi
+creano la stessa directory persistente, ne verrà usata solo una. Se due
+directory montate sono "nidificate" (una è la sottodirectory dell'altra), la
+superiore sarà montata per prima, per cui nessuna operazione di mount verrà
+sovrastata dall'altra. I mount nidificati personalizzati sono problematici
+se sono elencati nello stesso file #{live.persist}. Se si ha davvero la
+necessità (in genere non si dovrebbe averla :), consultare la manpage di
+live.persist(5) per sapere come gestire questo caso.
 
 3~ Istantanee
 
 Le istantanee sono raccolte di file e directory che non vengono montate
-durante l'esecuzione ma copiate all'avvio da un dispositivo persistente al
-sistema (tmpfs) e risincronizzate al riavvio e spegnimento. Il contenuto di
-un'istantanea può risiedere su una partizione o file immagine (come i tipi
-menzionati poc'anzi) etichettati come #{live-sn}#, ma sotto forma di un
-semplice archivio cpio nominato #{live-sn.cpio.gz}#. Come sopra, all'avvio,
-i device a blocchi collegati al sistema vengono analizzati alla ricerca di
-una partizione o file così nominati. Un'interruzione di corrente durante
-l'esecuzione potrebbe portare ad una perdita di dati, per cui si può usare
-uno strumento che richiama #{live-snapshot --refresh}# per sincronizzare i
-cambiamenti importanti. Giacché non scrive continuamente sul dispositivo,
+durante l'esecuzione ma copiate all'avvio da un volume persistente al
+sistema (tmpfs) e risincronizzate al riavvio e spegnimento. Il volume deve
+essere etichettato come #{live-sn}# sotto forma di un semplice archivio cpio
+nominato #{live-sn.cpio.gz}#. Un'interruzione di corrente durante
+l'esecuzione potrebbe portare ad una perdita di dati, se son state fatte
+modifiche importanti si può usare usare #{live-snapshot --refresh}# tante
+volte quanto necessario.Giacché non scrive continuamente sul dispositivo,
 questo tipo di persistenza è il sistema più comodo e veloce per dispositivi
-basati su memoria flash.
+basati su memoria flash ma occupa tanta RAM quanta è la dimensione
+dell'istantanea decompressa.
 
 Esiste anche un'istantanea della /home con etichetta #{home-sn.*}#; funziona
 come la principale ma viene applicata solo ad /home.
 
-Attualmente le istantanee non possono gestire la cancellazione dei file, al
-contrario della persistenza completa e il mount automatico della home. 
+Attualmente le istantanee non possono gestire la cancellazione dei file.
 
 3~ Sottotesto persistente
 
 Se un utente avesse bisogno di archiviazioni multiple dello stesso tipo per
-differenti posti o per test, come #{live-rw-casa}# e #{live-rw-lavoro}#, il
+differenti posti o per test, come #{full-ov-casa}# e #{full-ov-lavoro}#, il
 parametro d'avvio #{persistent-subtext}# usato in congiunzione con
 #{persistent}# permetterà supporti persistenti multipli ma univoci. Un
 esempio potrebbe essere un utente che vuole usare una partizione etichettata

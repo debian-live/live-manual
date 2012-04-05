@@ -92,7 +92,7 @@ commit: tidy test
 install:
 	rm -rf $(CURDIR)/build/manual/manifest
 	rm -f $(CURDIR)/build/manual/index.html
-	rm f $(CURDIR)/build/manual/toc.html
+	rm -f $(CURDIR)/build/manual/toc.html
 
 	mkdir -p $(DESTDIR)/usr/share/doc/live-manual
 	cp -a COPYING $(CURDIR)/build/manual/* $(DESTDIR)/usr/share/doc/live-manual

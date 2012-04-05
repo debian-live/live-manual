@@ -1,5 +1,13 @@
 # Makefile
 
+## live-manual(7) - Documentation
+## Copyright (C) 2006-2012 Debian Live Project <debian-live@lists.debian.org>
+##
+## live-manual comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
+## This is free software, and you are welcome to redistribute it
+## under certain conditions; see COPYING for details.
+
+
 SHELL := sh -e
 
 LANGUAGES = en $(shell cd manual/po && ls)

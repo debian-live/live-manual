@@ -90,11 +90,12 @@ commit: tidy test
 	@echo "  * git push "
 
 install:
-		FROMDIR=$(CURDIR)/build/manual; \
-		TODIR=$(DESTDIR)/usr/share/doc/live-manual; \
-	cd $${FROMDIR} && rm -rf manifest index.html toc.html; \
-	mkdir -p $${TODIR}; \
-	cp -a $(CURDIR)/build/manual/* $(DESTDIR)/usr/share/doc/live-manual
+	rm -rf $(CURDIR)/build/manual/manifest
+	rm -f $(CURDIR)/build/manual/index.html
+	rm f $(CURDIR)/build/manual/toc.html
+
+	mkdir -p $(DESTDIR)/usr/share/doc/live-manual
+	cp -a COPYING $(CURDIR)/build/manual/* $(DESTDIR)/usr/share/doc/live-manual
 
 uninstall:
 	rm -rf $(DESTDIR)/usr/share/doc/live-manual

@@ -14,6 +14,13 @@ override_dh_auto_clean:
 
 	rm -rf debian/build
 
+override_dh_auto_install:
+	dh_auto_install
+
+	# Removing useless files
+	rm -f debian/tmp/usr/share/doc/live-manual/COPYING
+	rm -f debian/tmp/usr/share/doc/live-manual/_sisu/image/.empty
+
 override_dh_builddeb:
 	dh_builddeb -- -Zgzip -z9
 

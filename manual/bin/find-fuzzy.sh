@@ -21,8 +21,6 @@ find_fuzzy ()
 	echo "There are $(grep -w 'fuzzy' manual/po/$ANSWER/* | wc -l) fuzzy strings in your language."
 	echo ""
 
-	grep -w 'fuzzy' manual/po/$ANSWER/*
-
 	if [ "$(grep -w 'fuzzy' manual/po/$ANSWER/* | wc -l)" -eq "0" ]
 	then
 		echo "You may now proceed... please do:"
@@ -34,6 +32,8 @@ find_fuzzy ()
 
 		exit 0
 	else
+		grep -w 'fuzzy' manual/po/$ANSWER/*
+
 		echo ""
 		echo "Do you want to launch your text editor to start fixing them? [yes/no]"
 

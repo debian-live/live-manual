@@ -236,14 +236,14 @@ code{
 
 }code
 
-Quindi riavviare. Durante il primo avvio il contenuto di /home e
-/var/cache/apt saranno copiati nel volume persistente e da allora tutte le
-modifiche a queste directory risiederanno in modo persistente sul
-volume. C'è da considerare che tutti i path elencati nel file
-#{live.persist}# non possono contenere spazi o i caratteri speciali "." e
-".."; inoltre, né "/live" (o nessuna delle sue sottodirectory) né "/" può
-essere resa persistente tramite i mount personalizzati (per l'ultimo usare
-la tipologia #{full-ov}# descritta prima).
+Then we reboot. During the first boot the contents of #{/home}# and
+#{/var/cache/apt}# will be copied into the persistent volume, and from then
+on all changes to these directories will live in the persistent
+volume. Please note that any paths listed in the #{live.persist}# file
+cannot contain white spaces or the special #{.}# and #{..}# path
+components. Also, neither #{/live}# (or any of its sub-directories) nor
+#{/}# can be made persistent using custom mounts (for the latter, use the
+#{full-ov}# type persistence described above).
 
 Possono essere utilizzati svariati volumi di stratificazione personalizzati
 (con i rispettivi file #{live.persist}#) allo stesso tempo ma se questi

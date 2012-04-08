@@ -191,9 +191,8 @@ code{
 
 3~ Segunda revisión
 
-En esta revisión, vamos a limpiar desde la primera creación, agregar el
-paquete #{vlc}# a nuestra configuración, crear de nuevo, probar y enviar los
-cambios al git.
+In this revision, we're going to clean up from the first build, add the
+/{vlc}/ package to our configuration, rebuild, test and commit.
 
 El comando #{lb clean}# limpiará todos los ficheros generados en las
 primeras creaciones a excepción del caché, lo cual ahorra tener que volver a
@@ -207,7 +206,7 @@ code{
 
 }code
 
-Añadir ahora el paquete #{vlc}# a nuestra lista de paquetes local en
+Now append the /{vlc}/ package to our local package list in
 #{config/package-lists/my.list.chroot}#:
 
 code{
@@ -250,9 +249,9 @@ experiencias recogidas de los usuarios de Debian Live.
 
 *{Caso Práctico:}* Crear una imagen con live-build para arrancar directamente un servidor VNC.
 
-Hacer un directorio de creación y crear una configuración en esqueleto según
-la lista estándar-x11, incluyendo #{gdm3}#, #{metacity}# y #{xvnc4viewer}#,
-desactivando los paquetes recomendados para conseguir un sistema mínimo:
+Make a build directory and create a skeletal configuration in it built
+around the standard-x11 list, including /{gdm3}/, /{metacity}/ and
+/{xvnc4viewer}/, disabling recommends to make a minimal system:
 
 code{
 
@@ -264,10 +263,9 @@ code{
 
 }code
 
-Crear el directorio #{/etc/skel}# y poner un fichero #{.xsession}#
-personalizado para el usuario que por defecto ejecutará metacity e iniciará
-el xvncviewer, conectándo al puerto #{5901}# de un servidor en
-#{192.168.1.2}#:
+Create the directory #{/etc/skel}# and put a custom #{.xsession}# in it for
+the default user that will launch /{metacity}/ and start /{xvncviewer}/,
+connecting to port #{5901}# on a server at #{192.168.1.2}#:
 
 code{
 
@@ -297,16 +295,15 @@ Disfrutarlo.
 
 *{Caso Práctico:}* Crear una imagen estándar quitando algunos componentes para que quepa en un pendrive USB de 128M dejándo espacio libre para poder usarlo.
 
-Al optimizar una imagen para adaptarla al tamaño de algunos medios de
-almacenamiento, es necesario comprender el equilibrio que se está haciendo
-entre tamaño y funcionalidad. En este ejemplo, se recorta tanto sólo para
-dar cabida a material adicional dentro de un tamaño de 128M, pero sin hacer
-nada para destruir la integridad de los paquetes que contiene, tales como la
-depuración de las variantes locales a través del paquete #{localepurge}# u
-otro tipo de optimizaciones «intrusivas». Cabe destacar que no se debe usar
-#{--bootstrap-flavour minimal}# a menos de que realmente se sepa lo que se
-está haciendo, ya que al omitir paquetes de prioridad #{importante}# lo más
-probable es que se produzca un sistema roto.
+When optimizing an image to fit a certain media size, you need to understand
+the tradeoffs you are making between size and functionality. In this
+example, we trim only so much as to make room for additional material within
+a 128M media size, but without doing anything to destroy integrity of the
+packages contained within, such as the purging of locale data via the
+/{localepurge}/ package, or other such "intrusive" optimizations. Of
+particular note, you should not use #{--bootstrap-flavour minimal}# unless
+you really know what you're doing, as omitting priority #{important}#
+packages will most likely produce a broken live system.
 
 code{
 
@@ -328,20 +325,19 @@ anterior produjo una imagen de 78Mbytes. Esto se compara favorablemente en
 tamaño con la imagen de 166Mbytes producida por la configuración por defecto
 en el {Tutorial 1}#tutorial-1.
 
-El mayor ahorro de espacio aquí, en comparación con la creación de una
-imagen estándar en un sistema de arquitectura #{i386}# es seleccionar sólo
-la versión del kernel #{486}# en lugar de la de por defecto #{-k "486
-686-pae"}#. Dejar fuera los índices de APT con #{--apt-indices false}#
-también ahorra una cantidad importante de espacio, la desventaja es que es
-necesario hacer un #{apt-get update}# antes de usar apt en el sistema en
-vivo. Elegir la lista del paquete #{minimal}# deja fuera el gran paquete de
-#{locales}# y sus utilidades asociadas. Dejando los paquetes recomendados
-con #{--apt-recommends false}# se ahorra un poco de espacio adicional a
-costa de omitir algunos paquetes que de otro modo podría esperarse que
-estuvieran alli, tal como #{firmware-linux-free}# que puede ser necesario
-para el soporte de cierto hardware. Las opciones restantes recortan pequeñas
-cantidades adicionales de espacio. Es necesario decidir si vale la pena la
-funcionalidad que se sacrifica con cada optimización.
+The biggest space-saver here, compared to building a standard image on an
+#{i386}# architecture system, is to select only the #{486}# kernel flavour
+instead of the default #{-k "486 686-pae"}#. Leaving off APT's indices with
+#{--apt-indices false}# also saves a fair amount of space, the tradeoff
+being that you need to #{apt-get update}# before using apt in the live
+system. Choosing the #{minimal}# package list leaves out the large
+#{locales}# package and associated utilities. Dropping recommended packages
+with #{--apt-recommends false}# saves some additional space, at the expense
+of omitting some packages you might otherwise expect to be there, such as
+/{firmware-linux-free}/ which may be needed to support certain hardware. The
+remaining options shave off additional small amounts of space. It's up to
+you to decide if the functionality that is sacrificed with each optimization
+is worth the loss in functionality.
 
 2~ Un escritorio KDE con variante local e instalador
 
@@ -406,8 +402,7 @@ code{
 
 }code
 
-Tener en cuenta que se ha incluido el paquete #{debian-installer-launcher}#
-para lanzar el instalador desde el escritorio en vivo, y que también se ha
-especificado el kernel 486, ya que actualmente es necesario que el
-instalador y el kernel del sistema en vivo coincidan para que el lanzador
-funcione correctamente.
+Note that we have included the debian-installer-launcher package to launch
+the installer from the live desktop, and have also specified the 486 flavour
+kernel, as it is currently necessary to make the installer and live system
+kernels match for the launcher to work properly.

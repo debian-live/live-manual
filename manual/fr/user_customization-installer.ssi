@@ -17,10 +17,10 @@ Les trois principaux types de programme d'installation sont:
 
 *{Installateur Debian «Régulière»}*: C'est une image de Debian Live normale avec un noyau et initrd séparés qui (lorsqu'ils sont sélectionnés à partir du chargeur d'amorçage approprié) se lancen dans une instance d'installateur Debian standard, exactement comme si vous aviez téléchargé une image CD de Debian et la auriez démarrée. Les images contenant un système live et un installateur indépendant sont souvent appelés «images combinées".
 
-Sur ces images, Debian est installé par l'extraction et l'installation de
-paquets .deb à l'aide de #{debootstrap}# ou #{cdebootstrap}#, à partir des
-supports locaux ou à partir du réseau, résultant en un système Debian
-standard en cours d'installation sur le disque dur.
+On such images, Debian is installed by fetching and installing .deb packages
+using /{debootstrap}/ or /{cdebootstrap}/, from the local media or some
+network-based network, resulting in a standard Debian system being installed
+to the hard disk.
 
 Tout ce processus peut être préconfiguré et personnalisé dans un certain
 nombre de façons, voir les pages correspondantes dans le manuel de
@@ -30,20 +30,17 @@ le mettre à l'image et l'activer pour vous.
 
 *{Installateur Debian "Live" }*: C'est une image de Debian Live avec un noyau et initrd séparés qui (lorsqu'ils sont sélectionnés à partir du chargeur d'amorçage approprié) se lancen dans une instance de l'installateur Debian.
 
-L'installation se poursuit de manière identique à l'installation "régulière"
-décrite ci-dessus, mais à l'étape de l'installation des paquets, au lieu
-d'utiliser #{debootstrap}# pour aller chercher et installer des paquets,
-l'image du système de fichiers live est copiée vers la cible. Ce résultat
-est obtenu avec un udeb spécial appelé «live-installer».
+Installation will proceed in an identical fashion to the "Regular"
+installation described above, but at the actual package installation stage,
+instead of using /{debootstrap}/ to fetch and install packages, the live
+filesystem image is copied to the target. This is achieved with a special
+udeb called live-installer.
 
 Après cette étape, l'installateur Debian se poursuit normalement, en
 installant et configurant des éléments tels que chargeurs de démarrage et
 les utilisateurs locaux, etc
 
-Remarque: Pour soutenir les deux options: installateur normal et live dans
-le chargeur d'amorçage du même support live, vous devez désactiver
-«live-installer» en utilisant la préconfiguration
-#{live-installer/enable=false}#.
+*{Note:}* to support both normal and live installer entries in the bootloader of the same live media, you must disable live-installer by preseeding #{live-installer/enable=false}#.
 
 *{Installateur Debian "de bureau"}*: Indépendamment du type d'installateur Debian inclus, #{d-i}# peut être lancé à partir du Bureau en cliquant sur une icône. C'est facile à utiliser dans certaines situations. Afin de faire usage de cela, le paquet debian-installer-launcher doit être inclus.
 

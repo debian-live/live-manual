@@ -25,16 +25,15 @@ installate con il pinning, giusto per citare alcune possibilità.
 
 3~ Distribuzione, le aree di archivio e le modalità
 
-La distribuzione che viene scelta ha un ampio impatto su quali pacchetti
-siano disponibili per essere inclusi nell'immagine live. Specificare il nome
-in codice, il predefinito per la versione Wheezy di live-build è #{wheezy}#;
-qualsiasi attuale distribuzione mantenuta negli archivi Debian può essere
-qui specificata con il suo nome in codice. (Per ulteriori dettagli
-consultare il {Glossario}#terms). L'opzione #{--distribution}# non solo
-influenza la sorgente dei pacchetti nell'archivio, ma indica a
-#{live-build}# di comportarsi secondo la necessità per compilare ciascuna
-distribuzione supportata. Ad esempio se si vuole costruire un rilascio
-*{unstable}*, Sid, specificare:
+The distribution you choose has the broadest impact on which packages are
+available to include in your live image. Specify the codename, which
+defaults to #{wheezy}# for the Wheezy version of live-build. Any current
+distribution carried in the Debian archive may be specified by its codename
+here. (See {Terms}#terms for more details.) The #{--distribution}# option
+not only influences the source of packages within the archive, but also
+instructs live-build to behave as needed to build each supported
+distribution. For example, to build against the *{unstable}* release, Sid,
+specify:
 
 code{
 
@@ -304,10 +303,10 @@ code{
 
 }code
 
-I task principali disponibili nell'installatore Debian possono essere
-elencati nel sistema live con #{tasksel --list-tasks}#. I contenuti di ogni
-task, inclusi quelli non inclusi in questo elenco, possono essere esaminati
-con #{tasksel --task-packages}#.
+The primary tasks available in the Debian Installer can be listed with
+#{tasksel --list-tasks}# in the live system. The contents of any task,
+including the ones not included in this list, may be examined with #{tasksel
+--task-packages}#.
 
 3~desktop-and-language-tasks Task per desktop e lingua
 
@@ -481,11 +480,11 @@ code{
 
 }code
 
-Questo non influenzerà le voci in /etc/apt/sources.list, determina solo se
-/var/lib/apt contiene o meno i file degli indici. Il compromesso è che APT
-necessita di quegli indici per operar enel sistema live, perciò prima di
-eseguire #{apt-cache search}# o #{apt-get install}#, per esempio, l'utente
-deve usare prima #{apt-get update}# per crearli.
+This will not influence the entries in #{/etc/apt/sources.list}#, but merely
+whether #{/var/lib/apt}# contains the indices files or not. The tradeoff is
+that APT needs those indices in order to operate in the live system, so
+before performing #{apt-cache search}# or #{apt-get install}#, for instance,
+the user must #{apt-get update}# first to create those indices.
 
 In caso si trovi che l'installazione dei pacchetti raccomandati appesantisca
 troppo l'immagine, si può disabilitare l'opzione predefinita di APT con:

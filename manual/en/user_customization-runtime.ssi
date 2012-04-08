@@ -160,7 +160,7 @@ code{
 
 }code
 
-Then we reboot. During the first boot the contents of /home and /var/cache/apt will be copied into the persistent volume, and from then on all changes to these directories will live in the persistent volume. Please note that any paths listed in the #{live.persist}# file cannot contain white spaces or the special "." and ".." path components. Also, neither "/live" (or any of its sub-directories) nor "/" can be made persistent using custom mounts (for the latter, use the #{full-ov}# type persistence described above).
+Then we reboot. During the first boot the contents of #{/home}# and #{/var/cache/apt}# will be copied into the persistent volume, and from then on all changes to these directories will live in the persistent volume. Please note that any paths listed in the #{live.persist}# file cannot contain white spaces or the special #{.}# and #{..}# path components. Also, neither #{/live}# (or any of its sub-directories) nor #{/}# can be made persistent using custom mounts (for the latter, use the #{full-ov}# type persistence described above).
 
 Several different custom overlay volumes (with their own #{live.persist}# files) can be used at the same time, but if several volumes make the same directory persistent, only one of them will be used. If any two mounts are "nested" (i.e. one is a sub-directory of the other) the parent will be mounted before the child so no mount will be hidden by the other. Nested custom mounts are problematic if they are listed in the same #{live.persist}# file. See the live.persist(5) man page for how to handle that case if you really need it (hint: you usually don't).
 

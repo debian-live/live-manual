@@ -31,10 +31,10 @@ in codice, il predefinito per la versione Wheezy di live-build è #{wheezy}#;
 qualsiasi attuale distribuzione mantenuta negli archivi Debian può essere
 qui specificata con il suo nome in codice. (Per ulteriori dettagli
 consultare il {Glossario}#terms). L'opzione #{--distribution}# non solo
-influenza la sorgente dei pacchetti nell'archivio, ma indica a
-#{live-build}# di comportarsi secondo la necessità per compilare ciascuna
-distribuzione supportata. Ad esempio se si vuole costruire un rilascio
-*{unstable}*, Sid, specificare:
+influenza la sorgente dei pacchetti nell'archivio, ma indica a live-build di
+comportarsi secondo la necessità per compilare ciascuna distribuzione
+supportata. Ad esempio se si vuole costruire un rilascio *{unstable}*, Sid,
+specificare:
 
 code{
 
@@ -71,7 +71,7 @@ vicino per la migliore velocità di scaricamento. Ciascuna delle opzioni
 #{--mirror-*}# determina quale mirror della distribuzione è usato nei vari
 stadi della compilazione. Ricordando dalle {Fasi della
 creazione}#stages-of-the-build che la fase di *{avvio}* è quando il chroot è
-inizialmente popolato da debootstrap con un sistema minimale e quella di
+inizialmente popolato da /{debootstrap}/ con un sistema minimale e quella di
 *{chroot}* è quando viene creato il chroot usato per costruire il file
 system del sistema live. Perciò per queste fasi vengono usati i
 corrispondenti cambi di mirror, e in seguito, nella fase *{binaria}* vengono
@@ -481,11 +481,11 @@ code{
 
 }code
 
-Questo non influenzerà le voci in /etc/apt/sources.list, determina solo se
-/var/lib/apt contiene o meno i file degli indici. Il compromesso è che APT
-necessita di quegli indici per operar enel sistema live, perciò prima di
-eseguire #{apt-cache search}# o #{apt-get install}#, per esempio, l'utente
-deve usare prima #{apt-get update}# per crearli.
+Questo non influenzerà le voci in #{/etc/apt/sources.list}#, determina solo
+se /#{var/lib/apt}# contiene o meno i file degli indici. Il compromesso è
+che APT necessita di quegli indici per operar enel sistema live, perciò
+prima di eseguire #{apt-cache search}# o #{apt-get install}#, per esempio,
+l'utente deve usare prima #{apt-get update}# per crearli.
 
 In caso si trovi che l'installazione dei pacchetti raccomandati appesantisca
 troppo l'immagine, si può disabilitare l'opzione predefinita di APT con:

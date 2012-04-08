@@ -27,15 +27,16 @@ algunas posibilidades.
 
 3~ Distribución, áreas de archivo y modo
 
-The distribution you choose has the broadest impact on which packages are
-available to include in your live image. Specify the codename, which
-defaults to #{wheezy}# for the Wheezy version of live-build. Any current
-distribution carried in the Debian archive may be specified by its codename
-here. (See {Terms}#terms for more details.) The #{--distribution}# option
-not only influences the source of packages within the archive, but also
-instructs live-build to behave as needed to build each supported
-distribution. For example, to build against the *{unstable}* release, Sid,
-specify:
+La distribución seleccionada tiene gran impacto en qué paquetes están
+disponibles para incluir en la imagen. Se debe indicar el nombre en clave de
+la distribución, que por defecto es #{wheezy}# para la versión Wheezy de
+live-build. Se puede especificar cualquier nombre de distribución disponible
+en los repositorios Debian indicando su nombre en clave. (Para más detalles
+ver {Términos}#terms). La opción #{--distribution}# no solamente influencia
+la fuente de los paquetes dentro del archivo Debian, sino que instruye a
+/{live-build}/ a comportarse tal y como se necesita para construir cada una
+de las distribuciones. Por ejemplo, para construir contra la versión
+*{inestable}*, Sid, se debe indicar: 
 
 code{
 
@@ -75,8 +76,8 @@ de obtener la mejor velocidad de descarga. Cada una de las opciones
 diferentes etapas de creación. Si se recuerda de {Etapas de la
 creación}#stages-of-the-build, en la etapa de preinstalación (bootstrap) es
 cuando se crea el directorio chroot y se rellena con un sistema mínimo
-mediante  la herramienta debootstrap, y en la etapa *{chroot}* es cuando el
-directorio chroot es completado con los paquetes necesarios para crear el
+mediante  la herramienta /{debootstrap}/, y en la etapa *{chroot}* es cuando
+el directorio chroot es completado con los paquetes necesarios para crear el
 sistema de ficheros que será utilizado en el sistema en vivo. A cada una de
 estas etapas le corresponde su propia opción #{--mirror-*}#. Posteriormente,
 en la etapa *{binary}* se utilizarán las réplicas Debian indicadas en los
@@ -319,10 +320,11 @@ code{
 
 }code
 
-The primary tasks available in the Debian Installer can be listed with
-#{tasksel --list-tasks}# in the live system. The contents of any task,
-including the ones not included in this list, may be examined with #{tasksel
---task-packages}#.
+Una vez ha sido arrancado el sistema en vivo puede conocerse qué tareas
+primarias están disponibles en el Instalador de Debian mediante la orden
+#{tasksel --list-tasks}#. La lista de paquetes contenidos en cualquier tarea
+(incluidas aquellas que no aparecen en la lista de tareas primarias) puede
+obtenerse mediante la orden #{tasksel --task-packages}#.
 
 3~desktop-and-language-tasks Tareas de Escritorio e Idioma
 
@@ -506,11 +508,13 @@ code{
 
 }code
 
-This will not influence the entries in #{/etc/apt/sources.list}#, but merely
-whether #{/var/lib/apt}# contains the indices files or not. The tradeoff is
-that APT needs those indices in order to operate in the live system, so
-before performing #{apt-cache search}# or #{apt-get install}#, for instance,
-the user must #{apt-get update}# first to create those indices.
+Esto no modificará el comportamiento de las entradas definidas en
+#{/etc/apt/sources.list}#, sino que solo afecta a si exitirán o no ficheros
+de índice en el directorio #{/var/lib/apt}#. El compromiso viene de que APT
+necesita estos ficheros índices para funcionar en el sistema en vivo, así
+que, si no existen, el usuario deberá ejecutar la orden #{apt-get update}#
+para crear estos índices antes de poder ejecutar una orden del tipo
+#{apt-cache search}# o #{apt-get install}#.
 
 Si la instalación de los paquetes recomendados aumenta demasiado el tamaño
 de la imagen, se puede desactivar el valor por defecto de esta opción de APT

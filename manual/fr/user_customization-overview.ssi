@@ -19,8 +19,8 @@ démarrage par défaut et alors les utilisateurs peuvent normalement démarrer
 directement au système live sans spécifier aucune option lorsque toutes les
 valeurs par défaut sont appropriées. En particulier, l'argument #{lb
 --bootappend-live}# se compose de toutes les options de ligne de commande du
-kernel par défaut pour le système live, comme la persistance, claviers, ou
-de fuseau horaire. Voir {Personnalisation des paramètres régionaux et la
+noyau par défaut pour le système live, comme la persistance, claviers, ou de
+fuseau horaire. Voir {Personnalisation des paramètres régionaux et la
 langue}#customizing-locale-and-language, par exemple.
 
 Les options de configuration pendant la construction sont décrites dans les
@@ -44,22 +44,23 @@ dans la configuration, ainsi que tout autre matériel. La plupart de
 personnalisation de contenu se produit à ce stade. La dernière étape de la
 préparation de l'image live est l'étape *{binary}*, qui construit une image
 démarrable, en utilisant le contenu du répertoire chroot pour construire le
-système de fichiers racine pour le système Live, et dont l'installateur et
-tout autre matériel supplémentaire sur les supports objectif en dehors du
+système de fichiers racine pour le système Live, il comprend l'installateur
+et tout autre matériel supplémentaire sur les supports objectif en dehors du
 système de fichiers du système live. Après l'image live est construite, s'il
-est activé, l'archive source est construit dans l'étape *{source}*.
+est activé, le tarball des sources est construit dans l'étape *{source}*.
 
 Dans chacune de ces étapes, il ya une séquence particulière dans laquelle
-les commandes sont appliquées. Ce sont disposées de telle manière à assurer
-que les personnalisations peuvent être superposées de manière
-raisonnable. Par exemple, dans l'étape *{chroot}*, preseeds sont appliqués
-avant tous les paquets sont installés, les paquets sont installés avant tout
-les fichiers localement inclus ou les patches sont appliqués, et les hooks
-sont exécutés plus tard, après que tous les matériaux sont en place.
+les commandes sont appliquées. Ceux-ci sont disposées de telle manière à
+assurer que les personnalisations peuvent être superposées de manière
+raisonnable. Par exemple, dans l'étape *{chroot}*, les preseeds sont
+appliqués avant tous les paquets sont installés, les paquets sont installés
+avant tout les fichiers localement inclus ou les correctifs sont appliqués,
+et les hooks sont exécutés plus tard, après que tous les matériaux sont en
+place.
 
 2~ Supplément lb config avec des fichiers
 
-Bien que #{lb config}# crée une configuration du squelette dans le
+Bien que #{lb config}# crée une arborescence de configuration dans le
 répertoire config/, pour accomplir vos objectifs, vous pourriez avoir besoin
 de fournir des fichiers supplémentaires dans les sous-répertoires de
 config/. Selon l'endroit où les fichiers sont stockés dans la configuration,

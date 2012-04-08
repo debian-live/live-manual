@@ -2,11 +2,11 @@
 
 1~examples  Exemples
 
-Ce chapitre s'occupe d'exemples de constructions pour les cas d'utilisation
+Ce chapitre s'occupe d'exemples de constructions pour des cas d'utilisation
 spécifiques avec Debian Live. Si vous êtes nouveau avec la construction de
 vos propres images Debian Live, nous vous recommandons d'abord regarder les
-trois tutoriels en séquence, comme chacun apprend nouvelles techniques qui
-vous aideront à utiliser et à comprendre les exemples restants.
+trois tutoriels en séquence, parce que chacun enseigne nouvelles techniques
+qui vous aideront à utiliser et à comprendre les exemples restants.
 
 2~using-the-examples En utilisant les exemples
 
@@ -44,7 +44,7 @@ défaut contenant uniquement paquets de base (pas de Xorg) et quelques
 paquets Debian de soutien live, comme un premier exercice en utilisant
 live-build.
 
-Vous ne pouvez pas obtenir beaucoup plus simple que cela:
+Vous ne pouvez pas obtenir rien plus simple que cela:
 
 code{
 
@@ -53,7 +53,7 @@ code{
 }code
 
 Examinez le contenu du répertoire #{config/}# si vous le souhaitez. Vous
-verrez stockés ici une configuration du squelette, pour être personnalise
+verrez stockés ici une arborescence de configuration, pour être personnalise
 ou, dans ce cas, utiliser immédiatement pour construire une image par
 défaut.
 
@@ -70,7 +70,7 @@ En supposant que tout se passe bien, après un certain temps, le répertoire
 courant contient #{binary-hybrid.iso}#. Cette image ISO hybride peut être
 démarré directement dans une machine virtuelle comme décrit dans {Test d'une
 image ISO avec QEMU}#testing-iso-with-qemu et {Test d'une image ISO avec
-virtualbox-ose}#testing-iso-with-virtualbox, ou bien copiés sur un support
+virtualbox-ose}#testing-iso-with-virtualbox, ou bien copiée sur un support
 optique ou un périphérique USB comme décrit dans {Graver une image ISO sur
 un support physique}#burning-iso-image et {Copie d'un image ISO hybride sur
 une clé USB}#copying-iso-hybrid-to-usb, respectivement.
@@ -94,13 +94,13 @@ code{
 
 Notre choix de LXDE pour cet exemple reflète notre volonté de fournir un
 environnement de bureau minime, puisque le point de l'image est
-l'utilisation unique, nous avons à l'esprit, le navigateur web. On pourrait
-aller encore plus loin et offrir une configuration par défaut pour le
-navigateur web dans #{config/includes.chroot/etc/iceweasel/profile/}#, ou
+l'utilisation unique que nous avons à l'esprit, le navigateur web. On
+pourrait aller encore plus loin et offrir une configuration par défaut pour
+le navigateur web dans #{config/includes.chroot/etc/iceweasel/profile/}#, ou
 des paquets de soutien supplémentaires pour visualiser différents types de
 contenu web, mais nous laissons cela comme une exercice pour le lecteur.
 
-Construire l'image, encore une fois en tant que superutilisateur, tenir un
+Construire l'image, encore une fois en tant que superutilisateur, garder un
 journal comme dans {Tutoriel 1}#tutorial-1:
 
 code{
@@ -179,8 +179,8 @@ inclus dans #{auto/build}#.
 
 Une fois que vous avez testé l'image (comme dans {Tutoriel 1}#tutorial-1) et
 êtes satisfait avec son fonctionnement, il est temps pour initialiser notre
-référentiel #{git}#, ajoutant que les scripts d'auto que nous avons juste
-créé, et ensuite faire le premier commit: 
+dépôt #{git}#, ajoutant que les scripts d'auto que nous avons juste créé, et
+ensuite faire le premier commit: 
 
 code{
 
@@ -198,7 +198,7 @@ tester et faire le commit.
 
 La commande #{lb clean}# va nettoyer tous les fichiers générés par la
 construction précédente à l'exception du cache, ça évite d'avoir à
-re-télécharger les paquets. Cela garantit que le #{lb build}# postérieure
+re-télécharger les paquets. Cela garantit que la #{lb build}# suivante
 ré-exécutera toutes les étapes pour régénérer les fichiers de notre nouvelle
 configuration.
 
@@ -252,7 +252,7 @@ expériences recueillies des utilisateurs de Debian Live.
 
 *{Cas d'utilisation:}* Créer une image avec live-build pour démarrer directement à un serveur VNC.
 
-Faire un répertoire de construction et créer une configuration du squelette
+Faire un répertoire de construction et créer une arborescence de fichiers
 construit autour de la liste standard x11, avec /{gdm3}/, /{metacity}/ et
 /{xvnc4viewer}/, désactivant «recommends» pour faire un système minimal:
 
@@ -297,7 +297,7 @@ Amusez-vous bien!
 
 2~ Une image de base pour une clé USB de 128M
 
-*{Cas d'utilisation:}* Créer une image standard avec certains composants éliminés afin de s'adapter sur une clé USB avec 128M avec espace laissé pour l'utiliser à votre convenance.
+*{Cas d'utilisation:}* Créer une image standard avec certains composants éliminés afin de l'adapter sur une clé USB de 128M avec espace laissé pour l'utiliser à votre convenance.
 
 Lorsque l'optimisation d'une image adaptée à une dimension des certains
 supports, vous avez besoin de comprendre le compromis que vous faites entre
@@ -308,7 +308,7 @@ telles que la purge des données de localisation via le paquet
 /{localepurge}/, ou d'autres tels optimisations "intrusives". On notera en
 particulier, vous ne devriez pas utiliser #{--bootstrap-flavour minimal}#
 sauf si vous savez vraiment ce que vous faites, que l'omission de paquets de
-priorité #{importants}# produira probablement un système live cassé.
+priorité *{importante}* produira probablement un système live cassé.
 
 code{
 

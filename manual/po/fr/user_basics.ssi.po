@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 2.0.0\n"
-"POT-Creation-Date: 2012-04-08 14:30+0300\n"
+"POT-Creation-Date: 2012-04-08 16:54+0300\n"
 "PO-Revision-Date: 2012-03-17 20:08+0100\n"
 "Last-Translator: Carlos Zuferri «chals» <chals@altorricon.com>\n"
 "Language-Team:  <debian-live@lists.debian.org>\n"
@@ -194,7 +194,7 @@ msgstr ""
 "construction et l'utilisation d'une image #{net}# , qui est un peu plus "
 "compliqué en raison de la configuration requise sur le serveur. C'est un "
 "sujet un peu avancée pour tous ceux qui ne connaissent pas déjà le démarrage "
-"par le réseau, mais est inclus ici car une fois la configuration est "
+"sur le réseau, mais est inclus ici car une fois la configuration est "
 "terminée, il est un moyen très pratique pour tester et déployer des images "
 "pour le démarrage sur le réseau local sans le tracas des supports de l'image."
 
@@ -225,7 +225,7 @@ msgstr ""
 "Un système live signifie généralement un système d'exploitation démarré sur "
 "un ordinateur à partir d'un support amovible, tel qu'un CD-ROM ou une clé "
 "USB, ou d'un réseau prêt à l'emploi sans aucune installation sur le disque "
-"habituel(s), avec auto-configuration fait lors de l'exécution (voir {Termes}"
+"habituel, avec auto-configuration fait lors de l'exécution (voir {Termes}"
 "#terms)."
 
 #. type: Plain text
@@ -242,7 +242,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:16
 msgid "_* *{Linux kernel image}*, usually named #{vmlinuz*}#"
-msgstr "_* *{Linux kernel image}*, d'habitude appelé #{vmlinuz*}#"
+msgstr "_* *{Image du noyau Linux}*, d'habitude appelé #{vmlinuz*}#"
 
 #. type: Plain text
 #: en/user_basics.ssi:18
@@ -251,9 +251,9 @@ msgid ""
 "boot, containing modules possibly needed to mount the System image and some "
 "scripts to do it."
 msgstr ""
-"_* *{Initial RAM disk image (initrd)}*: Un disque virtuel RAM configuré pour "
-"le démarrage de Linux, contenant possiblement des modules nécessaires pour "
-"monter l'image du système et certains scripts pour le faire."
+"_* *{Image du RAM-disque initial (initrd)}*: Un disque virtuel RAM configuré "
+"pour le démarrage de Linux, contenant possiblement des modules nécessaires "
+"pour monter l'image du système et certains scripts pour le faire."
 
 #. type: Plain text
 #: en/user_basics.ssi:20
@@ -265,14 +265,14 @@ msgid ""
 "running system. However, all modifications will be lost upon shutdown unless "
 "optional persistence is used (see {Persistence}#persistence)."
 msgstr ""
-"_* *{System image}*: L'image du système de fichiers du système "
+"_* *{Image du système}*: L'image du système de fichiers du système "
 "d'exploitation. Habituellement, un système de fichiers SquashFS comprimé est "
 "utilisé pour réduire au minimum la taille de l'image Debian Live. Notez "
 "qu'il est en lecture seulement. Ainsi, lors du démarrage du système Debian "
 "Live nous allons utiliser un disque RAM et un mécanisme  \"union\" pour "
 "permettre l'écriture de fichiers dans le système en marche. Cependant, "
 "toutes les modifications seront perdues lors de l'arrêt à moins que l'option "
-"persistance est utilisée (voir {Persistance}#persistence)."
+"persistance soit utilisée (voir {Persistance}#persistence)."
 
 #. type: Plain text
 #: en/user_basics.ssi:22
@@ -287,16 +287,16 @@ msgid ""
 "ext2/3/4 and btrfs partitions, pxelinux for PXE netboot, GRUB for ext2/3/4 "
 "partitions, etc."
 msgstr ""
-"_* *{Bootloader}*: Un petit morceau de code conçu pour démarrer à partir du "
-"support choisi, il peut présenter un menu rapide ou permettre la sélection "
-"des options/configuration. Il charge le kernel Linux et son initrd pour "
-"fonctionner avec un système de fichiers associé. Différentes solutions "
+"_* *{Chargeur d'amorçage}*: Un petit morceau de code conçu pour démarrer à "
+"partir du support choisi, il peut présenter un menu rapide ou permettre la "
+"sélection des options/configurations. Il charge le noyau Linux et son initrd "
+"pour fonctionner avec un système de fichiers associé. Différentes solutions "
 "peuvent être utilisées, selon le support de destination et le format du "
 "système de fichiers contenant les composants mentionnés précédemment: "
 "isolinux pour démarrer à partir d'un CD ou DVD au format ISO9660, syslinux "
 "pour démarrer le disque dur ou clé USB à partir d'une partition VFAT, "
-"extlinux pour ext2/3/4 et partitions btrfs, pxelinux pour netboot PXE, GRUB "
-"pour ext2/3/4 partitions, etc."
+"extlinux pour partitions ext2/3/4 et btrfs, pxelinux pour netboot PXE, GRUB "
+"pour partitions ext2/3/4, etc."
 
 #. type: Plain text
 #: en/user_basics.ssi:24
@@ -306,9 +306,9 @@ msgid ""
 "media-dependant format (ISO9660 image, disk image, etc.)."
 msgstr ""
 "Vous pouvez utiliser live-build pour construire l'image du système à partir "
-"de vos spécifications, configurer un kernel Linux, son initrd, et un "
-"chargeur de démarrage pour les exécuter, tout dans un format en fonction du "
-"support (image ISO9660,  disque image, etc.)"
+"de vos spécifications, configurer un noyau Linux, son initrd, et un chargeur "
+"de démarrage pour les exécuter, tout dans un format en fonction du support "
+"(image ISO9660,  image disque, etc.)"
 
 #. type: Plain text
 #: en/user_basics.ssi:26
@@ -853,23 +853,15 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_basics.ssi:208
-msgid ""
-"Note: If you want to use the extra space with Windows, apparently that OS "
-"cannot normally access any partitions but the first. Some solutions to this "
-"problem have been discussed on our {mailing list}#contact, but it seems "
-"there are no easy answers."
-msgstr ""
-"Remarque: Si vous voulez utiliser l'espace supplémentaire avec Windows, "
-"apparemment cet OS ne peut normalement pas accéder à n'importe quel "
-"partition, mais la première. Certaines solutions à ce problème ont été "
-"discutés sur notre {liste de diffusion}#contact, mais il semble qu'il n'y a "
-"pas de réponses faciles."
+#, no-wrap
+msgid "*{Note:}* If you want to use the extra space with Windows, apparently that OS cannot normally access any partitions but the first. Some solutions to this problem have been discussed on our {mailing list}#contact, but it seems there are no easy answers.\n"
+msgstr "*{Remarque:}* Si vous voulez utiliser l'espace supplémentaire avec Windows, apparemment cet OS ne peut normalement pas accéder à n'importe quel partition, mais la première. Certaines solutions à ce problème ont été discutés sur notre {liste de diffusion}#contact, mais il semble qu'il n'y a pas de réponses faciles."
 
 #. type: Plain text
 #: en/user_basics.ssi:210
 #, no-wrap
 msgid "*{Remember: Every time you install a new binary.img on the stick, all data on the stick will be lost because the partition table is overwritten by the contents of the image, so back up your extra partition first to restore again after updating the live image.}*\n"
-msgstr "*{Rappelez-vous: Chaque fois que vous installez une nouvelle binary.img sur la clé, toutes les données sur la clé seront perdues parce que la table de partition est écrasé par le contenu de l'image, vous devez sauvegarder votre partition supplémentaire d'abord la restaurer à nouveau après la mise à jour du live image.}*\n"
+msgstr "*{Rappelez-vous: Chaque fois que vous installez une nouvelle binary.img sur la clé, toutes les données sur la clé seront perdues parce que la table de partition est écrasé par le contenu de l'image, vous devez sauvegarder votre partition supplémentaire d'abord la restaurer à nouveau après la mise à jour de l'image live.}*\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:212
@@ -891,7 +883,7 @@ msgstr ""
 #: en/user_basics.ssi:216
 #, no-wrap
 msgid "*{Note:}* if you performed any previous examples, you will need to clean up your working directory with the #{lb clean}# command:\n"
-msgstr "*{Remarque:}* Si vous avez réalisé tous les exemples précédents, vous aurez besoin de nettoyer votre répertoire de travail avec la commande #{lb clean}#:"
+msgstr "*{Remarque:}* Si vous avez réalisé quelque des exemples précédents, vous aurez besoin de nettoyer votre répertoire de travail avec la commande #{lb clean}#:"
 
 #. type: Plain text
 #: en/user_basics.ssi:224
@@ -922,7 +914,7 @@ msgstr ""
 "pas l'image du système de fichiers pour le client, afin que les fichiers "
 "doivent être servis via NFS. Les options #{--net-root-path}# et #{--net-root-"
 "server}# spécifien l'emplacement et le serveur, respectivement, du serveur "
-"NFS sur lequel l'image système de fichiers sera situé au moment du "
+"NFS sur lequel l'image du système de fichiers sera situé au moment du "
 "démarrage. Assurez-vous que ce sont mis à des valeurs appropriées pour votre "
 "réseau et serveur."
 
@@ -954,7 +946,7 @@ msgid ""
 msgstr ""
 "Par exemple, si vous décompressez le fichier généré #{binary-net.tar.gz}# "
 "dans le répertoire #{/srv/debian-live}#, vous trouverez l'image du système "
-"de fichiers dans #{live/filesystem.squashfs}# et le kernel, initrd et le "
+"de fichiers dans #{live/filesystem.squashfs}# et le noyau, initrd et le "
 "chargeur de démarrage pxelinux dans #{tftpboot/debian-live/i386}#."
 
 #. type: Plain text
@@ -1045,7 +1037,7 @@ msgstr "3~ Serveur TFTP"
 #: en/user_basics.ssi:278
 msgid "This serves the kernel and initial ramdisk to the system at run time."
 msgstr ""
-"Cela sert le kernel et le ramdisk initial pour le système au moment de "
+"Cela sert le noyau et le ramdisk initial pour le système au moment de "
 "l'exécution."
 
 #. type: Plain text
@@ -1083,7 +1075,7 @@ msgid ""
 "its initrd, it will try to mount the Live filesystem image through a NFS "
 "server."
 msgstr ""
-"Une fois l'ordinateur hôte a téléchargé et démarré un kernel Linux et chargé "
+"Une fois l'ordinateur hôte a téléchargé et démarré un noyau Linux et chargé "
 "son initrd, il va essayer de monter l'image du système de fichiers live via "
 "un serveur NFS."
 
@@ -1130,12 +1122,13 @@ msgid ""
 "debian.org/manual/en.i386/ch04s05.html. They might help, as their processes "
 "are very similar."
 msgstr ""
-"Mise en place ces trois services peut être un peu délicat. Vous pourriez "
-"avoir besoin de patience pour obtenir que tous travaillent ensemble. Pour "
-"plus d'informations, consultez le wiki syslinux à http://syslinux.zytor.com/"
-"wiki/index.php/PXELINUX ou la section Debian Installer Manual's TFTP Net "
-"Booting à http://d-i.alioth.debian.org/manual/en.i386/ch04s05.html. Ils "
-"pourraient aider parce que leurs processus sont très semblables."
+"La configuation de ces trois services peut être un peu dificile. Vous "
+"pourriez avoir besoin de patience pour obtenir que tous travaillent "
+"ensemble. Pour plus d'informations, consultez le wiki syslinux à http://"
+"syslinux.zytor.com/wiki/index.php/PXELINUX ou la section Debian Installer "
+"Manual's TFTP Net Booting à http://d-i.alioth.debian.org/manual/en.i386/"
+"ch04s05.html. Ils pourraient aider parce que leurs processus sont très "
+"semblables."
 
 #. type: Plain text
 #: en/user_basics.ssi:314

@@ -171,7 +171,7 @@ _* una fichero imagen/archivo situado en el sistema raiz de cualquier
 sistema de ficheros que pueda ser leido (incluso una partición NTFS de otro
 sistema operativo), identificado por su nombre de fichero. En este caso el
 nombre del fichero debe contener el nombre el sistema de ficheros como
-extensión, p.ej. "<label>.ext3".
+extensión, p.ej. "<label>.ext4".
 
 Es posible restringir qué tipos de volúmenes persistentes se pueden usar
 especificando ciertos parámetros de arranque descritos en la página del
@@ -193,12 +193,12 @@ escritura en lugar de usar un tmpfs (sistema de ficheros temporal) para
 guardar los cambios realizados en los medios de sólo lectura (con el sistema
 copiar-al-escribir o COW «copy-on-write» N. del T.). Para utilizar este tipo
 de persistencia la etiqueta del volumen debe ser #{full-ov}#. Esta podría
-ser, por ejemplo, una partición ext2 o un disco duro o una llave usb creada
+ser, por ejemplo, una partición ext4 o un disco duro o una llave usb creada
 con. p.ej:
 
 code{
 
- # mkfs.ext2 -L full-ov /dev/sdb1
+ # mkfs.ext4 -L full-ov /dev/sdb1
 
 }code
 
@@ -213,13 +213,13 @@ code{
 
 }code
 
-Un ejemplo de cómo crear un fichero imagen basado en ext2 usando
+Un ejemplo de cómo crear un fichero imagen basado en ext4 usando
 persistencia total.
 
 code{
 
  $ dd if=/dev/null of=full-ov bs=1G seek=1 # for a 1GB sized image file
- $ /sbin/mkfs.ext2 -F full-ov
+ $ /sbin/mkfs.ext4 -F full-ov
 
 }code
 
@@ -236,13 +236,13 @@ hace persistentes y también de que manera.
 En la página de manual de live.persist(5) se explica en detalle cómo se
 configura el montaje de las capas, pero un sencillo ejemplo es suficiente
 para la mayoría de los casos. Supongamos que queremos crear nuestro
-directorio home y APT cache persistentes en un sistema de ficheros ext3 en
+directorio home y APT cache persistentes en un sistema de ficheros ext4 en
 la partición /dev/sdb1:
 
 code{
 
- $ mkfs.ext3 -L custom-ov /dev/sdb1
- $ mount -t ext3 /dev/sdb1 /mnt
+ $ mkfs.ext4 -L custom-ov /dev/sdb1
+ $ mount -t ext4 /dev/sdb1 /mnt
  $ echo "/home" >> /mnt/live.persist
  $ echo "/var/cache/apt" >> /mnt/live.persist
 

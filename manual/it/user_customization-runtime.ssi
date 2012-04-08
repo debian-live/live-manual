@@ -160,7 +160,7 @@ _* un file immagine o archivio situato nella directory radice di un
 qualsiasi filesystem leggibile (anche una partizione NTFS di un sistema
 estraneo), identificato dal nome del file. In questo caso il nome del file
 deve contenere anche il tipo di filesystem come estensione, ad esempio
-"<label>.ext3".
+"<label>.ext4".
 
 È possibile limitare i tipi di volume persistenti da usare specificando
 certi parametri di boot descritti nella manpage di live-boot(7). Le "label
@@ -180,12 +180,12 @@ Con "persistenza completa" si intende l'uso di un volume persistente invece
 di un filesystem temporaneo (tmpfs) per salvare le modifiche al supporto in
 sola lettura (con il sistema COW, copy-on-write). Per questo tipo di
 persistenza la label deve essere #{full-ov}#, che potrebbe essere una
-partizione di tipo ext2 su un hard disk o una penna USB creata ad esempio
+partizione di tipo ext4 su un hard disk o una penna USB creata ad esempio
 con:
 
 code{
 
- # mkfs.ext2 -L full-ov /dev/sdb1
+ # mkfs.ext4 -L full-ov /dev/sdb1
 
 }code
 
@@ -201,13 +201,13 @@ code{
 
 }code
 
-Ecco un esempio di come creare un file immagine ext2 da utilizzare per la
+Ecco un esempio di come creare un file immagine ext4 da utilizzare per la
 persistenza completa:
 
 code{
 
  $ dd if=/dev/null of=full-ov bs=1G seek=1 # per un file immagine da 1GB
- $ /sbin/mkfs.ext2 -F full-ov
+ $ /sbin/mkfs.ext4 -F full-ov
 
 }code
 
@@ -225,12 +225,12 @@ Nella manpage di live.persist(5) è descritto dettagliatamente come è
 configurato il mount degli strati personalizzati, ma un semplice esempio
 dovrebbe essere sufficiente per la maggior parte degli usi. Supponendo di
 voler creare la directory home e quella della cache di APT in modo
-persistente in un filesystem ext3 sulla partizione /dev/sdb1:
+persistente in un filesystem ext4 sulla partizione /dev/sdb1:
 
 code{
 
- $ mkfs.ext3 -L custom-ov /dev/sdb1
- $ mount -t ext3 /dev/sdb1 /mnt
+ $ mkfs.ext4 -L custom-ov /dev/sdb1
+ $ mount -t ext4 /dev/sdb1 /mnt
  $ echo "/home" >> /mnt/live.persist
  $ echo "/var/cache/apt" >> /mnt/live.persist
 

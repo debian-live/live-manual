@@ -170,7 +170,7 @@ _* un fichier image/archive situé sur la racine de tout système de fichiers
 en lecture (même une partition NTFS d'un système d'exploitation étranger),
 identifié par son nom de fichier. Dans ce cas, le nom du fichier doit
 également utiliser le système de fichiers contenant l'extension de fichier,
-par exemple, "<label>.ext3".
+par exemple, "<label>.ext4".
 
 Il est possible de limiter les types de volumes persistants à utiliser en
 spécifiant certains paramètres de démarrage décrits dans la page de manuel
@@ -191,12 +191,12 @@ Par «persistance pleine» on entend que au lieu d'utiliser un tmpfs pour le
 stockage des modifications au support en lecture seule (avec le système
 copy-on-write, COW) une partition accessible en écriture est utilisée. Pour
 ce type de persistance le nom du volume doit être #{full-ov}#. Cela
-pourrait, par exemple, être une partition ext2 sur un disque dur ou sur une
+pourrait, par exemple, être une partition ext4 sur un disque dur ou sur une
 clé usb créée avec, par exemple:
 
 code{
 
- # mkfs.ext2 -L full-ov /dev/sdb1
+ # mkfs.ext4 -L full-ov /dev/sdb1
 
 }code
 
@@ -212,13 +212,13 @@ code{
 
 }code
 
-Voici un exemple de comment créer un fichier image ext2 utilisé pour la
+Voici un exemple de comment créer un fichier image ext4 utilisé pour la
 persistance pleine:
 
 code{
 
  $ dd if=/dev/null of=full-ov bs=1G seek=1 # for a 1GB sized image file
- $ /sbin/mkfs.ext2 -F full-ov
+ $ /sbin/mkfs.ext4 -F full-ov
 
 }code
 
@@ -236,12 +236,12 @@ Comment on configure monter des couches personnalisés est décrit en détail
 dans la page de manuel live.persist(5), mais un simple exemple devrait être
 suffisant pour la plupart des utilisations. Imaginons que nous voulons faire
 notre répertoire personnel et APT cache persistants dans un système de
-fichiers ext3 sur la partition /dev/sdb1:
+fichiers ext4 sur la partition /dev/sdb1:
 
 code{
 
- $ mkfs.ext3 -L custom-ov /dev/sdb1
- $ mount -t ext3 /dev/sdb1 /mnt
+ $ mkfs.ext4 -L custom-ov /dev/sdb1
+ $ mount -t ext4 /dev/sdb1 /mnt
  $ echo "/home" >> /mnt/live.persist
  $ echo "/var/cache/apt" >> /mnt/live.persist
 

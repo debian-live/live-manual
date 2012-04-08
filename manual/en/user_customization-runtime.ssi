@@ -102,7 +102,7 @@ _* a partition, identified by its GPT name.
 
 _* a filesystem, identified by its filesystem label.
 
-_* an image/archive file located on the root of any readable filesystem (even an NTFS partition of a foreign OS), identified by its file name. In this case the file name must also use the containing filesystem as the file extension, e.g. "<label>.ext3".
+_* an image/archive file located on the root of any readable filesystem (even an NTFS partition of a foreign OS), identified by its file name. In this case the file name must also use the containing filesystem as the file extension, e.g. "<label>.ext4".
 
 It is possible to restrict which types of persistent volumes to use by specifying certain boot parameters described in the live-boot(7) man page. The "identifying labels" referred to above can be any of the following:
 
@@ -116,11 +116,11 @@ _* #{home-sn}# for /home snapshots.
 
 3~ Full persistent overlays
 
-By 'full persistence' it is meant that instead of using a tmpfs for storing modifications to the read-only media (with the copy-on-write, COW, system) a persistent volume is used. For this type of persistence the volume label must be #{full-ov}#. This could, for instance, be an ext2 partition on a hard disk or on a usb key created with, e.g.:
+By 'full persistence' it is meant that instead of using a tmpfs for storing modifications to the read-only media (with the copy-on-write, COW, system) a persistent volume is used. For this type of persistence the volume label must be #{full-ov}#. This could, for instance, be an ext4 partition on a hard disk or on a usb key created with, e.g.:
 
 code{
 
- # mkfs.ext2 -L full-ov /dev/sdb1
+ # mkfs.ext4 -L full-ov /dev/sdb1
 
 }code
 
@@ -134,12 +134,12 @@ code{
 
 }code
 
-Here's an example of how to create an ext2-based image file used for full persistence:
+Here's an example of how to create an ext4-based image file used for full persistence:
 
 code{
 
  $ dd if=/dev/null of=full-ov bs=1G seek=1 # for a 1GB sized image file
- $ /sbin/mkfs.ext2 -F full-ov
+ $ /sbin/mkfs.ext4 -F full-ov
 
 }code
 
@@ -149,12 +149,12 @@ Then copy the #{full-ov}# file to the root of a writable partition and reboot.
 
 A volume with the label #{custom-ov}# can be configured to make arbitrary directories persistent. The file #{live.persist}#, located on the volume's filesystem root, controls which directories it makes persistent, and in which way.
 
-How custom overlay mounts are configured is described in full detail in the live.persist(5) man page, but a simple example should be sufficient for most uses. Let's say we want to make our home directory and APT cache persistent in an ext3 filesystem on the /dev/sdb1 partition:
+How custom overlay mounts are configured is described in full detail in the live.persist(5) man page, but a simple example should be sufficient for most uses. Let's say we want to make our home directory and APT cache persistent in an ext4 filesystem on the /dev/sdb1 partition:
 
 code{
 
- $ mkfs.ext3 -L custom-ov /dev/sdb1
- $ mount -t ext3 /dev/sdb1 /mnt
+ $ mkfs.ext4 -L custom-ov /dev/sdb1
+ $ mount -t ext4 /dev/sdb1 /mnt
  $ echo "/home" >> /mnt/live.persist
  $ echo "/var/cache/apt" >> /mnt/live.persist
 

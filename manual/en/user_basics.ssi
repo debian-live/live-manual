@@ -80,7 +80,7 @@ code{
 
 The first time you boot your live media, whether CD, DVD, USB key, or PXE boot, some setup in your computer's BIOS may be needed first. Since BIOSes vary greatly in features and key bindings, we cannot get into the topic in depth here. Some BIOSes provide a key to bring up a menu of boot devices at boot time, which is the easiest way if it is available on your system. Otherwise, you need to enter the BIOS configuration menu and change the boot order to place the boot device for the live system before your normal boot device.
 
-Once you've booted the media, you are presented with a boot menu. If you just press enter here, the system will boot using the default entry, #{Live}# and default options. For more information about boot options, see the "help" entry in the menu and also the #{live-boot}# and #{live-config}# man pages found within the live system.
+Once you've booted the media, you are presented with a boot menu. If you just press enter here, the system will boot using the default entry, #{Live}# and default options. For more information about boot options, see the "help" entry in the menu and also the live-boot and live-config man pages found within the live system.
 
 Assuming you've selected #{Live}# and booted a default desktop live image, after the boot messages scroll by, you should be automatically logged into the #{user}# account and see a desktop, ready to use. If you've booted a console-only image, such as #{standard}# or #{rescue}# flavour prebuilt images, you should be automatically logged in on the console to the #{user}# account and see a shell prompt, ready to use.
 
@@ -100,9 +100,9 @@ Provided you can work within these constraints, survey the available VM software
 
 3~testing-iso-with-qemu Testing an ISO image with QEMU
 
-The most versatile VM in Debian is QEMU. If your processor has hardware support for virtualization, use the #{qemu-kvm}# package; the #{qemu-kvm}# package description briefly lists the requirements.
+The most versatile VM in Debian is QEMU. If your processor has hardware support for virtualization, use the /{qemu-kvm}/ package; the /{qemu-kvm}/ package description briefly lists the requirements.
 
-First, install #{qemu-kvm}# if your processor supports it. If not, install #{qemu}#, in which case the program name is #{qemu}# instead of #{kvm}# in the following examples. The #{qemu-utils}# package is also valuable for creating virtual disk images with #{qemu-img}#.
+First, install /{qemu-kvm}/ if your processor supports it. If not, install /{qemu}/, in which case the program name is /{qemu}/ instead of #{kvm}# in the following examples. The /{qemu-utils}/ package is also valuable for creating virtual disk images with #{qemu-img}#.
 
 code{
 
@@ -188,7 +188,7 @@ code{
 
 3~using-usb-extra-space Using the space left on a USB stick
 
-To use the remaining free space after copying #{binary.img}# to a USB stick, use a partitioning tool such as #{gparted}# or #{parted}# to create a new partition on the stick. The first partition will be used by the Debian Live system.
+To use the remaining free space after copying #{binary.img}# to a USB stick, use a partitioning tool such as /{gparted}/ or /{parted}/ to create a new partition on the stick. The first partition will be used by the Debian Live system.
 
 code{
 
@@ -290,7 +290,7 @@ and fill in the new tftp server directory when being asked about it.
 
 Once the guest computer has downloaded and booted a Linux kernel and loaded its initrd, it will try to mount the Live filesystem image through a NFS server.
 
-You need to install the #{nfs-kernel-server}# package.
+You need to install the /{nfs-kernel-server}/ package.
 
 Then, make the filesystem image available through NFS by adding a line like the following to #{/etc/exports}#:
 
@@ -318,7 +318,7 @@ To make our life easier, we can use virtualization. There are two solutions.
 
 3~ Qemu
 
-_* Install #{qemu}#, #{bridge-utils}#, #{sudo}#.
+_* Install /{qemu}/, /{bridge-utils}/, /{sudo}/.
 
 Edit #{/etc/qemu-ifup}#:
 

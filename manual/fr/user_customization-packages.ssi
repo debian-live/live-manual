@@ -14,11 +14,11 @@ miroir de distribution proche. Vous pouvez également ajouter vos propres
 dépôts pour les backports, paquets expérimentaux ou personnalisés, ou
 inclure des paquets directement en tant que fichiers. Vous pouvez définir
 vos propres listes de paquets à inclure, utiliser des listes prédéfinies de
-live-build, utiliser tâches #{tasksel}#, ou une combinaison des
+live-build, utiliser tâches /{tasksel}/, ou une combinaison des
 trois. Enfin, un certain nombre d'options donnent un certain contrôle sur
-apt, ou si vous préférez, aptitude, au moment de la construction quand les
-paquets sont installés. Vous pouvez trouver ces très pratique si vous
-utilisez un proxy, vous voulez désactiver l'installation des paquets
+/{apt}/, ou si vous préférez, /{aptitude}/, au moment de la construction
+quand les paquets sont installés. Vous pouvez trouver ces très pratique si
+vous utilisez un proxy, vous voulez désactiver l'installation des paquets
 recommandés pour économiser l'espace, ou avez besoin de contrôler quels
 versions des paquets sont installés via APT pinning, pour n'en nommer
 quelques possibilités.
@@ -29,7 +29,7 @@ quelques possibilités.
 
 La distribution que vous choisissez a le plus large impact sur les paquets
 qui sont disponibles à inclure dans votre image live. Indiquez le nom de
-code, qui est par défaut #{wheezy}# pour la version de live-build dans
+code, qui est par défaut wheezy pour la version de live-build dans
 wheezy. Toute distribution actuelle dans l'archive Debian peut être spécifié
 par son nom de code ici. (Voir {Termes}#terms pour plus de détails.)
 L'option #{--distribution}# non seulement influence la source des paquets
@@ -230,7 +230,7 @@ des «includes». Reportez-vous à ceux-ci dans le répertoire
 savoir comment écrire vos propres listes.
 
 Par exemple, pour faire une liste qui comprend la liste prédéfinie
-#{gnome}#, plus iceweasel, créer #{config/package-lists/my.list.chroot}#
+#{gnome}#, plus /{iceweasel}/, créer #{config/package-lists/my.list.chroot}#
 avec le contenu suivant:
 
 code{
@@ -262,7 +262,7 @@ code{
 }code
 
 Vous pouvez tester pour un certain nombre de valeurs, par exemple pour
-installer #{memtest86+}# si #{--architectures i386}# ou #{--architectures
+installer /{memtest86+}/ si #{--architectures i386}# ou #{--architectures
 amd64}# est spécifié:
 
 code{
@@ -460,7 +460,7 @@ options commençant par #{apt}# dans la page de manuel de #{lb_config}#.
 
 3~choosing-apt-or-aptitude Choisir apt ou aptitude
 
-Vous pouvez choisir d'utiliser soit #{apt}# ou #{aptitude}#  Quel logiciel
+Vous pouvez choisir d'utiliser soit /{apt}/ ou /{aptitude}/  Quel logiciel
 est utilisé est régi par l'argument #{--apt}# de #{lb config}#. Choisissez
 la méthode du comportement préférée pour l'installation de paquets, la
 différence notable étant la manière dont les paquets manquants sont
@@ -580,9 +580,9 @@ vous ne voulez pas un paquet qui est recommandé par un autre
 paquet. Supposons que vous construisez une image LXDE en utilisant l'option
 #{--package-lists lxde}# mais ne veulez pas que l'utilisateur soit invité à
 stocker les mots de passe wifi dans le trousseau de clés. Cette liste
-comprend #{gdm}#, que dépend de #{gksu}#, que à son tour recommends
-#{gnome-keyring}#. Donc, vous voulez omettre le paquet recommandé
-#{gnome-keyring}#. Cela peut être fait en ajoutant la strophe suivante à
+comprend /{gdm}/, que dépend de /{gksu}/, que à son tour recommande
+/{gnome-keyring}/. Donc, vous voulez omettre le paquet recommandé
+/{gnome-keyring}/. Cela peut être fait en ajoutant la strophe suivante à
 #{config/chroot_apt/preferences}#:
 
 code{

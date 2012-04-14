@@ -14,14 +14,14 @@ velocidad de descarga de paquetes, se debería elegir el repositorio Debian
 más cercano. Se pueden añadir repositorios para backports, experimentales,
 paquetes personalizados o incluir ficheros de paquetes directamente. Se
 pueden definir listas de paquetes personalizadas, utilizar listas
-predefinidas en live-build, seleccionar tareas de #{tasksel}# o una
+predefinidas en live-build, seleccionar tareas de /{tasksel}/ o una
 combinación de los tres métodos. Por último existen varias opciones que dan
 algún control sobre cuando son instalados los paquetes por la herramienta
-apt o la herramienta aptitude, según sea la elegida. Estas opciones pueden
-ser útiles si se utiliza un proxy, se quiere desactivar la instalación de
-paquetes recomendados para ahorrar espacio o se necesita controlar las
-versiones de los paquetes a instalar mediante APT pinning, por nombrar
-algunas posibilidades.
+/{apt}/ o la herramienta /{aptitude}/, según sea la elegida. Estas opciones
+pueden ser útiles si se utiliza un proxy, se quiere desactivar la
+instalación de paquetes recomendados para ahorrar espacio o se necesita
+controlar las versiones de los paquetes a instalar mediante APT pinning, por
+nombrar algunas posibilidades.
 
 2~ Origen de los paquetes
 
@@ -29,13 +29,13 @@ algunas posibilidades.
 
 La distribución seleccionada tiene gran impacto en qué paquetes están
 disponibles para incluir en la imagen. Se debe indicar el nombre en clave de
-la distribución, que por defecto es #{wheezy}# para la versión wheezy de
+la distribución, que por defecto es wheezy para la versión wheezy de
 live-build. Se puede especificar cualquier nombre de distribución disponible
 en los repositorios Debian indicando su nombre en clave. (Para más detalles
 ver {Términos}#terms). La opción #{--distribution}# no solamente influencia
 la fuente de los paquetes dentro del archivo Debian, sino que instruye a
-/{live-build}/ a comportarse tal y como se necesita para construir cada una
-de las distribuciones. Por ejemplo, para construir contra la versión
+live-build a comportarse tal y como se necesita para construir cada una de
+las distribuciones. Por ejemplo, para construir contra la versión
 *{inestable}*, sid, se debe indicar: 
 
 code{
@@ -235,9 +235,9 @@ las directivas «includes». Los ficheros existentes en el directorio
 como escribir listas de paquetes.
 
 Por ejemplo, para hacer una lista de paquetes que incluya la lista de
-paquetes predefinida #{gnome}# y añadir el paquete iceweasel se puede crear
-un fichero llamado #{config/package-lists/my.list.chroot}# con el siguiente
-contenido:
+paquetes predefinida #{gnome}# y añadir el paquete /{iceweasel}/ se puede
+crear un fichero llamado #{config/package-lists/my.list.chroot}# con el
+siguiente contenido:
 
 code{
 
@@ -269,7 +269,7 @@ code{
 }code
 
 En la expresión condicional pueden utilizarse varios valores. Por ejemplo
-para instalar el paquete #{memtest86+}# si la arquitectura es i386
+para instalar el paquete /{memtest86+}/ si la arquitectura es i386
 (#{--architectures i386}#) o es amd64 (#{--architectures amd64}#) se puede
 especificar:
 
@@ -470,7 +470,7 @@ aquellas opciones que comienzan con #{apt}#.
 3~choosing-apt-or-aptitude Utilizar apt o aptitude
 
 Se puede seleccionar qué herramienta se utilizará para instalar paquetes,
-#{apt}# o #{aptitude}#, en el momento de crear la imagen mediante la opción
+/{apt}/ o /{aptitude}/, en el momento de crear la imagen mediante la opción
 #{--apt}# de #{lb config}#. Esta selección definirá el comportamiento
 preferido en la instalación de paquetes, siendo la mayor diferencia la
 manera de tratar los paquetes no disponibles.
@@ -591,9 +591,9 @@ ser el caso de que no se desee que un paquete recomendado por otro sea
 instalado al instalar el primero. Supongamos que se está creando una imagen
 LXDE mediante la opción #{--package-lists lxde}#, pero no se desea preguntar
 al usuario si desea almacenar las claves wifi en el almacen de claves. La
-lista lxde incluye #{gdm}#, la cual depende de #{gksu}# que a su vez
-recomienda #{gnome-keyring}#. Así que el objetivo es omitir la instalación
-del paquete #{gnome-keyring}#, que puede conseguirse añadiendo un fichero
+lista lxde incluye /{gdm}/, la cual depende de /{gksu}/ que a su vez
+recomienda /{gnome-keyring}/. Así que el objetivo es omitir la instalación
+del paquete /{gnome-keyring}/, que puede conseguirse añadiendo un fichero
 con el siguiente contenido a #{config/chroot_apt/preferences}#:
 
 code{

@@ -13,13 +13,14 @@ velocità di scaricamento, dovreste usare un mirror a voi vicino. Si possono
 inoltre aggiungere i propri repository per pacchetti di backport,
 sperimentali o personalizzati, o aggiungere i pacchetti direttamente come
 file. È possibile definire una propria lista di pacchetti da includere,
-usarne una predefinita di live-build, usare task di #{tasksel}#, o una
+usarne una predefinita di live-build, usare task di /{tasksel}/, o una
 combinazione di tutti e tre. Infine una serie di opzioni fornisce un certo
-controllo su apt, o aptitude se si preferisce, in fase di compilazione
-quando i pacchetti sono installati. Ciò può tornare utile se si usa un
-proxy, se si vuole disabilitare l'installazione dei pacchetti raccomandati
-per risparmiare spazio o controllare quali versioni dei pacchetti vengono
-installate con il pinning, giusto per citare alcune possibilità.
+controllo su /{apt}/, o /{aptitude}/ se si preferisce, in fase di
+compilazione quando i pacchetti sono installati. Ciò può tornare utile se si
+usa un proxy, se si vuole disabilitare l'installazione dei pacchetti
+raccomandati per risparmiare spazio o controllare quali versioni dei
+pacchetti vengono installate con il pinning, giusto per citare alcune
+possibilità.
 
 2~ Sorgenti dei pacchetti
 
@@ -27,7 +28,7 @@ installate con il pinning, giusto per citare alcune possibilità.
 
 La distribuzione che viene scelta ha un ampio impatto su quali pacchetti
 siano disponibili per essere inclusi nell'immagine live. Specificare il nome
-in codice, il predefinito per la versione wheezy di live-build è #{wheezy}#;
+in codice, il predefinito per la versione wheezy di live-build è wheezy;
 qualsiasi attuale distribuzione mantenuta negli archivi Debian può essere
 qui specificata con il suo nome in codice. (Per ulteriori dettagli
 consultare il {Glossario}#terms). L'opzione #{--distribution}# non solo
@@ -220,8 +221,8 @@ include. Far riferimento a questi nella directory
 come scriverne di propri.
 
 Per esempio, per creare un elenco che includa quello predefinito di
-#{gnome}#più iceweasel, creare #{config/package-lists/mio.elenco.chroot}#
-con i seguenti contenuti:
+#{gnome}#più /{iceweasel}/, creare
+#{config/package-lists/mio.elenco.chroot}# con i seguenti contenuti:
 
 code{
 
@@ -252,7 +253,7 @@ code{
 }code
 
 Si può verificare per ognuna di una serie di valori, ad esempio per
-installare #{memtest86+}# specificando sia #{--architectures i386}# sia
+installare /{memtest86+}/ specificando sia #{--architectures i386}# sia
 #{--architectures amd64}#:
 
 code{
@@ -444,7 +445,7 @@ iniziano con #{apt}#.
 3~choosing-apt-or-aptitude Scegliere apt o aptitude
 
 Per installare pacchetti in fase di compilazione si può optare sia per
-#{apt}# sia per #{aptitude}#, l'argomento #{--apt}# di #{lb config}#
+/{apt}/ sia per /{aptitude}/, l'argomento #{--apt}# di #{lb config}#
 determina quale usare. Sceglie il metodo implementando il comportamento
 preferito per l'installazione dei pacchetti, la notevole differenza è come
 vengono gestiti quelli mancanti.
@@ -556,9 +557,9 @@ Un valore negativo della priorità evita che un pacchetto venga installato,
 come nel caso in cui non se ne voglia uno raccomandato da un altro. Si
 suppone di costruire un'immagine di LXDE utilizzando l'opzione
 #{--package-lists lxde}# ma non si desidera che all'utente venga richiesto
-di salvare la password del wifi nel portachiavi. L'elenco include #{gdm}#
-che dipende da #{gksu}# che a sua volta raccomanda #{gnome-keyring}#, in
-questo caso si vorrà omettere il pacchetto #{gnome-keyring}# aggiungendo a
+di salvare la password del wifi nel portachiavi. L'elenco include /{gdm}/
+che dipende da /{gksu}/ che a sua volta raccomanda /{gnome-keyring}/, in
+questo caso si vorrà omettere il pacchetto /{gnome-keyring}/ aggiungendo a
 #{config/chroot_apt/preferences}# la seguente definizione:
 
 code{

@@ -2,10 +2,10 @@
 
 1~about-manual À propos de ce manuel
 
-This manual serves as a single access point to all documentation related to
-the Debian Live project and in particular applies to the software produced
-by the project for the Debian 7.0 "wheezy" release. An up-to-date version
-can always be found at http://live.debian.net/
+L'objectif principal de ce manuel est servir de point d'accès unique à tous
+les documents liés au projet Debian Live et particulièrement aux logiciels
+produits par le projet pour Debian 7.0 "wheezy". Une version mise à jour
+peut toujours être trouvée à http://live.debian.net/
 
 Tandis ce manual est principalement sur vous aider à construire un système
 Live et non pas sur des sujets de l'utilisateur final, un utilisateur final
@@ -21,7 +21,7 @@ Certaines commandes mentionnées dans le texte doivent être exécutées avec
 les privilèges de super-utilisateur, qui peuvent être obtenus en devenant
 super-utilisateur à l'aide de #{su}# ou en utilisant #{sudo}#. Afin de
 distinguer les commandes qui peuvent être exécutées par un utilisateur sans
-privilèges de celles nécessitant les privilèges super-utilisateur, les
+privilèges de celles nécessitant les privilèges de super-utilisateur, les
 commandes sont précédées respectivement par #{$}# ou #{#}#. Ce symbole ne
 fait pas partie de la commande.
 
@@ -48,15 +48,15 @@ Nous vous encourageons à revenir à l'étude plus approfondie du manuel, la
 prochaine lecture peut-être {Les bases}#the-basics, passer pour {Construire
 une image netboot}#building-netboot-image, et finissant par la lecture de
 la{Vue d'ensemble de la personnalisation}#customization-overview et les
-autres sections suivantes. En ce point, nous espérons que vous êtes
+autres sections suivantes. En ce point, nous espérons que vous soyez
 complètement excités par ce que on peut faire avec Debian Live et motivés
 pour lire le reste du manuel, du début à la fin.
 
 2~terms Terminologie
 
 _* *{Système Live}*: Un système d'exploitation pouvant être démarré sans
-installation préalable sur disque dur. Les Systèmes Live ne modifient pas le
-système d'exploitation local ou les fichiers installés sur le disque dur
+installation préalable sur un disque dur. Les Systèmes Live ne modifient pas
+le système d'exploitation local ou les fichiers installés sur le disque dur
 sans qu'on leur en donne explicitement l'instruction. D'habitude, les
 systèmes Live sont démarrés à partir des supports tels que des CD, DVD, ou
 des clés USB. Certains systèmes peuvent également être démarrés sur le
@@ -67,12 +67,12 @@ live-boot, live-build, live-config, et live-manual.
 
 _* *{Système Debian Live}*: Un système live qui utilise les logiciels du
 système d'exploitation Debian et qui peut être démarré sur CD, DVD, clé USB,
-en réseau (à l'aide des images netboot), et à partir d'Internet (à l'aide du
-paramètre de démarrage #{fetch=URL}#).
+sur le réseau (à l'aide des images netboot), et à partir d'Internet (à
+l'aide du paramètre de démarrage #{fetch=URL}#).
 
 _* *{Système hôte}*: L'environnement utilisé pour créer le système live.
 
-_* *{Système de destination}*: L'environnement utilisé pour faire tourner le
+_* *{Système objectif}*: L'environnement utilisé pour faire fonctionner le
 système live.
 
 _* *{live-boot}*: Une collection de scripts utilisés pour lancer des
@@ -95,27 +95,27 @@ distribution Debian.
 _* *{Paramètres d'amorçage}*: Les paramètres qui peuvent être entrés à
 l'invite de démarrage afin de modifier le noyau ou live-config.
 
-_* *{chroot}*: Le programme /{chroot}/, #{chroot(8)}#, nous permet de faire
-tourner plusieurs instances concurrentes de l'environnement GNU/Linux sur un
-système sans redémarrage.
+_* *{chroot}*: Le logiciel /{chroot}/, #{chroot(8)}#, nous permet d'exécuter
+plusieurs instances concurrentes de l'environnement GNU/Linux sur un système
+sans redémarrage.
 
 _* *{Image binaire}*: Un fichier contenant le système live, tel que
 binary.iso ou binary.img.
 
-_* *{Distribution de destination}*: La distribution sur laquelle votre
-système live sera basée. Ceci peut varier en fonction de la distribution de
-votre système hôte.
+_* *{Distribution objectif}*: La distribution sur laquelle votre système
+live sera basée. Ceci peut varier en fonction de la distribution de votre
+système hôte.
 
 _* *{stable/testing/unstable}*: La distribution *{stable}* contient la
 dernière version officielle de Debian. La distribution *{testing}* est la
-future version stable où seulement les paquets suffisamment matures peuvent
-entrer. Un avantage de cette distribution est qu'elle contient des logiciels
-de versions plus récentes que la version *{stable}*. La distribution
-*{unstable}* est en constante évolution. En général cette distribution est
-utilisée par les développeurs et ceux qui aiment le risque. Tout au long du
-manuel, nous avons tendance à utiliser les noms de code pour les évolutions
-majeures, tels que wheezy ou sid, car c'est ce qui est pris en charge par
-les outils eux-mêmes.
+prochaine version stable où seulement les paquets suffisamment matures
+peuvent entrer. Un avantage de cette distribution est qu'elle contient des
+logiciels de versions plus récentes que la version *{stable}*. La
+distribution *{unstable}* est en constante évolution. En général cette
+distribution est utilisée par les développeurs et ceux qui aiment le
+risque. Tout au long du manuel, nous avons tendance à utiliser les noms de
+code pour les évolutions majeures, tels que wheezy ou sid, car c'est ce qui
+est soutenu par les outils eux-mêmes.
 
 2~ Auteurs
 
@@ -299,4 +299,4 @@ traduction des manuels sont mis à jour à partir des fichiers po, alors vous
 pouvez réviser vos modifications avec #{make build}# avant #{git add .}#,
 #{git commit -a -m "Translating..."}# et #{git push}#.
 
-*{Remarque:}* S'il vous plaît soyez conscient que même si les deux #{make commit}#  et  #{make build}# suppriment votre répertoire de construction, si vous construisez le manuel pour examiner vos modifications comme il est recommandé, et vous voulez nettoyer votre arbre git avant de les envoyer, vous pouvez utiliser #{make clean}#. Cette dernière étape n'est pas obligatoire grâce au fichier .gitignore mais il est une bonne pratique pour éviter d'envoyer certains fichiers involontairement.
+*{Remarque:}* S'il vous plaît soyez conscients que même si les deux #{make commit}#  et  #{make build}# suppriment votre répertoire de construction, si vous construisez le manuel pour examiner vos modifications comme il est recommandé, et vous voulez nettoyer votre arbre git avant de les envoyer, vous pouvez utiliser #{make clean}#. Cette dernière étape n'est pas obligatoire grâce au fichier .gitignore mais il est une bonne pratique pour éviter d'envoyer certains fichiers involontairement.

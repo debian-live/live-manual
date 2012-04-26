@@ -6,7 +6,7 @@ Ce chapitre documente le style du code utilisé en live-boot et autres.
 
 2~ Compatibilité
 
-_* Ne pas utiliser la syntaxe ou la sémantique qui sont uniques à le shell
+_* Ne pas utiliser une syntaxe ou sémantique qui soit unique à le shell
 Bash. Par exemple, l'utilisation d'arrays.
 
 _* N'utiliser que le sous-ensemble POSIX - par exemple, utiliser $(foo) au
@@ -77,15 +77,15 @@ _* Les variables sont toujours en lettres majuscules.
 _* Les variables utilisées dans #{lb config}# commencent toujours par le
 préfixe #{LB_}#.
 
-_* Les variables temporaires internes en live-build devraient commencer avec
-le préfixe #{\_LB_}#.
+_* Les variables temporaires internes dans live-build devraient commencer
+avec le préfixe #{\_LB_}#.
 
 _* Les variables locales commencent avec le préfixe #{\_\_LB_}#.
 
-_* Les variables en relation avec un paramètre de démarrage en live-config
+_* Les variables en relation avec un paramètre de démarrage dans live-config
 commencent par #{LIVE_}#.
 
-_* Toutes les autres variables en live-config commencent par le préfixe
+_* Toutes les autres variables dans live-config commencent par le préfixe
 #{_}#.
 
 _* Utilisez des accolades autour des variables; par exemple écrire
@@ -140,15 +140,15 @@ code{
 
 2~ Autres
 
-_* Utilisez "#{|}#" (sans les guillemets autour) comme un séparateur dans
-les appels à sed, par exemple "#{sed -e 's|foo|bar|'}#" (sans" ").
+_* Utilisez "#{|}#" (sans les guillemets autour) comme séparateur dans les
+appels à sed, par exemple "#{sed -e 's|foo|bar|'}#" (sans" ").
 
 _* Ne pas utiliser la commande #{test}# pour des comparaisons ou des tests,
 utilisez "#{[}#" "#{]}#" (sans ""); par exemple "#{if [ -x /bin/foo ];
 ...}#" et non pas "#{if test -x /bin/foo; ...}#".
 
 _* Utiliser #{case}# dans la mesure du possible en lieu de #{test}#, parce
-qu'il est plus facile à lire et plus rapide dans l'exécution.
+qu'il est plus facile à lire et plus rapide en l'exécution.
 
 _* Utilisez noms en majuscule pour les fonctions pour éviter toute
 interférence avec l'environnement des utilisateurs.

@@ -32,11 +32,11 @@ code{
 
 }code
 
-Il est également possible de changer le nom d'utilisateur par défaut «user»
-et du mot de passe par défaut "live". Si vous voulez pour quelque raison,
-vous pouvez facilement faire ça comme suit:
+Il est également possible de changer le nom de l'utilisateur par défaut
+«user» et du mot de passe par défaut "live". Si vous voulez pour quelque
+raison, vous pouvez facilement faire ça comme suit:
 
-Pour modifier le nom d'utilisateur par défaut, vous pouvez simplement le
+Pour modifier le nom de l'utilisateur par défaut, vous pouvez simplement le
 spécifier dans votre config:
 
 code{
@@ -53,9 +53,9 @@ ce faire vous pouvez utiliser le hook "passwd" de
 #{config/includes.chroot/lib/live/config/}#
 
 2~customizing-locale-and-language Personnalisation des paramètres régionaux
-et la langue
+et de la langue
 
-Au démarrage du système live, la langue est impliqué dans trois étapes:
+Au démarrage du système live, la langue est impliquée dans trois étapes:
 
 _* la génération des paramètres régionaux
 
@@ -79,12 +79,12 @@ noyau. Vous pouvez spécifier des paramètres régionaux par
 #{language_country.encoding}#.
 
 Tant la console et la configuration du clavier X dépendent du paramètre
-#{keyboard-layouts}# de l'option #{--bootappend-live}#. Options valides pour
-les dispositions des claviers X peuvent être trouvés dans
+#{keyboard-layouts}# de l'option #{--bootappend-live}#. Les options valides
+pour les dispositions des claviers X peuvent être trouvés dans
 #{/usr/share/X11/xkb/rules/base.xml}# (plutôt limitées à des codes des pays
-à deux lettres). Pour trouver la valeur (les deux caractères), correspondant
-à une langue essayez de rechercher le nom anglais de la nation où la langue
-est parlée, par exemple:
+à deux lettres). Pour trouver la valeur (les deux caractères),
+correspondante à une langue essayez de rechercher le nom anglais de la
+nation où la langue est parlée, par exemple:
 
 code{
 
@@ -102,7 +102,7 @@ code{
 
 }code
 
-Une liste des valeurs valides des claviers pour la console peut être figuré
+Une liste des valeurs valides des claviers pour la console peut être figurée
 avec la commande suivante:
 
 code{
@@ -113,7 +113,7 @@ code{
 }code
 
 Alternativement, vous pouvez utiliser le paquet #{console-setup}#, un outil
-pour vous permettre de configurer la disposition de la console en utilisant
+pour vous aider à configurer la disposition de la console en utilisant
 définitions X (XKB), vous pouvez alors définir votre clavier plus
 précisément avec variables #{keyboard-layouts}#, #{keyboard-variant}#,
 #{keyboard-options}# et #{keyboard-model}#; live-boot pourra également
@@ -154,7 +154,7 @@ support inscriptible persistant comme supports de stockage locaux, un
 partage réseau ou même une séance d'un CD/DVD multisession
 (ré)inscriptible. Tous ces supports sont pris en charge dans Debian Live de
 différentes manières, et tous, moins le dernier, nécessitent un paramètre
-d'amorçáge spéciale à préciser au moment du démarrage: #{persistent}#.
+d'amorçage spéciale à préciser au moment du démarrage: #{persistent}#.
 
 Si le paramètre de démarrage #{persistent}# est réglé (et #{nopersistent}#
 n'est pas utilisé), les supports de stockage locaux (par exemple les disques
@@ -169,8 +169,8 @@ fichiers.
 _* un fichier image/archive situé sur la racine de tout système de fichiers
 en lecture (même une partition NTFS d'un système d'exploitation étranger),
 identifié par son nom de fichier. Dans ce cas, le nom du fichier doit
-également utiliser le système de fichiers contenant l'extension de fichier,
-par exemple, "<label>.ext4".
+contenir le nom du système de fichiers comme extension, par exemple,
+"<label>.ext4".
 
 Il est possible de limiter les types de volumes persistants à utiliser en
 spécifiant certains paramètres de démarrage décrits dans la page de manuel
@@ -188,7 +188,7 @@ _* #{home-sn}# pour instantanés du /home.
 3~ Couches de persistance pleine
 
 Par «persistance pleine» on entend que au lieu d'utiliser un tmpfs pour le
-stockage des modifications au support en lecture seule (avec le système
+stockage des modifications dans le support en lecture seule (avec le système
 copy-on-write, COW) une partition accessible en écriture est utilisée. Pour
 ce type de persistance le nom du volume doit être #{full-ov}#. Cela
 pourrait, par exemple, être une partition ext4 sur un disque dur ou sur une
@@ -228,11 +228,11 @@ Ensuite, copiez le fichier #{full-ov}# sur une partition accessible en
 3~ Couches personnalisées
 
 Un volume avec l'étiquette #{custom-ov}# peut être configuré pour créer des
-répertoires arbitraires persistants. Le fichier #{live.persist}#, situé sur
+répertoires persistants arbitraires. Le fichier #{live.persist}#, situé sur
 le système de fichiers racine du volume, contrôle quels répertoires il fait
 persistants, et de quelle manière.
 
-Comment on configure monter des couches personnalisés est décrit en détail
+Comment on configure monter des couches personnalisées est décrit en détail
 dans la page de manuel live.persist(5), mais un simple exemple devrait être
 suffisant pour la plupart des utilisations. Imaginons que nous voulons faire
 notre répertoire personnel et APT cache persistants dans un système de
@@ -257,8 +257,8 @@ d'espaces blancs ou les éléments spéciaux #{.}# et #{..}#. En outre, ni
 persistants en utilisant custom mounts (pour ce dernier, utilisez la
 persistance #{full-ov}# décrite ci-dessus).
 
-Plusieurs différents volumes de couches personnalisés (avec leurs propres
-fichiers #{live.persist}#) peuvent être utilisés au même temps, mais si
+Plusieurs volumes de couches personnalisées différents (avec leurs propres
+fichiers #{live.persist}#) peuvent être utilisées au même temps, mais si
 plusieurs volumes font le même répertoire persistant, un seul d'entre eux
 sera utilisé. Si les deux sont «imbriqués» (un est un sous-répertoire de
 l'autre) le premier sera monté avant que le secondaire de sorte que aucun
@@ -274,37 +274,37 @@ Les instantanés sont des collections de fichiers et de répertoires qui ne
 sont pas montés lors de l'exécution, mais qui sont copiés à partir d'un
 périphérique persistant à le système (tmpfs) au démarrage et qui sont
 resynchronisés au redémarrage/arrêt du système. Le volume doit être étiqueté
-#{live-sn}#. Il est par défaut une simple archive cpio appelé
-#{live-sn.cpio.gz}#.  Une coupure de courant pendant l'exécution pourrait
+#{live-sn}#. Il est par défaut une simple archive cpio appelée
+#{live-sn.cpio.gz}#. Une coupure de courant pendant l'exécution pourrait
 conduire à la perte de données, donc un outil appelé #{live-snapshot
 --refresh}# pourrait être appelé pour synchroniser des changements
 importants. Ce type de persistance, car elle n'écrit pas continuellement
 dans les supports persistants, est la plus respectuese avec les dispositifs
 flash et la plus rapide de tous les systèmes de persistance, mais elle
-occupe autant RAM que la taille de l'instantané non compressé.
+occupe autant RAM que la taille de l'instantané non compressée.
 
 Une version d'instantané de /home existe aussi, et son étiquette est
-#{home-sn.*}#; elle travaille le même que l'instantané principale, mais il
-est seulement appliquée à /home.
+#{home-sn.*}#; elle fonctionne le même que l'instantané principal, mais
+c'est seulement appliqué à /home.
 
 Les instantanés ne peuvent pas actuellement gérer la suppression de
 fichiers.
 
 3~ SubText persistant
 
-Si un utilisateur a besoin de multiples stockages persistants du même type
+Si un utilisateur a besoin de stockages persistants multiples du même type
 pour différents endroits ou l'essai, tel que #{full-ov-nonwork}# et
 #{full-ov-work}#, le paramètre de démarrage #{persistent-subtext}# utilisé
 en conjonction avec le paramètre de démarrage #{persistent}# permettra
-multiples mais uniques supports persistants. Un exemple serait le cas si un
-utilisateur voudrait utiliser une partition persistante étiqueté
+multiples, mais uniques, supports persistants. Un exemple serait le cas si
+un utilisateur voudrait utiliser une partition persistante étiquetée
 #{live-sn-subText}# il utiliserait les paramètres de démarrage:
 #{persistent}# #{persistent-subtext=subText}#.
 
 3~ Remasterisation partielle
 
 Les modifications de l'exécution du tmpfs pourraient être recueillies à
-l'aide de live-snapshot dans une squashfs et ajoutés au CD en remasterisant
+l'aide de live-snapshot dans une squashfs et ajoutées au CD en remasterisant
 l'ISO dans le cas des CD-R ou en ajoutant une session à un cd/dvd(rw)
 multisession; live-boot monte tous les systèmes de fichiers /live dans
 l'ordre ou avec le paramètre de démarrage du module.

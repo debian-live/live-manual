@@ -13,8 +13,19 @@ sed -i  -e "s|^ :published:.*$| :published: ${YEAR}-${MONTH}-${DAY}|" \
 	-e "s|(C) 2006-.*|(C) 2006-${YEAR} Debian Live Project|" \
 en/live-manual.ssm
 
-if [ -e po/de/live-manual.ssm.po ]
+# European date format
+for _LANGUAGE in de es fr it ro
+do
+	if [ -e po/${_LANGUAGE}/live-manual.ssm.po ]
+	then
+		sed -i -e "s|:published: .*.${YEAR}|:published: ${DAY}.${MONTH}.${YEAR}|" \
+		po/${_LANGUAGE}/live-manual.ssm.po
+	fi
+done
+
+# Brazilian date format
+if [ -e po/pt_BR/live-manual.ssm.po ]
 then
-	sed -i -e "s|:published: .*.${YEAR}|:published: ${DAY}.${MONTH}.${YEAR}|" \
-	po/de/live-manual.ssm.po
+	sed -i -e "s|:published: .*-${YEAR}|:published: ${DAY}-${MONTH}-${YEAR}|" \
+	po/pt_BR/live-manual.ssm.po
 fi

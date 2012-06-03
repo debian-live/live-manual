@@ -142,7 +142,7 @@ su comportamiento predeterminado, se debe considerar un sistema de sólo
 lectura y todos los cambios en tiempo de ejecución del sistema se pierden al
 apagar el equipo.
 
-La persistencia es un nombre común que se da a los diferentes tipos de
+La «persistencia» es un nombre común que se da a los diferentes tipos de
 soluciones para guardar algunos o todos los cambios realizados durante la
 ejecución tras reiniciar el sistema. Para entender cómo funciona es útil
 saber que incluso si el sistema se inicia y se ejecuta desde los medios de
@@ -151,14 +151,14 @@ directorios se escriben en medios de escritura, por lo general en la memoria
 ram (tmpfs) y los datos guardados en la ram no se guardan tras reiniciar.
 
 Los datos almacenados en esta memoria ram se pueden guardar en un soporte
-grabable como un medio de almacenamiento local, un recurso compartido en red
-o incluso en una sesión de un CD/DVD regrabable en multisesión. Todos estos
-medios son compatibles con Debian Live de diferentes maneras, y todos menos
-el último requieren un parámetro de arranque especial que se especificará en
-el momento del arranque: #{persistent}#.
+grabable, como un medio de almacenamiento local, un recurso compartido en
+red o incluso en una sesión de un CD/DVD regrabable en multisesión. Todos
+estos medios son compatibles con Debian Live de diferentes maneras y todos,
+menos el último, requieren un parámetro de arranque especial que se
+especificará en el momento del arranque: #{persistence}#.
 
-Si se usa el parámetro de arranque #{persistent}# (y no se usa la opción
-#{nopersistent}#), se busca en los medios de almacenamiento locales
+Si se usa el parámetro de arranque #{persistence}# (y no se usa la opción
+#{nopersistence}#), se busca en los medios de almacenamiento locales
 (p.ej. discos duros, llaves USB) volúmenes con persistencia durante el
 arranque. Un volumen persistente es cualquiera de los siguientes: 
 
@@ -229,44 +229,44 @@ reiniciar el sistema.
 3~ Capas personalizadas
 
 Un volumen con la etiqueta #{custom-ov}# puede ser personalizado para crear
-arbitrariamente directorios persistentes. El fichero #{live.persist}#,
-situado en el sistema de ficheros raiz del volumen, controla que directorios
-hace persistentes y también de que manera.
+arbitrariamente directorios persistentes. El fichero
+#{live-persistence.conf}#, situado en el sistema de ficheros raiz del
+volumen, controla que directorios hace persistentes y también de que manera.
 
-En la página de manual de live.persist(5) se explica en detalle cómo se
-configura el montaje de las capas, pero un sencillo ejemplo es suficiente
-para la mayoría de los casos. Supongamos que queremos crear nuestro
-directorio home y APT cache persistentes en un sistema de ficheros ext4 en
-la partición /dev/sdb1:
+En la página de manual de live-persistence.conf(5) se explica en detalle
+cómo se configura el montaje de las capas, pero un sencillo ejemplo es
+suficiente para la mayoría de los casos. Supongamos que queremos crear
+nuestro directorio home y APT cache persistentes en un sistema de ficheros
+ext4 en la partición /dev/sdb1:
 
 code{
 
  $ mkfs.ext4 -L custom-ov /dev/sdb1
  $ mount -t ext4 /dev/sdb1 /mnt
- $ echo "/home" >> /mnt/live.persist
- $ echo "/var/cache/apt" >> /mnt/live.persist
+ $ echo "/home" >> /mnt/live-persistence.conf
+ $ echo "/var/cache/apt" >> /mnt/live-persistence.conf
 
 }code
 
 Entonces reiniciamos. Durante el primer arranque los contenidos de #{/home}#
 y #{/var/cache/apt}# se copiarán en el volumen persistente y a partir de ese
 momento todos los cambios en esos directorios se guardarán allí. Tener en
-cuenta que los rutas listadas en el fichero #{live.persist}# no pueden
-contener espacios en blanco ni los componentes especiales #{.}# y
-#{..}#. Además ni #{/live}# (o ninguno de sus sub-directorios) ni #{/}#
-pueden hacerse persistentes montándolos de forma personalizada. Para este
+cuenta que las rutas listadas en el fichero #{live-persistence.conf}# no
+pueden contener espacios en blanco ni los componentes especiales #{.}# y
+#{..}#. Además, ni #{/live}# (o ninguno de sus sub-directorios) ni #{/}#
+pueden hacerse persistentes montándolos de forma personalizada. Para esto
 último, usar el tipo de persistencia #{full-ov}# descrito anteriormente.
 
 Se puede usar diferentes volúmenes de capas personalizados al mismo tiempo
-(con sus propios ficheros #{live.persist}#) pero si varios volúmenes hacen
-que un mismo directorio sea persistente, sólo uno de ellos será usado. Si
-dos unidades montadas están "anidadas" (es decir, una es un sub-directorio
-de la otra) el directorio superior será montado antes que el inferior de
-este modo no quedará uno escondido por el otro. La personalización de los
-montajes anidadados es problemática si están listados en el mismo fichero
-#{live.persist}#. Consultar la página de manual de live.persist(5) para ver
-como manejar ese caso si realmente es necesario. (aclaración: normalmente no
-lo es).
+(con sus propios ficheros #{live-persistence.conf}#) pero si varios
+volúmenes hacen que un mismo directorio sea persistente, sólo uno de ellos
+será usado. Si dos unidades montadas están "anidadas" (es decir, una es un
+sub-directorio de la otra) el directorio superior será montado antes que el
+inferior de este modo no quedará uno escondido por el otro. La
+personalización de los montajes anidadados es problemática si están listados
+en el mismo fichero #{live-persistence.conf}#. Consultar la página de manual
+de live-persistence.conf(5) para ver como manejar ese caso si realmente es
+necesario. (aclaración: normalmente no lo es).
 
 3~ Instantáneas
 
@@ -293,12 +293,12 @@ Las instantáneas no pueden manejar el borrado de ficheros.
 
 Si un usuario necesita un almacenamiento persistente múltiple del mismo tipo
 para diferentes lugares o pruebas, tales como #{full-ov-nonwork}# y
-#{full-ov-work}#, el parámetro de arranque #{persistent-subtext}# usado
-junto con el parámetro de arranque #{persistent}# permitirá medios de
+#{full-ov-work}#, el parámetro de arranque #{persistence-subtext}# usado
+junto con el parámetro de arranque #{persistence}# permitirá medios de
 almacenamiento persistentes múltiples pero únicos. Un ejemplo sería, si un
 usuario desea utilizar una partición persistente etiquetada
-#{live-sn-subText}# usaría los parámetros de arranque: #{persistent}#
-#{persistent-subtext=subText}#.
+#{live-sn-subText}# usaría los parámetros de arranque: #{persistence}#
+#{persistence-subtext=subText}#.
 
 3~ Remasterización parcial
 

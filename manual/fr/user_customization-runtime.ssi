@@ -140,8 +140,8 @@ ainsi autres supports, en plus de CDs, mais encore, dans son comportement
 par défaut, il doit être considéré en lecture seule et toutes les évolutions
 pendant l'exécution du système sont perdus à l'arrêt.
 
-La persistance est un nom commun pour les différents types de solutions pour
-sauver, après un redémarrage, certaines ou toutes les données, de cette
+La «persistance» est un nom commun pour les différents types de solutions
+pour sauver, après un redémarrage, certaines ou toutes les données, de cette
 évolution pendant l'exécution du système. Pour comprendre comment cela
 pourrait fonctionner il pourrait être utile de savoir que même si le système
 est démarré et exécuté à partir d'un support en lecture seule, la
@@ -154,9 +154,9 @@ support inscriptible persistant comme supports de stockage locaux, un
 partage réseau ou même une séance d'un CD/DVD multisession
 (ré)inscriptible. Tous ces supports sont pris en charge dans Debian Live de
 différentes manières, et tous, moins le dernier, nécessitent un paramètre
-d'amorçage spéciale à préciser au moment du démarrage: #{persistent}#.
+d'amorçage spéciale à préciser au moment du démarrage: #{persistence}#.
 
-Si le paramètre de démarrage #{persistent}# est réglé (et #{nopersistent}#
+Si le paramètre de démarrage #{persistence}# est réglé (et #{nopersistence}#
 n'est pas utilisé), les supports de stockage locaux (par exemple les disques
 durs, clés USB) seront examinés pour trouver des volumes persistants pendant
 le démarrage. Un volume persistant est un des éléments suivants:
@@ -228,22 +228,22 @@ Ensuite, copiez le fichier #{full-ov}# sur une partition accessible en
 3~ Couches personnalisées
 
 Un volume avec l'étiquette #{custom-ov}# peut être configuré pour créer des
-répertoires persistants arbitraires. Le fichier #{live.persist}#, situé sur
-le système de fichiers racine du volume, contrôle quels répertoires il fait
-persistants, et de quelle manière.
+répertoires persistants arbitraires. Le fichier #{live-persistence.conf}#,
+situé sur le système de fichiers racine du volume, contrôle quels
+répertoires il fait persistants, et de quelle manière.
 
 Comment on configure monter des couches personnalisées est décrit en détail
-dans la page de manuel live.persist(5), mais un simple exemple devrait être
-suffisant pour la plupart des utilisations. Imaginons que nous voulons faire
-notre répertoire personnel et APT cache persistants dans un système de
-fichiers ext4 sur la partition /dev/sdb1:
+dans la page de manuel live-persistence.conf(5), mais un simple exemple
+devrait être suffisant pour la plupart des utilisations. Imaginons que nous
+voulons faire notre répertoire personnel et APT cache persistants dans un
+système de fichiers ext4 sur la partition /dev/sdb1:
 
 code{
 
  $ mkfs.ext4 -L custom-ov /dev/sdb1
  $ mount -t ext4 /dev/sdb1 /mnt
- $ echo "/home" >> /mnt/live.persist
- $ echo "/var/cache/apt" >> /mnt/live.persist
+ $ echo "/home" >> /mnt/live-persistence.conf
+ $ echo "/var/cache/apt" >> /mnt/live-persistence.conf
 
 }code
 
@@ -251,22 +251,22 @@ Alors nous redémarrons. Lors du premier démarrage les contenus du #{/home}#
 et #{/var/cache/apt}# seront copiés dans le volume persistant, et à partir
 de ce moment tous les changements dans ces répertoires seront stockés dans
 le volume persistant. S'il vous plaît souligner que les chemins d'accès aux
-répertoriés dans le fichier #{live.persist}# ne peuvent pas contenir
-d'espaces blancs ou les éléments spéciaux #{.}# et #{..}#. En outre, ni
-#{/live}# (ou un de ses sous-répertoires), ni #{/}#  peuvent être rendus
-persistants en utilisant custom mounts (pour ce dernier, utilisez la
+répertoriés dans le fichier #{live-persistence.conf}# ne peuvent pas
+contenir d'espaces blancs ou les éléments spéciaux #{.}# et #{..}#. En
+outre, ni #{/live}# (ou un de ses sous-répertoires), ni #{/}#  peuvent être
+rendus persistants en utilisant custom mounts (pour ce dernier, utilisez la
 persistance #{full-ov}# décrite ci-dessus).
 
 Plusieurs volumes de couches personnalisées différents (avec leurs propres
-fichiers #{live.persist}#) peuvent être utilisées au même temps, mais si
-plusieurs volumes font le même répertoire persistant, un seul d'entre eux
-sera utilisé. Si les deux sont «imbriqués» (un est un sous-répertoire de
-l'autre) le premier sera monté avant que le secondaire de sorte que aucun
-sera caché par l'autre. Monter  des éléments personnalisés imbriqués est
-problématique s'ils sont énumérés dans le même fichier
-#{live.persist}#. Voir la page de manuel live.persist(5) pour savoir comment
-gérer ce cas, si vous avez vraiment besoin (remarque: vous n'avez
-généralement pas).
+fichiers #{live-persistence.conf}#) peuvent être utilisées au même temps,
+mais si plusieurs volumes font le même répertoire persistant, un seul
+d'entre eux sera utilisé. Si les deux sont «imbriqués» (un est un
+sous-répertoire de l'autre) le premier sera monté avant que le secondaire de
+sorte que aucun sera caché par l'autre. Monter  des éléments personnalisés
+imbriqués est problématique s'ils sont énumérés dans le même fichier
+#{live-persistence.conf}#. Voir la page de manuel live-persistence.conf(5)
+pour savoir comment gérer ce cas, si vous avez vraiment besoin (remarque:
+vous n'avez généralement pas).
 
 3~ Instantanés
 
@@ -294,12 +294,12 @@ fichiers.
 
 Si un utilisateur a besoin de stockages persistants multiples du même type
 pour différents endroits ou l'essai, tel que #{full-ov-nonwork}# et
-#{full-ov-work}#, le paramètre de démarrage #{persistent-subtext}# utilisé
-en conjonction avec le paramètre de démarrage #{persistent}# permettra
+#{full-ov-work}#, le paramètre de démarrage #{persistence-subtext}# utilisé
+en conjonction avec le paramètre de démarrage #{persistence}# permettra
 multiples, mais uniques, supports persistants. Un exemple serait le cas si
 un utilisateur voudrait utiliser une partition persistante étiquetée
 #{live-sn-subText}# il utiliserait les paramètres de démarrage:
-#{persistent}# #{persistent-subtext=subText}#.
+#{persistence}# #{persistence-subtext=subText}#.
 
 3~ Remasterisation partielle
 

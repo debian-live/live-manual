@@ -145,10 +145,10 @@ scrivibile persistente come un supporto di memorizzazione locale, una
 condivisione di rete o anche una sessione di un CD/DVD riscrivibile
 multisessione. Tutti questi supporti sono gestiti in Debian Live in modi
 differenti, e tutti tranne l'ultimo richiedono un parametro d'avvio speciale
-da specificare all'avvio: #{persistent}#.
+da specificare all'avvio: #{persistence}#.
 
-Se il parametro di boot #{persistent}# è impostato (e non lo è
-#{nopersistent}#), i supporti di memorizzazione locali (hard disk,
+Se il parametro di boot #{persistence}# è impostato (e non lo è
+#{nopersistence}#), i supporti di memorizzazione locali (hard disk,
 dispositivi USB) saranno rilevati come volumi persistenti durante
 l'avvio. Un volume persistente è uno dei seguenti:
 
@@ -217,12 +217,12 @@ scrivibile e riavviare.
 3~ Strati personalizzati
 
 Un volume con una label #{custom-ov}# può essere configurato per creare
-directory persistenti arbitrarie. Il file #{live.persist}#, situato nella
-directory radice del filesystem del volume, controlla quali rendere
+directory persistenti arbitrarie. Il file #{live-persistence.conf}#, situato
+nella directory radice del filesystem del volume, controlla quali rendere
 persistenti e in che modo.
 
-Nella manpage di live.persist(5) è descritto dettagliatamente come è
-configurato il mount degli strati personalizzati, ma un semplice esempio
+Nella manpage di live-persistence.conf(5) è descritto dettagliatamente come
+è configurato il mount degli strati personalizzati, ma un semplice esempio
 dovrebbe essere sufficiente per la maggior parte degli usi. Supponendo di
 voler creare la directory home e quella della cache di APT in modo
 persistente in un filesystem ext4 sulla partizione /dev/sdb1:
@@ -231,8 +231,8 @@ code{
 
  $ mkfs.ext4 -L custom-ov /dev/sdb1
  $ mount -t ext4 /dev/sdb1 /mnt
- $ echo "/home" >> /mnt/live.persist
- $ echo "/var/cache/apt" >> /mnt/live.persist
+ $ echo "/home" >> /mnt/live-persistence.conf
+ $ echo "/var/cache/apt" >> /mnt/live-persistence.conf
 
 }code
 
@@ -240,20 +240,20 @@ Quindi riavviare. Durante il primo avvio il contenuto di #{/home}# e
 #{/var/cache/apt}# saranno copiati nel volume persistente e da allora tutte
 le modifiche a queste directory risiederanno in modo persistente sul
 volume. C'è da considerare che tutti i path elencati nel file
-#{live.persist}# non possono contenere spazi o i caratteri speciali #{.}# e
-#{..}#; inoltre, né #{/live}# (o nessuna delle sue sottodirectory) né #{/}#
-può essere resa persistente tramite i mount personalizzati (per l'ultimo
-usare la tipologia #{full-ov}# descritta prima).
+#{live-persistence.conf}# non possono contenere spazi o i caratteri speciali
+#{.}# e #{..}#; inoltre, né #{/live}# (o nessuna delle sue sottodirectory)
+né #{/}# può essere resa persistente tramite i mount personalizzati (per
+l'ultimo usare la tipologia #{full-ov}# descritta prima).
 
 Possono essere utilizzati svariati volumi di stratificazione personalizzati
-(con i rispettivi file #{live.persist}#) allo stesso tempo ma se questi
-creano la stessa directory persistente, ne verrà usata solo una. Se due
-directory montate sono "nidificate" (una è la sottodirectory dell'altra), la
-superiore sarà montata per prima, per cui nessuna operazione di mount verrà
-sovrastata dall'altra. I mount nidificati personalizzati sono problematici
-se sono elencati nello stesso file #{live.persist}. Se si ha davvero la
-necessità (in genere non si dovrebbe averla), consultare la manpage di
-live.persist(5) per sapere come gestire questo caso.
+(con i rispettivi file #{live-persistence.conf}#) allo stesso tempo ma se
+questi creano la stessa directory persistente, ne verrà usata solo una. Se
+due directory montate sono "nidificate" (una è la sottodirectory
+dell'altra), la superiore sarà montata per prima, per cui nessuna operazione
+di mount verrà sovrastata dall'altra. I mount nidificati personalizzati sono
+problematici se sono elencati nello stesso file #{live-persistence.conf}. Se
+si ha davvero la necessità (in genere non si dovrebbe averla), consultare la
+manpage di live-persistence.conf(5) per sapere come gestire questo caso.
 
 3~ Istantanee
 
@@ -278,11 +278,11 @@ Attualmente le istantanee non possono gestire la cancellazione dei file.
 
 Se un utente avesse bisogno di archiviazioni multiple dello stesso tipo per
 differenti posti o per test, come #{full-ov-casa}# e #{full-ov-lavoro}#, il
-parametro d'avvio #{persistent-subtext}# usato in congiunzione con
+parametro d'avvio #{persistence-subtext}# usato in congiunzione con
 #{persistent}# permetterà supporti persistenti multipli ma univoci. Un
 esempio potrebbe essere un utente che vuole usare una partizione etichettata
-come #{live-sn-sottotesto}#, userebbe: #{persistent}#
-#{persistent-subtext=sottotesto}#.
+come #{live-sn-sottotesto}#, userebbe: #{persistence}#
+#{persistence-subtext=sottotesto}#.
 
 3~ Rimasterizzazione parziale
 

@@ -60,7 +60,7 @@ code{
 }code
 
 Assuming all goes well, after a while, the current directory will contain
-#{binary-hybrid.iso}#. This ISO hybrid image can be booted directly in a
+#{binary.hybrid.iso}#. This ISO hybrid image can be booted directly in a
 virtual machine as described in {Testing an ISO image with
 Qemu}#testing-iso-with-qemu and {Testing an ISO image with
 virtualbox-ose}#testing-iso-with-virtualbox, or else imaged onto optical
@@ -149,9 +149,9 @@ code{
 First, #{--architectures i386}# ensures that on our #{amd64}# build system,
 we build a 32-bit version suitable for use on most machines. Second, we use
 #{--linux-flavours 686-pae}# because we don't anticipate using this image on
-much older systems. Third, we've chosen the #{lxde}# package list to give us
+much older systems. Third, we've chosen the /{lxde}/ package list to give us
 a minimal desktop. And finally, we have added two initial favourite
-packages: #{iceweasel}# and #{xchat}#.
+packages: /{iceweasel}/ and /{xchat}/.
 
 Now, build the image:
 
@@ -179,7 +179,7 @@ code{
 3~ Second revision
 
 In this revision, we're going to clean up from the first build, add the
-#{vlc}# package to our configuration, rebuild, test and commit.
+/{vlc}/ package to our configuration, rebuild, test and commit.
 
 The #{lb clean}# command will clean up all generated files from the previous
 build except for the cache, which saves having to re-download packages. This
@@ -192,7 +192,7 @@ code{
 
 }code
 
-Now append the #{vlc}# package to our local package list in
+Now append the /{vlc}/ package to our local package list in
 #{config/package-lists/my.list.chroot}#:
 
 code{
@@ -235,8 +235,8 @@ cases drawn from the collected experiences of users of Debian Live.
 *{Use case:}* Create an image with live-build to boot directly to a VNC server.
 
 Make a build directory and create a skeletal configuration in it built
-around the standard-x11 list, including #{gdm3}#, #{metacity}# and
-#{xvnc4viewer}#, disabling recommends to make a minimal system:
+around the standard-x11 list, including /{gdm3}/, /{metacity}/ and
+/{xvnc4viewer}/, disabling recommends to make a minimal system:
 
 code{
 
@@ -249,8 +249,8 @@ code{
 }code
 
 Create the directory #{/etc/skel}# and put a custom #{.xsession}# in it for
-the default user that will launch metacity and start xvncviewer, connecting
-to port #{5901}# on a server at #{192.168.1.2}#:
+the default user that will launch /{metacity}/ and start /{xvncviewer}/,
+connecting to port #{5901}# on a server at #{192.168.1.2}#:
 
 code{
 
@@ -285,9 +285,9 @@ the tradeoffs you are making between size and functionality. In this
 example, we trim only so much as to make room for additional material within
 a 128M media size, but without doing anything to destroy integrity of the
 packages contained within, such as the purging of locale data via the
-#{localepurge}# package, or other such "intrusive" optimizations. Of
+/{localepurge}/ package, or other such "intrusive" optimizations. Of
 particular note, you should not use #{--bootstrap-flavour minimal}# unless
-you really know what you're doing, as omitting priority #{important}#
+you really know what you're doing, as omitting priority *{important}*
 packages will most likely produce a broken live system.
 
 code{
@@ -318,7 +318,7 @@ system. Choosing the #{minimal}# package list leaves out the large
 #{locales}# package and associated utilities. Dropping recommended packages
 with #{--apt-recommends false}# saves some additional space, at the expense
 of omitting some packages you might otherwise expect to be there, such as
-#{firmware-linux-free}# which may be needed to support certain hardware. The
+/{firmware-linux-free}/ which may be needed to support certain hardware. The
 remaining options shave off additional small amounts of space. It's up to
 you to decide if the functionality that is sacrificed with each optimization
 is worth the loss in functionality.
@@ -385,7 +385,7 @@ code{
 
 }code
 
-Note that we have included the #{debian-installer-launcher}# package to
-launch the installer from the live desktop, and have also specified the 486
-flavour kernel, as it is currently necessary to make the installer and live
-system kernels match for the launcher to work properly.
+Note that we have included the debian-installer-launcher package to launch
+the installer from the live desktop, and have also specified the 486 flavour
+kernel, as it is currently necessary to make the installer and live system
+kernels match for the launcher to work properly.

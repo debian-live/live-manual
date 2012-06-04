@@ -12,17 +12,17 @@ The three main types of installer are:
 
 *{"Regular" Debian Installer}*: This is a normal Debian Live image with a separate kernel and initrd which (when selected from the appropriate bootloader) launches into a standard Debian Installer instance, just as if you had downloaded a CD image of Debian and booted it. Images containing a live system and such an otherwise independent installer are often referred to as "combined images".
 
-On such images, Debian is installed by fetching and installing .deb packages using #{debootstrap}# or #{cdebootstrap}#, from the local media or some network-based network, resulting in a standard Debian system being installed to the hard disk.
+On such images, Debian is installed by fetching and installing .deb packages using /{debootstrap}/ or /{cdebootstrap}/, from the local media or some network-based network, resulting in a standard Debian system being installed to the hard disk.
 
 This whole process can be preseeded and customized in a number of ways; see the relevant pages in the Debian Installer manual for more information. Once you have a working preseeding file, live-build can automatically put it in the image and enable it for you.
 
 *{"Live" Debian Installer}*: This is a Debian Live image with a separate kernel and initrd which (when selected from the appropriate bootloader) launches into an instance of the Debian Installer.
 
-Installation will proceed in an identical fashion to the "Regular" installation described above, but at the actual package installation stage, instead of using #{debootstrap}# to fetch and install packages, the live filesystem image is copied to the target. This is achieved with a special udeb called live-installer.
+Installation will proceed in an identical fashion to the "Regular" installation described above, but at the actual package installation stage, instead of using /{debootstrap}/ to fetch and install packages, the live filesystem image is copied to the target. This is achieved with a special udeb called live-installer.
 
 After this stage, the Debian Installer continues as normal, installing and configuring items such as bootloaders and local users, etc.
 
-Note: to support both normal and live installer entries in the bootloader of the same live media, you must disable live-installer by preseeding #{live-installer/enable=false}#.
+*{Note:}* to support both normal and live installer entries in the bootloader of the same live media, you must disable live-installer by preseeding #{live-installer/enable=false}#.
 
 *{"Desktop" Debian Installer}*: Regardless of the type of Debian Installer included, #{d-i}# can be launched from the Desktop by clicking on an icon. This is user friendlier in some situations. In order to make use of this, the debian-installer-launcher package needs to be included.
 
@@ -49,4 +49,4 @@ code{
 
 2~ Customizing Debian Installer content
 
-For experimental or debugging purposes, you might want to include locally built #{d-i}# component udeb packages. Place these in #{config/packages.binary/}# to include them in the image. Additional or replacement files and directories may be included in the installer initrd as well, in a similar fashion to {Live/chroot local includes}#live-chroot-local-includes, by placing the material in #{config/binary_debian-installer-includes/}#.
+For experimental or debugging purposes, you might want to include locally built #{d-i}# component udeb packages. Place these in #{config/packages.binary/}# to include them in the image. Additional or replacement files and directories may be included in the installer initrd as well, in a similar fashion to {Live/chroot local includes}#live-chroot-local-includes, by placing the material in #{config/includes.binary_debian-installer/}#.

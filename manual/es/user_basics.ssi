@@ -99,7 +99,7 @@ code{
 
 Este proceso puede llevar un tiempo, dependiendo de la velocidad de la
 conexión de red. Cuando haya terminado, debería haber un fichero
-#{binary-hybrid.iso}# listo para ser usado en el directorio actual.
+#{binary.hybrid.iso}# listo para ser usado en el directorio actual.
 
 2~using-iso-hybrid Usar una imagen ISO híbrida
 
@@ -117,7 +117,7 @@ code{
 
  # apt-get install wodim
 
- $ wodim binary-hybrid.iso
+ $ wodim binary.hybrid.iso
 
 }code
 
@@ -141,7 +141,7 @@ definitiva cualquier contenido previo en la llave!}*
 
 code{
 
- $ dd if=binary-hybrid.iso of=${USBSTICK}
+ $ dd if=binary.hybrid.iso of=${USBSTICK}
 
 }code
 
@@ -161,7 +161,7 @@ se accede a un menú de arranque. Si se pulsa la tecla «enter»,  el sistema
 arrancará usando el modo por defecto #{Live}# y las opciones
 predeterminadas. Para obtener más información acerca de las opciones de
 arranque, ver la opción  «help» del menú y también las páginas del manual de
-#{live-boot}# y #{live-config}# que se encuentran en el sistema en vivo.
+live-boot y live-config que se encuentran en el sistema en vivo.
 
 Suponiendo que se ha seleccionado #{Live}# y arrancado una imagen en vivo
 por defecto con escritorio gráfico, después de que los mensajes de arranque
@@ -199,13 +199,13 @@ necesidades.
 3~testing-iso-with-qemu Probar una imagen ISO con QEMU
 
 La máquina virtual más versátil en Debian es QEMU. Si el procesador tiene
-soporte de hardware para virtualización, utilizar el paquete #{qemu-kvm}# en
-la descripción del paquete #{qemu-kvm}# se enumera brevemente la lista de
+soporte de hardware para virtualización, utilizar el paquete /{qemu-kvm}/ en
+la descripción del paquete /{qemu-kvm}/ se enumera brevemente la lista de
 requisitos.
 
 En primer lugar, instalar #{qemu-kvm}# si el procesador lo soporta. Si no es
 así, instalar #{qemu}#, en cuyo caso el nombre del programa será #{qemu}# en
-vez de #{kvm}# en los siguientes ejemplos. El paquete #{qemu-utils}# también
+vez de #{kvm}# en los siguientes ejemplos. El paquete /{qemu-utils}/ también
 es útil para la creación de imágenes virtuales de disco con #{qemu-img}#.
 
 code{
@@ -218,7 +218,7 @@ Arrancar una imagen ISO es sencillo:
 
 code{
 
- $ kvm -cdrom binary-hybrid.iso
+ $ kvm -cdrom binary.hybrid.iso
 
 }code
 
@@ -226,7 +226,7 @@ Consultar las páginas del manual para más detalles.
 
 3~testing-iso-with-virtualbox  Probar una imagen ISO con virtualbox-ose
 
-Para probar una imagen ISO con #{virtualbox-ose}#:
+Para probar una imagen ISO con /{virtualbox-ose}/:
 
 code{
 
@@ -237,14 +237,10 @@ code{
 }code
 
 Crear una nueva máquina virtual, cambiar la configuración de almacenamiento
-para utilizar #{binary-hybrid.iso}# como dispositivo CD/DVD y arrancar la
+para utilizar #{binary.hybrid.iso}# como dispositivo CD/DVD y arrancar la
 máquina.
 
-Nota: Para probar los sistemas en vivo con soporte X.org en virtualbox-ose,
-se puede incluir el paquete del driver de VirtualBox X.org,
-#{virtualbox-ose-guest-x11}#, en la configuración de live-build. De lo
-contrario, la resolución se limita a 800x600
-
+*{Nota:}* Para probar los sistemas en vivo con soporte X.org en /{virtualbox-ose}/, se puede incluir el paquete del driver de VirtualBox X.org, /{virtualbox-ose-guest-x11}/, en la configuración de live-build. De lo contrario, la resolución se limita a 800x600
 code{
 
  $ echo virtualbox-ose-guest-x11 >> config/package-lists/my.list.chroot
@@ -263,10 +259,7 @@ BIOS no maneje adecuadamente las imágenes híbridas. También es interesante
 una imagen HDD si se desea utilizar el espacio restante en los medios de
 almacenamiento para una partición con persistencia.
 
-Nota: si se ha creado una imagen ISO híbrida con el ejemplo anterior, se
-tendrá que limpiar el directorio de trabajo con el comando #{lb clean}# (ver
-{El comando lb clean}#lb-clean):
-
+*{Nota:}* si se ha creado una imagen ISO híbrida con el ejemplo anterior, se tendrá que limpiar el directorio de trabajo con el comando #{lb clean}# (ver {El comando lb clean}#lb-clean):
 code{
 
  # lb clean --binary
@@ -300,14 +293,14 @@ arranque syslinux, lista para ser copiada directamente en un dispositivo
 USB. Dado que utilizar una imagen HDD es igual a usar una imagen ISO híbrida
 en un USB, seguir las instrucciones de {Usar una imagen ISO
 híbrida}#using-iso-hybrid con la diferencia de usar el nombre #{binary.img}#
-en lugar de #{binary-hybrid.iso}#.
+en lugar de #{binary.hybrid.iso}#.
 
 3~testing-hdd-with-qemu Probar una imágen HDD con Qemu
 
-En primer lugar, instalar QEMU como se describe más arriba en {Probar una
-imágen ISO con QEMU}#testing-iso-with-qemu A continuación, ejecutar #{kvm}#
-o #{qemu}#, según qué versión necesita el sistema anfitrión y especificando
-#{binary.img}# como primer disco duro.
+En primer lugar, instalar /{qemu}/ como se describe más arriba en {Probar
+una imágen ISO con QEMU}#testing-iso-with-qemu A continuación, ejecutar
+#{kvm}# o #{qemu}#, según qué versión necesita el sistema anfitrión y
+especificando #{binary.img}# como primer disco duro.
 
 code{
 
@@ -319,7 +312,7 @@ code{
 
 Si se desea usar el espacio libre después de haber instalado la imagen
 #{binary.img}# en una llave USB, se puede usar un programa de particionado
-como #{gparted}# o #{parted}# para crear una partición nueva en el
+como /{gparted}/ o /{parted}/ para crear una partición nueva en el
 dispositivo. La primera partición será usada por el sistema Debian en vivo.
 
 code{
@@ -338,11 +331,7 @@ code{
 
 }code
 
-Nota: Si se desea usar el espacio extra con Windows, segun parece, ese
-sistema operativo no puede acceder normalmente a otra partición más que a la
-primera. Se han comentado algunas soluciones a este problema en nuestra
-{lista de correo}#contact pero según parece no hay una solución fácil.
-
+{Nota:}* Si se desea usar el espacio extra con Windows, segun parece, ese sistema operativo no puede acceder normalmente a otra partición más que a la primera. Se han comentado algunas soluciones a este problema en nuestra {lista de correo}#contact pero según parece no hay una solución fácil.
 *{Recordar: Cada vez que se instale una nueva binary.img en el dispositivo, todos los datos del dispositivo se perderán debido a que la tabla de particiones se sobrescribe con el contenido de la imagen, así pues, realizar primero una copia de seguridad de la partición para poder restaurarla trás actualizar la imagen en vivo.}*
 
 2~building-netboot-image Creación de una imagen de arranque en red
@@ -351,9 +340,7 @@ La siguiente secuencia de comandos creará una imagen de arranque en red
 básica que contendrá el sistema estándar de Debian sin X.org. Se puede usar
 para el arranque en red.
 
-Nota: si se ha seguido algúno de los ejemplos anteriores, se tendrá que
-limpiar el directorio de trabajo con el comando #{lb clean}#:
-
+*{Nota:}* si se ha seguido algúno de los ejemplos anteriores, se tendrá que limpiar el directorio de trabajo con el comando #{lb clean}#:
 code{
 
  # lb clean --binary
@@ -437,8 +424,8 @@ code{
 
 Se encarga de suministrar el kernel y el Disco RAM inicial para el sistema.
 
-Se debe instalar el paquete tftpd-hpa. Este servidor podrá suministrar todos
-los ficheros contenidos de un directorio raíz, normalmente
+Se debe instalar el paquete /{tftpd-hpa}/. Este servidor podrá suministrar
+todos los ficheros contenidos de un directorio raíz, normalmente
 #{/srv/tftp}#. Para permitirle que pueda servir los ficheros de
 #{/srv/debian-live/tftpboot}#, se debe ejecutar el siguiente comando con
 privilegios de superusuario:
@@ -457,7 +444,7 @@ Una vez el equipo cliente ha descargado y arrancado el kernel de Linux junto
 a su initrd, intentará montar el sistema de archivos de la imagen en vivo a
 través de un servidor NFS.
 
-Se debe instalar el paquete #{nfs-kernel-server}#.
+Se debe instalar el paquete /{nfs-kernel-server}/.
 
 Entonces, se debe hacer que la imagen del sistema de archivos esté
 disponible a través de NFS añadiendo una línea como la siguiente para
@@ -497,7 +484,7 @@ dos soluciones.
 
 3~ Qemu
 
-_* Install #{qemu}#, #{bridge-utils}#, #{sudo}#.
+_* Instalar /{qemu}/, /{bridge-utils}/, /{sudo}/.
 
 Se debe editar el fichero #{/etc/qemu-ifup}#:
 

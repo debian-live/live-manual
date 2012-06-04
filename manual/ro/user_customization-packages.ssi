@@ -11,12 +11,12 @@ areas. To ensure decent download speeds, you should choose a nearby
 distribution mirror. You can also add your own repositories for backports,
 experimental or custom packages, or include packages directly as files. You
 can define your own lists of packages to include, use live-build's
-predefined lists, use #{tasksel}# tasks, or a combination of all
-three. Finally, a number of options give some control over apt, or if you
-prefer, aptitude, at build time when packages are installed. You may find
-these handy if you use a proxy, want to disable installation of recommended
-packages to save space, or need to control which versions of packages are
-installed via APT pinning, to name a few possibilities.
+predefined lists, use /{tasksel}/ tasks, or a combination of all
+three. Finally, a number of options give some control over /{apt}/, or if
+you prefer, /{aptitude}/, at build time when packages are installed. You may
+find these handy if you use a proxy, want to disable installation of
+recommended packages to save space, or need to control which versions of
+packages are installed via APT pinning, to name a few possibilities.
 
 2~ Package sources
 
@@ -24,12 +24,12 @@ installed via APT pinning, to name a few possibilities.
 
 The distribution you choose has the broadest impact on which packages are
 available to include in your live image. Specify the codename, which
-defaults to #{wheezy}# for the Wheezy version of live-build. Any current
+defaults to wheezy for the wheezy version of live-build. Any current
 distribution carried in the Debian archive may be specified by its codename
 here. (See {Terms}#terms for more details.) The #{--distribution}# option
 not only influences the source of packages within the archive, but also
-instructs #{live-build}# to behave as needed to build each supported
-distribution. For example, to build against the *{unstable}* release, Sid,
+instructs live-build to behave as needed to build each supported
+distribution. For example, to build against the *{unstable}* release, sid,
 specify:
 
 code{
@@ -65,10 +65,10 @@ the world so that people in each region can choose a nearby mirror for best
 download speed. Each of the #{--mirror-*}# options governs which
 distribution mirror is used at various stages of the build. Recall from
 {Stages of the build}#stages-of-the-build that the *{bootstrap}* stage is
-when the chroot is initially populated by debootstrap with a minimal system,
-and the *{chroot}* stage is when the chroot used to construct the live
-system's filesystem is built. Thus, the corresponding mirror switches are
-used for those stages, and later, in the *{binary}* stage, the
+when the chroot is initially populated by /{debootstrap}/ with a minimal
+system, and the *{chroot}* stage is when the chroot used to construct the
+live system's filesystem is built. Thus, the corresponding mirror switches
+are used for those stages, and later, in the *{binary}* stage, the
 #{--mirror-binary}# and #{--mirror-binary-security}# values are used,
 superceding any mirrors used in an earlier stage.
 
@@ -209,8 +209,8 @@ includes. Refer to these in the #{/usr/share/live/build/package-lists/}#
 directory, as they serve as good examples of how to write your own lists.
 
 For example, to make a list that includes the predefined #{gnome}# list plus
-iceweasel, create #{config/package-lists/my.list.chroot}# with the following
-contents:
+/{iceweasel}/, create #{config/package-lists/my.list.chroot}# with the
+following contents:
 
 code{
 
@@ -240,7 +240,7 @@ code{
 }code
 
 You may test for any one of a number of values, e.g. to install
-#{memtest86+}# if either #{--architectures i386}# or #{--architectures
+/{memtest86+}/ if either #{--architectures i386}# or #{--architectures
 amd64}# is specified:
 
 code{
@@ -252,7 +252,7 @@ code{
 }code
 
 You may also test against variables that may contain more than one value,
-e.g. to install #{vrms}# if either #{contrib}# or #{non-free}# is specified
+e.g. to install /{vrms}/ if either #{contrib}# or #{non-free}# is specified
 via #{--archive-areas}#:
 
 code{
@@ -294,7 +294,7 @@ code{
 
 The primary tasks available in the Debian Installer can be listed with
 #{tasksel --list-tasks}# in the live system. The contents of any task,
-including ones not included in this list, may be examined with #{tasksel
+including the ones not included in this list, may be examined with #{tasksel
 --task-packages}#.
 
 3~desktop-and-language-tasks Desktop and language tasks
@@ -427,7 +427,7 @@ man page.
 
 3~choosing-apt-or-aptitude Choosing apt or aptitude
 
-You can elect to use either #{apt}# or #{aptitude}# when installing packages
+You can elect to use either /{apt}/ or /{aptitude}/ when installing packages
 at build time. Which utility is used is governed by the #{--apt}# argument
 to #{lb config}#. Choose the method implementing the preferred behaviour for
 package installation, the notable difference being how missing packages are
@@ -466,11 +466,11 @@ code{
 
 }code
 
-This will not influence the entries in /etc/apt/sources.list, but merely
-whether /var/lib/apt contains the indices files or not. The tradeoff is that
-APT needs those indices in order to operate in the live system, so before
-performing #{apt-cache search}# or #{apt-get install}#, for instance, the
-user must #{apt-get update}# first to create those indices.
+This will not influence the entries in #{/etc/apt/sources.list}#, but merely
+whether #{/var/lib/apt}# contains the indices files or not. The tradeoff is
+that APT needs those indices in order to operate in the live system, so
+before performing #{apt-cache search}# or #{apt-get install}#, for instance,
+the user must #{apt-get update}# first to create those indices.
 
 If you find the installation of recommended packages bloats your image too
 much, you may disable that default option of APT with:
@@ -507,11 +507,11 @@ pinning can be configured either for build time, or else for run time. For
 the former, create #{config/chroot_apt/preferences}#. For the latter, create
 #{config/includes.chroot/etc/apt/preferences}#.
 
-Let's say you are building a Wheezy live system but need all the live
-packages that end up in the binary image to be installed from Sid at build
-time. You need to add Sid to your APT sources and pin it so that only the
+Let's say you are building a wheezy live system but need all the live
+packages that end up in the binary image to be installed from sid at build
+time. You need to add sid to your APT sources and pin it so that only the
 packages you want are installed from it at build time and all others are
-taken from the target system distribution, Wheezy. The following will
+taken from the target system distribution, wheezy. The following will
 accomplish this:
 
 code{
@@ -529,7 +529,7 @@ code{
 
 }code
 
-*{Note:}* Wildcards can be used in package names (e.g. *{Package: live-*}*) with Apt version 0.8.14 or higher. This means that it works with Wheezy using:
+*{Note:}* Wildcards can be used in package names (e.g. *{Package: live-*}*) with Apt version 0.8.14 or higher. This means that it works with wheezy using:
 
 code{
 
@@ -541,9 +541,9 @@ Negative pin priorities will prevent a package from being installed, as in
 the case where you do not want a package that is recommended by another
 package. Suppose you are building an LXDE image using #{--package-lists
 lxde}# option, but don't want the user prompted to store wifi passwords in
-the keyring. This list includes #{gdm}#, which depends on #{gksu}#, which in
-turn recommends #{gnome-keyring}#. So you want to omit the recommended
-#{gnome-keyring}# package. This can be done by adding the following stanza
+the keyring. This list includes /{gdm}/, which depends on /{gksu}/, which in
+turn recommends /{gnome-keyring}/. So you want to omit the recommended
+/{gnome-keyring}/ package. This can be done by adding the following stanza
 to #{config/chroot_apt/preferences}#:
 
 code{

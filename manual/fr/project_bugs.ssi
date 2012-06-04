@@ -15,7 +15,7 @@ l'image sur notre page d'accueil http://live.debian.net/ pour voir les
 problèmes connus.
 
 _* Toujours essayer de reproduire le bogue avec *{les versions les plus
-récents}* de live-build, live-boot, et live-config avant de présenter un
+récentes}* de live-build, live-boot, et live-config avant de présenter un
 rapport de bogue.
 
 _* Essayez de donner des informations aussi précises que possible sur le
@@ -26,8 +26,8 @@ construisez.
 2~ Problèmes connus
 
 Parce que les distributions Debian *{testing}* et Debian *{unstable}* sont
-une cible mouvante, quand vous les spécifiez comme la distribution du
-système cible, une construction avec succès n'est pas toujours possible.
+une cible mouvante, quand vous les spécifiez comme les distributions du
+système objectif, une construction avec succès n'est pas toujours possible.
 
 % FIXME:
 
@@ -41,8 +41,8 @@ http://live.debian.net/.
 Il est hors cadre de ce manuel vous former correctement à identifier et
 corriger les problèmes dans les paquets des distributions de développement,
 cependant, il y a deux choses que vous pouvez toujours essayer:  Si une
-construction échoue lorsque la distribution cible est *{testing}*, essayez
-*{unstable}*. Si *{unstable}* ne fonctionne pas non plus, revenir à
+construction échoue lorsque la distribution objectif est *{testing}*,
+essayez *{unstable}*. Si *{unstable}* ne fonctionne pas non plus, revenir à
 *{testing}* et fixer la nouvelle version du paquet qui échoue de
 *{unstable}* (voir {APT pinning}#apt-pinning pour plus de détails).
 
@@ -52,12 +52,12 @@ Afin de s'assurer que un bogue en particulier n'est pas causé par un système
 construit malpropre, s'il vous plaît toujours reconstruire l'ensemble du
 système live à partir de zéro pour voir si le bogue est reproductible.
 
-2~ Utilisez paquets mises à jour
+2~ Utilisez paquets mis à jour
 
 L'utilisation de paquets obsolètes peut causer des problèmes importants en
 essayant de reproduire (et finalement régler) votre problème. Assurez-vous
 que votre système de construction est mis à jour et tous les paquets inclus
-dans votre image sont mises à jour aussi.
+dans votre image sont mis à jour aussi.
 
 2~collect-information Recueillir l'information
 
@@ -78,7 +78,7 @@ _* Version de live-boot sur le système live
 
 _* Version de live-config sur le système live
 
-_* Version de #{debootstrap}# et/ou #{cdebootstrap}# sur le système hôte
+_* Version de /{debootstrap}/ et/ou /{cdebootstrap}/ sur le système hôte
 
 _* L'architecture du système live
 
@@ -109,7 +109,7 @@ pouvez utiliser la sortie de #{lb config --dump}# qui produit un résumé de
 votre arbre de config (c'est-à-dire les listes des fichiers dans les
 sous-répertoires de #{config/}# mais ne les inclut pas).
 
-N'oubliez pas d'envoyer tous les journaux qui ont été produites avec le
+N'oubliez pas d'envoyer tous les journaux qui ont été produits avec le
 paramètre régionaux anglais, par exemple exécuter vos commandes live-build
 précédées par #{LC_ALL=C}# ou #{LC_ALL=en_US}#.
 
@@ -118,13 +118,13 @@ précédées par #{LC_ALL=C}# ou #{LC_ALL=en_US}#.
 Si possible, isoler le cas qui échoue au plus petit changement possible. Il
 n'est pas toujours facile de faire cela, donc si vous ne pouvez pas le gérer
 pour votre rapport, ne vous inquiétez pas. Toutefois, si vous planifiez
-votre cycle de développement bien, en utilisant petits ensembles de changes
-par itération, vous pourriez être capable d'isoler le problème en
-construisant une configuration simple «base» qui correspond étroitement à la
-configuration réelle avec seulement le changement cassé ajouté. Si il est
-difficile de trier vos modifications que cassent, il est possible que vous y
-compris trop dans chaque ensemble de modifications et devraient se
-développer en petits incréments.
+votre cycle de développement bien, en utilisant petits ensembles de
+changements par itération, vous pourriez être capable d'isoler le problème
+en construisant une configuration simple «base» qui correspond étroitement à
+la configuration réelle avec seulement le changement cassé ajouté. Si il est
+difficile de trier vos modifications qui cassent, il est possible que vous y
+compris trop dans chaque ensemble de modifications et vous devriez
+developper en petits incréments.
 
 2~ Utilisez le paquet adéquat pour rapporter le bogue
 
@@ -132,10 +132,10 @@ Où est-ce que le bogue apparaît?
 
 3~ Au moment de la construction tandis l'amorçage
 
-live-build amorce d'abord un système Debian de base avec #{debootstrap}# ou
-#{cdebootstrap}#. Selon l'outil d'amorçage utilisé et de la distribution
+live-build amorce d'abord un système Debian de base avec /{debootstrap}/ ou
+/{cdebootstrap}/. Selon l'outil d'amorçage utilisé et de la distribution
 Debian il peut échouer. Si un bogue apparaît ici, vérifiez si l'erreur est
-liée à un paquet Debian spécifique (plus probable), ou si il est liée à
+liée à un paquet Debian spécifique (plus probable), ou si elle est liée à
 l'outil d'amorçage lui-même.
 
 Dans les deux cas, ce n'est pas un bogue dans Debian Live, mais plutôt dans
@@ -151,13 +151,13 @@ est également reproductible sur un système normal.
 
 Si c'est le cas, ce n'est pas un bogue dans Debian Live, mais plutôt dans
 Debian - s'il vous plaît faire le rapport sur le paquet
-défaillant. L'exécution de #{debootstrap}# séparément du système de
+défaillant. L'exécution de /{debootstrap}/ séparément du système de
 construction ou l'exécution de #{lb bootstrap --debug}# vous donnera plus
 d'informations.
 
 Aussi, si vous utilisez un miroir local et/ou un proxy et vous rencontrez un
-problème, s'il vous plaît toujours le reproduire d'abord en amorçant sur un
-miroir officiel.
+problème, s'il vous plaît toujours le reproduire d'abord bootstrapping sur
+un miroir officiel.
 
 3~ Au moment du démarrage
 
@@ -167,7 +167,7 @@ l'information}#collect-information. Ne pas oublier de mentionner,
 comment/quand l'image a échoué, dans Qemu, VirtualBox, VMWare ou matériel
 réel. Si vous utilisez une technologie de virtualisation d'aucune sorte,
 s'il vous plaît toujours tester sur matériel réel avant de rapporter un
-bug. Fournir une copie d'écran de l'échec est également très utile.
+bogue. Fournir une copie d'écran de l'échec est également très utile.
 
 3~ Au moment de l'exécution
 
@@ -176,7 +176,7 @@ système Live, c'est probablement un bogue dans Debian Live. Cependant,
 
 2~ Faire les recherches
 
-Avant de présenter le bogue, s'il vous plaît recherchez sur le web pour le
+Avant de présenter le bogue, s'il vous plaît recherchez sur le web le
 message d'erreur ou un symptôme particulier que vous obtenez. Comme il est
 hautement improbable que vous êtes la seule personne qui expérience un
 problème particulier, il y a toujours une chance qu'il a été discuté
@@ -190,7 +190,7 @@ inclure les références au sein de vos rapport de bogues.
 
 En outre, vous devriez vérifier les listes de bogues en cours de live-build,
 live-boot, et live-config pour voir si quelque chose de semblable n'a été
-déjà signalé.
+déjà signalée.
 
 2~ Où rapporter les bogues
 
@@ -200,12 +200,12 @@ d'utiliser le système, s'il vous plaît voir http://bugs.debian.org/. Vous
 pouvez également soumettre les bogues en utilisant la commande #{reportbug}#
 du paquet du même nom.
 
-En général, vous devez signaler des erreurs de construction contre le paquet
-live-build, des erreurs en temps de démarrage contre live-boot, et erreurs
-d'exécution contre live-config. Si vous n'êtes pas sûr de quel paquet est
-approprié ou avez besoin d'aide avant de soumettre un rapport de bogue, s'il
-vous plaît envoyez un message à la liste de diffusion et nous vous aiderons
-à décider.
+En général, vous devez signaler les erreurs de construction contre le paquet
+live-build, les erreurs en temps de démarrage contre live-boot, et les
+erreurs d'exécution contre live-config. Si vous n'êtes pas sûr de quel
+paquet est approprié ou avez besoin d'aide avant de soumettre un rapport de
+bogue, s'il vous plaît envoyez un message à la liste de diffusion et nous
+vous aiderons à décider.
 
 S'il vous plaît notez que les bogues trouvés dans les distributions dérivées
 de Debian (comme Ubuntu et autres) *{ne}* doivent *{pas}* être rapportés au

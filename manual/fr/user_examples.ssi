@@ -2,11 +2,11 @@
 
 1~examples  Exemples
 
-Ce chapitre s'occupe d'exemples de constructions pour les cas d'utilisation
+Ce chapitre s'occupe d'exemples de constructions pour des cas d'utilisation
 spécifiques avec Debian Live. Si vous êtes nouveau avec la construction de
 vos propres images Debian Live, nous vous recommandons d'abord regarder les
-trois tutoriels en séquence, comme chacun apprend nouvelles techniques qui
-vous aideront à utiliser et à comprendre les exemples restants.
+trois tutoriels en séquence, parce que chacun enseigne nouvelles techniques
+qui vous aideront à utiliser et à comprendre les exemples restants.
 
 2~using-the-examples En utilisant les exemples
 
@@ -44,7 +44,7 @@ défaut contenant uniquement paquets de base (pas de Xorg) et quelques
 paquets Debian de soutien live, comme un premier exercice en utilisant
 live-build.
 
-Vous ne pouvez pas obtenir beaucoup plus simple que cela:
+Vous ne pouvez pas obtenir rien plus simple que cela:
 
 code{
 
@@ -53,9 +53,9 @@ code{
 }code
 
 Examinez le contenu du répertoire #{config/}# si vous le souhaitez. Vous
-verrez stockés ici une configuration du squelette, pour être personnalise
-ou, dans ce cas, utiliser immédiatement pour construire une image par
-défaut.
+verrez stockés ici une arborescence de configuration, pour être
+personnalisee ou, dans ce cas, utiliser immédiatement pour construire une
+image par défaut.
 
 Maintenant, en tant que superutilisateur, construire l'image en enregistrant
 un journal avec #{tee}#.
@@ -67,13 +67,13 @@ code{
 }code
 
 En supposant que tout se passe bien, après un certain temps, le répertoire
-courant contient #{binary-hybrid.iso}#. Cette image ISO hybride peut être
-démarré directement dans une machine virtuelle comme décrit dans {Test d'une
-image ISO avec QEMU}#testing-iso-with-qemu et {Test d'une image ISO avec
-virtualbox-ose}#testing-iso-with-virtualbox, ou bien copiés sur un support
-optique ou un périphérique USB comme décrit dans {Graver une image ISO sur
-un support physique}#burning-iso-image et {Copie d'un image ISO hybride sur
-une clé USB}#copying-iso-hybrid-to-usb, respectivement.
+courant contiendra #{binary.hybrid.iso}#. Cette image ISO hybride peut être
+démarrée directement dans une machine virtuelle comme décrit dans {Test
+d'une image ISO avec QEMU}#testing-iso-with-qemu et {Test d'une image ISO
+avec virtualbox-ose}#testing-iso-with-virtualbox, ou bien copiée sur un
+support optique ou un périphérique USB comme décrit dans {Graver une image
+ISO sur un support physique}#burning-iso-image et {Copie d'un image ISO
+hybride sur une clé USB}#copying-iso-hybrid-to-usb, respectivement.
 
 2~tutorial-2 Tutoriel 2: Un utilitaire de navigateur Web
 
@@ -94,13 +94,13 @@ code{
 
 Notre choix de LXDE pour cet exemple reflète notre volonté de fournir un
 environnement de bureau minime, puisque le point de l'image est
-l'utilisation unique, nous avons à l'esprit, le navigateur web. On pourrait
-aller encore plus loin et offrir une configuration par défaut pour le
-navigateur web dans #{config/includes.chroot/etc/iceweasel/profile/}#, ou
+l'utilisation unique que nous avons à l'esprit, le navigateur web. On
+pourrait aller encore plus loin et offrir une configuration par défaut pour
+le navigateur web dans #{config/includes.chroot/etc/iceweasel/profile/}#, ou
 des paquets de soutien supplémentaires pour visualiser différents types de
-contenu web, mais nous laissons cela comme une exercice pour le lecteur.
+contenu web, mais nous laissons cela comme un exercice pour le lecteur.
 
-Construire l'image, encore une fois en tant que superutilisateur, tenir un
+Construire l'image, encore une fois en tant que superutilisateur, garder un
 journal comme dans {Tutoriel 1}#tutorial-1:
 
 code{
@@ -158,12 +158,12 @@ code{
 
 Tout d'abord, #{--architectures i386}# assure que sur notre système de
 construction #{amd64}#, nous construisons une version 32 bits qui peut être
-utilisé sur la plupart des machines. Deuxièmement, nous utilisons
+utilisée sur la plupart des machines. En seconde place, nous utilisons
 #{--linux-flavours 686-pae}# parce que nous ne prévoyons pas utiliser cette
-image sur des systèmes beaucoup plus anciens. Troisièmement, nous avons
-choisi la liste des paquets #{lxde}# pour nous donner un bureau minimal. Et
-enfin, nous avons ajouté deux premiers paquets préférés: #{iceweasel}# et
-#{xchat}#.
+image sur des systèmes beaucoup plus anciens. En troisième lieu, nous avons
+choisi la liste de paquets /{lxde}/ pour nous donner un bureau minimal. Et
+enfin, nous avons ajouté deux premiers paquets préférés: /{iceweasel}/ et
+/{xchat}/.
 
 Maintenant, construire l'image:
 
@@ -178,8 +178,8 @@ besoin de taper #{2>&1 | tee binary.log}# parce que cela est maintenant
 inclus dans #{auto/build}#.
 
 Une fois que vous avez testé l'image (comme dans {Tutoriel 1}#tutorial-1) et
-êtes satisfait avec son fonctionnement, il est temps pour initialiser notre
-référentiel #{git}#, ajoutant que les scripts d'auto que nous avons juste
+vous êtes satisfait avec son fonctionnement, il est temps pour initialiser
+notre dépôt #{git}#, ajoutant que les scripts d'auto que nous avons juste
 créé, et ensuite faire le premier commit: 
 
 code{
@@ -193,12 +193,12 @@ code{
 3~ Deuxième révision
 
 Dans cette révision, nous allons nettoyer à partir de la première
-construction, ajouter le paquet #{vlc}# à notre configuration, reconstruire,
+construction, ajouter le paquet /{vlc}/ à notre configuration, reconstruire,
 tester et faire le commit.
 
 La commande #{lb clean}# va nettoyer tous les fichiers générés par la
 construction précédente à l'exception du cache, ça évite d'avoir à
-re-télécharger les paquets. Cela garantit que le #{lb build}# postérieure
+re-télécharger les paquets. Cela garantit que la #{lb build}# suivante
 ré-exécutera toutes les étapes pour régénérer les fichiers de notre nouvelle
 configuration.
 
@@ -208,7 +208,7 @@ code{
 
 }code
 
-Maintenant ajouter le paquet #{vlc}# à votre liste de paquets local dans
+Maintenant ajouter le paquet /{vlc}/ à votre liste de paquets locaux dans
 #{config/package-lists/my.list.chroot}#:
 
 code{
@@ -225,7 +225,7 @@ code{
 
 }code
 
-Tester, et quand vous êtes satisfaits, commit la prochaine révision:
+Tester, et quand vous soyez satisfaits, commit la prochaine révision:
 
 code{
 
@@ -237,8 +237,8 @@ Bien sûr, des changements plus compliqués à la configuration sont possibles,
 peut-être l'ajout de fichiers dans les sous-répertoires de
 #{config/}#. Quand vous livrez des nouvelles révisions, on doit prendre soin
 de ne pas modifier à la main ou envoyer au dépôt les fichiers de niveau
-supérieur dans #{config}# contenant variables #{LB_*}#, car ce sont des
-produits de creation, aussi, et sont toujours nettoyés par #{lb clean}# et
+supérieur dans #{config}# contenant variables #{LB_*}#, car ce sont aussi
+des produits de creation et sont toujours nettoyés par #{lb clean}# et
 re-créés avec #{lb config}# via leur respectives #{auto}# scripts.
 
 Nous sommes arrivés à la fin de notre série de tutoriels. Alors que de
@@ -252,9 +252,9 @@ expériences recueillies des utilisateurs de Debian Live.
 
 *{Cas d'utilisation:}* Créer une image avec live-build pour démarrer directement à un serveur VNC.
 
-Faire un répertoire de construction et créer une configuration du squelette
-construit autour de la liste standard x11, avec #{gdm3}#, #{metacity}# et
-#{xvnc4viewer}#, désactivant «recommends» pour faire un système minimal:
+Faire un répertoire de construction et créer une arborescence de fichiers
+construite autour de la liste standard x11, avec /{gdm3}/, /{metacity}/ et
+/{xvnc4viewer}/, désactivant «recommends» pour faire un système minimal:
 
 code{
 
@@ -267,8 +267,9 @@ code{
 }code
 
 Créez le répertoire #{/etc/skel}# avec une #{.xsession}# personnalisée pour
-l'utilisateur par défaut qui va lancer metacity et commencer xvncviewer, en
-reliant le port #{5901}# sur un serveur à  #{192.168.1.2}#:
+l'utilisateur par défaut qui va lancer /{metacity}/ et commencer
+/{xvncviewer}/, en reliant le port #{5901}# sur un serveur à
+#{192.168.1.2}#:
 
 code{
 
@@ -296,18 +297,18 @@ Amusez-vous bien!
 
 2~ Une image de base pour une clé USB de 128M
 
-*{Cas d'utilisation:}* Créer une image standard avec certains composants éliminés afin de s'adapter sur une clé USB avec 128M avec espace laissé pour l'utiliser à votre convenance.
+*{Cas d'utilisation:}* Créer une image standard avec certains composants éliminés afin de l'adapter sur une clé USB de 128M avec espace laissé pour l'utiliser à votre convenance.
 
-Lorsque l'optimisation d'une image adaptée à une dimension des certains
+Pour l'optimisation d'une image adaptée à la dimension des certains
 supports, vous avez besoin de comprendre le compromis que vous faites entre
-la taille et la fonctionnalité. Dans cet exemple, nous réduisons uniquement
-que pour faire place à du matériel supplémentaire au sein d'une taille de
-128M, mais sans rien faire pour détruire l'intégrité des paquets contenus,
-telles que la purge des données de localisation via le paquet
-#{localepurge}#, ou d'autres tels optimisations "intrusives". On notera en
-particulier, vous ne devriez pas utiliser #{--bootstrap-flavour minimal}#
-sauf si vous savez vraiment ce que vous faites, que l'omission de paquets de
-priorité #{importants}# produira probablement un système live cassé.
+la taille et la fonctionnalité. Dans cet exemple, nous réduisons la taille
+uniquement que pour faire place au matériel supplémentaire au sein d'une
+taille de 128M, mais sans faire rien pour détruire l'intégrité des paquets
+contenus, telle que la purge des données de localisation via le paquet
+/{localepurge}/, ou d'autres optimisations "intrusives". On notera en
+particulier que vous ne devriez pas utiliser #{--bootstrap-flavour minimal}#
+sauf si vous savez vraiment ce que vous faites et que l'omission des paquets
+de priorité *{importante}* produira probablement un système live cassé.
 
 code{
 
@@ -325,40 +326,40 @@ code{
 }code
 
 Sur le système de l'auteur au moment de l'écriture, la configuration
-ci-dessus produit une image de 78Mbyte. Cela se compare favorablement avec
-l'image de 166Mbyte produite par la configuration par défaut dans {Tutoriel
-1}#tutorial-1.
+ci-dessus produisait une image de 78Mbyte. Cela se compare favorablement
+avec l'image de 166Mbyte produite par la configuration par défaut dans
+{Tutoriel 1}#tutorial-1.
 
 Le plus grand espace-économiseur ici, par rapport à la construction d'une
 image standard sur une architecture #{i386}#, est de sélectionner uniquement
 le saveur du noyau #{486}# au lieu de la valeur par défaut #{-k "486
-686-pae"}#. Laissant hors indices APT avec #{--apt-indices false}# permet
-aussi d'économiser une bonne quantité d'espace, le compromis étant que vous
-devez faire  #{apt-get update}# avant d'utiliser apt dans le système
+686-pae"}#. Laissant hors «APT's indices» avec #{--apt-indices false}#
+permet aussi d'économiser une bonne quantité d'espace, le compromis étant
+que vous devez faire #{apt-get update}# avant d'utiliser apt dans le système
 live. Le choix de la liste #{minimal}# laisse de côté les grands paquets de
 #{locales}# et les services associés. Laissant hors les paquets recommandés
-avec #{--apt-recommends false}# économise de l'espace supplémentaire, au
-détriment d'omettre certains paquets vous pourriez autrement attendre à être
-là, tel que #{firmware-linux-free}# qui peuvent être nécessaires pour
+avec #{--apt-recommends false}# économise d'espace supplémentaire, au
+détriment d'omettre certains paquets que vous pourriez autrement attendre à
+être là, tel que /{firmware-linux-free}/ qui peuvent être nécessaires pour
 soutenir certains supports matériels. Les options restantes économisent
-petites quantités d'espace supplémentaires. C'est à vous de décider si la
-fonctionnalité qui est sacrifié avec chaque optimisation est en vaut la
+petites quantités d'espace supplémentaire. C'est à vous de décider si la
+fonctionnalité qui est sacrifiée avec chaque optimisation est en vaut la
 perte de fonctionnalité.
 
 2~ Un bureau KDE localisé et installateur 
 
-*{Cas d'utilisation:}* Créer une image de bureau KDE, localisé pour le portugais brésilien et incluant un installateur.
+*{Cas d'utilisation:}* Créer une image de bureau KDE, localisée pour le portugais brésilien et incluant un installateur.
 
-Nous voulons faire une image iso-hybride pour l'architecture i386 en
+Nous voulons faire une image iso-hybrid pour l'architecture i386 en
 utilisant notre bureau préféré, dans ce cas, KDE, contenant tous les paquets
-mêmes qui seraient installés par l'installateur Debian standard pour KDE.
+qui seraient installés par l'installateur Debian standard pour KDE.
 
 Notre premier problème est la découverte des noms des tâches
-appropriées. Actuellement, live-build ne peut pas aider. Alors que nous
-pourrions être chanceux et trouver ce par essais et erreurs, il y a un
-outil, #{grep-dctrl}#, qui peut être utilisé pour découvrir des descriptions
-de tâches dans tasksel-data, de sorte à préparer, assurez-vous que vous avez
-ces deux choses:
+appropriées. Actuellement, live-build ne peut pas aider à faire ça. Alors
+que nous pourrions être chanceux et trouver ce par essais et erreurs, il y a
+un outil, #{grep-dctrl}#, qui peut être utilisé pour découvrir les
+descriptions des tâches dans tasksel-data, de sorte à préparer, assurez-vous
+que vous avez ces deux choses:
 
 code{
 
@@ -375,8 +376,8 @@ code{
 
 }code
 
-Par cette commande, nous découvrons la tâche est appelée, assez clairement,
-brazilian-portuguese. Maintenant, pour trouver les tâches liées:
+Par cette commande, nous découvrons que la tâche est appelée, assez
+clairement, brazilian-portuguese. Maintenant, pour trouver les tâches liées:
 
 code{
 
@@ -410,8 +411,8 @@ code{
 
 }code
 
-Notez que nous avons inclus le paquet #{debian-installer-launcher}# pour
-lancer l'installateur à partir du bureau live, nous avons également précisé
-le noyau 486, parce qu'il est actuellement nécessaire faire que
-l'installateur et le noyau du systéme live coïncident pour que le lanceur
-fonctionne correctement.
+Notez que nous avons inclus le paquet debian-installer-launcher pour lancer
+l'installateur à partir du bureau live, nous avons également précisé le
+noyau 486, parce qu'il est actuellement nécessaire faire que l'installateur
+et le noyau du systéme live coïncident pour que le lanceur fonctionne
+correctement.

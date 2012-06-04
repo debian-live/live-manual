@@ -67,7 +67,7 @@ code{
 }code
 
 Suponiendo que todo va bien, después de un rato, el directorio actual
-contendrá #{binary-hybrid.iso}#. Esta imagen ISO híbrida se puede arrancar
+contendrá #{binary.hybrid.iso}#. Esta imagen ISO híbrida se puede arrancar
 directamente en una máquina virtual como se describe en {Probar una imagen
 ISO con Qemu}#testing-iso-with-qemu y en {Probar una imagen ISO con
 virtualbox-ose}#testing-iso-with-virtualbox o bien ser copiada a un medio
@@ -161,8 +161,8 @@ sistema de creación #{amd64}# se crea una versión de 32-bits adecuada para
 ser usada en la mayoría de máquinas. En segundo lugar, se usa
 #{--linux-flavours 686-pae}# porque no se espera usar esta imagen en
 sistemas mucho más viejos. En tercer lugar se elige la lista de paquetes
-#{lxde}# para proporcionar un escritorio mínimo. Y, por último, se añaden
-dos paquetes iniciales favoritos: #{iceweasel}# y #{xchat}#.
+/{lxde}/ para proporcionar un escritorio mínimo. Y, por último, se añaden
+dos paquetes iniciales favoritos: /{iceweasel}/ y /{xchat}/.
 
 Ahora, crear la imagen:
 
@@ -192,7 +192,7 @@ code{
 3~ Segunda revisión
 
 En esta revisión, vamos a limpiar desde la primera creación, agregar el
-paquete #{vlc}# a nuestra configuración, crear de nuevo, probar y enviar los
+paquete /{vlc}/ a nuestra configuración, crear de nuevo, probar y enviar los
 cambios al git.
 
 El comando #{lb clean}# limpiará todos los ficheros generados en las
@@ -207,7 +207,7 @@ code{
 
 }code
 
-Añadir ahora el paquete #{vlc}# a nuestra lista de paquetes local en
+Añadir ahora el paquete /{vlc}/ a nuestra lista de paquetes local en
 #{config/package-lists/my.list.chroot}#:
 
 code{
@@ -251,7 +251,7 @@ experiencias recogidas de los usuarios de Debian Live.
 *{Caso Práctico:}* Crear una imagen con live-build para arrancar directamente un servidor VNC.
 
 Hacer un directorio de creación y crear una configuración en esqueleto según
-la lista estándar-x11, incluyendo #{gdm3}#, #{metacity}# y #{xvnc4viewer}#,
+la lista estándar-x11, incluyendo /{gdm3}/, /{metacity}/ y /{xvnc4viewer}/,
 desactivando los paquetes recomendados para conseguir un sistema mínimo:
 
 code{
@@ -265,8 +265,8 @@ code{
 }code
 
 Crear el directorio #{/etc/skel}# y poner un fichero #{.xsession}#
-personalizado para el usuario que por defecto ejecutará metacity e iniciará
-el xvncviewer, conectándo al puerto #{5901}# de un servidor en
+personalizado para el usuario que por defecto ejecutará /{metacity}/ e
+iniciará el /{xvncviewer}/, conectándo al puerto #{5901}# de un servidor en
 #{192.168.1.2}#:
 
 code{
@@ -302,10 +302,10 @@ almacenamiento, es necesario comprender el equilibrio que se está haciendo
 entre tamaño y funcionalidad. En este ejemplo, se recorta tanto sólo para
 dar cabida a material adicional dentro de un tamaño de 128M, pero sin hacer
 nada para destruir la integridad de los paquetes que contiene, tales como la
-depuración de las variantes locales a través del paquete #{localepurge}# u
+depuración de las variantes locales a través del paquete /{localepurge}/ u
 otro tipo de optimizaciones «intrusivas». Cabe destacar que no se debe usar
 #{--bootstrap-flavour minimal}# a menos de que realmente se sepa lo que se
-está haciendo, ya que al omitir paquetes de prioridad #{importante}# lo más
+está haciendo, ya que al omitir paquetes de prioridad *{importante}* lo más
 probable es que se produzca un sistema roto.
 
 code{
@@ -338,7 +338,7 @@ vivo. Elegir la lista del paquete #{minimal}# deja fuera el gran paquete de
 #{locales}# y sus utilidades asociadas. Dejando los paquetes recomendados
 con #{--apt-recommends false}# se ahorra un poco de espacio adicional a
 costa de omitir algunos paquetes que de otro modo podría esperarse que
-estuvieran alli, tal como #{firmware-linux-free}# que puede ser necesario
+estuvieran alli, tal como /{firmware-linux-free}/ que puede ser necesario
 para el soporte de cierto hardware. Las opciones restantes recortan pequeñas
 cantidades adicionales de espacio. Es necesario decidir si vale la pena la
 funcionalidad que se sacrifica con cada optimización.
@@ -406,8 +406,8 @@ code{
 
 }code
 
-Tener en cuenta que se ha incluido el paquete #{debian-installer-launcher}#
-para lanzar el instalador desde el escritorio en vivo, y que también se ha
+Tener en cuenta que se ha incluido el paquete debian-installer-launcher para
+lanzar el instalador desde el escritorio en vivo, y que también se ha
 especificado el kernel 486, ya que actualmente es necesario que el
 instalador y el kernel del sistema en vivo coincidan para que el lanzador
 funcione correctamente.

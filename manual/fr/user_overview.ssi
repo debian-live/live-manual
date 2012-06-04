@@ -14,12 +14,12 @@ L'idée derrière live-build est de constituer un cadre qui utilise un
 répertoire de configuration pour automatiser et personnaliser complètement
 tous les aspects de la construction d'une image Live.
 
-Plusieurs concepts sont similaires à celles ceux dans le paquet Debian
-debhelper écrit par Joey Hess:
+Plusieurs concepts sont similaires à ceux dans le paquet Debian
+/{debhelper}/ écrit par Joey Hess:
 
 _* Les scripts ont un emplacement central pour la configuration de leur
-fonctionnement. Avec debhelper, c'est le sous-répertoire #{debian/}# d'un
-arbre de paquets. Par exemple, dh_install cherchera, entre autres, un
+fonctionnement. Avec /{debhelper}/, c'est le sous-répertoire #{debian/}#
+d'un arbre de paquets. Par exemple, dh_install cherchera, entre autres, un
 fichier appelé #{debian/install}# pour déterminer quels fichiers doivent
 exister dans un paquet binaire particulier. De la même manière, live-build
 enregistre son configuration entièrement sous un sous-répertoire
@@ -28,11 +28,11 @@ enregistre son configuration entièrement sous un sous-répertoire
 _* Les scripts sont indépendants - c'est-à-dire, il est toujours sûr
 d'exécuter chaque commande.
 
-Contrairement à debhelper, live-build contient un outil pour générer un
-répertoire de configuration en squelette, #{lb config}#. Cela pourrait être
-considéré comme similaire à des outils tels que #{dh-make}#.  Pour plus
-d'informations à propos de #{lb config}#, s'il vous plaît voir {La commande
-lb config}#lb-config.
+Contrairement à /{debhelper}/, live-build contient un outil pour générer une
+arborescence de configuration, #{lb config}#. Cela pourrait être considéré
+comme similaire à des outils tels que /{dh-make}/.  Pour plus d'informations
+à propos de #{lb config}#, s'il vous plaît voir {La commande lb
+config}#lb-config.
 
 Le reste de cette section examine les trois commandes les plus importantes:
 
@@ -53,12 +53,11 @@ Comme indiqué dans {live-build}#live-build, les scripts qui composent
 live-build lisent leur configuration avec la commande #{source}# à partir
 d'un seul répertoire nommé #{config/}#. Comme la construction de ce
 répertoire à la main serait fastidieux et source d'erreurs, la commande #{lb
-config}# peut être utilisée pour créer des répertoires de configuration de
-squelette.
+config}# peut être utilisée pour créer une arborescence de configuration.
 
 Exécuter #{lb config}# sans aucun argument crée un sous-répertoire
 #{config/}# dont il remplit avec certains paramètres, et un sous-répertoire
-en squelette #{auto/}#.
+#{auto/}#  avec une arborescence de fichiers.
 
 code{
 
@@ -107,10 +106,11 @@ Le travail de la commande #{lb clean}# est enlever les différentes parties
 d'une construction afin que autres compilations ultérieures puissent
 commencer à partir d'un état propre. Par défaut, les étapes #{chroot}#,
 #{binary}# et #{source}# sont nettoyées, mais le cache est laissé intact. En
-outre, les étapes individuelles peuvent être nettoyées. Par exemple, si vous
-avez effectué des changements qui affectent uniquement la phase binaire,
-utilisez #{lb clean --binary}# avant de construire un nouveau binaire. Voir
-la page de manuel de #{lb_clean}# pour une liste complète des options.
+outre, les étapes peuvent être nettoyées individuellement. Par exemple, si
+vous avez effectué des changements qui affectent uniquement la phase
+binaire, utilisez #{lb clean --binary}# avant de construire un nouveau
+binary. Voir la page de manuel de #{lb_clean}# pour une liste complète des
+options.
 
 2~live-boot Le paquet live-boot
 
@@ -121,11 +121,11 @@ Debian Live, netboot tarballs, et les images pour clés USB.
 
 Au démarrage il va chercher un support en lecture seule qui contient un
 répertoire #{/live/}# où un système de fichiers racine (souvent une image du
-système de fichiers compressé comme squashfs) est stocké. S'il est trouvé,
+système de fichiers compressée comme squashfs) est stocké. S'il est trouvé,
 il va créer un environnement accessible en écriture, en utilisant aufs, afin
 que systémes similaires à Debian puissent démarrer à partir de ça.
 
-Plus d'information sur ramfs initial dans Debian peut être trouvé dans le
+Plus d'information sur initial ramfs dans Debian peut être trouvé dans le
 Debian Linux Kernel Handbook à  http://kernel-handbook.alioth.debian.org/
 dans le chapitre sur initramfs.
 

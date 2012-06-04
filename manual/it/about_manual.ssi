@@ -2,14 +2,16 @@
 
 1~about-manual A proposito di questo manuale
 
-Questo manuale funge da unico punto d'accesso a tutta la documentazione
-relativa al progetto Debian Live e si applica in particolare al software
-prodotto per il rilascio di Debian 7.0 "Wheezy". Sebbene sia principalmente
-focalizzato nell'aiutare a costruire un sistema live e non su argomenti per
-l'utente finale, è comunque possibile trovare alcune informazioni utili in
-queste sezioni: le {Nozioni di base}#the-basics coprono la preparazione
-delle immagini da avviare da un supporto o dalla rete, mentre
-{Personalizzare i comportamenti durante
+This manual serves as a single access point to all documentation related to
+the Debian Live project and in particular applies to the software produced
+by the project for the Debian 7.0 "wheezy" release. An up-to-date version
+can always be found at http://live.debian.net/
+
+Sebbene sia principalmente focalizzato nell'aiutare a costruire un sistema
+live e non su argomenti per l'utente finale, è comunque possibile trovare
+alcune informazioni utili in queste sezioni: le {Nozioni di base}#the-basics
+coprono la preparazione delle immagini da avviare da un supporto o dalla
+rete, mentre {Personalizzare i comportamenti durante
 l'esecuzione}#customizing-run-time-behaviours descrive alcune opzioni
 specificabili al prompt d'avvio, come la scelta di un layout di tastiera e
 una lingua, e l'utilizzo della persistenza.
@@ -23,26 +25,27 @@ di super-utente, i comandi sono preceduti rispettivamente da #{$}# o
 
 2~ Per gli impazienti
 
-Sebbene crediamo che ogni cosa in questo manuale sia importante almeno per
-alcuni dei nostri utenti, ci rendiamo conto che c'è tanto materiale da
-trattare e che si potrebbe voler provare il software prima di entrare nei
-dettagli; pertanto suggeriamo di leggerlo nel seguente ordine. Per iniziare
-leggere questo capitolo, {A proposito di questo manuale}#about-manual, da
-cima a fondo insieme alla sezione {Glossario}#terms, quindi passare ai tre
-tutorial all'inizio della sezione {Esempi}#examples progettati per insegnare
-le basi della costruzione e della personalizzazione delle immagini. Si legga
-innanzitutto {Usare gli esempi}#using-the-examples, seguito da {Tutorial 1:
-un'immagine standard}#tutorial-1, {Tutorial 2: un programma di utilità web
-browser}#tutorial-2 e, infine, {Tutorial 3: un'immagine
-personalizzata}#tutorial-3. Alla fine di queste esercitazioni, si avrà un
-assaggio di ciò che si può fare con Debian Live. Ti invitiamo ad uno studio
-più approfondito del manuale, magari leggendo in seguito le {Nozioni di
-base}#the-basics, sfogliando o saltando {Creare un'immagine
-netboot}#building-netboot-image, e finendo con la lettura di {Panoramica
-sulla personalizzazione}#customization-overview e dei capitoli che lo
-seguono. A questo punto, ci auguriamo che tu sia davvero eccitato da ciò che
-si può fare con Debian Live e motivato a leggere il resto del manuale, da
-cima a fondo.
+While we believe that everything in this manual is important to at least
+some of our users, we realize it is a lot of material to cover and that you
+may wish to experience early success using the software before delving into
+the details. Therefore, we suggest reading in the following order.
+
+First, read this chapter, {About this manual}#about-manual, from the
+beginning and ending with the {Terms}#terms section. Next, skip to the three
+tutorials at the front of the {Examples}#examples section designed to teach
+you image building and customization basics. Read {Using the
+examples}#using-the-examples first, followed by {Tutorial 1: A standard
+image}#tutorial-1, {Tutorial 2: A web browser utility}#tutorial-2 and
+finally {Tutorial 3: A personalized image}#tutorial-3. By the end of these
+tutorials, you will have a taste of what can be done with Debian Live.
+
+We encourage you to return to more in-depth study of the manual, perhaps
+next reading {The basics}#the-basics, skimming or skipping {Building a
+netboot image}#building-netboot-image, and finishing by reading the
+{Customization overview}#customization-overview and the chapters that follow
+it. By this point, we hope you are thoroughly excited by what can be done
+with Debian Live and motivated to read the rest of the manual,
+cover-to-cover.
 
 2~terms Glossario
 
@@ -66,15 +69,15 @@ _* *{Host system}*: L'ambiente utilizzato per creare il sistema live.
 _* *{Target system}*: L'ambiente usato per eseguire il sistema live.
 
 _* *{live-boot}*: Una raccolta di script usati per avviare sistemi
-live. live-boot era una parte di live-initramfs.
+live. live-boot era una parte di /{live-initramfs}/.
 
 _* *{live-build}*: Una raccolta di script usati per creare sistemi Debian
-Live personalizzati. live-build era conosciuto come live-helper, ed ancora
-prima come live-package.
+Live personalizzati. live-build era conosciuto come /{live-helper}/, ed
+ancora prima come /{live-package}/.
 
 _* *{live-config}*: Una raccolta di script usati per configurare un sistema
 live durante il processo di inizializzazione. live-config era una parte di
-live-initramfs.
+/{live-initramfs}/.
 
 _* *{live-manual}*: Questo documento è inserito nel pacchetto chiamato
 live-manual.
@@ -85,8 +88,8 @@ distribuzione Debian.
 _* *{Boot parameters}*: Parametri che possono essere immessi nel prompt del
 boot loader per modificare il comportamento del kernel o di live-config.
 
-_* *{chroot}*: Il programma chroot, #{chroot(8)}#, rende possibile eseguire
-diverse istanze dell'ambiente GNU/Linux su un singolo sistema
+_* *{chroot}*: Il programma /{chroot}/, #{chroot(8)}#, rende possibile
+eseguire diverse istanze dell'ambiente GNU/Linux su un singolo sistema
 simultaneamente senza riavviare.
 
 _* *{Binary image}*: Un file che contiene il sistema live, come binary.iso o
@@ -95,19 +98,15 @@ binary.img.
 _* *{Target distribution}*: La distribuzione su cui sarà basato il sistema
 live. Può differire dalla distribuzione presente sul proprio computer.
 
-_* *{Squeeze/Wheezy/Sid (stable/testing/unstable)}*: Nomi in codice per i
-rilasci Debian; al momento Squeeze è l'attuale *{stable}* e Wheezy l'attuale
-*{testing}*. Sid sarà sempre il sinonimo della *{unstable}*. In tutto il
-manuale si tende ad usare i nomi in codice dei rilasci, in quanto questo è
-ciò che è previsto dagli strumenti stessi.
-
-La distribuzione *{stable}* contiene l'ultima distribuzione ufficialmente
-rilasciata da Debian; la *{testing}* è il punto di raccolta per i pacchetti
-della prossima *{stable}*. Uno dei principali vantaggi nell'uso di questa
-distribuzione sta nell'avere software più recente rispetto alla
-*{stable}*. La distribuzione *{unstable}* è dove avviene lo sviluppo attivo
-di Debian; viene generalmente usata dagli sviluppatori o da coloro che amano
-l'azzardo.
+_* *{stable/testing/unstable}*: The *{stable}* distribution contains the
+latest officially released distribution of Debian. The *{testing}*
+distribution is the staging area for the next *{stable}* release. A major
+advantage of using this distribution is that it has more recent versions of
+software relative to the *{stable}* release. The *{unstable}* distribution
+is where active development of Debian occurs. Generally, this distribution
+is run by developers and those who like to live on the edge. Throughout the
+manual, we tend to use codenames for the releases, such as wheezy or sid, as
+that is what is supported by the tools themselves.
 
 2~ Autori
 
@@ -249,29 +248,15 @@ code{
 _* Si noti che tutte le modifiche vanno eseguite sul ramo debian-next e non
 su quello debian.
 
-_* Dopo aver modificato i file in #{manual/en/}#, chiamare il target
-"commit" nella directory superiore per bonificare i file ed aggiornare i
-file di traduzione:
+_* Do not use #{make commit}# unless you are updating translations in this
+commit, and in that case, do not mix changes to the English manual and
+translations in the same commit, but use separate commits for each. See the
+{Translation}#translation section for more details.
 
-code{
-
- $ make commit
-
-}code
-
-quindi
-
-code{
-
- $ git add .
-
-}code
-
-_* Dopo aver pulito e aggiunto i file è possibile eseguire il commit delle
-modifiche. Si scrivano messaggi costituiti da frasi in inglese esaurienti e
-utili, inizianti con una lettera maiuscola e terminanti con un
-punto. Solitamente cominceranno con la forma
-"Fixing/Adding/Removing/Correcting/Translating", ad esempio.
+_* Write commit messages that consist of complete, meaningful sentences in
+English, starting with a capital letter and ending with a full
+stop. Usually, these will start with the form
+'Fixing/Adding/Removing/Correcting/Translating', e.g.
 
 code{
 
@@ -293,9 +278,10 @@ Per inviare una traduzione per una nuova lingua, seguire questi tre passi:
 
 _* Tradurre i file about_manual.ssi.pot, about_project.ssi.pot e
 index.html.in.pot nella propria lingua con il proprio editor preferito (tipo
-poedit). Inviare i file tradotti alla mailing list. Una volta che abbiamo
-ricevuto il contributo, aggiungeremo la nuova lingua al manuale (fornendo i
-file po) e la attiveremo per la procedura di compilazione automatica.
+/{poedit}/). Inviare i file tradotti alla mailing list. Una volta che
+abbiamo ricevuto il contributo, aggiungeremo la nuova lingua al manuale
+(fornendo i file po) e la attiveremo per la procedura di compilazione
+automatica.
 
 _* Una volta che la nuova lingua è stata aggiunta, si può iniziare a
 tradurre tutti i file po situati in #{manual/po/}#, nell'ordine che si
@@ -304,6 +290,6 @@ preferisce.
 _* Non dimenticare che è necessario usare #{make commit}# per assicurarsi
 che i manuali tradotti siano aggiornati partendo dai file po, quindi si
 possono verificare le modifiche con #{make build}# prima di #{git add .}#,
-#{git commit -a -m "Traduzione..."}# e #{git push}#.
+#{git commit -a -m "Translating..."}# e #{git push}#.
 
 *{Nota:}* anche se #{make commit}# e #{make build}# rimuovono entrambi la directory di compilazione, se si compila il manuale per rivedere le modifiche come consigliato, si consiglia di pulire l'albero git prima del push; per fare ciò si puà usare il comando #{make clean}#. Grazie al file .gitignore, quest'ultimo passaggio non è obbligatorio ma è una buona abitudine che evita di fare involontariamente il commit di certi file.

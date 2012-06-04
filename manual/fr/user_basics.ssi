@@ -11,8 +11,8 @@ de la persistance, le type #{hdd}# peut être plus approprié pour les
 périphériques USB. Le chapitre se termine avec des instructions pour la
 construction et l'utilisation d'une image #{net}# , qui est un peu plus
 compliqué en raison de la configuration requise sur le serveur. C'est un
-sujet un peu avancée pour tous ceux qui ne connaissent pas déjà le démarrage
-par le réseau, mais est inclus ici car une fois la configuration est
+sujet un peu avancé pour tous ceux qui ne connaissent pas déjà le démarrage
+sur le réseau, mais est inclus ici car une fois la configuration est
 terminée, il est un moyen très pratique pour tester et déployer des images
 pour le démarrage sur le réseau local sans le tracas des supports de
 l'image.
@@ -24,58 +24,58 @@ image précompilée les noms de fichiers peuvent varier.
 2~what-is-live Qu'est-ce c'est un système live?
 
 Un système live signifie généralement un système d'exploitation démarré sur
-un ordinateur à partir d'un support amovible, tel qu'un CD-ROM ou une clé
-USB, ou d'un réseau prêt à l'emploi sans aucune installation sur le disque
-habituel(s), avec auto-configuration fait lors de l'exécution (voir
+un ordinateur à partir d'un support amovible, tel qu'un CD-ROM, une clé USB
+ou d'un réseau, prêt à l'emploi sans aucune installation sur le disque
+habituel, avec auto-configuration fait lors de l'exécution (voir
 {Termes}#terms).
 
 Avec Debian Live, c'est un système Debian GNU/Linux, construit pour une des
 architectures supportées (actuellement amd64, i386, PowerPC et SPARC). Il
 est fait à partir des éléments suivants:
 
-_* *{Linux kernel image}*, d'habitude appelé #{vmlinuz*}#
+_* *{Image du noyau Linux}*, d'habitude appelé #{vmlinuz*}#
 
-_* *{Initial RAM disk image (initrd)}*: Un disque virtuel RAM configuré pour
-le démarrage de Linux, contenant possiblement des modules nécessaires pour
-monter l'image du système et certains scripts pour le faire.
+_* *{Image du RAM-disque initial (initrd)}*: Un disque virtuel RAM configuré
+pour le démarrage de Linux, contenant possiblement des modules nécessaires
+pour monter l'image du système et certains scripts pour le faire.
 
-_* *{System image}*: L'image du système de fichiers du système
+_* *{Image du système}*: L'image du système de fichiers du système
 d'exploitation. Habituellement, un système de fichiers SquashFS comprimé est
 utilisé pour réduire au minimum la taille de l'image Debian Live. Notez
 qu'il est en lecture seulement. Ainsi, lors du démarrage du système Debian
 Live nous allons utiliser un disque RAM et un mécanisme  "union" pour
 permettre l'écriture de fichiers dans le système en marche. Cependant,
 toutes les modifications seront perdues lors de l'arrêt à moins que l'option
-persistance est utilisée (voir {Persistance}#persistence).
+«persistance» soit utilisée (voir {Persistance}#persistence).
 
-_* *{Bootloader}*: Un petit morceau de code conçu pour démarrer à partir du
-support choisi, il peut présenter un menu rapide ou permettre la sélection
-des options/configuration. Il charge le kernel Linux et son initrd pour
-fonctionner avec un système de fichiers associé. Différentes solutions
+_* *{Chargeur d'amorçage}*: Un petit morceau de code conçu pour démarrer à
+partir du support choisi, il peut présenter un menu rapide ou permettre la
+sélection des options/configurations. Il charge le noyau Linux et son initrd
+pour fonctionner avec un système de fichiers associé. Différentes solutions
 peuvent être utilisées, selon le support de destination et le format du
 système de fichiers contenant les composants mentionnés précédemment:
 isolinux pour démarrer à partir d'un CD ou DVD au format ISO9660, syslinux
-pour démarrer le disque dur ou clé USB à partir d'une partition VFAT,
-extlinux pour ext2/3/4 et partitions btrfs, pxelinux pour netboot PXE, GRUB
-pour ext2/3/4 partitions, etc.
+pour démarrer un disque dur ou une clé USB à partir d'une partition VFAT,
+extlinux pour partitions ext2/3/4 et btrfs, pxelinux pour netboot PXE, GRUB
+pour partitions ext2/3/4, etc.
 
 Vous pouvez utiliser live-build pour construire l'image du système à partir
-de vos spécifications, configurer un kernel Linux, son initrd, et un
-chargeur de démarrage pour les exécuter, tout dans un format en fonction du
-support (image ISO9660,  disque image, etc.)
+de vos spécifications, configurer un noyau Linux, son initrd, et un chargeur
+d'amorçage pour les exécuter, tout dans un format en fonction du support
+(image ISO9660, image disque, etc.)
 
 2~building-iso-hybrid Premières étapes: la construction d'une image ISO
 hybride
 
 Quel que soit le type d'image, vous devrez effectuer les mêmes étapes de
 base pour créer une image chaque fois. Comme premier exemple, exécuter la
-séquence suivante de commandes  live-build pour créer une image ISO hybride
+séquence suivante de commandes live-build pour créer une image ISO hybride
 de base contenant tout le système Debian standard sans X.org. Elle est
 appropriée pour être gravée sur CD ou DVD, et également peut être copiée sur
 une clé USB.
 
 Tout d'abord, exécutez la commande #{lb config}#. Cela va créer une
-hiérarchie "config /" dans le répertoire courant pour l'utilisation par
+hiérarchie "config/" dans le répertoire courant pour l'utilisation par
 d'autres commandes:
 
 code{
@@ -88,7 +88,7 @@ Aucun paramètre n'est passé à #{lb config}#, donc défauts seront utilisés
 pour l'ensemble de ses diverses options. Voir {La commande lb
 config}#lb-config pour plus de détails.
 
-Maintenant que la hiérarchie "config /" existe, créez l'image avec la
+Maintenant que la hiérarchie "config/" existe, créez l'image avec la
 commande #{lb build}# :
 
 code{
@@ -99,14 +99,14 @@ code{
 
 Ce processus peut prendre un certain temps, en fonction de la vitesse de
 votre connexion réseau. Quand il est complet, il devrait y avoir un fichier
-image #{binary-hybrid.iso}# prêt à l'emploi, dans le répertoire courant.
+image #{binary.hybrid.iso}# prêt à l'emploi, dans le répertoire courant.
 
 2~using-iso-hybrid Utilisation d'une image ISO hybride live
 
 Après la construction ou le téléchargement d'une image ISO hybride, qui peut
-être obtenue à http://www.debian.org/CD/live/, l'étape suivante est
-d'habitude préparer votre support pour le démarrage, soit sur CD-R(W) ou DVD
--R(W) des supports optiques ou une clé USB.
+être obtenue sur http://www.debian.org/CD/live/, l'étape suivante est
+d'habitude préparer votre support pour le démarrage, soit sur CD-R(W) ou
+DVD-R(W), des supports optiques ou une clé USB.
 
 3~burning-iso-image Graver une image ISO sur un support physique
 
@@ -117,7 +117,7 @@ code{
 
  # apt-get install wodim
 
- $ wodim binary-hybrid.iso
+ $ wodim binary.hybrid.iso
 
 }code
 
@@ -125,9 +125,9 @@ code{
 
 Les images ISO préparées avec la commande #{isohybrid}# comme les images
 #{iso-hybrid}# produites par défaut, peuvent être simplement copiées sur une
-clé USB avec #{dd}# ou un programme équivalent. Brancher une clé USB avec
-une capacité suffisamment grande pour votre fichier image et déterminez quel
-dispositif il est, que nous appellons ci-dessous #{${USBSTICK}}#. C'est le
+clé USB avec #{dd}# ou un logiciel équivalent. Brancher une clé USB avec une
+capacité suffisamment grande pour votre fichier image et déterminez quel
+dispositif elle est, que nous appellons ci-dessous #{${USBSTICK}}#. C'est le
 fichier de périphérique de votre clé, tel que #{/dev/sdb}#, pas une
 partition, tel que #{/dev/sdb1}#! Vous pouvez trouver le nom du périphérique
 en regardant la sortie de #{dmesg}# après avoir branché le dispositif, ou
@@ -139,7 +139,7 @@ déjà existant sur votre clé!}*
 
 code{
 
- $ dd if=binary-hybrid.iso of=${USBSTICK}
+ $ dd if=binary.hybrid.iso of=${USBSTICK}
 
 }code
 
@@ -147,7 +147,7 @@ code{
 3~booting-live-media Démarrer le support live
 
 La première fois que vous démarrez votre support live, qu'il s'agisse de CD,
-DVD, clé USB, ou le démarrage par PXE, une certaine configuration dans le
+DVD, clé USB, ou du démarrage par PXE, une certaine configuration dans le
 BIOS de votre ordinateur peut être d'abord nécessaire. Puisque les BIOS
 varient grandement en fonctionnalités et raccourcis clavier, on ne peut pas
 pénétrer dans le sujet en profondeur ici. Certains BIOS fournissent une
@@ -161,14 +161,13 @@ Une fois que vous avez démarré le support, vous êtes présenté avec un menu
 de démarrage. Si vous appuyez simplement sur enter ici, le système va
 démarrer en utilisant l'entrée par défaut, #{Live}# Pour plus d'informations
 sur les options de démarrage, consultez l'entrée «Help» dans le menu et
-aussi les pages de manuel de #{live-boot}# et #{live-config}# dans le
-système live.
+aussi les pages de manuel de live-boot et live-config dans le système live.
 
 En supposant que vous avez sélectionné #{Live}# et démarré une image de
 bureau live par défaut, après les messages de démarrage défilent, vous
 devriez être automatiquement connecté au compte #{user}# et voir un bureau,
 prêt à l'emploi. Si vous avez démarré une image de la console uniquement,
-tels que saveurs #{standard}# ou #{sauvetage}# des images prédéfinies, vous
+tels que saveurs #{standard}# ou #{rescue}# des images précompilées, vous
 devriez être automatiquement connecté à la console pour le compte #{user}#
 et voir une invite du shell, prêt à l'emploi.
 
@@ -181,7 +180,7 @@ sans ses avertissements:
 _* L'exécution d'une VM demande assez de RAM pour l'OS client et l'hôte et
 un CPU avec support matériel pour la virtualisation est recommandée.
 
-_* Il ya quelques limitations inhérentes à l'exécution sur une VM, par
+_* Il y a quelques limitations inhérentes à l'exécution sur une VM, par
 exemple performance de vidéo médiocre, ou choix limité de matériel émulé.
 
 _* Lors du développement d'un matériel spécifique, il n'existe aucun
@@ -197,13 +196,13 @@ logiciels VM disponibles et choisissez celui qui convient à vos besoins.
 3~testing-iso-with-qemu Test d'une image ISO avec QEMU
 
 La VM la plus polyvalente de Debian est QEMU. Si votre processeur possède un
-support matériel pour la virtualisation, vouz pouvez utiliser le paquet
-#{qemu-kvm}#; La description du paquet #{qemu-kvm}# énumère brièvement les
+support matériel pour la virtualisation, vous pouvez utiliser le paquet
+/{qemu-kvm}/; La description du paquet /{qemu-kvm}/ énumère brièvement les
 exigences.
 
-Tout d'abord, installez #{qemu-kvm}# si votre processeur le soutient. Sinon,
-installez #{qemu}#, dans ce cas, le nom du programme est #{qemu}# au lieu de
-#{kvm}# dans les exemples suivants. Le paquet #{qemu-utils}# est également
+Tout d'abord, installez /{qemu-kvm}/ si votre processeur le soutient. Sinon,
+installez /{qemu}/, dans ce cas, le nom du programme est #{qemu}# au lieu de
+#{kvm}# dans les exemples suivants. Le paquet /{qemu-utils}/ est également
 valuable pour créer des images disque virtuels avec #{qemu-img}#.
 
 code{
@@ -216,7 +215,7 @@ Démarrer une image ISO est simple:
 
 code{
 
- $ kvm -cdrom binary-hybrid.iso
+ $ kvm -cdrom binary.hybrid.iso
 
 }code
 
@@ -224,7 +223,7 @@ Voir les pages de manuel pour plus de détails.
 
 3~testing-iso-with-virtualbox  Test d'une image ISO avec virtualbox-ose
 
-Afin de tester l'ISO avec #{virtualbox-ose}#:
+Afin de tester l'ISO avec /{virtualbox-ose}/:
 
 code{
 
@@ -235,14 +234,10 @@ code{
 }code
 
 Créer une nouvelle machine virtuelle, modifiez les paramètres de stockage
-pour utiliser #{binary-hybrid.iso}# comme le périphérique CD/DVD et démarrer
+pour utiliser #{binary.hybrid.iso}# comme le périphérique CD/DVD et démarrer
 la machine.
 
-Remarque: Pour les systèmes live contenant X.org que vous voulez essayer
-avec #{virtualbox-ose}#, vous pouvez inclure le paquet des pilotes
-VirtualBox X.org, #{virtualbox-ose-guest-x11}#, dans votre configuration de
-live-build. Sinon, la résolution est limitée à 800x600.
-
+*{Remarque:}* Pour les systèmes live contenant X.org que vous voulez essayer avec /{virtualbox-ose}/, vous pouvez inclure le paquet des pilotes VirtualBox X.org, /{virtualbox-ose-guest-x11}/, dans votre configuration de live-build. Sinon, la résolution est limitée à 800x600.
 code{
 
  $ echo virtualbox-ose-guest-x11 >> config/package-lists/my.list.chroot
@@ -256,15 +251,12 @@ régards, sauf que vous spécifiez #{-b hdd}# et le nom du fichier résultant
 est #{binary.img}# qui ne peut être brûlé sur des supports optiques. Il
 convient pour le démarrage à partir de clés USB, disques durs USB, et divers
 autres dispositifs de stockage portables. Normalement, une image ISO hybride
-peut être utilisé à cette fin au lieu, mais si vous avez un BIOS qui ne gère
-pas correctement des images hybrides, ou si vous voulez utiliser l'espace
-disponible sur le support à certaines fins, tel que la persistance d'une
-partition, vous devez utiliser une image HDD. 
+peut être utilisée à cette fin au lieu, mais si vous avez un BIOS qui ne
+gère pas correctement les images hybrides, ou si vous voulez utiliser
+l'espace disponible sur le support à certaines fins, tel que la persistance
+d'une partition, vous devez utiliser une image HDD. 
 
-Remarque: si vous avez créé une image ISO hybride avec l'exemple précédent,
-vous devrez nettoyer votre répertoire de travail avec la commande #{lb
-clean}# (voir {La commande lb clean}#lb-clean):
-
+*{Remarque:}* si vous avez créé une image ISO hybride avec l'exemple précédent, vous devrez nettoyer votre répertoire de travail avec la commande #{lb clean}# (voir {La commande lb clean}#lb-clean):
 code{
 
  # lb clean --binary
@@ -298,13 +290,13 @@ démarrage syslinux, prêtes à être écrites directement sur une clé USB. Com
 l'utilisation d'une image HDD est juste comme l'utilisation d'une image ISO
 hybride sur USB, suivez les instructions {Utiliser une image live ISO
 hybride}#using-iso-hybrid, à l'exception du nom de fichier #{binary.img}# en
-lieu de #{binary-hybrid.iso}#.
+lieu de #{binary.hybrid.iso}#.
 
 3~testing-hdd-with-qemu Test d'une image HDD avec Qemu
 
-D'abord, installer QEMU comme décrit ci-dessus dans {Test d'une image ISO
-avec QEMU}#testing-iso-with-qemu. Ensuite, exécutez #{kvm}# ou #{qemu}#,
-selon la version de vos besoins du système hôte, précisant #{binary.img}#
+D'abord, installer /{qemu}/ comme décrit ci-dessus dans {Test d'une image
+ISO avec QEMU}#testing-iso-with-qemu. Ensuite, exécutez #{kvm}# ou #{qemu}#,
+selon la version que votre système hôte a besoin, précisant #{binary.img}#
 comme le premier disque dur.
 
 code{
@@ -316,8 +308,8 @@ code{
 3~using-usb-extra-space Utilisation de l'espace disponible sur une clé USB
 
 Pour utiliser l'espace libre restant après avoir copié #{binary.img}# sur
-une clé USB, utilisez un outil de partitionnement tels que #{gparted}# ou
-#{parted}# afin de créer une nouvelle partition sur la clé. La première
+une clé USB, utilisez un outil de partitionnement tel que /{gparted}/ ou
+/{parted}/ afin de créer une nouvelle partition sur la clé. La première
 partition sera utilisée par le système Debian Live.
 
 code{
@@ -336,13 +328,8 @@ code{
 
 }code
 
-Remarque: Si vous voulez utiliser l'espace supplémentaire avec Windows,
-apparemment cet OS ne peut normalement pas accéder à n'importe quel
-partition, mais la première. Certaines solutions à ce problème ont été
-discutés sur notre {liste de diffusion}#contact, mais il semble qu'il n'y a
-pas de réponses faciles.
-
-*{Rappelez-vous: Chaque fois que vous installez une nouvelle binary.img sur la clé, toutes les données sur la clé seront perdues parce que la table de partition est écrasé par le contenu de l'image, vous devez sauvegarder votre partition supplémentaire d'abord la restaurer à nouveau après la mise à jour du live image.}*
+*{Remarque:}* Si vous voulez utiliser l'espace supplémentaire avec Windows, apparemment cet OS ne peut normalement pas accéder à n'importe quelle partition, mais la première. Certaines solutions à ce problème ont été discutées sur notre {liste de diffusion}#contact, mais il semble qu'il n'y a pas de réponses faciles.
+*{Rappelez-vous: Chaque fois que vous installez une nouvelle binary.img sur la clé, toutes les données sur la clé seront perdues parce que la table de partition est écrasée par le contenu de l'image, vous devez sauvegarder votre partition supplémentaire d'abord la restaurer à nouveau après la mise à jour de l'image live.}*
 
 2~building-netboot-image Construction d'une image netboot
 
@@ -350,10 +337,7 @@ La séquence de commandes suivante va créer une image NetBoot de base
 contenant le système Debian standard sans X.org. Elle peut être démarrée sur
 le réseau.
 
-Remarque: Si vous avez réalisé tous les exemples précédents, vous aurez
-besoin de nettoyer votre répertoire de travail avec la commande #{lb
-clean}#:
-
+*{Remarque:}* Si vous avez réalisé quelque des exemples précédents, vous aurez besoin de nettoyer votre répertoire de travail avec la commande #{lb clean}#:
 code{
 
  # lb clean --binary
@@ -373,9 +357,9 @@ Contrairement à les images ISO et HDD le démarrage sur le réseau ne serve
 pas l'image du système de fichiers pour le client, afin que les fichiers
 doivent être servis via NFS. Les options #{--net-root-path}# et
 #{--net-root-server}# spécifien l'emplacement et le serveur, respectivement,
-du serveur NFS sur lequel l'image système de fichiers sera situé au moment
-du démarrage. Assurez-vous que ce sont mis à des valeurs appropriées pour
-votre réseau et serveur.
+du serveur NFS sur lequel l'image du système de fichiers sera située au
+moment du démarrage. Assurez-vous que ceux-ci sont fixées à des valeurs
+appropriées pour votre réseau et serveur.
 
 Maintenant construire l'image avec la commande #{lb build}#
 
@@ -389,14 +373,14 @@ Dans un démarrage réseau, le client exécute un petit morceau de logiciel qui
 réside habituellement sur l'EPROM de la carte Ethernet. Ce programme envoie
 une requête DHCP pour obtenir une adresse IP et les informations sur ce
 qu'il faut faire ensuite. Typiquement, la prochaine étape est obtenir un
-chargeur de démarrage de niveau supérieur via le protocole TFTP. Cela
-pourrait être pxelinux, GRUB, ou démarrer directement à un système
-d'exploitation comme Linux.
+chargeur d'amorçage de niveau supérieur via le protocole TFTP. Cela pourrait
+être pxelinux, GRUB, ou démarrer directement à un système d'exploitation
+comme Linux.
 
 Par exemple, si vous décompressez le fichier généré #{binary-net.tar.gz}#
 dans le répertoire #{/srv/debian-live}#, vous trouverez l'image du système
-de fichiers dans #{live/filesystem.squashfs}# et le kernel, initrd et le
-chargeur de démarrage pxelinux dans #{tftpboot/debian-live/i386}#.
+de fichiers dans #{live/filesystem.squashfs}# et le noyau, initrd et le
+chargeur d'amorçage pxelinux dans #{tftpboot/debian-live/i386}#.
 
 Nous devons maintenant configurer trois services sur le serveur pour activer
 le démarrage sur le réseau: le serveur DHCP, serveur TFTP et le serveur NFS.
@@ -405,7 +389,7 @@ le démarrage sur le réseau: le serveur DHCP, serveur TFTP et le serveur NFS.
 
 Nous devons configurer le serveur DHCP de notre réseau pour être sûr de
 donner une adresse IP au client du système du démarrage sur le réseau, et
-pour annoncer l'emplacement du chargeur de démarrage PXE.
+pour annoncer l'emplacement du chargeur d'amorçage PXE.
 
 Voici un exemple source d'inspiration, écrit pour le serveur ISC DHCP
 #{isc-dhcp-server}# dans le fichier de configuration
@@ -435,12 +419,12 @@ code{
 
 3~ Serveur TFTP
 
-Cela sert le kernel et le ramdisk initial pour le système au moment de
+Cela sert le noyau et le ramdisk initial pour le système au moment de
 l'exécution.
 
-Vous devriez installer le paquet tftpd-hpa. Il peut servir tous les fichiers
-contenus dans un répertoire racine, d'habitude #{/srv/tftp}#. Pour le
-laisser servir des fichiers dans #{/srv/debian-live/tftpboot}#, exécuter
+Vous devriez installer le paquet /{tftpd-hpa}/. Il peut servir tous les
+fichiers contenus dans un répertoire racine, d'habitude #{/srv/tftp}#. Pour
+le laisser servir des fichiers dans #{/srv/debian-live/tftpboot}#, exécuter
 comme utilisateur root la commande suivante:
 
 code{
@@ -453,11 +437,11 @@ et remplissez le nuveau répertoire du serveur tftp
 
 3~ Serveur NFS
 
-Une fois l'ordinateur hôte a téléchargé et démarré un kernel Linux et chargé
+Une fois l'ordinateur hôte a téléchargé et démarré un noyau Linux et chargé
 son initrd, il va essayer de monter l'image du système de fichiers live via
 un serveur NFS.
 
-Vous devez installer le paquet #{nfs-kernel-server}#.
+Vous devez installer le paquet /{nfs-kernel-server}/.
 
 Ensuite, rendre l'image du système de fichiers disponible via NFS en
 ajoutant une ligne comme la suivante #{/etc/exports}#:
@@ -468,7 +452,7 @@ code{
 
 }code
 
-et dire au serveur NFS sur cette exportation avec la commande suivante:
+et indiquer au serveur NFS sur cette exportation avec la commande suivante:
 
 code{
 
@@ -476,9 +460,9 @@ code{
 
 }code
 
-Mise en place ces trois services peut être un peu délicat. Vous pourriez
-avoir besoin de patience pour obtenir que tous travaillent ensemble. Pour
-plus d'informations, consultez le wiki syslinux à
+La configuation de ces trois services peut être un peu dificile. Vous
+pourriez avoir besoin de patience pour obtenir que tous travaillent
+ensemble. Pour plus d'informations, consultez le wiki syslinux à
 http://syslinux.zytor.com/wiki/index.php/PXELINUX ou la section Debian
 Installer Manual's TFTP Net Booting à
 http://d-i.alioth.debian.org/manual/en.i386/ch04s05.html. Ils pourraient
@@ -495,7 +479,7 @@ virtualisation. Il y a deux solutions.
 
 3~ Qemu
 
-_* Installer #{qemu}#, #{bridge-utils}#, #{sudo}#.
+_* Installer /{qemu}/, /{bridge-utils}/, /{sudo}/.
 
 Èditer #{/etc/qemu-ifup}#:
 

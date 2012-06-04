@@ -16,6 +16,8 @@ lugar de `foo`.
 _* Se puede comprobar las secuencias de comandos con 'sh -n' y
 'checkbashisms'.
 
+_* Asegurarse de que el código funcione con 'set -e'.
+
 2~ Sangrado
 
 _* Utilizar siempre los tabuladores en lugar de espacios.
@@ -53,7 +55,7 @@ Mal:
 
 code{
 
- foo () {
+ Foo () {
          bar
  }
 
@@ -63,7 +65,7 @@ Bien:
 
 code{
 
- foo ()
+ Foo ()
  {
          bar
  }
@@ -148,3 +150,6 @@ en lugar de "#{if test -x /bin/foo; ...}#".
 
 _* Se debe utilizar #{case}# siempre que sea posible en lugar de #{test}#,
 ya que es más fácil de leer y más rápido en la ejecución.
+
+_* Usar mayúsculas en los nombres de las funciones para evitar confusiones
+con el entorno de los usuarios.

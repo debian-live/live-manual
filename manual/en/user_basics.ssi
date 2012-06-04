@@ -44,7 +44,7 @@ code{
 
 }code
 
-This process can take a while, depending on the speed of your network connection. When it is complete, there should be a #{binary-hybrid.iso}# image file, ready to use, in the current directory.
+This process can take a while, depending on the speed of your network connection. When it is complete, there should be a #{binary.hybrid.iso}# image file, ready to use, in the current directory.
 
 2~using-iso-hybrid Using an ISO hybrid live image
 
@@ -58,7 +58,7 @@ code{
 
  # apt-get install wodim
 
- $ wodim binary-hybrid.iso
+ $ wodim binary.hybrid.iso
 
 }code
 
@@ -71,7 +71,7 @@ Once you are certain you have the correct device name, use the #{dd}# command to
 
 code{
 
- $ dd if=binary-hybrid.iso of=${USBSTICK}
+ $ dd if=binary.hybrid.iso of=${USBSTICK}
 
 }code
 
@@ -80,7 +80,7 @@ code{
 
 The first time you boot your live media, whether CD, DVD, USB key, or PXE boot, some setup in your computer's BIOS may be needed first. Since BIOSes vary greatly in features and key bindings, we cannot get into the topic in depth here. Some BIOSes provide a key to bring up a menu of boot devices at boot time, which is the easiest way if it is available on your system. Otherwise, you need to enter the BIOS configuration menu and change the boot order to place the boot device for the live system before your normal boot device.
 
-Once you've booted the media, you are presented with a boot menu. If you just press enter here, the system will boot using the default entry, #{Live}# and default options. For more information about boot options, see the "help" entry in the menu and also the #{live-boot}# and #{live-config}# man pages found within the live system.
+Once you've booted the media, you are presented with a boot menu. If you just press enter here, the system will boot using the default entry, #{Live}# and default options. For more information about boot options, see the "help" entry in the menu and also the live-boot and live-config man pages found within the live system.
 
 Assuming you've selected #{Live}# and booted a default desktop live image, after the boot messages scroll by, you should be automatically logged into the #{user}# account and see a desktop, ready to use. If you've booted a console-only image, such as #{standard}# or #{rescue}# flavour prebuilt images, you should be automatically logged in on the console to the #{user}# account and see a shell prompt, ready to use.
 
@@ -100,9 +100,9 @@ Provided you can work within these constraints, survey the available VM software
 
 3~testing-iso-with-qemu Testing an ISO image with QEMU
 
-The most versatile VM in Debian is QEMU. If your processor has hardware support for virtualization, use the #{qemu-kvm}# package; the #{qemu-kvm}# package description briefly lists the requirements.
+The most versatile VM in Debian is QEMU. If your processor has hardware support for virtualization, use the /{qemu-kvm}/ package; the /{qemu-kvm}/ package description briefly lists the requirements.
 
-First, install #{qemu-kvm}# if your processor supports it. If not, install #{qemu}#, in which case the program name is #{qemu}# instead of #{kvm}# in the following examples. The #{qemu-utils}# package is also valuable for creating virtual disk images with #{qemu-img}#.
+First, install /{qemu-kvm}/ if your processor supports it. If not, install /{qemu}/, in which case the program name is #{qemu}# instead of #{kvm}# in the following examples. The /{qemu-utils}/ package is also valuable for creating virtual disk images with #{qemu-img}#.
 
 code{
 
@@ -114,7 +114,7 @@ Booting an ISO image is simple:
 
 code{
 
- $ kvm -cdrom binary-hybrid.iso
+ $ kvm -cdrom binary.hybrid.iso
 
 }code
 
@@ -122,7 +122,7 @@ See the man pages for more details.
 
 3~testing-iso-with-virtualbox Testing an ISO image with virtualbox-ose
 
-In order to test the ISO with #{virtualbox-ose}#:
+In order to test the ISO with /{virtualbox-ose}/:
 
 code{
 
@@ -132,9 +132,9 @@ code{
 
 }code
 
-Create a new virtual machine, change the storage settings to use #{binary-hybrid.iso}# as the CD/DVD device, and start the machine.
+Create a new virtual machine, change the storage settings to use #{binary.hybrid.iso}# as the CD/DVD device, and start the machine.
 
-Note: For live systems containing X.org that you want to test with #{virtualbox-ose}#, you may wish to include the VirtualBox X.org driver package, #{virtualbox-ose-guest-x11}#, in your live-build configuration. Otherwise, the resolution is limited to 800x600.
+*{Note:}* For live systems containing X.org that you want to test with /{virtualbox-ose}/, you may wish to include the VirtualBox X.org driver package, /{virtualbox-ose-guest-x11}/, in your live-build configuration. Otherwise, the resolution is limited to 800x600.
 
 code{
 
@@ -146,7 +146,7 @@ code{
 
 Building an HDD image is similar to ISO hybrid in all respects except you specify #{-b hdd}# and the resulting filename is #{binary.img}# which cannot be burnt to optical media. It is suitable for booting from USB sticks, USB hard drives, and various other portable storage devices. Normally, an ISO hybrid image can be used for this purpose instead, but if you have a BIOS which does not handle hybrid images properly, or want to use the remaining space on the media for some purpose, such as a persistence partition, you need an HDD image.
 
-Note: if you created an ISO hybrid image with the previous example, you will need to clean up your working directory with the #{lb clean}# command (see {The lb clean command}#lb-clean):
+*{Note:}* if you created an ISO hybrid image with the previous example, you will need to clean up your working directory with the #{lb clean}# command (see {The lb clean command}#lb-clean):
 
 code{
 
@@ -174,11 +174,11 @@ When the build finishes, a #{binary.img}# file should be present in the current 
 
 2~using-hdd-image Using an HDD image
 
-The generated binary image contains a VFAT partition and the syslinux bootloader, ready to be directly written on a USB stick. Since using an HDD image is just like using an ISO hybrid image on USB, follow the instructions in {Using an ISO hybrid live image}#using-iso-hybrid, except use the filename #{binary.img}# instead of #{binary-hybrid.iso}#.
+The generated binary image contains a VFAT partition and the syslinux bootloader, ready to be directly written on a USB stick. Since using an HDD image is just like using an ISO hybrid image on USB, follow the instructions in {Using an ISO hybrid live image}#using-iso-hybrid, except use the filename #{binary.img}# instead of #{binary.hybrid.iso}#.
 
 3~testing-hdd-with-qemu Testing an HDD image with Qemu
 
-First, install QEMU as described above in {Testing an ISO image with QEMU}#testing-iso-with-qemu. Then run #{kvm}# or #{qemu}#, depending on which version your host system needs, specifying #{binary.img}# as the first hard drive.
+First, install /{qemu}/ as described above in {Testing an ISO image with QEMU}#testing-iso-with-qemu. Then run #{kvm}# or #{qemu}#, depending on which version your host system needs, specifying #{binary.img}# as the first hard drive.
 
 code{
 
@@ -188,7 +188,7 @@ code{
 
 3~using-usb-extra-space Using the space left on a USB stick
 
-To use the remaining free space after copying #{binary.img}# to a USB stick, use a partitioning tool such as #{gparted}# or #{parted}# to create a new partition on the stick. The first partition will be used by the Debian Live system.
+To use the remaining free space after copying #{binary.img}# to a USB stick, use a partitioning tool such as /{gparted}/ or /{parted}/ to create a new partition on the stick. The first partition will be used by the Debian Live system.
 
 code{
 
@@ -204,7 +204,7 @@ code{
 
 }code
 
-Note: If you want to use the extra space with Windows, apparently that OS cannot normally access any partitions but the first. Some solutions to this problem have been discussed on our {mailing list}#contact, but it seems there are no easy answers.
+*{Note:}* If you want to use the extra space with Windows, apparently that OS cannot normally access any partitions but the first. Some solutions to this problem have been discussed on our {mailing list}#contact, but it seems there are no easy answers.
 
 *{Remember: Every time you install a new binary.img on the stick, all data on the stick will be lost because the partition table is overwritten by the contents of the image, so back up your extra partition first to restore again after updating the live image.}*
 
@@ -212,7 +212,7 @@ Note: If you want to use the extra space with Windows, apparently that OS cannot
 
 The following sequence of commands will create a basic netboot image containing the Debian standard system without X.org. It is suitable for booting over the network.
 
-Note: if you performed any previous examples, you will need to clean up your working directory with the #{lb clean}# command:
+*{Note:}* if you performed any previous examples, you will need to clean up your working directory with the #{lb clean}# command:
 
 code{
 
@@ -276,7 +276,7 @@ code{
 
 This serves the kernel and initial ramdisk to the system at run time.
 
-You should install the tftpd-hpa package. It can serve all files contained inside a root directory, usually #{/srv/tftp}#. To let it serve files inside #{/srv/debian-live/tftpboot}#, run as root the following command:
+You should install the /{tftpd-hpa}/ package. It can serve all files contained inside a root directory, usually #{/srv/tftp}#. To let it serve files inside #{/srv/debian-live/tftpboot}#, run as root the following command:
 
 code{
 
@@ -290,7 +290,7 @@ and fill in the new tftp server directory when being asked about it.
 
 Once the guest computer has downloaded and booted a Linux kernel and loaded its initrd, it will try to mount the Live filesystem image through a NFS server.
 
-You need to install the #{nfs-kernel-server}# package.
+You need to install the /{nfs-kernel-server}/ package.
 
 Then, make the filesystem image available through NFS by adding a line like the following to #{/etc/exports}#:
 
@@ -318,7 +318,7 @@ To make our life easier, we can use virtualization. There are two solutions.
 
 3~ Qemu
 
-_* Install #{qemu}#, #{bridge-utils}#, #{sudo}#.
+_* Install /{qemu}/, /{bridge-utils}/, /{sudo}/.
 
 Edit #{/etc/qemu-ifup}#:
 

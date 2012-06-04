@@ -62,7 +62,7 @@ code{
 }code
 
 Presupponendo che tutto vada per il verso giusto, dopo un po' la directory
-corrente conterrà #{binary-hybrid.iso}#. Questa immagine ISO ibrida può
+corrente conterrà #{binary.hybrid.iso}#. Questa immagine ISO ibrida può
 essere avviata direttamente in una macchina virtuale come descritto in
 {Provare un'immagine ISO con Qemu}#testing-iso-with-qemu e {Provare
 un'immagine ISO con virtualbox-ose}#testing-iso-with-virtualbox, oppure
@@ -156,9 +156,9 @@ Per prima cosa, #{--architectures i386}# assicura che sul nostro sistema
 #{amd64}# costruiamo una versione a 32-bit utilizzabile sulla maggior parte
 delle macchine. In secondo luogo, usiamo #{--linux-flavours 686-pae}# dato
 che non prevediamo di usare questa immagine su sistemi troppo vecchi. Terzo,
-abbiamo scelto la lista di pacchetti #{lxde}# per avere un desktop
+abbiamo scelto la lista di pacchetti /{lxde}/ per avere un desktop
 minimale. Infine, abbiamo aggiunto due pacchetti preferiti per cominciare:
-#{iceweasel}# e #{xchat}#.
+/{iceweasel}/ e /{xchat}/.
 
 Costruire quindi l'immagine:
 
@@ -187,7 +187,7 @@ code{
 3~ Seconda revisione
 
 In questa revisione ripuliremo la prima compilazione, aggiungeremo il
-pacchetto #{vlc}# alla configurazione, dunque avverrà una ricompilazione,
+pacchetto /{vlc}/ alla configurazione, dunque avverrà una ricompilazione,
 verifica e commit.
 
 Il comando #{lb clean}# ripulirà tutti i file ottenuti con la precedente
@@ -201,7 +201,7 @@ code{
 
 }code
 
-Now append the #{vlc}# package to our local package list in
+Ora inserire il pacchetto /{vlc}/ all'elenco locale dei pacchetti
 #{config/package-lists/my.list.chroot}#:
 
 code{
@@ -247,8 +247,8 @@ utenti Debian Live.
 *{Caso d'uso:}* creazione di un'immagine con live-build per avviare direttamente un server VNC.
 
 Creare una directory con al suo interno una configurazione scheletrica
-costruita sulla base dell'elenco di standard-x11, tra cui #{gdm3}#,
-#{metacity}# e #{xvnc4viewer}#, disabilitando i raccomandati per ottenere un
+costruita sulla base dell'elenco di standard-x11, tra cui /{gdm3}/,
+/{metacity}/ e /{xvnc4viewer}/, disabilitando i raccomandati per ottenere un
 sistema minimale:
 
 code{
@@ -262,8 +262,8 @@ code{
 }code
 
 Creare la directory #{/etc/skel}# e inserirvi un #{.xsession}#
-personalizzato per l'utente predefinito che lancerà metacity e avvierà
-xvncviewer, connesso alla porta #{5901}# su un server all'indirizzo
+personalizzato per l'utente predefinito che lancerà /{metacity}/ e avvierà
+/{xvncviewer}/, connesso alla porta #{5901}# su un server all'indirizzo
 #{192.168.1.2}#:
 
 code{
@@ -299,10 +299,10 @@ supporto, è necessario capire il compromesso che si deve fare tra la
 dimensione e la funzionalità. In questo esempio, taglieremo solo quanto
 basta per far sì che il tutto stia in 128M, senza fare nient'altro che
 distrugga l'integrità dei pacchetti contenuti, come eliminare localizzazioni
-con il pacchetto #{localepurge}# o altre ottimizzazioni "intrusive". È da
+con il pacchetto /{localepurge}/ o altre ottimizzazioni "intrusive". È da
 notare che non va usato #{--bootstrap-flavour minimal}# a meno che non si
 sappia cosa si sta facendo, come omettere la priorità dei pacchetti
-#{important}# che molto probabilmente produrrà un sistema live danneggiato.
+*{important}* che molto probabilmente produrrà un sistema live danneggiato.
 
 code{
 
@@ -332,7 +332,7 @@ apt nel sistema live. Scegliendo la lista #{minima}# dei pacchetti si
 esclude il grosso pacchetto #{locales}# e le utilità associate. Saltare i
 pacchetti raccomandati con #{--apt-recommends false}# salva altro spazio, a
 scapito di alcuni pacchetti che ci si aspetta di trovare, come
-#{firmware-linux-free}# che potrebbe servire a supportare un certo
+/{firmware-linux-free}/ che potrebbe servire a supportare un certo
 hardware. Le restanti opzioni limano altre piccole quantità di spazio. Sta a
 voi decidere se le funzionalità sacrificate con ciascuna ottimizzazione
 valgono la pena.
@@ -378,11 +378,11 @@ code{
 
 }code
 
-At boot time we will generate the pt_BR.UTF-8 locale and select the
-pt-latin1 keyboard layout. We will also need to preseed our desktop choice,
-"kde" so that tasksel will install the correct desktop task, as it differs
-from the default (see {Desktop and languages
-tasks}#desktop-and-language-tasks). Now let's put the pieces together:
+Durante l'avvio verrà generata la localizzazione pt_BR.UTF-8 e selezionato
+il layout di tastiera pt-latin1. Ci sarà anche bisogno di preconfigurare la
+nostra scelta desktop, "kde" cosicché tasksel installerà il task corretto,
+che differisce dal predefinito (vedere {Task per desktop e
+lingua}#desktop-and-language-tasks). È ora di mettere insieme i pezzi:
 
 code{
 
@@ -400,8 +400,8 @@ code{
 
 }code
 
-Si noti che è stato incluso il pacchetto #{debian-installer-launcher}# in
-modo da poter lanciare l'installer dal desktop della live, e che è stato
-anche specificato il kernel 486, dato che attualmente è necessario che il
-kernel dell'installer e quello del sistema live coincidano affinché il
-launcher funzioni correttamente.
+Si noti che è stato incluso il pacchetto debian-installer-launcher in modo
+da poter lanciare l'installer dal desktop della live, e che è stato anche
+specificato il kernel 486, dato che attualmente è necessario che il kernel
+dell'installer e quello del sistema live coincidano affinché il launcher
+funzioni correttamente.

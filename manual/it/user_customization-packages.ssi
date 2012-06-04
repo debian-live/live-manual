@@ -13,13 +13,14 @@ velocità di scaricamento, dovreste usare un mirror a voi vicino. Si possono
 inoltre aggiungere i propri repository per pacchetti di backport,
 sperimentali o personalizzati, o aggiungere i pacchetti direttamente come
 file. È possibile definire una propria lista di pacchetti da includere,
-usarne una predefinita di live-build, usare task di #{tasksel}#, o una
+usarne una predefinita di live-build, usare task di /{tasksel}/, o una
 combinazione di tutti e tre. Infine una serie di opzioni fornisce un certo
-controllo su apt, o aptitude se si preferisce, in fase di compilazione
-quando i pacchetti sono installati. Ciò può tornare utile se si usa un
-proxy, se si vuole disabilitare l'installazione dei pacchetti raccomandati
-per risparmiare spazio o controllare quali versioni dei pacchetti vengono
-installate con il pinning, giusto per citare alcune possibilità.
+controllo su /{apt}/, o /{aptitude}/ se si preferisce, in fase di
+compilazione quando i pacchetti sono installati. Ciò può tornare utile se si
+usa un proxy, se si vuole disabilitare l'installazione dei pacchetti
+raccomandati per risparmiare spazio o controllare quali versioni dei
+pacchetti vengono installate con il pinning, giusto per citare alcune
+possibilità.
 
 2~ Sorgenti dei pacchetti
 
@@ -27,14 +28,14 @@ installate con il pinning, giusto per citare alcune possibilità.
 
 La distribuzione che viene scelta ha un ampio impatto su quali pacchetti
 siano disponibili per essere inclusi nell'immagine live. Specificare il nome
-in codice, il predefinito per la versione Wheezy di live-build è #{wheezy}#;
+in codice, il predefinito per la versione wheezy di live-build è wheezy;
 qualsiasi attuale distribuzione mantenuta negli archivi Debian può essere
 qui specificata con il suo nome in codice. (Per ulteriori dettagli
 consultare il {Glossario}#terms). L'opzione #{--distribution}# non solo
-influenza la sorgente dei pacchetti nell'archivio, ma indica a
-#{live-build}# di comportarsi secondo la necessità per compilare ciascuna
-distribuzione supportata. Ad esempio se si vuole costruire un rilascio
-*{unstable}*, Sid, specificare:
+influenza la sorgente dei pacchetti nell'archivio, ma indica a live-build di
+comportarsi secondo la necessità per compilare ciascuna distribuzione
+supportata. Ad esempio se si vuole costruire un rilascio *{unstable}*, sid,
+specificare:
 
 code{
 
@@ -71,7 +72,7 @@ vicino per la migliore velocità di scaricamento. Ciascuna delle opzioni
 #{--mirror-*}# determina quale mirror della distribuzione è usato nei vari
 stadi della compilazione. Ricordando dalle {Fasi della
 creazione}#stages-of-the-build che la fase di *{avvio}* è quando il chroot è
-inizialmente popolato da debootstrap con un sistema minimale e quella di
+inizialmente popolato da /{debootstrap}/ con un sistema minimale e quella di
 *{chroot}* è quando viene creato il chroot usato per costruire il file
 system del sistema live. Perciò per queste fasi vengono usati i
 corrispondenti cambi di mirror, e in seguito, nella fase *{binaria}* vengono
@@ -197,20 +198,20 @@ inclusi e condizionali come descritto nella sezioni seguenti.
 Gli elenchi predefiniti si possono integrare usando quelli locali dei
 pacchetti in #{config/package-lists/}#.
 
-Per essere processate, gli elenchi dei pacchetti che si trovano in questa
+Per essere processati, gli elenchi dei pacchetti che si trovano in questa
 directory devono avere un suffisso #{.list}# e un suffisso #{.chroot}# o
 #{.binary}# aggiuntivo per indicare per quale fase sia l'elenco.
 
-*{Note:}* If you don't specify the stage suffix, the list will be used for both stages. Normally, you want to specify #{.list.chroot}# so that the packages will only be installed in the live filesystem and not have an extra copy of the #{.deb}# placed on the media.
+*{Nota:}* se non si specifica il suffisso l'elenco sarà usato per entrambe le fasi. Normalmente è preferibile specificare #{.list.chroot}# in modo che i pacchetti vengono installati solo nel filesystem live evitando di avere una copia extra del #{.deb}# sul dispositivo.
 
 3~ Elenchi locali di pacchetti binari
 
-To make a binary stage list, place a file suffixed with #{.list.binary}# in
-#{config/package-lists/}#. These packages are not installed in the live
-filesystem, but are included on the live media under #{pool/}#. You would
-typically use such a list with one of the non-live installer variants. As
-mentioned above, if you want this list to be the same as your chroot stage
-list, simply use the #{.list}# suffix by itself.
+Per creare un elenco di binari inserire un file con suffisso
+#{.list.binary}# in #{config/package-lists/}#; questi pacchetti non sono
+installati nel filesystem ma inclusi sul dispositivo live sotto
+#{pool/}#. Solitamente questo elenco si usa con una delle varianti non-live
+dell'installatore; come detto sopra, se si vuole che questo sia identico
+all'elenco della fase chroot, usare semplicemente il suffisso #{.list}#.
 
 3~ Estendere un'elenco di pacchetti usando gli include
 
@@ -220,8 +221,8 @@ include. Far riferimento a questi nella directory
 come scriverne di propri.
 
 Per esempio, per creare un elenco che includa quello predefinito di
-#{gnome}#più iceweasel, creare #{config/package-lists/mio.elenco.chroot}#
-con i seguenti contenuti:
+#{gnome}#più /{iceweasel}/, creare
+#{config/package-lists/mio.elenco.chroot}# con i seguenti contenuti:
 
 code{
 
@@ -252,7 +253,7 @@ code{
 }code
 
 Si può verificare per ognuna di una serie di valori, ad esempio per
-installare #{memtest86+}# specificando sia #{--architectures i386}# sia
+installare /{memtest86+}/ specificando sia #{--architectures i386}# sia
 #{--architectures amd64}#:
 
 code{
@@ -264,7 +265,7 @@ code{
 }code
 
 È possibile provare altre variabili che contengano più di un valore, ad
-esempio per installare #{vrms}# specificando sia da #{contrib}# sia da
+esempio per installare /{vrms}/ specificando sia da #{contrib}# sia da
 #{non-free}# tramite #{--archive-areas}#:
 
 code{
@@ -322,12 +323,13 @@ modo, non c'è nessuna voce nel menu per i task delle lingue, ma la scelta
 della lingua dell'utente durante l'installazione influenza la selezione dei
 corrispondenti task della lingua.
 
-When developing a desktop live image, the image typically boots directly to
-a working desktop, the choices of both desktop and default language having
-been made at build time, not at run time as in the case of the Debian
-Installer. That's not to say that a live image couldn't be built to support
-multiple desktops or multiple languages and offer the user a choice, but
-that is not live-build's default behaviour.
+Sviluppando un'immagine live per desktop, questa si avvia direttamente su
+un'area di lavoro, le scelte del desktop e della lingua predefinita sono
+state fatte al momento della compilazione e non al volo come nel caso
+dell'installatore Debian. Questo non per dire che un'immagine live non possa
+essere creata con un supporto per desktop o lingue multipli per offrire
+all'utente una scelta, ma che non è il comportamento predefinito nella
+creazione di una live.
 
 Poiché automaticamente non viene fatta alcuna preparazione sui task della
 lingua, i quali includono cose come caratteri specifici per la lingua e
@@ -343,10 +345,10 @@ code{
 
 }code
 
-Since desktop tasks are "internal" tasks, for every desktop flavour task
-included in the image, the corresponding value, if it differs from the
-default, "gnome", must be preseeded in the "tasksel/desktop" debconf
-variable or else tasksel will not recognize and install it. Thus:
+Dal momento che i task desktop sono "interni", bisogna preconfigurare ogni
+altro desktop da includere nell'immagine e diverso dal predefinito "gnome"
+nella variabile debconf "tasksel/desktop", altrimenti tasksel non li
+installerà:
 
 code{
 
@@ -355,7 +357,8 @@ code{
 
 }code
 
-This parameter can take multiple values, e.g. "lxde xfce" instead of "kde".
+Questo parametro supporta valori multipli, ad esempio "lxde xfce" invece di
+"kde".
 
 2~installing-modified-or-third-party-packages Installare pacchetti
 modificati o di terze parti
@@ -442,7 +445,7 @@ iniziano con #{apt}#.
 3~choosing-apt-or-aptitude Scegliere apt o aptitude
 
 Per installare pacchetti in fase di compilazione si può optare sia per
-#{apt}# sia per #{aptitude}#, l'argomento #{--apt}# di #{lb config}#
+/{apt}/ sia per /{aptitude}/, l'argomento #{--apt}# di #{lb config}#
 determina quale usare. Sceglie il metodo implementando il comportamento
 preferito per l'installazione dei pacchetti, la notevole differenza è come
 vengono gestiti quelli mancanti.
@@ -479,11 +482,11 @@ code{
 
 }code
 
-Questo non influenzerà le voci in /etc/apt/sources.list, determina solo se
-/var/lib/apt contiene o meno i file degli indici. Il compromesso è che APT
-necessita di quegli indici per operar enel sistema live, perciò prima di
-eseguire #{apt-cache search}# o #{apt-get install}#, per esempio, l'utente
-deve usare prima #{apt-get update}# per crearli.
+Questo non influenzerà le voci in #{/etc/apt/sources.list}#, determina solo
+se /#{var/lib/apt}# contiene o meno i file degli indici. Il compromesso è
+che APT necessita di quegli indici per operar enel sistema live, perciò
+prima di eseguire #{apt-cache search}# o #{apt-get install}#, per esempio,
+l'utente deve usare prima #{apt-get update}# per crearli.
 
 In caso si trovi che l'installazione dei pacchetti raccomandati appesantisca
 troppo l'immagine, si può disabilitare l'opzione predefinita di APT con:
@@ -520,11 +523,11 @@ può essere configurato sia in fase di costruzione sia di esecuzione; per la
 prima creare #{config/chroot_apt/preferences}# mentre per l'ultima creare
 #{config/includes.chroot/etc/apt/preferences}#.
 
-Nell'ipotesi di creare un sistema live Wheezy e avendo la necessità di
-installare da Sid tutti i pacchetti live destinati all'immagine binaria
-questa fase, bisogna aggiungere Sid alle fonti di APT e farne il pinning
+Nell'ipotesi di creare un sistema live wheezy e avendo la necessità di
+installare da sid tutti i pacchetti live destinati all'immagine binaria
+questa fase, bisogna aggiungere sid alle fonti di APT e farne il pinning
 affinché verranno installati da lì solo i pacchetti voluti, mentre per tutti
-gli altri si attingerà dalla distribuzione principale, Wheezy. Quanto segue
+gli altri si attingerà dalla distribuzione principale, wheezy. Quanto segue
 servirà allo scopo:
 
 code{
@@ -542,7 +545,7 @@ code{
 
 }code
 
-*{Nota:}* con la versione 0.8.14 o superiore di Apt si possono utilizzare wildcard nei nomi dei pacchetti (*{Package: live-*}*). Ciò significa che funziona con Wheezy usando:
+*{Nota:}* con la versione 0.8.14 o superiore di Apt si possono utilizzare wildcard nei nomi dei pacchetti (*{Package: live-*}*). Ciò significa che funziona con wheezy usando:
 
 code{
 
@@ -554,9 +557,9 @@ Un valore negativo della priorità evita che un pacchetto venga installato,
 come nel caso in cui non se ne voglia uno raccomandato da un altro. Si
 suppone di costruire un'immagine di LXDE utilizzando l'opzione
 #{--package-lists lxde}# ma non si desidera che all'utente venga richiesto
-di salvare la password del wifi nel portachiavi. L'elenco include #{gdm}#
-che dipende da #{gksu}# che a sua volta raccomanda #{gnome-keyring}#, in
-questo caso si vorrà omettere il pacchetto #{gnome-keyring}# aggiungendo a
+di salvare la password del wifi nel portachiavi. L'elenco include /{gdm}/
+che dipende da /{gksu}/ che a sua volta raccomanda /{gnome-keyring}/, in
+questo caso si vorrà omettere il pacchetto /{gnome-keyring}/ aggiungendo a
 #{config/chroot_apt/preferences}# la seguente definizione:
 
 code{

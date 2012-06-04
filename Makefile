@@ -1,5 +1,13 @@
 # Makefile
 
+## live-manual(7) - Documentation
+## Copyright (C) 2006-2012 Debian Live Project <debian-live@lists.debian.org>
+##
+## live-manual comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
+## This is free software, and you are welcome to redistribute it
+## under certain conditions; see COPYING for details.
+
+
 SHELL := sh -e
 
 LANGUAGES = en $(shell cd manual/po && ls)
@@ -51,10 +59,8 @@ build: clean
 	done; \
 
 
-autobuild: build	
-	
+autobuild: build
 	cd build/manual && rm -rf manifest toc.html; \
-	
 	set +e; for LANGUAGE in $(LANGUAGES); \
 	do \
 		FROMDIR=$(CURDIR)/manual/$${LANGUAGE}; \
@@ -65,7 +71,7 @@ autobuild: build
 		$${TODIR}/index.html.in > $${TODIR}/index.$${LANGUAGE}.html; \
 		rm $${TODIR}/index.html.in; \
 	done
-	
+
 commit: tidy test
 	$(MAKE) -C manual rebuild
 
@@ -84,13 +90,12 @@ commit: tidy test
 	@echo "  * git push "
 
 install:
-		FROMDIR=$(CURDIR)/build/manual; \
-		TODIR=$(DESTDIR)/usr/share/doc/live-manual; \
-	cd $${FROMDIR} && rm -rf manifest index.html toc.html; \
-	mkdir -p $${TODIR}; \
-	cp -a $(CURDIR)/build/manual/* $(DESTDIR)/usr/share/doc/live-manual	
-	
+	rm -rf $(CURDIR)/build/manual/manifest
+	rm -f $(CURDIR)/build/manual/index.html
+	rm -f $(CURDIR)/build/manual/toc.html
 
+	mkdir -p $(DESTDIR)/usr/share/doc/live-manual
+	cp -a COPYING $(CURDIR)/build/manual/* $(DESTDIR)/usr/share/doc/live-manual
 
 uninstall:
 	rm -rf $(DESTDIR)/usr/share/doc/live-manual
@@ -111,4 +116,3 @@ translate:
 	else \
 		echo "There are no fuzzy strings to translate." ; \
 	fi
-

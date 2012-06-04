@@ -3,7 +3,7 @@
 1~customizing-installer Personnalisation de l'installateur Debian
 
 Les images du système Debian Live peuvent être intégrées avec l'installateur
-Debian. Il y a un certain nombre de différents types d'installation, variant
+Debian. Il y a un certain nombre de types d'installation différents, variant
 en ce qui est inclus et comment fonctionne l'installateur.
 
 S'il vous plaît noter l'utilisation prudente des lettres majuscules pour
@@ -15,12 +15,12 @@ pour le système Debian, pas autre chose. On le voit souvent abrégé en «d-i»
 
 Les trois principaux types de programme d'installation sont:
 
-*{Installateur Debian «Régulière»}*: C'est une image de Debian Live normale avec un noyau et initrd séparés qui (lorsqu'ils sont sélectionnés à partir du chargeur d'amorçage approprié) se lancen dans une instance d'installateur Debian standard, exactement comme si vous aviez téléchargé une image CD de Debian et la auriez démarrée. Les images contenant un système live et un installateur indépendant sont souvent appelés «images combinées".
+*{Installateur Debian «Régulière»}*: C'est une image de Debian Live normale avec un noyau et initrd séparés qui (lorsqu'ils sont sélectionnés à partir du chargeur d'amorçage approprié) se lancen dans une instance d'installateur Debian standard, exactement comme si vous aviez téléchargé une image CD de Debian et la auriez démarrée. Les images contenant un système live et un installateur indépendant sont souvent appelées «images combinées».
 
 Sur ces images, Debian est installé par l'extraction et l'installation de
-paquets .deb à l'aide de #{debootstrap}# ou #{cdebootstrap}#, à partir des
-supports locaux ou à partir du réseau, résultant en un système Debian
-standard en cours d'installation sur le disque dur.
+paquets .deb à l'aide de /{debootstrap}/ ou /{cdebootstrap}/, à partir des
+supports locaux ou sur le réseau, résultant en un système Debian standard en
+cours d'installation sur le disque dur.
 
 Tout ce processus peut être préconfiguré et personnalisé dans un certain
 nombre de façons, voir les pages correspondantes dans le manuel de
@@ -30,25 +30,22 @@ le mettre à l'image et l'activer pour vous.
 
 *{Installateur Debian "Live" }*: C'est une image de Debian Live avec un noyau et initrd séparés qui (lorsqu'ils sont sélectionnés à partir du chargeur d'amorçage approprié) se lancen dans une instance de l'installateur Debian.
 
-L'installation se poursuit de manière identique à l'installation "régulière"
+L'installation continue de manière identique à l'installation «Régulière»
 décrite ci-dessus, mais à l'étape de l'installation des paquets, au lieu
-d'utiliser #{debootstrap}# pour aller chercher et installer des paquets,
+d'utiliser /{debootstrap}/ pour aller chercher et installer des paquets,
 l'image du système de fichiers live est copiée vers la cible. Ce résultat
-est obtenu avec un udeb spécial appelé «live-installer».
+est obtenu avec un udeb spécial appelé live-installer.
 
-Après cette étape, l'installateur Debian se poursuit normalement, en
-installant et configurant des éléments tels que chargeurs de démarrage et
-les utilisateurs locaux, etc
+Après cette étape, l'installateur Debian continue normalement, en installant
+et configurant des éléments tels que les chargeurs d'amorçage et les
+utilisateurs locaux, etc
 
-Remarque: Pour soutenir les deux options: installateur normal et live dans
-le chargeur d'amorçage du même support live, vous devez désactiver
-«live-installer» en utilisant la préconfiguration
-#{live-installer/enable=false}#.
+*{Remarque:}* Pour soutenir les deux options: installateur normal et live dans le chargeur d'amorçage du même support live, vous devez désactiver live-installer en utilisant la préconfiguration #{live-installer/enable=false}#.
 
 *{Installateur Debian "de bureau"}*: Indépendamment du type d'installateur Debian inclus, #{d-i}# peut être lancé à partir du Bureau en cliquant sur une icône. C'est facile à utiliser dans certaines situations. Afin de faire usage de cela, le paquet debian-installer-launcher doit être inclus.
 
 Notez que par défaut, live-build n'inclut pas les images de l'installateur
-Debian dans les images, il doit être spécifiquement activée avec #{lb
+Debian dans les images, il doit être spécifiquement activé avec #{lb
 config}#. Aussi, s'il vous plaît noter que pour que l'installateur "de
 bureau" fonctionne le noyau du système live doit correspondre au noyau que
 #{d-i}# utilise pour l'architecture spécifiée. Par exemple:
@@ -65,11 +62,11 @@ code{
 
 Comme décrit dans le Debian Installer Manual, Appendix B at
 http://www.debian.org/releases/stable/i386/apb.html,
-"La préconfiguration est une façon de donner des réponses aux questions
-posées durant le processus d'installation, sans avoir à entrer manuellement
+«La préconfiguration est une façon de donner des réponses aux questions
+posées pendant le processus d'installation, sans avoir à entrer manuellement
 les réponses alors que l'installation est en marche. Cela permet
-d'automatiser entièrement la plupart des types d'installation et propose
-même quelques fonctionnalités ne sont pas disponibles pendant les
+d'automatiser entièrement la plupart des types d'installation et elle offre
+certaines fonctionnalités que ne sont pas disponibles pendant les
 installations normales ». Ce type de personnalisation se fait mieux avec
 live-build en plaçant la configuration dans un fichier #{preseed.cfg}#
 inclus dans #{config/binary_debian-installer/}#. Par exemple, pour
@@ -85,9 +82,9 @@ code{
 2~ Personnalisation de contenu pour l'Installateur Debian
 
 Pour des fins expérimentales ou de débogage, vous pouvez inclure paquets
-udeb #{d-i}# construits localement. Les placer dans
-#{config/packages.binary/}# pour les inclure dans l'image. Fichiers
-supplémentaires ou de remplacement et répertoires peuvent être inclus dans
-l'initrd de l'installateur ainsi, d'une manière similaire à {Live/chroot
-local includes}#live-chroot-local-includes en plaçant le matériau dans
-#{config/binary_debian-installer-includes/}#. 
+udeb #{d-i}# construits localement. Et les placer dans
+#{config/packages.binary/}# pour les inclure dans l'image. Plusieurs
+fichiers supplémentaires ou de remplacement et plusieurs répertoires peuvent
+être inclus dans l'initrd de l'installateur ainsi, d'une manière similaire à
+{Live/chroot local includes}#live-chroot-local-includes en plaçant le
+matériau dans #{config/includes.binary_debian-installer/}#. 

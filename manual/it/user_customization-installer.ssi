@@ -18,7 +18,7 @@ I tre principali tipi dell'installer sono:
 *{Installatore Debian "normale"}*: un'immagine Debian Live con un kernel e un initrd separati i quali (quando viene selezionato dal bootloader appropriato) lancia un'istanza standard dell'Installatore Debian, come quando si scarica un'immagine di Debian per CD e la si avvia. Le immagini che contengono un sistema live e un'installatore indipendenti sono spesso definite "immagini combinate".
 
 In queste immagini, Debian è installata prendendo e installando i pacchetti
-.deb usando {debootstrap}# o #{cdebootstrap}#, da supporti locali o dalla
+.deb usando /{debootstrap}/ o /{cdebootstrap}/, da supporti locali o dalla
 rete, risultante in un sistema Debian standard installato sul disco rigido.
 
 L'intero processo può essere preimpostato e personalizzato in diversi modi;
@@ -31,16 +31,14 @@ abilitarlo.
 
 L'installazione procederà nello stesso modo di un'installazione "Normale"
 come descritto sopra, ma nella fase dell'installazione del pacchetto, invece
-di usare #{debootstrap}# per prelevare e installare i pacchetti, l'immagine
+di usare /{debootstrap}/ per prelevare e installare i pacchetti, l'immagine
 del filesystem live viene copiata sulla destinazione. Questo si ottiene con
 uno speciale udeb chiamato live-installer.
 
 Dopo questa fase, l'Installatore Debian continua normalmente, installando e
 configurando elementi come bootloader e utenti locali, ecc.
 
-Nota: per supportare nel bootloader sia la voce normale che quella live
-dell'installatore sullo stesso supporto si deve disabilitare live-installer
-preconfigurando #{live-installer/enable=false}#.
+*{Nota:}* per supportare nel bootloader sia la voce normale che quella live dell'installatore sullo stesso supporto si deve disabilitare live-installer preconfigurando #{live-installer/enable=false}#.
 
 *{Installatore Debian "Desktop"}*: indipendentemente dal tipo di Installatore Debian incluso, #{d-i}# può essere lanciato cliccando un'icona sul desktop, in alcune situazioni più semplice per l'utente. Per poterne usufruire deve essere incluso il pacchetto debian-installer-launcher.
 
@@ -86,4 +84,4 @@ nell'immagine inserirli in #{config/packages.binary/}#. I file e le
 directory aggiuntivi o di rimpiazzo si possono includere nell'initrd
 dell'installatore in maniera simile agli {Include locali del
 Live/chroot}#live-chroot-local-includes, inserendo il materiale in
-#{config/binary_debian-installer-includes/}#.
+#{config/includes.binary_debian-installer/}#.

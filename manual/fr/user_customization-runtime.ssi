@@ -143,11 +143,11 @@ pendant l'exécution du système sont perdus à l'arrêt.
 La «persistance» est un nom commun pour les différents types de solutions
 pour sauver, après un redémarrage, certaines ou toutes les données, de cette
 évolution pendant l'exécution du système. Pour comprendre comment cela
-pourrait fonctionner il pourrait être utile de savoir que même si le système
-est démarré et exécuté à partir d'un support en lecture seule, la
-modification des fichiers et répertoires sont écrits sur des supports
-inscriptibles, typiquement un disque ram (tmpfs) et aux disques RAM les
-données ne survivent pas à un redémarrage.
+fonctionne il peut être utile de savoir que même si le système est démarré
+et exécuté à partir d'un support en lecture seule, la modification des
+fichiers et répertoires sont écrits sur des supports inscriptibles,
+typiquement un disque ram (tmpfs) et aux disques RAM les données ne
+survivent pas à un redémarrage.
 
 Les données stockées sur ce disque virtuel doivent être enregistrées sur un
 support inscriptible persistant comme supports de stockage locaux, un
@@ -159,44 +159,32 @@ d'amorçage spéciale à préciser au moment du démarrage: #{persistence}#.
 Si le paramètre de démarrage #{persistence}# est réglé (et #{nopersistence}#
 n'est pas utilisé), les supports de stockage locaux (par exemple les disques
 durs, clés USB) seront examinés pour trouver des volumes persistants pendant
-le démarrage. Un volume persistant est un des éléments suivants:
+le démarrage. Il est possible de limiter les types de volumes persistants à
+utiliser en spécifiant certains paramètres de démarrage décrits dans la page
+de manuel live-boot(7). Un volume persistant est un des éléments suivants:
 
 _* une partition, identifiée par son nom GPT.
 
 _* un système de fichiers, identifié par son étiquette de système de
 fichiers.
 
-_* un fichier image/archive situé sur la racine de tout système de fichiers
-en lecture (même une partition NTFS d'un système d'exploitation étranger),
-identifié par son nom de fichier. Dans ce cas, le nom du fichier doit
-contenir le nom du système de fichiers comme extension, par exemple,
-"<label>.ext4".
+_* un fichier image situé sur la racine d'un système de fichiers en lecture
+(même une partition NTFS d'un système d'exploitation étranger), identifié
+par son nom de fichier. Dans ce cas, le nom du fichier doit contenir le nom
+du système de fichiers comme extension, par exemple, "persistence.ext4".
 
-Il est possible de limiter les types de volumes persistants à utiliser en
-spécifiant certains paramètres de démarrage décrits dans la page de manuel
-live-boot(7). Les "étiquettes d'identification" mentionnées ci-dessus
-peuvent être un des éléments suivants:
+L'étiquette du volume pour les couches de persistence doit être
+#{persistence}#. Et afin de personnaliser entièrement la persistance du
+volume il doit y avoir un fichier nommé #{live-persistence.conf}#. Voir {Le
+fichier live-persistence.conf}#live-persistence-conf
 
-_* #{full-ov}# pour couches de persistance pleine.
-
-_* #{custom-ov}# pour couches personalisées
-
-_* #{live-sn}# pour instantanés du système complet.
-
-_* #{home-sn}# pour instantanés du /home.
-
-3~ Couches de persistance pleine
-
-Par «persistance pleine» on entend que au lieu d'utiliser un tmpfs pour le
-stockage des modifications dans le support en lecture seule (avec le système
-copy-on-write, COW) une partition accessible en écriture est utilisée. Pour
-ce type de persistance le nom du volume doit être #{full-ov}#. Cela
-pourrait, par exemple, être une partition ext4 sur un disque dur ou sur une
-clé usb créée avec, par exemple:
+Voici quelques exemples de comment préparer un volume à utiliser pour la
+persistance. Il peut être, par exemple, une partition ext4 sur un disque dur
+ou sur une clé usb créée avec, par exemple:
 
 code{
 
- # mkfs.ext4 -L full-ov /dev/sdb1
+ # mkfs.ext4 -L persistence /dev/sdb1
 
 }code
 
@@ -208,29 +196,30 @@ modifier l'étiquette avec l'un des suivants:
 
 code{
 
- $ tune2fs -L full-ov /dev/sdb1 # for ext2,3,4 filesystems
+ $ tune2fs -L persistence /dev/sdb1 # for ext2,3,4 filesystems
 
 }code
 
 Voici un exemple de comment créer un fichier image ext4 utilisé pour la
-persistance pleine:
+persistance:
 
 code{
 
- $ dd if=/dev/null of=full-ov bs=1G seek=1 # for a 1GB sized image file
- $ /sbin/mkfs.ext4 -F full-ov
+ $ dd if=/dev/null of=persistence bs=1G seek=1 # for a 1GB sized image file
+ $ /sbin/mkfs.ext4 -F persistence
 
 }code
 
-Ensuite, copiez le fichier #{full-ov}# sur une partition accessible en
-écriture et redémarrer.
+Ensuite, copiez le fichier #{persistence}# à la racine d'une partition
+accessible en écriture.
 
-3~ Couches personnalisées
+3~live-persistence-conf Le fichier live-persistence.conf
 
-Un volume avec l'étiquette #{custom-ov}# peut être configuré pour créer des
-répertoires persistants arbitraires. Le fichier #{live-persistence.conf}#,
-situé sur le système de fichiers racine du volume, contrôle quels
-répertoires il fait persistants, et de quelle manière.
+Un volume avec l'étiquette #{persistence}# peut être configuré pour créer
+des répertoires persistants arbitraires. Le fichier
+#{live-persistence.conf}#, situé sur le système de fichiers racine du
+volume, contrôle quels répertoires il fait persistants, et de quelle
+manière.
 
 Comment on configure monter des couches personnalisées est décrit en détail
 dans la page de manuel live-persistence.conf(5), mais un simple exemple
@@ -240,7 +229,7 @@ système de fichiers ext4 sur la partition /dev/sdb1:
 
 code{
 
- $ mkfs.ext4 -L custom-ov /dev/sdb1
+ $ mkfs.ext4 -L persistence /dev/sdb1
  $ mount -t ext4 /dev/sdb1 /mnt
  $ echo "/home" >> /mnt/live-persistence.conf
  $ echo "/var/cache/apt" >> /mnt/live-persistence.conf
@@ -252,59 +241,28 @@ et #{/var/cache/apt}# seront copiés dans le volume persistant, et à partir
 de ce moment tous les changements dans ces répertoires seront stockés dans
 le volume persistant. S'il vous plaît souligner que les chemins d'accès aux
 répertoriés dans le fichier #{live-persistence.conf}# ne peuvent pas
-contenir d'espaces blancs ou les éléments spéciaux #{.}# et #{..}#. En
+contenir des espaces blancs ou les éléments spéciaux #{.}# et #{..}#. En
 outre, ni #{/live}# (ou un de ses sous-répertoires), ni #{/}#  peuvent être
-rendus persistants en utilisant custom mounts (pour ce dernier, utilisez la
-persistance #{full-ov}# décrite ci-dessus).
+rendus persistants en utilisant montages personnalisés.
 
 Plusieurs volumes de couches personnalisées différents (avec leurs propres
-fichiers #{live-persistence.conf}#) peuvent être utilisées au même temps,
+fichiers #{live-persistence.conf}#) peuvent être utilisés au même temps,
 mais si plusieurs volumes font le même répertoire persistant, un seul
 d'entre eux sera utilisé. Si les deux sont «imbriqués» (un est un
 sous-répertoire de l'autre) le premier sera monté avant que le secondaire de
-sorte que aucun sera caché par l'autre. Monter  des éléments personnalisés
+sorte que aucun sera caché par l'autre. Monter des éléments personnalisés
 imbriqués est problématique s'ils sont énumérés dans le même fichier
 #{live-persistence.conf}#. Voir la page de manuel live-persistence.conf(5)
 pour savoir comment gérer ce cas, si vous avez vraiment besoin (remarque:
 vous n'avez généralement pas).
 
-3~ Instantanés
-
-Les instantanés sont des collections de fichiers et de répertoires qui ne
-sont pas montés lors de l'exécution, mais qui sont copiés à partir d'un
-périphérique persistant à le système (tmpfs) au démarrage et qui sont
-resynchronisés au redémarrage/arrêt du système. Le volume doit être étiqueté
-#{live-sn}#. Il est par défaut une simple archive cpio appelée
-#{live-sn.cpio.gz}#. Une coupure de courant pendant l'exécution pourrait
-conduire à la perte de données, donc un outil appelé #{live-snapshot
---refresh}# pourrait être appelé pour synchroniser des changements
-importants. Ce type de persistance, car elle n'écrit pas continuellement
-dans les supports persistants, est la plus respectuese avec les dispositifs
-flash et la plus rapide de tous les systèmes de persistance, mais elle
-occupe autant RAM que la taille de l'instantané non compressée.
-
-Une version d'instantané de /home existe aussi, et son étiquette est
-#{home-sn.*}#; elle fonctionne le même que l'instantané principal, mais
-c'est seulement appliqué à /home.
-
-Les instantanés ne peuvent pas actuellement gérer la suppression de
-fichiers.
-
 3~ SubText persistant
 
 Si un utilisateur a besoin de stockages persistants multiples du même type
-pour différents endroits ou l'essai, tel que #{full-ov-nonwork}# et
-#{full-ov-work}#, le paramètre de démarrage #{persistence-subtext}# utilisé
-en conjonction avec le paramètre de démarrage #{persistence}# permettra
-multiples, mais uniques, supports persistants. Un exemple serait le cas si
-un utilisateur voudrait utiliser une partition persistante étiquetée
-#{live-sn-subText}# il utiliserait les paramètres de démarrage:
-#{persistence}# #{persistence-subtext=subText}#.
-
-3~ Remasterisation partielle
-
-Les modifications de l'exécution du tmpfs pourraient être recueillies à
-l'aide de live-snapshot dans une squashfs et ajoutées au CD en remasterisant
-l'ISO dans le cas des CD-R ou en ajoutant une session à un cd/dvd(rw)
-multisession; live-boot monte tous les systèmes de fichiers /live dans
-l'ordre ou avec le paramètre de démarrage du module.
+pour différents endroits ou l'essai, tel que #{persistence-nonwork}# et
+#{persistence-work}#, le paramètre de démarrage #{persistence-subtext}#
+utilisé en conjonction avec le paramètre de démarrage #{persistence}#
+permettra multiples, mais uniques, supports persistants. Un exemple serait
+le cas si un utilisateur voudrait utiliser une partition persistante
+étiquetée #{persistence-subText}# il utiliserait les paramètres de
+démarrage: #{persistence}# #{persistence-subtext=subText}#.

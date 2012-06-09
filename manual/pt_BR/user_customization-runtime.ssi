@@ -132,8 +132,8 @@ are lost at shutdown.
 
 'Persistence' is a common name for different kinds of solutions for saving
 across reboots some, or all, of this run-time evolution of the system. To
-understand how it could work it could be handy to know that even if the
-system is booted and run from read-only media, modification to the files and
+understand how it works it would be handy to know that even if the system is
+booted and run from read-only media, modifications to the files and
 directories are written on writable media, typically a ram disk (tmpfs) and
 ram disks' data do not survive reboots.
 
@@ -145,42 +145,31 @@ parameter to be specified at boot time: #{persistence}#.
 
 If the boot parameter #{persistence}# is set (and #{nopersistence}# is not
 set), local storage media (e.g. hard disks, USB drives) will be probed for
-persistence volumes during boot. A persistence volume is any of the
-following:
+persistence volumes during boot. It is possible to restrict which types of
+persistence volumes to use by specifying certain boot parameters described
+in the live-boot(7) man page. A persistence volume is any of the following:
 
 _* a partition, identified by its GPT name.
 
 _* a filesystem, identified by its filesystem label.
 
-_* an image/archive file located on the root of any readable filesystem
-(even an NTFS partition of a foreign OS), identified by its file name. In
-this case the file name must also use the containing filesystem as the file
-extension, e.g. "<label>.ext4".
+_* an image file located on the root of any readable filesystem (even an
+NTFS partition of a foreign OS), identified by its file name. In this case
+the file name must also use the containing filesystem as the file extension,
+e.g. "persistence.ext4".
 
-It is possible to restrict which types of persistence volumes to use by
-specifying certain boot parameters described in the live-boot(7) man
-page. The "identifying labels" referred to above can be any of the
-following:
+The volume label for overlays must be #{persistence}#. And in order to fully
+customize the volume's persistence there must be a file named
+#{live-persistence.conf}#. See {The live-persistence.conf
+file}#live-persistence-conf
 
-_* #{full-ov}# for full persistence overlays.
-
-_* #{custom-ov}# for custom overlays.
-
-_* #{live-sn}# for full system snapshots.
-
-_* #{home-sn}# for /home snapshots.
-
-3~ Full persistence overlays
-
-By 'full persistence' it is meant that instead of using a tmpfs for storing
-modifications to the read-only media (with the copy-on-write, COW, system) a
-persistence volume is used. For this type of persistence the volume label
-must be #{full-ov}#. This could, for instance, be an ext4 partition on a
-hard disk or on a usb key created with, e.g.:
+Here are some examples of how to prepare a volume to be used for
+persistence. It can be, for instance, an ext4 partition on a hard disk or on
+a usb key created with, e.g.:
 
 code{
 
- # mkfs.ext4 -L full-ov /dev/sdb1
+ # mkfs.ext4 -L persistence /dev/sdb1
 
 }code
 
@@ -191,26 +180,25 @@ label with one of the following:
 
 code{
 
- $ tune2fs -L full-ov /dev/sdb1 # for ext2,3,4 filesystems
+ $ tune2fs -L persistence /dev/sdb1 # for ext2,3,4 filesystems
 
 }code
 
-Here's an example of how to create an ext4-based image file used for full
+Here's an example of how to create an ext4-based image file used for
 persistence:
 
 code{
 
- $ dd if=/dev/null of=full-ov bs=1G seek=1 # for a 1GB sized image file
- $ /sbin/mkfs.ext4 -F full-ov
+ $ dd if=/dev/null of=persistence bs=1G seek=1 # for a 1GB sized image file
+ $ /sbin/mkfs.ext4 -F persistence
 
 }code
 
-Then copy the #{full-ov}# file to the root of a writable partition and
-reboot.
+Then copy the #{persistence}# file to the root of a writable partition.
 
-3~ Custom overlays
+3~live-persistence-conf The live-persistence.conf file
 
-A volume with the label #{custom-ov}# can be configured to make arbitrary
+A volume with the label #{persistence}# can be configured to make arbitrary
 directories persistent. The file #{live-persistence.conf}#, located on the
 volume's filesystem root, controls which directories it makes persistent,
 and in which way.
@@ -222,7 +210,7 @@ persistent in an ext4 filesystem on the /dev/sdb1 partition:
 
 code{
 
- $ mkfs.ext4 -L custom-ov /dev/sdb1
+ $ mkfs.ext4 -L persistence /dev/sdb1
  $ mount -t ext4 /dev/sdb1 /mnt
  $ echo "/home" >> /mnt/live-persistence.conf
  $ echo "/var/cache/apt" >> /mnt/live-persistence.conf
@@ -235,8 +223,7 @@ on all changes to these directories will live in the persistence
 volume. Please note that any paths listed in the #{live-persistence.conf}#
 file cannot contain white spaces or the special #{.}# and #{..}# path
 components. Also, neither #{/live}# (or any of its sub-directories) nor
-#{/}# can be made persistent using custom mounts (for the latter, use the
-#{full-ov}# type persistence described above).
+#{/}# can be made persistent using custom mounts.
 
 Several different custom overlay volumes (with their own
 #{live-persistence.conf}# files) can be used at the same time, but if
@@ -248,37 +235,12 @@ in the same #{live-persistence.conf}# file. See the live-persistence.conf(5)
 man page for how to handle that case if you really need it (hint: you
 usually don't).
 
-3~ Snapshots
-
-Snapshots are collections of files and directories which are not mounted
-while running but which are copied from a persistence volume to the system
-(tmpfs) at boot and which are resynced at reboot/shutdown of the system. The
-volume must be labeled #{live-sn}#, and it defaults to a simple cpio archive
-named #{live-sn.cpio.gz}#. A power interruption during run time could lead
-to data loss, hence, if you have important changes, invoke #{live-snapshot
---refresh}# as often as needed. This type of persistence, since it does not
-write continuously to the persistence media, is the most flash-based device
-friendly and the fastest of all the persistence systems, but it occupies as
-much RAM as the size of the uncompressed snapshot.
-
-A /home version of snapshot exists too and its label is #{home-sn.*}#; it
-works the same as the main snapshot but it is only applied to /home.
-
-Snapshots cannot currently handle file deletion.
-
 3~ Persistence SubText
 
 If a user would need multiple persistence storage of the same type for
-different locations or testing, such as #{full-ov-nonwork}# and
-#{full-ov-work}#, the boot parameter #{persistence-subtext}# used in
+different locations or testing, such as #{persistence-nonwork}# and
+#{persistence-work}#, the boot parameter #{persistence-subtext}# used in
 conjunction with the boot parameter #{persistence}# will allow for multiple
 but unique persistence media. An example would be if a user wanted to use a
-persistence partition labeled #{live-sn-subText}# they would use the boot
-parameters of: #{persistence}# #{persistence-subtext=subText}#.
-
-3~ Partial remastering
-
-The run-time modification of the tmpfs could be collected using
-live-snapshot in a squashfs and added to the cd by remastering the iso in
-the case of cd-r or adding a session to multisession cd/dvd(rw); live-boot
-mounts all /live filesystem in order or with the module boot parameter.
+persistence partition labeled #{persistence-subText}# they would use the
+boot parameters of: #{persistence}# #{persistence-subtext=subText}#.

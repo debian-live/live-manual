@@ -15,7 +15,7 @@ EDITOR="${EDITOR:-vim}"
 
 # Creating the function. Searches 'fuzzy' and offers to open editor to fix them.
 
-find_fuzzy ()
+Find_fuzzy ()
 {
 	echo ""
 	echo "There are $(grep -w 'fuzzy' manual/po/$ANSWER/* | wc -l) fuzzy strings in your language."

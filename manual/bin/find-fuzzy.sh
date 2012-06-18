@@ -68,7 +68,7 @@ case "$ANSWER" in
 		;;
 
 	de|es|fr|it|pt_BR|ro)
-		find_fuzzy
+		Find_fuzzy
 		;;
 
 	a)

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual\n"
 "POT-Creation-Date: 2012-06-09 20:31+0300\n"
-"PO-Revision-Date: 2012-04-02 23:25+0100\n"
+"PO-Revision-Date: 2012-06-18 19:35+0200\n"
 "Last-Translator: skizzhg <skizzhg@gmx.com>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -431,14 +431,6 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:96
-#, fuzzy
-#| msgid ""
-#| "'Persistence' is a common name for different kinds of solutions for "
-#| "saving across reboots some, or all, of this run-time evolution of the "
-#| "system. To understand how it could work it could be handy to know that "
-#| "even if the system is booted and run from read-only media, modification "
-#| "to the files and directories are written on writable media, typically a "
-#| "ram disk (tmpfs) and ram disks' data do not survive reboots."
 msgid ""
 "'Persistence' is a common name for different kinds of solutions for saving "
 "across reboots some, or all, of this run-time evolution of the system. To "
@@ -472,12 +464,6 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:100
-#, fuzzy
-#| msgid ""
-#| "If the boot parameter #{persistence}# is set (and #{nopersistence}# is "
-#| "not set), local storage media (e.g. hard disks, USB drives) will be "
-#| "probed for persistence volumes during boot. A persistence volume is any "
-#| "of the following:"
 msgid ""
 "If the boot parameter #{persistence}# is set (and #{nopersistence}# is not "
 "set), local storage media (e.g. hard disks, USB drives) will be probed for "
@@ -487,8 +473,10 @@ msgid ""
 msgstr ""
 "Se il parametro di boot #{persistence}# è impostato (e non lo è #"
 "{nopersistence}#), i supporti di memorizzazione locali (hard disk, "
-"dispositivi USB) saranno rilevati come volumi persistenti durante l'avvio. "
-"Un volume persistente è uno dei seguenti:"
+"dispositivi USB) saranno rilevati come volumi persistenti durante l'avvio. È "
+"possibile selezionare quali tipi utilizzare specificando certi parametri di "
+"avvio descritti nella manpage di live-boot(7). Un volume persistente è uno "
+"dei seguenti:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:102
@@ -503,23 +491,17 @@ msgstr "_* un filesystem, identificato dalla sua label."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:106
-#, fuzzy
-#| msgid ""
-#| "_* an image/archive file located on the root of any readable filesystem "
-#| "(even an NTFS partition of a foreign OS), identified by its file name. In "
-#| "this case the file name must also use the containing filesystem as the "
-#| "file extension, e.g. \"<label>.ext4\"."
 msgid ""
 "_* an image file located on the root of any readable filesystem (even an "
 "NTFS partition of a foreign OS), identified by its file name. In this case "
 "the file name must also use the containing filesystem as the file extension, "
 "e.g. \"persistence.ext4\"."
 msgstr ""
-"_* un file immagine o archivio situato nella directory radice di un "
-"qualsiasi filesystem leggibile (anche una partizione NTFS di un sistema "
-"estraneo), identificato dal nome del file. In questo caso il nome del file "
-"deve contenere anche il tipo di filesystem come estensione, ad esempio "
-"\"<label>.ext4\"."
+"_* un file immagine situato nella directory radice di un qualsiasi "
+"filesystem leggibile (anche una partizione NTFS di un sistema estraneo), "
+"identificato dal nome del file. In questo caso il nome del file deve "
+"contenere anche il tipo di filesystem come estensione, ad esempio \"<label>."
+"ext4\"."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:108
@@ -562,47 +544,35 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:124
-#, fuzzy, no-wrap
-#| msgid " $ tune2fs -L full-ov /dev/sdb1 # for ext2,3,4 filesystems\n"
+#, no-wrap
 msgid " $ tune2fs -L persistence /dev/sdb1 # for ext2,3,4 filesystems\n"
-msgstr " $ tune2fs -L full-ov /dev/sdb1 # per filesystems ext2,3,4\n"
+msgstr " $ tune2fs -L persistence /dev/sdb1 # per filesystem ext2,3,4\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:128
-#, fuzzy
-#| msgid ""
-#| "Here's an example of how to create an ext4-based image file used for full "
-#| "persistence:"
 msgid ""
 "Here's an example of how to create an ext4-based image file used for "
 "persistence:"
 msgstr ""
 "Ecco un esempio di come creare un file immagine ext4 da utilizzare per la "
-"persistenza completa:"
+"persistenza:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:133
-#, fuzzy, no-wrap
-#| msgid ""
-#| " $ dd if=/dev/null of=full-ov bs=1G seek=1 # for a 1GB sized image file\n"
-#| " $ /sbin/mkfs.ext4 -F full-ov\n"
+#, no-wrap
 msgid ""
 " $ dd if=/dev/null of=persistence bs=1G seek=1 # for a 1GB sized image file\n"
 " $ /sbin/mkfs.ext4 -F persistence\n"
 msgstr ""
-" $ dd if=/dev/null of=full-ov bs=1G seek=1 # per un file immagine da 1GB\n"
-" $ /sbin/mkfs.ext4 -F full-ov\n"
+" $ dd if=/dev/null of=persistence bs=1G seek=1 # per un file immagine da 1GB\n"
+" $ /sbin/mkfs.ext4 -F persistence\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:137
-#, fuzzy
-#| msgid ""
-#| "Then copy the #{full-ov}# file to the root of a writable partition and "
-#| "reboot."
 msgid "Then copy the #{persistence}# file to the root of a writable partition."
 msgstr ""
-"Quindi copiare il file #{full-ov}# nella directory radice di una partizione "
-"scrivibile e riavviare."
+"Quindi copiare il file #{persistence}# nella directory radice di una "
+"partizione scrivibile e riavviare."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:139
@@ -611,19 +581,13 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:141
-#, fuzzy
-#| msgid ""
-#| "A volume with the label #{custom-ov}# can be configured to make arbitrary "
-#| "directories persistent. The file #{live-persistence.conf}#, located on "
-#| "the volume's filesystem root, controls which directories it makes "
-#| "persistent, and in which way."
 msgid ""
 "A volume with the label #{persistence}# can be configured to make arbitrary "
 "directories persistent. The file #{live-persistence.conf}#, located on the "
 "volume's filesystem root, controls which directories it makes persistent, "
 "and in which way."
 msgstr ""
-"Un volume con una label #{custom-ov}# può essere configurato per creare "
+"Un volume con una label #{persistence}# può essere configurato per creare "
 "directory persistenti arbitrarie. Il file #{live-persistence.conf}#, situato "
 "nella directory radice del filesystem del volume, controlla quali rendere "
 "persistenti e in che modo."
@@ -654,16 +618,6 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:154
-#, fuzzy
-#| msgid ""
-#| "Then we reboot. During the first boot the contents of #{/home}# and #{/"
-#| "var/cache/apt}# will be copied into the persistence volume, and from then "
-#| "on all changes to these directories will live in the persistence volume. "
-#| "Please note that any paths listed in the #{live-persistence.conf}# file "
-#| "cannot contain white spaces or the special #{.}# and #{..}# path "
-#| "components. Also, neither #{/live}# (or any of its sub-directories) nor #"
-#| "{/}# can be made persistent using custom mounts (for the latter, use the #"
-#| "{full-ov}# type persistence described above)."
 msgid ""
 "Then we reboot. During the first boot the contents of #{/home}# and #{/var/"
 "cache/apt}# will be copied into the persistence volume, and from then on all "
@@ -679,8 +633,7 @@ msgstr ""
 "C'è da considerare che tutti i path elencati nel file #{live-persistence."
 "conf}# non possono contenere spazi o i caratteri speciali #{.}# e #{..}#; "
 "inoltre, né #{/live}# (o nessuna delle sue sottodirectory) né #{/}# può "
-"essere resa persistente tramite i mount personalizzati (per l'ultimo usare "
-"la tipologia #{full-ov}# descritta prima)."
+"essere resa persistente tramite i mount personalizzati."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:156
@@ -711,15 +664,6 @@ msgstr "3~ Sottotesto persistente"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:159
-#, fuzzy
-#| msgid ""
-#| "If a user would need multiple persistence storage of the same type for "
-#| "different locations or testing, such as #{full-ov-nonwork}# and #{full-ov-"
-#| "work}#, the boot parameter #{persistence-subtext}# used in conjunction "
-#| "with the boot parameter #{persistence}# will allow for multiple but "
-#| "unique persistence media. An example would be if a user wanted to use a "
-#| "persistence partition labeled #{live-sn-subText}# they would use the boot "
-#| "parameters of: #{persistence}# #{persistence-subtext=subText}#."
 msgid ""
 "If a user would need multiple persistence storage of the same type for "
 "different locations or testing, such as #{persistence-nonwork}# and #"
@@ -730,9 +674,9 @@ msgid ""
 "boot parameters of: #{persistence}# #{persistence-subtext=subText}#."
 msgstr ""
 "Se un utente avesse bisogno di archiviazioni multiple dello stesso tipo per "
-"differenti posti o per test, come #{full-ov-casa}# e #{full-ov-lavoro}#, il "
-"parametro d'avvio #{persistence-subtext}# usato in congiunzione con #"
-"{persistent}# permetterà supporti persistenti multipli ma univoci. Un "
+"differenti posti o per test, come #{persistence-casa}# e #{persistence-"
+"lavoro}#, il parametro d'avvio #{persistence-subtext}# usato in congiunzione "
+"con #{persistent}# permetterà supporti persistenti multipli ma univoci. Un "
 "esempio potrebbe essere un utente che vuole usare una partizione etichettata "
-"come #{live-sn-sottotesto}#, userebbe: #{persistence}# #{persistence-"
+"come #{persistence-sottotesto}#, userebbe: #{persistence}# #{persistence-"
 "subtext=sottotesto}#."

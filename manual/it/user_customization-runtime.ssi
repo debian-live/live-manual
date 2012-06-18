@@ -133,12 +133,12 @@ comportamento predefinito, deve essere considerato in sola lettura e tutte i
 cambiamenti fatti durante l'esecuzione del sistema verranno persi allo
 spegnimento.
 
-'Persistence' is a common name for different kinds of solutions for saving
-across reboots some, or all, of this run-time evolution of the system. To
-understand how it works it would be handy to know that even if the system is
-booted and run from read-only media, modifications to the files and
-directories are written on writable media, typically a ram disk (tmpfs) and
-ram disks' data do not survive reboots.
+Persistenza è il nome comune per differenti tipi di soluzioni per salvare
+alcune o tutte queste modifiche con i riavii. Per capire come funziona
+potrebbe essere utile sapere che sebbene il sistema venga avviato ed
+eseguito da un dispositivo in sola lettura, le modifiche a file e directory
+vengono scritte su uno scrivibile, tipicamente un ram disk (tmpfs) e i dati
+sui ram disk non sopravvivono ai riavvii.
 
 I dati immagazzinati su questo ramdisk andrebbero salvati un supporto
 scrivibile persistente come un supporto di memorizzazione locale, una
@@ -147,20 +147,22 @@ multisessione. Tutti questi supporti sono gestiti in Debian Live in modi
 differenti, e tutti tranne l'ultimo richiedono un parametro d'avvio speciale
 da specificare all'avvio: #{persistence}#.
 
-If the boot parameter #{persistence}# is set (and #{nopersistence}# is not
-set), local storage media (e.g. hard disks, USB drives) will be probed for
-persistence volumes during boot. It is possible to restrict which types of
-persistence volumes to use by specifying certain boot parameters described
-in the live-boot(7) man page. A persistence volume is any of the following:
+Se il parametro di boot #{persistence}# è impostato (e non lo è
+#{nopersistence}#), i supporti di memorizzazione locali (hard disk,
+dispositivi USB) saranno rilevati come volumi persistenti durante l'avvio. È
+possibile selezionare quali tipi utilizzare specificando certi parametri di
+avvio descritti nella manpage di live-boot(7). Un volume persistente è uno
+dei seguenti:
 
 _* una partizione, identificata dal suo nome GPT (GUID Partition Table).
 
 _* un filesystem, identificato dalla sua label.
 
-_* an image file located on the root of any readable filesystem (even an
-NTFS partition of a foreign OS), identified by its file name. In this case
-the file name must also use the containing filesystem as the file extension,
-e.g. "persistence.ext4".
+_* un file immagine situato nella directory radice di un qualsiasi
+filesystem leggibile (anche una partizione NTFS di un sistema estraneo),
+identificato dal nome del file. In questo caso il nome del file deve
+contenere anche il tipo di filesystem come estensione, ad esempio
+"<label>.ext4".
 
 The volume label for overlays must be #{persistence}#. And in order to fully
 customize the volume's persistence there must be a file named
@@ -185,28 +187,29 @@ l'etichetta con una delle seguenti:
 
 code{
 
- $ tune2fs -L persistence /dev/sdb1 # for ext2,3,4 filesystems
+ $ tune2fs -L persistence /dev/sdb1 # per filesystem ext2,3,4
 
 }code
 
-Here's an example of how to create an ext4-based image file used for
-persistence:
+Ecco un esempio di come creare un file immagine ext4 da utilizzare per la
+persistenza:
 
 code{
 
- $ dd if=/dev/null of=persistence bs=1G seek=1 # for a 1GB sized image file
+ $ dd if=/dev/null of=persistence bs=1G seek=1 # per un file immagine da 1GB
  $ /sbin/mkfs.ext4 -F persistence
 
 }code
 
-Then copy the #{persistence}# file to the root of a writable partition.
+Quindi copiare il file #{persistence}# nella directory radice di una
+partizione scrivibile e riavviare.
 
 3~live-persistence-conf The live-persistence.conf file
 
-A volume with the label #{persistence}# can be configured to make arbitrary
-directories persistent. The file #{live-persistence.conf}#, located on the
-volume's filesystem root, controls which directories it makes persistent,
-and in which way.
+Un volume con una label #{persistence}# può essere configurato per creare
+directory persistenti arbitrarie. Il file #{live-persistence.conf}#, situato
+nella directory radice del filesystem del volume, controlla quali rendere
+persistenti e in che modo.
 
 Nella manpage di live-persistence.conf(5) è descritto dettagliatamente come
 è configurato il mount degli strati personalizzati, ma un semplice esempio
@@ -223,13 +226,13 @@ code{
 
 }code
 
-Then we reboot. During the first boot the contents of #{/home}# and
-#{/var/cache/apt}# will be copied into the persistence volume, and from then
-on all changes to these directories will live in the persistence
-volume. Please note that any paths listed in the #{live-persistence.conf}#
-file cannot contain white spaces or the special #{.}# and #{..}# path
-components. Also, neither #{/live}# (or any of its sub-directories) nor
-#{/}# can be made persistent using custom mounts.
+Quindi riavviare. Durante il primo avvio il contenuto di #{/home}# e
+#{/var/cache/apt}# saranno copiati nel volume persistente e da allora tutte
+le modifiche a queste directory risiederanno in modo persistente sul
+volume. C'è da considerare che tutti i path elencati nel file
+#{live-persistence.conf}# non possono contenere spazi o i caratteri speciali
+#{.}# e #{..}#; inoltre, né #{/live}# (o nessuna delle sue sottodirectory)
+né #{/}# può essere resa persistente tramite i mount personalizzati.
 
 Possono essere utilizzati svariati volumi di stratificazione personalizzati
 (con i rispettivi file #{live-persistence.conf}#) allo stesso tempo ma se
@@ -243,10 +246,10 @@ manpage di live-persistence.conf(5) per sapere come gestire questo caso.
 
 3~ Sottotesto persistente
 
-If a user would need multiple persistence storage of the same type for
-different locations or testing, such as #{persistence-nonwork}# and
-#{persistence-work}#, the boot parameter #{persistence-subtext}# used in
-conjunction with the boot parameter #{persistence}# will allow for multiple
-but unique persistence media. An example would be if a user wanted to use a
-persistence partition labeled #{persistence-subText}# they would use the
-boot parameters of: #{persistence}# #{persistence-subtext=subText}#.
+Se un utente avesse bisogno di archiviazioni multiple dello stesso tipo per
+differenti posti o per test, come #{persistence-casa}# e
+#{persistence-lavoro}#, il parametro d'avvio #{persistence-subtext}# usato
+in congiunzione con #{persistent}# permetterà supporti persistenti multipli
+ma univoci. Un esempio potrebbe essere un utente che vuole usare una
+partizione etichettata come #{persistence-sottotesto}#, userebbe:
+#{persistence}# #{persistence-subtext=sottotesto}#.

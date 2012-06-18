@@ -1,0 +1,299 @@
+:B~ Sobre aquest manual
+
+1~about-manual Sobre aquest manual
+
+Aquest manual serveix com a punt d'accés únic a tota la documentació
+relacionada amb el projecte Debian Live i en particular s'aplica al
+programari produït pel projecte per la versió Debian 7.0 "wheezy". Una
+versió actualitzada es pot trobar sempre a http://live.debian.net/
+
+Si bé live-manual es centra principalment en ajudar a construir un sistema
+viu i no en temes dels usuaris finals, un usuari final pot trobar informació
+útil en aquestes seccions: {Els Fonaments}#the-basics abasta la preparació
+d'imatges per ser arrencadas des dels dispositius o la xarxa, i
+{Personalització dels comportaments en temps
+d'execució}#customizing-run-time-behaviours descriu algunes de les opcions
+que es poden especificar durant l'arrencada del sistema, com ara la selecció
+de la disposició del teclat, la configuració regional i l'us de la
+persistència.
+
+Algunes de les ordres esmentades en el text s'han d'executar amb privilegis
+de superusuari que es poden obtenir esdevenint l'usuari root amb #{su}# o
+mitjançant l'ús de #{sudo}#. Per distingir entre les ordres que poden ser
+executades per un usuari sense privilegis i aquelles que requereixen
+privilegis de root, s'anteposa #{$}# o #{#}# respectivament. Aquest símbol
+no és part de l'ordre. 
+
+2~ Per als impacients
+
+Si bé creiem que tot en aquest manual és important si més no per alguns dels
+nostres usuaris, ens adonem que hi ha una gran quantitat de material per
+cobrir i que és possible que es vulgui experimentar l'èxit amb el programari
+aviat, abans d'aprofundir en els detalls. Per tant, us recomanem llegir en
+el següent ordre.
+
+En primer lloc, llegiu aquest capítol, {Sobre aquest manual}#about-manual,
+des del principi i acabant amb els {Termes}#terms. A continuació, saltar als
+tres tutorials abans dels {Exemples}#examples secció dissenyada per ensenyar
+la creació de l'imatge i alguns aspectes bàsics de la
+personalització. Llegiu en primer lloc {Usant els
+exemples}#using-the-examples seguit per {Tutorial 1: Una imatge
+estàndard}#tutorial-1, {Tutorial 2: Una utilitat de navegador
+d'Internet}#tutorial-2 i finalment, {Tutorial 3: Una image
+personalitzada}#tutorial-3. Al final d'aquests tutorials, tindreu una idea
+del que es pot fer amb Debian Live.
+
+Us animem a tornar i a fer un estudi del manual en profunditat, la propera
+lectura pot ser {Els fonaments}#the-basics, fregant o saltant {Construcció
+d'una imatge netboot}#building-netboot-image, i acabant per la lectura de la
+{Visió de conjunt de la personalització}#customization-overview i els
+capítols que la segueixen. En aquest punt, esperem que estigueu ben
+emocionats pel que es pot fer amb Debian Live i motivats per llegir la resta
+del manual, de principi a fi.
+
+2~terms Termes
+
+_* *{Sistema viu}*: Un sistema operatiu que pot arrencar sense necessitat
+d'instal·lació en un disc dur. Els sistemes vius no alteren el sistema
+operatiu local(s) o els fitxer(s) ja instal·lats al disc dur de l'ordinador
+a menys que s'els ho indiqui. Els sistemes vius normalment s'inician des de
+dispositius, com ara CD, DVD o memòries USB. Alguns també poden arrencar des
+de la xarxa.
+
+_* *{Debian Live}*: El subprojecte Debian, que manté els paquets live-boot,
+live-build, live-config i live-manual. 
+
+_* *{Sistema Debian Live}*: Un sistema viu que utilitza el programari del
+sistema operatiu Debian que es pot arrencar des d'un CD, DVD, memòries USB,
+o la xarxa (a través d'imatges netboot) i a través d'Internet (a través de
+paràmetre d'arrencada {fetch=URL}#).
+
+_* *{Sistema amfitrió}*: L'entorn utilitzat per crear el sistema en viu.
+
+_* *{Sistema objectiu}*: L'entorn que s'utilitza per executar el sistema en
+viu.
+
+_* *{live-boot}*: Una col·lecció d'scripts per arrencar els sistemes
+vius. live-boot abans havia estat part de /{live-initramfs}/.
+
+_* *{live-build}*: Una col·lecció d'scripts utilitzats per construir
+sistemes personalitzats de Debian Live. live-build era anteriorment conegut
+com /{live-helper}/ i fins i tot abans conegut com /{live-package}/.
+
+_* *{live-config}*: Una col·lecció d'scripts utilitzats per configurar un
+sistema en viu durant el procés d'arrencada. live-config abans va ser part
+de /{live-initramfs}/.
+
+_* *{live-manual}*: Aquest document és mantingut en un paquet anomenat
+live-manual
+
+_* *{Instaŀlador de Debian (d-i)}*: El sistema oficial d'instaŀlació de la
+distribució Debian.
+
+_* *{Paràmeters d'arrencada}*: Els paràmetres que es poden introduir a
+l'indicador del carregador d'arrencada per influir en el nucli o live-config
+
+_* *{chroot}*: El programa /{chroot}/, #{chroot(8)}#, ens permet executar
+diferentes instàncies d'un entorn GNU/Linux a la vegada en un sol sistema
+sense reiniciar.
+
+_* *{Imatge binaria}*: Un fitxer que conté el sistema en viu, com ara
+binary.iso o binary.img.
+
+_* *{Distribució objectiu}*: La distribució en què es basa el sistema en
+viu. Que pot diferir de la distribució del sistema amfitrió.
+
+_* *{stable/testing/unstable}*: La distribució *{stable}* conté l'última
+distribució de Debian llençada oficialment. La distribució *{testing}* és
+l'àrea d'assaig per a la pròxima versió *{stable}*. Un avantatge important
+de l'ús d'aquesta distribució és que té versions més recents del programari
+en relació amb l'edició *{stable}*. La distribució *{unstable}* és on es
+produeix el desenvolupament actiu de Debian. En general, aquesta distribució
+és utilitzada pels desenvolupadors i els que els agrada viure en risc. Al
+llarg del manual, es tendeix a utilitzar els seus noms en clau, com ara
+wheezy or sid, ja que és el que fan servir les pròpies eines.
+
+2~ Autors
+
+Llistat d'autors (en ordre alfabètic)
+
+_* Ben Armstrong
+
+_* Brendan Sleight
+
+_* Chris Lamb
+
+_* Daniel Baumann
+
+_* Franklin Piat
+
+_* Jonas Stein
+
+_* Kai Hendry
+
+_* Marco Amadori
+
+_* Mathieu Geli
+
+_* Matthias Kirschner
+
+_* Richard Nelson
+
+_* Trent W. Buck
+
+2~how-to-contribute Contribuir en aquest document
+
+Aquest manual està pensat com un projecte comunitari i totes les propostes
+per millorar-lo i les contribucions són molt benvingudes. La millor forma
+d'enviar una contribució és enviar-la a la llista de correu. Si us plau,
+consulteu la secció {Contacte}#contact per més informació.
+
+Quan es presenta una contribució, si us plau, identifiqueu clarament el
+titular dels drets d'autor i s'ha d'incloure la declaració de concessió de
+llicències. Recordeu que per ser acceptada, la contribució ha de tenir una
+llicencia igual que la resta del document, a saber, la versió de la GPL 3 o
+superior.
+
+Les fonts d'aquest manual es mantenen utilitzant el sistema de control de
+versions Git. Es pot comprovar l'última còpia mitjançant l'execució de:
+
+code{
+
+$ git clone git://live.debian.net/git/live-manual.git
+
+}code
+
+Abans de presentar una contribució, si us plau, previsualitzar el
+treball. Per previsualitzar el live-manual, assegurar-se que s'han
+instal·lat els paquets necessaris per a la seva construcció  mitjançant
+l'execució de:
+
+code{
+
+# apt-get install make po4a sisu-complete libnokogiri-ruby
+
+}code
+
+Es pot crear el live-manual des del directori de nivell superior del arbre
+Git mitjançant l'execució de:
+
+code{
+
+ $ make build
+
+}code
+
+Com es necessita un cert temps per construir el manual en tots els idiomes
+suportats, potser resulti convenient quan es fa una prova construir per a un
+sol idioma, per exemple, mitjançant l'execució de:
+
+code{
+
+$ make build LANGUAGES=en
+
+}code
+
+També es possible crear per tipus de document, per exemple: 
+
+code{
+
+ $ make build FORMATS=pdf
+
+}code
+
+O combinar tot dos, per exemple:
+
+code{
+
+ $ make build FORMATS=html LANGUAGES=it
+
+}code
+
+3~ Aplicar canvis
+
+Qualsevol persona pot fer un commit directament al repositori. No obstant
+això, demanem que s'enviïn els canvis grans a la llista de correu per
+parlar-ne en primer lloc. Per fer un push al repositori, s'ha de seguir el
+següent procediment:
+
+_* Obtenir la clau pública:
+
+code{
+
+ $ mkdir -p ~/.ssh/identity.d
+ $ wget http://live.debian.net/other/keys/git@live.debian.net \
+     -O ~/.ssh/identity.d/git@live.debian.net
+ $ wget http://live.debian.net/other/keys/git@live.debian.net.pub \
+     -O ~/.ssh/identity.d/git@live.debian.net.pub
+ $ chmod 0600 ~/.ssh/identity.d/git@live.debian.net*
+
+}code
+
+_* Afegiu la següent secció a la configuració del vostre openssh-client:
+
+code{
+
+ $ cat >> ~/.ssh/config << EOF
+ Host live.debian.net
+     Hostname live.debian.net
+     User git
+     IdentityFile ~/.ssh/identity.d/git@live.debian.net
+ EOF
+
+}code
+
+_* Fer una ullada a una còpia del manual a través de ssh:
+
+code{
+
+ $ git clone git@live.debian.net:/live-manual.git
+ $ cd live-manual && git checkout debian-next
+
+}code
+
+_* Tenir en compte que s'han d'enviar els canvis a la branca debian-next, no
+a la branca debian.
+
+_* No fer un #{make commit}# a menys que s'actualitzen les traduccions al
+mateix temps, i en aquest cas, no barrejar els canvis al manual en Anglès i
+les traduccions en el mateix commit, fer-ne un altre separat per cada
+un. Veure la secció {Traducció}#translation per a més detalls.
+
+_* Escriure missatges de commit que consisteixen en oracions completes i
+significatives en Anglès, començant amb una lletra majúscula i acabant amb
+un punt. En general, aquestes començaran amb la forma
+'Fixing/Adding/Removing/Correcting/Translating', per exemple:
+
+code{
+
+ $ git commit -a -m "Adding a section on applying patches."
+
+}code
+
+_* Fer un push al servidor:
+
+code{
+
+ $ git push
+
+}code
+
+3~translation Traducció
+
+Per enviar la traducció d'un idioma nou, seguiu aquests tres passos:
+
+_* Traduir els fixers about_manual.ssi.pot, about_project.ssi.pot i
+index.html.in.pot a la vostra llengua amb el vostre editor favorit (per
+exemple /{poedit}/). Enviar els fitxers traduïts a la llista de correu. Un
+cop haguem revisat el seu contingut, afegirem el nou idioma al manual
+(mitjançant els fitxers po) i l'activarem al autobuild.
+
+_* Una vegada que s'ha afegit la nova llengua, es pot començar a traduir
+tots els fitxers po dins de #{manual/po/}# a l'atzar.
+
+_* No oblidar que es necessari fer #{make commit}# per garantir que els
+manuals traduïts s'actualitzen a partir del fitxers po i llavors es poden
+revisar els canvis executant #{make build}# abans de #{git add .}#, #{git
+commit -a -m "Translating..."}# i #{git push}#.
+
+*{Nota:}* Recordar que tot i que tant #{make commit}# com #{make build}# esborren el directori de construcció, si es construeix el manual per revisar els canvis tal i com es recomana, és possible que es vulgui netejar l'arbre git abans de fer un push. Per tal de fer això, es pot utilitzar #{make clean}#. Aquest últim pas no és obligatori, gràcies al fitxer .gitignore, però és una bona pràctica per evitar enviar fixers de forma involuntària.

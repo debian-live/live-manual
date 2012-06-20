@@ -7,7 +7,7 @@ set -e
 echo ""
 echo "There are $(grep -w 'fuzzy' manual/po/*/* | wc -l) fuzzy strings altogether in live-manual."
 echo "This script can help you find and fix them. What is your language?."
-echo "Type: ca, de, es, fr, it, pt_BR or ro ['a' to see all]['q' to quit]" 
+echo "Type: $(ls -C manual/po) ['a' to see all]['q' to quit]" 
 
 # Editor defaults to vim unless otherwise specified in preferences.
 

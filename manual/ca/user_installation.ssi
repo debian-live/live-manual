@@ -1,40 +1,41 @@
-:B~ Installation
+:B~ Instal·lació
 
-1~installation Installation
+1~installation Instal·lació
 
-2~requirements Requirements
+2~requirements Requeriments
 
-Building Debian Live images has very few system requirements:
+La construcció d'imatges Debian Live té molts pocs requeriments.
 
-_* Super user (root) access
+_* Accés de superusuari (root)
 
-_* An up-to-date version of live-build
+_* Una versió actualitzada de live-build
 
-_* A POSIX-compliant shell, such as /{bash}/ or /{dash}/.
+_* Una shell compatible amb POSIX, com ara /{bash}/ o /{dash}/.
 
-_* /{debootstrap}/ or /{cdebootstrap}/
+_* /{debootstrap}/ o /{cdebootstrap}/
 
 _* Linux 2.6.x
 
-Note that using Debian or a Debian-derived distribution is not required -
-live-build will run on almost any distribution with the above requirements.
+Tenir en compte que no cal usar Debian o una distribució derivada de Debian
+ja que live-build funcionarà en gairebé qualsevol distribució amb els
+requisits anteriors.
 
-2~installing-live-build Installing live-build
+2~installing-live-build Instal·lació de live-build
 
-You can install live-build in a number of different ways:
+Es pot instal·lar live-build en un nombre de maneres diferentes:
 
-_* From the Debian repository
+_* Des del repositori Debian
 
-_* From source
+_* À partir del codi font
 
-_* From snapshots
+_* À partir d'instantànies
 
-If you are using Debian, the recommended way is to install live-build via
-the Debian repository.
+Si s'utilitza Debian, la manera recomanada és instal·lar live-build des del
+repositori de Debian.
 
-3~ From the Debian repository
+3~ Des del repositori de Debian
 
-Simply install live-build like any other package:
+Només cal instal·lar live-build com qualsevol altre paquet:
 
 code{
 
@@ -42,7 +43,7 @@ code{
 
 }code
 
-or
+o
 
 code{
 
@@ -50,11 +51,11 @@ code{
 
 }code
 
-3~ From source
+3~ À partir del codi font
 
-live-build is developed using the Git version control system. On Debian
-based systems, this is provided by the /{git}/ package. To check out the
-latest code, execute:
+live-build es desenvolupa utilitzant el sistema de control de versions Git.
+En els sistemes basats en Debian, això és proporcionat pel paquet git. Per
+comprovar l'últim codi, executeu:
 
 code{
 
@@ -62,7 +63,8 @@ code{
 
 }code
 
-You can build and install your own Debian package by executing:
+Es pot construir i instal·lar un paquet Debian pròpi mitjançant l'execució
+de:
 
 code{
 
@@ -72,8 +74,8 @@ code{
 
 }code
 
-Now install whichever of the freshly built #{.deb}# files you were
-interested in, e.g.
+Ara instal·lar qualsevol dels fitxers #{.deb}# recent construïts que ens
+interessen, per exemple,
 
 code{
 
@@ -81,7 +83,8 @@ code{
 
 }code
 
-You can also install live-build directly to your system by executing:
+Es pot instal·lar live-build directament al sistema mitjançant l'execució
+de:
 
 code{
 
@@ -89,7 +92,7 @@ code{
 
 }code
 
-and uninstall it with:
+i desinstal·lar lo amb:
 
 code{
 
@@ -97,27 +100,29 @@ code{
 
 }code
 
-3~ From 'snapshots'
+3~ A partir d'instantànies
 
-If you do not wish to build or install live-build from source, you can use
-snapshots. These are built automatically from the latest version in Git and
-are available on http://live.debian.net/debian/.
+Si no es desitja construir o instal·lar live-build a partir de les fonts, es
+pot utilitzar les instantànies. Aquestes es construeixen automàticament a
+partir de l'última versió del Git, i estan disponibles a
+http://live.debian.net/debian/.
 
-2~ Installing live-boot and live-config
+2~ Instal.lació de live-boot i live-config
 
-*{Note:}* You do not need to install live-boot or live-config on your system to create customized Debian Live systems. However, doing so will do no harm and is useful for reference purposes. If you only want the documentation, you may now install the /{live-boot-doc}/ and /{live-config-doc}/ packages separately.
+*{Nota:}* No cal instal·lar live-boot o live-config en el sistema per crear sistemes personalitzats de Debian Live. No obstant, això no farà cap mal i és útil per a fins de referència. Si només es vol la documentació, ara es poden instal·lar els paquets/{live-boot-doc}/ i /{live-config-doc}/ per separat.
 
-3~ From the Debian repository
+3~ Des del repositori de Debian
 
-Both live-boot and live-config are available from the Debian repository as
-per {Installing live-build}#installing-live-build.
+Tots dos, live-boot i live-config, estan disponibles al arxiu de Debian,
+d'una manera similar a {Instal·lació de live-build}#installing-live-build.
 
-3~ From source
+3~ À partir del codi font
 
-To use the latest source from git, you can follow the process below. Please
-ensure you are familiar with the terms mentioned in {Terms}#terms.
+Per utilitzar les darreres fonts del git, es pot seguir el procés
+seguent. Assegurar-se d'estar familiaritzat amb els termes esmentats a
+{Termes}#terms.
 
-_* Checkout the live-boot and live-config source
+_* Clonar les fonts de live-boot i live-config
 
 code{
 
@@ -126,21 +131,23 @@ code{
 
 }code
 
-Consult the live-boot and live-config man pages for details on customizing
-if that is your reason for building these packages from source.
+Consultar les pàgines del manual de live-boot i live-config per més detalls
+sobre la seva personalització si aquesta és la raó per construir aquests
+paquets a partir de les fonts.
 
-_* Build live-boot and live-config .deb files
+_* Crear els fitxers .deb de live-boot i live-config 
 
-You must build either on your target distribution or in a chroot containing
-your target platform: this means if your target is wheezy then you should
-build against wheezy.
+S'ha de crear ja sigui en la distribució de destinació o en un chroot que
+contingui la plataforma de destinació: és a dir, si el objectiu és wheezy
+llavors s'ha de construir contra wheezy.
 
-Use a personal builder such as /{pbuilder}/ or /{sbuild}/ if you need to
-build live-boot for a target distribution that differs from your build
-system. For example, for wheezy live images, build live-boot in a wheezy
-chroot. If your target distribution happens to match your build system
-distribution, you may build directly on the build system using
-#{dpkg-buildpackage}# (provided by the /{dpkg-dev}/ package):
+Es pot utilitzar un constructor personal, com ara /{pbuilder}/ o /{sbuild}/
+si es necessita crear live-boot per a una distribució de destinació
+diferenta del sistema de construcció. Per exemple, per a les imatges en viu
+de wheezy, crear live-boot en un chroot wheezy. Si la distribució de
+destinació per casualitat coincideix amb la distribució del sistema de
+construcció, es pot construir directament en el sistema de construcció amb
+#{dpkg-buildpackage}# (proporcionat pel paquet/{dpkg-dev}/):
 
 code{
 
@@ -151,21 +158,22 @@ code{
 
 }code
 
-_* Use all generated .deb files
+_* Utilitzar tots el fitxers .deb generats
 
-As live-boot and live-config are installed by live-build system, installing
-the packages in the host system is not sufficient: you should treat the
-generated .deb files like any other custom packages. Please see {Customizing
-package installation}#customizing-package-installation for more
-information. You should pay particular attention to {Additional
-repositories}#additional-repositories.
+Com live-boot i live-config són instal·lats pel sistema live-build,
+instal·lar els paquets en el sistema amfitrió no és suficient: S'han de
+tractar tots els fitxers .deb generats igual que qualsevol altre paquet
+personalitzat. Si us plau veure {Personalització de l'instal·lació de
+paquets}#customizing-package-installation per a més informació. S'ha de
+prestar especial atenció a {Repositoris
+addicionals}#additional-repositories.
 
-3~ From 'snapshots'
+3~ A partir d'instantànies
 
-You can let live-build automatically use the latest snapshots of live-boot
-and live-config by configuring a third-party repository in your live-build
-configuration directory. Assuming you have already created a configuration
-tree in the current directory with #{lb config}#:
+Es pot deixar que live-build utilitzi les darreres instantànies de live-boot
+i live-config configurant un repositori de tercers en el directori de
+configuració de live-build. Suposant que ja s'ha creat un arbre de
+configuració del directori actual amb #{lb config}#:
 
 code{
 

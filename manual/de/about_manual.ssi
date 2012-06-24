@@ -199,7 +199,7 @@ Or combine both, e.g:
 
 code{
 
- $ make build FORMATS=html LANGUAGES=it
+ $ make build LANGUAGES=it FORMATS=html
 
 }code
 
@@ -273,20 +273,23 @@ code{
 
 3~translation Translation
 
-To submit a translation for a new language, follow these three steps:
+To start a translation for a new language, follow these steps:
 
-_* Translate the about_manual.ssi.pot, about_project.ssi.pot and
-index.html.in.pot files to your language with your favourite editor (such as
-/{poedit}/). Send translated files to the mailing list. Once we have
-reviewed your submission, we will add the new language to the manual
-(providing the po files) and will enable it in the autobuild.
+_* Translate the *{about_manual.ssi.pot}*, *{about_project.ssi.pot}* and
+*{index.html.in.pot}* files to your language with your favourite editor
+(such as /{poedit}/). Send the translated #{.po}# files to the mailing list
+so that the translation team can check their integrity.
 
-_* Once the new language is added, you can randomly start translating all po
-files in #{manual/po/}#.
+_* To enable a new language in the autobuild it is enough to add the initial
+translated files to #{manual/po/${LANGUAGE}/}# and run #{make commit}#. And
+then edit #{manual/_sisu/home/index.html}#.
+
+_* Once the new language is added, you can randomly continue translating the
+remaining po files in #{manual/po/}#.
 
 _* Don't forget you need #{make commit}# to ensure the translated manuals
 are updated from the po files and then you can review your changes launching
 #{make build}# before #{git add .}#, #{git commit -a -m "Translating..."}#
 and #{git push}#.
 
-*{Note:}* Please be aware that even though both #{make commit}# and #{make build}# remove your build directory, if you build the manual to review your changes as recommended, you may want to clean your git tree before pushing. In order to do that, you can use #{make clean}#. This last step is not compulsory thanks to the .gitignore file but it is a good practice to avoid committing files involuntarily.
+*{Note:}* You can use #{make clean}# to clean your git tree before pushing. This step is not compulsory thanks to the .gitignore file but it is a good practice to avoid committing files involuntarily.

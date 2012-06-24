@@ -200,7 +200,7 @@ O entrambi:
 
 code{
 
- $ make build FORMATS=html LANGUAGES=it
+ $ make build LANGUAGES=it FORMATS=html
 
 }code
 
@@ -276,22 +276,23 @@ code{
 
 3~translation Traduzione
 
-Per inviare una traduzione per una nuova lingua, seguire questi tre passi:
+To start a translation for a new language, follow these steps:
 
-_* Tradurre i file about_manual.ssi.pot, about_project.ssi.pot e
-index.html.in.pot nella propria lingua con il proprio editor preferito (tipo
-/{poedit}/). Inviare i file tradotti alla mailing list. Una volta che
-abbiamo ricevuto il contributo, aggiungeremo la nuova lingua al manuale
-(fornendo i file po) e la attiveremo per la procedura di compilazione
-automatica.
+_* Translate the *{about_manual.ssi.pot}*, *{about_project.ssi.pot}* and
+*{index.html.in.pot}* files to your language with your favourite editor
+(such as /{poedit}/). Send the translated #{.po}# files to the mailing list
+so that the translation team can check their integrity.
 
-_* Una volta che la nuova lingua è stata aggiunta, si può iniziare a
-tradurre tutti i file po situati in #{manual/po/}#, nell'ordine che si
-preferisce.
+_* To enable a new language in the autobuild it is enough to add the initial
+translated files to #{manual/po/${LANGUAGE}/}# and run #{make commit}#. And
+then edit #{manual/_sisu/home/index.html}#.
+
+_* Once the new language is added, you can randomly continue translating the
+remaining po files in #{manual/po/}#.
 
 _* Non dimenticare che è necessario usare #{make commit}# per assicurarsi
 che i manuali tradotti siano aggiornati partendo dai file po, quindi si
 possono verificare le modifiche con #{make build}# prima di #{git add .}#,
 #{git commit -a -m "Translating..."}# e #{git push}#.
 
-*{Nota:}* anche se #{make commit}# e #{make build}# rimuovono entrambi la directory di compilazione, se si compila il manuale per rivedere le modifiche come consigliato, si consiglia di pulire l'albero git prima del push; per fare ciò si puà usare il comando #{make clean}#. Grazie al file .gitignore, quest'ultimo passaggio non è obbligatorio ma è una buona abitudine che evita di fare involontariamente il commit di certi file.
+*{Note:}* You can use #{make clean}# to clean your git tree before pushing. This step is not compulsory thanks to the .gitignore file but it is a good practice to avoid committing files involuntarily.

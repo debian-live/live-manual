@@ -26,8 +26,8 @@ no és part de l'ordre.
 
 2~ Per als impacients
 
-Si bé creiem que tot el que hi ha aquest manual és important si més no per
-alguns dels nostres usuaris, ens adonem que hi ha una gran quantitat de
+Si bé creiem que tot el que hi ha en aquest manual és important si més no
+per alguns dels nostres usuaris, ens adonem que hi ha una gran quantitat de
 material per cobrir i que és possible que es vulgui experimentar l'èxit amb
 el programari aviat, abans d'aprofundir en els detalls. Per tant, us
 recomanem llegir en el següent ordre.
@@ -56,9 +56,9 @@ Debian Live i motivats per llegir la resta del manual, de principi a fi.
 _* *{Sistema viu}*: Un sistema operatiu que pot arrencar sense necessitat
 d'instaŀlació en un disc dur. Els sistemes vius no alteren el sistema
 operatiu local(s) o els fitxer(s) ja instaŀlats al disc dur de l'ordinador a
-menys que se'ls ho indiqui. Els sistemes vius normalment s'inician des de
-dispositius, com ara CD, DVD o memòries USB. Alguns també poden arrencar des
-de la xarxa.
+menys que així se'ls ho indiqui. Els sistemes vius normalment s'inician des
+de dispositius, com ara CD, DVD o memòries USB. Alguns també poden arrencar
+des de la xarxa.
 
 _* *{Debian Live}*: Un subprojecte de Debian, que manté els paquets
 live-boot, live-build, live-config i live-manual. 
@@ -204,7 +204,7 @@ O combinar tot dos, per exemple:
 
 code{
 
- $ make build FORMATS=html LANGUAGES=it
+ $ make build LANGUAGES=it FORMATS=html
 
 }code
 
@@ -279,20 +279,23 @@ code{
 
 3~translation Traducció
 
-Per enviar la traducció d'un idioma nou, seguir aquests tres passos:
+Per començar la traducció d'un idioma nou, seguir aquests passos:
 
-_* Traduir els fitxers about_manual.ssi.pot, about_project.ssi.pot i
-index.html.in.pot a la vostra llengua amb el vostre editor favorit (per
-exemple /{poedit}/). Enviar els fitxers traduïts a la llista de correu. Un
-cop haguem revisat el seu contingut, afegirem el nou idioma al manual
-(mitjançant els fitxers po) i l'activarem al autobuild.
+_* Traduir els fitxers *{about_manual.ssi.pot}*, *{about_project.ssi.pot}* i
+*{index.html.in.pot}* a la vostra llengua amb el vostre editor favorit (per
+exemple /{poedit}/). Enviar els fitxers #{.po}# traduïts a la llista de
+correu perquè l'equip de traducció pugui comprovar la seva integritat.
 
-_* Una vegada que s'ha afegit la nova llengua, es pot començar a traduir
-tots els fitxers po dins de #{manual/po/}# a l'atzar.
+_* Per activar una nova llengua al autobuild, només cal afegir els arxius
+inicials traduïts a #{manual/po/${LANGUAGE}/}# i executar #{make commit}#. I
+llavors editar #{manual/_sisu/home/index.html}#.
+
+_* Una vegada que s'ha afegit la nova llengua, es pot continuar traduint la
+resta de fitxers dins de #{manual/po/}# a l'atzar.
 
 _* No oblidar que es necessari fer #{make commit}# per garantir que els
 manuals traduïts s'actualitzen a partir del fitxers po i llavors es poden
 revisar els canvis executant #{make build}# abans de #{git add .}#, #{git
 commit -a -m "Translating..."}# i #{git push}#.
 
-*{Nota:}* Recordar que tot i que tant #{make commit}# com #{make build}# esborren el directori de construcció, si es construeix el manual per revisar els canvis tal i com es recomana, és possible que es vulgui netejar l'arbre git abans de fer un push. Per tal de fer això, es pot utilitzar #{make clean}#. Aquest últim pas no és obligatori, gràcies al fitxer .gitignore, però és una bona pràctica per evitar enviar fitxers de forma involuntària.
+*{Nota:}* Es pot utilitzar #{make clean}# per netejar l'arbre git abans de fer un push.  Aquest  pas no és obligatori, gràcies al fitxer .gitignore, però és una bona pràctica per evitar enviar fitxers de forma involuntària.

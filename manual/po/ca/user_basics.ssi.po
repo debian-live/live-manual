@@ -1,15 +1,15 @@
-# Catalan translations for live-manual package
+# Catalan translations for live-manual
 # This file is distributed under the same license as the live-manual package.
-# Automatically generated, 2012.
+# Carlos Zuferri <chals@altorricon.com>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
 "POT-Creation-Date: 2012-06-03 19:00+0300\n"
-"PO-Revision-Date: 2012-06-03 19:00+0300\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: ca\n"
+"PO-Revision-Date: 2012-06-24 17:14+0200\n"
+"Last-Translator: Carlos Zuferri <chals@altorricon.com>\n"
+"Language-Team:  <debian-live@lists.debian.org>\n"
+"Language: Catalan\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -157,12 +157,12 @@ msgstr "}code"
 #. type: Plain text
 #: en/user_basics.ssi:2
 msgid ":B~ The basics"
-msgstr ""
+msgstr ":B~ Conceptes bàsics"
 
 #. type: Plain text
 #: en/user_basics.ssi:4
 msgid "1~the-basics The basics"
-msgstr ""
+msgstr "1~the-basics Conceptes bàsics"
 
 #. type: Plain text
 #: en/user_basics.ssi:6
@@ -179,6 +179,19 @@ msgid ""
 "very convenient way to test and deploy images for booting on the local "
 "network without the hassle of dealing with image media."
 msgstr ""
+"Aquest capítol conté una breu descripció del procés de construcció i les "
+"instruccions per a l'ús dels tres tipus d'imatge més comunes. El tipus "
+"d'imatge més versàtil #{iso-hybrid}# es pot utilitzar en una màquina "
+"virtual, en medis òptics o qualsevol altre dispositiu d'emmagatzematge USB "
+"portàtil. En certs casos especials, com ara l'ús de la persistència, el "
+"tipus #{hdd}# pot ser el més adequat per als dispositius USB. El capítol "
+"acaba amb instruccions per a la construcció d'una imatge tipus #{net}#, que "
+"és una mica més complicat a causa de la configuració necessària en el "
+"servidor. Aquest és un tema una mica avançat per a algú que no està "
+"familiaritzat ja amb l'arrencada en xarxa, però s'inclou aquí perquè un cop "
+"que la configuració es porta a terme, es tracta d'una forma molt convenient "
+"per provar i desplegar imatges per a l'arrencada en xarxa local sense la "
+"molèstia de tractar amb els dispositius de les imatges."
 
 #. type: Plain text
 #: en/user_basics.ssi:8
@@ -187,11 +200,14 @@ msgid ""
 "produced by live-build. If you are downloading a prebuilt image instead, the "
 "actual filenames may vary."
 msgstr ""
+"Al llarg del capítol, sovint es fa referència als noms dels fitxers produïts "
+"per defecte per live-build. Si es descarrega una imatge prefabricada, els "
+"noms dels fitxers poden ser direrents."
 
 #. type: Plain text
 #: en/user_basics.ssi:10
 msgid "2~what-is-live What is a live system?"
-msgstr ""
+msgstr "2~what-is-live Què és un sistema viu?"
 
 #. type: Plain text
 #: en/user_basics.ssi:12
@@ -201,6 +217,11 @@ msgid ""
 "use without any installation on the usual drive(s), with auto-configuration "
 "done at run time (see {Terms}#terms)."
 msgstr ""
+"Un sistema viu és un sistema operatiu que arrenca en un equip des d'un "
+"dispositiu extraïble, com un CD-ROM o una memòria USB o des d'una xarxa, a "
+"punt per fer servir sense cap tipus d'instaŀlació en la unitat(s) habitual"
+"(s), amb una configuració automàtica feta en temps d'execució (veure {Termes}"
+"#terms)."
 
 #. type: Plain text
 #: en/user_basics.ssi:14
@@ -209,11 +230,14 @@ msgid ""
 "the supported architectures (currently amd64, i386, powerpc and sparc). It "
 "is made from the following parts:"
 msgstr ""
+"Amb Debian Live, és un sistema operatiu Debian GNU/Linux, construït per una "
+"de les arquitectures suportades (actualment amd64, i386 powerpc i sparc). "
+"Conté les següents parts:"
 
 #. type: Plain text
 #: en/user_basics.ssi:16
 msgid "_* *{Linux kernel image}*, usually named #{vmlinuz*}#"
-msgstr ""
+msgstr "_* *{Imatge del nucli Linux}*, generalment s'anomena #{vmlinuz*}#"
 
 #. type: Plain text
 #: en/user_basics.ssi:18
@@ -222,6 +246,9 @@ msgid ""
 "boot, containing modules possibly needed to mount the System image and some "
 "scripts to do it."
 msgstr ""
+"_* *{Imatge del disc RAM inicial (initrd)}*: un disc RAM configurat per a "
+"l'arrencada de Linux, que conté els mòduls que possiblement es necessitaran "
+"per muntar la imatge del sistema i algunes seqüències d'ordres per fer-ho."
 
 #. type: Plain text
 #: en/user_basics.ssi:20
@@ -233,6 +260,14 @@ msgid ""
 "running system. However, all modifications will be lost upon shutdown unless "
 "optional persistence is used (see {Persistence}#persistence)."
 msgstr ""
+"_* *{Imatge del sistema}*: Imatge del sistema de fitxers del sistema "
+"operatiu. Normalment, s'utilitza un sistema de fitxers comprimit SquashFS "
+"per minimitzar la mida de la imatge Debian Live. Tenir en compte que és de "
+"només lectura. Així, durant l'arrencada, el sistema Debian Live utilitzarà "
+"el disc RAM i un mecanisme de \"unió\" per permetre l'escriptura de fitxers "
+"en el sistema en funcionament. No obstant això, totes les modificacions es "
+"perdran en tancar si no és que s'utilitza la persistència opcional (vegeu "
+"{Persistència}#persistence)."
 
 #. type: Plain text
 #: en/user_basics.ssi:22
@@ -247,6 +282,16 @@ msgid ""
 "ext2/3/4 and btrfs partitions, pxelinux for PXE netboot, GRUB for ext2/3/4 "
 "partitions, etc."
 msgstr ""
+"_* *{Carregador d'arrencada }*: Una petita peça de codi dissenyat per "
+"arrencar des del medi triat, possiblement presentant un indicador "
+"d'arrencada o un menú per permetre la selecció d'opcions/configuració. "
+"Carrega el nucli del Linux i el seu initrd per funcionar amb un sistema de "
+"fitxers del sistema associat. Es poden utilitzar diverses solucions, en "
+"funció dels medis de destinació i el format del sistema de fitxers que conté "
+"els components esmentats anteriorment: isolinux per arrencar des de CD o DVD "
+"en format ISO9660, syslinux per una unitat USB o HDD que s'iniciarà des de "
+"particions VFAT, extlinux per particions ext2/3/4 i btrfs, pxelinux per PXE "
+"netboot, GRUB per particions ext2/3/4, etc"
 
 #. type: Plain text
 #: en/user_basics.ssi:24
@@ -255,11 +300,16 @@ msgid ""
 "set up a Linux kernel, its initrd, and a bootloader to run them, all in one "
 "media-dependant format (ISO9660 image, disk image, etc.)."
 msgstr ""
+"Es pot utilitzar live-build per construir la imatge del sistema amb "
+"especificacions pròpies, configurar un nucli de Linux, el initrd, i un "
+"carregador d'arrencada per executar-los, tot això en un format depenent dels "
+"dispositius (imatge ISO9660, imatge de disc, etc.)"
 
 #. type: Plain text
 #: en/user_basics.ssi:26
 msgid "2~building-iso-hybrid First steps: building an ISO hybrid image"
 msgstr ""
+"2~building-iso-hybrid Primers passos: construcció d'una imatge ISO híbrida"
 
 #. type: Plain text
 #: en/user_basics.ssi:28
@@ -270,6 +320,11 @@ msgid ""
 "containing just the Debian standard system without X.org. It is suitable for "
 "burning to CD or DVD media, and also to copy onto a USB stick."
 msgstr ""
+"Independentment del tipus d'imatge, s'haurà de fer els mateixos passos "
+"bàsics per construir una imatge cada vegada. Com a primer exemple, executar "
+"la següent seqüència d'ordres live-build per crear una imatge ISO híbrida  "
+"de base que conté només el sistema estàndard de Debian sense X.org. És "
+"adequat per gravar en un CD o DVD, i també per copiar en una memòria USB."
 
 #. type: Plain text
 #: en/user_basics.ssi:30
@@ -277,6 +332,8 @@ msgid ""
 "First, run the #{lb config}# command. This will create a \"config/\" "
 "hierarchy in the current directory for use by other commands:"
 msgstr ""
+"En primer lloc, executar l'ordre #{lb config}#. Això crearà una jerarquia "
+"«config/» en el directori actual per ser utilitzada per altres ordres:"
 
 #. type: Plain text
 #: en/user_basics.ssi:34
@@ -291,6 +348,8 @@ msgid ""
 "various options will be used. See {The lb config command}#lb-config for more "
 "details."
 msgstr ""
+"Aquí no es passa cap paràmetre a #{lb config}#, per tant s'utilitzaran les "
+"opcions per defecte. Veure {L'ordre lb config}#lb-config per més detalls."
 
 #. type: Plain text
 #: en/user_basics.ssi:40
@@ -298,6 +357,8 @@ msgid ""
 "Now that the \"config/\" hierarchy exists, build the image with the #{lb "
 "build}# command:"
 msgstr ""
+"Ara que la jerarquia «config/» ja existeix, crear la imatge amb l'ordre #{lb "
+"build}#:"
 
 #. type: Plain text
 #: en/user_basics.ssi:44 en/user_basics.ssi:170 en/user_basics.ssi:238
@@ -313,11 +374,14 @@ msgid ""
 "connection. When it is complete, there should be a #{binary.hybrid.iso}# "
 "image file, ready to use, in the current directory."
 msgstr ""
+"Aquest procés tardarà una mica, depenent de la velocitat de la connexió de "
+"la xarxa. Quan hagi acabat, ha d'haver un fitxer imatge #{binary.hybrid.iso}"
+"#, a punt per ser utilitzar, en el directori actual."
 
 #. type: Plain text
 #: en/user_basics.ssi:50
 msgid "2~using-iso-hybrid Using an ISO hybrid live image"
-msgstr ""
+msgstr "2~using-iso-hybrid Usar una imatge ISO híbrida en viu"
 
 #. type: Plain text
 #: en/user_basics.ssi:52
@@ -327,11 +391,15 @@ msgid ""
 "prepare your media for booting, either CD-R(W) or DVD-R(W) optical media or "
 "a USB stick."
 msgstr ""
+"Després de la construcció o la descàrrega d'una imatge ISO híbrida, que pot "
+"ser obtinguda a http://www.debian.org/CD/live/, el següent pas habitual és "
+"preparar els dispositius per a l'arrencada, ja sigui medis òptics com un CD-R"
+"(W) o DVD-R(W) o una memòria USB."
 
 #. type: Plain text
 #: en/user_basics.ssi:54
 msgid "3~burning-iso-image Burning an ISO image to a physical medium"
-msgstr ""
+msgstr "3~burning-iso-image Gravar una imatge ISO en un medi físic"
 
 #. type: Plain text
 #: en/user_basics.ssi:56
@@ -339,6 +407,8 @@ msgid ""
 "Burning an ISO image is easy. Just install wodim and use it from the command-"
 "line to burn the image. For instance:"
 msgstr ""
+"Gravar una imatge ISO és fàcil. Simplement cal instaŀlar i utilitzar wodim "
+"des de la línia d'ordres per gravar la imatge. Per exemple:"
 
 #. type: Plain text
 #: en/user_basics.ssi:60
@@ -356,6 +426,8 @@ msgstr ""
 #: en/user_basics.ssi:66
 msgid "3~copying-iso-hybrid-to-usb Copying an ISO hybrid image to a USB stick"
 msgstr ""
+"3~copying-iso-hybrid-to-usb Còpiar una imatge ISO híbrida en un dispositiu "
+"USB"
 
 #. type: Plain text
 #: en/user_basics.ssi:68
@@ -369,6 +441,15 @@ msgid ""
 "can find the right device name by looking in #{dmesg}#'s output after "
 "plugging in the stick, or better yet, #{ls -l /dev/disk/by-id}#."
 msgstr ""
+"Les imatges ISO preparades amb l'ordre #{isohybrid}#, com les imatges "
+"binàries del tipus #{iso-hybrid}# produïdes per defecte és poden copiar "
+"directament a una memòria USB utilitzant el programa #{dd}# o un altre "
+"d'equivalent. Connectar una memòria USB amb una mida prou gran per al fitxer "
+"de la imatge i determinar quin dispositiu és, que d'ara endavant annomenarem "
+"#{${USBSTICK}}#. Aquest és el dispositiu de la memòria com per exemple #{/"
+"dev/sdb}#, no una partició, com ara #{/dev/sdb1}#! Es pot trobar el nom del "
+"dispositiu correcte mirant la sortida de #{dmesg}# després de connectar la "
+"memòria usb o encara millor, #{ls -l /dev/disk/by-id}#."
 
 #. type: Plain text
 #: en/user_basics.ssi:71
@@ -377,6 +458,9 @@ msgid ""
 "command to copy the image to the stick.  *{This will definitely overwrite "
 "any previous contents on your stick!}*"
 msgstr ""
+"Quan s'estigui segur de tenir el nom del dispositiu correcte, utilitzar "
+"l'ordre #{dd}# per a copiar la imatge a la memòria. *{Fent això es perdran "
+"definitivament tots els continguts anteriors de la memòria usb!}*"
 
 #. type: Plain text
 #: en/user_basics.ssi:75
@@ -387,7 +471,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:80
 msgid "3~booting-live-media Booting the live media"
-msgstr ""
+msgstr "3~booting-live-media Arrencar els medis en viu"
 
 #. type: Plain text
 #: en/user_basics.ssi:82
@@ -401,6 +485,15 @@ msgid ""
 "order to place the boot device for the live system before your normal boot "
 "device."
 msgstr ""
+"La primera vegada que s'arrenqui els medis en viu, ja sigui des de CD, DVD, "
+"memòria USB, o PXE, pot ser necessaria alguna petita configuració al BIOS "
+"del ordinador en primer lloc. Atès que les BIOS varien molt en les seves "
+"funcions i dreceres de teclat, no podem entrar en el tema en profunditat "
+"aquí. Algunes BIOS proporcionen una tecla per obrir un menú de dispositius "
+"d'arrencada, que és la manera més fàcil si es troba disponible al sistema. "
+"En cas contrari, cal entrar al menú de configuració del BIOS i canviar "
+"l'ordre d'arrencada per situar el dispositiu del sistema en viu abans que el "
+"dispositiu d'arrencada normal."
 
 #. type: Plain text
 #: en/user_basics.ssi:84
@@ -411,6 +504,11 @@ msgid ""
 "\"help\" entry in the menu and also the live-boot and live-config man pages "
 "found within the live system."
 msgstr ""
+"Després d'arrencar des del dispositiu, es veurà un menu d'inici. S'ha de "
+"prémer «entrer» i el sistema s'iniciarà amb l'entrada #{Live}# i les seves "
+"opcions per defecte. Per obtenir més informació sobre les opcions "
+"d'arrencada, llegir la «ajuda» (help) al menú i també les pàgines del manual "
+"de live-boot i live-config que es troben dins del sistema en viu."
 
 #. type: Plain text
 #: en/user_basics.ssi:86
@@ -422,11 +520,18 @@ msgid ""
 "images, you should be automatically logged in on the console to the #{user}# "
 "account and see a shell prompt, ready to use."
 msgstr ""
+"Suposant que s'ha seleccionat #{Live}# i s'ha arrencat una imatge "
+"d'escriptori per defecte, després que els missatges d'arrencada hagin passat "
+"s'haurà iniciat una sessió com a usuari #{user}# i es veurà un escriptori, a "
+"punt per ser utilitzat. Si s'ha arrencat una imatge de la consola només, com "
+"les imatges preconfigurades #{standard}# o #{rescue}# s'iniciarà una sessió "
+"com a usuari #{user}# i es veurà el indicador de la shell, a punt per ser "
+"utilitzat."
 
 #. type: Plain text
 #: en/user_basics.ssi:88
 msgid "2~using-virtual-machine Using a virtual machine for testing"
-msgstr ""
+msgstr "2~using-virtual-machine Utilitzar una màquina virtual per fer proves"
 
 #. type: Plain text
 #: en/user_basics.ssi:90
@@ -434,6 +539,8 @@ msgid ""
 "It can be a great time-saver for the development of live images to run them "
 "in a virtual machine (VM). This is not without its caveats:"
 msgstr ""
+"Pot ser un gran estalvi de temps per al desenvolupament d'imatges en viu "
+"executar-les en una màquina virtual (VM). Això no està exempt d'advertiments:"
 
 #. type: Plain text
 #: en/user_basics.ssi:92
@@ -441,6 +548,9 @@ msgid ""
 "_* Running a VM requires enough RAM for both the guest OS and the host and a "
 "CPU with hardware support for virtualization is recommended."
 msgstr ""
+"_* L'execució d'una màquina virtual requereix de suficient memòria RAM, tant "
+"per al sistema operatiu convidat i l'amfitrió i es recomana una CPU amb "
+"maquinari amb suport per a la virtualització."
 
 #. type: Plain text
 #: en/user_basics.ssi:94
@@ -448,6 +558,9 @@ msgid ""
 "_* There are some inherent limitations to running on a VM, e.g. poor video "
 "performance, limited choice of emulated hardware."
 msgstr ""
+"_* Hi ha algunes limitacions inherents a l'execució en una màquina virtual, "
+"per exemple, rendiment de vídeo pobre, opcions limitadades de maquinari "
+"emulat."
 
 #. type: Plain text
 #: en/user_basics.ssi:96
@@ -455,6 +568,8 @@ msgid ""
 "_* When developing for specific hardware, there is no substitute for running "
 "on the hardware itself."
 msgstr ""
+"_* En el desenvolupament per a un maquinari específic, no hi ha substitut "
+"per al propi maquinari."
 
 #. type: Plain text
 #: en/user_basics.ssi:98
@@ -462,6 +577,9 @@ msgid ""
 "_* Occasionally there are bugs that relate only to running in a VM. When in "
 "doubt, test your image directly on the hardware."
 msgstr ""
+"_* De tant en tant hi ha errors que només sorgeixen durant l'execució en una "
+"màquina virtual. En cas de dubte, comprovar la imatge directament al "
+"maquinari."
 
 #. type: Plain text
 #: en/user_basics.ssi:100
@@ -469,11 +587,14 @@ msgid ""
 "Provided you can work within these constraints, survey the available VM "
 "software and choose one that is suitable for your needs."
 msgstr ""
+"Sempre que es pugui treballar dins d'aquestes limitacions, examinar el "
+"programari de màquina virtual disponible i triar un que sigui adequat per a "
+"les necessitats pròpies."
 
 #. type: Plain text
 #: en/user_basics.ssi:102
 msgid "3~testing-iso-with-qemu Testing an ISO image with QEMU"
-msgstr ""
+msgstr "3~testing-iso-with-qemu Provar una imatge ISO amb QEMU"
 
 #. type: Plain text
 #: en/user_basics.ssi:104
@@ -482,6 +603,10 @@ msgid ""
 "support for virtualization, use the /{qemu-kvm}/ package; the /{qemu-kvm}/ "
 "package description briefly lists the requirements."
 msgstr ""
+"La màquina virtual més versàtil dins Debian és QEMU. Si el processador té "
+"suport de maquinari per a la virtualització, utilitzar el paquet /{qemu-"
+"kvm}/; la descripció del paquet /{qemu-kvm}/ enumera breument els "
+"requeriments."
 
 #. type: Plain text
 #: en/user_basics.ssi:106
@@ -491,6 +616,10 @@ msgid ""
 "the following examples. The /{qemu-utils}/ package is also valuable for "
 "creating virtual disk images with #{qemu-img}#."
 msgstr ""
+"Primer, instaŀlar /{qemu-kvm}/ si el processador ho suporta. Si no, "
+"instaŀlar /{qemu}/, en aquest cas el nom del programa és #{qemu}# en lloc de "
+"#{kvm}# en els exemples següents. El paquet /{qemu-utils}/  també és valuós "
+"per a la creació d'imatges de disc virtuals amb #{qemu-img}#."
 
 #. type: Plain text
 #: en/user_basics.ssi:110
@@ -501,7 +630,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:114
 msgid "Booting an ISO image is simple:"
-msgstr ""
+msgstr "Arrencar una imatge ISO és senzill:"
 
 #. type: Plain text
 #: en/user_basics.ssi:118
@@ -512,17 +641,17 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:122
 msgid "See the man pages for more details."
-msgstr ""
+msgstr "Veure les pàgines del manual per a més detalls"
 
 #. type: Plain text
 #: en/user_basics.ssi:124
 msgid "3~testing-iso-with-virtualbox Testing an ISO image with virtualbox-ose"
-msgstr ""
+msgstr "3~testing-iso-with-virtualbox Provar una imatge ISO amb virtualbox-ose"
 
 #. type: Plain text
 #: en/user_basics.ssi:126
 msgid "In order to test the ISO with /{virtualbox-ose}/:"
-msgstr ""
+msgstr "Per provar la ISO amb /{virtualbox-ose}/:"
 
 #. type: Plain text
 #: en/user_basics.ssi:130
@@ -542,12 +671,14 @@ msgid ""
 "Create a new virtual machine, change the storage settings to use #{binary."
 "hybrid.iso}# as the CD/DVD device, and start the machine."
 msgstr ""
+"Crear una nova màquina virtual, canviar els paràmetres d'emmagatzematge per "
+"utilitzar #{binary.hybrid.iso}# com  unitat de CD/DVD i arrencar la màquina."
 
 #. type: Plain text
 #: en/user_basics.ssi:138
 #, no-wrap
 msgid "*{Note:}* For live systems containing X.org that you want to test with /{virtualbox-ose}/, you may wish to include the VirtualBox X.org driver package, /{virtualbox-ose-guest-x11}/, in your live-build configuration. Otherwise, the resolution is limited to 800x600.\n"
-msgstr ""
+msgstr "*{Nota:}* Per provar sistemes vius que contenen X.org amb /{virtualbox-ose}/, segurament es assenyat incloure el paquet del driver VirtualBox X.org, /{virtualbox-ose-guest-x11}/, en la configuració de live-build. En cas contrari, la resolució es limita a 800x600.\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:142
@@ -558,7 +689,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:146
 msgid "2~building-hdd Building an HDD image"
-msgstr ""
+msgstr "2~building-hdd Construir una imatge HDD"
 
 #. type: Plain text
 #: en/user_basics.ssi:148
@@ -572,12 +703,21 @@ msgid ""
 "space on the media for some purpose, such as a persistence partition, you "
 "need an HDD image."
 msgstr ""
+"Construir una imatge HDD és similar a una ISO híbrida en tots els aspectes, "
+"excepte que s'especifiqua #{-b hdd}# que el nom del fitxer resultant és #"
+"{binary.img}# i que no es pot gravar en medis òptics. És adequada per "
+"arrencar des de dispositius USB, discs durs USB, i altres dispositius "
+"d'emmagatzematge portàtils. Normalment, una imatge ISO híbrida es pot "
+"utilitzar per aquest propòsit en el seu lloc, però si el BIOS no maneja "
+"adequadament les imatges híbrides, o es desitja utilitzar l'espai lliure en "
+"els medis per a algun propòsit, com una partició per a la persistència, cal "
+"una imatge HDD."
 
 #. type: Plain text
 #: en/user_basics.ssi:150
 #, no-wrap
 msgid "*{Note:}* if you created an ISO hybrid image with the previous example, you will need to clean up your working directory with the #{lb clean}# command (see {The lb clean command}#lb-clean):\n"
-msgstr ""
+msgstr "*{Nota:}* si s'ha creat una imatge ISO híbrida amb l'exemple anterior, s'haurà de netejar el directori de treball amb l'ordre #{lb clean}# (veure {L'ordre lb clean}#lb-clean):\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:154 en/user_basics.ssi:220
@@ -591,6 +731,8 @@ msgid ""
 "Run the #{lb config}# command as before, except this time specifying the HDD "
 "image type:"
 msgstr ""
+"Executar l'ordre #{lb config}# com abans, excepte que aquesta vegada "
+"especificant el tipus d'imatge HDD:"
 
 #. type: Plain text
 #: en/user_basics.ssi:162
@@ -601,7 +743,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:166 en/user_basics.ssi:234
 msgid "Now build the image with the #{lb build}# command:"
-msgstr ""
+msgstr "Ara construir la imatge amb l'ordre #{lb build}#:"
 
 #. type: Plain text
 #: en/user_basics.ssi:174
@@ -609,11 +751,13 @@ msgid ""
 "When the build finishes, a #{binary.img}# file should be present in the "
 "current directory."
 msgstr ""
+"Quan la construcció acabi, hauria d'haver un fitxer #{binary.img}# al "
+"directori actual."
 
 #. type: Plain text
 #: en/user_basics.ssi:176
 msgid "2~using-hdd-image Using an HDD image"
-msgstr ""
+msgstr "2~using-hdd-image Utilitzar una imatge HDD"
 
 #. type: Plain text
 #: en/user_basics.ssi:178
@@ -624,11 +768,17 @@ msgid ""
 "in {Using an ISO hybrid live image}#using-iso-hybrid, except use the "
 "filename #{binary.img}# instead of #{binary.hybrid.iso}#."
 msgstr ""
+"La imatge binària generada conté una partició VFAT i el carregador "
+"d'arrencada syslinux, llestos per ser escrits directament a una memòria USB. "
+"Donat que l'ús d'una imatge HDD és com utilitzar una imatge ISO híbrida en "
+"un USB, seguir les instruccions de {Usar una imatge ISO híbrida en viu}"
+"#using-iso-hybrid, però amb el nom de fitxer #{binary.img}# en lloc de #"
+"{binary.hybrid.iso}#."
 
 #. type: Plain text
 #: en/user_basics.ssi:180
 msgid "3~testing-hdd-with-qemu Testing an HDD image with Qemu"
-msgstr ""
+msgstr "3~testing-hdd-with-qemu Provar una imatge HDD amb Qemu"
 
 #. type: Plain text
 #: en/user_basics.ssi:182
@@ -638,6 +788,10 @@ msgid ""
 "which version your host system needs, specifying #{binary.img}# as the first "
 "hard drive."
 msgstr ""
+"Primer, instaŀlar /{qemu}/ com s'ha descrit anteriorment a {Provar una "
+"imatge ISO amb QEMU}#testing-iso-with-qemu. A continuació, executar #{kvm}# "
+"o #{qemu}#, segons la versió instaŀlada al sistema amfitrió, especificant #"
+"{binary.img}# com a primer disc dur."
 
 #. type: Plain text
 #: en/user_basics.ssi:186
@@ -648,7 +802,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:190
 msgid "3~using-usb-extra-space Using the space left on a USB stick"
-msgstr ""
+msgstr "3~using-usb-extra-space Utilitzar l'espai lliure en una memòria USB"
 
 #. type: Plain text
 #: en/user_basics.ssi:192
@@ -658,6 +812,10 @@ msgid ""
 "partition on the stick. The first partition will be used by the Debian Live "
 "system."
 msgstr ""
+"Per poder utilitzar l'espai que queda lliure després de copiar #{binary.img}"
+"# en un dispositiu USB, utilitzar una eina de particionament com /{gparted}/ "
+"o /{parted}/ per crear una nova partició. La primera partició serà "
+"utilitzada pel sistema Debian Live."
 
 #. type: Plain text
 #: en/user_basics.ssi:196
@@ -672,6 +830,9 @@ msgid ""
 "partition, such as #{/dev/sdb2}#, you have to create a filesystem on it. One "
 "possible choice would be ext4."
 msgstr ""
+"Després de crear la partició, on #{${PARTITION}}# és el nom de la partició, "
+"com ara #{/dev/sdb2}#, s'ha de crear un sistema de fitxers. Una opció "
+"possible seria ext4."
 
 #. type: Plain text
 #: en/user_basics.ssi:204
@@ -683,18 +844,18 @@ msgstr ""
 #: en/user_basics.ssi:208
 #, no-wrap
 msgid "*{Note:}* If you want to use the extra space with Windows, apparently that OS cannot normally access any partitions but the first. Some solutions to this problem have been discussed on our {mailing list}#contact, but it seems there are no easy answers.\n"
-msgstr ""
+msgstr "*{Nota:}* Si es vol utilitzar l'espai addicional amb Windows, pel que sembla, aquest sistema operatiu normalment no pot accedir a altres particions més que a la primera. Algunes solucions a aquest problema han estat discutides a la nostra {llista de correu}#contact, però sembla que no hi ha respostes fàcils.\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:210
 #, no-wrap
 msgid "*{Remember: Every time you install a new binary.img on the stick, all data on the stick will be lost because the partition table is overwritten by the contents of the image, so back up your extra partition first to restore again after updating the live image.}*\n"
-msgstr ""
+msgstr "*{Recordar: Cada vegada que s'instaŀli una nova binary.img al dispositiu, es perdran totes les dades perquè la taula de particions se sobreescriu amb el contingut de la imatge, de manera que es assenyat fer una còpia de seguretat de la partició addicional per restaurar les dades de nou després d'actualitzar la imatge en viu.}*\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:212
 msgid "2~building-netboot-image Building a netboot image"
-msgstr ""
+msgstr "2~building-netboot-image Construir una imatge netboot"
 
 #. type: Plain text
 #: en/user_basics.ssi:214
@@ -703,12 +864,15 @@ msgid ""
 "containing the Debian standard system without X.org. It is suitable for "
 "booting over the network."
 msgstr ""
+"La següent seqüència d'ordres crearà una imatge netboot bàsica que conté el "
+"sistema estàndard de Debian sense X.org. És adequada per a l'arrencada en "
+"xarxa."
 
 #. type: Plain text
 #: en/user_basics.ssi:216
 #, no-wrap
 msgid "*{Note:}* if you performed any previous examples, you will need to clean up your working directory with the #{lb clean}# command:\n"
-msgstr ""
+msgstr "*{Nota:}* si s'ha realitzat algun dels exemples anteriors, s'haurà de netejar el directori de treball amb l'ordre #{lb clean}#:\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:224
@@ -716,6 +880,7 @@ msgid ""
 "Run the #{lb config}# command as follows to configure your image for "
 "netbooting:"
 msgstr ""
+"Executar l'ordre següent per configurar la imatge per arrencar en xarxa:"
 
 #. type: Plain text
 #: en/user_basics.ssi:228
@@ -733,6 +898,12 @@ msgid ""
 "be located at boot time. Make sure these are set to suitable values for your "
 "network and server."
 msgstr ""
+"A diferència de les imatges ISO i HDD, l'arrencada en xarxa no serveix el "
+"sistema de fitxers al client, per tant els fitxers  han de ser servits a "
+"través de NFS. Les opcions #{--net-root-path}# y #{--net-root-server}# "
+"especifiquen la ubicació i el servidor, respectivament,  del servidor NFS on "
+"es troba la imatge de sistema de fitxers a l'hora d'arrencar. Assegurar-se "
+"que aquests s'ajusten als valors adequats per la xarxa i el servidor pròpis."
 
 #. type: Plain text
 #: en/user_basics.ssi:242
@@ -744,6 +915,12 @@ msgid ""
 "could be pxelinux, GRUB, or even boot directly to an operating system like "
 "Linux."
 msgstr ""
+"En l'arrencada en xarxa, el client executa una petita peça de programari que "
+"normalment es troba a la EPROM de la targeta Ethernet. Aquest programa envia "
+"una petició DHCP per obtenir una adreça IP i la informació sobre què fer a "
+"continuació. Per regla general, el següent pas és aconseguir un carregador "
+"d'arrencada de més alt nivell a través del protocol TFTP. Podria ser GRUB, "
+"pxelinux o fins i tot arrencar directament a un sistema operatiu com Linux."
 
 #. type: Plain text
 #: en/user_basics.ssi:244
@@ -753,6 +930,10 @@ msgid ""
 "{live/filesystem.squashfs}# and the kernel, initrd and pxelinux bootloader "
 "in #{tftpboot/debian-live/i386}#."
 msgstr ""
+"Per exemple, si es descomprimeix el arxiu #{binary-net.tar.gz}# generat al "
+"directori #{/srv/debian-live}#, es trobarà  la imatge del sistema de fitxers "
+"a #{live/filesystem.squashfs}# i el nucli, initrd i carregador d'arrencada "
+"pxelinux a #{tftpboot/debian-live/i386}#."
 
 #. type: Plain text
 #: en/user_basics.ssi:246
@@ -760,11 +941,13 @@ msgid ""
 "We must now configure three services on the server to enable netboot: the "
 "DHCP server, the TFTP server and the NFS server."
 msgstr ""
+"Ara hem de configurar els tres serveis al servidor per l'arrencada en xarxa: "
+"el servidor DHCP, servidor TFTP i el servidor NFS."
 
 #. type: Plain text
 #: en/user_basics.ssi:248
 msgid "3~ DHCP server"
-msgstr ""
+msgstr "3~ Servidor DHCP "
 
 #. type: Plain text
 #: en/user_basics.ssi:250
@@ -773,6 +956,9 @@ msgid ""
 "to the netbooting client system, and to advertise the location of the PXE "
 "bootloader."
 msgstr ""
+"S'ha de configurar el servidor DHCP de la xarxa per assegurar-se que dona "
+"una adreça IP per al client del sistema d'arrencada en xarxa, i per anunciar "
+"la ubicació del carregador d'arrencada PXE."
 
 #. type: Plain text
 #: en/user_basics.ssi:252
@@ -780,6 +966,8 @@ msgid ""
 "Here is an example for inspiration, written for the ISC DHCP server #{isc-"
 "dhcp-server}# in the #{/etc/dhcp/dhcpd.conf}# configuration file:"
 msgstr ""
+"Heus aquí un exemple per servir d'inspiració, escrit per al servidor ISC "
+"DHCP #{isc-dhcp-server}# al fitxer de configuració #{/etc/dhcp/dhcpd.conf}#:"
 
 #. type: Plain text
 #: en/user_basics.ssi:256
@@ -829,12 +1017,14 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:276
 msgid "3~ TFTP server"
-msgstr ""
+msgstr "3~ Servidor TFTP"
 
 #. type: Plain text
 #: en/user_basics.ssi:278
 msgid "This serves the kernel and initial ramdisk to the system at run time."
 msgstr ""
+"Aquest serveix el nucli i el disc ram inicial per al sistema en temps "
+"d'execució."
 
 #. type: Plain text
 #: en/user_basics.ssi:280
@@ -844,6 +1034,10 @@ msgid ""
 "files inside #{/srv/debian-live/tftpboot}#, run as root the following "
 "command:"
 msgstr ""
+"S'ha d'instaŀlar el paquet /{tftpd-hpa}/. Aquest pot servir tots els arxius "
+"continguts dins d'un directori arrel, per regla general #{/srv/tftp}#. "
+"Perquè es serveixen els arxius dins de #{/srv/debian-live/tftpboot}#, s'ha "
+"d'executar com a root la següent ordre:"
 
 #. type: Plain text
 #: en/user_basics.ssi:284
@@ -854,12 +1048,12 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:288
 msgid "and fill in the new tftp server directory when being asked about it."
-msgstr ""
+msgstr "i omplir el nou directori del servidor tftp quan ho hàgim de fer."
 
 #. type: Plain text
 #: en/user_basics.ssi:290
 msgid "3~ NFS server"
-msgstr ""
+msgstr "3~ Servidor NFS"
 
 #. type: Plain text
 #: en/user_basics.ssi:292
@@ -868,11 +1062,14 @@ msgid ""
 "its initrd, it will try to mount the Live filesystem image through a NFS "
 "server."
 msgstr ""
+"Un cop l'ordinador ha descarregat, ha arrencat el nucli de Linux i ha "
+"carregat el initrd, intentarà muntar la imatge del sistema de fitxers en viu "
+"a través d'un servidor NFS."
 
 #. type: Plain text
 #: en/user_basics.ssi:294
 msgid "You need to install the /{nfs-kernel-server}/ package."
-msgstr ""
+msgstr "S'ha d'instaŀlar el paquet /{nfs-kernel-server}/"
 
 #. type: Plain text
 #: en/user_basics.ssi:296
@@ -880,6 +1077,8 @@ msgid ""
 "Then, make the filesystem image available through NFS by adding a line like "
 "the following to #{/etc/exports}#:"
 msgstr ""
+"Llavors, fer que la imatge del sistema de fitxers estigui disponible a "
+"través de NFS afegint una línia com la següent a #{/etc/exports}#:"
 
 #. type: Plain text
 #: en/user_basics.ssi:300
@@ -892,6 +1091,8 @@ msgstr ""
 msgid ""
 "and tell the NFS server about this new export with the following command:"
 msgstr ""
+"i informar al servidor NFS sobre aquesta nova exportació amb la següent "
+"ordre:"
 
 #. type: Plain text
 #: en/user_basics.ssi:308
@@ -909,11 +1110,18 @@ msgid ""
 "debian.org/manual/en.i386/ch04s05.html. They might help, as their processes "
 "are very similar."
 msgstr ""
+"La configuració d'aquests tres serveis pot ser una mica difícil. És possible "
+"que es necessiti una mica de paciència per aconseguir que tots tres "
+"funcionin plegats. Per obtenir més informació, veure el wiki de syslinux a "
+"http://syslinux.zytor.com/wiki/index.php/PXELINUX o la secció TFTP Net "
+"Booting al Manual del Instaŀlador de Debian a http://d-i.alioth.debian.org/"
+"manual/en.i386/ch04s05.html. Això pot ajudar, ja que els seus processos són "
+"molt similars."
 
 #. type: Plain text
 #: en/user_basics.ssi:314
 msgid "3~ Netboot testing HowTo"
-msgstr ""
+msgstr "3~ Com provar l'arrencada en xarxa"
 
 #. type: Plain text
 #: en/user_basics.ssi:316
@@ -921,27 +1129,31 @@ msgid ""
 "Netboot image creation is made easy with live-build magic, but testing the "
 "images on physical machines can be really time consuming."
 msgstr ""
+"La creació d'imatges d'arrencada en xarxa es fa fàcil amb la màgia de live-"
+"build, però provar les imatges en màquines físiques pot costar molt de temps."
 
 #. type: Plain text
 #: en/user_basics.ssi:318
 msgid ""
 "To make our life easier, we can use virtualization. There are two solutions."
 msgstr ""
+"Per fer la nostra vida més fàcil, podem utilitzar la virtualització. Hi ha "
+"dues solucions."
 
 #. type: Plain text
 #: en/user_basics.ssi:320
 msgid "3~ Qemu"
-msgstr ""
+msgstr "3~ Qemu"
 
 #. type: Plain text
 #: en/user_basics.ssi:322
 msgid "_* Install /{qemu}/, /{bridge-utils}/, /{sudo}/."
-msgstr ""
+msgstr "_* Instaŀlar /{qemu}/, /{bridge-utils}/, /{sudo}/."
 
 #. type: Plain text
 #: en/user_basics.ssi:324
 msgid "Edit #{/etc/qemu-ifup}#:"
-msgstr ""
+msgstr "Editar #{/etc/qemu-ifup}#:"
 
 #. type: Plain text
 #: en/user_basics.ssi:335
@@ -960,23 +1172,24 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:339
 msgid "Get, or build a #{grub-floppy-netboot}# (in the svn)."
-msgstr ""
+msgstr "Descarregar o crear un #{grub-floppy-netboot}# (al svn)."
 
 #. type: Plain text
 #: en/user_basics.ssi:341
 msgid ""
 "Launch #{qemu}# with \"#{-net nic,vlan=0 -net tap,vlan=0,ifname=tun0}#\""
 msgstr ""
+"Llançar #{qemu}# amb \"#{-net nic,vlan=0 -net tap,vlan=0,ifname=tun0}#\""
 
 #. type: Plain text
 #: en/user_basics.ssi:343
 msgid "3~ VMWare Player"
-msgstr ""
+msgstr "3~ VMWare Player"
 
 #. type: Plain text
 #: en/user_basics.ssi:345
 msgid "_* Install VMWare Player (\"free as in beer\" edition)"
-msgstr ""
+msgstr "_* Instaŀlar VMWare Player (edició gratuïta «free as in beer»)"
 
 #. type: Plain text
 #: en/user_basics.ssi:347
@@ -984,11 +1197,13 @@ msgid ""
 "_* Create a PXETester directory, and create a text file called #{pxe.vwx}# "
 "inside"
 msgstr ""
+"_* Crear un directory PXETester amb un fitxer de text dins anomenat #{pxe."
+"vwx}#"
 
 #. type: Plain text
 #: en/user_basics.ssi:349
 msgid "_* Paste this text inside:"
-msgstr ""
+msgstr "_* Enganxar aquest text dins:"
 
 #. type: Plain text
 #: en/user_basics.ssi:357
@@ -1044,14 +1259,20 @@ msgid ""
 "_* You can play with this configuration file (e.g. change memory limit to "
 "256)"
 msgstr ""
+"_* Es pot jugar amb aquest fitxer de configuració (per exemple, canviar el "
+"limit de memòria a 256)"
 
 #. type: Plain text
 #: en/user_basics.ssi:380
 msgid ""
 "_* Double click on this file (or run VMWare player and select this file)."
 msgstr ""
+"_* Fer doble clic sobre aquest fitxer (o executar VMWare player i "
+"seleccionar aquest fitxer)."
 
 #. type: Plain text
 #: en/user_basics.ssi:381
 msgid "_* When running just press space if that strange question comes up..."
 msgstr ""
+"_* Quan està en execució només cal prémer «espai» si sorgeix aquella "
+"pregunta estranya ..."

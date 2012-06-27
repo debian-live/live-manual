@@ -7,7 +7,7 @@ set -e
 echo ""
 echo "There are $(grep -w 'fuzzy' manual/po/*/* | wc -l) fuzzy strings altogether in live-manual."
 echo "This script can help you find and fix them. What is your language?."
-echo "Type: de, es, fr, it, pt_BR or ro ['a' to see all]['q' to quit]" 
+echo "Type: $(ls -C manual/po) ['a' to see all]['q' to quit]" 
 
 # Editor defaults to vim unless otherwise specified in preferences.
 
@@ -15,7 +15,7 @@ EDITOR="${EDITOR:-vim}"
 
 # Creating the function. Searches 'fuzzy' and offers to open editor to fix them.
 
-find_fuzzy ()
+Find_fuzzy ()
 {
 	echo ""
 	echo "There are $(grep -w 'fuzzy' manual/po/$ANSWER/* | wc -l) fuzzy strings in your language."
@@ -67,8 +67,8 @@ case "$ANSWER" in
 		echo "Translation English-English not implemented yet!"
 		;;
 
-	de|es|fr|it|pt_BR|ro)
-		find_fuzzy
+	ca|de|es|fr|it|pt_BR|ro)
+		Find_fuzzy
 		;;
 
 	a)

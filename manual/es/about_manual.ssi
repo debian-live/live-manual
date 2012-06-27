@@ -218,7 +218,7 @@ O combinar ambos, por ejemplo:
 
 code{
 
- $ make build FORMATS=html LANGUAGES=it
+ $ make build LANGUAGES=it FORMATS=html
 
 }code
 
@@ -299,17 +299,20 @@ code{
 
 3~translation Traducción
 
-Para enviar una traducción para un nuevo idioma, se deben seguir los
+Para comenzar la traducción de un idioma nuevo, se deben seguir los
 siguientes pasos:
 
-_* Traducir los ficheros about_manual.ssi.pot, about_project.ssi.pot e
-index.html.in.pot al idioma deseado con cualquier editor (como puede ser
-/{poedit}/) y enviarlos a la lista de correos. Una vez hayan sido revisados,
-el idioma será añadido al manual, (añadiendo los ficheros .po) y se activará
-en el autobuild.
+_* Traducir los ficheros *{about_manual.ssi.pot}*, *{about_project.ssi.pot}*
+y *{index.html.in.pot}* al idioma deseado con cualquier editor (como puede
+ser /{poedit}/). Enviar los ficheros #{.po}# traducidos a la lista de correo
+para que el equipo de traducción pueda revisar su integridad.
 
-_* Una vez que el nuevo idioma haya sido añadido, se puede comenzar la
-traducción de todos los ficheros .po exisitentes en #{manual/po/}# de manera
+_* Para activar una nueva lengua en el autobuild basta con añadir los
+ficheros traducidos inicialmente a #{manual/po/${LANGUAGE}/}# y ejecutar
+#{make commit}#. Y entonces editar #{manual/_sisu/home/index.html}#.
+
+_* Una vez que el nuevo idioma haya sido añadido, se puede continuar la
+traducción de los ficheros po restantes en #{manual/po/}# de manera
 aleatoria.
 
 _* No se debe olvidar la ejecución del comando #{make commit}# para asegurar
@@ -318,4 +321,4 @@ que los manuales traducidos son actualizados desde los ficheros
 de realizar la entrega mediante #{git add .}#, #{git commit -a -m
 "Translating..."}# y #{git push}#.
 
-*{Nota:}* Tener en cuenta que a pesar de que tanto #{make commit}# como #{make build}# borran el directorio «build», si se crea el manual para revisar los cambios tal y como se recomienda, es posible que se desee limpiar el árbol git antes de enviar los cambios. Para hacer esto, se puede usar #{make clean}#. Este último paso no es obligatorio, gracias al fichero .gitignore, pero es una buena práctica para evitar enviar ficheros involuntariamente.
+*{Nota:}* Se puede utilizar #{make clean}# para limpiar el árbol git antes de enviar los cambios. Este paso no es obligatorio, gracias al fichero .gitignore, pero es una buena práctica para evitar enviar ficheros involuntariamente.

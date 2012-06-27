@@ -1,0 +1,545 @@
+:B~ Conceptes bàsics
+
+1~the-basics Conceptes bàsics
+
+Aquest capítol conté una breu descripció del procés de construcció i les
+instruccions per a l'ús dels tres tipus d'imatge més comunes. El tipus
+d'imatge més versàtil #{iso-hybrid}# es pot utilitzar en una màquina
+virtual, en medis òptics o qualsevol altre dispositiu d'emmagatzematge USB
+portàtil. En certs casos especials, com ara l'ús de la persistència, el
+tipus #{hdd}# pot ser el més adequat per als dispositius USB. El capítol
+acaba amb instruccions per a la construcció d'una imatge tipus #{net}#, que
+és una mica més complicat a causa de la configuració necessària en el
+servidor. Aquest és un tema una mica avançat per a algú que no està
+familiaritzat ja amb l'arrencada en xarxa, però s'inclou aquí perquè un cop
+que la configuració es porta a terme, es tracta d'una forma molt convenient
+per provar i desplegar imatges per a l'arrencada en xarxa local sense la
+molèstia de tractar amb els dispositius de les imatges.
+
+Al llarg del capítol, sovint es fa referència als noms dels fitxers produïts
+per defecte per live-build. Si es descarrega una imatge prefabricada, els
+noms dels fitxers poden ser direrents.
+
+2~what-is-live Què és un sistema viu?
+
+Un sistema viu és un sistema operatiu que arrenca en un equip des d'un
+dispositiu extraïble, com un CD-ROM o una memòria USB o des d'una xarxa, a
+punt per fer servir sense cap tipus d'instaŀlació en la unitat(s)
+habitual(s), amb una configuració automàtica feta en temps d'execució (veure
+{Termes}#terms).
+
+Amb Debian Live, és un sistema operatiu Debian GNU/Linux, construït per una
+de les arquitectures suportades (actualment amd64, i386 powerpc i
+sparc). Conté les següents parts:
+
+_* *{Imatge del nucli Linux}*, generalment s'anomena #{vmlinuz*}#
+
+_* *{Imatge del disc RAM inicial (initrd)}*: un disc RAM configurat per a
+l'arrencada de Linux, que conté els mòduls que possiblement es necessitaran
+per muntar la imatge del sistema i algunes seqüències d'ordres per fer-ho.
+
+_* *{Imatge del sistema}*: Imatge del sistema de fitxers del sistema
+operatiu. Normalment, s'utilitza un sistema de fitxers comprimit SquashFS
+per minimitzar la mida de la imatge Debian Live. Tenir en compte que és de
+només lectura. Així, durant l'arrencada, el sistema Debian Live utilitzarà
+el disc RAM i un mecanisme de "unió" per permetre l'escriptura de fitxers en
+el sistema en funcionament. No obstant això, totes les modificacions es
+perdran en tancar si no és que s'utilitza la persistència opcional (vegeu
+{Persistència}#persistence).
+
+_* *{Carregador d'arrencada }*: Una petita peça de codi dissenyat per
+arrencar des del medi triat, possiblement presentant un indicador
+d'arrencada o un menú per permetre la selecció
+d'opcions/configuració. Carrega el nucli del Linux i el seu initrd per
+funcionar amb un sistema de fitxers del sistema associat. Es poden utilitzar
+diverses solucions, en funció dels medis de destinació i el format del
+sistema de fitxers que conté els components esmentats anteriorment: isolinux
+per arrencar des de CD o DVD en format ISO9660, syslinux per una unitat USB
+o HDD que s'iniciarà des de particions VFAT, extlinux per particions
+ext2/3/4 i btrfs, pxelinux per PXE netboot, GRUB per particions ext2/3/4,
+etc
+
+Es pot utilitzar live-build per construir la imatge del sistema amb
+especificacions pròpies, configurar un nucli de Linux, el initrd, i un
+carregador d'arrencada per executar-los, tot això en un format depenent dels
+dispositius (imatge ISO9660, imatge de disc, etc.)
+
+2~building-iso-hybrid Primers passos: construcció d'una imatge ISO híbrida
+
+Independentment del tipus d'imatge, s'haurà de fer els mateixos passos
+bàsics per construir una imatge cada vegada. Com a primer exemple, executar
+la següent seqüència d'ordres live-build per crear una imatge ISO híbrida
+de base que conté només el sistema estàndard de Debian sense X.org. És
+adequat per gravar en un CD o DVD, i també per copiar en una memòria USB.
+
+En primer lloc, executar l'ordre #{lb config}#. Això crearà una jerarquia
+«config/» en el directori actual per ser utilitzada per altres ordres:
+
+code{
+
+ $ lb config
+
+}code
+
+Aquí no es passa cap paràmetre a #{lb config}#, per tant s'utilitzaran les
+opcions per defecte. Veure {L'ordre lb config}#lb-config per més detalls.
+
+Ara que la jerarquia «config/» ja existeix, crear la imatge amb l'ordre #{lb
+build}#:
+
+code{
+
+ # lb build
+
+}code
+
+Aquest procés tardarà una mica, depenent de la velocitat de la connexió de
+la xarxa. Quan hagi acabat, ha d'haver un fitxer imatge
+#{binary.hybrid.iso}#, a punt per ser utilitzar, en el directori actual.
+
+2~using-iso-hybrid Usar una imatge ISO híbrida en viu
+
+Després de la construcció o la descàrrega d'una imatge ISO híbrida, que pot
+ser obtinguda a http://www.debian.org/CD/live/, el següent pas habitual és
+preparar els dispositius per a l'arrencada, ja sigui medis òptics com un
+CD-R(W) o DVD-R(W) o una memòria USB.
+
+3~burning-iso-image Gravar una imatge ISO en un medi físic
+
+Gravar una imatge ISO és fàcil. Simplement cal instaŀlar i utilitzar wodim
+des de la línia d'ordres per gravar la imatge. Per exemple:
+
+code{
+
+ # apt-get install wodim
+
+ $ wodim binary.hybrid.iso
+
+}code
+
+3~copying-iso-hybrid-to-usb Còpiar una imatge ISO híbrida en un dispositiu
+USB
+
+Les imatges ISO preparades amb l'ordre #{isohybrid}#, com les imatges
+binàries del tipus #{iso-hybrid}# produïdes per defecte és poden copiar
+directament a una memòria USB utilitzant el programa #{dd}# o un altre
+d'equivalent. Connectar una memòria USB amb una mida prou gran per al fitxer
+de la imatge i determinar quin dispositiu és, que d'ara endavant annomenarem
+#{${USBSTICK}}#. Aquest és el dispositiu de la memòria com per exemple
+#{/dev/sdb}#, no una partició, com ara #{/dev/sdb1}#! Es pot trobar el nom
+del dispositiu correcte mirant la sortida de #{dmesg}# després de connectar
+la memòria usb o encara millor, #{ls -l /dev/disk/by-id}#.
+
+Quan s'estigui segur de tenir el nom del dispositiu correcte, utilitzar
+l'ordre #{dd}# per a copiar la imatge a la memòria. *{Fent això es perdran
+definitivament tots els continguts anteriors de la memòria usb!}*
+
+code{
+
+ $ dd if=binary.hybrid.iso of=${USBSTICK}
+
+}code
+
+
+3~booting-live-media Arrencar els medis en viu
+
+La primera vegada que s'arrenqui els medis en viu, ja sigui des de CD, DVD,
+memòria USB, o PXE, pot ser necessaria alguna petita configuració al BIOS
+del ordinador en primer lloc. Atès que les BIOS varien molt en les seves
+funcions i dreceres de teclat, no podem entrar en el tema en profunditat
+aquí. Algunes BIOS proporcionen una tecla per obrir un menú de dispositius
+d'arrencada, que és la manera més fàcil si es troba disponible al
+sistema. En cas contrari, cal entrar al menú de configuració del BIOS i
+canviar l'ordre d'arrencada per situar el dispositiu del sistema en viu
+abans que el dispositiu d'arrencada normal.
+
+Després d'arrencar des del dispositiu, es veurà un menu d'inici. S'ha de
+prémer «entrer» i el sistema s'iniciarà amb l'entrada #{Live}# i les seves
+opcions per defecte. Per obtenir més informació sobre les opcions
+d'arrencada, llegir la «ajuda» (help) al menú i també les pàgines del manual
+de live-boot i live-config que es troben dins del sistema en viu.
+
+Suposant que s'ha seleccionat #{Live}# i s'ha arrencat una imatge
+d'escriptori per defecte, després que els missatges d'arrencada hagin passat
+s'haurà iniciat una sessió com a usuari #{user}# i es veurà un escriptori, a
+punt per ser utilitzat. Si s'ha arrencat una imatge de la consola només, com
+les imatges preconfigurades #{standard}# o #{rescue}# s'iniciarà una sessió
+com a usuari #{user}# i es veurà el indicador de la shell, a punt per ser
+utilitzat.
+
+2~using-virtual-machine Utilitzar una màquina virtual per fer proves
+
+Pot ser un gran estalvi de temps per al desenvolupament d'imatges en viu
+executar-les en una màquina virtual (VM). Això no està exempt
+d'advertiments:
+
+_* L'execució d'una màquina virtual requereix de suficient memòria RAM, tant
+per al sistema operatiu convidat i l'amfitrió i es recomana una CPU amb
+maquinari amb suport per a la virtualització.
+
+_* Hi ha algunes limitacions inherents a l'execució en una màquina virtual,
+per exemple, rendiment de vídeo pobre, opcions limitadades de maquinari
+emulat.
+
+_* En el desenvolupament per a un maquinari específic, no hi ha substitut
+per al propi maquinari.
+
+_* De tant en tant hi ha errors que només sorgeixen durant l'execució en una
+màquina virtual. En cas de dubte, comprovar la imatge directament al
+maquinari.
+
+Sempre que es pugui treballar dins d'aquestes limitacions, examinar el
+programari de màquina virtual disponible i triar un que sigui adequat per a
+les necessitats pròpies.
+
+3~testing-iso-with-qemu Provar una imatge ISO amb QEMU
+
+La màquina virtual més versàtil dins Debian és QEMU. Si el processador té
+suport de maquinari per a la virtualització, utilitzar el paquet
+/{qemu-kvm}/; la descripció del paquet /{qemu-kvm}/ enumera breument els
+requeriments.
+
+Primer, instaŀlar /{qemu-kvm}/ si el processador ho suporta. Si no,
+instaŀlar /{qemu}/, en aquest cas el nom del programa és #{qemu}# en lloc de
+#{kvm}# en els exemples següents. El paquet /{qemu-utils}/  també és valuós
+per a la creació d'imatges de disc virtuals amb #{qemu-img}#.
+
+code{
+
+ # apt-get install qemu-kvm qemu-utils
+
+}code
+
+Arrencar una imatge ISO és senzill:
+
+code{
+
+ $ kvm -cdrom binary.hybrid.iso
+
+}code
+
+Veure les pàgines del manual per a més detalls
+
+3~testing-iso-with-virtualbox Provar una imatge ISO amb virtualbox-ose
+
+Per provar la ISO amb /{virtualbox-ose}/:
+
+code{
+
+ # apt-get install virtualbox-ose virtualbox-ose-dkms
+
+ $ virtualbox
+
+}code
+
+Crear una nova màquina virtual, canviar els paràmetres d'emmagatzematge per
+utilitzar #{binary.hybrid.iso}# com  unitat de CD/DVD i arrencar la màquina.
+
+*{Nota:}* Per provar sistemes vius que contenen X.org amb /{virtualbox-ose}/, segurament es assenyat incloure el paquet del driver VirtualBox X.org, /{virtualbox-ose-guest-x11}/, en la configuració de live-build. En cas contrari, la resolució es limita a 800x600.
+
+code{
+
+ $ echo virtualbox-ose-guest-x11 >> config/package-lists/my.list.chroot
+
+}code
+
+2~building-hdd Construir una imatge HDD
+
+Construir una imatge HDD és similar a una ISO híbrida en tots els aspectes,
+excepte que s'especifiqua #{-b hdd}# que el nom del fitxer resultant és
+#{binary.img}# i que no es pot gravar en medis òptics. És adequada per
+arrencar des de dispositius USB, discs durs USB, i altres dispositius
+d'emmagatzematge portàtils. Normalment, una imatge ISO híbrida es pot
+utilitzar per aquest propòsit en el seu lloc, però si el BIOS no maneja
+adequadament les imatges híbrides, o es desitja utilitzar l'espai lliure en
+els medis per a algun propòsit, com una partició per a la persistència, cal
+una imatge HDD.
+
+*{Nota:}* si s'ha creat una imatge ISO híbrida amb l'exemple anterior, s'haurà de netejar el directori de treball amb l'ordre #{lb clean}# (veure {L'ordre lb clean}#lb-clean):
+
+code{
+
+ # lb clean --binary
+
+}code
+
+Executar l'ordre #{lb config}# com abans, excepte que aquesta vegada
+especificant el tipus d'imatge HDD:
+
+code{
+
+ $ lb config -b hdd
+
+}code
+
+Ara construir la imatge amb l'ordre #{lb build}#:
+
+code{
+
+ # lb build
+
+}code
+
+Quan la construcció acabi, hauria d'haver un fitxer #{binary.img}# al
+directori actual.
+
+2~using-hdd-image Utilitzar una imatge HDD
+
+La imatge binària generada conté una partició VFAT i el carregador
+d'arrencada syslinux, llestos per ser escrits directament a una memòria
+USB. Donat que l'ús d'una imatge HDD és com utilitzar una imatge ISO híbrida
+en un USB, seguir les instruccions de {Usar una imatge ISO híbrida en
+viu}#using-iso-hybrid, però amb el nom de fitxer #{binary.img}# en lloc de
+#{binary.hybrid.iso}#.
+
+3~testing-hdd-with-qemu Provar una imatge HDD amb Qemu
+
+Primer, instaŀlar /{qemu}/ com s'ha descrit anteriorment a {Provar una
+imatge ISO amb QEMU}#testing-iso-with-qemu. A continuació, executar #{kvm}#
+o #{qemu}#, segons la versió instaŀlada al sistema amfitrió, especificant
+#{binary.img}# com a primer disc dur.
+
+code{
+
+ $ kvm -hda binary.img
+
+}code
+
+3~using-usb-extra-space Utilitzar l'espai lliure en una memòria USB
+
+Per poder utilitzar l'espai que queda lliure després de copiar
+#{binary.img}# en un dispositiu USB, utilitzar una eina de particionament
+com /{gparted}/ o /{parted}/ per crear una nova partició. La primera
+partició serà utilitzada pel sistema Debian Live.
+
+code{
+
+ # gparted ${USBSTICK}
+
+}code
+
+Després de crear la partició, on #{${PARTITION}}# és el nom de la partició,
+com ara #{/dev/sdb2}#, s'ha de crear un sistema de fitxers. Una opció
+possible seria ext4.
+
+code{
+
+ # mkfs.ext4 ${PARTITION}
+
+}code
+
+*{Nota:}* Si es vol utilitzar l'espai addicional amb Windows, pel que sembla, aquest sistema operatiu normalment no pot accedir a altres particions més que a la primera. Algunes solucions a aquest problema han estat discutides a la nostra {llista de correu}#contact, però sembla que no hi ha respostes fàcils.
+
+*{Recordar: Cada vegada que s'instaŀli una nova binary.img al dispositiu, es perdran totes les dades perquè la taula de particions se sobreescriu amb el contingut de la imatge, de manera que es assenyat fer una còpia de seguretat de la partició addicional per restaurar les dades de nou després d'actualitzar la imatge en viu.}*
+
+2~building-netboot-image Construir una imatge netboot
+
+La següent seqüència d'ordres crearà una imatge netboot bàsica que conté el
+sistema estàndard de Debian sense X.org. És adequada per a l'arrencada en
+xarxa.
+
+*{Nota:}* si s'ha realitzat algun dels exemples anteriors, s'haurà de netejar el directori de treball amb l'ordre #{lb clean}#:
+
+code{
+
+ # lb clean --binary
+
+}code
+
+Executar l'ordre següent per configurar la imatge per arrencar en xarxa:
+
+code{
+
+ $ lb config -b net --net-root-path "/srv/debian-live" --net-root-server "192.168.0.1"
+
+}code
+
+A diferència de les imatges ISO i HDD, l'arrencada en xarxa no serveix el
+sistema de fitxers al client, per tant els fitxers  han de ser servits a
+través de NFS. Les opcions #{--net-root-path}# y #{--net-root-server}#
+especifiquen la ubicació i el servidor, respectivament,  del servidor NFS on
+es troba la imatge de sistema de fitxers a l'hora d'arrencar. Assegurar-se
+que aquests s'ajusten als valors adequats per la xarxa i el servidor pròpis.
+
+Ara construir la imatge amb l'ordre #{lb build}#:
+
+code{
+
+ # lb build
+
+}code
+
+En l'arrencada en xarxa, el client executa una petita peça de programari que
+normalment es troba a la EPROM de la targeta Ethernet. Aquest programa envia
+una petició DHCP per obtenir una adreça IP i la informació sobre què fer a
+continuació. Per regla general, el següent pas és aconseguir un carregador
+d'arrencada de més alt nivell a través del protocol TFTP. Podria ser GRUB,
+pxelinux o fins i tot arrencar directament a un sistema operatiu com Linux.
+
+Per exemple, si es descomprimeix el arxiu #{binary-net.tar.gz}# generat al
+directori #{/srv/debian-live}#, es trobarà  la imatge del sistema de fitxers
+a #{live/filesystem.squashfs}# i el nucli, initrd i carregador d'arrencada
+pxelinux a #{tftpboot/debian-live/i386}#.
+
+Ara hem de configurar els tres serveis al servidor per l'arrencada en xarxa:
+el servidor DHCP, servidor TFTP i el servidor NFS.
+
+3~ Servidor DHCP 
+
+S'ha de configurar el servidor DHCP de la xarxa per assegurar-se que dona
+una adreça IP per al client del sistema d'arrencada en xarxa, i per anunciar
+la ubicació del carregador d'arrencada PXE.
+
+Heus aquí un exemple per servir d'inspiració, escrit per al servidor ISC
+DHCP #{isc-dhcp-server}# al fitxer de configuració #{/etc/dhcp/dhcpd.conf}#:
+
+code{
+
+ # /etc/dhcp/dhcpd.conf - configuration file for isc-dhcp-server
+
+ ddns-update-style none;
+
+ option domain-name "example.org";
+ option domain-name-servers ns1.example.org, ns2.example.org;
+
+ default-lease-time 600;
+ max-lease-time 7200;
+
+ log-facility local7;
+
+ subnet 192.168.0.0 netmask 255.255.255.0 {
+   range 192.168.0.1 192.168.0.254;
+   next-server servername;
+   filename "pxelinux.0";
+}
+
+}code
+
+3~ Servidor TFTP
+
+Aquest serveix el nucli i el disc ram inicial per al sistema en temps
+d'execució.
+
+S'ha d'instaŀlar el paquet /{tftpd-hpa}/. Aquest pot servir tots els arxius
+continguts dins d'un directori arrel, per regla general
+#{/srv/tftp}#. Perquè es serveixen els arxius dins de
+#{/srv/debian-live/tftpboot}#, s'ha d'executar com a root la següent ordre:
+
+code{
+
+ # dpkg-reconfigure -plow tftpd-hpa
+
+}code
+
+i omplir el nou directori del servidor tftp quan ho hàgim de fer.
+
+3~ Servidor NFS
+
+Un cop l'ordinador ha descarregat, ha arrencat el nucli de Linux i ha
+carregat el initrd, intentarà muntar la imatge del sistema de fitxers en viu
+a través d'un servidor NFS.
+
+S'ha d'instaŀlar el paquet /{nfs-kernel-server}/
+
+Llavors, fer que la imatge del sistema de fitxers estigui disponible a
+través de NFS afegint una línia com la següent a #{/etc/exports}#:
+
+code{
+
+ /srv/debian-live *(ro,async,no_root_squash,no_subtree_check)
+
+}code
+
+i informar al servidor NFS sobre aquesta nova exportació amb la següent
+ordre:
+
+code{
+
+ # exportfs -rv
+
+}code
+
+La configuració d'aquests tres serveis pot ser una mica difícil. És possible
+que es necessiti una mica de paciència per aconseguir que tots tres
+funcionin plegats. Per obtenir més informació, veure el wiki de syslinux a
+http://syslinux.zytor.com/wiki/index.php/PXELINUX o la secció TFTP Net
+Booting al Manual del Instaŀlador de Debian a
+http://d-i.alioth.debian.org/manual/en.i386/ch04s05.html. Això pot ajudar,
+ja que els seus processos són molt similars.
+
+3~ Com provar l'arrencada en xarxa
+
+La creació d'imatges d'arrencada en xarxa es fa fàcil amb la màgia de
+live-build, però provar les imatges en màquines físiques pot costar molt de
+temps.
+
+Per fer la nostra vida més fàcil, podem utilitzar la virtualització. Hi ha
+dues solucions.
+
+3~ Qemu
+
+_* Instaŀlar /{qemu}/, /{bridge-utils}/, /{sudo}/.
+
+Editar #{/etc/qemu-ifup}#:
+
+code{
+
+ #!/bin/sh
+ sudo -p "Password for $0:" /sbin/ifconfig $1 172.20.0.1
+ echo "Executing /etc/qemu-ifup"
+ echo "Bringing up $1 for bridged mode..."
+ sudo /sbin/ifconfig $1 0.0.0.0 promisc up
+ echo "Adding $1 to br0..."
+ sudo /usr/sbin/brctl addif br0 $1
+ sleep 2
+
+}code
+
+Descarregar o crear un #{grub-floppy-netboot}# (al svn).
+
+Llançar #{qemu}# amb "#{-net nic,vlan=0 -net tap,vlan=0,ifname=tun0}#"
+
+3~ VMWare Player
+
+_* Instaŀlar VMWare Player (edició gratuïta «free as in beer»)
+
+_* Crear un directory PXETester amb un fitxer de text dins anomenat
+#{pxe.vwx}#
+
+_* Enganxar aquest text dins:
+
+code{
+
+ #!/usr/bin/vmware
+ config.version = "8"
+ virtualHW.version = "4"
+ memsize = "512"
+ MemAllowAutoScaleDown = "FALSE"
+
+ ide0:0.present = "FALSE"
+ ide1:0.present = "FALSE"
+ floppy0.present = "FALSE"
+ sound.present = "FALSE"
+ tools.remindInstall = "FALSE"
+
+ ethernet0.present = "TRUE"
+ ethernet0.addressType = "generated"
+
+ displayName = "Test Boot PXE"
+ guestOS = "other"
+
+ ethernet0.generatedAddress = "00:0c:29:8d:71:3b"
+ uuid.location = "56 4d 83 72 5c c4 de 3f-ae 9e 07 91 1d 8d 71 3b"
+ uuid.bios = "56 4d 83 72 5c c4 de 3f-ae 9e 07 91 1d 8d 71 3b"
+ ethernet0.generatedAddressOffset = "0"
+
+}code
+
+_* Es pot jugar amb aquest fitxer de configuració (per exemple, canviar el
+limit de memòria a 256)
+
+_* Fer doble clic sobre aquest fitxer (o executar VMWare player i
+seleccionar aquest fitxer).
+
+_* Quan està en execució només cal prémer «espai» si sorgeix aquella
+pregunta estranya ...

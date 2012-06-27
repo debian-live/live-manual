@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
-"POT-Creation-Date: 2012-06-03 20:02+0300\n"
+"POT-Creation-Date: 2012-06-09 20:31+0300\n"
 "PO-Revision-Date: 2012-03-24 13:18+0100\n"
 "Last-Translator: José Luis Zabalza and Carlos Zuferri «chals» "
 "<jlz.3008@gmail.com> <chals@altorricon.com>\n"
@@ -67,8 +67,8 @@ msgstr ""
 #: en/user_customization-runtime.ssi:27 en/user_customization-runtime.ssi:47
 #: en/user_customization-runtime.ssi:57 en/user_customization-runtime.ssi:66
 #: en/user_customization-runtime.ssi:74 en/user_customization-runtime.ssi:83
-#: en/user_customization-runtime.ssi:122 en/user_customization-runtime.ssi:132
-#: en/user_customization-runtime.ssi:140 en/user_customization-runtime.ssi:155
+#: en/user_customization-runtime.ssi:112 en/user_customization-runtime.ssi:122
+#: en/user_customization-runtime.ssi:130 en/user_customization-runtime.ssi:145
 #: en/user_examples.ssi:14 en/user_examples.ssi:30 en/user_examples.ssi:40
 #: en/user_examples.ssi:54 en/user_examples.ssi:67 en/user_examples.ssi:83
 #: en/user_examples.ssi:93 en/user_examples.ssi:107 en/user_examples.ssi:117
@@ -137,8 +137,8 @@ msgstr "code{"
 #: en/user_customization-runtime.ssi:31 en/user_customization-runtime.ssi:51
 #: en/user_customization-runtime.ssi:62 en/user_customization-runtime.ssi:70
 #: en/user_customization-runtime.ssi:79 en/user_customization-runtime.ssi:88
-#: en/user_customization-runtime.ssi:126 en/user_customization-runtime.ssi:136
-#: en/user_customization-runtime.ssi:145 en/user_customization-runtime.ssi:162
+#: en/user_customization-runtime.ssi:116 en/user_customization-runtime.ssi:126
+#: en/user_customization-runtime.ssi:135 en/user_customization-runtime.ssi:152
 #: en/user_examples.ssi:20 en/user_examples.ssi:34 en/user_examples.ssi:44
 #: en/user_examples.ssi:61 en/user_examples.ssi:71 en/user_examples.ssi:89
 #: en/user_examples.ssi:103 en/user_examples.ssi:111 en/user_examples.ssi:121
@@ -449,8 +449,8 @@ msgstr ""
 msgid ""
 "'Persistence' is a common name for different kinds of solutions for saving "
 "across reboots some, or all, of this run-time evolution of the system. To "
-"understand how it could work it could be handy to know that even if the "
-"system is booted and run from read-only media, modification to the files and "
+"understand how it works it would be handy to know that even if the system is "
+"booted and run from read-only media, modifications to the files and "
 "directories are written on writable media, typically a ram disk (tmpfs) and "
 "ram disks' data do not survive reboots."
 msgstr ""
@@ -483,13 +483,17 @@ msgstr ""
 msgid ""
 "If the boot parameter #{persistence}# is set (and #{nopersistence}# is not "
 "set), local storage media (e.g. hard disks, USB drives) will be probed for "
-"persistence volumes during boot. A persistence volume is any of the "
-"following:"
+"persistence volumes during boot. It is possible to restrict which types of "
+"persistence volumes to use by specifying certain boot parameters described "
+"in the live-boot(7) man page. A persistence volume is any of the following:"
 msgstr ""
 "Si se usa el parámetro de arranque #{persistence}# (y no se usa la opción #"
 "{nopersistence}#), se busca en los medios de almacenamiento locales (p.ej. "
-"discos duros, llaves USB) volúmenes con persistencia durante el arranque. Un "
-"volumen persistente es cualquiera de los siguientes: "
+"discos duros, llaves USB) volúmenes con persistencia durante el arranque. Es "
+"posible restringir qué tipos de volúmenes persistentes se pueden usar "
+"especificando ciertos parámetros de arranque descritos en la página del "
+"manual de live-boot(7). Un volumen persistente es cualquiera de los "
+"siguientes: "
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:102
@@ -506,85 +510,55 @@ msgstr ""
 #. type: Plain text
 #: en/user_customization-runtime.ssi:106
 msgid ""
-"_* an image/archive file located on the root of any readable filesystem "
-"(even an NTFS partition of a foreign OS), identified by its file name. In "
-"this case the file name must also use the containing filesystem as the file "
-"extension, e.g. \"<label>.ext4\"."
+"_* an image file located on the root of any readable filesystem (even an "
+"NTFS partition of a foreign OS), identified by its file name. In this case "
+"the file name must also use the containing filesystem as the file extension, "
+"e.g. \"persistence.ext4\"."
 msgstr ""
-"_* una fichero imagen/archivo situado en el sistema raiz de cualquier "
-"sistema de ficheros que pueda ser leido (incluso una partición NTFS de otro "
-"sistema operativo), identificado por su nombre de fichero. En este caso el "
-"nombre del fichero debe contener el nombre el sistema de ficheros como "
-"extensión, p.ej. \"<label>.ext4\"."
+"_* una fichero imagen situado en la raíz de cualquier sistema de ficheros "
+"que pueda ser leido (incluso una partición NTFS de otro sistema operativo), "
+"identificado por su nombre de fichero. En este caso el nombre del fichero "
+"debe contener el nombre el sistema de ficheros como extensión, p.ej. "
+"\"persistence.ext4\"."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:108
 msgid ""
-"It is possible to restrict which types of persistence volumes to use by "
-"specifying certain boot parameters described in the live-boot(7) man page. "
-"The \"identifying labels\" referred to above can be any of the following:"
+"The volume label for overlays must be #{persistence}#. And in order to fully "
+"customize the volume's persistence there must be a file named #{live-"
+"persistence.conf}#. See {The live-persistence.conf file}#live-persistence-"
+"conf"
 msgstr ""
-"Es posible restringir qué tipos de volúmenes persistentes se pueden usar "
-"especificando ciertos parámetros de arranque descritos en la página del "
-"manual de live-boot(7). Las \"etiquetas identificadoras\" referidas "
-"anteriormente pueden ser cualquiera de las siguientes:"
+"La etiqueta del volumen para las capas de persistencia debe ser #"
+"{persistence}#. Y para poder personalizar de forma completa la persistencia "
+"del volumen tiene que haber un fichero llamado #{live-persistence.conf}#. "
+"Ver {El fichero live-persistence.conf}#live-persistence-conf"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:110
-msgid "_* #{full-ov}# for full persistence overlays."
-msgstr "_* #{full-ov}# para capas de persistencia total."
-
-#. type: Plain text
-#: en/user_customization-runtime.ssi:112
-msgid "_* #{custom-ov}# for custom overlays."
-msgstr "_* #{custom-ov}# para capas personalizadas."
+msgid ""
+"Here are some examples of how to prepare a volume to be used for "
+"persistence. It can be, for instance, an ext4 partition on a hard disk or on "
+"a usb key created with, e.g.:"
+msgstr ""
+"He aquí algunos ejemplos de cómo preparar un volumen para ser usado para la "
+"persistencia. Puede ser, por ejemplo, una partición en un disco duro o en "
+"una llave usb creada con, p.ej."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:114
-msgid "_* #{live-sn}# for full system snapshots."
-msgstr "_* #{live-sn}# para instantáneas del sistema entero."
-
-#. type: Plain text
-#: en/user_customization-runtime.ssi:116
-msgid "_* #{home-sn}# for /home snapshots."
-msgstr "_* #{home-sn}# para instantáneas de /home."
+#, no-wrap
+msgid " # mkfs.ext4 -L persistence /dev/sdb1\n"
+msgstr ""
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:118
-msgid "3~ Full persistence overlays"
-msgstr "3~ Capas de persistencia total "
-
-#. type: Plain text
-#: en/user_customization-runtime.ssi:120
-msgid ""
-"By 'full persistence' it is meant that instead of using a tmpfs for storing "
-"modifications to the read-only media (with the copy-on-write, COW, system) a "
-"persistence volume is used. For this type of persistence the volume label "
-"must be #{full-ov}#. This could, for instance, be an ext4 partition on a "
-"hard disk or on a usb key created with, e.g.:"
-msgstr ""
-"Por «Persistencia total» se entiende la utilización de una partición de "
-"escritura en lugar de usar un tmpfs (sistema de ficheros temporal) para "
-"guardar los cambios realizados en los medios de sólo lectura (con el sistema "
-"copiar-al-escribir o COW «copy-on-write» N. del T.). Para utilizar este tipo "
-"de persistencia la etiqueta del volumen debe ser #{full-ov}#. Esta podría "
-"ser, por ejemplo, una partición ext4 o un disco duro o una llave usb creada "
-"con. p.ej:"
-
-#. type: Plain text
-#: en/user_customization-runtime.ssi:124
-#, no-wrap
-msgid " # mkfs.ext4 -L full-ov /dev/sdb1\n"
-msgstr ""
-
-#. type: Plain text
-#: en/user_customization-runtime.ssi:128
 msgid "See also {Using the space left on a USB stick}#using-usb-extra-space."
 msgstr ""
 "Ver {Usar el espacio libre en el dispositivo USB}#using-usb-extra-space."
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:130
+#: en/user_customization-runtime.ssi:120
 msgid ""
 "If you already have a partition on your device, you could just change the "
 "label with one of the following:"
@@ -593,57 +567,55 @@ msgstr ""
 "etiqueta con uno de los siguientes:"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:134
+#: en/user_customization-runtime.ssi:124
 #, no-wrap
-msgid " $ tune2fs -L full-ov /dev/sdb1 # for ext2,3,4 filesystems\n"
+msgid " $ tune2fs -L persistence /dev/sdb1 # for ext2,3,4 filesystems\n"
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:138
+#: en/user_customization-runtime.ssi:128
 msgid ""
-"Here's an example of how to create an ext4-based image file used for full "
+"Here's an example of how to create an ext4-based image file used for "
 "persistence:"
 msgstr ""
-"Un ejemplo de cómo crear un fichero imagen basado en ext4 usando "
-"persistencia total."
+"Un ejemplo de cómo crear un fichero imagen basado en ext4 usado para la "
+"persistencia:"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:143
+#: en/user_customization-runtime.ssi:133
 #, no-wrap
 msgid ""
-" $ dd if=/dev/null of=full-ov bs=1G seek=1 # for a 1GB sized image file\n"
-" $ /sbin/mkfs.ext4 -F full-ov\n"
+" $ dd if=/dev/null of=persistence bs=1G seek=1 # for a 1GB sized image file\n"
+" $ /sbin/mkfs.ext4 -F persistence\n"
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:147
-msgid ""
-"Then copy the #{full-ov}# file to the root of a writable partition and "
-"reboot."
+#: en/user_customization-runtime.ssi:137
+msgid "Then copy the #{persistence}# file to the root of a writable partition."
 msgstr ""
-"A continuación, copiar el fichero #{full-ov}# en una partición grabable y "
-"reiniciar el sistema."
+"A continuación, copiar el fichero #{persistence}# en la raíz de una "
+"partición grabable."
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:149
-msgid "3~ Custom overlays"
-msgstr "3~ Capas personalizadas"
+#: en/user_customization-runtime.ssi:139
+msgid "3~live-persistence-conf The live-persistence.conf file"
+msgstr "3~live-persistence-conf El fichero live-persistence.conf"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:151
+#: en/user_customization-runtime.ssi:141
 msgid ""
-"A volume with the label #{custom-ov}# can be configured to make arbitrary "
+"A volume with the label #{persistence}# can be configured to make arbitrary "
 "directories persistent. The file #{live-persistence.conf}#, located on the "
 "volume's filesystem root, controls which directories it makes persistent, "
 "and in which way."
 msgstr ""
-"Un volumen con la etiqueta #{custom-ov}# puede ser personalizado para crear "
+"Un volumen con la etiqueta #{persistence}# puede ser configurado para crear "
 "arbitrariamente directorios persistentes. El fichero #{live-persistence.conf}"
-"#, situado en el sistema de ficheros raiz del volumen, controla que "
+"#, situado en el sistema de ficheros raíz del volumen, controla que "
 "directorios hace persistentes y también de que manera."
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:153
+#: en/user_customization-runtime.ssi:143
 msgid ""
 "How custom overlay mounts are configured is described in full detail in the "
 "live-persistence.conf(5) man page, but a simple example should be sufficient "
@@ -657,17 +629,17 @@ msgstr ""
 "ext4 en la partición /dev/sdb1:"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:160
+#: en/user_customization-runtime.ssi:150
 #, no-wrap
 msgid ""
-" $ mkfs.ext4 -L custom-ov /dev/sdb1\n"
+" $ mkfs.ext4 -L persistence /dev/sdb1\n"
 " $ mount -t ext4 /dev/sdb1 /mnt\n"
 " $ echo \"/home\" >> /mnt/live-persistence.conf\n"
 " $ echo \"/var/cache/apt\" >> /mnt/live-persistence.conf\n"
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:164
+#: en/user_customization-runtime.ssi:154
 msgid ""
 "Then we reboot. During the first boot the contents of #{/home}# and #{/var/"
 "cache/apt}# will be copied into the persistence volume, and from then on all "
@@ -675,8 +647,7 @@ msgid ""
 "note that any paths listed in the #{live-persistence.conf}# file cannot "
 "contain white spaces or the special #{.}# and #{..}# path components. Also, "
 "neither #{/live}# (or any of its sub-directories) nor #{/}# can be made "
-"persistent using custom mounts (for the latter, use the #{full-ov}# type "
-"persistence described above)."
+"persistent using custom mounts."
 msgstr ""
 "Entonces reiniciamos. Durante el primer arranque los contenidos de #{/home}# "
 "y #{/var/cache/apt}# se copiarán en el volumen persistente y a partir de ese "
@@ -684,11 +655,10 @@ msgstr ""
 "cuenta que las rutas listadas en el fichero #{live-persistence.conf}# no "
 "pueden contener espacios en blanco ni los componentes especiales #{.}# y #"
 "{..}#. Además, ni #{/live}# (o ninguno de sus sub-directorios) ni #{/}# "
-"pueden hacerse persistentes montándolos de forma personalizada. Para esto "
-"último, usar el tipo de persistencia #{full-ov}# descrito anteriormente."
+"pueden hacerse persistentes montándolos de forma personalizada."
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:166
+#: en/user_customization-runtime.ssi:156
 msgid ""
 "Several different custom overlay volumes (with their own #{live-persistence."
 "conf}# files) can be used at the same time, but if several volumes make the "
@@ -711,91 +681,26 @@ msgstr ""
 "necesario. (aclaración: normalmente no lo es)."
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:168
-msgid "3~ Snapshots"
-msgstr "3~ Instantáneas"
-
-#. type: Plain text
-#: en/user_customization-runtime.ssi:170
-msgid ""
-"Snapshots are collections of files and directories which are not mounted "
-"while running but which are copied from a persistence volume to the system "
-"(tmpfs) at boot and which are resynced at reboot/shutdown of the system. The "
-"volume must be labeled #{live-sn}#, and it defaults to a simple cpio archive "
-"named #{live-sn.cpio.gz}#. A power interruption during run time could lead "
-"to data loss, hence, if you have important changes, invoke #{live-snapshot --"
-"refresh}# as often as needed. This type of persistence, since it does not "
-"write continuously to the persistence media, is the most flash-based device "
-"friendly and the fastest of all the persistence systems, but it occupies as "
-"much RAM as the size of the uncompressed snapshot."
-msgstr ""
-"Las instantáneas son colecciones de ficheros y directorios que no se montan "
-"durante la ejecución, pero que se copian desde un volumen persistente al "
-"sistema (tmpfs) en el arranque y que se resincroniza en el reinicio/apagado "
-"del sistema.  El volumen debe tener la etiqueta #{live-sn}#, y su valor "
-"predeterminado es un simple archivo cpio denominado #{live-sn.cpio.gz}#. Una "
-"interrupción del suministro eléctrico en tiempo de ejecución podría conducir "
-"a la pérdida de datos, por lo tanto, se puede usar la herramienta #{live-"
-"snapshot --refresh}# para sincronizar cambios importantes. Este tipo de "
-"persistencia es la menos agresiva con los dispositivos tipo flash y el más "
-"rápido de todos los sistemas de persistencia, ya que no escribe "
-"continuamente en los medios de almacenamiento, pero ocupa tanta RAM como el "
-"tamaño de la instantánea sin comprimir."
-
-#. type: Plain text
-#: en/user_customization-runtime.ssi:172
-msgid ""
-"A /home version of snapshot exists too and its label is #{home-sn.*}#; it "
-"works the same as the main snapshot but it is only applied to /home."
-msgstr ""
-"Existe también una versión de la instantánea /home y su etiqueta es #{home-"
-"sn.*}#; que funciona igual que la instantánea principal, pero sólo se aplica "
-"a /home."
-
-#. type: Plain text
-#: en/user_customization-runtime.ssi:174
-msgid "Snapshots cannot currently handle file deletion."
-msgstr "Las instantáneas no pueden manejar el borrado de ficheros."
-
-#. type: Plain text
-#: en/user_customization-runtime.ssi:176
+#: en/user_customization-runtime.ssi:158
 msgid "3~ Persistence SubText"
 msgstr "3~ SubText persistente"
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:178
+#: en/user_customization-runtime.ssi:159
 msgid ""
 "If a user would need multiple persistence storage of the same type for "
-"different locations or testing, such as #{full-ov-nonwork}# and #{full-ov-"
-"work}#, the boot parameter #{persistence-subtext}# used in conjunction with "
-"the boot parameter #{persistence}# will allow for multiple but unique "
-"persistence media. An example would be if a user wanted to use a persistence "
-"partition labeled #{live-sn-subText}# they would use the boot parameters of: "
-"#{persistence}# #{persistence-subtext=subText}#."
+"different locations or testing, such as #{persistence-nonwork}# and #"
+"{persistence-work}#, the boot parameter #{persistence-subtext}# used in "
+"conjunction with the boot parameter #{persistence}# will allow for multiple "
+"but unique persistence media. An example would be if a user wanted to use a "
+"persistence partition labeled #{persistence-subText}# they would use the "
+"boot parameters of: #{persistence}# #{persistence-subtext=subText}#."
 msgstr ""
 "Si un usuario necesita un almacenamiento persistente múltiple del mismo tipo "
-"para diferentes lugares o pruebas, tales como #{full-ov-nonwork}# y #{full-"
-"ov-work}#, el parámetro de arranque #{persistence-subtext}# usado junto con "
-"el parámetro de arranque #{persistence}# permitirá medios de almacenamiento "
-"persistentes múltiples pero únicos. Un ejemplo sería, si un usuario desea "
-"utilizar una partición persistente etiquetada #{live-sn-subText}# usaría los "
-"parámetros de arranque: #{persistence}# #{persistence-subtext=subText}#."
-
-#. type: Plain text
-#: en/user_customization-runtime.ssi:180
-msgid "3~ Partial remastering"
-msgstr "3~ Remasterización parcial"
-
-#. type: Plain text
-#: en/user_customization-runtime.ssi:181
-msgid ""
-"The run-time modification of the tmpfs could be collected using live-"
-"snapshot in a squashfs and added to the cd by remastering the iso in the "
-"case of cd-r or adding a session to multisession cd/dvd(rw); live-boot "
-"mounts all /live filesystem in order or with the module boot parameter."
-msgstr ""
-"La modificación en tiempo de ejecución de la tmpfs podría ser guardada "
-"usando una instantánea en vivo en un squashfs y añadirla a un cd "
-"remasterizando la iso en el caso de un cd-r o añadiendo una sesión a un cd/"
-"dvd(rw) multisesión; live-boot monta todo el sistema de ficheros /live en "
-"orden o con el parámetro del módulo de arranque."
+"para diferentes lugares o pruebas, tales como #{persistence-nonwork}# y #"
+"{persistence-work}#, el parámetro de arranque #{persistence-subtext}# usado "
+"junto con el parámetro de arranque #{persistence}# permitirá medios de "
+"almacenamiento persistentes múltiples pero únicos. Un ejemplo sería, si un "
+"usuario desea utilizar una partición persistente etiquetada #{persistence-"
+"subText}# usaría los parámetros de arranque: #{persistence}# #{persistence-"
+"subtext=subText}#."

@@ -21,7 +21,9 @@ all: build
 test:
 	@echo "Checking for syntax errors... [not implemented yet - FIXME]"
 	@echo "Checking for spelling errors... [not implemented yet - FIXME]"
-
+	@echo ""
+	@echo "You can check the integrity of po files using 'make check'."
+	@echo ""
 tidy:
 	# Removing useless whitespaces at EOL
 	for FILE in manual/en/*.ssm manual/en/*.ssi; \
@@ -116,3 +118,6 @@ translate:
 	else \
 		echo "There are no fuzzy strings to translate." ; \
 	fi
+
+check:
+	@./manual/bin/po-integrity-check.sh

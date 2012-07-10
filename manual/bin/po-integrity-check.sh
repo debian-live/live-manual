@@ -27,14 +27,10 @@ Integrity_check()
 	do
 		echo "-$(basename ${POFILE})"
 		echo ""	
-		msgfmt --verbose --check --output-file=/dev/null ${POFILE}
+		msgfmt --verbose --check --output-file=/dev/null ${POFILE} || { echo "-> This .po file might be 'BAD'. Please revise it."; echo ""; exit 1; }
 		if [ "$?" -eq "0" ]
 		then
 			echo "-> This .po file is 'GOOD'."
-			echo ""
-		elif [ "$?" -ne "0" ]
-		then 
-			echo "-> This .po file might be 'BAD'. Please revise it."
 			echo ""
 		fi
 	done
@@ -58,14 +54,10 @@ case "$LANGUAGE" in
 			do
 				echo "-Checking $(basename ${POFILE}) integrity in ${LANGUAGE}"
 				echo ""	
-				msgfmt --verbose --check --output-file=/dev/null ${POFILE}
+				msgfmt --verbose --check --output-file=/dev/null ${POFILE} || { echo "-> This .po file might be 'BAD'. Please revise it."; echo ""; exit 1; }
 				if [ "$?" -eq "0" ]
 				then
 					echo "->This .po file is 'GOOD'."
-					echo ""
-				elif [ "$?" -ne "0" ]
-				then 
-					echo "->This .po file might be 'BAD'. Please revise it."
 					echo ""
 				fi
 			done

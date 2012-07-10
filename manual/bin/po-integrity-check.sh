@@ -1,7 +1,7 @@
 #!/bin/sh 
 
-# Can't be "set -e". It would not finish checking if it encountered an error. 
-#
+set -e
+ 
 # Script to help translators to check the integrity of po files in live-manual.
 #
 # 'msgfmt' performs several checks and outputs some common errors: 

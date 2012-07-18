@@ -55,18 +55,16 @@ ce faire vous pouvez utiliser le hook "passwd" de
 2~customizing-locale-and-language Personnalisation des paramètres régionaux
 et de la langue
 
-Au démarrage du système live, la langue est impliquée dans trois étapes:
+When the live system boots, language is involved in two steps:
 
 _* la génération des paramètres régionaux
 
-_* réglage de la disposition du clavier pour la console
+_* setting the keyboard configuration
 
-_* réglage de la disposition du clavier pour X
-
-Les paramètres régionaux par défaut pendant la construction d'un système
-Live sont "locales=en_US.UTF-8". Pour définir les paramètres régionaux qui
-doivent être générés, utilisez le paramètre #{locales}# dans l'option
-#{--bootappend-live}# de #{lb config}#, par exemple
+The default locale when building a Live system is
+#{locales=en_US.UTF-8}#. To define the locale that should be generated, use
+the #{locales}# parameter in the #{--bootappend-live}# option of #{lb
+config}#, e.g.
 
 code{
 
@@ -74,27 +72,43 @@ code{
 
 }code
 
-Ce paramètre peut également être utilisé à la ligne de commande du
-noyau. Vous pouvez spécifier des paramètres régionaux par
-#{language_country.encoding}#.
+Multiple locales may be specified as a comma-delimited list.
 
-Tant la console et la configuration du clavier X dépendent du paramètre
-#{keyboard-layouts}# de l'option #{--bootappend-live}#. Les options valides
-pour les dispositions des claviers X peuvent être trouvés dans
-#{/usr/share/X11/xkb/rules/base.xml}# (plutôt limitées à des codes des pays
-à deux lettres). Pour trouver la valeur (les deux caractères),
-correspondante à une langue essayez de rechercher le nom anglais de la
-nation où la langue est parlée, par exemple:
+This parameter, as well as the keyboard configuration parameters indicated
+below, can also be used at the kernel command line. You can specify a locale
+by #{language_country}# (in which case the default encoding is used) or the
+full #{language_country.encoding}# word. A list of supported locales and the
+encoding for each can be found in #{/usr/share/i18n/SUPPORTED}#.
+
+Both the console and X keyboard configuration are performed by
+#{live-config}# using the #{console-setup}# package. To configure them, use
+the #{keyboard-layouts}#, #{keyboard-variant}#, #{keyboard-options}# and
+#{keyboard-model}# boot parameters via the #{--bootappend-live}#
+option. Valid options for these can be found in
+#{/usr/share/X11/xkb/rules/base.lst}#. To find layouts and variants for a
+given language, try searching for the English name of the language and/or
+the country where the language is spoken, e.g:
 
 code{
 
- $ grep -i sweden -C3 /usr/share/X11/xkb/rules/base.xml | grep name
- <name>se</name>
+$ egrep -i '(^!|german.*switzerland)' /usr/share/X11/xkb/rules/base.lst 
+ ! model
+ ! layout
+   ch              German (Switzerland)
+ ! variant
+   legacy          ch: German (Switzerland, legacy)
+   de_nodeadkeys   ch: German (Switzerland, eliminate dead keys)
+   de_sundeadkeys  ch: German (Switzerland, Sun dead keys)
+   de_mac          ch: German (Switzerland, Macintosh)
+ ! option
 
 }code
 
-Pour obtenir les fichiers des paramètres régionaux de l'allemand et la
-disposition du clavier suisse allemand dans X utiliser:
+Note that each variant lists the layout to which it applies in the
+description.
+
+Often, only the layout needs to be configured. For example, to get the
+locale files for German and Swiss German keyboard layout in X use:
 
 code{
 
@@ -102,24 +116,9 @@ code{
 
 }code
 
-Une liste des valeurs valides des claviers pour la console peut être figurée
-avec la commande suivante:
-
-code{
-
- $ for i in $(find /usr/share/keymaps/ -iname "*kmap.gz"); \
-     do basename $i | head -c -9; echo; done | sort | less
-
-}code
-
-Alternativement, vous pouvez utiliser le paquet #{console-setup}#, un outil
-pour vous aider à configurer la disposition de la console en utilisant
-définitions X (XKB), vous pouvez alors définir votre clavier plus
-précisément avec variables #{keyboard-layouts}#, #{keyboard-variant}#,
-#{keyboard-options}# et #{keyboard-model}#; live-boot pourra également
-utiliser ces paramètres pour la configuration de X. Par exemple, pour mettre
-en place un système français avec une disposition Français Dvorak (appelée
-Bepo) sur un clavier TypeMatrix, à la fois dans la console et X11, utilisez:
+However, for very specific use cases, you may wish to include other
+parameters. For example, to set up a French system with a French-Dvorak
+layout (called Bepo) on a TypeMatrix EZ-Reach 2030 USB keyboard, use:
 
 code{
 
@@ -127,6 +126,12 @@ code{
      "locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variant=bepo keyboard-model=tm2030usb"
 
 }code
+
+Multiple values may be specified as comma-delimited lists for each of the
+keyboard configuration variables. Please see the #{keyboard(5)}# man page
+for details and examples of #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# and
+#{XKBOPTIONS}# variables which correspond to the similarly-named
+#{live-config}# variables described above.
 
 2~persistence Persistance
 

@@ -87,7 +87,14 @@ code{
 
 }code
 
-Multiple values may be specified as comma-delimited lists for each of the keyboard configuration variables. Please see the #{keyboard(5)}# man page for details and examples of #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# and #{XKBOPTIONS}# variables which correspond to the similarly-named #{live-config}# variables described above.
+Multiple values may be specified as comma-delimited lists for each of the #{keyboard-*}# options, with the exception of #{keyboard-model}#, which accepts only one value. Please see the #{keyboard(5)}# man page for details and examples of #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# and #{XKBOPTIONS}# variables. If multiple #{keyboard-variant}# values are given, they will be matched one-to-one with #{keyboard-layouts}# values (see #{setxkbmap(1)}# #{-variant}# option). Empty values are allowed; e.g. to define two layouts, the default being US QWERTY and the other being US Dvorak, use:
+
+code{
+
+ $ lb config --bootappend-live \
+     "keyboard-layouts=us,us keyboard-variant=,dvorak"
+
+}code
 
 2~persistence Persistence
 

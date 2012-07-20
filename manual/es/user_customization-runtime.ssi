@@ -56,16 +56,16 @@ prefijo adecuado (p.ej. 2000-passwd) y añadirlo a
 2~customizing-locale-and-language Personalización de las variantes locales e
 idioma
 
-When the live system boots, language is involved in two steps:
+Cuando el sistema en vivo arranca, el idioma está implicado en dos pasos:
 
 _* Generar las variantes locales
 
-_* setting the keyboard configuration
+_* Establecer la distribución del teclado
 
-The default locale when building a Live system is
-#{locales=en_US.UTF-8}#. To define the locale that should be generated, use
-the #{locales}# parameter in the #{--bootappend-live}# option of #{lb
-config}#, e.g.
+La variante local predeterminada en la creación de un sistema en vivo es
+#{locales=en_US.UTF-8}#. Para definir la variante local que se debe generar,
+se puede utilizar el parámetro #{locales}# en la opción
+#{--bootappend-live}# de #{lb config}#, p.ej.
 
 code{
 
@@ -73,22 +73,24 @@ code{
 
 }code
 
-Multiple locales may be specified as a comma-delimited list.
+Se pueden especificar diversas variantes locales separándolas con comas.
 
-This parameter, as well as the keyboard configuration parameters indicated
-below, can also be used at the kernel command line. You can specify a locale
-by #{language_country}# (in which case the default encoding is used) or the
-full #{language_country.encoding}# word. A list of supported locales and the
-encoding for each can be found in #{/usr/share/i18n/SUPPORTED}#.
+Este parámetro se puede utilizar en la línea de comandos del kernel, al
+igual que los parámetros de configuración del teclado indicados a
+continuación. Es posibe configurar una variante local con #{idioma_país}#
+(en cuyo caso se utiliza el tipo de codificación por omisión) o también con
+la expresión completa #{idioma_país.codificación}#. La lista de todas las
+variantes locales está en #{/usr/share/i18n/SUPPORTED}#.
 
-Both the console and X keyboard configuration are performed by
-#{live-config}# using the #{console-setup}# package. To configure them, use
-the #{keyboard-layouts}#, #{keyboard-variant}#, #{keyboard-options}# and
-#{keyboard-model}# boot parameters via the #{--bootappend-live}#
-option. Valid options for these can be found in
-#{/usr/share/X11/xkb/rules/base.lst}#. To find layouts and variants for a
-given language, try searching for the English name of the language and/or
-the country where the language is spoken, e.g:
+#{live-config}# se encarga de la configuración del teclado de la consola y
+del entorno gráfico X utilizando el paquete #{console-setup}#. Para
+configurarlos se puede utilizar los parámetros de arranque
+#{keyboard-layouts}#, #{keyboard-variant}#, #{keyboard-options}# y
+#{keyboard-model}# a través de la opción #{--bootappend-live}#. Se puede
+encontrar una lista de opciones válidas para estos parámetros en
+#{/usr/share/X11/xkb/rules/base.lst}#. Para hallar la distribución del
+teclado y la variante que corresponde a un idioma se puede buscar el nombre
+en inglés de la nación donde se habla el idioma, por ejemplo:
 
 code{
 
@@ -105,11 +107,11 @@ $ egrep -i '(^!|german.*switzerland)' /usr/share/X11/xkb/rules/base.lst
 
 }code
 
-Note that each variant lists the layout to which it applies in the
-description.
+Cada variante muestra una descripción de la disposición que aplica.
 
-Often, only the layout needs to be configured. For example, to get the
-locale files for German and Swiss German keyboard layout in X use:
+Normalmente, sólo es necesario configurar la disposición del teclado. Por
+ejemplo, para obtener los ficheros de la variante local de la disposición
+del teclado alemán y suizo-alemán en X utilizar:
 
 code{
 
@@ -117,9 +119,10 @@ code{
 
 }code
 
-However, for very specific use cases, you may wish to include other
-parameters. For example, to set up a French system with a French-Dvorak
-layout (called Bepo) on a TypeMatrix EZ-Reach 2030 USB keyboard, use:
+Sin enbargo, para casos de uso muy específicos, se puede incluir otros
+parámetros. Por ejemplo, para configurar un sistema Francés con una
+disposición French-Dvorak (también llamado Bepo) en un teclado USB
+TypeMatrix EZ-Reach 2030, utilizar:
 
 code{
 
@@ -128,11 +131,23 @@ code{
 
 }code
 
-Multiple values may be specified as comma-delimited lists for each of the
-keyboard configuration variables. Please see the #{keyboard(5)}# man page
-for details and examples of #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# and
-#{XKBOPTIONS}# variables which correspond to the similarly-named
-#{live-config}# variables described above.
+Para cada una de las variables de configuración del teclado #{keyboard-*}#
+se puede especificar varios valores separados por comas. A excepción de
+#{keyboard-model}#, que sólo acepta un valor. En la página de manual
+#{keyboard(5)}# se explican los detalles y algunos ejemplos de cómo utilizar
+las variables #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# y
+#{XKBOPTIONS}#. Si se especifican diferentes valores en #{keyboard-variant}#
+estos se corresponderan uno a uno con los valores #{keyboard-layouts}# (ver
+#{setxkbmap(1)}# opción #{-variant}#). Se admiten valores vacíos; por
+ejemplo para definir dos distribuciones de teclado, la que se usa por
+omisión US QWERTY y otra US Dvorak, utilizar:
+
+code{
+
+ $ lb config --bootappend-live \
+     "keyboard-layouts=us,us keyboard-variant=,dvorak"
+
+}code
 
 2~persistence  Persistencia
 
@@ -236,10 +251,10 @@ ext4 en la partición /dev/sdb1:
 
 code{
 
- $ mkfs.ext4 -L persistence /dev/sdb1
- $ mount -t ext4 /dev/sdb1 /mnt
- $ echo "/home" >> /mnt/live-persistence.conf
- $ echo "/var/cache/apt" >> /mnt/live-persistence.conf
+ # mkfs.ext4 -L persistence /dev/sdb1
+ # mount -t ext4 /dev/sdb1 /mnt
+ # echo "/home" >> /mnt/live-persistence.conf
+ # echo "/var/cache/apt" >> /mnt/live-persistence.conf
 
 }code
 
@@ -262,7 +277,7 @@ en el mismo fichero #{live-persistence.conf}#. Consultar la página de manual
 de live-persistence.conf(5) para ver como manejar ese caso si realmente es
 necesario. (aclaración: normalmente no lo es).
 
-3~ SubText persistente
+3~ Utilizar varios medios persistentes
 
 Si un usuario necesita un almacenamiento persistente múltiple del mismo tipo
 para diferentes lugares o pruebas, tales como #{persistence-nonwork}# y

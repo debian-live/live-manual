@@ -122,10 +122,21 @@ code{
 }code
 
 Multiple values may be specified as comma-delimited lists for each of the
-keyboard configuration variables. Please see the #{keyboard(5)}# man page
-for details and examples of #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# and
-#{XKBOPTIONS}# variables which correspond to the similarly-named
-#{live-config}# variables described above.
+#{keyboard-*}# options, with the exception of #{keyboard-model}#, which
+accepts only one value. Please see the #{keyboard(5)}# man page for details
+and examples of #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# and
+#{XKBOPTIONS}# variables. If multiple #{keyboard-variant}# values are given,
+they will be matched one-to-one with #{keyboard-layouts}# values (see
+#{setxkbmap(1)}# #{-variant}# option). Empty values are allowed; e.g. to
+define two layouts, the default being US QWERTY and the other being US
+Dvorak, use:
+
+code{
+
+ $ lb config --bootappend-live \
+     "keyboard-layouts=us,us keyboard-variant=,dvorak"
+
+}code
 
 2~persistence Persistence
 
@@ -218,10 +229,10 @@ persistent in an ext4 filesystem on the /dev/sdb1 partition:
 
 code{
 
- $ mkfs.ext4 -L persistence /dev/sdb1
- $ mount -t ext4 /dev/sdb1 /mnt
- $ echo "/home" >> /mnt/live-persistence.conf
- $ echo "/var/cache/apt" >> /mnt/live-persistence.conf
+ # mkfs.ext4 -L persistence /dev/sdb1
+ # mount -t ext4 /dev/sdb1 /mnt
+ # echo "/home" >> /mnt/live-persistence.conf
+ # echo "/var/cache/apt" >> /mnt/live-persistence.conf
 
 }code
 
@@ -243,9 +254,9 @@ in the same #{live-persistence.conf}# file. See the live-persistence.conf(5)
 man page for how to handle that case if you really need it (hint: you
 usually don't).
 
-3~ Persistence SubText
+3~ Using more than one persistence store
 
-If a user would need multiple persistence storage of the same type for
+If a user would need multiple persistence store of the same type for
 different locations or testing, such as #{persistence-nonwork}# and
 #{persistence-work}#, the boot parameter #{persistence-label}# used in
 conjunction with the boot parameter #{persistence}# will allow for multiple

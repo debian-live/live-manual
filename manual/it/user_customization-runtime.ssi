@@ -124,10 +124,21 @@ code{
 }code
 
 Multiple values may be specified as comma-delimited lists for each of the
-keyboard configuration variables. Please see the #{keyboard(5)}# man page
-for details and examples of #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# and
-#{XKBOPTIONS}# variables which correspond to the similarly-named
-#{live-config}# variables described above.
+#{keyboard-*}# options, with the exception of #{keyboard-model}#, which
+accepts only one value. Please see the #{keyboard(5)}# man page for details
+and examples of #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# and
+#{XKBOPTIONS}# variables. If multiple #{keyboard-variant}# values are given,
+they will be matched one-to-one with #{keyboard-layouts}# values (see
+#{setxkbmap(1)}# #{-variant}# option). Empty values are allowed; e.g. to
+define two layouts, the default being US QWERTY and the other being US
+Dvorak, use:
+
+code{
+
+ $ lb config --bootappend-live \
+     "keyboard-layouts=us,us keyboard-variant=,dvorak"
+
+}code
 
 2~persistence Persistenza
 
@@ -227,10 +238,10 @@ persistente in un filesystem ext4 sulla partizione /dev/sdb1:
 
 code{
 
- $ mkfs.ext4 -L persistence /dev/sdb1
- $ mount -t ext4 /dev/sdb1 /mnt
- $ echo "/home" >> /mnt/live-persistence.conf
- $ echo "/var/cache/apt" >> /mnt/live-persistence.conf
+ # mkfs.ext4 -L persistence /dev/sdb1
+ # mount -t ext4 /dev/sdb1 /mnt
+ # echo "/home" >> /mnt/live-persistence.conf
+ # echo "/var/cache/apt" >> /mnt/live-persistence.conf
 
 }code
 
@@ -252,12 +263,12 @@ problematici se sono elencati nello stesso file #{live-persistence.conf}. Se
 si ha davvero la necessità (in genere non si dovrebbe averla), consultare la
 manpage di live-persistence.conf(5) per sapere come gestire questo caso.
 
-3~ Sottotesto persistente
+3~ Using more than one persistence store
 
-Se un utente avesse bisogno di archiviazioni multiple dello stesso tipo per
-differenti posti o per test, come #{persistence-casa}# e
-#{persistence-lavoro}#, il parametro d'avvio #{persistence-label}# usato in
-congiunzione con #{persistent}# permetterà supporti persistenti multipli ma
-univoci. Un esempio potrebbe essere un utente che vuole usare una partizione
-etichettata come #{persistence-sottotesto}#, userebbe: #{persistence}#
-#{persistence-label=sottotesto}#.
+If a user would need multiple persistence store of the same type for
+different locations or testing, such as #{persistence-nonwork}# and
+#{persistence-work}#, the boot parameter #{persistence-label}# used in
+conjunction with the boot parameter #{persistence}# will allow for multiple
+but unique persistence media. An example would be if a user wanted to use a
+persistence partition labeled #{persistence-subText}# they would use the
+boot parameters of: #{persistence}# #{persistence-label=subText}#.

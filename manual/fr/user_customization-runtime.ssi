@@ -55,16 +55,16 @@ ce faire vous pouvez utiliser le hook "passwd" de
 2~customizing-locale-and-language Personnalisation des paramètres régionaux
 et de la langue
 
-When the live system boots, language is involved in two steps:
+Au démarrage du système live, la langue est impliquée dans deux étapes:
 
 _* la génération des paramètres régionaux
 
-_* setting the keyboard configuration
+_* le réglage de la disposition du clavier
 
-The default locale when building a Live system is
-#{locales=en_US.UTF-8}#. To define the locale that should be generated, use
-the #{locales}# parameter in the #{--bootappend-live}# option of #{lb
-config}#, e.g.
+Les paramètres régionaux par défaut pendant la construction d'un système
+Live sont #{locales=en_US.UTF-8}#. Pour définir les paramètres régionaux qui
+doivent être générés, utiliser le paramètre #{locales}# dans l'option
+#{--bootappend-live}# de #{lb config}#, par exemple
 
 code{
 
@@ -72,22 +72,24 @@ code{
 
 }code
 
-Multiple locales may be specified as a comma-delimited list.
+Multiples paramètres régionaux peuvent être spécifiés en une liste séparée
+par des virgules.
 
-This parameter, as well as the keyboard configuration parameters indicated
-below, can also be used at the kernel command line. You can specify a locale
-by #{language_country}# (in which case the default encoding is used) or the
-full #{language_country.encoding}# word. A list of supported locales and the
-encoding for each can be found in #{/usr/share/i18n/SUPPORTED}#.
+Ce paramètre, ainsi que les paramètres de configuration du clavier indiqués
+ci-dessous, peut également être utilisé sur la ligne de commande du
+noyau. On peut spécifier des paramètres régionaux avec #{language_country}#
+(dans ce cas le codage par défaut est utilisé) ou l'expression complete
+#{language_country.encoding}#. Une liste des paramètres régionaux et le
+codage pour chacun peuvent être trouvés dans #{/usr/share/i18n/SUPPORTED}#.
 
-Both the console and X keyboard configuration are performed by
-#{live-config}# using the #{console-setup}# package. To configure them, use
-the #{keyboard-layouts}#, #{keyboard-variant}#, #{keyboard-options}# and
-#{keyboard-model}# boot parameters via the #{--bootappend-live}#
-option. Valid options for these can be found in
-#{/usr/share/X11/xkb/rules/base.lst}#. To find layouts and variants for a
-given language, try searching for the English name of the language and/or
-the country where the language is spoken, e.g:
+La configuration du clavier pour la console et pour X est faite par
+#{live-config}# en utilisant le paquet #{console-setup}#. Pour les
+configurer, utiliser les paramètres de démarrage #{keyboard-layouts}#,
+#{keyboard-variant}#, #{keyboard-options}# et #{keyboard-model}# avec
+l'option #{--bootappend-live}#. On peut trouver options valides dans
+#{/usr/share/X11/xkb/rules/base.lst}#. Pour trouver les dispositions el les
+variantes correspondantes à une langue essayez de rechercher le nom anglais
+de la nation où la langue est parlée, par exemple:
 
 code{
 
@@ -104,11 +106,11 @@ $ egrep -i '(^!|german.*switzerland)' /usr/share/X11/xkb/rules/base.lst
 
 }code
 
-Note that each variant lists the layout to which it applies in the
-description.
+Chaque variante présente une description de la disposition appliquée.
 
-Often, only the layout needs to be configured. For example, to get the
-locale files for German and Swiss German keyboard layout in X use:
+Souvent, seulement la disposition doit être configurée. Par exemple, pour
+obtenir les fichiers des paramètres régionaux de l'allemand et la
+disposition du clavier suisse allemand dans X utiliser:
 
 code{
 
@@ -116,9 +118,10 @@ code{
 
 }code
 
-However, for very specific use cases, you may wish to include other
-parameters. For example, to set up a French system with a French-Dvorak
-layout (called Bepo) on a TypeMatrix EZ-Reach 2030 USB keyboard, use:
+Toutefois, pour les cas d'utilisation très spécifiques, on peut inclure
+d'autres paramètres. Par exemple, pour mettre en place un système français
+avec une disposition French-Dvorak (Bepo) avec un clavier USB TypeMatrix
+EZ-Reach 2030, utiliser:
 
 code{
 
@@ -127,15 +130,15 @@ code{
 
 }code
 
-Multiple values may be specified as comma-delimited lists for each of the
-#{keyboard-*}# options, with the exception of #{keyboard-model}#, which
-accepts only one value. Please see the #{keyboard(5)}# man page for details
-and examples of #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# and
-#{XKBOPTIONS}# variables. If multiple #{keyboard-variant}# values are given,
-they will be matched one-to-one with #{keyboard-layouts}# values (see
-#{setxkbmap(1)}# #{-variant}# option). Empty values are allowed; e.g. to
-define two layouts, the default being US QWERTY and the other being US
-Dvorak, use:
+Plusieurs valeurs peuvent être spécifiées séparées par des virgules pour
+chacune des options #{keyboard-*}#, à l'exception de #{keyboard-model}#, qui
+accepte une seule valeur. S'il vous plaît voir la page de manuel
+#{keyboard(5)}#  pour plus de détails et des exemples des variables
+#{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# et #{XKBOPTIONS}#. Si plusieurs
+valeurs #{keyboard-variant}# sont données, elles seront jumelées tête à tête
+avec les valeurs #{keyboard-layouts}# voir #{setxkbmap(1)}# option
+#{-variant}#). On peut utiliser des valeurs vides; par exemple pour regler
+deux dispositions, une par défaut US QWERTY et l'autre US Dvorak, utiliser:
 
 code{
 
@@ -272,12 +275,13 @@ imbriqués est problématique s'ils sont énumérés dans le même fichier
 pour savoir comment gérer ce cas, si vous avez vraiment besoin (remarque:
 vous n'avez généralement pas).
 
-3~ Using more than one persistence store
+3~ Utilisation de plusieurs dispositifs de persistance
 
-If a user would need multiple persistence store of the same type for
-different locations or testing, such as #{persistence-nonwork}# and
-#{persistence-work}#, the boot parameter #{persistence-label}# used in
-conjunction with the boot parameter #{persistence}# will allow for multiple
-but unique persistence media. An example would be if a user wanted to use a
-persistence partition labeled #{persistence-subText}# they would use the
-boot parameters of: #{persistence}# #{persistence-label=subText}#.
+Si un utilisateur a besoin de stockages persistants multiples du même type
+pour différents endroits ou l'essai, tel que #{persistence-nonwork}# et
+#{persistence-work}#, le paramètre de démarrage #{persistence-label}#
+utilisé en conjonction avec le paramètre de démarrage #{persistence}#
+permettra multiples, mais uniques, supports persistants. Un exemple serait
+le cas si un utilisateur voudrait utiliser une partition persistante
+étiquetée #{persistence-subText}# il utiliserait les paramètres de
+démarrage: #{persistence}# #{persistence-label=subText}#.

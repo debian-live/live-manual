@@ -12,14 +12,13 @@ Para los impacientes:
 _* Primero, siempre se debe comprobar el estado actualizado de la imagen en
 busca de problemas conocidos en la página web http://live.debian.net/.
 
-_* Se debe intentar reproducir el error con las *{versiones más recientes}*
-de live-build, live-boot, y live-config antes de presentar un informe de
-errores.
+_* Always try to reproduce the bug with the *{most recent versions}* of
+live-build, live-boot, live-config and live-tools before submitting a bug
+report.
 
-_* Se debe intentar dar la *{información tan específica como sea posible}*
-acerca del error. Esto incluye (al menos) la versión de live-build,
-live-boot, y live-config  utilizada y la distribución del sistema en vivo
-que está construyendo.
+_* Try to give *{as specific information as possible}* about the bug. This
+includes (at least) the version of live-build, live-boot, live-config, and
+live-tools used and the distribution of the live system you are building.
 
 2~ Problemas conocidos
 
@@ -76,6 +75,8 @@ _* Versión de live-boot en el sistema en vivo.
 
 _* Versión de live-config en el sistema en vivo.
 
+_* Version of live-tools on the live system
+
 _* Versión de /{debootstrap}/ y/o /{cdebootstrap}/ en el sistema anfitrión.
 
 _* Arquitectura del sistema en vivo.
@@ -95,8 +96,7 @@ code{
 
 }code
 
-En el momento del arranque, live-boot guarda un log en #{/var/log/live.log}#
-(o #{/var/log/live-boot.log}#).
+At boot time, live-boot stores a log in #{/var/log/live-boot.log}#.
 
 Además, para descartar otros errores, siempre es una buena idea comprimir en
 un .tar el directorio #{config/}# y subirlo a algún lugar, para que el
@@ -126,7 +126,12 @@ más pequeños.
 
 2~ Utilizar el paquete correcto sobre el que informar del error
 
-¿Dónde aparece el error?
+If you don't know what component is responsible for the bug or if the bug is
+a general bug concerning live systems, you can fill a bug against the
+debian-live pseudo-package.
+
+However, we would appreciate if you try to narrow it down according to where
+the bug appears.
 
 3~ En la preinstalación (bootstrap) en tiempo de creación.
 
@@ -186,8 +191,9 @@ como su página principal, ya que seguramente tienen la información más
 actualizada. Si esa información existe, se debe incluir la referencia a ella
 en su informe de errores.
 
-Además, se debe comprobar las listas de errores actuales de live-build,
-live-boot, y live-config y verificar si se ha informado ya de algo similar.
+In addition, you should check the current bug lists for live-build,
+live-boot, live-config and live-tools to see whether something similar has
+been reported already.
 
 2~ Dónde informar de los fallos
 
@@ -197,13 +203,12 @@ sobre cómo utilizar el sistema, consultar http://bugs.debian.org/. También
 se puede enviar los errores mediante el comando #{reportbug}# del paquete
 con el mismo nombre.
 
-En general, se debe informar sobre los errores en tiempo de creación en el
-BTS contra el paquete live-build. De los fallos en el tiempo de arranque
-contra el paquete live-boot, y de los errores en tiempo de ejecución contra
-el paquete live-config. Si no se está seguro de qué paquete es el adecuado o
-se necesita más ayuda antes de presentar un informe de errores, lo mejor es
-enviar un mensaje a la lista de correo y el equipo de Debian Live le ayudará
-a resolverlo.
+In general, you should report build time errors against the live-build
+package, boot time errors against live-boot, and run time errors against
+live-config. If you are unsure of which package is appropriate or need more
+help before submitting a bug report, please report it against the
+debian-live pseudo-package. We will then take care about it and reassign it
+where appropriate.
 
 Hay que tener en cuenta que los errores que se encuentran en las
 distribuciones derivadas de Debian (como Ubuntu y otros) *{NO}* deben

@@ -1,51 +1,54 @@
-:B~ Customizing contents
+:B~ Personalització dels continguts
 
-1~customizing-contents Customizing contents
+1~customizing-contents Personalització dels continguts
 
-This chapter discusses fine-tuning customization of the live system contents
-beyond merely choosing which packages to include. Includes allow you to add
-or replace arbitrary files in your Debian Live image, hooks allow you to
-execute arbitrary commands at different stages of the build and at boot
-time, and preseeding allows you to configure packages when they are
-installed by supplying answers to debconf questions.
+Aquest capítol tracta d'afinar la personalització dels continguts del
+sistema en viu més enllà de simplement triar els paquets que es desitja
+incloure. Els «includes» permeten afegir o reemplaçar fitxers arbitraris en
+la imatge Debian Live, els scripts ganxo (hooks) permeten executar ordres
+arbitràries en diferents etapes de la construcció i en el moment d'arrencar,
+i la preconfiguració permet configurar paquets quan s'instaŀlen mitjançant
+respostes a les preguntes de debconf .
 
 2~includes Includes
 
-While ideally a Debian live system would include files entirely provided by
-unmodified Debian packages, it is sometimes convenient to provide or modify
-some content by means of files. Using includes, it is possible to add (or
-replace) arbitrary files in your Debian Live image. live-build provides
-three mechanisms for using them:
+Tot i que l'ideal seria un sistema Debian Live que inclogués només fitxers
+proporcionats per paquets Debian sense modificació, de vegades és convenient
+proporcionar o modificar part del contingut a través de fitxers. Amb els
+includes, és possible afegir (o substituir) fitxers arbitraris en la imatge
+Debian Live. live-build ofereix tres mecanismes per al seu ús:
 
-_* Chroot local includes: These allow you to add or replace files to the
-chroot/Live filesystem. Please see {Live/chroot local
-includes}#live-chroot-local-includes for more information.
+_* Chroot local includes: Aquests permeten afegir o substituir fitxers
+dintre de chroot/Live en el sistema de fitxers. Consultar {Live/chroot local
+includes}#live-chroot-local-includes per a més informació.
 
-_* Binary local includes: These allow you to add or replace files in the
-binary image. Please see {Binary local includes}#binary-local-includes for
-more information.
+_* Binary local includes: Aquests et permeten afegir o substituir fitxers a
+la imatge binària. Consultar {Binary local includes}#binary-local-includes
+per a més informació.
 
-_* Binary includes: These allow you to add or replace Debian specific files
-in the binary image, such as the templates and tools directories. Please see
-{Binary includes}#binary-includes for more information.
+_* Binary includes: Aquests et permeten afegir o substituir els fitxers
+específics de Debian a la imatge binària, com ara les plantilles i
+directoris d'eines. Consultar {Binary includes}#binary-includes per a més
+informació.
 
-Please see {Terms}#terms for more information about the distinction between
-the "Live" and "binary" images.
+Consultar {Termes}#terms per a més informació sobre la distinció entre les
+imatges "Live" and "binary".
 
 3~live-chroot-local-includes Live/chroot local includes
 
-Chroot local includes can be used to add or replace files in the chroot/Live
-filesystem so that they may be used in the Live system. A typical use is to
-populate the skeleton user directory (#{/etc/skel}#) used by the Live system
-to create the live user's home directory. Another is to supply configuration
-files that can be simply added or replaced in the image without processing;
-see {Live/chroot local hooks}#live-chroot-local-hooks if processing is
-needed.
+Es poden utilitzar els chroot local includes per afegir o reemplaçar fitxers
+en el sistema de fitxers chroot/Live perquè puguin ser utilitzats en el
+sistema en viu. Un ús típic és per omplir l'esquelet de directori d'usuari
+(#{/etc/skel}#)utilitzat pel sistema en viu per crear el directori home de
+l'usuari en viu. Un altre és el de subministrar fitxers de configuració que
+poden ser simplement afegits o reemplaçats en la imatge sense processar;
+veure{Live/chroot local hooks}#live-chroot-local-hooks si es necessita
+processar-los.
 
-To include files, simply add them to your #{config/includes.chroot}#
-directory. This directory corresponds to the root directory #{/}# of the
-live system. For example, to add a file #{/var/www/index.html}# in the live
-system, use:
+Per incloure fitxers, només s'han d'afegir al directori
+#{config/includes.chroot}#. Aquest directori es correspon amb el directori
+arrel #{/}# del sistema en viu. Per exemple, per afegir un fitxer
+#{/var/www/index.html}# en el sistema en viu, fer:
 
 code{
 
@@ -54,7 +57,7 @@ code{
 
 }code
 
-Your configuration will then have the following layout:
+La configuració tindrà llavors l'estructura següent:
 
 code{
 
@@ -69,18 +72,19 @@ code{
 
 }code
 
-Chroot local includes are installed after package installation so that files
-installed by packages are overwritten.
+Els chroot local includes s'instaŀlen després de la instaŀlació del paquets
+de tal manera que es sobreescriuen els fitxers instaŀlats pels paquets.
 
 3~binary-local-includes Binary local includes
 
-To include material such as documentation or videos on the media filesystem
-so that it is accessible immediately upon insertion of the media without
-booting the Live system, you can use binary local includes. This works in a
-similar fashion to chroot local includes. For example, suppose the files
-#{~/video_demo.*}# are demo videos of the live system described by and
-linked to by an HTML index page. Simply copy the material to
-#{config/includes.binary/}# as follows:
+Per incloure material com documentació o vídeos en el sistema de fitxers
+dels medis de manera que sigui accessible immediatament després de la
+inserció dels medis sense haver de arrencar el sistema en viu, es pot
+utilitzar els binary local includes. Això funciona de manera similar als
+chroot local includes. Per exemple, si els fitxers #{~/video_demo.*}# són
+vídeos de demostració del sistema en viu descrits i lligats per una pàgina
+d'índex HTML. Només cal copiar el material a #{config/includes.binary/}# de
+la següent manera:
 
 code{
 
@@ -88,12 +92,13 @@ code{
 
 }code
 
-These files will now appear in the root directory of the live media.
+Aquests fitxers apareixeran ara en el directori arrel dels medis en viu.
 
 3~binary-includes Binary includes
 
-live-build has some standard files (like documentation) that gets included
-in the default configuration on every live media. This can be disabled with:
+live-build té alguns fitxers estàndard (com ara la documentació) que
+s'inclouen en la configuració per defecte de tots els medis en viu. Això es
+pot desactivar amb:
 
 code{
 
@@ -101,55 +106,57 @@ code{
 
 }code
 
-Otherwise, the material will be installed by live-build in #{/includes/}# by
-default on the media filesystem, or else you can specify an alternate path
-with #{--includes}#.
+En cas contrari, el material serà instaŀlat per live-build a #{/includes/}#
+per defecte  en el sistema de fitxers dels medis o bé es pot especificar una
+ruta alternativa amb l'opció #{--includes}#.
 
-2~hooks Hooks
+2~hooks Scripts ganxo (Hooks)
 
-Hooks allow commands to be performed in the chroot and binary stages of the
-build in order to customize the image.
+Els scripts ganxo permeten executar ordres en les etapes de la construcció
+chroot i binary per tal de personalitzar la imatge.
 
 3~live-chroot-local-hooks Live/chroot local hooks
 
-To run commands in the chroot stage, create a hook script with a #{.chroot}#
-suffix containing the commands in the #{config/hooks/}# directory. The hook
-will run in the chroot after the rest of your chroot configuration has been
-applied, so remember to ensure your configuration includes all packages and
-files your hook needs in order to run. See the example chroot hook scripts
-for various common chroot customization tasks provided in
-#{/usr/share/live/build/examples/hooks}# which you can copy or symlink to
-use them in your own configuration.
+Per executar ordres en l'etapa chroot, crear un script ganxo al directori
+#{config/hooks/}# amb el sufix #{.chroot}# que contingui les ordres. El
+ganxo s'executarà en el chroot després que la resta de la configuració del
+chroot s'hagi aplicat, assegurar-se que la configuració inclou tots els
+paquets i els fitxers que el ganxo necessita per funcionar. Veure els
+scripts chroot d'exemple per a diverses tasques comunes de personalització
+que es poden trovar a #{/usr/share/live/build/examples/hooks}# que es poden
+copiar o fer un enllaç simbòlic per utilitzar-los en la configuració pròpia.
 
-3~boot-time-hooks Boot-time hooks
+3~boot-time-hooks Scripts ganxo durant l'arrencada
 
-To execute commands at boot time, you can supply live-config hooks as
-explained in the "Customization" section of its man page. Examine
-live-config's own hooks provided in #{/lib/live/config/}#, noting the
-sequence numbers. Then provide your own hook prefixed with an appropriate
-sequence number, either as a chroot local include in
-#{config/includes.chroot/lib/live/config/}#, or as a custom package as
-discussed in {Installing modified or third-party
-packages}#installing-modified-or-third-party-packages.
+Per executar ordres durant l'arrencada, es pot proporcionar scripts ganxo
+live-config com s'explica a la secció "Personalització" de la seva pàgina de
+manual. Es poden proporcionar els ganxos de live-config a
+#{/lib/live/config/}#, tenint en compte la seqüència dels números. A
+continuació, proporcionar el script ganxo propi amb el prefix d'un número de
+seqüència apropiat, ja sigui com a un chroot local include a
+#{config/includes.chroot/lib/live/config/}#, o com un paquet personalitzat
+com es va discutir a {Instaŀlació de paquets modificats o de
+tercers}#installing-modified-or-third-party-packages.
 
 3~ Binary local hooks
 
-To run commands in the binary stage, create a hook script with a #{.binary}#
-suffix containing the commands in the #{config/hooks/}# directory. The hook
-will run after all other binary commands are run, but before
-binary_checksums, the very last binary command. The commands in your hook do
-not run in the chroot, so take care to not modify any files outside of the
-build tree, or you may damage your build system! See the example binary hook
-scripts for various common binary customization tasks provided in
-#{/usr/share/live/build/examples/hooks}# which you can copy or symlink to
-use them in your own configuration.
+Per executar ordres a l'etapa binary, crear un script ganxo amb un sufix
+#{.binary}# que contingui les ordres al directori #{config/hooks/}#. El
+ganxo s'executarà després que s'executin totes les ordres de la etapa binary
+però avans dels binary_checksums, la darrera ordre de la etapa binary. Les
+ordres del ganxo no s'executen al chroot, per tant tenir cura de no
+modificar cap fitxer de fora del arbre de construcció, o es pot fer malbé el
+sistema de creació! Veure els scripts ganxo de binary per a diverses tasques
+comunes de personalització a #{/usr/share/live/build/examples/hooks}# que es
+poden copiar o fer un enllaç simbòlic per utilitzar-los en la configuració
+pròpia.
 
-2~ Preseeding Debconf questions
+2~ Preconfiguració de les preguntes de Debconf
 
-Files in the #{config/preseed/}# directory suffixed with #{.preseed}#
-followed by the stage (#{.chroot}# or #{.binary}#) are considered to be
-debconf preseed files and are installed by live-build using
-#{debconf-set-selections}# during the corresponding stage.
+Els fitxers del directory #{config/preseed/}# amb el sufix #{.preseed}#
+seguits del sufix de la etapa (#{.chroot}# o #{.binary}#) son considerats
+fitxers de preconfiguració de debconf i són instaŀlats per live-build
+utilitzant #{debconf-set-selections}# durant l'etapa corresponent.
 
-For more information about debconf, please see #{debconf(7)}# in the
-/{debconf}/ package.
+Per a més informació sobre debconf, veure #{debconf(7)}# del paquet
+/{debconf}/.

@@ -8,9 +8,9 @@ For the impatient:
 
 _* Always check first the image status updates on our homepage at http://live.debian.net/ for known issues.
 
-_* Always try to reproduce the bug with the *{most recent versions}* of live-build, live-boot, and live-config before submitting a bug report.
+_* Always try to reproduce the bug with the *{most recent versions}* of live-build, live-boot, live-config and live-tools before submitting a bug report.
 
-_* Try to give *{as specific information as possible}* about the bug. This includes (at least) the version of live-build, live-boot, and live-config used and the distribution of the live system you are building.
+_* Try to give *{as specific information as possible}* about the bug. This includes (at least) the version of live-build, live-boot, live-config, and live-tools used and the distribution of the live system you are building.
 
 2~ Known issues
 
@@ -46,6 +46,8 @@ _* Version of live-boot on the live system
 
 _* Version of live-config on the live system
 
+_* Version of live-tools on the live system
+
 _* Version of /{debootstrap}/ and/or /{cdebootstrap}/ on the host system
 
 _* Architecture of the live system
@@ -62,7 +64,7 @@ code{
 
 }code
 
-At boot time, live-boot stores a log in #{/var/log/live.log}# (or #{/var/log/live-boot.log}#).
+At boot time, live-boot stores a log in #{/var/log/live-boot.log}#.
 
 Additionally, to rule out other errors, it is always a good idea to tar up your #{config/}# directory and upload it somewhere (do *{not}* send it as an attachment to the mailing list), so that we can try to reproduce the errors you encountered. If this is difficult (e.g. due to size) you can use the output of #{lb config --dump}# which produces a summary of your config tree (i.e. lists files in subdirectories of #{config/}# but does not include them).
 
@@ -74,7 +76,9 @@ If possible, isolate the failing case to the smallest possible change that break
 
 2~ Use the correct package to report the bug against
 
-Where does the bug appear?
+If you don't know what component is responsible for the bug or if the bug is a general bug concerning live systems, you can fill a bug against the debian-live pseudo-package.
+
+However, we would appreciate if you try to narrow it down according to where the bug appears.
 
 3~ At build time whilst bootstrapping
 
@@ -104,12 +108,12 @@ Before filing the bug, please search the web for the particular error message or
 
 You should pay particular attention to the Debian Live mailing list, as well as the homepage, as these are likely to contain the most up-to-date information. If such information exists, always include the references to it in your bug report.
 
-In addition, you should check the current bug lists for live-build, live-boot, and live-config to see whether something similar has been reported already.
+In addition, you should check the current bug lists for live-build, live-boot, live-config and live-tools to see whether something similar has been reported already.
 
 2~ Where to report bugs
 
 The Debian Live project keeps track of all bugs in the Debian Bug Tracking System (BTS). For information on how to use the system, please see http://bugs.debian.org/. You can also submit the bugs by using the #{reportbug}# command from the package with the same name.
 
-In general, you should report build time errors against the live-build package, boot time errors against live-boot, and run time errors against live-config. If you are unsure of which package is appropriate or need more help before submitting a bug report, please send a message to the mailing list and we will help you to figure it out.
+In general, you should report build time errors against the live-build package, boot time errors against live-boot, and run time errors against live-config. If you are unsure of which package is appropriate or need more help before submitting a bug report, please report it against the debian-live pseudo-package. We will then take care about it and reassign it where appropriate.
 
 Please note that bugs found in distributions derived from Debian (such as Ubuntu and others) should *{not}* be reported to the Debian BTS unless they can be also reproduced on a Debian system using official Debian packages.

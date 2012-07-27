@@ -15,13 +15,13 @@ l'image sur notre page d'accueil http://live.debian.net/ pour voir les
 problèmes connus.
 
 _* Toujours essayer de reproduire le bogue avec *{les versions les plus
-récentes}* de live-build, live-boot, et live-config avant de présenter un
-rapport de bogue.
+récentes}* de live-build, live-boot, live-config et live-tools avant de
+présenter un rapport de bogue.
 
 _* Essayez de donner des informations aussi précises que possible sur le
-bogue. Cela comprend (au moins) la version de live-build, live-boot et
-live-config, de la distribution utilisée et du système live que vous
-construisez. 
+bogue. Cela comprend (au moins) la version de live-build, live-boot,
+live-config et live-tools, de la distribution utilisée et du système live
+que vous construisez. 
 
 2~ Problèmes connus
 
@@ -78,6 +78,8 @@ _* Version de live-boot sur le système live
 
 _* Version de live-config sur le système live
 
+_* Version de live-tools sur le système live
+
 _* Version de /{debootstrap}/ et/ou /{cdebootstrap}/ sur le système hôte
 
 _* L'architecture du système live
@@ -97,8 +99,7 @@ code{
 
 }code
 
-Au démarrage, live-boot stocke un journal dans #{/var/log/live.log}# (ou
-#{/var/log/live-boot.log}#).
+Au démarrage, live-boot stocke un journal dans #{/var/log/live-boot.log}#.
 
 Par ailleurs, pour écarter d'autres erreurs, c'est toujours une bonne idée
 faire un tar de votre répertoire #{config/}# et de le télécharger quelque
@@ -128,7 +129,12 @@ developper en petits incréments.
 
 2~ Utilisez le paquet adéquat pour rapporter le bogue
 
-Où est-ce que le bogue apparaît?
+Si vous ne savez pas quel composant est responsable du bogue ou si le bogue
+est un bogue général concernant les systèmes live, vous pouvez remplir un
+bogue sur le pseudo-paquet debian-live.
+
+Toutefois, nous apprécierons si vous essayez de le réduire en fonction de
+l'endroit où le bogue apparaît.
 
 3~ Au moment de la construction tandis l'amorçage
 
@@ -189,8 +195,8 @@ contenir des informations à jour. Si ces informations existent, toujours
 inclure les références au sein de vos rapport de bogues.
 
 En outre, vous devriez vérifier les listes de bogues en cours de live-build,
-live-boot, et live-config pour voir si quelque chose de semblable n'a été
-déjà signalée.
+live-boot, live-config  et live-tools pour voir si quelque chose de
+semblable n'a été déjà signalée.
 
 2~ Où rapporter les bogues
 
@@ -204,8 +210,8 @@ En général, vous devez signaler les erreurs de construction contre le paquet
 live-build, les erreurs en temps de démarrage contre live-boot, et les
 erreurs d'exécution contre live-config. Si vous n'êtes pas sûr de quel
 paquet est approprié ou avez besoin d'aide avant de soumettre un rapport de
-bogue, s'il vous plaît envoyez un message à la liste de diffusion et nous
-vous aiderons à décider.
+bogue, s'il vous plaît signalez le rapport contre le pseudo-paquet
+debian-live. Nous le réattribuerons s'il y a lieu.
 
 S'il vous plaît notez que les bogues trouvés dans les distributions dérivées
 de Debian (comme Ubuntu et autres) *{ne}* doivent *{pas}* être rapportés au

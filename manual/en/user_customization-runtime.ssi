@@ -29,19 +29,17 @@ code{
 
 }code
 
-One possible way of changing the default password is by means of a hook as described in {Boot-time hooks}#boot-time-hooks. In order to do that you can use the "passwd" hook from #{/usr/share/doc/live-config/examples/hooks}#, prefix it accordingly (e.g. 200-passwd) and add it to #{config/includes.chroot/lib/live/config/}#
+One possible way of changing the default password is by means of a hook as described in {Boot-time hooks}#boot-time-hooks. In order to do that you can use the "passwd" hook from #{/usr/share/doc/live-config/examples/hooks}#, prefix it accordingly (e.g. 2000-passwd) and add it to #{config/includes.chroot/lib/live/config/}#
 
 2~customizing-locale-and-language Customizing locale and language
 
-When the live system boots, language is involved in three steps:
+When the live system boots, language is involved in two steps:
 
 _* the locale generation
 
-_* setting the keyboard layout for the console
+_* setting the keyboard configuration
 
-_* setting the keyboard layout for X
-
-The default locale when building a Live system is "locales=en_US.UTF-8". To define the locale that should be generated, use the #{locales}# parameter in the #{--bootappend-live}# option of #{lb config}#, e.g.
+The default locale when building a Live system is #{locales=en_US.UTF-8}#. To define the locale that should be generated, use the #{locales}# parameter in the #{--bootappend-live}# option of #{lb config}#, e.g.
 
 code{
 
@@ -49,18 +47,30 @@ code{
 
 }code
 
-This parameter can also be used at the kernel command line. You can specify a locale by a full #{language_country.encoding}# word.
+Multiple locales may be specified as a comma-delimited list.
 
-Both the console and X keyboard configuration depend on the #{keyboard-layouts}# parameter of the #{--bootappend-live}# option. Valid options for X keyboard layouts can be found in #{/usr/share/X11/xkb/rules/base.xml}# (rather limited to two-letters country codes). To find the value (the two characters) corresponding to a language try searching for the english name of the nation where the language is spoken, e.g:
+This parameter, as well as the keyboard configuration parameters indicated below, can also be used at the kernel command line. You can specify a locale by #{language_country}# (in which case the default encoding is used) or the full #{language_country.encoding}# word. A list of supported locales and the encoding for each can be found in #{/usr/share/i18n/SUPPORTED}#.
+
+Both the console and X keyboard configuration are performed by #{live-config}# using the #{console-setup}# package. To configure them, use the #{keyboard-layouts}#, #{keyboard-variant}#, #{keyboard-options}# and #{keyboard-model}# boot parameters via the #{--bootappend-live}# option. Valid options for these can be found in #{/usr/share/X11/xkb/rules/base.lst}#. To find layouts and variants for a given language, try searching for the English name of the language and/or the country where the language is spoken, e.g:
 
 code{
 
- $ grep -i sweden -C3 /usr/share/X11/xkb/rules/base.xml | grep name
- <name>se</name>
+$ egrep -i '(^!|german.*switzerland)' /usr/share/X11/xkb/rules/base.lst
+ ! model
+ ! layout
+   ch              German (Switzerland)
+ ! variant
+   legacy          ch: German (Switzerland, legacy)
+   de_nodeadkeys   ch: German (Switzerland, eliminate dead keys)
+   de_sundeadkeys  ch: German (Switzerland, Sun dead keys)
+   de_mac          ch: German (Switzerland, Macintosh)
+ ! option
 
 }code
 
-To get the locale files for German and Swiss German keyboard layout in X use:
+Note that each variant lists the layout to which it applies in the description.
+
+Often, only the layout needs to be configured. For example, to get the locale files for German and Swiss German keyboard layout in X use:
 
 code{
 
@@ -68,21 +78,21 @@ code{
 
 }code
 
-A list of the valid values of the keyboards for the console can be figured with the following command:
-
-code{
-
- $ for i in $(find /usr/share/keymaps/ -iname "*kmap.gz"); \
-     do basename $i | head -c -9; echo; done | sort | less
-
-}code
-
-Alternatively, you can use the #{console-setup}# package, a tool to let you configure console layout using X (XKB) definitions; you can then set your keyboard layout more precisely with #{keyboard-layouts}#, #{keyboard-variant}#, #{keyboard-options}# and #{keyboard-model}# variables; live-boot will use also these parameters for X configuration. For example, to set up a French system with a French-Dvorak layout (called Bepo) on a TypeMatrix keyboard, both in console and X11, use:
+However, for very specific use cases, you may wish to include other parameters. For example, to set up a French system with a French-Dvorak layout (called Bepo) on a TypeMatrix EZ-Reach 2030 USB keyboard, use:
 
 code{
 
  $ lb config --bootappend-live \
      "locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variant=bepo keyboard-model=tm2030usb"
+
+}code
+
+Multiple values may be specified as comma-delimited lists for each of the #{keyboard-*}# options, with the exception of #{keyboard-model}#, which accepts only one value. Please see the #{keyboard(5)}# man page for details and examples of #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# and #{XKBOPTIONS}# variables. If multiple #{keyboard-variant}# values are given, they will be matched one-to-one with #{keyboard-layouts}# values (see #{setxkbmap(1)}# #{-variant}# option). Empty values are allowed; e.g. to define two layouts, the default being US QWERTY and the other being US Dvorak, use:
+
+code{
+
+ $ lb config --bootappend-live \
+     "keyboard-layouts=us,us keyboard-variant=,dvorak"
 
 }code
 
@@ -120,7 +130,7 @@ If you already have a partition on your device, you could just change the label 
 
 code{
 
- $ tune2fs -L persistence /dev/sdb1 # for ext2,3,4 filesystems
+ # tune2fs -L persistence /dev/sdb1 # for ext2,3,4 filesystems
 
 }code
 
@@ -143,10 +153,10 @@ How custom overlay mounts are configured is described in full detail in the live
 
 code{
 
- $ mkfs.ext4 -L persistence /dev/sdb1
- $ mount -t ext4 /dev/sdb1 /mnt
- $ echo "/home" >> /mnt/live-persistence.conf
- $ echo "/var/cache/apt" >> /mnt/live-persistence.conf
+ # mkfs.ext4 -L persistence /dev/sdb1
+ # mount -t ext4 /dev/sdb1 /mnt
+ # echo "/home" >> /mnt/live-persistence.conf
+ # echo "/var/cache/apt" >> /mnt/live-persistence.conf
 
 }code
 
@@ -154,6 +164,6 @@ Then we reboot. During the first boot the contents of #{/home}# and #{/var/cache
 
 Several different custom overlay volumes (with their own #{live-persistence.conf}# files) can be used at the same time, but if several volumes make the same directory persistent, only one of them will be used. If any two mounts are "nested" (i.e. one is a sub-directory of the other) the parent will be mounted before the child so no mount will be hidden by the other. Nested custom mounts are problematic if they are listed in the same #{live-persistence.conf}# file. See the live-persistence.conf(5) man page for how to handle that case if you really need it (hint: you usually don't).
 
-3~ Persistence SubText
+3~ Using more than one persistence store
 
-If a user would need multiple persistence storage of the same type for different locations or testing, such as #{persistence-nonwork}# and #{persistence-work}#, the boot parameter #{persistence-subtext}# used in conjunction with the boot parameter #{persistence}# will allow for multiple but unique persistence media. An example would be if a user wanted to use a persistence partition labeled #{persistence-subText}# they would use the boot parameters of: #{persistence}# #{persistence-subtext=subText}#.
+If a user would need multiple persistence store of the same type for different locations or testing, such as #{persistence-nonwork}# and #{persistence-work}#, the boot parameter #{persistence-label}# used in conjunction with the boot parameter #{persistence}# will allow for multiple but unique persistence media. An example would be if a user wanted to use a persistence partition labeled #{persistence-subText}# they would use the boot parameters of: #{persistence}# #{persistence-label=subText}#.

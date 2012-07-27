@@ -129,7 +129,7 @@ configuración}#managing-a-configuration.
 code{
 
  $ mkdir -p tutorial3/auto
- $ cp /usr/share/live/build/examples/auto/* tutorial3/auto/
+ $ cp /usr/share/doc/live-build/examples/auto/* tutorial3/auto/
  $ cd tutorial3
 
 }code
@@ -145,6 +145,15 @@ code{
      --linux-flavours 686-pae \
      --package-lists lxde \
      "${@}"
+
+}code
+
+Ejecutar #{lb config}# para generar el árbol de configuración, utilizando el
+script #{auto/config}# que justo se acaba de crear:
+
+code{
+
+ $ lb config
 
 }code
 
@@ -212,7 +221,8 @@ Añadir ahora el paquete /{vlc}/ a nuestra lista de paquetes local en
 
 code{
 
- 
+  $ echo vlc >> config/package-lists/my.list.chroot
+
 }code
 
 Crear de nuevo:
@@ -360,7 +370,8 @@ tasksel-data, para proceder, asegurarse de tener ambas cosas:
 
 code{
 
- 
+  # apt-get install dctrl-tools tasksel-data
+
 }code
 
 Ahora podemos buscar las tareas apropiadas, primero con:

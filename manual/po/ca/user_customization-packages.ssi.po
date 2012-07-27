@@ -1,19 +1,19 @@
 # Catalan translations for live-manual package
-# Copyright (C) 2012 Free Software Foundation, Inc.
 # This file is distributed under the same license as the live-manual package.
-# Automatically generated, 2012.
+# Carlos Zuferri <chals@altorricon.com>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
 "POT-Creation-Date: 2012-04-14 22:45+0300\n"
-"PO-Revision-Date: 2012-04-14 22:45+0300\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2012-07-19 14:40+0200\n"
+"Last-Translator: Carlos Zuferri <chals@altorricon.com>\n"
+"Language-Team:  <debian-live@lists.debian.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #. type: Plain text
 #: en/about_manual.ssi:88 en/about_manual.ssi:96 en/about_manual.ssi:104
@@ -158,12 +158,14 @@ msgstr "}code"
 #. type: Plain text
 #: en/user_customization-packages.ssi:2
 msgid ":B~ Customizing package installation"
-msgstr ""
+msgstr ":B~ Personalització de la instaŀlació de paquets"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:4
 msgid "1~customizing-package-installation Customizing package installation"
 msgstr ""
+"1~customizing-package-installation Personalització de la instaŀlació de "
+"paquets"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:6
@@ -184,16 +186,33 @@ msgid ""
 "recommended packages to save space, or need to control which versions of "
 "packages are installed via APT pinning, to name a few possibilities."
 msgstr ""
+"La personalització més bàsica d'un sistema Debian viu pot ser la selecció "
+"dels paquets que seran inclosos en la imatge. Aquest capítol explica les "
+"diverses opcions de live-build per personalitzar la instaŀlació de paquets "
+"durant la construcció. Les opcions més importants que influeixen en els "
+"paquets que estan disponibles per ser instaŀlats en la imatge són les àrees "
+"de distribució i el arxiu. Per garantir velocitats de descàrrega decents, "
+"s'ha de triar un mirall de distribució proper. També es pot incloure "
+"repositoris de backports, paquets experimentals o personalitzats, o incloure "
+"paquets directament com si fossin fitxers. Es poden definir llistes pròpies "
+"de paquets, utilitzar llistes predefinides, utilitzar tasques de /"
+"{tasksel}/, o una combinació d'aquests tres mètodes. Finalment, una sèrie "
+"d'opcions donen un cert control sobre /{apt}/ o si es prefereix /"
+"{aptitude}/, quan s'instaŀlen els paquets durant la construcció. Això pot "
+"ser útil si s'utilitza un proxy, es vol desactivar la instaŀlació de paquets "
+"recomanats per estalviar espai, o hi ha la necessitat de controlar quines "
+"versions dels paquets s'instaŀlen mitjançant la tècnica pinning d'APT, per "
+"nomenar algunes possibilitats."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:8
 msgid "2~ Package sources"
-msgstr ""
+msgstr "2~ Fonts dels paquets"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:10
 msgid "3~ Distribution, archive areas and mode"
-msgstr ""
+msgstr "3~ Distribució, zones d'arxiu i mode "
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:12
@@ -208,6 +227,15 @@ msgid ""
 "distribution. For example, to build against the *{unstable}* release, sid, "
 "specify:"
 msgstr ""
+"La distribució que es tria té una gran importància en els paquets que estan "
+"disponibles per incloure en una imatge en viu. Només cal especificar el nom "
+"en clau, que per defecte és wheezy per a la versió wheezy de live-build. "
+"Qualsevol distribució disponible a l'arxiu de Debian pot ser especificada "
+"pel seu nom en clau aquí. (Veure {Termes}#terms per més detalls.) L'opció #"
+"{--distribution}# no només influeix en l'origen dels paquets dins l'arxiu, "
+"sinó que també instrueix a live-build per comportar-se segons sigui "
+"necessari per a construir cada distribució compatible. Per exemple, per "
+"construir la distribució *{unstable}*, sid, s'ha d'especificar:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:16
@@ -223,6 +251,11 @@ msgid ""
 "{main}# contains software that is part of the Debian distribution, hence "
 "that is the default. One or more values may be specified, e.g."
 msgstr ""
+"A l'arxiu de la distribució, les àrees d'arxiu són les divisions principals "
+"de l'arxiu. A Debian, es tracta de #{main}#, #{contrib}# i #{non-free}#.  "
+"Només #{main}# conté el programari que és part de la distribució Debian, pel "
+"que és el valor per defecte. Un o més valors es poden especificar, per "
+"exemple:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:24
@@ -240,17 +273,24 @@ msgid ""
 "derivative are supported instead of the ones for Debian. The mode also "
 "modifies live-build behaviour to suit the derivatives."
 msgstr ""
+"És dona suport experimental a alguns derivats de Debian a través de l'opció #"
+"{--mode}#. Per defecte, aquesta opció està establerta en #{debian}#, tot i "
+"que se estigui construint en un sistema que no sigui Debian. Si s'especifica "
+"#{--mode ubuntu}# o #{--mode emdebian}#, s'utilitzen els noms de distribució "
+"i les àrees dels arxius dels derivats especificats en lloc dels de Debian. "
+"El «mode» també modifica el comportament de live-build per adaptar-lo als "
+"derivats."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:30
 #, no-wrap
 msgid "*{Note:}* The projects for whom these modes were added are primarily responsible for supporting users of these options. The Debian live project, in turn, provides development support on a best-effort basis only, based on feedback from the derivative projects as we do not develop or support these derivatives ourselves.\n"
-msgstr ""
+msgstr "*{Nota:}* Els projectes per als quals aquests modes s'han afegit són els principals responsables de donar suport als usuaris d'aquestes opcions. El projecte Debian Live, al seu torn, dona suport de desenvolupament només sobre una base de millor esforç, basada en les informacions proporcionades pels projectes derivats ja que nosaltres no desenvolupem ni donem suport a aquests derivats.\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:32
 msgid "3~ Distribution mirrors"
-msgstr ""
+msgstr "3~ Miralls de distribució"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:34
@@ -267,12 +307,26 @@ msgid ""
 "mirror-binary}# and #{--mirror-binary-security}# values are used, "
 "superceding any mirrors used in an earlier stage."
 msgstr ""
+"L'arxiu de Debian es replica a través d'una àmplia xarxa de miralls a tot el "
+"món perquè la gent en cada regió pugui triar un mirall proper amb la millor "
+"velocitat de descàrrega. Cadascuna de les opcions #{--mirror-*}# governa "
+"quin mirall de distribució s'utilitzara en les diverses etapes de la "
+"construcció. Recordar de {Etapes de la construcció}#stages-of-the-build que "
+"l'etapa *{bootstrap}* es quan el chroot s'omple inicialment per /"
+"{debootstrap}/  amb un sistema mínim i l'etapa *{chroot}* és quan s'utilitza "
+"el chroot per a la construcció de sistema d'fitxers del sistema en viu. "
+"D'aquesta manera, s'utilitzan els miralls corresponents per a aquestes "
+"etapes, i més tard, durant l'etapa *{binary}* s'utilitzan els valors #{--"
+"mirror-binary}# i #{--mirror-binary-security}# substituint qualsevol mirall "
+"utilitzat en una etapa anterior."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:36
 msgid ""
 "3~distribution-mirrors-build-time Distribution mirrors used at build time"
 msgstr ""
+"3~distribution-mirrors-build-time Miralls de distribució utilitzats en temps "
+"de construcció"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:38
@@ -281,6 +335,10 @@ msgid ""
 "mirror, it is sufficient to set #{--mirror-bootstrap}#, #{--mirror-chroot-"
 "security}# and #{--mirror-chroot-backports}# as follows."
 msgstr ""
+"Per establir els miralls de la distrubució utilitzats en temps de "
+"construcció perquè apuntin a una rèplica local, és suficient establir #{--"
+"mirror-bootstrap}#, #{--mirror-chroot-security}# i #{--mirror-chroot-"
+"backports}# de la manera següent."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:44
@@ -297,11 +355,13 @@ msgid ""
 "The chroot mirror, specified by #{--mirror-chroot}#, defaults to the #{--"
 "mirror-bootstrap}# value."
 msgstr ""
+"El mirall per al chroot, especificat per l'opció #{--mirror-chroot}#, per "
+"defecte pren el mateix valor que #{--mirror-bootstrap}#"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:50
 msgid "3~ Distribution mirrors used at run time"
-msgstr ""
+msgstr "3~ Miralls de distribució utilitzats en temps d'execució"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:52
@@ -315,6 +375,15 @@ msgid ""
 "example below. An image built from this configuration would only be suitable "
 "for users on a network where \"#{mirror}#\" is reachable."
 msgstr ""
+"Les opcions #{--mirror-binary*}# governen els miralls de distribució "
+"coŀlocats a la imatge binària. Aquestes poden ser utilitzades per instaŀlar "
+"paquets addicionals mentre s'executa el sistema en viu. Els valors per "
+"defecte utilitzan #{cdn.debian.net}#, un servei que tria un mirall "
+"geogràficament a prop en funció del número IP de l'usuari. Aquesta és una "
+"opció adequada quan no es pot predir quin serà el millor mirall per tots els "
+"usuaris. O es pot especificar els valors propis com es mostra en l'exemple "
+"següent. Una imatge construïda a partir d'aquesta configuració només seria "
+"convenient per als usuaris en una xarxa on \"#{mirror}#\" és abastable."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:57
@@ -327,7 +396,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_customization-packages.ssi:61
 msgid "3~additional-repositories Additional repositories"
-msgstr ""
+msgstr "3~additional-repositories Repositoris addicionals"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:63
@@ -341,6 +410,15 @@ msgid ""
 "stage when building the image, and in the *{binary}* stage, i.e. for use "
 "when running the live system."
 msgstr ""
+"És possible afegir més repositoris, ampliant les opcions de paquets més "
+"enllà dels disponibles en la pròpia distribució de destinació. Aquests poden "
+"ser, per exemple, per backports, experimentals o paquets personalitzats. Per "
+"configurar repositoris addicionals, crear els fitxers #{config/archives/your-"
+"repository.list.chroot}#, i/o #{config/archives/your-repository.list.binary}"
+"#. Igual que amb les opcions #{--mirror-*}# aquest regeix els repositoris "
+"utilitzats en l'étapa *{chroot}*  durant la construcció de la imatge, i a "
+"l'étapa *{binary}*, és a dir, per ser utilitzades quan s'executa el sistema "
+"en viu."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:65
@@ -348,6 +426,9 @@ msgid ""
 "For example, #{config/archives/live.list.chroot}# allows you to install "
 "packages from the debian live snapshot repository at live system build time."
 msgstr ""
+"Per exemple, #{config/archives/live.list.chroot}# permet d'instaŀlar paquets "
+"des del repositori de instantànies de debian live en el moment de creació "
+"del sistema viu."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:69
@@ -362,11 +443,14 @@ msgid ""
 "repository will be added to your live system's #{/etc/apt/sources.list.d/}# "
 "directory."
 msgstr ""
+"Si s'afegeix la mateixa línia a #{config/archives/live.list.binary}#, el "
+"repositori sera afegit al directori #{/etc/apt/sources.list.d/}# del sistema "
+"viu."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:75
 msgid "If such files exist, they will be picked up automatically."
-msgstr ""
+msgstr "Si aquests fitxers existeixen, seran utilitzats de forma automàtica."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:77
@@ -374,12 +458,14 @@ msgid ""
 "You should also put the GPG key used to sign the repository into #{config/"
 "archives/your-repository.key.{binary,chroot}}# files."
 msgstr ""
+"També s'ha de posar la clau GPG utilitzada per signar el repositori en "
+"fitxers #{config/archives/your-repository.key.{binary,chroot}}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:79
 #, no-wrap
 msgid "*{Note:}* some preconfigured package repositories are available for easy selection through the #{--archives}# option, e.g. for enabling live snapshots, a simple command is enough to enable it:\n"
-msgstr ""
+msgstr "*{Nota:}* alguns repositoris preconfigurats de paquets estan disponibles per facilitar la selecció a través de l'opció #{--archives}#, per exemple, per habilitar instantànies en viu, una ordre simple és suficient per activar-ho:\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:83 en/user_installation.ssi:148
@@ -390,7 +476,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_customization-packages.ssi:87
 msgid "2~choosing-packages-to-install Choosing packages to install"
-msgstr ""
+msgstr "2~choosing-packages-to-install Selecció dels paquets a instaŀlar"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:89
@@ -402,11 +488,19 @@ msgid ""
 "package files in your #{config/}# tree, which is well suited to testing of "
 "new or experimental packages before they are available from a repository."
 msgstr ""
+"Hi ha una sèrie de formes de triar els paquets que live-build instaŀlarà en "
+"la imatge, que abasta una varietat de necessitats diferents. Es pot "
+"simplement anomenar paquets individualment per instaŀlar en una llista de "
+"paquets. També es pot optar per llistes predefinides de paquets, o utilitzar "
+"les tasques d'APT. I, finalment, es poden coŀlocar paquets com si fossin "
+"fitxers dins del arbre #{config/}#, que és un mètode que s'adapta "
+"perfectament a fer proves amb paquets nous o experimentals abans de "
+"afegirlos a un repositori."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:91
 msgid "3~package-lists Package lists"
-msgstr ""
+msgstr "3~package-lists Llistes de paquets"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:93
@@ -420,17 +514,26 @@ msgid ""
 "others are based upon. You can also provide your own package lists, or use a "
 "combination of both."
 msgstr ""
+"Les llistes de paquets són una forma eficaç d'expressar quins paquets han de "
+"ser instaŀlats. La sintaxi de la llista suporta els fitxers inclosos i "
+"seccions condicionals que fa que sigui fàcil de construir llistes a partir "
+"d'altres llistes i adaptar-ler per al propi ús en múltiples configuracions. "
+"Es poden utilitzar llistes predefinides de paquets, proporcionant una "
+"selecció de paquets de forma modular de cada un dels principals entorns "
+"d'escriptori i algunes llistes per a fins especials, així com llistes "
+"estàndard a partir de les que es basen altres. També es pot proporcionar "
+"llistes pròpies de paquets, o utilitzar una combinació d'ambdós."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:95
 #, no-wrap
 msgid "*{Note:}* The behaviour of live-build when specifying a package that does not exist is determined by your choice of APT utility. See {Choosing apt or aptitude}#choosing-apt-or-aptitude for more details.\n"
-msgstr ""
+msgstr "*{Nota:}* El comportament de live-build a l'hora d'especificar un paquet que no existeix està determinat per la elecció que es faci de l'eina APT. Veure {Elegir apt or aptitude}#choosing-apt-or-aptitude per més detalls.\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:97
 msgid "3~ Predefined package lists"
-msgstr ""
+msgstr "3~ Llistes predefinides de paquets"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:99
@@ -438,6 +541,8 @@ msgid ""
 "The simplest way to use lists is to specify one or more predefined lists "
 "with the #{--package-lists}# option. For example:"
 msgstr ""
+"La forma més senzilla d'utilitzar les llistes consisteix a especificar una o "
+"més llistes predefinides amb l'opció #{--package-lists}#. Per exemple:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:103
@@ -453,11 +558,15 @@ msgid ""
 "corresponding file, paying attention to included files and conditionals as "
 "described in the following sections."
 msgstr ""
+"La ubicació per defecte de les llistes en el sistema és #{/usr/share/live/"
+"build/package-lists/}#. Per determinar els paquets en una llista donada, "
+"llegir el fitxer corresponent, prestant atenció als fitxers inclosos i els "
+"condicionals com es descriu a les següents seccions."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:109
 msgid "3~ Local package lists"
-msgstr ""
+msgstr "3~ Llistes locals de paquets"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:111
@@ -465,6 +574,8 @@ msgid ""
 "You may supplement the predefined lists using local package lists stored in #"
 "{config/package-lists/}#."
 msgstr ""
+"Es poden completar les llistes predefinides mitjançant les llistes locals de "
+"paquets emmagatzemades a #{config/package-lists/}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:113
@@ -473,17 +584,21 @@ msgid ""
 "in order to be processed, and then an additional stage suffix, #{.chroot}# "
 "or #{.binary}# to indicate which stage the list is for."
 msgstr ""
+"Les llistes de paquets que es troben en aquest directori han de tenir el "
+"sufix #{.list}# per ser processades, i a més a més un sufix d'etapa "
+"adicional #{.chroot}# o #{.binary}# per indicar per a quina etapa és la "
+"llista."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:115
 #, no-wrap
 msgid "*{Note:}* If you don't specify the stage suffix, the list will be used for both stages. Normally, you want to specify #{.list.chroot}# so that the packages will only be installed in the live filesystem and not have an extra copy of the #{.deb}# placed on the media.\n"
-msgstr ""
+msgstr "*{Nota:}* Si no s'especifica el sufix d'etapa, la llista s'utilitzarà per a ambdues etapes. Normalment, s'especifica #{.list.chroot}# de manera que els paquets només s'instaŀlaran al sistema de fitxers en viu i no hi haura una còpia extra del #{.deb}# en els medis.\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:117
 msgid "3~ Local binary package lists"
-msgstr ""
+msgstr "3~ Llistes locals de paquets per l'etapa binary"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:119
@@ -495,11 +610,18 @@ msgid ""
 "mentioned above, if you want this list to be the same as your chroot stage "
 "list, simply use the #{.list}# suffix by itself."
 msgstr ""
+"Per crear una llista per a l'etapa binary, crear un fitxer amb el sufix #{."
+"list.binary}# a #{config/package-lists/}#. Aquests paquets no s'instaŀlan al "
+"sistema de fitxers en viu però s'inclouen en els medis en viu a #{pool/}#. "
+"Un ús típic d'aquesta llista seria amb una de les variants del instaŀlador "
+"non-live. Com s'ha esmentat anteriorment, si es vol que aquesta llista sigui "
+"la mateixa que la llista de l'etapa chroot, simplement utilitzar el sufix #{."
+"list}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:121
 msgid "3~ Extending a provided package list using includes"
-msgstr ""
+msgstr "3~ Ampliació d'una llista mitjançant includes"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:123
@@ -508,6 +630,10 @@ msgid ""
 "includes. Refer to these in the #{/usr/share/live/build/package-lists/}# "
 "directory, as they serve as good examples of how to write your own lists."
 msgstr ""
+"Les llistes de paquets que s'inclouen amb live-build fan un ús extensiu dels "
+"includes. Es poden consultar al directori #{/usr/share/live/build/package-"
+"lists/}#  ja que serveixen com a bons exemples de com escriure llistes "
+"pròpies."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:125
@@ -516,6 +642,9 @@ msgid ""
 "plus /{iceweasel}/, create #{config/package-lists/my.list.chroot}# with the "
 "following contents:"
 msgstr ""
+"Per exemple, per fer una llista que inclogui la llista predefinida #{gnome}# "
+"més /{iceweasel}/, crear #{config/package-lists/my.list.chroot}# amb el "
+"contingut:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:130
@@ -528,7 +657,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_customization-packages.ssi:134
 msgid "3~ Using conditionals inside package lists"
-msgstr ""
+msgstr "3~ Ús de condicionals dins de les llistes de paquets"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:136
@@ -540,6 +669,13 @@ msgid ""
 "package selection that make sense, such as #{DISTRIBUTION}#, #{ARCHITECTURES}"
 "# or #{ARCHIVE_AREAS}#."
 msgstr ""
+"Qualsevol de les variables de configuració de live-build emmagatzemades a #"
+"{config/*}# (menys el prefix #{LB_}#) poden ser utilitzades en sentències "
+"condicionals en les llistes de paquets. En general, això significa qualsevol "
+"opció #{lb config}# en lletres majuscules i amb guions canviats a guions "
+"baixos. Però a la pràctica, només tenen sentit les que influeixen en la "
+"selecció de paquets, com ara #{DISTRIBUTION}#, #{ARCHITECTURES}# o #"
+"{ARCHIVE_AREAS}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:138
@@ -547,6 +683,8 @@ msgid ""
 "For example, to install #{ia32-libs}# if the #{--architectures amd64}# is "
 "specified:"
 msgstr ""
+"Per exemple, per instaŀlar #{ia32-libs}# si s'especifica #{--architectures "
+"amd64}#:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:144
@@ -564,6 +702,9 @@ msgid ""
 "{memtest86+}/ if either #{--architectures i386}# or #{--architectures amd64}"
 "# is specified:"
 msgstr ""
+"És possible fer un test d'un qualsevol d'un nombre de valors, per exemple "
+"per instaŀlar /{memtest86+}/ si s'especifica #{--architectures i386}# o #{--"
+"architectures amd64}#:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:154
@@ -581,6 +722,9 @@ msgid ""
 "g. to install /{vrms}/ if either #{contrib}# or #{non-free}# is specified "
 "via #{--archive-areas}#:"
 msgstr ""
+"També es pot provar amb variables que poden contenir més d'un valor, per "
+"exemple, per instaŀlar /{vrms}/ si s'especifica o #{contrib}# o #{non-free}# "
+"a través de l'opció #{--archive-areas}#:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:164
@@ -594,7 +738,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_customization-packages.ssi:168
 msgid "A conditional may surround an #{#include}# directive:"
-msgstr ""
+msgstr "Un condicional pot envoltar una directiva #{#include}#:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:174
@@ -608,12 +752,12 @@ msgstr ""
 #. type: Plain text
 #: en/user_customization-packages.ssi:178
 msgid "The nesting of conditionals is not supported."
-msgstr ""
+msgstr "No és possible el anidament dels condicionals."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:180
 msgid "3~ Tasks"
-msgstr ""
+msgstr "3~ Tasques"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:182
@@ -626,6 +770,13 @@ msgid ""
 "live-build by putting them in a list in #{config/task-lists/}#, as in the "
 "example below."
 msgstr ""
+"L'instaŀlador de Debian ofereix al usuari opcions d'una sèrie de llistes de "
+"paquets preseleccionats, cadascuna centrada en un tipus particular de "
+"sistema, o una tasca per a la qual es pot utilitzar un sistema, com "
+"\"Graphical desktop environment\", \"Mail server\" o \"Laptop\". Aquestes "
+"llistes es diuen \"tasks\" (tasques) i son suportades per APT a través de "
+"l'opció \"Task:\" es poden especificar una o més tasques a live-build posant-"
+"les en una llista a #{config/task-lists/}#, com en l'exemple següent."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:187
@@ -643,11 +794,15 @@ msgid ""
 "including the ones not included in this list, may be examined with #{tasksel "
 "--task-packages}#."
 msgstr ""
+"Es poden llistar les principals tasques disponibles al instaŀlador de Debian "
+"amb #{tasksel --list-tasks}# al sistema viu. El contingut de qualsevol "
+"tasca, fins i tot les no estan incloses en aquesta llista, poden ser "
+"examinades amb #{tasksel --task-packages}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:193
 msgid "3~desktop-and-language-tasks Desktop and language tasks"
-msgstr ""
+msgstr "3~desktop-and-language-tasks Tasques d'escriptori i llenguatge"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:195
@@ -662,6 +817,17 @@ msgid ""
 "for languages, but the user's language choice during the install influences "
 "the selection of corresponding language tasks."
 msgstr ""
+"Les tasques d'escriptori i el llenguatge són casos especials que necessiten "
+"una mica de planificació i configuració extra. Les imatges en viu són "
+"diferentes de les imatges de l'instaŀlador de Debian en aquest sentit. A "
+"l'instaŀlador de Debian, si el medi es va preparar per obtenir un tipus "
+"entorn d'escriptori en particular, la tasca corresponent s'instaŀlarà "
+"automàticament. Per tant hi ha tasques internes #{gnome-desktop}#, #{kde-"
+"desktop}#, #{lxde-desktop}# and #{xfce-desktop}# cap de les quals "
+"s'ofereixen al menú de #{tasksel}#. De la mateixa manera, no hi ha cap "
+"entrada de menú per a les tasques de les llengües, però l'elecció del idioma "
+"de l'usuari durant la instaŀlació influeix en la selecció de les tasques de "
+"llengües corresponents."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:197
@@ -673,6 +839,13 @@ msgid ""
 "multiple desktops or multiple languages and offer the user a choice, but "
 "that is not live-build's default behaviour."
 msgstr ""
+"En el desenvolupament d'una imatge en viu d'escriptori, la imatge sol "
+"arrencar directament a un escriptori de treball, les opcions d'escriptori i "
+"de llengua han estat fetes en temps de construcció, no en temps d'execució "
+"com en el cas del instaŀlador de Debian. Això no vol dir que una imatge en "
+"viu no es pugui construir per donar suport a diversos equips d'escriptori o "
+"diversos idiomes i oferir a l'usuari una opció, però això no és el "
+"comportament de live-build per defecte."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:199
@@ -683,6 +856,11 @@ msgid ""
 "a GNOME desktop image containing support for Japanese might include these "
 "tasks:"
 msgstr ""
+"Com que no hi ha cap ajust automàtic per les tasques de llengua que "
+"incloguin coses com ara fonts específiques per a una llengua o paquets de "
+"mètode d'entrada, si es vol, cal especificar-ho en la configuració. Per "
+"exemple, una imatge d'escriptori GNOME que contingui suport per al japonés "
+"podrie incloure les següents tasques:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:205
@@ -701,6 +879,11 @@ msgid ""
 "default, \"gnome\", must be preseeded in the \"tasksel/desktop\" debconf "
 "variable or else tasksel will not recognize and install it. Thus:"
 msgstr ""
+"Com les tasques d'escriptori són \"internes\" per a cada tasca d'escriptori "
+"inclosa en la imatge, el valor corresponent, si aquest és diferent del valor "
+"per defecte, \"gnome\", s'ha de fer servir la variable de preconfiguració "
+"\"tasksel/desktop\" o en cas contrari tasksel no la reconeixerà i no la "
+"instaŀlarà. Així:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:214
@@ -716,6 +899,8 @@ msgid ""
 "This parameter can take multiple values, e.g. \"lxde xfce\" instead of \"kde"
 "\"."
 msgstr ""
+"Aquest paràmetre pot tenir diversos valors, per exemple \"lxde xfce\" en "
+"lloc de \"kde\"."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:220
@@ -723,6 +908,8 @@ msgid ""
 "2~installing-modified-or-third-party-packages Installing modified or third-"
 "party packages"
 msgstr ""
+"2~installing-modified-or-third-party-packages Instaŀlació de paquets "
+"modificats o de tercers"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:222
@@ -734,6 +921,13 @@ msgid ""
 "packages that are undesirable. Similarly, \"third-party\" packages may be "
 "used to add bespoke and/or proprietary functionality."
 msgstr ""
+"Si bé està en contra de la filosofia de Debian Live, de vegades pot ser "
+"necessària la construcció d'un sistema en viu amb versions modificades dels "
+"paquets que es troben al arxiu de Debian. Pot ser per modificar or donar "
+"suport a funcions addicionals, les llengües o les marques, o fins i tot per "
+"eliminar elements dels paquets existents que són indesitjables. De la "
+"mateixa manera, es poden utilitzar paquets de tercers per afegir alguna "
+"funcionalitat personalitzada i/o propietària."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:224
@@ -745,11 +939,17 @@ msgid ""
 "the Debian New Maintainers' Guide at http://www.debian.org/doc/maint-guide/ "
 "and elsewhere."
 msgstr ""
+"Aquesta secció no cobreix l'assessorament en matèria de construcció o "
+"manteniment de paquets modificats. Però el métode de Joachim Breitner's 'How "
+"to fork privately' a http://www.joachim-breitner.de/blog/archives/282-How-to-"
+"fork-privately.html pot ser d'interès. La creació de paquets personalitzats "
+"es tracta a Debian New Maintainers' Guide at http://www.debian.org/doc/maint-"
+"guide/ i en altres llocs."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:226
 msgid "There are two ways of installing modified custom packages:"
-msgstr ""
+msgstr "Hi ha dues formes d'instaŀlar paquets personalitzats modificats:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:228
@@ -759,7 +959,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_customization-packages.ssi:230
 msgid "_* Using a custom APT repository"
-msgstr ""
+msgstr "_* L'ús d'un repositori APT personalitzat"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:232
@@ -768,11 +968,15 @@ msgid ""
 "customizations but has a number of drawbacks, whilst using a custom APT "
 "repository is more time-consuming to set up."
 msgstr ""
+"Utilitzar #{packages.chroot}#  és més fàcil d'aconseguir i útil per a "
+"personalitzacions \"ràpides\", però té una sèrie d'inconvenients, mentre que "
+"l'ús d'un repositori APT personalitzat és més costós en la quantitat de "
+"temps necessari."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:234
 msgid "3~ Using #{packages.chroot}# to install custom packages"
-msgstr ""
+msgstr "3~ Fer servir #{packages.chroot}# per instaŀar paquets personalitzats"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:236
@@ -782,6 +986,10 @@ msgid ""
 "installed into the live system during build - you do not need to specify "
 "them elsewhere."
 msgstr ""
+"Per instaŀar un paquet personalitzat, només s'ha de copiar al directori #"
+"{config/packages.chroot/}#. Els paquets que es troben dins d'aquest "
+"directori s'instaŀlaran automàticament en el sistema en viu durant la "
+"construcció - no cal especificar res més en cap altre lloc."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:238
@@ -789,6 +997,8 @@ msgid ""
 "Packages *{must}* be named in the prescribed way. One simple way to do this "
 "is to use #{dpkg-name}#."
 msgstr ""
+"Els paquets *{han de}* ser nomenats en la forma prescrita. Una manera simple "
+"de fer això és utilitzar #{dpkg-name}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:240
@@ -796,11 +1006,13 @@ msgid ""
 "Using #{packages.chroot}# for installation of custom packages has "
 "disadvantages:"
 msgstr ""
+"Utilitzar #{packages.chroot}# per a la instaŀlació de paquets personalitzats "
+"té els seus desavantatges:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:242
 msgid "_* It is not possible to use secure APT."
-msgstr ""
+msgstr "_* No és possible utilitzar APT segur."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:244
@@ -808,6 +1020,8 @@ msgid ""
 "_* You must install all appropriate packages in the #{config/packages."
 "chroot/}# directory."
 msgstr ""
+"_* Cal posar tots els paquets apropiats al directori #{config/packages."
+"chroot/}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:246
@@ -815,11 +1029,13 @@ msgid ""
 "_* It does not lend itself to storing Debian Live configurations in revision "
 "control."
 msgstr ""
+"_* No es presta per a l'emmagatzematge de configuracions de Debian Live en "
+"el control de revisió."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:248
 msgid "3~ Using an APT repository to install custom packages"
-msgstr ""
+msgstr "3~ Fer servir un repositori APT per instaŀlar paquets personalitzats"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:250
@@ -828,6 +1044,10 @@ msgid ""
 "must ensure that you specify the packages elsewhere. See {Choosing packages "
 "to install}#choosing-packages-to-install for details."
 msgstr ""
+"A diferència de #{packages.chroot}#, quan s'utilitza un repositori APT "
+"personalitzat s'ha d'assegurar que s'especifiquen els paquets en un altre "
+"lloc. Veure {Selecció dels paquets a instaŀlar}#choosing-packages-to-install "
+"per més detalls."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:252
@@ -836,11 +1056,15 @@ msgid ""
 "custom packages, the infrastructure can be easily re-used at a later date to "
 "offer updates of the modified packages."
 msgstr ""
+"Si bé crear un repositori APT per instaŀlar paquets personalitzats pot "
+"semblar un esforç innecessari, la infraestructura pot ser fàcilment "
+"reutilitzada en una data posterior per oferir actualitzacions dels paquets "
+"modificats."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:254
 msgid "3~ Custom packages and APT"
-msgstr ""
+msgstr "3~ Paquets personalitzats i APT"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:256
@@ -851,6 +1075,11 @@ msgid ""
 "different repositories with different version numbers, APT will elect to "
 "install the package with the higher version number."
 msgstr ""
+"live-build utilitza APT per instaŀlar tots els paquets al sistema en viu per "
+"tant, heretarà els comportaments d'aquest programa. Un exemple rellevant és "
+"que (assumint una configuració per defecte) si es dóna el cas que un paquet "
+"està disponible en dos repositoris diferents, amb diferents números de "
+"versió, APT triarà per instaŀlar el paquet amb la versió més alta."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:258
@@ -861,11 +1090,17 @@ msgid ""
 "achieved by altering the live system's APT pinning preferences - see {APT "
 "pinning}#apt-pinning for more information."
 msgstr ""
+"A causa d'això, s'aconsella augmentar el nombre de versió dels paquets "
+"personalitzats als fixers #{debian/changelog}#  per assegurar-se que la "
+"versió modificada és la que s'instaŀla en lloc d'una dels repositoris "
+"oficials de Debian. Això també es pot aconseguir mitjançant l'alteració de "
+"les preferències d'APT del sistema en viu - veure {APT pinning}#apt-pinning "
+"per més informació."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:260
 msgid "2~ Configuring APT at build time"
-msgstr ""
+msgstr "2~ Configurar APT en temps de construcció"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:262
@@ -877,11 +1112,17 @@ msgid ""
 "complete list, look for options starting with #{apt}# in the #{lb_config}# "
 "man page."
 msgstr ""
+"Es pot configurar APT a través d'una sèrie d'opcions que només s'apliquen en "
+"temps de construcció. (La configuració d'APT al sistema en funcionament en "
+"viu es pot fer de forma normal per als continguts del sistema en viu, és a "
+"dir, mitjançant la inclusió de les configuracions adequades a través de #"
+"{config/includes.chroot/}#.) Per obtenir una llista completa, buscar les "
+"opcions que comencen amb #{apt}# a la pàgina del manual de #{lb_config}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:264
 msgid "3~choosing-apt-or-aptitude Choosing apt or aptitude"
-msgstr ""
+msgstr "3~choosing-apt-or-aptitude Seleccionar apt o aptitude"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:266
@@ -892,6 +1133,11 @@ msgid ""
 "package installation, the notable difference being how missing packages are "
 "handled."
 msgstr ""
+"Es pot optar per utilitzar /{apt}/ o /{aptitude}/ a l'hora d'instaŀlar "
+"paquets en temps de construcció. Quina utilitat s'usa es configura gràcies "
+"al argument #{--apt}# de #{lb config}#. Escollir el mètode d'implementació "
+"per al comportament preferit durant la instaŀlació de paquets, la diferència "
+"notable és la forma en que es manegen els paquets que falten."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:268
@@ -899,6 +1145,8 @@ msgid ""
 "_* #{apt}#: With this method, if a missing package is specified, the package "
 "installation will fail. This is the default setting."
 msgstr ""
+"_* #{apt}#: Amb aquest mètode, si un paquet que s'especifica falta, "
+"l'instaŀlació de paquets fallarà. Aquesta és la configuració per defecte."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:270
@@ -906,11 +1154,13 @@ msgid ""
 "_* #{aptitude}#: With this method, if a missing package is specified, the "
 "package installation will succeed."
 msgstr ""
+"_* #{aptitude}#: Amb aquest mètode, si s'especifica un paquet que falta, "
+"l'instaŀlació de paquets tindrà èxit."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:272
 msgid "3~ Using a proxy with APT"
-msgstr ""
+msgstr "3~ L'ús d'un proxy amb APT"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:274
@@ -919,6 +1169,9 @@ msgid ""
 "behind a proxy. You may specify your APT proxy with the #{--apt-ftp-proxy}# "
 "or #{--apt-http-proxy}# options as needed, e.g."
 msgstr ""
+"Una configuració típica d'APT és per fer front a la construcció d'una imatge "
+"darrere d'un proxy. Es pot especificar el proxy per APT amb les opcions #{--"
+"apt-ftp-proxy}# o #{--apt-http-proxy}# segons sigui necessari, per exemple,"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:278
@@ -929,7 +1182,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_customization-packages.ssi:282
 msgid "3~ Tweaking APT to save space"
-msgstr ""
+msgstr "3~ Afinar APT per estalviar espai"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:284
@@ -938,6 +1191,8 @@ msgid ""
 "which case one or the other or both of the following options may be of "
 "interest."
 msgstr ""
+"Pot ser necessari estalviar espai en els medis destinats a la imatge, en "
+"aquest cas una o altra o ambdós de les següentes opcions poden ser d'interès."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:286
@@ -945,6 +1200,7 @@ msgid ""
 "If you don't want to include APT indices in the image, you can omit those "
 "with:"
 msgstr ""
+"Si no es vol incloure els índexs d'APT en la imatge, es poden omitir amb:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:290
@@ -961,6 +1217,12 @@ msgid ""
 "before performing #{apt-cache search}# or #{apt-get install}#, for instance, "
 "the user must #{apt-get update}# first to create those indices."
 msgstr ""
+"Això no influirà en les entrades de #{/etc/apt/sources.list}#, sinó "
+"simplement si #{/var/lib/apt}# conté els fitxers dels índexs o no. El "
+"desavantatge és que APT necessita aquests índexs per tal d'operar en el "
+"sistema en viu, així que abans d'executar per exemple #{apt-cache search}# o "
+"#{apt-get install}#, l'usuari primer ha fer un #{apt-get update}# per crear "
+"aquests índexs."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:296
@@ -968,6 +1230,8 @@ msgid ""
 "If you find the installation of recommended packages bloats your image too "
 "much, you may disable that default option of APT with:"
 msgstr ""
+"Si es considera que la instaŀlació de tots els paquets recomanats infla "
+"massa la imatge, es pot desactivar aquesta opció per defecte d'APT amb:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:300
@@ -990,11 +1254,23 @@ msgid ""
 "priority on selected packages to prevent them from being installed, as "
 "explained in {APT pinning}#apt-pinning."
 msgstr ""
+"El desavantatge aquí és que si no s'instaŀlen els paquets recomanats per un "
+"paquet determinat, és a dir, \"els paquets que es troben junts amb aquest en "
+"totes les instaŀlacions a menys que siguin inusuals\" (Debian Policy Manual, "
+"secció 7.2), els paquets que en realitat són necessaris poden ser omesos. "
+"Per tant, suggerim revisar la diferència que desactivar els paquets "
+"recomanats té en la llista de paquets (veure el fitxer #{binary.packages}# "
+"generat per #{lb build}#) i tornar a incloure a la llista els paquets que "
+"falten que haurien de ser instaŀlats. D'altra banda, si només es vol un "
+"petit nombre de paquets recomanats deixats de banda, es pot deixar els "
+"paquets recomanats activat i establir una prioritat pin d'APT negativa en "
+"els paquets seleccionats per impedir la seva instaŀlació, com s'explica a "
+"{APT pinning}#apt-pinning."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:306
 msgid "3~ Passing options to apt or aptitude"
-msgstr ""
+msgstr "3~ Passar opcions per a apt o aptitude"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:308
@@ -1004,11 +1280,15 @@ msgid ""
 "options through to your configured APT tool. See the man pages for #{apt}# "
 "and #{aptitude}# for details."
 msgstr ""
+"Si no hi ha una opció #{lb config}# per modificar el comportament d'APT tal "
+"i com es necessita, utilitzar #{--apt-options}# o #{--aptitude-options}# per "
+"passar alguna opció a través de l'eina APT configurada. Consultar les "
+"pàgines del manual de #{apt}# i #{aptitude}# per a més detalls."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:310
 msgid "3~apt-pinning APT pinning"
-msgstr ""
+msgstr "3~apt-pinning APT pinning"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:312
@@ -1018,6 +1298,10 @@ msgid ""
 "the former, create #{config/chroot_apt/preferences}#. For the latter, create "
 "#{config/includes.chroot/etc/apt/preferences}#."
 msgstr ""
+"Com a referència, llegir primer la pàgina del manual #{apt_preferences(5)}#. "
+"Es pot configurar APT pinning tant pel temps de construcció, o bé per temps "
+"d'execució. En el primer cas, crear  #{config/chroot_apt/preferences}#. Per "
+"aquest últim cas, crear #{config/includes.chroot/etc/apt/preferences}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:314
@@ -1029,6 +1313,12 @@ msgid ""
 "taken from the target system distribution, wheezy. The following will "
 "accomplish this:"
 msgstr ""
+"Suposem que s'està construint un sistema en viu wheezy però es necessita que "
+"tots els paquets en viu que acaben en la imatge binària s'instaŀlin desde "
+"sid en temps de construcció. Cal afegir sid a les fonts d'APT i fer un pin "
+"de manera que només els paquets que es vol s'instaŀlin en el moment de la "
+"construcció i tots els altres es preguin de la distribució de destinació, "
+"wheezy. El que segueix aconseguira això:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:322
@@ -1055,7 +1345,7 @@ msgstr ""
 #: en/user_customization-packages.ssi:331
 #, no-wrap
 msgid "*{Note:}* Wildcards can be used in package names (e.g. *{Package: live-*}*) with Apt version 0.8.14 or higher. This means that it works with wheezy using:\n"
-msgstr ""
+msgstr "*{Nota:}* Es poden usar comodins en els noms dels paquets (per exemple, *{Package: live-*}*) amb la versió 0.8.14 o superior d'Apt. Això significa que funciona amb wheezy utilitzant:\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:335
@@ -1074,6 +1364,14 @@ msgid ""
 "{gnome-keyring}/ package. This can be done by adding the following stanza to "
 "#{config/chroot_apt/preferences}#:"
 msgstr ""
+"Una prioritat pin negativa evitarà que un paquet s'instaŀli, com en el cas "
+"que no es vulgui un paquet que és recomanat per un altre paquet. Suposem que "
+"s'està construint una imatge LXDE amb #{--package-lists lxde}# però no es "
+"desitja que al usuari se li demani que guardi les contrasenyes wifi al "
+"clauer. Aquesta llista inclou /{gdm}/, que depèn de /{gksu}/,  que al seu "
+"torn recomana /{gnome-keyring}/. Si es vol omitir el paquet recomanat /"
+"{gnome-keyring}/ això es pot fer mitjançant l'addició de les següents línies "
+"al #{config/chroot_apt/preferences}#:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:345

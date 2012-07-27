@@ -12,13 +12,13 @@ Per gli impazienti
 _* Per i problemi noti verificare sempre lo stato degli aggiornamenti
 dell'immagine sulla nostra pagina iniziale http://live.debian.net/.
 
-_* Prima di inviare una segnalazione di bug provare a riprodurlo con le
-*{versione più recenti}* di live-build, live-boot e live-config.
+_* Always try to reproduce the bug with the *{most recent versions}* of
+live-build, live-boot, live-config and live-tools before submitting a bug
+report.
 
-_* Si cerchi di fornire *{informazioni il più dettagliate possibile}*
-riguardo il bug. Questo comprende (almeno) la versione di live-build,
-live-boot e live-config utilizzata e la distribuzione del sistema live che
-si sta costruendo.
+_* Try to give *{as specific information as possible}* about the bug. This
+includes (at least) the version of live-build, live-boot, live-config, and
+live-tools used and the distribution of the live system you are building.
 
 2~ Problemi noti
 
@@ -75,6 +75,8 @@ _* Versione di live-boot sul sistema ospitante
 
 _* Versione di live-config sul sistema live
 
+_* Version of live-tools on the live system
+
 _* Versione di /{debootstrap}/ o /{cdebootstrap}/ sul sistema ospitante
 
 _* Architettura del sistema live
@@ -94,8 +96,7 @@ code{
 
 }code
 
-All'avvio, live-boot conserva un registro in #{/var/log/live.log}# (or
-#{/var/log/live-boot.log}#).
+At boot time, live-boot stores a log in #{/var/log/live-boot.log}#.
 
 Inoltre, per escludere altri errori, è sempre una buona idea creare un tar
 della propria directory #{config/}# e caricarlo da qualche parte (*{non}*
@@ -123,7 +124,12 @@ e bisogna cambiare approccio.
 
 2~ Segnalare il bug del pacchetto giusto
 
-Dove appare il bug?
+If you don't know what component is responsible for the bug or if the bug is
+a general bug concerning live systems, you can fill a bug against the
+debian-live pseudo-package.
+
+However, we would appreciate if you try to narrow it down according to where
+the bug appears.
 
 3~ Durante la compilazione mentre esegue il bootstrap
 
@@ -181,9 +187,9 @@ così come la pagina iniziale del sito, in quanto contengono informazioni più
 aggiornate. Se tale informazione esiste si includa sempre un riferimento
 nella segnalazione del bug.
 
-In aggiunta bisogna controllare l'attuale elenco dei bug riguardanti
-live-build, live-boot e live-config per vedere se sia già stato segnalato
-qualcosa di simile.
+In addition, you should check the current bug lists for live-build,
+live-boot, live-config and live-tools to see whether something similar has
+been reported already.
 
 2~ Dove segnalare i bug
 
@@ -192,11 +198,12 @@ System (BTS, sistema di tracciamento dei bug Debian), si veda
 http://bugs.debian.org/ per le informazioni su come usarlo. È anche
 possibile utilizzare il comando #{reportbug}# dall'omonimo pacchetto.
 
-In genere bisogna riportare gli errori in fase di compilazione verso il
-pacchetto live-build, quelli di avvio verso live-boot e quelli in fase di
-esecuzione a live-config. Se non siete certi di quale sia il pacchetto
-appropriato o serve maggiore aiuto prima della segnalazione, inviate un
-messaggio in mailing list e vi aiuteremo a capire.
+In general, you should report build time errors against the live-build
+package, boot time errors against live-boot, and run time errors against
+live-config. If you are unsure of which package is appropriate or need more
+help before submitting a bug report, please report it against the
+debian-live pseudo-package. We will then take care about it and reassign it
+where appropriate.
 
 Si noti che i bug trovati nelle distribuzioni derivate da Debian (come
 Ubuntu e altre) *{non}* vanno segnalati a Debian BTS a meno che non siano

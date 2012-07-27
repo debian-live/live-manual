@@ -186,7 +186,8 @@ diferentes entornos de escritorios y algunas listas de propósito especial
 basadas en otras listas de propósito general. Puede utilizarse listas
 propias o una combinación de listas propias y listas predefinidas.
 
-*{Nota:}* El comportamiento de live-build cuando se especifica un paquete que no existe es determinado por lo que se haya configurado en la utilidad APT. Para más detalles ver {Utilizar apt o aptitude}#choosing-apt-or-aptitude .
+*{Nota:}* El comportamiento de live-build cuando se especifica un paquete que no existe es determinado por lo que se haya configurado en la utilidad APT. Para más detalles ver {Utilizar apt o aptitude}#choosing-apt-or-aptitude.
+
 3~ Listas de paquetes predefinidas
 
 La forma más simple de utilizar listas de paquetes es especificar una o más
@@ -215,7 +216,7 @@ directorio deben tener la extensión #{.list}# además de la extensión de la
 etapa #{.chroot}# o #{.binary}# para indicar a qué etapa corresponde la
 lista.
 
-*{Nota:}* Si no se especifica el sufijo, la lista será usada en las dos etapas. En consecuencia, es conveniente especificar #{.list.chroot}# de modo que los paquetes se instalen únicamente en el sistema en vivo y no exista otra copia extra del paquete #{.deb}# 
+*{Nota:}* Si no se especifica el sufijo, la lista será usada en las dos etapas. En consecuencia, es conveniente especificar #{.list.chroot}# de modo que los paquetes se instalen únicamente en el sistema en vivo y no exista otra copia extra del paquete #{.deb}#.
 
 3~ Listas de paquetes locales para binary
 
@@ -298,7 +299,10 @@ Es habitual que una condición incluya una directiva «include»:
 
 code{
 
- 
+  #if ARCHITECTURES amd64
+ #include <gnome-full>
+ #endif
+
 }code
 
 No se permite el anidamiento de estructuras condicionales.
@@ -578,7 +582,7 @@ code{
 
 }code
 
-*{Nota:}* Se pueden usar comodines en los nombres de los paquetes a fijar (p.ej. *{Package: live-*}*)  si se usa una versión de apt igual o superior a 0.8.14. Esto significa que funciona con wheezy usando:
+*{Nota:}* Se pueden usar comodines en los nombres de los paquetes a fijar (p.ej. *{Package: live-*}*) si se usa una versión de apt igual o superior a 0.8.14. Esto significa que funciona con wheezy usando:
 
 code{
 

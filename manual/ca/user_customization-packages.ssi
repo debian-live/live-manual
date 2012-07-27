@@ -1,36 +1,39 @@
-:B~ Customizing package installation
+:B~ Personalització de la instaŀlació de paquets
 
-1~customizing-package-installation Customizing package installation
+1~customizing-package-installation Personalització de la instaŀlació de
+paquets
 
-Perhaps the most basic customization of a Debian live system is the
-selection of packages to be included in the image. This chapter guides you
-through the various build-time options to customize live-build's
-installation of packages. The broadest choices influencing which packages
-are available to install in the image are the distribution and archive
-areas. To ensure decent download speeds, you should choose a nearby
-distribution mirror. You can also add your own repositories for backports,
-experimental or custom packages, or include packages directly as files. You
-can define your own lists of packages to include, use live-build's
-predefined lists, use /{tasksel}/ tasks, or a combination of all
-three. Finally, a number of options give some control over /{apt}/, or if
-you prefer, /{aptitude}/, at build time when packages are installed. You may
-find these handy if you use a proxy, want to disable installation of
-recommended packages to save space, or need to control which versions of
-packages are installed via APT pinning, to name a few possibilities.
+La personalització més bàsica d'un sistema Debian viu pot ser la selecció
+dels paquets que seran inclosos en la imatge. Aquest capítol explica les
+diverses opcions de live-build per personalitzar la instaŀlació de paquets
+durant la construcció. Les opcions més importants que influeixen en els
+paquets que estan disponibles per ser instaŀlats en la imatge són les àrees
+de distribució i el arxiu. Per garantir velocitats de descàrrega decents,
+s'ha de triar un mirall de distribució proper. També es pot incloure
+repositoris de backports, paquets experimentals o personalitzats, o incloure
+paquets directament com si fossin fitxers. Es poden definir llistes pròpies
+de paquets, utilitzar llistes predefinides, utilitzar tasques de
+/{tasksel}/, o una combinació d'aquests tres mètodes. Finalment, una sèrie
+d'opcions donen un cert control sobre /{apt}/ o si es prefereix
+/{aptitude}/, quan s'instaŀlen els paquets durant la construcció. Això pot
+ser útil si s'utilitza un proxy, es vol desactivar la instaŀlació de paquets
+recomanats per estalviar espai, o hi ha la necessitat de controlar quines
+versions dels paquets s'instaŀlen mitjançant la tècnica pinning d'APT, per
+nomenar algunes possibilitats.
 
-2~ Package sources
+2~ Fonts dels paquets
 
-3~ Distribution, archive areas and mode
+3~ Distribució, zones d'arxiu i mode 
 
-The distribution you choose has the broadest impact on which packages are
-available to include in your live image. Specify the codename, which
-defaults to wheezy for the wheezy version of live-build. Any current
-distribution carried in the Debian archive may be specified by its codename
-here. (See {Terms}#terms for more details.) The #{--distribution}# option
-not only influences the source of packages within the archive, but also
-instructs live-build to behave as needed to build each supported
-distribution. For example, to build against the *{unstable}* release, sid,
-specify:
+La distribució que es tria té una gran importància en els paquets que estan
+disponibles per incloure en una imatge en viu. Només cal especificar el nom
+en clau, que per defecte és wheezy per a la versió wheezy de
+live-build. Qualsevol distribució disponible a l'arxiu de Debian pot ser
+especificada pel seu nom en clau aquí. (Veure {Termes}#terms per més
+detalls.) L'opció #{--distribution}# no només influeix en l'origen dels
+paquets dins l'arxiu, sinó que també instrueix a live-build per comportar-se
+segons sigui necessari per a construir cada distribució compatible. Per
+exemple, per construir la distribució *{unstable}*, sid, s'ha d'especificar:
 
 code{
 
@@ -38,10 +41,11 @@ code{
 
 }code
 
-Within the distribution archive, archive areas are major divisions of the
-archive. In Debian, these are #{main}#, #{contrib}# and #{non-free}#. Only
-#{main}# contains software that is part of the Debian distribution, hence
-that is the default. One or more values may be specified, e.g.
+A l'arxiu de la distribució, les àrees d'arxiu són les divisions principals
+de l'arxiu. A Debian, es tracta de #{main}#, #{contrib}# i #{non-free}#.
+Només #{main}# conté el programari que és part de la distribució Debian, pel
+que és el valor per defecte. Un o més valors es poden especificar, per
+exemple:
 
 code{
 
@@ -49,34 +53,38 @@ code{
 
 }code
 
-Experimental support is available for some Debian derivatives through a
-#{--mode}# option. By default, this option is set to #{debian}#, even if you
-are building on a non-Debian system. If you specify #{--mode ubuntu}# or
-#{--mode emdebian}#, the distribution names and archive areas for the
-specified derivative are supported instead of the ones for Debian. The mode
-also modifies live-build behaviour to suit the derivatives.
+És dona suport experimental a alguns derivats de Debian a través de l'opció
+#{--mode}#. Per defecte, aquesta opció està establerta en #{debian}#, tot i
+que se estigui construint en un sistema que no sigui Debian. Si s'especifica
+#{--mode ubuntu}# o #{--mode emdebian}#, s'utilitzen els noms de distribució
+i les àrees dels arxius dels derivats especificats en lloc dels de
+Debian. El «mode» també modifica el comportament de live-build per
+adaptar-lo als derivats.
 
-*{Note:}* The projects for whom these modes were added are primarily responsible for supporting users of these options. The Debian live project, in turn, provides development support on a best-effort basis only, based on feedback from the derivative projects as we do not develop or support these derivatives ourselves.
+*{Nota:}* Els projectes per als quals aquests modes s'han afegit són els principals responsables de donar suport als usuaris d'aquestes opcions. El projecte Debian Live, al seu torn, dona suport de desenvolupament només sobre una base de millor esforç, basada en les informacions proporcionades pels projectes derivats ja que nosaltres no desenvolupem ni donem suport a aquests derivats.
 
-3~ Distribution mirrors
+3~ Miralls de distribució
 
-The Debian archive is replicated across a large network of mirrors around
-the world so that people in each region can choose a nearby mirror for best
-download speed. Each of the #{--mirror-*}# options governs which
-distribution mirror is used at various stages of the build. Recall from
-{Stages of the build}#stages-of-the-build that the *{bootstrap}* stage is
-when the chroot is initially populated by /{debootstrap}/ with a minimal
-system, and the *{chroot}* stage is when the chroot used to construct the
-live system's filesystem is built. Thus, the corresponding mirror switches
-are used for those stages, and later, in the *{binary}* stage, the
-#{--mirror-binary}# and #{--mirror-binary-security}# values are used,
-superceding any mirrors used in an earlier stage.
+L'arxiu de Debian es replica a través d'una àmplia xarxa de miralls a tot el
+món perquè la gent en cada regió pugui triar un mirall proper amb la millor
+velocitat de descàrrega. Cadascuna de les opcions #{--mirror-*}# governa
+quin mirall de distribució s'utilitzara en les diverses etapes de la
+construcció. Recordar de {Etapes de la construcció}#stages-of-the-build que
+l'etapa *{bootstrap}* es quan el chroot s'omple inicialment per
+/{debootstrap}/  amb un sistema mínim i l'etapa *{chroot}* és quan
+s'utilitza el chroot per a la construcció de sistema d'fitxers del sistema
+en viu. D'aquesta manera, s'utilitzan els miralls corresponents per a
+aquestes etapes, i més tard, durant l'etapa *{binary}* s'utilitzan els
+valors #{--mirror-binary}# i #{--mirror-binary-security}# substituint
+qualsevol mirall utilitzat en una etapa anterior.
 
-3~distribution-mirrors-build-time Distribution mirrors used at build time
+3~distribution-mirrors-build-time Miralls de distribució utilitzats en temps
+de construcció
 
-To set the distribution mirrors used at build time to point at a local
-mirror, it is sufficient to set #{--mirror-bootstrap}#,
-#{--mirror-chroot-security}# and #{--mirror-chroot-backports}# as follows.
+Per establir els miralls de la distrubució utilitzats en temps de
+construcció perquè apuntin a una rèplica local, és suficient establir
+#{--mirror-bootstrap}#, #{--mirror-chroot-security}# i
+#{--mirror-chroot-backports}# de la manera següent.
 
 code{
 
@@ -86,19 +94,20 @@ code{
 
 }code
 
-The chroot mirror, specified by #{--mirror-chroot}#, defaults to the
-#{--mirror-bootstrap}# value.
+El mirall per al chroot, especificat per l'opció #{--mirror-chroot}#, per
+defecte pren el mateix valor que #{--mirror-bootstrap}#
 
-3~ Distribution mirrors used at run time
+3~ Miralls de distribució utilitzats en temps d'execució
 
-The #{--mirror-binary*}# options govern the distribution mirrors placed in
-the binary image. These may be used to install additional packages while
-running the live system. The defaults employ #{cdn.debian.net}#, a service
-that chooses a geographically close mirror based on the user's IP
-number. This is a suitable choice when you cannot predict which mirror will
-be best for all of your users. Or you may specify your own values as shown
-in the example below. An image built from this configuration would only be
-suitable for users on a network where "#{mirror}#" is reachable.
+Les opcions #{--mirror-binary*}# governen els miralls de distribució
+coŀlocats a la imatge binària. Aquestes poden ser utilitzades per instaŀlar
+paquets addicionals mentre s'executa el sistema en viu. Els valors per
+defecte utilitzan #{cdn.debian.net}#, un servei que tria un mirall
+geogràficament a prop en funció del número IP de l'usuari. Aquesta és una
+opció adequada quan no es pot predir quin serà el millor mirall per tots els
+usuaris. O es pot especificar els valors propis com es mostra en l'exemple
+següent. Una imatge construïda a partir d'aquesta configuració només seria
+convenient per als usuaris en una xarxa on "#{mirror}#" és abastable.
 
 code{
 
@@ -107,19 +116,21 @@ code{
 
 }code
 
-3~additional-repositories Additional repositories
+3~additional-repositories Repositoris addicionals
 
-You may add more repositories, broadening your package choices beyond what
-is available in your target distribution. These may be, for example, for
-backports, experimental or custom packages. To configure additional
-repositories, create #{config/archives/your-repository.list.chroot}#, and/or
-#{config/archives/your-repository.list.binary}# files. As with the
-#{--mirror-*}# options, these govern the repositories used in the *{chroot}*
-stage when building the image, and in the *{binary}* stage, i.e. for use
-when running the live system.
+És possible afegir més repositoris, ampliant les opcions de paquets més
+enllà dels disponibles en la pròpia distribució de destinació. Aquests poden
+ser, per exemple, per backports, experimentals o paquets personalitzats. Per
+configurar repositoris addicionals, crear els fitxers
+#{config/archives/your-repository.list.chroot}#, i/o
+#{config/archives/your-repository.list.binary}#. Igual que amb les opcions
+#{--mirror-*}# aquest regeix els repositoris utilitzats en l'étapa
+*{chroot}*  durant la construcció de la imatge, i a l'étapa *{binary}*, és a
+dir, per ser utilitzades quan s'executa el sistema en viu.
 
-For example, #{config/archives/live.list.chroot}# allows you to install
-packages from the debian live snapshot repository at live system build time.
+Per exemple, #{config/archives/live.list.chroot}# permet d'instaŀlar paquets
+des del repositori de instantànies de debian live en el moment de creació
+del sistema viu.
 
 code{
 
@@ -127,16 +138,16 @@ code{
 
 }code
 
-If you add the same line to #{config/archives/live.list.binary}#, the
-repository will be added to your live system's #{/etc/apt/sources.list.d/}#
-directory.
+Si s'afegeix la mateixa línia a #{config/archives/live.list.binary}#, el
+repositori sera afegit al directori #{/etc/apt/sources.list.d/}# del sistema
+viu.
 
-If such files exist, they will be picked up automatically.
+Si aquests fitxers existeixen, seran utilitzats de forma automàtica.
 
-You should also put the GPG key used to sign the repository into
-#{config/archives/your-repository.key.{binary,chroot}}# files.
+També s'ha de posar la clau GPG utilitzada per signar el repositori en
+fitxers #{config/archives/your-repository.key.{binary,chroot}}#.
 
-*{Note:}* some preconfigured package repositories are available for easy selection through the #{--archives}# option, e.g. for enabling live snapshots, a simple command is enough to enable it:
+*{Nota:}* alguns repositoris preconfigurats de paquets estan disponibles per facilitar la selecció a través de l'opció #{--archives}#, per exemple, per habilitar instantànies en viu, una ordre simple és suficient per activar-ho:
 
 code{
 
@@ -144,32 +155,36 @@ code{
 
 }code
 
-2~choosing-packages-to-install Choosing packages to install
+2~choosing-packages-to-install Selecció dels paquets a instaŀlar
 
-There are a number of ways to choose which packages live-build will install
-in your image, covering a variety of different needs. You can simply name
-individual packages to install in a package list. You can also choose
-predefined lists of packages, or use APT tasks. And finally, you may place
-package files in your #{config/}# tree, which is well suited to testing of
-new or experimental packages before they are available from a repository.
+Hi ha una sèrie de formes de triar els paquets que live-build instaŀlarà en
+la imatge, que abasta una varietat de necessitats diferents. Es pot
+simplement anomenar paquets individualment per instaŀlar en una llista de
+paquets. També es pot optar per llistes predefinides de paquets, o utilitzar
+les tasques d'APT. I, finalment, es poden coŀlocar paquets com si fossin
+fitxers dins del arbre #{config/}#, que és un mètode que s'adapta
+perfectament a fer proves amb paquets nous o experimentals abans de
+afegirlos a un repositori.
 
-3~package-lists Package lists
+3~package-lists Llistes de paquets
 
-Package lists are a powerful way of expressing which packages should be
-installed. The list syntax supports included files and conditional sections
-which makes it easy to build lists from other lists and adapt them for use
-in multiple configurations. You can use predefined package lists, providing
-in a modular fashion package selections from each of the major desktop
-environments and some special purpose lists, as well as standard lists the
-others are based upon. You can also provide your own package lists, or use a
-combination of both.
+Les llistes de paquets són una forma eficaç d'expressar quins paquets han de
+ser instaŀlats. La sintaxi de la llista suporta els fitxers inclosos i
+seccions condicionals que fa que sigui fàcil de construir llistes a partir
+d'altres llistes i adaptar-ler per al propi ús en múltiples
+configuracions. Es poden utilitzar llistes predefinides de paquets,
+proporcionant una selecció de paquets de forma modular de cada un dels
+principals entorns d'escriptori i algunes llistes per a fins especials, així
+com llistes estàndard a partir de les que es basen altres. També es pot
+proporcionar llistes pròpies de paquets, o utilitzar una combinació
+d'ambdós.
 
-*{Note:}* The behaviour of live-build when specifying a package that does not exist is determined by your choice of APT utility. See {Choosing apt or aptitude}#choosing-apt-or-aptitude for more details.
+*{Nota:}* El comportament de live-build a l'hora d'especificar un paquet que no existeix està determinat per la elecció que es faci de l'eina APT. Veure {Elegir apt or aptitude}#choosing-apt-or-aptitude per més detalls.
 
-3~ Predefined package lists
+3~ Llistes predefinides de paquets
 
-The simplest way to use lists is to specify one or more predefined lists
-with the #{--package-lists}# option. For example:
+La forma més senzilla d'utilitzar les llistes consisteix a especificar una o
+més llistes predefinides amb l'opció #{--package-lists}#. Per exemple:
 
 code{
 
@@ -177,40 +192,43 @@ code{
 
 }code
 
-The default location for the list files on your system is
-#{/usr/share/live/build/package-lists/}#. To determine the packages in a
-given list, read the corresponding file, paying attention to included files
-and conditionals as described in the following sections.
+La ubicació per defecte de les llistes en el sistema és
+#{/usr/share/live/build/package-lists/}#. Per determinar els paquets en una
+llista donada, llegir el fitxer corresponent, prestant atenció als fitxers
+inclosos i els condicionals com es descriu a les següents seccions.
 
-3~ Local package lists
+3~ Llistes locals de paquets
 
-You may supplement the predefined lists using local package lists stored in
-#{config/package-lists/}#.
+Es poden completar les llistes predefinides mitjançant les llistes locals de
+paquets emmagatzemades a #{config/package-lists/}#.
 
-Package lists that exist in this directory need to have a #{.list}# suffix
-in order to be processed, and then an additional stage suffix, #{.chroot}#
-or #{.binary}# to indicate which stage the list is for.
+Les llistes de paquets que es troben en aquest directori han de tenir el
+sufix #{.list}# per ser processades, i a més a més un sufix d'etapa
+adicional #{.chroot}# o #{.binary}# per indicar per a quina etapa és la
+llista.
 
-*{Note:}* If you don't specify the stage suffix, the list will be used for both stages. Normally, you want to specify #{.list.chroot}# so that the packages will only be installed in the live filesystem and not have an extra copy of the #{.deb}# placed on the media.
+*{Nota:}* Si no s'especifica el sufix d'etapa, la llista s'utilitzarà per a ambdues etapes. Normalment, s'especifica #{.list.chroot}# de manera que els paquets només s'instaŀlaran al sistema de fitxers en viu i no hi haura una còpia extra del #{.deb}# en els medis.
 
-3~ Local binary package lists
+3~ Llistes locals de paquets per l'etapa binary
 
-To make a binary stage list, place a file suffixed with #{.list.binary}# in
-#{config/package-lists/}#. These packages are not installed in the live
-filesystem, but are included on the live media under #{pool/}#. You would
-typically use such a list with one of the non-live installer variants. As
-mentioned above, if you want this list to be the same as your chroot stage
-list, simply use the #{.list}# suffix by itself.
+Per crear una llista per a l'etapa binary, crear un fitxer amb el sufix
+#{.list.binary}# a #{config/package-lists/}#. Aquests paquets no s'instaŀlan
+al sistema de fitxers en viu però s'inclouen en els medis en viu a
+#{pool/}#. Un ús típic d'aquesta llista seria amb una de les variants del
+instaŀlador non-live. Com s'ha esmentat anteriorment, si es vol que aquesta
+llista sigui la mateixa que la llista de l'etapa chroot, simplement
+utilitzar el sufix #{.list}#.
 
-3~ Extending a provided package list using includes
+3~ Ampliació d'una llista mitjançant includes
 
-The package lists that are included with live-build make extensive use of
-includes. Refer to these in the #{/usr/share/live/build/package-lists/}#
-directory, as they serve as good examples of how to write your own lists.
+Les llistes de paquets que s'inclouen amb live-build fan un ús extensiu dels
+includes. Es poden consultar al directori
+#{/usr/share/live/build/package-lists/}#  ja que serveixen com a bons
+exemples de com escriure llistes pròpies.
 
-For example, to make a list that includes the predefined #{gnome}# list plus
-/{iceweasel}/, create #{config/package-lists/my.list.chroot}# with the
-following contents:
+Per exemple, per fer una llista que inclogui la llista predefinida #{gnome}#
+més /{iceweasel}/, crear #{config/package-lists/my.list.chroot}# amb el
+contingut:
 
 code{
 
@@ -219,17 +237,18 @@ code{
 
 }code
 
-3~ Using conditionals inside package lists
+3~ Ús de condicionals dins de les llistes de paquets
 
-Any of the live-build configuration variables stored in #{config/*}# (minus
-the #{LB_}# prefix) may be used in conditional statements in package
-lists. Generally, this means any #{lb config}# option uppercased and with
-dashes changed to underscores. But in practice, it is only the ones that
-influence package selection that make sense, such as #{DISTRIBUTION}#,
-#{ARCHITECTURES}# or #{ARCHIVE_AREAS}#.
+Qualsevol de les variables de configuració de live-build emmagatzemades a
+#{config/*}# (menys el prefix #{LB_}#) poden ser utilitzades en sentències
+condicionals en les llistes de paquets. En general, això significa qualsevol
+opció #{lb config}# en lletres majuscules i amb guions canviats a guions
+baixos. Però a la pràctica, només tenen sentit les que influeixen en la
+selecció de paquets, com ara #{DISTRIBUTION}#, #{ARCHITECTURES}# o
+#{ARCHIVE_AREAS}#.
 
-For example, to install #{ia32-libs}# if the #{--architectures amd64}# is
-specified:
+Per exemple, per instaŀlar #{ia32-libs}# si s'especifica #{--architectures
+amd64}#:
 
 code{
 
@@ -239,9 +258,9 @@ code{
 
 }code
 
-You may test for any one of a number of values, e.g. to install
-/{memtest86+}/ if either #{--architectures i386}# or #{--architectures
-amd64}# is specified:
+És possible fer un test d'un qualsevol d'un nombre de valors, per exemple
+per instaŀlar /{memtest86+}/ si s'especifica #{--architectures i386}# o
+#{--architectures amd64}#:
 
 code{
 
@@ -251,9 +270,9 @@ code{
 
 }code
 
-You may also test against variables that may contain more than one value,
-e.g. to install /{vrms}/ if either #{contrib}# or #{non-free}# is specified
-via #{--archive-areas}#:
+També es pot provar amb variables que poden contenir més d'un valor, per
+exemple, per instaŀlar /{vrms}/ si s'especifica o #{contrib}# o #{non-free}#
+a través de l'opció #{--archive-areas}#:
 
 code{
 
@@ -263,7 +282,7 @@ code{
 
 }code
 
-A conditional may surround an #{#include}# directive:
+Un condicional pot envoltar una directiva #{#include}#:
 
 code{
 
@@ -273,17 +292,17 @@ code{
 
 }code
 
-The nesting of conditionals is not supported.
+No és possible el anidament dels condicionals.
 
-3~ Tasks
+3~ Tasques
 
-The Debian Installer offers the user choices of a number of preselected
-lists of packages, each one focused on a particular kind of system, or task
-a system may be used for, such as "Graphical desktop environment", "Mail
-server" or "Laptop". These lists are called "tasks" and are supported by APT
-through the "Task:" field. You can specify one or more tasks in live-build
-by putting them in a list in #{config/task-lists/}#, as in the example
-below.
+L'instaŀlador de Debian ofereix al usuari opcions d'una sèrie de llistes de
+paquets preseleccionats, cadascuna centrada en un tipus particular de
+sistema, o una tasca per a la qual es pot utilitzar un sistema, com
+"Graphical desktop environment", "Mail server" o "Laptop". Aquestes llistes
+es diuen "tasks" (tasques) i son suportades per APT a través de l'opció
+"Task:" es poden especificar una o més tasques a live-build posant-les en
+una llista a #{config/task-lists/}#, com en l'exemple següent.
 
 code{
 
@@ -292,35 +311,38 @@ code{
 
 }code
 
-The primary tasks available in the Debian Installer can be listed with
-#{tasksel --list-tasks}# in the live system. The contents of any task,
-including the ones not included in this list, may be examined with #{tasksel
---task-packages}#.
+Es poden llistar les principals tasques disponibles al instaŀlador de Debian
+amb #{tasksel --list-tasks}# al sistema viu. El contingut de qualsevol
+tasca, fins i tot les no estan incloses en aquesta llista, poden ser
+examinades amb #{tasksel --task-packages}#.
 
-3~desktop-and-language-tasks Desktop and language tasks
+3~desktop-and-language-tasks Tasques d'escriptori i llenguatge
 
-Desktop and language tasks are special cases that need some extra planning
-and configuration. Live images are different from Debian Installer images in
-this respect. In the Debian Installer, if the medium was prepared for a
-particular desktop environment flavour, the corresponding task will be
-automatically installed. Thus, there are internal #{gnome-desktop}#,
-#{kde-desktop}#, #{lxde-desktop}# and #{xfce-desktop}# tasks, none of which
-are offered in #{tasksel}#'s menu. Likewise, there are no menu entries for
-tasks for languages, but the user's language choice during the install
-influences the selection of corresponding language tasks.
+Les tasques d'escriptori i el llenguatge són casos especials que necessiten
+una mica de planificació i configuració extra. Les imatges en viu són
+diferentes de les imatges de l'instaŀlador de Debian en aquest sentit. A
+l'instaŀlador de Debian, si el medi es va preparar per obtenir un tipus
+entorn d'escriptori en particular, la tasca corresponent s'instaŀlarà
+automàticament. Per tant hi ha tasques internes #{gnome-desktop}#,
+#{kde-desktop}#, #{lxde-desktop}# and #{xfce-desktop}# cap de les quals
+s'ofereixen al menú de #{tasksel}#. De la mateixa manera, no hi ha cap
+entrada de menú per a les tasques de les llengües, però l'elecció del idioma
+de l'usuari durant la instaŀlació influeix en la selecció de les tasques de
+llengües corresponents.
 
-When developing a desktop live image, the image typically boots directly to
-a working desktop, the choices of both desktop and default language having
-been made at build time, not at run time as in the case of the Debian
-Installer. That's not to say that a live image couldn't be built to support
-multiple desktops or multiple languages and offer the user a choice, but
-that is not live-build's default behaviour.
+En el desenvolupament d'una imatge en viu d'escriptori, la imatge sol
+arrencar directament a un escriptori de treball, les opcions d'escriptori i
+de llengua han estat fetes en temps de construcció, no en temps d'execució
+com en el cas del instaŀlador de Debian. Això no vol dir que una imatge en
+viu no es pugui construir per donar suport a diversos equips d'escriptori o
+diversos idiomes i oferir a l'usuari una opció, però això no és el
+comportament de live-build per defecte.
 
-Because there is no provision made automatically for language tasks, which
-include such things as language-specific fonts and input-method packages, if
-you want them, you need to specify them in your configuration. For example,
-a GNOME desktop image containing support for Japanese might include these
-tasks:
+Com que no hi ha cap ajust automàtic per les tasques de llengua que
+incloguin coses com ara fonts específiques per a una llengua o paquets de
+mètode d'entrada, si es vol, cal especificar-ho en la configuració. Per
+exemple, una imatge d'escriptori GNOME que contingui suport per al japonés
+podrie incloure les següents tasques:
 
 code{
 
@@ -330,10 +352,11 @@ code{
 
 }code
 
-Since desktop tasks are "internal" tasks, for every desktop flavour task
-included in the image, the corresponding value, if it differs from the
-default, "gnome", must be preseeded in the "tasksel/desktop" debconf
-variable or else tasksel will not recognize and install it. Thus:
+Com les tasques d'escriptori són "internes" per a cada tasca d'escriptori
+inclosa en la imatge, el valor corresponent, si aquest és diferent del valor
+per defecte, "gnome", s'ha de fer servir la variable de preconfiguració
+"tasksel/desktop" o en cas contrari tasksel no la reconeixerà i no la
+instaŀlarà. Així:
 
 code{
 
@@ -342,108 +365,116 @@ code{
 
 }code
 
-This parameter can take multiple values, e.g. "lxde xfce" instead of "kde".
+Aquest paràmetre pot tenir diversos valors, per exemple "lxde xfce" en lloc
+de "kde".
 
-2~installing-modified-or-third-party-packages Installing modified or
-third-party packages
+2~installing-modified-or-third-party-packages Instaŀlació de paquets
+modificats o de tercers
 
-Whilst it is against the philosophy of Debian Live, it may sometimes be
-necessary to build a Live system with modified versions of packages that are
-in the Debian repository. This may be to modify or support additional
-features, languages and branding, or even to remove elements of existing
-packages that are undesirable. Similarly, "third-party" packages may be used
-to add bespoke and/or proprietary functionality.
+Si bé està en contra de la filosofia de Debian Live, de vegades pot ser
+necessària la construcció d'un sistema en viu amb versions modificades dels
+paquets que es troben al arxiu de Debian. Pot ser per modificar or donar
+suport a funcions addicionals, les llengües o les marques, o fins i tot per
+eliminar elements dels paquets existents que són indesitjables. De la
+mateixa manera, es poden utilitzar paquets de tercers per afegir alguna
+funcionalitat personalitzada i/o propietària.
 
-This section does not cover advice regarding building or maintaining
-modified packages. Joachim Breitner's 'How to fork privately' method from
+Aquesta secció no cobreix l'assessorament en matèria de construcció o
+manteniment de paquets modificats. Però el métode de Joachim Breitner's 'How
+to fork privately' a
 http://www.joachim-breitner.de/blog/archives/282-How-to-fork-privately.html
-may be of interest, however. The creation of bespoke packages is covered in
-the Debian New Maintainers' Guide at http://www.debian.org/doc/maint-guide/
-and elsewhere.
+pot ser d'interès. La creació de paquets personalitzats es tracta a Debian
+New Maintainers' Guide at http://www.debian.org/doc/maint-guide/ i en altres
+llocs.
 
-There are two ways of installing modified custom packages:
+Hi ha dues formes d'instaŀlar paquets personalitzats modificats:
 
 _* #{packages.chroot}#
 
-_* Using a custom APT repository
+_* L'ús d'un repositori APT personalitzat
 
-Using #{packages.chroot}# is simpler to achieve and useful for "one-off"
-customizations but has a number of drawbacks, whilst using a custom APT
-repository is more time-consuming to set up.
+Utilitzar #{packages.chroot}#  és més fàcil d'aconseguir i útil per a
+personalitzacions "ràpides", però té una sèrie d'inconvenients, mentre que
+l'ús d'un repositori APT personalitzat és més costós en la quantitat de
+temps necessari.
 
-3~ Using #{packages.chroot}# to install custom packages
+3~ Fer servir #{packages.chroot}# per instaŀar paquets personalitzats
 
-To install a custom package, simply copy it to the
-#{config/packages.chroot/}# directory. Packages that are inside this
-directory will be automatically installed into the live system during build
-- you do not need to specify them elsewhere.
+Per instaŀar un paquet personalitzat, només s'ha de copiar al directori
+#{config/packages.chroot/}#. Els paquets que es troben dins d'aquest
+directori s'instaŀlaran automàticament en el sistema en viu durant la
+construcció - no cal especificar res més en cap altre lloc.
 
-Packages *{must}* be named in the prescribed way. One simple way to do this
-is to use #{dpkg-name}#.
+Els paquets *{han de}* ser nomenats en la forma prescrita. Una manera simple
+de fer això és utilitzar #{dpkg-name}#.
 
-Using #{packages.chroot}# for installation of custom packages has
-disadvantages:
+Utilitzar #{packages.chroot}# per a la instaŀlació de paquets personalitzats
+té els seus desavantatges:
 
-_* It is not possible to use secure APT.
+_* No és possible utilitzar APT segur.
 
-_* You must install all appropriate packages in the
-#{config/packages.chroot/}# directory.
+_* Cal posar tots els paquets apropiats al directori
+#{config/packages.chroot/}#.
 
-_* It does not lend itself to storing Debian Live configurations in revision
-control.
+_* No es presta per a l'emmagatzematge de configuracions de Debian Live en
+el control de revisió.
 
-3~ Using an APT repository to install custom packages
+3~ Fer servir un repositori APT per instaŀlar paquets personalitzats
 
-Unlike using #{packages.chroot}#, when using a custom APT repository you
-must ensure that you specify the packages elsewhere. See {Choosing packages
-to install}#choosing-packages-to-install for details.
+A diferència de #{packages.chroot}#, quan s'utilitza un repositori APT
+personalitzat s'ha d'assegurar que s'especifiquen els paquets en un altre
+lloc. Veure {Selecció dels paquets a instaŀlar}#choosing-packages-to-install
+per més detalls.
 
-Whilst it may seem unnecessary effort to create an APT repository to install
-custom packages, the infrastructure can be easily re-used at a later date to
-offer updates of the modified packages.
+Si bé crear un repositori APT per instaŀlar paquets personalitzats pot
+semblar un esforç innecessari, la infraestructura pot ser fàcilment
+reutilitzada en una data posterior per oferir actualitzacions dels paquets
+modificats.
 
-3~ Custom packages and APT
+3~ Paquets personalitzats i APT
 
-live-build uses APT to install all packages into the live system so will
-therefore inherit behaviours from this program. One relevant example is that
-(assuming a default configuration) given a package available in two
-different repositories with different version numbers, APT will elect to
-install the package with the higher version number.
+live-build utilitza APT per instaŀlar tots els paquets al sistema en viu per
+tant, heretarà els comportaments d'aquest programa. Un exemple rellevant és
+que (assumint una configuració per defecte) si es dóna el cas que un paquet
+està disponible en dos repositoris diferents, amb diferents números de
+versió, APT triarà per instaŀlar el paquet amb la versió més alta.
 
-Because of this, you may wish to increment the version number in your custom
-packages' #{debian/changelog}# files to ensure that your modified version is
-installed over one in the official Debian repositories. This may also be
-achieved by altering the live system's APT pinning preferences - see {APT
-pinning}#apt-pinning for more information.
+A causa d'això, s'aconsella augmentar el nombre de versió dels paquets
+personalitzats als fixers #{debian/changelog}#  per assegurar-se que la
+versió modificada és la que s'instaŀla en lloc d'una dels repositoris
+oficials de Debian. Això també es pot aconseguir mitjançant l'alteració de
+les preferències d'APT del sistema en viu - veure {APT pinning}#apt-pinning
+per més informació.
 
-2~ Configuring APT at build time
+2~ Configurar APT en temps de construcció
 
-You can configure APT through a number of options applied only at build
-time. (APT configuration used in the running live system may be configured
-in the normal way for live system contents, that is, by including the
-appropriate configurations through #{config/includes.chroot/}#.) For a
-complete list, look for options starting with #{apt}# in the #{lb_config}#
-man page.
+Es pot configurar APT a través d'una sèrie d'opcions que només s'apliquen en
+temps de construcció. (La configuració d'APT al sistema en funcionament en
+viu es pot fer de forma normal per als continguts del sistema en viu, és a
+dir, mitjançant la inclusió de les configuracions adequades a través de
+#{config/includes.chroot/}#.) Per obtenir una llista completa, buscar les
+opcions que comencen amb #{apt}# a la pàgina del manual de #{lb_config}#.
 
-3~choosing-apt-or-aptitude Choosing apt or aptitude
+3~choosing-apt-or-aptitude Seleccionar apt o aptitude
 
-You can elect to use either /{apt}/ or /{aptitude}/ when installing packages
-at build time. Which utility is used is governed by the #{--apt}# argument
-to #{lb config}#. Choose the method implementing the preferred behaviour for
-package installation, the notable difference being how missing packages are
-handled.
+Es pot optar per utilitzar /{apt}/ o /{aptitude}/ a l'hora d'instaŀlar
+paquets en temps de construcció. Quina utilitat s'usa es configura gràcies
+al argument #{--apt}# de #{lb config}#. Escollir el mètode d'implementació
+per al comportament preferit durant la instaŀlació de paquets, la diferència
+notable és la forma en que es manegen els paquets que falten.
 
-_* #{apt}#: With this method, if a missing package is specified, the package
-installation will fail. This is the default setting.
+_* #{apt}#: Amb aquest mètode, si un paquet que s'especifica falta,
+l'instaŀlació de paquets fallarà. Aquesta és la configuració per defecte.
 
-_* #{aptitude}#: With this method, if a missing package is specified, the
-package installation will succeed.
+_* #{aptitude}#: Amb aquest mètode, si s'especifica un paquet que falta,
+l'instaŀlació de paquets tindrà èxit.
 
-3~ Using a proxy with APT
+3~ L'ús d'un proxy amb APT
 
-One commonly required APT configuration is to deal with building an image
-behind a proxy. You may specify your APT proxy with the #{--apt-ftp-proxy}#
-or #{--apt-http-proxy}# options as needed, e.g.
+Una configuració típica d'APT és per fer front a la construcció d'una imatge
+darrere d'un proxy. Es pot especificar el proxy per APT amb les opcions
+#{--apt-ftp-proxy}# o #{--apt-http-proxy}# segons sigui necessari, per
+exemple,
 
 code{
 
@@ -451,14 +482,13 @@ code{
 
 }code
 
-3~ Tweaking APT to save space
+3~ Afinar APT per estalviar espai
 
-You may find yourself needing to save some space on the image media, in
-which case one or the other or both of the following options may be of
-interest.
+Pot ser necessari estalviar espai en els medis destinats a la imatge, en
+aquest cas una o altra o ambdós de les següentes opcions poden ser
+d'interès.
 
-If you don't want to include APT indices in the image, you can omit those
-with:
+Si no es vol incloure els índexs d'APT en la imatge, es poden omitir amb:
 
 code{
 
@@ -466,14 +496,15 @@ code{
 
 }code
 
-This will not influence the entries in #{/etc/apt/sources.list}#, but merely
-whether #{/var/lib/apt}# contains the indices files or not. The tradeoff is
-that APT needs those indices in order to operate in the live system, so
-before performing #{apt-cache search}# or #{apt-get install}#, for instance,
-the user must #{apt-get update}# first to create those indices.
+Això no influirà en les entrades de #{/etc/apt/sources.list}#, sinó
+simplement si #{/var/lib/apt}# conté els fitxers dels índexs o no. El
+desavantatge és que APT necessita aquests índexs per tal d'operar en el
+sistema en viu, així que abans d'executar per exemple #{apt-cache search}# o
+#{apt-get install}#, l'usuari primer ha fer un #{apt-get update}# per crear
+aquests índexs.
 
-If you find the installation of recommended packages bloats your image too
-much, you may disable that default option of APT with:
+Si es considera que la instaŀlació de tots els paquets recomanats infla
+massa la imatge, es pot desactivar aquesta opció per defecte d'APT amb:
 
 code{
 
@@ -481,38 +512,40 @@ code{
 
 }code
 
-The tradeoff here is that if you don't install recommended packages for a
-given package, that is, "packages that would be found together with this one
-in all but unusual installations" (Debian Policy Manual, section 7.2), some
-packages that you actually need may be omitted. Therefore, we suggest you
-review the difference turning off recommends makes to your packages list
-(see the #{binary.packages}# file generated by #{lb build}#) and re-include
-in your list any missing packages that you still want
-installed. Alternatively, if you find you only want a small number of
-recommended packages left out, leave recommends enabled and set a negative
-APT pin priority on selected packages to prevent them from being installed,
-as explained in {APT pinning}#apt-pinning.
+El desavantatge aquí és que si no s'instaŀlen els paquets recomanats per un
+paquet determinat, és a dir, "els paquets que es troben junts amb aquest en
+totes les instaŀlacions a menys que siguin inusuals" (Debian Policy Manual,
+secció 7.2), els paquets que en realitat són necessaris poden ser
+omesos. Per tant, suggerim revisar la diferència que desactivar els paquets
+recomanats té en la llista de paquets (veure el fitxer #{binary.packages}#
+generat per #{lb build}#) i tornar a incloure a la llista els paquets que
+falten que haurien de ser instaŀlats. D'altra banda, si només es vol un
+petit nombre de paquets recomanats deixats de banda, es pot deixar els
+paquets recomanats activat i establir una prioritat pin d'APT negativa en
+els paquets seleccionats per impedir la seva instaŀlació, com s'explica a
+{APT pinning}#apt-pinning.
 
-3~ Passing options to apt or aptitude
+3~ Passar opcions per a apt o aptitude
 
-If there is not a #{lb config}# option to alter APT's behaviour in the way
-you need, use #{--apt-options}# or #{--aptitude-options}# to pass any
-options through to your configured APT tool. See the man pages for #{apt}#
-and #{aptitude}# for details.
+Si no hi ha una opció #{lb config}# per modificar el comportament d'APT tal
+i com es necessita, utilitzar #{--apt-options}# o #{--aptitude-options}# per
+passar alguna opció a través de l'eina APT configurada. Consultar les
+pàgines del manual de #{apt}# i #{aptitude}# per a més detalls.
 
 3~apt-pinning APT pinning
 
-For background, please first read the #{apt_preferences(5)}# man page. APT
-pinning can be configured either for build time, or else for run time. For
-the former, create #{config/chroot_apt/preferences}#. For the latter, create
+Com a referència, llegir primer la pàgina del manual
+#{apt_preferences(5)}#. Es pot configurar APT pinning tant pel temps de
+construcció, o bé per temps d'execució. En el primer cas, crear
+#{config/chroot_apt/preferences}#. Per aquest últim cas, crear
 #{config/includes.chroot/etc/apt/preferences}#.
 
-Let's say you are building a wheezy live system but need all the live
-packages that end up in the binary image to be installed from sid at build
-time. You need to add sid to your APT sources and pin it so that only the
-packages you want are installed from it at build time and all others are
-taken from the target system distribution, wheezy. The following will
-accomplish this:
+Suposem que s'està construint un sistema en viu wheezy però es necessita que
+tots els paquets en viu que acaben en la imatge binària s'instaŀlin desde
+sid en temps de construcció. Cal afegir sid a les fonts d'APT i fer un pin
+de manera que només els paquets que es vol s'instaŀlin en el moment de la
+construcció i tots els altres es preguin de la distribució de destinació,
+wheezy. El que segueix aconseguira això:
 
 code{
 
@@ -529,7 +562,7 @@ code{
 
 }code
 
-*{Note:}* Wildcards can be used in package names (e.g. *{Package: live-*}*) with Apt version 0.8.14 or higher. This means that it works with wheezy using:
+*{Nota:}* Es poden usar comodins en els noms dels paquets (per exemple, *{Package: live-*}*) amb la versió 0.8.14 o superior d'Apt. Això significa que funciona amb wheezy utilitzant:
 
 code{
 
@@ -537,14 +570,14 @@ $ lb config --distribution wheezy
 
 }code
 
-Negative pin priorities will prevent a package from being installed, as in
-the case where you do not want a package that is recommended by another
-package. Suppose you are building an LXDE image using #{--package-lists
-lxde}# option, but don't want the user prompted to store wifi passwords in
-the keyring. This list includes /{gdm}/, which depends on /{gksu}/, which in
-turn recommends /{gnome-keyring}/. So you want to omit the recommended
-/{gnome-keyring}/ package. This can be done by adding the following stanza
-to #{config/chroot_apt/preferences}#:
+Una prioritat pin negativa evitarà que un paquet s'instaŀli, com en el cas
+que no es vulgui un paquet que és recomanat per un altre paquet. Suposem que
+s'està construint una imatge LXDE amb #{--package-lists lxde}# però no es
+desitja que al usuari se li demani que guardi les contrasenyes wifi al
+clauer. Aquesta llista inclou /{gdm}/, que depèn de /{gksu}/,  que al seu
+torn recomana /{gnome-keyring}/. Si es vol omitir el paquet recomanat
+/{gnome-keyring}/ això es pot fer mitjançant l'addició de les següents
+línies al #{config/chroot_apt/preferences}#:
 
 code{
 

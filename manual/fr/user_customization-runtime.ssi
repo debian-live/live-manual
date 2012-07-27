@@ -49,23 +49,21 @@ Une façon possible de changer le mot de passe par défaut est au moyen d'un
 hook comme décrit dans {Hooks au moment du démarrage}#boot-time-hooks. Pour
 ce faire vous pouvez utiliser le hook "passwd" de
 #{/usr/share/doc/live-config/examples/hooks}#, ajouter un préfixe correct
-(par exemple 200-passwd) et l'ajouter à
+(par exemple 2000-passwd) et l'ajouter à
 #{config/includes.chroot/lib/live/config/}#
 
 2~customizing-locale-and-language Personnalisation des paramètres régionaux
 et de la langue
 
-Au démarrage du système live, la langue est impliquée dans trois étapes:
+Au démarrage du système live, la langue est impliquée dans deux étapes:
 
 _* la génération des paramètres régionaux
 
-_* réglage de la disposition du clavier pour la console
-
-_* réglage de la disposition du clavier pour X
+_* le réglage de la disposition du clavier
 
 Les paramètres régionaux par défaut pendant la construction d'un système
-Live sont "locales=en_US.UTF-8". Pour définir les paramètres régionaux qui
-doivent être générés, utilisez le paramètre #{locales}# dans l'option
+Live sont #{locales=en_US.UTF-8}#. Pour définir les paramètres régionaux qui
+doivent être générés, utiliser le paramètre #{locales}# dans l'option
 #{--bootappend-live}# de #{lb config}#, par exemple
 
 code{
@@ -74,26 +72,44 @@ code{
 
 }code
 
-Ce paramètre peut également être utilisé à la ligne de commande du
-noyau. Vous pouvez spécifier des paramètres régionaux par
-#{language_country.encoding}#.
+Multiples paramètres régionaux peuvent être spécifiés en une liste séparée
+par des virgules.
 
-Tant la console et la configuration du clavier X dépendent du paramètre
-#{keyboard-layouts}# de l'option #{--bootappend-live}#. Les options valides
-pour les dispositions des claviers X peuvent être trouvés dans
-#{/usr/share/X11/xkb/rules/base.xml}# (plutôt limitées à des codes des pays
-à deux lettres). Pour trouver la valeur (les deux caractères),
-correspondante à une langue essayez de rechercher le nom anglais de la
-nation où la langue est parlée, par exemple:
+Ce paramètre, ainsi que les paramètres de configuration du clavier indiqués
+ci-dessous, peut également être utilisé sur la ligne de commande du
+noyau. On peut spécifier des paramètres régionaux avec #{language_country}#
+(dans ce cas le codage par défaut est utilisé) ou l'expression complete
+#{language_country.encoding}#. Une liste des paramètres régionaux et le
+codage pour chacun peuvent être trouvés dans #{/usr/share/i18n/SUPPORTED}#.
+
+La configuration du clavier pour la console et pour X est faite par
+#{live-config}# en utilisant le paquet #{console-setup}#. Pour les
+configurer, utiliser les paramètres de démarrage #{keyboard-layouts}#,
+#{keyboard-variant}#, #{keyboard-options}# et #{keyboard-model}# avec
+l'option #{--bootappend-live}#. On peut trouver options valides dans
+#{/usr/share/X11/xkb/rules/base.lst}#. Pour trouver les dispositions el les
+variantes correspondantes à une langue essayez de rechercher le nom anglais
+de la nation où la langue est parlée, par exemple:
 
 code{
 
- $ grep -i sweden -C3 /usr/share/X11/xkb/rules/base.xml | grep name
- <name>se</name>
+$ egrep -i '(^!|german.*switzerland)' /usr/share/X11/xkb/rules/base.lst
+ ! model
+ ! layout
+   ch              German (Switzerland)
+ ! variant
+   legacy          ch: German (Switzerland, legacy)
+   de_nodeadkeys   ch: German (Switzerland, eliminate dead keys)
+   de_sundeadkeys  ch: German (Switzerland, Sun dead keys)
+   de_mac          ch: German (Switzerland, Macintosh)
+ ! option
 
 }code
 
-Pour obtenir les fichiers des paramètres régionaux de l'allemand et la
+Chaque variante présente une description de la disposition appliquée.
+
+Souvent, seulement la disposition doit être configurée. Par exemple, pour
+obtenir les fichiers des paramètres régionaux de l'allemand et la
 disposition du clavier suisse allemand dans X utiliser:
 
 code{
@@ -102,29 +118,32 @@ code{
 
 }code
 
-Une liste des valeurs valides des claviers pour la console peut être figurée
-avec la commande suivante:
-
-code{
-
- $ for i in $(find /usr/share/keymaps/ -iname "*kmap.gz"); \
-     do basename $i | head -c -9; echo; done | sort | less
-
-}code
-
-Alternativement, vous pouvez utiliser le paquet #{console-setup}#, un outil
-pour vous aider à configurer la disposition de la console en utilisant
-définitions X (XKB), vous pouvez alors définir votre clavier plus
-précisément avec variables #{keyboard-layouts}#, #{keyboard-variant}#,
-#{keyboard-options}# et #{keyboard-model}#; live-boot pourra également
-utiliser ces paramètres pour la configuration de X. Par exemple, pour mettre
-en place un système français avec une disposition Français Dvorak (appelée
-Bepo) sur un clavier TypeMatrix, à la fois dans la console et X11, utilisez:
+Toutefois, pour les cas d'utilisation très spécifiques, on peut inclure
+d'autres paramètres. Par exemple, pour mettre en place un système français
+avec une disposition French-Dvorak (Bepo) avec un clavier USB TypeMatrix
+EZ-Reach 2030, utiliser:
 
 code{
 
  $ lb config --bootappend-live \
      "locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variant=bepo keyboard-model=tm2030usb"
+
+}code
+
+Plusieurs valeurs peuvent être spécifiées séparées par des virgules pour
+chacune des options #{keyboard-*}#, à l'exception de #{keyboard-model}#, qui
+accepte une seule valeur. S'il vous plaît voir la page de manuel
+#{keyboard(5)}#  pour plus de détails et des exemples des variables
+#{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# et #{XKBOPTIONS}#. Si plusieurs
+valeurs #{keyboard-variant}# sont données, elles seront jumelées tête à tête
+avec les valeurs #{keyboard-layouts}# voir #{setxkbmap(1)}# option
+#{-variant}#). On peut utiliser des valeurs vides; par exemple pour regler
+deux dispositions, une par défaut US QWERTY et l'autre US Dvorak, utiliser:
+
+code{
+
+ $ lb config --bootappend-live \
+     "keyboard-layouts=us,us keyboard-variant=,dvorak"
 
 }code
 
@@ -196,7 +215,7 @@ modifier l'étiquette avec l'un des suivants:
 
 code{
 
- $ tune2fs -L persistence /dev/sdb1 # for ext2,3,4 filesystems
+ # tune2fs -L persistence /dev/sdb1 # for ext2,3,4 filesystems
 
 }code
 
@@ -229,10 +248,10 @@ système de fichiers ext4 sur la partition /dev/sdb1:
 
 code{
 
- $ mkfs.ext4 -L persistence /dev/sdb1
- $ mount -t ext4 /dev/sdb1 /mnt
- $ echo "/home" >> /mnt/live-persistence.conf
- $ echo "/var/cache/apt" >> /mnt/live-persistence.conf
+ # mkfs.ext4 -L persistence /dev/sdb1
+ # mount -t ext4 /dev/sdb1 /mnt
+ # echo "/home" >> /mnt/live-persistence.conf
+ # echo "/var/cache/apt" >> /mnt/live-persistence.conf
 
 }code
 
@@ -256,13 +275,13 @@ imbriqués est problématique s'ils sont énumérés dans le même fichier
 pour savoir comment gérer ce cas, si vous avez vraiment besoin (remarque:
 vous n'avez généralement pas).
 
-3~ SubText persistant
+3~ Utilisation de plusieurs dispositifs de persistance
 
 Si un utilisateur a besoin de stockages persistants multiples du même type
 pour différents endroits ou l'essai, tel que #{persistence-nonwork}# et
-#{persistence-work}#, le paramètre de démarrage #{persistence-subtext}#
+#{persistence-work}#, le paramètre de démarrage #{persistence-label}#
 utilisé en conjonction avec le paramètre de démarrage #{persistence}#
 permettra multiples, mais uniques, supports persistants. Un exemple serait
 le cas si un utilisateur voudrait utiliser une partition persistante
 étiquetée #{persistence-subText}# il utiliserait les paramètres de
-démarrage: #{persistence}# #{persistence-subtext=subText}#.
+démarrage: #{persistence}# #{persistence-label=subText}#.

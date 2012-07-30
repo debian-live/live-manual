@@ -148,39 +148,65 @@ code{
 
 There are a number of ways to choose which packages live-build will install
 in your image, covering a variety of different needs. You can simply name
-individual packages to install in a package list. You can also choose
-predefined lists of packages, or use APT tasks. And finally, you may place
-package files in your #{config/}# tree, which is well suited to testing of
-new or experimental packages before they are available from a repository.
+individual packages to install in a package list. You can also use
+metapackages in those lists, or select them using package control file
+fields. And finally, you may place package files in your #{config/}# tree,
+which is well suited to testing of new or experimental packages before they
+are available from a repository.
 
 3~package-lists Package lists
 
 Package lists are a powerful way of expressing which packages should be
 installed. The list syntax supports included files and conditional sections
 which makes it easy to build lists from other lists and adapt them for use
-in multiple configurations. You can use predefined package lists, providing
-in a modular fashion package selections from each of the major desktop
-environments and some special purpose lists, as well as standard lists the
-others are based upon. You can also provide your own package lists, or use a
-combination of both.
+in multiple configurations. Package names may also be injected into the list
+using shell helpers at build time.
 
 *{Note:}* The behaviour of live-build when specifying a package that does not exist is determined by your choice of APT utility. See {Choosing apt or aptitude}#choosing-apt-or-aptitude for more details.
 
-3~ Predefined package lists
+3~ Using metapackages
 
-The simplest way to use lists is to specify one or more predefined lists
-with the #{--package-lists}# option. For example:
+The simplest way to populate your package list is to use a task metapackage
+maintained by your distribution. For example:
 
 code{
 
- $ lb config --package-lists "gnome rescue"
+ $ lb config
+ $ echo task-gnome-desktop > config/package-lists/gnome-desktop.list.chroot
 
 }code
 
-The default location for the list files on your system is
-#{/usr/share/live/build/package-lists/}#. To determine the packages in a
-given list, read the corresponding file, paying attention to included files
-and conditionals as described in the following sections.
+This supercedes the older predefined list method supported in #{live-build}#
+2.x. Unlike predefined lists, task metapackages are not specific to the
+Debian Live project. Instead, they are maintained by specialist working
+groups within the distribution and therefore reflect the consensus of each
+group about which packages best serve the needs of the intended users. They
+also cover a much broader range of use cases than the predefined lists they
+replace.
+
+All task metapackages are prefixed #{task-}#, so a quick way to determine
+which are available (though it may contain a handful of false hits that
+match the name but aren't metapackages) is to match on the package name
+with:
+
+code{
+
+ $ apt-cache search --names-only ^task-
+
+}code
+
+In addition to these, you will find other metapackages with various
+purposes. Some are subsets of broader task packages, like #{gnome-core}#,
+while others are individual specialized parts of a Debian Pure Blend, such
+as the #{education-*}# metapackages. To list all metapackages in the
+archive, install the #{debtags}# package and list all packages with the
+#{role::metapackage}# tag as follows:
+
+code{
+
+ $ debtags search role::metapackage
+
+}code
 
 3~ Local package lists
 

@@ -157,45 +157,67 @@ code{
 
 2~choosing-packages-to-install Selecció dels paquets a instaŀlar
 
-Hi ha una sèrie de formes de triar els paquets que live-build instaŀlarà en
-la imatge, que abasta una varietat de necessitats diferents. Es pot
-simplement anomenar paquets individualment per instaŀlar en una llista de
-paquets. També es pot optar per llistes predefinides de paquets, o utilitzar
-les tasques d'APT. I, finalment, es poden coŀlocar paquets com si fossin
-fitxers dins del arbre #{config/}#, que és un mètode que s'adapta
-perfectament a fer proves amb paquets nous o experimentals abans de
-afegirlos a un repositori.
+There are a number of ways to choose which packages live-build will install
+in your image, covering a variety of different needs. You can simply name
+individual packages to install in a package list. You can also use
+metapackages in those lists, or select them using package control file
+fields. And finally, you may place package files in your #{config/}# tree,
+which is well suited to testing of new or experimental packages before they
+are available from a repository.
 
 3~package-lists Llistes de paquets
 
-Les llistes de paquets són una forma eficaç d'expressar quins paquets han de
-ser instaŀlats. La sintaxi de la llista suporta els fitxers inclosos i
-seccions condicionals que fa que sigui fàcil de construir llistes a partir
-d'altres llistes i adaptar-ler per al propi ús en múltiples
-configuracions. Es poden utilitzar llistes predefinides de paquets,
-proporcionant una selecció de paquets de forma modular de cada un dels
-principals entorns d'escriptori i algunes llistes per a fins especials, així
-com llistes estàndard a partir de les que es basen altres. També es pot
-proporcionar llistes pròpies de paquets, o utilitzar una combinació
-d'ambdós.
+Package lists are a powerful way of expressing which packages should be
+installed. The list syntax supports included files and conditional sections
+which makes it easy to build lists from other lists and adapt them for use
+in multiple configurations. Package names may also be injected into the list
+using shell helpers at build time.
 
 *{Nota:}* El comportament de live-build a l'hora d'especificar un paquet que no existeix està determinat per la elecció que es faci de l'eina APT. Veure {Elegir apt or aptitude}#choosing-apt-or-aptitude per més detalls.
 
-3~ Llistes predefinides de paquets
+3~ Using metapackages
 
-La forma més senzilla d'utilitzar les llistes consisteix a especificar una o
-més llistes predefinides amb l'opció #{--package-lists}#. Per exemple:
+The simplest way to populate your package list is to use a task metapackage
+maintained by your distribution. For example:
 
 code{
 
- $ lb config --package-lists "gnome rescue"
+ $ lb config
+ $ echo task-gnome-desktop > config/package-lists/gnome-desktop.list.chroot
 
 }code
 
-La ubicació per defecte de les llistes en el sistema és
-#{/usr/share/live/build/package-lists/}#. Per determinar els paquets en una
-llista donada, llegir el fitxer corresponent, prestant atenció als fitxers
-inclosos i els condicionals com es descriu a les següents seccions.
+This supercedes the older predefined list method supported in #{live-build}#
+2.x. Unlike predefined lists, task metapackages are not specific to the
+Debian Live project. Instead, they are maintained by specialist working
+groups within the distribution and therefore reflect the consensus of each
+group about which packages best serve the needs of the intended users. They
+also cover a much broader range of use cases than the predefined lists they
+replace.
+
+All task metapackages are prefixed #{task-}#, so a quick way to determine
+which are available (though it may contain a handful of false hits that
+match the name but aren't metapackages) is to match on the package name
+with:
+
+code{
+
+ $ apt-cache search --names-only ^task-
+
+}code
+
+In addition to these, you will find other metapackages with various
+purposes. Some are subsets of broader task packages, like #{gnome-core}#,
+while others are individual specialized parts of a Debian Pure Blend, such
+as the #{education-*}# metapackages. To list all metapackages in the
+archive, install the #{debtags}# package and list all packages with the
+#{role::metapackage}# tag as follows:
+
+code{
+
+ $ debtags search role::metapackage
+
+}code
 
 3~ Llistes locals de paquets
 

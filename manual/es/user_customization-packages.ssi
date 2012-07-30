@@ -168,42 +168,69 @@ code{
 Hay varias maneras de seleccionar qué paquetes serán instalados por
 live-build en la imagen que cubren una variedad de necesidades diversas. Se
 puede nombrar paquetes individuales para instalar en una lista de
-paquetes. También se puede seleccionar listas de paquetes predefinidos o
-incluso utilizar tareas de APT. Por último, también se pueden utilizar
-ficheros de paquetes de prueba o experimentales obtenidos antes de que
-aparezcan en los repositorios oficiales simplemente depositando estos
-ficheros directamente en el árbol de directorios #{config/}#.
+paquetes. También se puede utilizar metapaquetes en esas listas, o
+selecionarlas utilizando campos de ficheros de control de paquetes. Por
+último, también se pueden utilizar ficheros de paquetes de prueba o
+experimentales obtenidos antes de que aparezcan en los repositorios
+oficiales simplemente depositando estos ficheros directamente en el árbol de
+directorios #{config/}#.
 
 3~package-lists Listas de paquetes
 
 Las listas de paquetes proporcionan una potente forma de expresar qué
-paquetes deberían ser instalados. La sintaxis de la lista soporta la
+paquetes deberían ser instalados. La sintaxis de la listas soporta la
 inclusión de ficheros y secciones condicionales, que facilitan la creación
 de listas a partir de otras listas, adaptando su utilización a diversas
-configuraciones. También pueden utilizarse listas de paquetes predefinidas,
-dando una manera modular a la selección de paquetes para cada uno de los
-diferentes entornos de escritorios y algunas listas de propósito especial
-basadas en otras listas de propósito general. Puede utilizarse listas
-propias o una combinación de listas propias y listas predefinidas.
+configuraciones. También se pueden añadir nombre de paquetes en la listas
+utilizando shell helpers en tiempo de construcción. 
 
 *{Nota:}* El comportamiento de live-build cuando se especifica un paquete que no existe es determinado por lo que se haya configurado en la utilidad APT. Para más detalles ver {Utilizar apt o aptitude}#choosing-apt-or-aptitude.
 
-3~ Listas de paquetes predefinidas
+2~ Utilizar metapaquetes
 
-La forma más simple de utilizar listas de paquetes es especificar una o más
-listas predefinidas mediante la opción #{--package-lists}#, por ejemplo:
+La manera más sencilla de rellenar una lista de paquetes es utilizar una
+tarea metapaquete mantenida por una distribución. Por ejemplo:
 
 code{
 
- $ lb config --package-lists "gnome rescue"
+ $ lb config
+ $ echo task-gnome-desktop > config/package-lists/gnome-desktop.list.chroot
 
 }code
 
-La ubicación por defecto de las listas de los ficheros en el sistema huésped
-es #{/usr/share/live/build/package-lists/}#. Para determinar qué paquetes
-componen una lista dada se debe leer el correspondiente fichero poniendo
-atención en los ficheros incluidos y en las secciones condicionales como se
-describen a continuación.
+Esto reemplaza el antiguo método de listas predefinidas compatible con
+#{live-build}# 2.x. A diferencia de las listas predefinidas, los
+metapaquetes de tareas no son específicos del proyecto Debian Live. Por el
+contrario, son mantenidas por grupos de especialistas que trabajan en la
+distribución y por lo tanto, reflejan el consenso de cada grupo acerca de
+qué paquetes sirven mejor a las necesidades de los usuarios. Además, abarcan
+una gama mucho más amplia de casos de uso que las listas predefinidas a las
+que sustituyen.
+
+Todos los metapaquetes de tareas tienen el prefijo #{task-}#,  por lo que
+una forma rápida de determinar cuales están disponibles (aunque puede
+contener un puñado de entradas falsas que coincidan con el nombre, pero que
+no son metapaquetes) es buscar el nombre del paquete con:
+
+code{
+
+ $ apt-cache search --names-only ^task-
+
+}code
+
+Además de éstos, se encuentran otros metapaquetes con diversos
+fines. Algunos son subconjuntos de paquetes de tareas más amplias, como
+#{gnome-core}#, mientras que otros son partes especializadas individuales de
+un Debian Pure Blend, como los metapaquetes #{education-*}#. Para tener una
+lista de todos los metapaquetes en el archivo, instalar el paquete
+#{debtags}# y listar todos los paquetes con la etiqueta
+#{role::metapackage}# de la siguiente manera:
+
+code{
+
+ $ debtags search role::metapackage
+
+}code
 
 3~ Listas de paquetes locales
 

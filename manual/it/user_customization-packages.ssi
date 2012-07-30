@@ -158,41 +158,67 @@ code{
 
 2~choosing-packages-to-install Scegliere i pacchetti da installare
 
-Ci sono diversi modi per scegliere quali pacchetti live-build installerà
-nell'immagine, coprendo una gamma di esigenze diverse. Si possono richiamare
-i singoli pacchetti da un elenco o scegliere elenchi predefiniti di
-pacchetti oppure utilizzare i task di APT. E infine inserire i file dei
-pacchetti nell'albero #{config/}#, che ben si adatta a provare pacchetti
-nuovi o sperimentali prima che siano disponibili in un repository.
+There are a number of ways to choose which packages live-build will install
+in your image, covering a variety of different needs. You can simply name
+individual packages to install in a package list. You can also use
+metapackages in those lists, or select them using package control file
+fields. And finally, you may place package files in your #{config/}# tree,
+which is well suited to testing of new or experimental packages before they
+are available from a repository.
 
 3~package-lists Elenchi di pacchetti
 
-Gli elenchi di pacchetti sono un potente mezzo per esprimere quali pacchetti
-devono essere installati. La sintassi gestisce file inclusi e sezioni
-condizionali rendendo semplice la creazione di elenchi da altri elenchi e
-adattarli per l'uso in molteplici configurazioni. Si può usare un elenco
-predefinito fornendo una selezione modulare dei pacchetti da ciascuno dei
-principali ambienti desktop e alcuni elenchi per uso speciale, così come
-elenchi standard sui quali vi si basano altri. È inoltre possibile fornire i
-propri elenchi o usare una combinazione di entrambi.
+Package lists are a powerful way of expressing which packages should be
+installed. The list syntax supports included files and conditional sections
+which makes it easy to build lists from other lists and adapt them for use
+in multiple configurations. Package names may also be injected into the list
+using shell helpers at build time.
 
 *{Nota:}* quando si specifica un pacchetto che non esiste, il comportamento di live-build è determinato dalla scelta delle utilità di APT. Per ulteriori dettagli si veda {Scegliere apt o aptitude}#choosing-apt-or-aptitude.
 
-3~ Elenchi predefiniti di pacchetti
+3~ Using metapackages
 
-Il modo più semplice per usare gli elenchi è di specificarne uno o più con
-l'opzione #{--package-lists}#. Per esempio:
+The simplest way to populate your package list is to use a task metapackage
+maintained by your distribution. For example:
 
 code{
 
- $ lb config --package-lists "gnome rescue"
+ $ lb config
+ $ echo task-gnome-desktop > config/package-lists/gnome-desktop.list.chroot
 
 }code
 
-Il percorso predefinito per i file elenco sul sistema è
-#{/usr/share/live/build/package-lists/}#. Per determinare i pacchetti in un
-dato elenco, si legga il file corrispondente, prestando attenzione ai file
-inclusi e condizionali come descritto nella sezioni seguenti.
+This supercedes the older predefined list method supported in #{live-build}#
+2.x. Unlike predefined lists, task metapackages are not specific to the
+Debian Live project. Instead, they are maintained by specialist working
+groups within the distribution and therefore reflect the consensus of each
+group about which packages best serve the needs of the intended users. They
+also cover a much broader range of use cases than the predefined lists they
+replace.
+
+All task metapackages are prefixed #{task-}#, so a quick way to determine
+which are available (though it may contain a handful of false hits that
+match the name but aren't metapackages) is to match on the package name
+with:
+
+code{
+
+ $ apt-cache search --names-only ^task-
+
+}code
+
+In addition to these, you will find other metapackages with various
+purposes. Some are subsets of broader task packages, like #{gnome-core}#,
+while others are individual specialized parts of a Debian Pure Blend, such
+as the #{education-*}# metapackages. To list all metapackages in the
+archive, install the #{debtags}# package and list all packages with the
+#{role::metapackage}# tag as follows:
+
+code{
+
+ $ debtags search role::metapackage
+
+}code
 
 3~ Elenchi locali dei pacchetti
 

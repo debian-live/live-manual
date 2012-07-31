@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual\n"
 "POT-Creation-Date: 2012-07-31 00:40+0300\n"
-"PO-Revision-Date: 2012-03-17 19:13+0100\n"
-"Last-Translator: Carlos Zuferri «chals» <chals@altorricon.com>\n"
+"PO-Revision-Date: 2012-07-31 23:27+0100\n"
+"Last-Translator: Carlos Zuferri <chals@altorricon.com>\n"
 "Language-Team:  <debian-live@lists.debian.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -247,7 +247,7 @@ msgstr ""
 #: en/user_customization-packages.ssi:16
 #, no-wrap
 msgid " $ lb config --distribution sid\n"
-msgstr ""
+msgstr " $ lb config --distribution sid\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:20
@@ -267,7 +267,7 @@ msgstr ""
 #: en/user_customization-packages.ssi:24
 #, no-wrap
 msgid " $ lb config --archive-areas \"main contrib\"\n"
-msgstr ""
+msgstr " $ lb config --archive-areas \"main contrib\"\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:28
@@ -353,6 +353,9 @@ msgid ""
 "             --mirror-chroot-security http://localhost/debian-security/ \\\n"
 "\t     --mirror-chroot-backports http://localhost/debian-backports/\n"
 msgstr ""
+" $ lb config --mirror-bootstrap http://localhost/debian/ \\\n"
+"             --mirror-chroot-security http://localhost/debian-security/ \\\n"
+"\t     --mirror-chroot-backports http://localhost/debian-backports/\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:48
@@ -398,6 +401,8 @@ msgid ""
 " $ lb config --mirror-binary http://mirror/debian/ \\\n"
 "             --mirror-binary-security http://mirror/debian-security/\n"
 msgstr ""
+" $ lb config --mirror-binary http://mirror/debian/ \\\n"
+"             --mirror-binary-security http://mirror/debian-security/\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:61
@@ -440,7 +445,7 @@ msgstr ""
 #: en/user_customization-packages.ssi:69
 #, no-wrap
 msgid " deb http://live.debian.net/ sid-snapshots main contrib non-free\n"
-msgstr ""
+msgstr " deb http://live.debian.net/ sid-snapshots main contrib non-free\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:73
@@ -477,7 +482,7 @@ msgstr "*{Remarque:}* certains dépôts de paquets préconfigurés sont disponib
 #: en/user_customization-packages.ssi:83 en/user_installation.ssi:148
 #, no-wrap
 msgid " $ lb config --archives live.debian.net\n"
-msgstr ""
+msgstr " $ lb config --archives live.debian.net\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:87
@@ -486,15 +491,6 @@ msgstr "2~choosing-packages-to-install Choisir les paquets à installer"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:89
-#, fuzzy
-#| msgid ""
-#| "There are a number of ways to choose which packages live-build will "
-#| "install in your image, covering a variety of different needs. You can "
-#| "simply name individual packages to install in a package list. You can "
-#| "also choose predefined lists of packages, or use APT tasks. And finally, "
-#| "you may place package files in your #{config/}# tree, which is well "
-#| "suited to testing of new or experimental packages before they are "
-#| "available from a repository."
 msgid ""
 "There are a number of ways to choose which packages live-build will install "
 "in your image, covering a variety of different needs. You can simply name "
@@ -504,13 +500,14 @@ msgid ""
 "which is well suited to testing of new or experimental packages before they "
 "are available from a repository."
 msgstr ""
-"Il y a un certain nombre de façons de choisir quels paquets live-build va "
-"installer dans votre image, couvrant une variété de besoins différents. Vous "
-"pouvez tout simplement nommer les paquets individuels à installer dans une "
-"liste de paquets. Vous pouvez également choisir grandes listes prédéfinies "
-"de paquets, ou utiliser des tâches APT. Et enfin, vous pouvez placer paquets "
-"dans votre arbre #{config/}# qui est bien adapté aux essais de nouveaux "
-"paquets ou expérimentaux avant qu'ils ne soient disponibles sur un dépôt."
+"Il y a un certain nombre de façons pour choisir quels paquets live-build "
+"installera dans votre image, couvrant une variété de besoins différentes. "
+"Vous pouvez tout simplement nommer les paquets individuels à installer dans "
+"une liste de paquets. Vous pouvez également choisir métapaquets dans ces "
+"listes, ou sélectionner-les en utilisant des champs de paquets de contrôle "
+"de fichiers. Et enfin, vous pouvez placer paquets dans votre arbre #{config/}"
+"# qui est bien adapté aux essais de nouveaux paquets ou expérimentaux avant "
+"qu'ils ne soient disponibles sur un dépôt."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:91
@@ -519,16 +516,6 @@ msgstr "3~package-lists Listes de paquets"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:93
-#, fuzzy
-#| msgid ""
-#| "Package lists are a powerful way of expressing which packages should be "
-#| "installed. The list syntax supports included files and conditional "
-#| "sections which makes it easy to build lists from other lists and adapt "
-#| "them for use in multiple configurations. You can use predefined package "
-#| "lists, providing in a modular fashion package selections from each of the "
-#| "major desktop environments and some special purpose lists, as well as "
-#| "standard lists the others are based upon. You can also provide your own "
-#| "package lists, or use a combination of both."
 msgid ""
 "Package lists are a powerful way of expressing which packages should be "
 "installed. The list syntax supports included files and conditional sections "
@@ -538,13 +525,10 @@ msgid ""
 msgstr ""
 "Les listes de paquets sont un excellent moyen d'exprimer quels paquets "
 "doivent être installés. La syntaxe de la liste soutient les fichiers inclus "
-"et sections conditionnelles qui les rend facile de construire à partir "
+"et sections conditionnelles qui les rend faciles de construire à partir "
 "d'autres listes et de les adapter pour une utilisation dans configurations "
-"multiples. Vous pouvez utiliser des listes de paquets prédéfinies, offrant "
-"une sélection modulaire de paquets provenants de chacun des environnements "
-"de bureau majeurs et certaines listes de but spécial, ainsi que les autres "
-"listes standard sont basées sur elles. Vous pouvez également fournir votre "
-"propre liste de paquets, ou utiliser une combinaison des deux."
+"multiples. Les noms des paquets peuvent également être injectés dans la "
+"liste en utilisant assistants de shell au moment de la construction."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:95
@@ -554,10 +538,8 @@ msgstr "*{Remarque:}* Le comportement de live-build pour spécifier un paquet qu
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:97
-#, fuzzy
-#| msgid "2~ Use up-to-date packages"
 msgid "3~ Using metapackages"
-msgstr "2~ Utilisez paquets mis à jour"
+msgstr "2~ Utilisation de métapaquets"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:99
@@ -565,6 +547,8 @@ msgid ""
 "The simplest way to populate your package list is to use a task metapackage "
 "maintained by your distribution. For example:"
 msgstr ""
+"La façon la plus simple pour remplir votre liste de paquets consiste à "
+"utiliser une tâche métapaquet maintenue par votre distribution. Par exemple:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:104
@@ -573,6 +557,8 @@ msgid ""
 " $ lb config\n"
 " $ echo task-gnome-desktop > config/package-lists/gnome-desktop.list.chroot\n"
 msgstr ""
+" $ lb config\n"
+" $ echo task-gnome-desktop > config/package-lists/gnome-desktop.list.chroot\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:108
@@ -585,6 +571,13 @@ msgid ""
 "also cover a much broader range of use cases than the predefined lists they "
 "replace."
 msgstr ""
+"Ceci remplace l'ancienne méthode des listes prédéfinies soutenue dans #{live-"
+"build}# 2.x. Contrairement aux listes prédéfinies, les métapaquets ne sont "
+"pas spécifiques du projet Debian Live. Au lieu de cela, ils sont maintenus "
+"par des groupes de travail spécialisés dans la distribution et reflètent "
+"donc le consensus de chaque groupe sur les paquets pour mieux servir les "
+"besoins des utilisateurs. Ils couvrent également une gamme beaucoup plus "
+"large des cas d'utilisation que les listes prédéfinies qu'ils remplacent."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:110
@@ -593,12 +586,16 @@ msgid ""
 "which are available (though it may contain a handful of false hits that "
 "match the name but aren't metapackages) is to match on the package name with:"
 msgstr ""
+"Tous les métapaquets de tâches sont préfixés avec #{task-}#, donc un moyen "
+"rapide pour déterminer lesquels sont disponibles (même si elle peut contenir "
+"une poignée de faux résultats qui correspondent avec le nom, mais ne sont "
+"pas métapaquets) est de faire correspondre le nom du paquet avec:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:114
 #, no-wrap
 msgid " $ apt-cache search --names-only ^task-\n"
-msgstr ""
+msgstr " $ apt-cache search --names-only ^task-\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:118
@@ -610,12 +607,18 @@ msgid ""
 "archive, install the #{debtags}# package and list all packages with the #"
 "{role::metapackage}# tag as follows:"
 msgstr ""
+"En plus, vous trouverez d'autres métapaquets à des fins diverses. Certains "
+"sont sous-ensembles de paquets de tâches plus larges, comme #{gnome-core}#, "
+"tandis que d'autres sont pièces individuelles spécialisées d'un Debian Pure "
+"Blend, comme les métapaquets #{education-*}#. Pour lister tous les "
+"métapaquets dans l'archive, installer le paquet #{debtags}# et lister tous "
+"les paquets avec le tag #{role::metapackage}# comme suit:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:122
 #, no-wrap
 msgid " $ debtags search role::metapackage\n"
-msgstr ""
+msgstr " $ debtags search role::metapackage\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:126
@@ -707,6 +710,8 @@ msgid ""
 " #include <gnome>\n"
 " iceweasel\n"
 msgstr ""
+" #include <gnome>\n"
+" iceweasel\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:151
@@ -748,6 +753,9 @@ msgid ""
 " ia32-libs\n"
 " #endif\n"
 msgstr ""
+" #if ARCHITECTURES amd64\n"
+" ia32-libs\n"
+" #endif\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:165
@@ -768,6 +776,9 @@ msgid ""
 " memtest86+\n"
 " #endif\n"
 msgstr ""
+" #if ARCHITECTURES i386 amd64\n"
+" memtest86+\n"
+" #endif\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:175
@@ -788,6 +799,9 @@ msgid ""
 " vrms\n"
 " #endif\n"
 msgstr ""
+" #if ARCHIVE_AREAS contrib non-free\n"
+" vrms\n"
+" #endif\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:185
@@ -802,6 +816,9 @@ msgid ""
 " #include <gnome-full>\n"
 " #endif\n"
 msgstr ""
+" #if ARCHITECTURES amd64\n"
+" #include <gnome-full>\n"
+" #endif\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:195
@@ -840,6 +857,8 @@ msgid ""
 " $ lb config\n"
 " $ echo \"mail-server file-server\" >> config/task-lists/my.list.chroot\n"
 msgstr ""
+" $ lb config\n"
+" $ echo \"mail-server file-server\" >> config/task-lists/my.list.chroot\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:208
@@ -925,6 +944,9 @@ msgid ""
 " $ echo \"gnome-desktop desktop standard laptop\" >> config/task-lists/my.list.chroot\n"
 " $ echo \"japanese japanese-desktop japanese-gnome-desktop\" >> config/task-lists/my.list.chroot\n"
 msgstr ""
+" $ lb config\n"
+" $ echo \"gnome-desktop desktop standard laptop\" >> config/task-lists/my.list.chroot\n"
+" $ echo \"japanese japanese-desktop japanese-gnome-desktop\" >> config/task-lists/my.list.chroot\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:226
@@ -947,6 +969,8 @@ msgid ""
 " $ lb config\n"
 " $ echo 'tasksel tasksel/desktop multiselect kde' >> config/preseed/my.preseed.chroot\n"
 msgstr ""
+" $ lb config\n"
+" $ echo 'tasksel tasksel/desktop multiselect kde' >> config/preseed/my.preseed.chroot\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:235
@@ -1230,7 +1254,7 @@ msgstr ""
 #: en/user_customization-packages.ssi:295
 #, no-wrap
 msgid " $ lb config --apt-http-proxy http://proxy/\n"
-msgstr ""
+msgstr " $ lb config --apt-http-proxy http://proxy/\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:299
@@ -1261,7 +1285,7 @@ msgstr ""
 #: en/user_customization-packages.ssi:307
 #, no-wrap
 msgid " $ lb config --apt-indices false\n"
-msgstr ""
+msgstr " $ lb config --apt-indices false\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:311
@@ -1292,7 +1316,7 @@ msgstr ""
 #: en/user_customization-packages.ssi:317
 #, no-wrap
 msgid " $ lb config --apt-recommends false\n"
-msgstr ""
+msgstr " $ lb config --apt-recommends false\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:321
@@ -1386,6 +1410,11 @@ msgid ""
 " Pin: release n=sid\n"
 " Pin-Priority: 600\n"
 msgstr ""
+" $ echo \"deb http://mirror/debian sid main\" > config/archives/sid.list.chroot\n"
+" $ cat >> config/chroot_apt/preferences << END\n"
+" Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit\n"
+" Pin: release n=sid\n"
+" Pin-Priority: 600\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:344
@@ -1396,6 +1425,10 @@ msgid ""
 " Pin-Priority: 1\n"
 " END\n"
 msgstr ""
+" Package: *\n"
+" Pin: release n=sid\n"
+" Pin-Priority: 1\n"
+" END\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:348
@@ -1406,7 +1439,7 @@ msgstr "*{Remarque:}* Caractères génériques peuvent être utilisés dans les 
 #. type: Plain text
 #: en/user_customization-packages.ssi:352
 msgid "$ lb config --distribution wheezy"
-msgstr ""
+msgstr "$ lb config --distribution wheezy"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:356
@@ -1438,3 +1471,6 @@ msgid ""
 " Pin: version *\n"
 " Pin-Priority: -1\n"
 msgstr ""
+" Package: gnome-keyring\n"
+" Pin: version *\n"
+" Pin-Priority: -1\n"

@@ -160,28 +160,30 @@ code{
 
 2~choosing-packages-to-install Choisir les paquets à installer
 
-There are a number of ways to choose which packages live-build will install
-in your image, covering a variety of different needs. You can simply name
-individual packages to install in a package list. You can also use
-metapackages in those lists, or select them using package control file
-fields. And finally, you may place package files in your #{config/}# tree,
-which is well suited to testing of new or experimental packages before they
-are available from a repository.
+Il y a un certain nombre de façons pour choisir quels paquets live-build
+installera dans votre image, couvrant une variété de besoins
+différentes. Vous pouvez tout simplement nommer les paquets individuels à
+installer dans une liste de paquets. Vous pouvez également choisir
+métapaquets dans ces listes, ou sélectionner-les en utilisant des champs de
+paquets de contrôle de fichiers. Et enfin, vous pouvez placer paquets dans
+votre arbre #{config/}# qui est bien adapté aux essais de nouveaux paquets
+ou expérimentaux avant qu'ils ne soient disponibles sur un dépôt.
 
 3~package-lists Listes de paquets
 
-Package lists are a powerful way of expressing which packages should be
-installed. The list syntax supports included files and conditional sections
-which makes it easy to build lists from other lists and adapt them for use
-in multiple configurations. Package names may also be injected into the list
-using shell helpers at build time.
+Les listes de paquets sont un excellent moyen d'exprimer quels paquets
+doivent être installés. La syntaxe de la liste soutient les fichiers inclus
+et sections conditionnelles qui les rend faciles de construire à partir
+d'autres listes et de les adapter pour une utilisation dans configurations
+multiples. Les noms des paquets peuvent également être injectés dans la
+liste en utilisant assistants de shell au moment de la construction.
 
 *{Remarque:}* Le comportement de live-build pour spécifier un paquet qui n'existe pas est déterminé par votre choix de l'utilité APT. Voir {Choisir apt ou aptitude}#choosing-apt-or-aptitude pour plus de détails.
 
-3~ Using metapackages
+2~ Utilisation de métapaquets
 
-The simplest way to populate your package list is to use a task metapackage
-maintained by your distribution. For example:
+La façon la plus simple pour remplir votre liste de paquets consiste à
+utiliser une tâche métapaquet maintenue par votre distribution. Par exemple:
 
 code{
 
@@ -190,18 +192,19 @@ code{
 
 }code
 
-This supercedes the older predefined list method supported in #{live-build}#
-2.x. Unlike predefined lists, task metapackages are not specific to the
-Debian Live project. Instead, they are maintained by specialist working
-groups within the distribution and therefore reflect the consensus of each
-group about which packages best serve the needs of the intended users. They
-also cover a much broader range of use cases than the predefined lists they
-replace.
+Ceci remplace l'ancienne méthode des listes prédéfinies soutenue dans
+#{live-build}# 2.x. Contrairement aux listes prédéfinies, les métapaquets ne
+sont pas spécifiques du projet Debian Live. Au lieu de cela, ils sont
+maintenus par des groupes de travail spécialisés dans la distribution et
+reflètent donc le consensus de chaque groupe sur les paquets pour mieux
+servir les besoins des utilisateurs. Ils couvrent également une gamme
+beaucoup plus large des cas d'utilisation que les listes prédéfinies qu'ils
+remplacent.
 
-All task metapackages are prefixed #{task-}#, so a quick way to determine
-which are available (though it may contain a handful of false hits that
-match the name but aren't metapackages) is to match on the package name
-with:
+Tous les métapaquets de tâches sont préfixés avec #{task-}#, donc un moyen
+rapide pour déterminer lesquels sont disponibles (même si elle peut contenir
+une poignée de faux résultats qui correspondent avec le nom, mais ne sont
+pas métapaquets) est de faire correspondre le nom du paquet avec:
 
 code{
 
@@ -209,12 +212,12 @@ code{
 
 }code
 
-In addition to these, you will find other metapackages with various
-purposes. Some are subsets of broader task packages, like #{gnome-core}#,
-while others are individual specialized parts of a Debian Pure Blend, such
-as the #{education-*}# metapackages. To list all metapackages in the
-archive, install the #{debtags}# package and list all packages with the
-#{role::metapackage}# tag as follows:
+En plus, vous trouverez d'autres métapaquets à des fins diverses. Certains
+sont sous-ensembles de paquets de tâches plus larges, comme #{gnome-core}#,
+tandis que d'autres sont pièces individuelles spécialisées d'un Debian Pure
+Blend, comme les métapaquets #{education-*}#. Pour lister tous les
+métapaquets dans l'archive, installer le paquet #{debtags}# et lister tous
+les paquets avec le tag #{role::metapackage}# comme suit:
 
 code{
 

@@ -234,9 +234,15 @@ code{
 
 3~ Listas de paquetes locales
 
-Tanto si en las listas se incluyen metapaquetes, paquetes individuales, o
-una combinación de los dos, todas las listas de paquetes locales se deben
-depositar en el directorio #{config/package-lists/}#.
+Ya sea incluyendo metapaquetes en una lista, paquetes individuales, o una
+combinación de ambos, todas las listas de paquetes locales se deben
+almacenar en #{config/package-lists/}#. Ya que se puede utilizar más de una
+lista, esto se presta muy bien a los diseños modulares. Por ejemplo, se
+puede dedicar una lista a una elección particular de escritorio, la otra a
+una colección de paquetes relacionados que puedan ser fácilmente utilizados
+sobre un escritorio diferente. Esto permite experimentar con diferentes
+combinaciones de conjuntos de paquetes con un mínimo esfuerzo, así como
+compartir listas comunes entre diferentes proyectos de imágenes en vivo.
 
 Para que sean procesadas, las listas de paquetes que se depositen en este
 directorio deben tener la extensión #{.list}# además de la extensión de la
@@ -255,22 +261,26 @@ normal («non-live» N.del T.). Tal y como se mencionaba anteriormente, si se
 desea usar la misma lista para la etapa «chroot» basta con solamente añadir
 el sufijo #{.list}#
 
-3~ Extensión de una lista de paquetes dada mediante «includes»
+3~ Listas de paquetes generadas
 
-Las listas de paquetes predefinidas en live-build hacen un uso intensivo de
-las directivas «includes». Los ficheros existentes en el directorio
-#{/usr/share/live/build/package-lists/}# pueden servir como buen ejemplo de
-como escribir listas de paquetes.
+A veces ocurre que la mejor manera de crear una lista es generarla con un
+script. Cualquier línea que comience con un signo de exclamación indica un
+comando que se ejecutará dentro del chroot cuando la imagen se
+construya. Por ejemplo, se podría incluir la línea #{! grep-aptavail -n
+-sPackage -FPriority standard | sort}# en una lista de paquetes para
+producir una lista ordenada de los paquetes disponibles con #{Priority:
+standard}#.
 
-Por ejemplo, para hacer una lista de paquetes que incluya la lista de
-paquetes predefinida #{gnome}# y añadir el paquete /{iceweasel}/ se puede
-crear un fichero llamado #{config/package-lists/my.list.chroot}# con el
-siguiente contenido:
+De hecho, la selección de paquetes con la orden #{grep-aptavail}# (del
+paquete #{dctrl-tools}#) es tan útil que #{live-build}# proporciona un
+script de ayuda llamado #{Packages}#. Este script acepta dos argumentos:
+#{field}# y #{pattern}#. Por lo tanto, se puede crear una lista con los
+siguientes contenidos:
 
 code{
 
- #include <gnome>
- iceweasel
+ $ lb config
+ $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
 
 }code
 
@@ -333,29 +343,6 @@ code{
 }code
 
 No se permite el anidamiento de estructuras condicionales.
-
-3~ Tareas
-
-El Instalador de Debian ofrece al usuario un conjunto de opciones con una
-lista de paquetes preseleccionada enfocadas a configurar un tipo de sistema
-o configurar el sistema para realizar una tarea como puede ser «Entorno de
-escritorio gráfico», «Servidor de correo», «Portátil», etc. Estas listas son
-llamadas «tareas» ("Tasks") y son soportadas por APT mediante el campo
-«Task:». Se puede especificar una o más tareas a live-build poniéndolas en
-una lista en #{config/task-lists/}#, como en el ejemplo siguiente.
-
-code{
-
- $ lb config
- $ echo "mail-server file-server" >> config/task-lists/my.list.chroot
-
-}code
-
-Una vez ha sido arrancado el sistema en vivo puede conocerse qué tareas
-primarias están disponibles en el Instalador de Debian mediante la orden
-#{tasksel --list-tasks}#. La lista de paquetes contenidos en cualquier tarea
-(incluidas aquellas que no aparecen en la lista de tareas primarias) puede
-obtenerse mediante la orden #{tasksel --task-packages}#.
 
 3~desktop-and-language-tasks Tareas de Escritorio e Idioma
 

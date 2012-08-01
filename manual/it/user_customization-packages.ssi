@@ -220,7 +220,13 @@ code{
 3~ Elenchi locali dei pacchetti
 
 Whether you list metapackages, individual packages, or a combination of
-both, all local package lists are stored in #{config/package-lists/}#.
+both, all local package lists are stored in #{config/package-lists/}#. Since
+more than one list can be used, this lends itself well to modular
+designs. For example, you may decide to devote one list to a particular
+choice of desktop, another to a collection of related packages that might as
+easily be used on top of a different desktop. This allows you to experiment
+with different combinations of sets of packages with a minimum of fuss,
+sharing common lists between different live image projects.
 
 Per essere processati, gli elenchi dei pacchetti che si trovano in questa
 directory devono avere un suffisso #{.list}# e un suffisso #{.chroot}# o
@@ -237,21 +243,25 @@ installati nel filesystem ma inclusi sul dispositivo live sotto
 dell'installatore; come detto sopra, se si vuole che questo sia identico
 all'elenco della fase chroot, usare semplicemente il suffisso #{.list}#.
 
-3~ Estendere un'elenco di pacchetti usando gli include
+3~ Generated package lists
 
-Gli elenchi di pacchetti inclusi in live-build fanno un notevole uso di
-include. Far riferimento a questi nella directory
-#{/usr/share/live/build/package-lists/}#, in quanto portano ottimi esempi su
-come scriverne di propri.
+It sometimes happens that the best way to compose a list is to generate it
+with a script. Any line starting with an exclamation point indicates a
+command to be executed within the chroot when the image is built. For
+example, one might include the line #{! grep-aptavail -n -sPackage
+-FPriority standard | sort}# in a package list to produce a sorted list of
+available packages with #{Priority: standard}#.
 
-Per esempio, per creare un elenco che includa quello predefinito di
-#{gnome}#più /{iceweasel}/, creare
-#{config/package-lists/mio.elenco.chroot}# con i seguenti contenuti:
+In fact, selecting packages with the #{grep-aptavail}# command (from the
+#{dctrl-tools}# package) is so useful that #{live-build}# provides a
+#{Packages}# helper script as a convenience. This script takes two
+arguments: #{field}# and #{pattern}#. Thus, you can create a list with the
+following contents:
 
 code{
 
- #include <gnome>
- iceweasel
+ $ lb config
+ $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
 
 }code
 
@@ -311,28 +321,6 @@ code{
 }code
 
 Le condizioni nidificate non sono supportate.
-
-3~ Task
-
-L'installatore Debian offre all'utente la scelta di vari elenchi di
-pacchetti pre-selezionati, ognuno dei quali focalizzato su un particolare
-tipo di sistema, o il tipo di attività per cui utilizzarlo, come "Graphical
-desktop environment", "Mail server" o "Laptop". Questi elenchi sono chiamati
-"task" e sono gestiti da APT attraverso il campo"Task:". In live-build si
-possono specificare uno o più task inserendoli in una lista in
-#{config/task-lists/}#, come nell'esempio seguente.
-
-code{
-
- $ lb config
- $ echo "mail-server file-server" >> config/task-lists/my.list.chroot
-
-}code
-
-I task principali disponibili nell'installatore Debian possono essere
-elencati nel sistema live con #{tasksel --list-tasks}#. I contenuti di ogni
-task, inclusi quelli non inclusi in questo elenco, possono essere esaminati
-con #{tasksel --task-packages}#.
 
 3~desktop-and-language-tasks Task per desktop e lingua
 

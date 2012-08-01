@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
 "POT-Creation-Date: 2012-08-01 23:16+0300\n"
-"PO-Revision-Date: 2012-08-01 22:09+0200\n"
+"PO-Revision-Date: 2012-08-02 00:07+0100\n"
 "Last-Translator: Carlos Zuferri <chals@altorricon.com>\n"
 "Language-Team:  <debian-live@lists.debian.org>\n"
 "Language: ca\n"
@@ -633,6 +633,15 @@ msgid ""
 "different combinations of sets of packages with a minimum of fuss, sharing "
 "common lists between different live image projects."
 msgstr ""
+"Ja sigui afegint metapaquets a una llista, paquets individuals, o una "
+"combinació d'ambdós, totes les llistes de paquets locals s'emmagatzemen a #"
+"{config/package-lists/}#. Ja que es pot utilitzar més d'una llista, això es "
+"presta molt bé als dissenys modulars. Per exemple, es pot decidir dedicar "
+"una llista a una elecció particular d'escriptori, l'altra a una coŀlecció de "
+"paquets relacionats que puguin ser fàcilment utilitzats al damunt d'un "
+"escriptori diferent. Això  permet experimentar amb diferents combinacions de "
+"conjunts de paquets amb un mínim d'esforç, intercanviant llistes comunes "
+"entre els diferents projectes d'imatges en viu."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:130
@@ -677,10 +686,8 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:138
-#, fuzzy
-#| msgid "3~ Local package lists"
 msgid "3~ Generated package lists"
-msgstr "3~ Llistes locals de paquets"
+msgstr "3~ Llistes de paquets generades"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:140
@@ -692,6 +699,12 @@ msgid ""
 "FPriority standard | sort}# in a package list to produce a sorted list of "
 "available packages with #{Priority: standard}#."
 msgstr ""
+"De vegades passa que la millor manera de crear una llista és generar-la amb "
+"un script. Qualsevol línia que comença amb un signe d'exclamació indica una "
+"ordre que s'executarà dins del chroot quan la imatge es construeix. Per "
+"exemple, es podria incloure la línia #{! grep-aptavail -n -sPackage -"
+"FPriority standard | sort}# en una llista de paquets per per produir una "
+"llista ordenada de paquets disponibles amb #{Priority: standard}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:142
@@ -702,19 +715,21 @@ msgid ""
 "#{field}# and #{pattern}#. Thus, you can create a list with the following "
 "contents:"
 msgstr ""
+"De fet, la selecció de paquets amb l'ordre #{grep-aptavail}# (del paquet #"
+"{dctrl-tools}#) és tan útil que #{live-build}# proporciona un script #"
+"{Packages}# d'ajuda per motius de comoditat. Aquest script accepta dos "
+"arguments: #{field}# and #{pattern}#. Per tant, pot crear una llista amb els "
+"següents continguts:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:147
-#, fuzzy, no-wrap
-#| msgid ""
-#| " $ lb config\n"
-#| " $ echo task-gnome-desktop > config/package-lists/gnome-desktop.list.chroot\n"
+#, no-wrap
 msgid ""
 " $ lb config\n"
 " $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot\n"
 msgstr ""
 " $ lb config\n"
-" $ echo task-gnome-desktop > config/package-lists/gnome-desktop.list.chroot\n"
+" $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:151

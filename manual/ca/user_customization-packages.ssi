@@ -223,14 +223,15 @@ code{
 
 3~ Llistes locals de paquets
 
-Whether you list metapackages, individual packages, or a combination of
-both, all local package lists are stored in #{config/package-lists/}#. Since
-more than one list can be used, this lends itself well to modular
-designs. For example, you may decide to devote one list to a particular
-choice of desktop, another to a collection of related packages that might as
-easily be used on top of a different desktop. This allows you to experiment
-with different combinations of sets of packages with a minimum of fuss,
-sharing common lists between different live image projects.
+Ja sigui afegint metapaquets a una llista, paquets individuals, o una
+combinació d'ambdós, totes les llistes de paquets locals s'emmagatzemen a
+#{config/package-lists/}#. Ja que es pot utilitzar més d'una llista, això es
+presta molt bé als dissenys modulars. Per exemple, es pot decidir dedicar
+una llista a una elecció particular d'escriptori, l'altra a una coŀlecció de
+paquets relacionats que puguin ser fàcilment utilitzats al damunt d'un
+escriptori diferent. Això  permet experimentar amb diferents combinacions de
+conjunts de paquets amb un mínim d'esforç, intercanviant llistes comunes
+entre els diferents projectes d'imatges en viu.
 
 Les llistes de paquets que es troben en aquest directori han de tenir el
 sufix #{.list}# per ser processades, i a més a més un sufix d'etapa
@@ -249,20 +250,20 @@ instaŀlador non-live. Com s'ha esmentat anteriorment, si es vol que aquesta
 llista sigui la mateixa que la llista de l'etapa chroot, simplement
 utilitzar el sufix #{.list}#.
 
-3~ Generated package lists
+3~ Llistes de paquets generades
 
-It sometimes happens that the best way to compose a list is to generate it
-with a script. Any line starting with an exclamation point indicates a
-command to be executed within the chroot when the image is built. For
-example, one might include the line #{! grep-aptavail -n -sPackage
--FPriority standard | sort}# in a package list to produce a sorted list of
-available packages with #{Priority: standard}#.
+De vegades passa que la millor manera de crear una llista és generar-la amb
+un script. Qualsevol línia que comença amb un signe d'exclamació indica una
+ordre que s'executarà dins del chroot quan la imatge es construeix. Per
+exemple, es podria incloure la línia #{! grep-aptavail -n -sPackage
+-FPriority standard | sort}# en una llista de paquets per per produir una
+llista ordenada de paquets disponibles amb #{Priority: standard}#.
 
-In fact, selecting packages with the #{grep-aptavail}# command (from the
-#{dctrl-tools}# package) is so useful that #{live-build}# provides a
-#{Packages}# helper script as a convenience. This script takes two
-arguments: #{field}# and #{pattern}#. Thus, you can create a list with the
-following contents:
+De fet, la selecció de paquets amb l'ordre #{grep-aptavail}# (del paquet
+#{dctrl-tools}#) és tan útil que #{live-build}# proporciona un script
+#{Packages}# d'ajuda per motius de comoditat. Aquest script accepta dos
+arguments: #{field}# and #{pattern}#. Per tant, pot crear una llista amb els
+següents continguts:
 
 code{
 

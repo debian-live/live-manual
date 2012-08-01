@@ -10,9 +10,9 @@ are available to install in the image are the distribution and archive
 areas. To ensure decent download speeds, you should choose a nearby
 distribution mirror. You can also add your own repositories for backports,
 experimental or custom packages, or include packages directly as files. You
-can define your own lists of packages to include, use live-build's
-predefined lists, use /{tasksel}/ tasks, or a combination of all
-three. Finally, a number of options give some control over /{apt}/, or if
+can define lists of packages, including metapackages which will install many
+related packages at once, such as packages for a particular desktop or
+language. Finally, a number of options give some control over /{apt}/, or if
 you prefer, /{aptitude}/, at build time when packages are installed. You may
 find these handy if you use a proxy, want to disable installation of
 recommended packages to save space, or need to control which versions of
@@ -210,8 +210,8 @@ code{
 
 3~ Local package lists
 
-You may supplement the predefined lists using local package lists stored in
-#{config/package-lists/}#.
+Whether you list metapackages, individual packages, or a combination of
+both, all local package lists are stored in #{config/package-lists/}#.
 
 Package lists that exist in this directory need to have a #{.list}# suffix
 in order to be processed, and then an additional stage suffix, #{.chroot}#
@@ -565,10 +565,11 @@ $ lb config --distribution wheezy
 
 Negative pin priorities will prevent a package from being installed, as in
 the case where you do not want a package that is recommended by another
-package. Suppose you are building an LXDE image using #{--package-lists
-lxde}# option, but don't want the user prompted to store wifi passwords in
-the keyring. This list includes /{gdm}/, which depends on /{gksu}/, which in
-turn recommends /{gnome-keyring}/. So you want to omit the recommended
+package. Suppose you are building an LXDE image using #{task-lxde-desktop}#
+in #{config/package-lists/lxde-desktop.list.chroot}#, but don't want the
+user prompted to store wifi passwords in the keyring. This metapackage
+depends on /{lxde-core}/, which recommends /{gksu}/, which in turn
+recommends /{gnome-keyring}/. So you want to omit the recommended
 /{gnome-keyring}/ package. This can be done by adding the following stanza
 to #{config/chroot_apt/preferences}#:
 

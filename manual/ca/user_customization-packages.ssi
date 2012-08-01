@@ -3,23 +3,21 @@
 1~customizing-package-installation Personalització de la instaŀlació de
 paquets
 
-La personalització més bàsica d'un sistema Debian viu pot ser la selecció
-dels paquets que seran inclosos en la imatge. Aquest capítol explica les
-diverses opcions de live-build per personalitzar la instaŀlació de paquets
-durant la construcció. Les opcions més importants que influeixen en els
-paquets que estan disponibles per ser instaŀlats en la imatge són les àrees
-de distribució i el arxiu. Per garantir velocitats de descàrrega decents,
-s'ha de triar un mirall de distribució proper. També es pot incloure
-repositoris de backports, paquets experimentals o personalitzats, o incloure
-paquets directament com si fossin fitxers. Es poden definir llistes pròpies
-de paquets, utilitzar llistes predefinides, utilitzar tasques de
-/{tasksel}/, o una combinació d'aquests tres mètodes. Finalment, una sèrie
-d'opcions donen un cert control sobre /{apt}/ o si es prefereix
-/{aptitude}/, quan s'instaŀlen els paquets durant la construcció. Això pot
-ser útil si s'utilitza un proxy, es vol desactivar la instaŀlació de paquets
-recomanats per estalviar espai, o hi ha la necessitat de controlar quines
-versions dels paquets s'instaŀlen mitjançant la tècnica pinning d'APT, per
-nomenar algunes possibilitats.
+Perhaps the most basic customization of a Debian live system is the
+selection of packages to be included in the image. This chapter guides you
+through the various build-time options to customize live-build's
+installation of packages. The broadest choices influencing which packages
+are available to install in the image are the distribution and archive
+areas. To ensure decent download speeds, you should choose a nearby
+distribution mirror. You can also add your own repositories for backports,
+experimental or custom packages, or include packages directly as files. You
+can define lists of packages, including metapackages which will install many
+related packages at once, such as packages for a particular desktop or
+language. Finally, a number of options give some control over /{apt}/, or if
+you prefer, /{aptitude}/, at build time when packages are installed. You may
+find these handy if you use a proxy, want to disable installation of
+recommended packages to save space, or need to control which versions of
+packages are installed via APT pinning, to name a few possibilities.
 
 2~ Fonts dels paquets
 
@@ -223,8 +221,8 @@ code{
 
 3~ Llistes locals de paquets
 
-Es poden completar les llistes predefinides mitjançant les llistes locals de
-paquets emmagatzemades a #{config/package-lists/}#.
+Whether you list metapackages, individual packages, or a combination of
+both, all local package lists are stored in #{config/package-lists/}#.
 
 Les llistes de paquets que es troben en aquest directori han de tenir el
 sufix #{.list}# per ser processades, i a més a més un sufix d'etapa
@@ -594,14 +592,15 @@ $ lb config --distribution wheezy
 
 }code
 
-Una prioritat pin negativa evitarà que un paquet s'instaŀli, com en el cas
-que no es vulgui un paquet que és recomanat per un altre paquet. Suposem que
-s'està construint una imatge LXDE amb #{--package-lists lxde}# però no es
-desitja que al usuari se li demani que guardi les contrasenyes wifi al
-clauer. Aquesta llista inclou /{gdm}/, que depèn de /{gksu}/,  que al seu
-torn recomana /{gnome-keyring}/. Si es vol omitir el paquet recomanat
-/{gnome-keyring}/ això es pot fer mitjançant l'addició de les següents
-línies al #{config/chroot_apt/preferences}#:
+Negative pin priorities will prevent a package from being installed, as in
+the case where you do not want a package that is recommended by another
+package. Suppose you are building an LXDE image using #{task-lxde-desktop}#
+in #{config/package-lists/lxde-desktop.list.chroot}#, but don't want the
+user prompted to store wifi passwords in the keyring. This metapackage
+depends on /{lxde-core}/, which recommends /{gksu}/, which in turn
+recommends /{gnome-keyring}/. So you want to omit the recommended
+/{gnome-keyring}/ package. This can be done by adding the following stanza
+to #{config/chroot_apt/preferences}#:
 
 code{
 

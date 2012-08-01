@@ -13,15 +13,15 @@ disponibles para su instalación en la imagen. Para asegurar una buena
 velocidad de descarga de paquetes, se debería elegir el repositorio Debian
 más cercano. Se pueden añadir repositorios para backports, experimentales,
 paquetes personalizados o incluir ficheros de paquetes directamente. Se
-pueden definir listas de paquetes personalizadas, utilizar listas
-predefinidas en live-build, seleccionar tareas de /{tasksel}/ o una
-combinación de los tres métodos. Por último existen varias opciones que dan
-algún control sobre cuando son instalados los paquetes por la herramienta
-/{apt}/ o la herramienta /{aptitude}/, según sea la elegida. Estas opciones
-pueden ser útiles si se utiliza un proxy, se quiere desactivar la
-instalación de paquetes recomendados para ahorrar espacio o se necesita
-controlar las versiones de los paquetes a instalar mediante APT pinning, por
-nombrar algunas posibilidades.
+pueden definir listas de paquetes personalizadas, incluyendo metapaquetes
+que instalarán muchos paquetes relacionados, como por ejemplo paquetes de un
+entorno de escritorio o lenguaje particular. Por último existen varias
+opciones que dan algún control sobre cuando son instalados los paquetes por
+la herramienta /{apt}/ o la herramienta /{aptitude}/, según sea la
+elegida. Estas opciones pueden ser útiles si se utiliza un proxy, se quiere
+desactivar la instalación de paquetes recomendados para ahorrar espacio o se
+necesita controlar las versiones de los paquetes a instalar mediante APT
+pinning, por nombrar algunas posibilidades.
 
 2~ Origen de los paquetes
 
@@ -234,9 +234,9 @@ code{
 
 3~ Listas de paquetes locales
 
-Se pueden añadir o reemplazar completamente las listas predefinidas
-depositando listas de paquetes locales en el directorio
-#{config/package-lists/}#.
+Tanto si en las listas se incluyen metapaquetes, paquetes individuales, o
+una combinación de los dos, todas las listas de paquetes locales se deben
+depositar en el directorio #{config/package-lists/}#.
 
 Para que sean procesadas, las listas de paquetes que se depositen en este
 directorio deben tener la extensión #{.list}# además de la extensión de la
@@ -620,12 +620,14 @@ $ lb config --distribution wheezy
 Una prioridad pin negativa previene la instalación de un paquete, como puede
 ser el caso de que no se desee que un paquete recomendado por otro sea
 instalado al instalar el primero. Supongamos que se está creando una imagen
-LXDE mediante la opción #{--package-lists lxde}#, pero no se desea preguntar
-al usuario si desea almacenar las claves wifi en el almacen de claves. La
-lista lxde incluye /{gdm}/, la cual depende de /{gksu}/ que a su vez
-recomienda /{gnome-keyring}/. Así que el objetivo es omitir la instalación
-del paquete /{gnome-keyring}/, que puede conseguirse añadiendo un fichero
-con el siguiente contenido a #{config/chroot_apt/preferences}#:
+LXDE añadiendo #{task-lxde-desktop}# en
+#{config/package-lists/lxde-desktop.list.chroot}#, pero no se desea
+preguntar al usuario si desea almacenar las claves wifi en el almacen de
+claves. Este metapaquete depende de /{lxde-core}/, el cual recomienda
+/{gksu}/ que a su vez recomienda /{gnome-keyring}/. Así que el objetivo es
+omitir la instalación del paquete /{gnome-keyring}/, que puede conseguirse
+añadiendo un fichero con el siguiente contenido a
+#{config/chroot_apt/preferences}#:
 
 code{
 

@@ -227,14 +227,15 @@ code{
 
 3~ Listes de paquets locaux
 
-Whether you list metapackages, individual packages, or a combination of
-both, all local package lists are stored in #{config/package-lists/}#. Since
-more than one list can be used, this lends itself well to modular
-designs. For example, you may decide to devote one list to a particular
-choice of desktop, another to a collection of related packages that might as
-easily be used on top of a different desktop. This allows you to experiment
-with different combinations of sets of packages with a minimum of fuss,
-sharing common lists between different live image projects.
+Si vous ajoutez métapaquets dans une liste, des paquets individuels ou une
+combinaison des deux, toutes les listes de paquets locaux sont stockées dans
+#{config/package-lists/}#. Comme plus d'une liste peut être utilisée, cela
+se prête bien à une conception modulaire. Par exemple, vous pouvez décider
+de consacrer une liste à un choix particulier de bureau, l'autre à une
+collection de packages connexes qui pourraient aussi bien être utilisés
+au-dessus d'un bureau différent. Cela vous permet d'expérimenter avec
+différentes combinaisons d'ensembles de paquets avec un minimum de tracas en
+utilisant des listes communes entre les différents projets d'images live.
 
 Les listes de paquets qui existent dans ce répertoire ont besoin d'avoir un
 suffixe #{.list}# pour être traitées, puis un suffixe d'étape supplémentaire
@@ -253,20 +254,20 @@ une des variantes d'installation non-live. Comme mentionné ci-dessus, si
 vous voulez que cette liste soit la même que votre liste pour l'étape
 chroot, utilisez simplement le suffixe #{.list}#. 
 
-3~ Generated package lists
+3~ Listes de paquets générés
 
-It sometimes happens that the best way to compose a list is to generate it
-with a script. Any line starting with an exclamation point indicates a
-command to be executed within the chroot when the image is built. For
-example, one might include the line #{! grep-aptavail -n -sPackage
--FPriority standard | sort}# in a package list to produce a sorted list of
-available packages with #{Priority: standard}#.
+Il arrive parfois que la meilleure façon de composer une liste est de la
+générer avec un script. Toute ligne commençant par un point d'exclamation
+indique une commande à exécuter dans le chroot lorsque l'image est
+construite. Par exemple, on pourrait inclure la ligne #{! grep-aptavail -n
+-sPackage -FPriority standard | sort}# dans une liste de paquets qui permet
+de produire une liste triée des paquets disponibles avec
 
-In fact, selecting packages with the #{grep-aptavail}# command (from the
-#{dctrl-tools}# package) is so useful that #{live-build}# provides a
-#{Packages}# helper script as a convenience. This script takes two
-arguments: #{field}# and #{pattern}#. Thus, you can create a list with the
-following contents:
+En fait, la sélection des paquets avec la commande #{grep-aptavail}# (du
+paquet #{dctrl-tools}#) est si utile que #{live-build}# fournit un script
+#{Packages}# à titre de commodité. Ce script accepte deux arguments:
+#{field}# et #{pattern}#. Ainsi, vous pouvez créer une liste avec le contenu
+suivant:
 
 code{
 

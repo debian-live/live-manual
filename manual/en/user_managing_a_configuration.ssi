@@ -24,7 +24,6 @@ code{
 
  #!/bin/sh
  lb config noauto \
-     --package-lists "standard" \
      "${@}"
 
 }code
@@ -58,4 +57,19 @@ code{
 
 }code
 
-Edit #{auto/config}#, changing or adding any options as you see fit. In the example above, #{--package-lists standard}# is set to the default value. Change this to an appropriate value for your image (or delete it if you want to use the default) and add any additional options in continuation lines that follow.
+Edit #{auto/config}#, adding any options as you see fit. For instance:
+
+code{
+
+ #!/bin/sh
+ lb config noauto \
+	--architectures i386 \
+	--linux-flavours 686-pae \
+	--binary-images hdd \
+	--mirror-bootstrap http://ftp.es.debian.org/debian/  \
+	--mirror-binary http://ftp.es.debian.org/debian/ \
+	"${@}"
+
+}code
+
+And any other additional options in continuation lines that follow.

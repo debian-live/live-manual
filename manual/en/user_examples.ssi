@@ -181,7 +181,7 @@ We've come to the end of our tutorial series. While many more kinds of customiza
 
 *{Use case:}* Create an image with live-build to boot directly to a VNC server.
 
-Make a build directory and create a skeletal configuration in it built around the standard-x11 list, including /{gdm3}/, /{metacity}/ and /{xvnc4viewer}/, disabling recommends to make a minimal system:
+Make a build directory and create an skeletal configuration inside it, disabling recommends to make a minimal system. And then create two package lists: the first one generated with a script provided by live-build named #{Packages}# (see {Generated package lists}#generated-package-lists), and the second one including /{xorg}/, /{gdm3}/, /{metacity}/ and /{xvnc4viewer}/.
 
 code{
 
@@ -193,7 +193,7 @@ code{
 
 }code
 
-Create the directory #{/etc/skel}# and put a custom #{.xsession}# in it for the default user that will launch /{metacity}/ and start /{xvncviewer}/, connecting to port #{5901}# on a server at #{192.168.1.2}#:
+Create the directory #{/etc/skel}# in #{config/includes.chroot}# and put a custom #{.xsession}# in it for the default user that will launch /{metacity}/ and start /{xvncviewer}/, connecting to port #{5901}# on a server at #{192.168.1.2}#:
 
 code{
 

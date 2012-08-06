@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
-"POT-Creation-Date: 2012-08-06 22:49+0300\n"
-"PO-Revision-Date: 2012-08-06 23:37+0100\n"
+"POT-Creation-Date: 2012-08-07 01:11+0300\n"
+"PO-Revision-Date: 2012-08-07 01:14+0100\n"
 "Last-Translator: Carlos Zuferri <chals@altorricon.com>\n"
 "Language-Team:  <debian-live@lists.debian.org>\n"
 "Language: ca\n"
@@ -192,11 +192,17 @@ msgid ""
 "satisfied. To support these changes, you will need auto scripts which ensure "
 "your configuration is kept in a consistent state."
 msgstr ""
+"Les configuracions en viu poques vegades són perfectes al primer intent. "
+"Passar opcions de #{lb config}# desde la línea d'ordres pot estar be per "
+"construir una imatge una vegada, però és més típic revisar aquestes opcions "
+"i construir de nou fins que se'n estigui satisfet. Per donar suport a "
+"aquests canvis, es poden utilitzar scripts auto que assegurin que la seva "
+"configuració es manté en un estat coherent."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:12
 msgid "3~ Why you need auto"
-msgstr ""
+msgstr "3~ Per què es necessita auto"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:14
@@ -213,6 +219,18 @@ msgid ""
 "upgrade live-build and it happens to rename an option, #{config/*}# would "
 "still contain variables named after the old option that are no longer valid."
 msgstr ""
+"L'ordre #{lb config}# emmagatzema les opcions que se li passen en els "
+"fitxers de #{config/*}#, juntament amb moltes altres opcions que estan "
+"establertes als valors per defecte. Si s'executa un cop més, #{lb config}# "
+"no restablirà cap de les opcios dependents basades en les opcions inicials. "
+"Així, per exemple, si s'executa #{lb config}# de nou amb un nou valor per #"
+"{--distribution}#, totes les opcions que en depenen que es van omplir per a "
+"la distribució per defecte ja no poden funcionar amb la nova. Tampoc són "
+"aquests fitxers destinats a ser llegits o editats. S'emmagatzemen els valors "
+"per més de cent opcions, i ningú serà capaç de veure aquestes opcions que "
+"s'han especificat realment. I, finalment, si s'executa #{lb config}# i a "
+"continuació s'actualitza live-build i canvia el nom d'una opció, #{config/*}"
+"# encara conté les variables de l'opció vella que ja no són vàlides."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:16
@@ -256,6 +274,9 @@ msgid ""
 "copy and edit. Start a new, default configuration, then copy the examples "
 "into it:"
 msgstr ""
+"Per a més comoditat, live-build ve amb uns scripts d'exemple per copiar i "
+"editar. Iniciar una nova configuració per defecte, i a continuació, copiar "
+"els exemples:"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:25
@@ -264,11 +285,15 @@ msgid ""
 " $ mkdir mylive && cd mylive && lb config\n"
 " $ cp /usr/share/doc/live-build/examples/auto/* auto/\n"
 msgstr ""
+" $ mkdir mylive && cd mylive && lb config\n"
+" $ cp /usr/share/doc/live-build/examples/auto/* auto/\n"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:29
 msgid "Edit #{auto/config}#, adding any options as you see fit. For instance:"
 msgstr ""
+"Editar #{auto/config}#, afegint les opcions com millor li sembli. Per "
+"exemple:"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:40
@@ -283,6 +308,14 @@ msgid ""
 "     --mirror-binary http://ftp.es.debian.org/debian/ \\\n"
 "     \"${@}\"\n"
 msgstr ""
+" #!/bin/sh\n"
+" lb config noauto \\\n"
+"     --architectures i386 \\\n"
+"     --linux-flavours 686-pae \\\n"
+"     --binary-images hdd \\\n"
+"     --mirror-bootstrap http://ftp.es.debian.org/debian/ \\\n"
+"     --mirror-binary http://ftp.es.debian.org/debian/ \\\n"
+"     \"${@}\"\n"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:44
@@ -294,6 +327,13 @@ msgid ""
 "along with any other build products. And finally, when you use #{lb build}#, "
 "a log of the build will be written by #{auto/build}# in #{build.log}#."
 msgstr ""
+"Ara, cada vegada que s'utilitzi #{lb config}#, #{auto/config}# restablirà la "
+"configuració basada en aquestes opcions. Quan es vulguin fer canvis, editar "
+"les opcions d'aquest fitxer en lloc de passar-les a #{lb config}#. Quan "
+"s'utilitza #{lb clean}#, #{auto/clean}# netejarà els fitxers de #{config/*}# "
+"juntament amb els altres productes de construcció. I, finalment, quan "
+"s'utilitza #{lb build}#, es crea un log de la construcció mitjançant #{auto/"
+"build}# anomenat #{build.log}#."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:46
@@ -305,11 +345,17 @@ msgid ""
 "readability, as shown in the example above, that you don't forget the "
 "backslash (\\) at the end of each line that continues to the next."
 msgstr ""
+"Nota: Aquí s'utilitza un paràmetre especial #{noauto}# per suprimir un altra "
+"crida a #{auto/config}#, la qual cosa impedeix la recursivitat infinita. "
+"Assegurar-se de no eliminarlo accidentalment fent canvis. També, tenir cura "
+"de que quan es divideix l'ordre #{lb config}# a través de diverses línies "
+"per facilitar la lectura, com es mostra en l'exemple anterior, no s'oblidi "
+"la barra invertida (\\) al final de cada línia que segueix a la següent."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:48
 msgid "2~ Clone a configuration published via Git"
-msgstr ""
+msgstr "2~ Clonar una configuració publicada via Git"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:50
@@ -338,10 +384,10 @@ msgstr ""
 #, no-wrap
 msgid ""
 " $ mkdir live-rescue && cd live-rescue\n"
-" $ lb config git://live.debian.net/git/config-rescue.git\n"
+" $ lb config --config git://live.debian.net/git/config-rescue.git\n"
 msgstr ""
 " $ mkdir live-rescue && cd live-rescue\n"
-" $ lb config git://live.debian.net/git/config-rescue.git\n"
+" $ lb config --config git://live.debian.net/git/config-rescue.git\n"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:61
@@ -385,5 +431,5 @@ msgstr ""
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:76
 #, no-wrap
-msgid " $ lb config ldn:config-rescue\n"
-msgstr " $ lb config ldn:config-rescue\n"
+msgid " $ lb config --config ldn:config-rescue\n"
+msgstr " $ lb config --config ldn:config-rescue\n"

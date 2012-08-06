@@ -14,8 +14,8 @@ installed by supplying answers to debconf questions.
 While ideally a Debian live system would include files entirely provided by
 unmodified Debian packages, it is sometimes convenient to provide or modify
 some content by means of files. Using includes, it is possible to add (or
-replace) arbitrary files in your Debian Live image. live-build provides
-three mechanisms for using them:
+replace) arbitrary files in your Debian Live image. live-build provides two
+mechanisms for using them:
 
 _* Chroot local includes: These allow you to add or replace files to the
 chroot/Live filesystem. Please see {Live/chroot local
@@ -24,10 +24,6 @@ includes}#live-chroot-local-includes for more information.
 _* Binary local includes: These allow you to add or replace files in the
 binary image. Please see {Binary local includes}#binary-local-includes for
 more information.
-
-_* Binary includes: These allow you to add or replace Debian specific files
-in the binary image, such as the templates and tools directories. Please see
-{Binary includes}#binary-includes for more information.
 
 Please see {Terms}#terms for more information about the distinction between
 the "Live" and "binary" images.
@@ -89,21 +85,6 @@ code{
 }code
 
 These files will now appear in the root directory of the live media.
-
-3~binary-includes Binary includes
-
-live-build has some standard files (like documentation) that gets included
-in the default configuration on every live media. This can be disabled with:
-
-code{
-
- $ lb config --includes none
-
-}code
-
-Otherwise, the material will be installed by live-build in #{/includes/}# by
-default on the media filesystem, or else you can specify an alternate path
-with #{--includes}#.
 
 2~hooks Hooks
 

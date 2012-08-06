@@ -8,92 +8,119 @@ versions successives du logiciel live-build et de l'image live elle-même.
 
 2~ Utiliser auto pour gérer les modifications de configuration
 
-Les configurations live sont rarement parfaites du premier coup. Vous aurez
-probablement besoin de faire une série de révisions jusqu'à ce que vous êtes
-satisfait. Cependant, des incohérences peuvent se glisser dans votre
-configuration d'une révision à la prochaine si vous ne faites pas
-attention. Le principal problème est, une fois qu'une variable est donnée
-une valeur par défaut, cette valeur ne sera pas recalculée à partir d'autres
-variables qui peuvent changer dans les révisions ultérieures.
+Live configurations rarely are perfect on the first try. It may be fine to
+pass #{lb config}# options from the command-line to perform a single build,
+but it is more typical to revise those options and build again until you are
+satisfied. To support these changes, you will need auto scripts which ensure
+your configuration is kept in a consistent state.
 
-Par exemple, lorsque la distribution est d'abord définie, nombreuses
-variables sont assignées des valeurs par défaut qui conviennent à cette
-distribution. Cependant, si vous décidez ultérieurement de modifier la
-distribution, ces variables dépendantes conservent les anciennes valeurs qui
-ne sont plus appropriées.
+3~ Why you need auto
 
-Un deuxième problème lié est que si vous exécutez #{lb config}# et ensuite
-mettez à jour une nouvelle version de live-build qui a changée l'un des noms
-des variables, vous découvrirez ce que par un examen manuel des variables
-dans votre fichiers dans #{config/*}#, que vous devrez ensuite utiliser pour
-définir l'option appropriée à nouveau.
+The #{lb config}# command stores the options you pass to it in #{config/*}#
+files along with many other options set to default values. If you run #{lb
+config}# again, it will not reset any option that was defaulted based on
+your initial options. So, for example, if you run #{lb config}# again with a
+new value for #{--distribution}#, any dependent options that were defaulted
+for the old distribution may no longer work with the new. Nor are these
+files intended to be read or edited. They store values for over a hundred
+options, so nobody, let alone yourself, will be able to see in these which
+options you actually specified. And finally, if you run #{lb config}#, then
+upgrade live-build and it happens to rename an option, #{config/*}# would
+still contain variables named after the old option that are no longer valid.
 
-Tout cela serait une nuisance terrible si ce n'était pas pour les scripts
-auto/*, simples emballages pour les commandes #{lb config}#, #{lb build}# et
-#{lb clean}# qui sont conçus pour vous aider à gérer votre configuration. Il
-suffit de créer un script auto/config contenant la commande #{lb config}#
-avec toutes les options désirées, et un auto/clean qui supprime les fichiers
-contenant les valeurs des variables de configuration, et chaque fois que
-vous lancez #{lb config}# et #{lb clean}#, ces fichiers seront
-exécutés. Cela permettra d'assurer que votre configuration a une cohérence
-interne d'une révision à l'autre et d'une version de live-build à la
-suivante (bien que vous aurez encore de prendre soin et lire la
-documentation lorsque vous mettez live-build à niveau pour faire les
-ajustements nécessaires).
+For all these reasons, #{auto/*}# scripts will make your life easier. They
+are simple wrappers to the #{lb config}#, #{lb build}# and #{lb clean}#
+commands that are designed to help you manage your configuration. The
+#{auto/config}# script stores your #{lb config}# command with all desired
+options, the #{auto/clean}# script removes the files containing
+configuration variable values, and the #{auto/build}# script keeps a
+#{build.log}# of each build. Each of these scripts is run automatically
+every time you run the corresponding #{lb}# command. By using these scripts,
+your configuration is easier to read and is kept internally consistent from
+one revision to the next. Also, it will be much easier for you identify and
+fix options which need to change when you upgrade live-build after reading
+the updated documentation.
 
-2~ Exemples de scripts auto
+3~ Use example auto scripts
 
-Utiliser des exemples de scripts auto tels que les suivants comme point de
-départ pour votre nouvelle configuration de live-build. Prenez note que
-lorsque vous appelez la commande #{lb}# que votre script auto emballage,
-vous devez spécifier #{noauto}# comme paramètre afin de s'assurer que le
-script automatique n'est pas appelé à nouveau, de façon récursive. Aussi,
-n'oubliez pas de s'assurer que les scripts sont exécutables (par exemple
-#{chmod 755 auto/*}#).
+For your convenience, live-build comes with example auto shell scripts to
+copy and edit. Start a new, default configuration, then copy the examples
+into it:
 
-#{auto/config}#
+code{
+
+ $ mkdir mylive && cd mylive && lb config
+ $ cp /usr/share/doc/live-build/examples/auto/* auto/
+
+}code
+
+Edit #{auto/config}#, adding any options as you see fit. For instance:
 
 code{
 
  #!/bin/sh
  lb config noauto \
-     --package-lists "standard" \
+     --architectures i386 \
+     --linux-flavours 686-pae \
+     --binary-images hdd \
+     --mirror-bootstrap http://ftp.es.debian.org/debian/ \
+     --mirror-binary http://ftp.es.debian.org/debian/ \
      "${@}"
 
 }code
 
-#{auto/clean}#
+Now, each time you use #{lb config}#, #{auto/config}# will reset the
+configuration based on these options. When you want to make changes to them,
+edit the options in this file instead of passing them to #{lb config}#. When
+you use #{lb clean}#, #{auto/clean}# will clean up the #{config/*}# files
+along with any other build products. And finally, when you use #{lb build}#,
+a log of the build will be written by #{auto/build}# in #{build.log}#.
+
+Note: A special #{noauto}# parameter is used here to suppress another call
+to #{auto/config}#, thereby preventing infinite recursion. Make sure you
+don't accidentally remove it when making edits. Also, take care to ensure
+when you split the #{lb config}# command across multiple lines for
+readability, as shown in the example above, that you don't forget the
+backslash (\) at the end of each line that continues to the next.
+
+2~ Clone a configuration published via Git
+
+Use the #{lb config --config}# option to clone a Git repository that
+contains a Debian Live configuration. If you would like to base your
+configuration on one maintained by the Debian Live project, look at
+http://live.debian.net/gitweb for the repositories prefixed with
+#{config-}#.
+
+For example, to build a rescue image, use the #{config-rescue}# repository
+as follows:
 
 code{
 
- #!/bin/sh
- lb clean noauto "${@}"
- rm -f config/binary config/bootstrap \
-     config/chroot config/common config/source
- rm -f build.log
+ $ mkdir live-rescue && cd live-rescue
+ $ lb config git://live.debian.net/git/config-rescue.git
 
 }code
 
-#{auto/build}#
+Edit #{auto/config}# and any other things you need in the #{config}# tree to
+suit your needs.
+
+You may optionally define a shortcut in your Git configuration by adding the
+following to your #{${HOME}/.gitconfig}#:
 
 code{
 
- #!/bin/sh
- lb build noauto "${@}" 2>&1 | tee build.log
+ [url "git://live.debian.net/git/"]
+     insteadOf = ldn:
 
 }code
 
-Nous expédions maintenant scripts auto d'exemple avec live-build sur la base
-des exemples ci-dessus. Vous pouvez copier ces comme point de départ.
+This enables you to use #{ldn:}# anywhere you need to specify the address of
+a #{live.debian.net}# git repository. If you also drop the optional #{.git}#
+suffix, starting a new image using this configuration is as easy as:
 
 code{
 
- $ cp /usr/share/doc/live-build/examples/auto/* auto/
+ $ lb config ldn:config-rescue
 
 }code
 
-Editer #{auto/config}#, en changeant ou en ajoutant des options comme bon
-vous semble. Dans l'exemple ci-dessus, #{--package-lists standard}# est fixé
-à la valeur par défaut. Changez ce à une valeur appropriée pour votre image
-(ou le supprimer si vous voulez utiliser par défaut) et ajouter des options
-supplémentaires dans les lignes suivantes.

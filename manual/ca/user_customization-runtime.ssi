@@ -81,14 +81,14 @@ la forma completa #{language_country.encoding}#. Una llista de locales
 suportades i la codificació per a cadascuna es poden trobar a
 #{/usr/share/i18n/SUPPORTED}#.
 
-Both the console and X keyboard configuration are performed by
-#{live-config}# using the #{console-setup}# package. To configure them, use
-the #{keyboard-layouts}#, #{keyboard-variants}#, #{keyboard-options}# and
-#{keyboard-model}# boot parameters via the #{--bootappend-live}#
-option. Valid options for these can be found in
-#{/usr/share/X11/xkb/rules/base.lst}#. To find layouts and variants for a
-given language, try searching for the English name of the language and/or
-the country where the language is spoken, e.g:
+#{live-config}# s'encarrega de la configuració del teclat per X i per la
+consola utilitzant el paquet #{console-setup}#. Per la seva configuració es
+por fer servir els paràmetres d'arrencada #{keyboard-layouts}#,
+#{keyboard-variants}#, #{keyboard-options}# i #{keyboard-model}# mitjançant
+l'opció #{--bootappend-live}#. Es poden trobar opcions vàlides per a aquests
+a #{/usr/share/X11/xkb/rules/base.lst}#. Per trobar distribucions de teclat
+i variants per a un idioma determinat, s'ha d'intentar cercar el nom en
+anglès de la llengua i/o el país on es parla l'idioma, per exemple:
 
 code{
 
@@ -130,15 +130,15 @@ code{
 
 }code
 
-Multiple values may be specified as comma-delimited lists for each of the
-#{keyboard-*}# options, with the exception of #{keyboard-model}#, which
-accepts only one value. Please see the #{keyboard(5)}# man page for details
-and examples of #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# and
-#{XKBOPTIONS}# variables. If multiple #{keyboard-variants}# values are
-given, they will be matched one-to-one with #{keyboard-layouts}# values (see
-#{setxkbmap(1)}# #{-variant}# option). Empty values are allowed; e.g. to
-define two layouts, the default being US QWERTY and the other being US
-Dvorak, use:
+Es poden especificar diversos valors per a cada una de les opcions
+#{keyboard-*}# en una llista separada per comes amb l'excepció de
+#{keyboard-model}#, que només accepta un valor. Veure la pàgina de manual
+#{keyboard(5)}# per a més detalls i exemples de les variables #{XKBMODEL}#,
+#{XKBLAYOUT}#, #{XKBVARIANT}# y #{XKBOPTIONS}#. Si s'especifican diversos
+valors de #{keyboard-variants}# es correspondran un a un amb els valors
+#{keyboard-layouts}# (veure #{setxkbmap(1)}# opció #{-variant}#). Es poden
+utilitzar valors buits, per exemple, per definir dos dissenys, el valor
+predeterminat US QWERTY i l'altre US Dvorak:
 
 code{
 

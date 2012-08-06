@@ -8,90 +8,119 @@ el programari live-build com de la imatge en viu en si mateixa.
 
 2~ Utilitzar auto per gestionar canvis de configuració
 
-Les configuracions dels sistemes vius poques vegades són perfectes al primer
-intent. És probable que s'hagi de fer una sèrie de revisions fins quedar
-satisfet. No obstant això, es poden introduir inconsistències a la
-configuració d'una versió a la següent si no se'n te cura. El principal
-problema és, que una vegada que a una variable se li assigna un valor per
-defecte, aquest valor no es torna a calcular a partir d'altres variables que
-poden canviar en revisions posteriors.
+Live configurations rarely are perfect on the first try. It may be fine to
+pass #{lb config}# options from the command-line to perform a single build,
+but it is more typical to revise those options and build again until you are
+satisfied. To support these changes, you will need auto scripts which ensure
+your configuration is kept in a consistent state.
 
-Per exemple, quan la distribució s'estableix per primer cop, a moltes de les
-variables dependents se'ls assigna uns valors per defecte que s'adapten a
-aquesta distribució. No obstant això, si més endavant es decideix canviar la
-distribució, les variables dependents seguiran conservant els mateixos
-valors que ja no són apropiats.
+3~ Why you need auto
 
-Un segon problema relacionat és que si s'executa #{lb config}# i després
-s'actualitza a una versió nova de live-build que ha canviat un dels noms de
-les variables, només es descobrirà això mitjantçant una revisió manual de
-les variables als fitxers de #{config/*}# que després s'hauran de tornar a
-modificar per establir l'opció corresponent de nou.
+The #{lb config}# command stores the options you pass to it in #{config/*}#
+files along with many other options set to default values. If you run #{lb
+config}# again, it will not reset any option that was defaulted based on
+your initial options. So, for example, if you run #{lb config}# again with a
+new value for #{--distribution}#, any dependent options that were defaulted
+for the old distribution may no longer work with the new. Nor are these
+files intended to be read or edited. They store values for over a hundred
+options, so nobody, let alone yourself, will be able to see in these which
+options you actually specified. And finally, if you run #{lb config}#, then
+upgrade live-build and it happens to rename an option, #{config/*}# would
+still contain variables named after the old option that are no longer valid.
 
-Tot això seria una molestia terrible si no fos pels scripts auto/*, simples
-embolcalls per les ordres #{lb config}#, #{lb build}# i #{lb clean}#
-dissenyats per ajudar a gestionar una configuració. Només cal crear un
-script auto/config que contingui totes les opcions que es desitgin, i un
-auto/clean que elimini els fitxers que continguin diversos valors de
-variables de configuració, cada vegada que s'executi #{lb config}# i #{lb
-clean}#, aquests fitxers seran executats. Això assegurarà que la
-configuració guarda una coherència interna d'una versió a una altra i d'una
-versió de live-build a la següent (Tot i que encara s'haurà d'anar amb
-compte i llegir la documentació quan s'actualitzi live-build i fer els
-ajustos necessaris ).
+ Per totes aquestes raons, els scripts #{auto/*}# ens fan la vida més
+fàcil. Són simples embolcalls per les ordres #{lb config}#, #{lb build}# i
+#{lb clean}# dissenyats per ajudar a gestionar una configuració. Només cal
+crear un script #{auto/config}# que contingui totes les opcions que es
+desitgin per a #{lb config}#, i un #{auto/clean}# que elimini els fitxers
+que continguin diversos valors de variables de configuració, i el script
+#{auto/build}# guarda un #{build.log}# de cada construcció. Cada vegada que
+s'executi l'ordre #{lb}# corresponent, aquests fitxers seran executats
+automàticament. L'ús d'aquests scripts assegurarà que la configuració sigui
+més senzilla de llegir i que guardi una coherència interna d'una reversió a
+una altra. A més a més serà més fàcil identificar i solucionar les opcions
+que s'han de canviar al actualitzar d'una versió de live-build a la següent
+després de llegir la documentació.
 
-2~ Scripts auto d'exemple
+2~ Utilitzar scripts auto d'exemple
 
-Es poden utilitzar scripts auto d'exemple com ara els següents com a punt de
-partida per crear una nova configuració de live-build. Tenir en compte que
-quan s'invoca l'ordre #{lb}# que embolcalla el script auto, s'ha
-d'especificar #{noauto}# com a paràmetre per garantir que el script auto no
-es torna a executar de forma recursiva. A més, assegurar-se que els scripts
-són fitxers executables (e.g. #{chmod 755 auto/*}#).
+For your convenience, live-build comes with example auto shell scripts to
+copy and edit. Start a new, default configuration, then copy the examples
+into it:
 
-#{auto/config}#
+code{
+
+ $ mkdir mylive && cd mylive && lb config
+ $ cp /usr/share/doc/live-build/examples/auto/* auto/
+
+}code
+
+Edit #{auto/config}#, adding any options as you see fit. For instance:
 
 code{
 
  #!/bin/sh
  lb config noauto \
-     --package-lists "standard" \
+     --architectures i386 \
+     --linux-flavours 686-pae \
+     --binary-images hdd \
+     --mirror-bootstrap http://ftp.es.debian.org/debian/ \
+     --mirror-binary http://ftp.es.debian.org/debian/ \
      "${@}"
 
 }code
 
-#{auto/clean}#
+Now, each time you use #{lb config}#, #{auto/config}# will reset the
+configuration based on these options. When you want to make changes to them,
+edit the options in this file instead of passing them to #{lb config}#. When
+you use #{lb clean}#, #{auto/clean}# will clean up the #{config/*}# files
+along with any other build products. And finally, when you use #{lb build}#,
+a log of the build will be written by #{auto/build}# in #{build.log}#.
+
+Note: A special #{noauto}# parameter is used here to suppress another call
+to #{auto/config}#, thereby preventing infinite recursion. Make sure you
+don't accidentally remove it when making edits. Also, take care to ensure
+when you split the #{lb config}# command across multiple lines for
+readability, as shown in the example above, that you don't forget the
+backslash (\) at the end of each line that continues to the next.
+
+2~ Clone a configuration published via Git
+
+Utilitzar l'opció #{lb config --config}# opció per clonar un repositori Git
+que contingui una configuració de Debian Live. Si es vol basar la
+configuració en un repositori mantingut pel projecte Debian Live, mirar els
+repositoris amb el prefix #{config-}# a http://live.debian.net/gitweb
+
+Per exemple, per construir una imatge de rescat, utilitzar el repositori
+#{config-rescue}# de la manera següent:
 
 code{
 
- #!/bin/sh
- lb clean noauto "${@}"
- rm -f config/binary config/bootstrap \
-     config/chroot config/common config/source
- rm -f build.log
+ $ mkdir live-rescue && cd live-rescue
+ $ lb config git://live.debian.net/git/config-rescue.git
 
 }code
 
-#{auto/build}#
+Editar #{auto/config}# i qualsevol altra cosa necessària dins l'arbre
+#{config}# per satisfer les vostres necessitats.
+
+Si es desitja, es pot definir una drecera en la configuració de Git, afegint
+el següent a #{${HOME}/.gitconfig}#:
 
 code{
 
- #!/bin/sh
- lb build noauto "${@}" 2>&1 | tee build.log
+ [url "git://live.debian.net/git/"]
+     insteadOf = ldn:
 
 }code
 
-Ara incloem scripts auto d'exemple amb live-build basats en els exemples
-anteriors. Es poden copiar com a punt de partida.
+Això permet utilitzar #{ldn:}# en qualsevol lloc on cal especificar la
+direcció d'un repositori git. També es pot omitir el sufix #{.git}#,
+començar una nova imatge amb aquesta configuració és tan fàcil com:
 
 code{
 
- $ cp /usr/share/doc/live-build/examples/auto/* auto/
+ $ lb config ldn:config-rescue
 
 }code
 
-Editar #{auto/config}#, canviar o afegir qualsevol opció que millor
-sembli. En l'exemple anterior s'estableix el valor per defecte,
-#{--package-lists standard}#. Canviar això a qualsevol valor vàlid per la
-pròpia imatge (o suprimir-ho si es vol utilitzar el valor per defecte) i
-afegir opcions addicionals en les línies que segueixen a continuació.

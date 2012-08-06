@@ -87,8 +87,7 @@ code{
 
  $ mkdir tutorial2
  $ cd tutorial2
- $ lb config -p lxde
- $ echo iceweasel >> config/package-lists/my.list.chroot
+ $ echo "task-lxde-desktop iceweasel" >> config/package-lists/my.list.chroot
 
 }code
 
@@ -143,7 +142,6 @@ code{
  lb config noauto \
      --architectures i386 \
      --linux-flavours 686-pae \
-     --package-lists lxde \
      "${@}"
 
 }code
@@ -161,17 +159,16 @@ Completar la lista de paquetes local:
 
 code{
 
- $ echo "iceweasel xchat" >> config/package-lists/my.list.chroot
+ $ echo "task-lxde-desktop iceweasel xchat" >> config/package-lists/my.list.chroot
 
 }code
 
-En primer lugar con #{--architectures i386}# se asegura de que en nuestro
-sistema de creación #{amd64}# se crea una versión de 32-bits adecuada para
-ser usada en la mayoría de máquinas. En segundo lugar, se usa
-#{--linux-flavours 686-pae}# porque no se espera usar esta imagen en
-sistemas mucho más viejos. En tercer lugar se elige la lista de paquetes
-/{lxde}/ para proporcionar un escritorio mínimo. Y, por último, se añaden
-dos paquetes iniciales favoritos: /{iceweasel}/ y /{xchat}/.
+First, #{--architectures i386}# ensures that on our #{amd64}# build system,
+we build a 32-bit version suitable for use on most machines. Second, we use
+#{--linux-flavours 686-pae}# because we don't anticipate using this image on
+much older systems. Third, we have chosen the /{lxde}/ task metapackage to
+give us a minimal desktop. And finally, we have added two initial favourite
+packages: /{iceweasel}/ and /{xchat}/.
 
 Ahora, crear la imagen:
 
@@ -260,24 +257,27 @@ experiencias recogidas de los usuarios de Debian Live.
 
 *{Caso Práctico:}* Crear una imagen con live-build para arrancar directamente un servidor VNC.
 
-Hacer un directorio de creación y crear una configuración en esqueleto según
-la lista estándar-x11, incluyendo /{gdm3}/, /{metacity}/ y /{xvnc4viewer}/,
-desactivando los paquetes recomendados para conseguir un sistema mínimo:
+Make a build directory and create an skeletal configuration inside it,
+disabling recommends to make a minimal system. And then create two package
+lists: the first one generated with a script provided by live-build named
+#{Packages}# (see {Generated package lists}#generated-package-lists), and
+the second one including /{xorg}/, /{gdm3}/, /{metacity}/ and
+/{xvnc4viewer}/.
 
 code{
 
  $ mkdir vnc_kiosk_client
  $ cd vnc_kiosk_client
- $ lb config -a i386 -k 686-pae -p standard-x11 \
-     --apt-recommends false
- $ echo "gdm3 metacity xvnc4viewer" >> config/package-lists/my.list.chroot
+ $ lb config -a i386 -k 686-pae --apt-recommends false
+ $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
+ $ echo "xorg gdm3 metacity xvnc4viewer" > config/package-lists/my.list.chroot
 
 }code
 
-Crear el directorio #{/etc/skel}# y poner un fichero #{.xsession}#
-personalizado para el usuario que por defecto ejecutará /{metacity}/ e
-iniciará el /{xvncviewer}/, conectándo al puerto #{5901}# de un servidor en
-#{192.168.1.2}#:
+Create the directory #{/etc/skel}# in #{config/includes.chroot}# and put a
+custom #{.xsession}# in it for the default user that will launch
+/{metacity}/ and start /{xvncviewer}/, connecting to port #{5901}# on a
+server at #{192.168.1.2}#:
 
 code{
 
@@ -305,23 +305,21 @@ Disfrutarlo.
 
 2~ Una imagen básica para un pendrive USB de 128M
 
-*{Caso Práctico:}* Crear una imagen estándar quitando algunos componentes para que quepa en un pendrive USB de 128M dejándo espacio libre para poder usarlo.
+*{Use case:}* Create a standard image with some components removed in order to fit on a 128M USB key with a little space left over to use as you see fit.
 
-Al optimizar una imagen para adaptarla al tamaño de algunos medios de
-almacenamiento, es necesario comprender el equilibrio que se está haciendo
-entre tamaño y funcionalidad. En este ejemplo, se recorta tanto sólo para
-dar cabida a material adicional dentro de un tamaño de 128M, pero sin hacer
-nada para destruir la integridad de los paquetes que contiene, tales como la
-depuración de las variantes locales a través del paquete /{localepurge}/ u
-otro tipo de optimizaciones «intrusivas». Cabe destacar que no se debe usar
-#{--bootstrap-flavour minimal}# a menos de que realmente se sepa lo que se
-está haciendo, ya que al omitir paquetes de prioridad *{importante}* lo más
-probable es que se produzca un sistema roto.
+When optimizing an image to fit a certain media size, you need to understand
+the tradeoffs you are making between size and functionality. In this
+example, we trim only so much as to make room for additional material within
+a 128M media size, but without doing anything to destroy the integrity of
+the packages contained within, such as the purging of locale data via the
+/{localepurge}/ package, or other such "intrusive" optimizations. Of
+particular note, in order to understand what the #{minimal.chroot}# hook
+does you should take a look at #{/usr/share/doc/live-build/examples/hooks}#
 
 code{
 
- $ lb config -k 486 -p minimal --apt-indices false \
-     --memtest none --apt-recommends false --includes none
+ $ lb config -k 486 --apt-indices false --apt-recommends false --memtest none
+ $ cp /usr/share/doc/live-build/examples/hooks/minimal.chroot config/hooks
 
 }code
 
@@ -333,25 +331,27 @@ code{
 
 }code
 
-En el sistema del autor, en el momento de escribir esto, la configuración
-anterior produjo una imagen de 78Mbytes. Esto se compara favorablemente en
-tamaño con la imagen de 166Mbytes producida por la configuración por defecto
-en el {Tutorial 1}#tutorial-1.
+On the author's system at the time of writing this, the above configuration
+produced a 95Mbyte image. This compares favourably with the 182Mbyte image
+produced by the default configuration in {Tutorial 1}#tutorial-1.
 
-El mayor ahorro de espacio aquí, en comparación con la creación de una
-imagen estándar en un sistema de arquitectura #{i386}# es seleccionar sólo
-la versión del kernel #{486}# en lugar de la de por defecto #{-k "486
-686-pae"}#. Dejar fuera los índices de APT con #{--apt-indices false}#
-también ahorra una cantidad importante de espacio, la desventaja es que es
-necesario hacer un #{apt-get update}# antes de usar apt en el sistema en
-vivo. Elegir la lista del paquete #{minimal}# deja fuera el gran paquete de
-#{locales}# y sus utilidades asociadas. Dejando los paquetes recomendados
-con #{--apt-recommends false}# se ahorra un poco de espacio adicional a
-costa de omitir algunos paquetes que de otro modo podría esperarse que
-estuvieran alli, tal como /{firmware-linux-free}/ que puede ser necesario
-para el soporte de cierto hardware. Las opciones restantes recortan pequeñas
-cantidades adicionales de espacio. Es necesario decidir si vale la pena la
-funcionalidad que se sacrifica con cada optimización.
+The biggest space-saver here, compared to building a standard image on an
+#{i386}# architecture system, is to select only the #{486}# kernel flavour
+instead of the default #{-k "486 686-pae"}#. Leaving off APT's indices with
+#{--apt-indices false}# also saves a fair amount of space, the tradeoff
+being that you need to #{apt-get update}# before using apt in the live
+system. Dropping recommended packages with #{--apt-recommends false}# saves
+some additional space, at the expense of omitting some packages you might
+otherwise expect to be there, such as /{firmware-linux-free}/ which may be
+needed to support certain hardware. #{--memtest none}# prevents the
+installation of a memory tester. And finally, the execution of the
+#{minimal}# hook removes some unused packages and files.
+
+Using other hooks, like for example the #{stripped.chroot}# hook found in
+#{/usr/share/doc/live-build/examples/hooks}#, may shave off additional small
+amounts of space and produce an image of 76MB. But it is up to you to decide
+if the functionality that is sacrificed with each size optimization is worth
+the loss of functionality.
 
 2~ Un escritorio KDE con variante local e instalador
 

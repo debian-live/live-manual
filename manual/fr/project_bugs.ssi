@@ -2,11 +2,10 @@ B~ Rapporter des bogues
 
 1~bugs Rapporter des bogues
 
-Debian Live est loin d'être parfait, mais nous voulons le rendre aussi
-proche que possible de parfait - avec votre aide. N'hésitez pas à signaler
-un bogue: il est préférable de remplir un rapport deux fois plus que
-jamais. Toutefois, ce chapitre contient des recommandations pour déposer les
-rapports de bogues.
+Debian Live is far from being perfect, but we want to make it as close as
+possible to perfect - with your help. Do not hesitate to report a bug. It is
+better to fill a report twice than never. However, this chapter includes
+recommendations on how to file good bug reports.
 
 Pour les impatients:
 
@@ -25,15 +24,15 @@ que vous construisez.
 
 2~ Problèmes connus
 
-Parce que les distributions Debian *{testing}* et Debian *{unstable}* sont
-une cible mouvante, quand vous les spécifiez comme les distributions du
-système cible, une construction avec succès n'est pas toujours possible.
+Since Debian *{testing}* and Debian *{unstable}* distributions are moving
+targets, when you specify either of them as the target system distribution,
+a successful build may not always be possible.
 
 % FIXME:
 
-Si cela provoque trop de difficulté pour vous, ne pas construire un système
-basé sur *{testing}* or *{unstable}*, mais plutôt utiliser
-*{stable}*. live-build fait toujours défaut à la version *{stable}*.
+If this causes too much difficulty for you, do not build a system based on
+*{testing}* or *{unstable}*, but rather, use *{stable}*. live-build always
+defaults to the *{stable}* release.
 
 Les problèmes connus sont énumérés sous la section "status" sur notre page à
 http://live.debian.net/.
@@ -61,11 +60,10 @@ dans votre image sont mis à jour aussi.
 
 2~collect-information Recueillir l'information
 
-S'il vous plaît fournir assez d'informations à votre rapport. Incluez au
-moins la version exacte de live-build où le bogue est rencontré et les
-mesures pour le reproduire. S'il vous plaît utilisez votre bon sens et
-incluez d'autres renseignements pertinents, si vous pensez que cela pourrait
-aider à résoudre le problème.
+Please provide enough information with your report. Include, at least, the
+exact version of live-build where the bug is encountered and the steps to
+reproduce it. Please use your common sense and provide any other relevant
+information if you think that it might help in solving the problem.
 
 Pour tirer le meilleur parti de votre rapport de bogue, nous avons besoin
 d'au moins les informations suivantes:
@@ -88,10 +86,9 @@ _* Répartition du système live
 
 _* Version du noyau sur le système live
 
-Vous pouvez générer un journal du processus de construction en utilisant la
-commande #{tee}#. Nous recommandons de faire cela automatiquement avec un
-script #{auto/build}#; (voir {Gestion d'une
-configuration}#managing-a-configuration pour les détails).
+You can generate a log of the build process by using the #{tee}# command. We
+recommend doing this automatically with an #{auto/build}# script (see
+{Managing a configuration}#managing-a-configuration for details).
 
 code{
 
@@ -116,37 +113,36 @@ précédées par #{LC_ALL=C}# ou #{LC_ALL=en_US}#.
 
 2~ Isoler le cas qui échoue, si possible
 
-Si possible, isoler le cas qui échoue au plus petit changement possible. Il
-n'est pas toujours facile de faire cela, donc si vous ne pouvez pas le gérer
-pour votre rapport, ne vous inquiétez pas. Toutefois, si vous planifiez
-votre cycle de développement bien, en utilisant petits ensembles de
-changements par itération, vous pourriez être capable d'isoler le problème
-en construisant une configuration simple «base» qui correspond étroitement à
-la configuration réelle avec seulement le changement cassé ajouté. Si il est
-difficile de trier vos modifications qui cassent, il est possible que vous y
-compris trop dans chaque ensemble de modifications et vous devriez
-developper en petits incréments.
+If possible, isolate the failing case to the smallest possible change that
+breaks. It is not always easy to do this so if you cannot manage it for your
+report, do not worry. However, if you plan your development cycle well,
+using small enough change sets per iteration, you may be able to isolate the
+problem by constructing a simpler 'base' configuration that closely matches
+your actual configuration plus just the broken change set added to it. If
+you have a hard time sorting out which of your changes broke, it may be that
+you are including too much in each change set and should develop in smaller
+increments.
 
 2~ Utilisez le paquet adéquat pour rapporter le bogue
 
-Si vous ne savez pas quel composant est responsable du bogue ou si le bogue
-est un bogue général concernant les systèmes live, vous pouvez remplir un
-bogue sur le pseudo-paquet debian-live.
+If you do not know what component is responsible for the bug or if the bug
+is a general bug concerning live systems, you can fill a bug against the
+debian-live pseudo-package.
 
-Toutefois, nous apprécierons si vous essayez de le réduire en fonction de
-l'endroit où le bogue apparaît.
+However, we would appreciate it if you try to narrow it down according to
+where the bug appears.
 
 3~ Au moment de la construction tandis l'amorçage
 
-live-build amorce d'abord un système Debian de base avec /{debootstrap}/ ou
-/{cdebootstrap}/. Selon l'outil d'amorçage utilisé et de la distribution
-Debian il peut échouer. Si un bogue apparaît ici, vérifiez si l'erreur est
-liée à un paquet Debian spécifique (plus probable), ou si elle est liée à
-l'outil d'amorçage lui-même.
+live-build first bootstraps a basic Debian system with /{debootstrap}/ or
+/{cdebootstrap}/. Depending on the bootstrapping tool used and the Debian
+distribution it is bootstrapping, it may fail. If a bug appears here, check
+if the error is related to a specific Debian package (most likely), or if it
+is related to the bootstrapping tool itself.
 
-Dans les deux cas, ce n'est pas un bogue dans Debian Live, mais plutôt dans
-Debian lui-même que nous ne pouvons résoudre directement. S'il vous plaît
-rapportez un bogue sur l'outil d'amorçage ou du paquet défaillant. 
+In both cases, this is not a bug in Debian Live, but rather in Debian itself
+and probably we cannot fix it directly. Please report such a bug against the
+bootstrapping tool or the failing package.
 
 3~ Au moment de la construction tandis l'installation de paquets
 
@@ -161,42 +157,41 @@ défaillant. L'exécution de /{debootstrap}/ séparément du système de
 construction ou l'exécution de #{lb bootstrap --debug}# vous donnera plus
 d'informations.
 
-Aussi, si vous utilisez un miroir local et/ou un proxy et vous rencontrez un
-problème, s'il vous plaît toujours le reproduire d'abord bootstrapping sur
-un miroir officiel.
+Also, if you are using a local mirror and/or any sort of proxy and you are
+experiencing a problem, please always reproduce it first by bootstrapping
+from an official mirror.
 
 3~ Au moment du démarrage
 
-Si votre image ne démarre pas, s'il vous plaît le signaler à la liste de
-diffusion avec les informations demandées dans {Recueillir
-l'information}#collect-information. Ne pas oublier de mentionner,
-comment/quand l'image a échoué, dans Qemu, VirtualBox, VMWare ou matériel
-réel. Si vous utilisez une technologie de virtualisation d'aucune sorte,
-s'il vous plaît toujours tester sur matériel réel avant de rapporter un
-bogue. Fournir une copie d'écran de l'échec est également très utile.
+If your image does not boot, please report it to the mailing list together
+with the information requested in {Collect
+information}#collect-information. Do not forget to mention, how/when the
+image failed, whether in Qemu, Virtualbox, VMWare or real hardware. If you
+are using a virtualization technology of any kind, please always run it on
+real hardware before reporting a bug. Providing a screenshot of the failure
+is also very helpful.
 
 3~ Au moment de l'exécution
 
-Si un paquet a été installé avec succès, mais échoue tout en exécutant le
-système Live, c'est probablement un bogue dans Debian Live. Cependant,
+If a package was successfully installed, but fails while actually running
+the Live system, this is probably a bug in Debian Live. However:
 
 2~ Faire les recherches
 
-Avant de présenter le bogue, s'il vous plaît recherchez sur le web le
-message d'erreur ou un symptôme particulier que vous obtenez. Comme il est
-hautement improbable que vous êtes la seule personne qui expérience un
-problème particulier, il y a toujours une chance qu'il a été discuté
-ailleurs, et une solution possible, un correctif, ou une solution de
-contournement a été proposé.
+Before filing the bug, please search the web for the particular error
+message or symptom you are getting. As it is highly unlikely that you are
+the only person experiencing a particular problem. There is always a chance
+that it has been discussed elsewhere and a possible solution, patch, or
+workaround has been proposed.
 
 Vous devez prêter une attention particulière à la liste de diffusion de
 Debian Live, ainsi que à la page d'accueil, car elles sont susceptibles de
 contenir des informations à jour. Si ces informations existent, toujours
 inclure les références au sein de vos rapport de bogues.
 
-En outre, vous devriez vérifier les listes de bogues en cours de live-build,
-live-boot, live-config  et live-tools pour voir si quelque chose de
-semblable n'a été déjà signalée.
+In addition, you should check the current bug lists for live-build,
+live-boot, live-config and live-tools to see whether something similar has
+already been reported.
 
 2~ Où rapporter les bogues
 

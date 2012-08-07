@@ -4,11 +4,11 @@
 
 This chapter explains how to manage a live configuration from initial creation, through successive revisions and successive releases of both the live-build software and the live image itself.
 
-2~ Use auto to manage configuration changes
+2~ Dealing with configuration changes
 
 Live configurations rarely are perfect on the first try. It may be fine to pass #{lb config}# options from the command-line to perform a single build, but it is more typical to revise those options and build again until you are satisfied. To support these changes, you will need auto scripts which ensure your configuration is kept in a consistent state.
 
-3~ Why you need auto
+3~ Why use auto scripts? What do they do?
 
 The #{lb config}# command stores the options you pass to it in #{config/*}# files along with many other options set to default values. If you run #{lb config}# again, it will not reset any option that was defaulted based on your initial options. So, for example, if you run #{lb config}# again with a new value for #{--distribution}#, any dependent options that were defaulted for the old distribution may no longer work with the new. Nor are these files intended to be read or edited. They store values for over a hundred options, so nobody, let alone yourself, will be able to see in these which options you actually specified. And finally, if you run #{lb config}#, then upgrade live-build and it happens to rename an option, #{config/*}# would still contain variables named after the old option that are no longer valid.
 

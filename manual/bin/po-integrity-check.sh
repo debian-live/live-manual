@@ -25,8 +25,7 @@ Integrity_check()
 	echo ""	
 	for POFILE in manual/po/${LANGUAGE}/*
 	do
-		echo "-$(basename ${POFILE})"
-		echo ""	
+		echo "-$(basename ${POFILE})"	
 		msgfmt --verbose --check --output-file=/dev/null ${POFILE} || { echo "-> This .po file might be 'BAD'. Please revise it."; echo ""; exit 1; }
 		if [ "$?" -eq "0" ]
 		then
@@ -52,8 +51,7 @@ case "$LANGUAGE" in
 		do 
 			for POFILE in ${LANGUAGE}/*
 			do
-				echo "-Checking $(basename ${POFILE}) integrity in ${LANGUAGE}"
-				echo ""	
+				echo "-Checking the integrity of $(basename ${POFILE}) in ${LANGUAGE}"	
 				msgfmt --verbose --check --output-file=/dev/null ${POFILE} || { echo "-> This .po file might be 'BAD'. Please revise it."; echo ""; exit 1; }
 				if [ "$?" -eq "0" ]
 				then

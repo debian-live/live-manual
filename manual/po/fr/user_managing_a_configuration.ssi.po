@@ -1,15 +1,14 @@
 # French translations for live-manual package
 # This file is distributed under the same license as the live-manual package.
-# Automatically generated, 2010.
 # Carlos Zuferri <chals@altorricon.com>, 2011, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual\n"
 "POT-Creation-Date: 2012-08-07 13:47+0300\n"
-"PO-Revision-Date: 2012-08-07 15:07+0200\n"
+"PO-Revision-Date: 2012-08-07 23:44+0100\n"
 "Last-Translator: Carlos Zuferri <chals@altorricon.com>\n"
-"Language-Team: Catalan <debian-live@lists.debian.org>\n"
+"Language-Team: Debian Live <debian-live@lists.debian.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -181,10 +180,8 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:8
-#, fuzzy
-#| msgid "2~ Use auto to manage configuration changes"
 msgid "2~ Dealing with configuration changes"
-msgstr "2~ Utiliser auto pour gérer les modifications de configuration"
+msgstr "2~ Traiter les modifications de configuration"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:10
@@ -195,11 +192,18 @@ msgid ""
 "satisfied. To support these changes, you will need auto scripts which ensure "
 "your configuration is kept in a consistent state."
 msgstr ""
+"Les configurations live sont rarement parfaites du premier coup. Il peut "
+"être bon de passer des options #{lb config}# à partir de la ligne de "
+"commande pour effectuer une construction unique, mais il est plus typique de "
+"réviser ces options et de construire à nouveau jusqu'à ce que vous êtes "
+"satisfait. Afin de soutenir ces changements, vous aurez besoin des scripts "
+"automatiques qui assurent que votre configuration est maintenue dans un état "
+"cohérent."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:12
 msgid "3~ Why use auto scripts? What do they do?"
-msgstr ""
+msgstr "3~ Pourquoi utiliser des scripts auto? Que font-ils?"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:14
@@ -216,22 +220,20 @@ msgid ""
 "upgrade live-build and it happens to rename an option, #{config/*}# would "
 "still contain variables named after the old option that are no longer valid."
 msgstr ""
+"La commande #{lb config}# enregistre les options que vous lui passez dans "
+"les fichiers dans #{config/*}# avec beaucoup d'autres options aux valeurs "
+"par défaut. Si vous exécutez #{lb config}# à nouveau, il ne réinitialisera "
+"pas l'option qui a été faite défaut en fonction de vos options initiales. "
+"Ainsi, par exemple, si vous exécutez #{lb config}# à nouveau avec une "
+"nouvelle valeur pour #{--distribution}#, toutes les options qui ont été "
+"dépendantes par défaut pour l'ancienne distribution ne peuvent plus "
+"fonctionner avec les nouveaux. Ces fichiers ne sont pas destinés à être lus "
+"ou édités. Ils enregistrent des valeurs pour plus d'une centaine d'options, "
+"afin que personne puisse voir dans ces options que vous avez réellement "
+"précisée."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:16
-#, fuzzy
-#| msgid ""
-#| "All of this would be a terrible nuisance if it weren't for auto/* "
-#| "scripts, simple wrappers to the #{lb config}#, #{lb build}# and #{lb "
-#| "clean}# commands that are designed to help you manage your configuration. "
-#| "Simply create an auto/config script containing #{lb config}# command with "
-#| "all desired options, and an auto/clean that removes the files containing "
-#| "configuration variable values, and each time you run #{lb config}# and #"
-#| "{lb clean}#, these files will be executed. This will ensure that your "
-#| "configuration is kept internally consistent from one revision to the next "
-#| "and from one live-build release to the next (Although you will still have "
-#| "to take care and read the documentation when you upgrade live-build and "
-#| "make adjustments as needed)."
 msgid ""
 "For all these reasons, #{auto/*}# scripts will make your life easier. They "
 "are simple wrappers to the #{lb config}#, #{lb build}# and #{lb clean}# "
@@ -246,24 +248,24 @@ msgid ""
 "need to change when you upgrade live-build after reading the updated "
 "documentation."
 msgstr ""
-"Tout cela serait une nuisance terrible si ce n'était pas pour les scripts "
-"auto/*, simples emballages pour les commandes #{lb config}#, #{lb build}# et "
-"#{lb clean}# qui sont conçus pour vous aider à gérer votre configuration. Il "
-"suffit de créer un script auto/config contenant la commande #{lb config}# "
-"avec toutes les options désirées, et un auto/clean qui supprime les fichiers "
-"contenant les valeurs des variables de configuration, et chaque fois que "
-"vous lancez #{lb config}# et #{lb clean}#, ces fichiers seront exécutés. "
-"Cela permettra d'assurer que votre configuration a une cohérence interne "
-"d'une révision à l'autre et d'une version de live-build à la suivante (bien "
-"que vous aurez encore de prendre soin et lire la documentation lorsque vous "
-"mettez live-build à niveau pour faire les ajustements nécessaires)."
+"Pour toutes ces raisons, les scripts #{auto/*}# vous rendront la vie plus "
+"facile. Ils sont simples emballages pour les commandes #{lb config}#, #{lb "
+"build}# et #{lb clean}# qui sont conçus pour vous aider à gérer votre "
+"configuration. Le script #{auto/config}# enregistre votre commande #{lb "
+"config}# avec toutes les options désirées, le script #{auto/clean}# supprime "
+"les fichiers contenant les valeurs des variables de configuration, et le "
+"script #{auto/build}# crée un #{build.log}# de chaque construction. Et "
+"chaque fois que vous lancez la commande #{lb}# correspondante, ces fichiers "
+"seront exécutés automatiquement. En utilisant ces scripts, votre "
+"configuration est plus facile à lire et a une cohérence interne d'une "
+"révision à l'autre. En outre, il sera plus facile pour vous identifier et "
+"corriger les options qui doivent changer lorsque vous mettez à niveau live-"
+"build après avoir lu la documentation mise à jour."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:18
-#, fuzzy
-#| msgid "2~ Example auto scripts"
 msgid "3~ Use example auto scripts"
-msgstr "2~ Exemples de scripts auto"
+msgstr "2~ Utilisez scripts auto d'exemple"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:20
@@ -272,6 +274,9 @@ msgid ""
 "copy and edit. Start a new, default configuration, then copy the examples "
 "into it:"
 msgstr ""
+"Pour votre commodité, live-build est fourni avec shell scripts d'exemple, "
+"pour copier et modifier. Lancer une nouvelle configuration par défaut, puis "
+"copier les exemples:"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:25
@@ -287,6 +292,8 @@ msgstr ""
 #: en/user_managing_a_configuration.ssi:29
 msgid "Edit #{auto/config}#, adding any options as you see fit. For instance:"
 msgstr ""
+"Modifier #{auto/config}#,  ajouter des options comme bon vous semble. Par "
+"exemple:"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:40
@@ -320,6 +327,13 @@ msgid ""
 "along with any other build products. And finally, when you use #{lb build}#, "
 "a log of the build will be written by #{auto/build}# in #{build.log}#."
 msgstr ""
+"Maintenant, chaque fois que vous utilisez #{lb config}#, #{auto/config}# "
+"réinitialisera la configuration basée sur ces options. Lorsque vous "
+"souhaitez effectuer des modifications, modifier les options dans ce fichier "
+"au lieu de les passer à #{lb config}#. Lorsque vous utilisez #{lb clean}#, #"
+"{auto/clean}# va nettoyer les fichiers ainsi que tous les autres produits de "
+"construction. Et enfin, lorsque vous utilisez #{lb build}# , un journal de "
+"la construction sera écrit par #{auto/build}# dans #{build.log}#."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:46
@@ -331,11 +345,18 @@ msgid ""
 "readability, as shown in the example above, that you don't forget the "
 "backslash (\\) at the end of each line that continues to the next."
 msgstr ""
+"Remarque: Un paramètre spécial #{noauto}# est utilisé ici pour en éliminer "
+"un autre appel à #{auto/config}#, évitant ainsi une récursion infinie. "
+"Assurez-vous que vous ne l'avez pas accidentellement supprimé modifiant le "
+"fichier. Aussi, prenez soin d'assurer quand vous divisez la commande #{lb "
+"config}# sur plusieurs lignes pour une meilleure lisibilité, comme le montre "
+"l'exemple ci-dessus, que vous n'oubliez pas la barre oblique inverse (\\) de "
+"sorte que chaque ligne continue à l'autre."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:48
 msgid "2~ Clone a configuration published via Git"
-msgstr ""
+msgstr "2~ Cloner une configuration publiée via Git"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:50
@@ -345,6 +366,10 @@ msgid ""
 "configuration on one maintained by the Debian Live project, look at http://"
 "live.debian.net/gitweb for the repositories prefixed with #{config-}#."
 msgstr ""
+"Utilisez l'option #{lb config --config}# pour cloner un dépôt Git qui "
+"contient une configuration de Debian Live. Si vous souhaitez baser votre "
+"configuration sur une maintenue par le projet Debian Live, voir les dépôts "
+"avec le préfixe #{config-}# sur http://live.debian.net/gitweb "
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:52
@@ -352,6 +377,8 @@ msgid ""
 "For example, to build a rescue image, use the #{config-rescue}# repository "
 "as follows:"
 msgstr ""
+"Par exemple, pour construire une image de récupération, utiliser le dépôt #"
+"{config-rescue}# comme suit:"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:57
@@ -369,6 +396,8 @@ msgid ""
 "Edit #{auto/config}# and any other things you need in the #{config}# tree to "
 "suit your needs."
 msgstr ""
+"Modifier #{auto/config}# et toutes les autres choses dont vous avez besoin "
+"dans l'arbre #{config}# en fonction de vos besoins."
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:63
@@ -376,6 +405,8 @@ msgid ""
 "You may optionally define a shortcut in your Git configuration by adding the "
 "following to your #{${HOME}/.gitconfig}#:"
 msgstr ""
+"Vous pouvez éventuellement définir un raccourci dans votre configuration Git "
+"en ajoutant la ligne suivante à votre #{${HOME}/.gitconfig}#:"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:68
@@ -394,6 +425,10 @@ msgid ""
 "a #{live.debian.net}# git repository. If you also drop the optional #{.git}# "
 "suffix, starting a new image using this configuration is as easy as:"
 msgstr ""
+"Cela vous permet d'utiliser # {ldn:} # partout où vous devez spécifier "
+"l'adresse d'un dépôt #{live.debian.net}# Si vous supprimez le suffixe "
+"optionnel #{.git}#, démarrer une nouvelle image en utilisant cette "
+"configuration est aussi simple que:"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:76

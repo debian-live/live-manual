@@ -10,11 +10,11 @@ _* Accés de superusuari (root)
 
 _* Una versió actualitzada de live-build
 
-_* Una shell compatible amb POSIX, com ara /{bash}/ o /{dash}/.
+_* A POSIX-compliant shell, such as /{bash}/ or /{dash}/
 
 _* /{debootstrap}/ o /{cdebootstrap}/
 
-_* Linux 2.6.x
+_* Linux 2.6.x or 3.x
 
 Tenir en compte que no cal usar Debian o una distribució derivada de Debian
 ja que live-build funcionarà en gairebé qualsevol distribució amb els
@@ -157,15 +157,28 @@ code{
 
 }code
 
-_* Utilitzar tots el fitxers .deb generats
+_* Use applicable generated .deb files
 
-Com live-boot i live-config són instaŀlats pel sistema live-build, instaŀlar
-els paquets en el sistema amfitrió no és suficient: S'han de tractar tots
-els fitxers .deb generats igual que qualsevol altre paquet personalitzat. Si
-us plau veure {Personalització de l'instaŀlació de
-paquets}#customizing-package-installation per a més informació. S'ha de
-prestar especial atenció a {Repositoris
-addicionals}#additional-repositories.
+As live-boot and live-config are installed by live-build system, installing
+the packages in the host system is not sufficient: you should treat the
+generated .deb files like any other custom packages. Since your purpose for
+building from source is like to test new things over the short term before
+the official release, follow {Installing modified or third-party
+packages}#installing-modified-or-third-party-packages to temporarily include
+the relevant files in your configuration. In particular, notice that both
+packages are divided into a generic part, a documentation part and one or
+more back-ends. Include the generic part, only one back-end matching your
+configuration, and optionally the documentation. Assuming you are building a
+live image in the current directory and have generated all .deb files for a
+single version of both packages in the directory above, these bash commands
+would copy all of the relevant packages including default back-ends:
+
+code{
+
+ $ cp ../live-boot{_,-initramfs-tools,-doc}*.deb  config/packages.chroot/
+ $ cp ../live-config{_,-sysvinit,-doc}*.deb  config/packages.chroot/
+
+}code
 
 3~ A partir d'instantànies
 

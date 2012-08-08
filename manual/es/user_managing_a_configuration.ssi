@@ -7,46 +7,50 @@ en vivo desde el principio, pasando por sucesivas versiones tanto de la
 herramienta live-build como de la imagen del sistema en vivo propiamente
 dicha.
 
-2~ Dealing with configuration changes
+2~ Gestionar los cambios de configuración
 
-Live configurations rarely are perfect on the first try. It may be fine to
-pass #{lb config}# options from the command-line to perform a single build,
-but it is more typical to revise those options and build again until you are
-satisfied. To support these changes, you will need auto scripts which ensure
-your configuration is kept in a consistent state.
+Las configuraciones en vivo rara vez son perfectas al primer intento. Puede
+estar bien pasar opciones a #{lb config}# en la línea de comandos para
+realizar una construcción única, pero es más típico revisar esas opciones y
+construir de nuevo hasta quedar satisfecho. Para apoyar estos cambios, se
+pueden utilizar scripts auto que garanticen que la configuración se mantiene
+en un estado coherente.
 
-3~ Why use auto scripts? What do they do?
+3~ ¿Por qué utilizar scripts auto? ¿Qué hacen?
 
-The #{lb config}# command stores the options you pass to it in #{config/*}#
-files along with many other options set to default values. If you run #{lb
-config}# again, it will not reset any option that was defaulted based on
-your initial options. So, for example, if you run #{lb config}# again with a
-new value for #{--distribution}#, any dependent options that were defaulted
-for the old distribution may no longer work with the new. Nor are these
-files intended to be read or edited. They store values for over a hundred
-options, so nobody, let alone yourself, will be able to see in these which
-options you actually specified. And finally, if you run #{lb config}#, then
-upgrade live-build and it happens to rename an option, #{config/*}# would
-still contain variables named after the old option that are no longer valid.
+El comando #{lb config}# almacena las opciones que se le pasan en ficheros
+en el directorio #{config/*}#, junto con muchas otras opciones que figuran
+en sus valores predeterminados. Si se ejecuta #{lb config}# una vez más, no
+restablecerá ninguna opción que se estableció como por defecto en función de
+las opciones iniciales. Así, por ejemplo, si se ejecuta #{lb config}# otra
+vez con un nuevo valor para #{--distribution}#, todas las opciones que se
+establecieron como predeterminadas para la distribución anteriormente ya no
+pueden funcionar con la nueva configuración. Estos archivos tampoco estan
+destinados a ser leídos o editados. Almacenan valores para más de cien
+opciones, para que nadie sea capaz de ver las opciones que se especificó
+realmente. Y por último, si se ejecuta #{lb config}# y a continuación se
+actualiza live-build y hay alguna opción que cambió de nombre, #{config/*}#
+todavía tendrá variables con las opciones viejas que ya no son válidas.
 
-For all these reasons, #{auto/*}# scripts will make your life easier. They
-are simple wrappers to the #{lb config}#, #{lb build}# and #{lb clean}#
-commands that are designed to help you manage your configuration. The
-#{auto/config}# script stores your #{lb config}# command with all desired
-options, the #{auto/clean}# script removes the files containing
-configuration variable values, and the #{auto/build}# script keeps a
-#{build.log}# of each build. Each of these scripts is run automatically
-every time you run the corresponding #{lb}# command. By using these scripts,
-your configuration is easier to read and is kept internally consistent from
-one revision to the next. Also, it will be much easier for you identify and
-fix options which need to change when you upgrade live-build after reading
-the updated documentation.
+Por todas estas razones, los scripts #{auto/*}# nos hacen la vida más
+fácil. Son simples envoltorios para los comandos #{lb config}#, #{lb build}#
+y #{lb clean}# diseñados para ayudar a administrar una configuración. El
+script #{auto/config}# contiene el comando #{lb config}# con todas las
+opciones que se desea, el script #{auto/clean}# elimina los ficheros que
+contienen variables de configuración y el fichero #{auto/build}# crea un
+#{build.log}# de cada creación. Cada uno de estos scripts se ejecuta
+automáticamente cada vez que se ejecuta la orden #{lb}#
+correspondiente. Mediante el uso de estos scripts, la configuración es más
+fácil de leer y se mantiene internamente coherente de una revisión a la
+siguiente. Además, será mucho más fácil identificar y corregir las opciones
+que necesitan cambiarse tras actualizar live-build y leer la documentación
+actualizada.
 
-3~ Use example auto scripts
+2~ Usar scripts auto de ejemplo
 
-For your convenience, live-build comes with example auto shell scripts to
-copy and edit. Start a new, default configuration, then copy the examples
-into it:
+Para mayor comodidad, live-build contiene shell scripts auto de ejemplo que
+se pueden copiar y editar. Iniciar una nueva configuración por defecto y a
+continuación, copiar los ejemplos:
 
 code{
 
@@ -55,7 +59,7 @@ code{
 
 }code
 
-Edit #{auto/config}#, adding any options as you see fit. For instance:
+Editar #{auto/config}#, añadiendo las opciones que se desee. Por ejemplo:
 
 code{
 
@@ -70,30 +74,30 @@ code{
 
 }code
 
-Now, each time you use #{lb config}#, #{auto/config}# will reset the
-configuration based on these options. When you want to make changes to them,
-edit the options in this file instead of passing them to #{lb config}#. When
-you use #{lb clean}#, #{auto/clean}# will clean up the #{config/*}# files
-along with any other build products. And finally, when you use #{lb build}#,
-a log of the build will be written by #{auto/build}# in #{build.log}#.
+Ahora, cada vez que se utilize #{lb config}#, #{auto/config}# reiniciará la
+configuración basándose en estas opciones. Cuando se desee realizar cambios,
+se deben editar las opciones en este fichero en lugar de pasarlas a #{lb
+config}#. Cuando se utilize #{lb clean}#, #{auto/clean}# limpiará los
+ficheros en #{config/*}# junto a los otros productos de construcción. Y, por
+último, cuando se utilice #{lb build}#, #{auto/build}# creará un log del
+proceso de construcción llamado #{build.log}#.
 
-Note: A special #{noauto}# parameter is used here to suppress another call
-to #{auto/config}#, thereby preventing infinite recursion. Make sure you
-don't accidentally remove it when making edits. Also, take care to ensure
-when you split the #{lb config}# command across multiple lines for
-readability, as shown in the example above, that you don't forget the
-backslash (\) at the end of each line that continues to the next.
+Nota: Aquí se utiliza #{noauto}#, un parámetro especial para suprimir otra
+llamada a #{auto/config}#, evitando así una repetición infinita. Asegurarse
+de no eliminarlo accidentalmente al hacer cambios en el fichero. Tener
+cuidado al dividir el comando #{lb config}# en varias líneas para facilitar
+la lectura, como se muestra en el ejemplo anterior, ya que no debe olvidarse
+la barra invertida (\) al final de cada línea que sigue en la siguiente.
 
-2~ Clone a configuration published via Git
+2~ Clonar una configuración publicada a través de Git
 
-Use the #{lb config --config}# option to clone a Git repository that
-contains a Debian Live configuration. If you would like to base your
-configuration on one maintained by the Debian Live project, look at
-http://live.debian.net/gitweb for the repositories prefixed with
-#{config-}#.
+Utilizar la opción #{lb config --config}# para clonar un repositorio Git que
+contenga una configuración de Debian Live. Si se desea basar la
+configuración en una mantenida por el proyecto Debian Live, visitar los
+repositorios con el prefijo #{config-}# en http://live.debian.net/gitweb
 
-For example, to build a rescue image, use the #{config-rescue}# repository
-as follows:
+Por ejemplo, para construir una imagen de rescate, utilizar el repositorio
+#{config-rescue}# de la siguiente manera:
 
 code{
 
@@ -102,11 +106,11 @@ code{
 
 }code
 
-Edit #{auto/config}# and any other things you need in the #{config}# tree to
-suit your needs.
+Editar #{auto/config}#y cualquier otra cosa que se necesite en el árbol
+#{config}# para adaptarlo a las propias necesidades.
 
-You may optionally define a shortcut in your Git configuration by adding the
-following to your #{${HOME}/.gitconfig}#:
+Si se desea, se puede definir un método abreviado en la configuración de
+Git, añadiendo lo siguiente al fichero #{${HOME}/.gitconfig}#:
 
 code{
 
@@ -115,9 +119,10 @@ code{
 
 }code
 
-This enables you to use #{ldn:}# anywhere you need to specify the address of
-a #{live.debian.net}# git repository. If you also drop the optional #{.git}#
-suffix, starting a new image using this configuration is as easy as:
+Esto permite utilizar #{ldn:}# en cualquier lugar en que se tenga que
+especificar la dirección de un repositorio git de #{live.debian.net}#. Si se
+omite el sufijo #{.git}#, comenzar una nueva imagen con esta configuración
+es tan fácil como:
 
 code{
 

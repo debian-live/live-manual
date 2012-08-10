@@ -279,7 +279,7 @@ code{
 
 }code
 
-At boot time we will generate the pt_BR.UTF-8 locale and select the pt-latin1 keyboard layout. We will also need to preseed our desktop choice, "kde" so that tasksel will install the correct desktop task, as it differs from the default (see {Desktop and languages tasks}#desktop-and-language-tasks). Now let's put the pieces together:
+At boot time we will generate the pt_BR.UTF-8 locale and select the pt-latin1 keyboard layout. Now let's put the pieces together. Recalling from {Using metapackages}#using-metapackages that task metapackages are prefixed #{task-}#, we just specify these language boot parameters, then add standard priority packages and all our discovered task metapackages to our package list as follows:
 
 code{
 
@@ -290,10 +290,10 @@ code{
      -k 486 \
      --bootappend-live "locales=pt_BR.UTF-8 keyboard-layouts=pt-latin1" \
      --debian-installer live
- $ echo kde-desktop brazilian-portuguese brazilian-portuguese-desktop \
-     brazilian-portuguese-kde-desktop >> config/task-lists/my.list.chroot
- $ echo debian-installer-launcher >> config/package-lists/my.list.chroot
- $ echo tasksel tasksel/desktop multiselect kde >> config/preseed/my.preseed.chroot
+ $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
+ $ echo task-kde-desktop task-brazilian-portuguese task-brazilian-portuguese-desktop \
+     task-brazilian-portuguese-kde-desktop >> config/package-lists/desktop.list.chroot
+ $ echo debian-installer-launcher >> config/package-lists/installer.list.chroot
 
 }code
 

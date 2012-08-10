@@ -93,7 +93,7 @@ Package lists are a powerful way of expressing which packages should be installe
 
 *{Note:}* The behaviour of live-build when specifying a package that does not exist is determined by your choice of APT utility. See {Choosing apt or aptitude}#choosing-apt-or-aptitude for more details.
 
-3~ Using metapackages
+3~using-metapackages Using metapackages
 
 The simplest way to populate your package list is to use a task metapackage maintained by your distribution. For example:
 
@@ -199,26 +199,15 @@ Desktop and language tasks are special cases that need some extra planning and c
 
 When developing a desktop live image, the image typically boots directly to a working desktop, the choices of both desktop and default language having been made at build time, not at run time as in the case of the Debian Installer. That's not to say that a live image couldn't be built to support multiple desktops or multiple languages and offer the user a choice, but that is not live-build's default behaviour.
 
-Because there is no provision made automatically for language tasks, which include such things as language-specific fonts and input-method packages, if you want them, you need to specify them in your configuration. For example, a GNOME desktop image containing support for Japanese might include these tasks:
+Because there is no provision made automatically for language tasks, which include such things as language-specific fonts and input-method packages, if you want them, you need to specify them in your configuration. For example, a GNOME desktop image containing support for Japanese might include these task metapackages:
 
 code{
 
  $ lb config
- $ echo "gnome-desktop desktop standard laptop" >> config/task-lists/my.list.chroot
- $ echo "japanese japanese-desktop japanese-gnome-desktop" >> config/task-lists/my.list.chroot
+ $ echo "task-gnome-desktop task-laptop" >> config/package-lists/my.list.chroot
+ $ echo "task-japanese task-japanese-desktop task-japanese-gnome-desktop" >> config/package-lists/my.list.chroot
 
 }code
-
-Since desktop tasks are "internal" tasks, for every desktop flavour task included in the image, the corresponding value, if it differs from the default, "gnome", must be preseeded in the "tasksel/desktop" debconf variable or else tasksel will not recognize and install it. Thus:
-
-code{
-
- $ lb config
- $ echo 'tasksel tasksel/desktop multiselect kde' >> config/preseed/my.preseed.chroot
-
-}code
-
-This parameter can take multiple values, e.g. "lxde xfce" instead of "kde".
 
 2~installing-modified-or-third-party-packages Installing modified or third-party packages
 

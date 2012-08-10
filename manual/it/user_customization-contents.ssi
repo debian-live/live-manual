@@ -11,11 +11,11 @@ vengono installati fornendo risposte alle domande di debconf.
 
 2~includes Include
 
-Anche se idealmente un sistema live Debian dovrebbe includere file forniti
-interamente dal pacchetti Debian non modificati, a volte è conveniente
-fornire o modificare parte del contenuto per mezzo di file. Utilizzando gli
-include, si può aggiungere (o sostituire) file arbitrari nell'immagine di
-Debian Live. Per usarli, live-build mette a disposizione tre meccanismi:
+While ideally a Debian live system would include files entirely provided by
+unmodified Debian packages, it is sometimes convenient to provide or modify
+some content by means of files. Using includes, it is possible to add (or
+replace) arbitrary files in your Debian Live image. live-build provides two
+mechanisms for using them:
 
 _* Include locali del chroot: permettono di aggiungere o sostituire file al
 file system chroot/Live. Vedere {Live/chroot include
@@ -24,10 +24,6 @@ locali}#live-chroot-local-includes per maggiori informazioni.
 _* Include locali binari: permettono di aggiungere o sostituire file
 nell'immagine binaria. Vedere {Include locali binari}#binary-local-includes
 per maggiori informazioni
-
-_* Include binari: permettono di aggiungere o sostituire specifici file
-Debian nell'immagine binaria, come le directory dei template e dei
-tool. Vedere {Include binari}#binary-includes per maggiori informazioni.
 
 Si consulti il {Glossario}#terms per ulteriori informazioni sulla
 distinzione tra immagini "Live" e "binarie".
@@ -90,22 +86,6 @@ code{
 }code
 
 Questi file appariranno nella directory principale del supporto live.
-
-3~binary-includes Include binari
-
-live-build ha alcuni file standard (come la documentazione) inclusi nella
-configurazione predefinita di ogni supporto live. Ciò può essere
-disabilitato con:
-
-code{
-
- $ lb config --includes none
-
-}code
-
-In caso contrario il materiale verrà installato da live-build nella
-directory #{/includes/}# del filesystem in modo predefinito, oppure è
-possibile specificare un percorso alternativo con #{--includes}#.
 
 2~hooks Hook
 

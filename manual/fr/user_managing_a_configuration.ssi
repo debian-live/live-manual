@@ -6,94 +6,127 @@ Ce chapitre explique comment gérer une configuration d'un système live à
 partir d'une création initiale, à travers des révisions successives et des
 versions successives du logiciel live-build et de l'image live elle-même.
 
-2~ Utiliser auto pour gérer les modifications de configuration
+2~ Traiter les modifications de configuration
 
-Les configurations live sont rarement parfaites du premier coup. Vous aurez
-probablement besoin de faire une série de révisions jusqu'à ce que vous êtes
-satisfait. Cependant, des incohérences peuvent se glisser dans votre
-configuration d'une révision à la prochaine si vous ne faites pas
-attention. Le principal problème est, une fois qu'une variable est donnée
-une valeur par défaut, cette valeur ne sera pas recalculée à partir d'autres
-variables qui peuvent changer dans les révisions ultérieures.
+Les configurations live sont rarement parfaites du premier coup. Il peut
+être bon de passer des options #{lb config}# à partir de la ligne de
+commande pour effectuer une construction unique, mais il est plus typique de
+réviser ces options et de construire à nouveau jusqu'à ce que vous êtes
+satisfait. Afin de soutenir ces changements, vous aurez besoin des scripts
+automatiques qui assurent que votre configuration est maintenue dans un état
+cohérent.
 
-Par exemple, lorsque la distribution est d'abord définie, nombreuses
-variables sont assignées des valeurs par défaut qui conviennent à cette
-distribution. Cependant, si vous décidez ultérieurement de modifier la
-distribution, ces variables dépendantes conservent les anciennes valeurs qui
-ne sont plus appropriées.
+3~ Pourquoi utiliser des scripts auto? Que font-ils?
 
-Un deuxième problème lié est que si vous exécutez #{lb config}# et ensuite
-mettez à jour une nouvelle version de live-build qui a changée l'un des noms
-des variables, vous découvrirez ce que par un examen manuel des variables
-dans votre fichiers dans #{config/*}#, que vous devrez ensuite utiliser pour
-définir l'option appropriée à nouveau.
+La commande #{lb config}# enregistre les options que vous lui passez dans
+les fichiers dans #{config/*}# avec beaucoup d'autres options aux valeurs
+par défaut. Si vous exécutez #{lb config}# à nouveau, il ne réinitialisera
+pas l'option qui a été faite défaut en fonction de vos options
+initiales. Ainsi, par exemple, si vous exécutez #{lb config}# à nouveau avec
+une nouvelle valeur pour #{--distribution}#, toutes les options qui ont été
+dépendantes par défaut pour l'ancienne distribution ne peuvent plus
+fonctionner avec les nouveaux. Ces fichiers ne sont pas destinés à être lus
+ou édités. Ils enregistrent des valeurs pour plus d'une centaine d'options,
+afin que personne puisse voir dans ces options que vous avez réellement
+précisée.
 
-Tout cela serait une nuisance terrible si ce n'était pas pour les scripts
-auto/*, simples emballages pour les commandes #{lb config}#, #{lb build}# et
-#{lb clean}# qui sont conçus pour vous aider à gérer votre configuration. Il
-suffit de créer un script auto/config contenant la commande #{lb config}#
-avec toutes les options désirées, et un auto/clean qui supprime les fichiers
-contenant les valeurs des variables de configuration, et chaque fois que
-vous lancez #{lb config}# et #{lb clean}#, ces fichiers seront
-exécutés. Cela permettra d'assurer que votre configuration a une cohérence
-interne d'une révision à l'autre et d'une version de live-build à la
-suivante (bien que vous aurez encore de prendre soin et lire la
-documentation lorsque vous mettez live-build à niveau pour faire les
-ajustements nécessaires).
+Pour toutes ces raisons, les scripts #{auto/*}# vous rendront la vie plus
+facile. Ils sont simples emballages pour les commandes #{lb config}#, #{lb
+build}# et #{lb clean}# qui sont conçus pour vous aider à gérer votre
+configuration. Le script #{auto/config}# enregistre votre commande #{lb
+config}# avec toutes les options désirées, le script #{auto/clean}# supprime
+les fichiers contenant les valeurs des variables de configuration, et le
+script #{auto/build}# crée un #{build.log}# de chaque construction. Et
+chaque fois que vous lancez la commande #{lb}# correspondante, ces fichiers
+seront exécutés automatiquement. En utilisant ces scripts, votre
+configuration est plus facile à lire et a une cohérence interne d'une
+révision à l'autre. En outre, il sera plus facile pour vous identifier et
+corriger les options qui doivent changer lorsque vous mettez à niveau
+live-build après avoir lu la documentation mise à jour.
 
-2~ Exemples de scripts auto
+2~ Utilisez scripts auto d'exemple
 
-Utiliser des exemples de scripts auto tels que les suivants comme point de
-départ pour votre nouvelle configuration de live-build. Prenez note que
-lorsque vous appelez la commande #{lb}# que votre script auto emballage,
-vous devez spécifier #{noauto}# comme paramètre afin de s'assurer que le
-script automatique n'est pas appelé à nouveau, de façon récursive. Aussi,
-n'oubliez pas de s'assurer que les scripts sont exécutables (par exemple
-#{chmod 755 auto/*}#).
+Pour votre commodité, live-build est fourni avec shell scripts d'exemple,
+pour copier et modifier. Lancer une nouvelle configuration par défaut, puis
+copier les exemples:
 
-#{auto/config}#
+code{
+
+ $ mkdir mylive && cd mylive && lb config
+ $ cp /usr/share/doc/live-build/examples/auto/* auto/
+
+}code
+
+Modifier #{auto/config}#,  ajouter des options comme bon vous semble. Par
+exemple:
 
 code{
 
  #!/bin/sh
  lb config noauto \
-     --package-lists "standard" \
+     --architectures i386 \
+     --linux-flavours 686-pae \
+     --binary-images hdd \
+     --mirror-bootstrap http://ftp.es.debian.org/debian/ \
+     --mirror-binary http://ftp.es.debian.org/debian/ \
      "${@}"
 
 }code
 
-#{auto/clean}#
+Maintenant, chaque fois que vous utilisez #{lb config}#, #{auto/config}#
+réinitialisera la configuration basée sur ces options. Lorsque vous
+souhaitez effectuer des modifications, modifier les options dans ce fichier
+au lieu de les passer à #{lb config}#. Lorsque vous utilisez #{lb clean}#,
+#{auto/clean}# va nettoyer les fichiers ainsi que tous les autres produits
+de construction. Et enfin, lorsque vous utilisez #{lb build}# , un journal
+de la construction sera écrit par #{auto/build}# dans #{build.log}#.
+
+Remarque: Un paramètre spécial #{noauto}# est utilisé ici pour en éliminer
+un autre appel à #{auto/config}#, évitant ainsi une récursion
+infinie. Assurez-vous que vous ne l'avez pas accidentellement supprimé
+modifiant le fichier. Aussi, prenez soin d'assurer quand vous divisez la
+commande #{lb config}# sur plusieurs lignes pour une meilleure lisibilité,
+comme le montre l'exemple ci-dessus, que vous n'oubliez pas la barre oblique
+inverse (\) de sorte que chaque ligne continue à l'autre.
+
+2~ Cloner une configuration publiée via Git
+
+Utilisez l'option #{lb config --config}# pour cloner un dépôt Git qui
+contient une configuration de Debian Live. Si vous souhaitez baser votre
+configuration sur une maintenue par le projet Debian Live, voir les dépôts
+avec le préfixe #{config-}# sur http://live.debian.net/gitweb 
+
+Par exemple, pour construire une image de récupération, utiliser le dépôt
+#{config-rescue}# comme suit:
 
 code{
 
- #!/bin/sh
- lb clean noauto "${@}"
- rm -f config/binary config/bootstrap \
-     config/chroot config/common config/source
- rm -f build.log
+ $ mkdir live-rescue && cd live-rescue
+ $ lb config --config git://live.debian.net/git/config-rescue.git
 
 }code
 
-#{auto/build}#
+Modifier #{auto/config}# et toutes les autres choses dont vous avez besoin
+dans l'arbre #{config}# en fonction de vos besoins.
+
+Vous pouvez éventuellement définir un raccourci dans votre configuration Git
+en ajoutant la ligne suivante à votre #{${HOME}/.gitconfig}#:
 
 code{
 
- #!/bin/sh
- lb build noauto "${@}" 2>&1 | tee build.log
+ [url "git://live.debian.net/git/"]
+     insteadOf = ldn:
 
 }code
 
-Nous expédions maintenant scripts auto d'exemple avec live-build sur la base
-des exemples ci-dessus. Vous pouvez copier ces comme point de départ.
+Cela vous permet d'utiliser # {ldn:} # partout où vous devez spécifier
+l'adresse d'un dépôt #{live.debian.net}# Si vous supprimez le suffixe
+optionnel #{.git}#, démarrer une nouvelle image en utilisant cette
+configuration est aussi simple que:
 
 code{
 
- $ cp /usr/share/doc/live-build/examples/auto/* auto/
+ $ lb config --config ldn:config-rescue
 
 }code
 
-Editer #{auto/config}#, en changeant ou en ajoutant des options comme bon
-vous semble. Dans l'exemple ci-dessus, #{--package-lists standard}# est fixé
-à la valeur par défaut. Changez ce à une valeur appropriée pour votre image
-(ou le supprimer si vous voulez utiliser par défaut) et ajouter des options
-supplémentaires dans les lignes suivantes.

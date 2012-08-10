@@ -6,92 +6,127 @@ En aquest capítol s'explica com gestionar una configuració en viu des de la
 seva creació inicial, a través de revisions i versions successives de tant
 el programari live-build com de la imatge en viu en si mateixa.
 
-2~ Utilitzar auto per gestionar canvis de configuració
+2~ Gestionar canvis a la configuració
 
-Les configuracions dels sistemes vius poques vegades són perfectes al primer
-intent. És probable que s'hagi de fer una sèrie de revisions fins quedar
-satisfet. No obstant això, es poden introduir inconsistències a la
-configuració d'una versió a la següent si no se'n te cura. El principal
-problema és, que una vegada que a una variable se li assigna un valor per
-defecte, aquest valor no es torna a calcular a partir d'altres variables que
-poden canviar en revisions posteriors.
+Les configuracions en viu poques vegades són perfectes al primer
+intent. Passar opcions de #{lb config}# des de la línea d'ordres pot estar
+be per construir una imatge una vegada, però és més típic revisar aquestes
+opcions i construir de nou fins que se'n estigui satisfet. Per donar suport
+a aquests canvis, es poden utilitzar scripts auto que assegurin que la seva
+configuració es manté en un estat coherent.
 
-Per exemple, quan la distribució s'estableix per primer cop, a moltes de les
-variables dependents se'ls assigna uns valors per defecte que s'adapten a
-aquesta distribució. No obstant això, si més endavant es decideix canviar la
-distribució, les variables dependents seguiran conservant els mateixos
-valors que ja no són apropiats.
+3~ Per què utilitzar scripts auto? Què fan?
 
-Un segon problema relacionat és que si s'executa #{lb config}# i després
-s'actualitza a una versió nova de live-build que ha canviat un dels noms de
-les variables, només es descobrirà això mitjantçant una revisió manual de
-les variables als fitxers de #{config/*}# que després s'hauran de tornar a
-modificar per establir l'opció corresponent de nou.
+L'ordre #{lb config}# emmagatzema les opcions que se li passen en els
+fitxers de #{config/*}#, juntament amb moltes altres opcions que estan
+establertes als valors per defecte. Si s'executa un cop més, #{lb config}#
+no restablirà cap de les opcios dependents basades en les opcions
+inicials. Així, per exemple, si s'executa #{lb config}# de nou amb un nou
+valor per #{--distribution}#, totes les opcions que en depenen que es van
+omplir per a la distribució per defecte ja no poden funcionar amb la
+nova. Tampoc són aquests fitxers destinats a ser llegits o
+editats. S'emmagatzemen els valors per més de cent opcions, i ningú serà
+capaç de veure aquestes opcions que s'han especificat realment. I,
+finalment, si s'executa #{lb config}# i a continuació s'actualitza
+live-build i canvia el nom d'una opció, #{config/*}# encara conté les
+variables de l'opció vella que ja no són vàlides.
 
-Tot això seria una molestia terrible si no fos pels scripts auto/*, simples
-embolcalls per les ordres #{lb config}#, #{lb build}# i #{lb clean}#
-dissenyats per ajudar a gestionar una configuració. Només cal crear un
-script auto/config que contingui totes les opcions que es desitgin, i un
-auto/clean que elimini els fitxers que continguin diversos valors de
-variables de configuració, cada vegada que s'executi #{lb config}# i #{lb
-clean}#, aquests fitxers seran executats. Això assegurarà que la
-configuració guarda una coherència interna d'una versió a una altra i d'una
-versió de live-build a la següent (Tot i que encara s'haurà d'anar amb
-compte i llegir la documentació quan s'actualitzi live-build i fer els
-ajustos necessaris ).
+ Per totes aquestes raons, els scripts #{auto/*}# ens fan la vida més
+fàcil. Són simples embolcalls per les ordres #{lb config}#, #{lb build}# i
+#{lb clean}# dissenyats per ajudar a gestionar una configuració. Només cal
+crear un script #{auto/config}# que contingui totes les opcions que es
+desitgin per a #{lb config}#, i un #{auto/clean}# que elimini els fitxers
+que continguin diversos valors de variables de configuració, i el script
+#{auto/build}# guarda un #{build.log}# de cada construcció. Cada vegada que
+s'executi l'ordre #{lb}# corresponent, aquests fitxers seran executats
+automàticament. L'ús d'aquests scripts assegurarà que la configuració sigui
+més senzilla de llegir i que guardi una coherència interna d'una reversió a
+una altra. A més a més serà més fàcil identificar i solucionar les opcions
+que s'han de canviar al actualitzar d'una versió de live-build a la següent
+després de llegir la documentació.
 
-2~ Scripts auto d'exemple
+2~ Utilitzar scripts auto d'exemple
 
-Es poden utilitzar scripts auto d'exemple com ara els següents com a punt de
-partida per crear una nova configuració de live-build. Tenir en compte que
-quan s'invoca l'ordre #{lb}# que embolcalla el script auto, s'ha
-d'especificar #{noauto}# com a paràmetre per garantir que el script auto no
-es torna a executar de forma recursiva. A més, assegurar-se que els scripts
-són fitxers executables (e.g. #{chmod 755 auto/*}#).
+Per a més comoditat, live-build ve amb uns scripts d'exemple per copiar i
+editar. Iniciar una nova configuració per defecte, i a continuació, copiar
+els exemples:
 
-#{auto/config}#
+code{
+
+ $ mkdir mylive && cd mylive && lb config
+ $ cp /usr/share/doc/live-build/examples/auto/* auto/
+
+}code
+
+Editar #{auto/config}#, afegint les opcions com millor li sembli. Per
+exemple:
 
 code{
 
  #!/bin/sh
  lb config noauto \
-     --package-lists "standard" \
+     --architectures i386 \
+     --linux-flavours 686-pae \
+     --binary-images hdd \
+     --mirror-bootstrap http://ftp.es.debian.org/debian/ \
+     --mirror-binary http://ftp.es.debian.org/debian/ \
      "${@}"
 
 }code
 
-#{auto/clean}#
+Ara, cada vegada que s'utilitzi #{lb config}#, #{auto/config}# restablirà la
+configuració basada en aquestes opcions. Quan es vulguin fer canvis, editar
+les opcions d'aquest fitxer en lloc de passar-les a #{lb config}#. Quan
+s'utilitza #{lb clean}#, #{auto/clean}# netejarà els fitxers de #{config/*}#
+juntament amb els altres productes de construcció. I, finalment, quan
+s'utilitza #{lb build}#, es crea un log de la construcció mitjançant
+#{auto/build}# anomenat #{build.log}#.
+
+Nota: Aquí s'utilitza un paràmetre especial #{noauto}# per suprimir un altra
+crida a #{auto/config}#, la qual cosa impedeix la recursivitat
+infinita. Assegurar-se de no eliminarlo accidentalment fent canvis. També,
+tenir cura de que quan es divideix l'ordre #{lb config}# a través de
+diverses línies per facilitar la lectura, com es mostra en l'exemple
+anterior, no s'oblidi la barra invertida (\) al final de cada línia que
+segueix a la següent.
+
+2~ Clonar una configuració publicada via Git
+
+Utilitzar l'opció #{lb config --config}# per clonar un repositori Git que
+contingui una configuració de Debian Live. Si es vol basar la configuració
+en un repositori mantingut pel projecte Debian Live, mirar els repositoris
+amb el prefix #{config-}# a http://live.debian.net/gitweb
+
+Per exemple, per construir una imatge de rescat, utilitzar el repositori
+#{config-rescue}# de la manera següent:
 
 code{
 
- #!/bin/sh
- lb clean noauto "${@}"
- rm -f config/binary config/bootstrap \
-     config/chroot config/common config/source
- rm -f build.log
+ $ mkdir live-rescue && cd live-rescue
+ $ lb config --config git://live.debian.net/git/config-rescue.git
 
 }code
 
-#{auto/build}#
+Editar #{auto/config}# i qualsevol altra cosa necessària dins l'arbre
+#{config}# per satisfer les vostres necessitats.
+
+Si es desitja, es pot definir una drecera en la configuració de Git, afegint
+el següent a #{${HOME}/.gitconfig}#:
 
 code{
 
- #!/bin/sh
- lb build noauto "${@}" 2>&1 | tee build.log
+ [url "git://live.debian.net/git/"]
+     insteadOf = ldn:
 
 }code
 
-Ara incloem scripts auto d'exemple amb live-build basats en els exemples
-anteriors. Es poden copiar com a punt de partida.
+Això permet utilitzar #{ldn:}# en qualsevol lloc on cal especificar la
+direcció d'un repositori git. També es pot omitir el sufix #{.git}#,
+començar una nova imatge amb aquesta configuració és tan fàcil com:
 
 code{
 
- $ cp /usr/share/doc/live-build/examples/auto/* auto/
+ $ lb config --config ldn:config-rescue
 
 }code
 
-Editar #{auto/config}#, canviar o afegir qualsevol opció que millor
-sembli. En l'exemple anterior s'estableix el valor per defecte,
-#{--package-lists standard}#. Canviar això a qualsevol valor vàlid per la
-pròpia imatge (o suprimir-ho si es vol utilitzar el valor per defecte) i
-afegir opcions addicionals en les línies que segueixen a continuació.

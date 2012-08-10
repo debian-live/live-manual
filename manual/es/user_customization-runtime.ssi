@@ -85,7 +85,7 @@ variantes locales está en #{/usr/share/i18n/SUPPORTED}#.
 #{live-config}# se encarga de la configuración del teclado de la consola y
 del entorno gráfico X utilizando el paquete #{console-setup}#. Para
 configurarlos se puede utilizar los parámetros de arranque
-#{keyboard-layouts}#, #{keyboard-variant}#, #{keyboard-options}# y
+#{keyboard-layouts}#, #{keyboard-variants}#, #{keyboard-options}# y
 #{keyboard-model}# a través de la opción #{--bootappend-live}#. Se puede
 encontrar una lista de opciones válidas para estos parámetros en
 #{/usr/share/X11/xkb/rules/base.lst}#. Para hallar la distribución del
@@ -127,7 +127,7 @@ TypeMatrix EZ-Reach 2030, utilizar:
 code{
 
  $ lb config --bootappend-live \
-     "locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variant=bepo keyboard-model=tm2030usb"
+     "locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variants=bepo keyboard-model=tm2030usb"
 
 }code
 
@@ -136,16 +136,16 @@ se puede especificar varios valores separados por comas. A excepción de
 #{keyboard-model}#, que sólo acepta un valor. En la página de manual
 #{keyboard(5)}# se explican los detalles y algunos ejemplos de cómo utilizar
 las variables #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# y
-#{XKBOPTIONS}#. Si se especifican diferentes valores en #{keyboard-variant}#
-estos se corresponderan uno a uno con los valores #{keyboard-layouts}# (ver
-#{setxkbmap(1)}# opción #{-variant}#). Se admiten valores vacíos; por
-ejemplo para definir dos distribuciones de teclado, la que se usa por
-omisión US QWERTY y otra US Dvorak, utilizar:
+#{XKBOPTIONS}#. Si se especifican diferentes valores en
+#{keyboard-variants}# estos se corresponderan uno a uno con los valores
+#{keyboard-layouts}# (ver #{setxkbmap(1)}# opción #{-variant}#). Se admiten
+valores vacíos; por ejemplo para definir dos distribuciones de teclado, la
+que se usa por omisión US QWERTY y otra US Dvorak, utilizar:
 
 code{
 
  $ lb config --bootappend-live \
-     "keyboard-layouts=us,us keyboard-variant=,dvorak"
+     "keyboard-layouts=us,us keyboard-variants=,dvorak"
 
 }code
 

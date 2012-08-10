@@ -10,11 +10,11 @@ _* Super-utilisateur (root) accès
 
 _* Une version mise à jour de live-build
 
-_* Un shell POSIX, tel que /{bash}/ ou /{dash}/.
+_* Un shell POSIX, tel que /{bash}/ ou /{dash}/
 
 _* /{debootstrap}/ ou /{cdebootstrap}/
 
-_* Linux 2.6.x
+_* Linux 2.6.x ou 3.x
 
 Notez que l'utilisation de Debian ou une distribution dérivée de Debian
 n'est pas nécessaire - live-build fonctionne sur presque toute distribution
@@ -158,15 +158,30 @@ code{
 
 }code
 
-_* Utilisez tous les fichiers .deb générés.
+_* Utilisez les fichiers .deb générés nécessaires.
 
-Comme live-boot et live-config sont installés par le système live-build,
-l'installation des paquets dans le système hôte ne suffit pas: vous devez
-traiter les fichiers .deb générés comme aucun autre paquet
-personnalisé. S'il vous plaît voir {Personnalisation de l'installation de
-paquets}#customizing-package-installation pour plus d'informations. Vous
-devriez prêter une attention particulière à {Dépôts
-additionnels}#additional-repositories.
+Comme live-boot and live-config sont installés par le système de
+construction live-build, l'installation de ces paquets dans le système hôte
+ne suffit pas: vous devez traiter les fichiers .deb générés comme d'autres
+paquets personnalisés. Comme votre objectif pour la construction à partir du
+code source est tester nouvelles choses à court terme avant la publication
+officielle, suivez {Installation de paquets modifiés ou de
+tiers}#installing-modified-or-third-party-packages pour inclure
+temporairement les pertinents dans votre configuration. En particulier,
+remarquez que les deux paquets sont divisés en une partie générique, une
+partie de documentation et un ou plusieurs back-ends. Inclure la partie
+générique, un seul back-end et éventuellement la documentation. En supposant
+que vous construisez une image live dans le répertoire courant et avez
+généré tous les fichiers .deb pour une version unique de deux paquets dans
+le répertoire ci-dessus, ces commandes bash seraient pour copier tous les
+paquets concernés, y compris par défaut les back-ends:
+
+code{
+
+ $ cp ../live-boot{_,-initramfs-tools,-doc}*.deb  config/packages.chroot/
+ $ cp ../live-config{_,-sysvinit,-doc}*.deb  config/packages.chroot/
+
+}code
 
 3~ À partir des instantanés
 

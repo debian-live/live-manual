@@ -11,15 +11,15 @@ paquets que estan disponibles per ser instaŀlats en la imatge són les àrees
 de distribució i el arxiu. Per garantir velocitats de descàrrega decents,
 s'ha de triar un mirall de distribució proper. També es pot incloure
 repositoris de backports, paquets experimentals o personalitzats, o incloure
-paquets directament com si fossin fitxers. Es poden definir llistes pròpies
-de paquets, utilitzar llistes predefinides, utilitzar tasques de
-/{tasksel}/, o una combinació d'aquests tres mètodes. Finalment, una sèrie
-d'opcions donen un cert control sobre /{apt}/ o si es prefereix
-/{aptitude}/, quan s'instaŀlen els paquets durant la construcció. Això pot
-ser útil si s'utilitza un proxy, es vol desactivar la instaŀlació de paquets
-recomanats per estalviar espai, o hi ha la necessitat de controlar quines
-versions dels paquets s'instaŀlen mitjançant la tècnica pinning d'APT, per
-nomenar algunes possibilitats.
+paquets directament com si fossin fitxers. Es poden definir llistes de
+paquets, incloent-hi els metapaquets que instaŀlaran diversos paquets
+relacionats alhora, com ara paquets per a un ordinador d'escriptori o un
+llenguatge en particular. Finalment, una sèrie d'opcions donen un cert
+control sobre /{apt}/ o si es prefereix /{aptitude}/, quan s'instaŀlen els
+paquets durant la construcció. Això pot ser útil si s'utilitza un proxy, es
+vol desactivar la instaŀlació de paquets recomanats per estalviar espai, o
+hi ha la necessitat de controlar quines versions dels paquets s'instaŀlen
+mitjançant la tècnica pinning d'APT, per nomenar algunes possibilitats.
 
 2~ Fonts dels paquets
 
@@ -160,47 +160,78 @@ code{
 Hi ha una sèrie de formes de triar els paquets que live-build instaŀlarà en
 la imatge, que abasta una varietat de necessitats diferents. Es pot
 simplement anomenar paquets individualment per instaŀlar en una llista de
-paquets. També es pot optar per llistes predefinides de paquets, o utilitzar
-les tasques d'APT. I, finalment, es poden coŀlocar paquets com si fossin
-fitxers dins del arbre #{config/}#, que és un mètode que s'adapta
-perfectament a fer proves amb paquets nous o experimentals abans de
-afegirlos a un repositori.
+paquets. També es pot optar per utilitzar metapaquets a les llistes, o
+seleccionar-los utilitzant camps de control de fitxers de paquets. I,
+finalment, es poden copiar paquets com si fossin fitxers dins del arbre
+#{config/}#, que és un mètode que s'adapta perfectament a fer proves amb
+paquets nous o experimentals abans de afegirlos a un repositori.
 
 3~package-lists Llistes de paquets
 
 Les llistes de paquets són una forma eficaç d'expressar quins paquets han de
 ser instaŀlats. La sintaxi de la llista suporta els fitxers inclosos i
 seccions condicionals que fa que sigui fàcil de construir llistes a partir
-d'altres llistes i adaptar-ler per al propi ús en múltiples
-configuracions. Es poden utilitzar llistes predefinides de paquets,
-proporcionant una selecció de paquets de forma modular de cada un dels
-principals entorns d'escriptori i algunes llistes per a fins especials, així
-com llistes estàndard a partir de les que es basen altres. També es pot
-proporcionar llistes pròpies de paquets, o utilitzar una combinació
-d'ambdós.
+d'altres llistes i adaptar-les per al propi ús en múltiples
+configuracions. Els noms dels paquets també poden ser injectats a la llista
+amb els ajudants de shell en temps de construcció. 
 
 *{Nota:}* El comportament de live-build a l'hora d'especificar un paquet que no existeix està determinat per la elecció que es faci de l'eina APT. Veure {Elegir apt or aptitude}#choosing-apt-or-aptitude per més detalls.
 
-3~ Llistes predefinides de paquets
+3~using-metapackages Using metapackages
 
-La forma més senzilla d'utilitzar les llistes consisteix a especificar una o
-més llistes predefinides amb l'opció #{--package-lists}#. Per exemple:
+La forma més senzilla per omplir la llista de paquets és utilitzar una tasca
+metapaquet mantinguda per una distribució. Per exemple:
 
 code{
 
- $ lb config --package-lists "gnome rescue"
+ $ lb config
+ $ echo task-gnome-desktop > config/package-lists/gnome-desktop.list.chroot
 
 }code
 
-La ubicació per defecte de les llistes en el sistema és
-#{/usr/share/live/build/package-lists/}#. Per determinar els paquets en una
-llista donada, llegir el fitxer corresponent, prestant atenció als fitxers
-inclosos i els condicionals com es descriu a les següents seccions.
+Això reemplaça l'antic mètode de llistes predefinides de #{live-build}#
+2.x. A diferència de les llistes predefinides, els metapaquets no són
+específics del projecte Debian Live. Per contra, són mantingudes per grups
+d'especialistes que treballen dins la distribució i per tant, reflecteixen
+el consens de cada grup sobre els paquets que serviran millor a les
+necessitats dels usuaris. A més, abasten una gamma molt més àmplia de casos
+d'ús que les llistes predefinides que substitueixen.
+
+Tots els metapaquets tenen el prefix #{task-}#, de manera que una forma
+ràpida de determinar quins estan disponibles (encara que pot contenir un
+grapat d'entrades falses que coincideixin amb el nom, però que no són
+metapaquets) és fer coincidir el nom del paquet amb:
+
+code{
+
+ $ apt-cache search --names-only ^task-
+
+}code
+
+A més d'aquests, es troben altres metapaquets amb diverses
+finalitats. Alguns són subconjunts de paquets de tasques més àmplies, com
+#{gnome-core}#, mentre que altres són parts individuals especialitzades de
+un Debian Pure Blend, com els metapaquets #{education-*}#. Per a una llista
+de tots els metapaquets a l'arxiu, instaŀlar el paquet #{debtags}# i llistar
+tots els paquets amb l'etiqueta #{role::metapackage}# de la següent manera:
+
+code{
+
+ $ debtags search role::metapackage
+
+}code
 
 3~ Llistes locals de paquets
 
-Es poden completar les llistes predefinides mitjançant les llistes locals de
-paquets emmagatzemades a #{config/package-lists/}#.
+Ja sigui afegint metapaquets a una llista, paquets individuals, o una
+combinació d'ambdós, totes les llistes de paquets locals s'emmagatzemen a
+#{config/package-lists/}#. Ja que es pot utilitzar més d'una llista, això es
+presta molt bé als dissenys modulars. Per exemple, es pot decidir dedicar
+una llista a una elecció particular d'escriptori, l'altra a una coŀlecció de
+paquets relacionats que puguin ser fàcilment utilitzats al damunt d'un
+escriptori diferent. Això  permet experimentar amb diferents combinacions de
+conjunts de paquets amb un mínim d'esforç, intercanviant llistes comunes
+entre els diferents projectes d'imatges en viu.
 
 Les llistes de paquets que es troben en aquest directori han de tenir el
 sufix #{.list}# per ser processades, i a més a més un sufix d'etapa
@@ -219,21 +250,25 @@ instaŀlador non-live. Com s'ha esmentat anteriorment, si es vol que aquesta
 llista sigui la mateixa que la llista de l'etapa chroot, simplement
 utilitzar el sufix #{.list}#.
 
-3~ Ampliació d'una llista mitjançant includes
+3~generated-package-lists Generar llistes de paquets
 
-Les llistes de paquets que s'inclouen amb live-build fan un ús extensiu dels
-includes. Es poden consultar al directori
-#{/usr/share/live/build/package-lists/}#  ja que serveixen com a bons
-exemples de com escriure llistes pròpies.
+De vegades passa que la millor manera de crear una llista és generar-la amb
+un script. Qualsevol línia que comença amb un signe d'exclamació indica una
+ordre que s'executarà dins del chroot quan la imatge es construeix. Per
+exemple, es podria incloure la línia #{! grep-aptavail -n -sPackage
+-FPriority standard | sort}# en una llista de paquets per produir una llista
+ordenada de paquets disponibles amb #{Priority: standard}#.
 
-Per exemple, per fer una llista que inclogui la llista predefinida #{gnome}#
-més /{iceweasel}/, crear #{config/package-lists/my.list.chroot}# amb el
-contingut:
+De fet, la selecció de paquets amb l'ordre #{grep-aptavail}# (del paquet
+#{dctrl-tools}#) és tan útil que #{live-build}# proporciona un script
+#{Packages}# d'ajuda per motius de comoditat. Aquest script accepta dos
+arguments: #{field}# and #{pattern}#. Per tant, pot crear una llista amb els
+següents continguts:
 
 code{
 
- #include <gnome>
- iceweasel
+ $ lb config
+ $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
 
 }code
 
@@ -294,28 +329,6 @@ code{
 
 No és possible el anidament dels condicionals.
 
-3~ Tasques
-
-L'instaŀlador de Debian ofereix al usuari opcions d'una sèrie de llistes de
-paquets preseleccionats, cadascuna centrada en un tipus particular de
-sistema, o una tasca per a la qual es pot utilitzar un sistema, com
-"Graphical desktop environment", "Mail server" o "Laptop". Aquestes llistes
-es diuen "tasks" (tasques) i son suportades per APT a través de l'opció
-"Task:" es poden especificar una o més tasques a live-build posant-les en
-una llista a #{config/task-lists/}#, com en l'exemple següent.
-
-code{
-
- $ lb config
- $ echo "mail-server file-server" >> config/task-lists/my.list.chroot
-
-}code
-
-Es poden llistar les principals tasques disponibles al instaŀlador de Debian
-amb #{tasksel --list-tasks}# al sistema viu. El contingut de qualsevol
-tasca, fins i tot les no estan incloses en aquesta llista, poden ser
-examinades amb #{tasksel --task-packages}#.
-
 3~desktop-and-language-tasks Tasques d'escriptori i llenguatge
 
 Les tasques d'escriptori i el llenguatge són casos especials que necessiten
@@ -338,35 +351,19 @@ viu no es pugui construir per donar suport a diversos equips d'escriptori o
 diversos idiomes i oferir a l'usuari una opció, però això no és el
 comportament de live-build per defecte.
 
-Com que no hi ha cap ajust automàtic per les tasques de llengua que
-incloguin coses com ara fonts específiques per a una llengua o paquets de
-mètode d'entrada, si es vol, cal especificar-ho en la configuració. Per
-exemple, una imatge d'escriptori GNOME que contingui suport per al japonés
-podrie incloure les següents tasques:
+Because there is no provision made automatically for language tasks, which
+include such things as language-specific fonts and input-method packages, if
+you want them, you need to specify them in your configuration. For example,
+a GNOME desktop image containing support for Japanese might include these
+task metapackages:
 
 code{
 
  $ lb config
- $ echo "gnome-desktop desktop standard laptop" >> config/task-lists/my.list.chroot
- $ echo "japanese japanese-desktop japanese-gnome-desktop" >> config/task-lists/my.list.chroot
+ $ echo "task-gnome-desktop task-laptop" >> config/package-lists/my.list.chroot
+ $ echo "task-japanese task-japanese-desktop task-japanese-gnome-desktop" >> config/package-lists/my.list.chroot
 
 }code
-
-Com les tasques d'escriptori són "internes" per a cada tasca d'escriptori
-inclosa en la imatge, el valor corresponent, si aquest és diferent del valor
-per defecte, "gnome", s'ha de fer servir la variable de preconfiguració
-"tasksel/desktop" o en cas contrari tasksel no la reconeixerà i no la
-instaŀlarà. Així:
-
-code{
-
- $ lb config
- $ echo 'tasksel tasksel/desktop multiselect kde' >> config/preseed/my.preseed.chroot
-
-}code
-
-Aquest paràmetre pot tenir diversos valors, per exemple "lxde xfce" en lloc
-de "kde".
 
 2~installing-modified-or-third-party-packages Instaŀlació de paquets
 modificats o de tercers
@@ -482,7 +479,7 @@ code{
 
 }code
 
-3~ Afinar APT per estalviar espai
+3~tweaking-apt-to-save-space Tweaking APT to save space
 
 Pot ser necessari estalviar espai en els medis destinats a la imatge, en
 aquest cas una o altra o ambdós de les següentes opcions poden ser
@@ -503,8 +500,9 @@ sistema en viu, així que abans d'executar per exemple #{apt-cache search}# o
 #{apt-get install}#, l'usuari primer ha fer un #{apt-get update}# per crear
 aquests índexs.
 
-Si es considera que la instaŀlació de tots els paquets recomanats infla
-massa la imatge, es pot desactivar aquesta opció per defecte d'APT amb:
+If you find the installation of recommended packages bloats your image too
+much, provided you are prepared to deal with the consequences discussed
+below, you may disable that default option of APT with:
 
 code{
 
@@ -512,18 +510,27 @@ code{
 
 }code
 
-El desavantatge aquí és que si no s'instaŀlen els paquets recomanats per un
-paquet determinat, és a dir, "els paquets que es troben junts amb aquest en
-totes les instaŀlacions a menys que siguin inusuals" (Debian Policy Manual,
-secció 7.2), els paquets que en realitat són necessaris poden ser
-omesos. Per tant, suggerim revisar la diferència que desactivar els paquets
-recomanats té en la llista de paquets (veure el fitxer #{binary.packages}#
-generat per #{lb build}#) i tornar a incloure a la llista els paquets que
-falten que haurien de ser instaŀlats. D'altra banda, si només es vol un
-petit nombre de paquets recomanats deixats de banda, es pot deixar els
-paquets recomanats activat i establir una prioritat pin d'APT negativa en
-els paquets seleccionats per impedir la seva instaŀlació, com s'explica a
-{APT pinning}#apt-pinning.
+The most important consequence of turning off recommends is that
+#{live-boot}# and #{live-config}# themselves recommend some packages that
+provide important functionality used by most Live configurations, such as
+#{user-setup}# which #{live-config}# recommends and is used to create the
+live user. In all but the most exceptional circumstances you need to add
+back at least some of these recommends to your package lists or else your
+image will not work as expected, if at all. Look at the recommended packages
+for each of the #{live-*}# packages included in your build and if you are
+not certain you can omit them, add them back into your package lists.
+
+The more general consequence is that if you don't install recommended
+packages for any given package, that is, "packages that would be found
+together with this one in all but unusual installations" (Debian Policy
+Manual, section 7.2), some packages that users of your Live system actually
+need may be omitted. Therefore, we suggest you review the difference turning
+off recommends makes to your packages list (see the #{binary.packages}# file
+generated by #{lb build}#) and re-include in your list any missing packages
+that you still want installed. Alternatively, if you find you only want a
+small number of recommended packages left out, leave recommends enabled and
+set a negative APT pin priority on selected packages to prevent them from
+being installed, as explained in {APT pinning}#apt-pinning.
 
 3~ Passar opcions per a apt o aptitude
 
@@ -572,10 +579,11 @@ $ lb config --distribution wheezy
 
 Una prioritat pin negativa evitarà que un paquet s'instaŀli, com en el cas
 que no es vulgui un paquet que és recomanat per un altre paquet. Suposem que
-s'està construint una imatge LXDE amb #{--package-lists lxde}# però no es
-desitja que al usuari se li demani que guardi les contrasenyes wifi al
-clauer. Aquesta llista inclou /{gdm}/, que depèn de /{gksu}/,  que al seu
-torn recomana /{gnome-keyring}/. Si es vol omitir el paquet recomanat
+s'està construint una imatge LXDE afegint #{task-lxde-desktop}# a
+#{config/package-lists/lxde-desktop.list.chroot}# però no es desitja que al
+usuari se li demani que guardi les contrasenyes wifi al clauer. Aquesta
+llista depèn de /{lxde-core}/, que recomana /{gksu}/,  que al seu torn
+recomana /{gnome-keyring}/. Si es vol omitir el paquet recomanat
 /{gnome-keyring}/ això es pot fer mitjançant l'addició de les següents
 línies al #{config/chroot_apt/preferences}#:
 

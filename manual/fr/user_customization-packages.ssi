@@ -13,15 +13,15 @@ de garantir des vitesses de téléchargement décentes, vous devez choisir un
 miroir de distribution proche. Vous pouvez également ajouter vos propres
 dépôts pour les backports, paquets expérimentaux ou personnalisés, ou
 inclure des paquets directement en tant que fichiers. Vous pouvez définir
-vos propres listes de paquets à inclure, utiliser des listes prédéfinies de
-live-build, utiliser tâches /{tasksel}/, ou une combinaison des
-trois. Enfin, un certain nombre d'options donnent un certain contrôle sur
-/{apt}/, ou si vous préférez, /{aptitude}/, au moment de la construction
-quand les paquets sont installés. Vous pouvez trouver ces très pratique si
-vous utilisez un proxy, vous voulez désactiver l'installation des paquets
-recommandés pour économiser l'espace, ou avez besoin de contrôler quels
-versions des paquets sont installés via APT pinning, pour n'en nommer
-quelques possibilités.
+des listes de paquets, incluant les métapaquets qui installent nombreux
+paquets liés à la fois, telles que les paquets pour un ordinateur de bureau
+ou langue particulière. Enfin, un certain nombre d'options donnent un
+certain contrôle sur /{apt}/, ou si vous préférez, /{aptitude}/, au moment
+de la construction quand les paquets sont installés. Vous pouvez trouver ces
+très pratique si vous utilisez un proxy, vous voulez désactiver
+l'installation des paquets recommandés pour économiser l'espace, ou avez
+besoin de contrôler quels versions des paquets sont installés via APT
+pinning, pour n'en nommer quelques possibilités.
 
 2~ Sources des paquets
 
@@ -160,50 +160,82 @@ code{
 
 2~choosing-packages-to-install Choisir les paquets à installer
 
-Il y a un certain nombre de façons de choisir quels paquets live-build va
-installer dans votre image, couvrant une variété de besoins différents. Vous
-pouvez tout simplement nommer les paquets individuels à installer dans une
-liste de paquets. Vous pouvez également choisir grandes listes prédéfinies
-de paquets, ou utiliser des tâches APT. Et enfin, vous pouvez placer paquets
-dans votre arbre #{config/}# qui est bien adapté aux essais de nouveaux
-paquets ou expérimentaux avant qu'ils ne soient disponibles sur un dépôt.
+Il y a un certain nombre de façons pour choisir quels paquets live-build
+installera dans votre image, couvrant une variété de besoins
+différentes. Vous pouvez tout simplement nommer les paquets individuels à
+installer dans une liste de paquets. Vous pouvez également choisir
+métapaquets dans ces listes, ou sélectionner-les en utilisant des champs de
+paquets de contrôle de fichiers. Et enfin, vous pouvez placer paquets dans
+votre arbre #{config/}# qui est bien adapté aux essais de nouveaux paquets
+ou expérimentaux avant qu'ils ne soient disponibles sur un dépôt.
 
 3~package-lists Listes de paquets
 
 Les listes de paquets sont un excellent moyen d'exprimer quels paquets
 doivent être installés. La syntaxe de la liste soutient les fichiers inclus
-et sections conditionnelles qui les rend facile de construire à partir
+et sections conditionnelles qui les rend faciles de construire à partir
 d'autres listes et de les adapter pour une utilisation dans configurations
-multiples. Vous pouvez utiliser des listes de paquets prédéfinies, offrant
-une sélection modulaire de paquets provenants de chacun des environnements
-de bureau majeurs et certaines listes de but spécial, ainsi que les autres
-listes standard sont basées sur elles. Vous pouvez également fournir votre
-propre liste de paquets, ou utiliser une combinaison des deux.
+multiples. Les noms des paquets peuvent également être injectés dans la
+liste en utilisant assistants de shell au moment de la construction.
 
 *{Remarque:}* Le comportement de live-build pour spécifier un paquet qui n'existe pas est déterminé par votre choix de l'utilité APT. Voir {Choisir apt ou aptitude}#choosing-apt-or-aptitude pour plus de détails.
 
-3~ Listes de paquets prédéfinies
+3~using-metapackages Using metapackages
 
-La façon la plus simple d'utiliser des listes consiste à spécifier une ou
-plusieurs listes prédéfinies avec la option #{--package-lists}#. Par
-exemple:
+La façon la plus simple pour remplir votre liste de paquets consiste à
+utiliser une tâche métapaquet maintenue par votre distribution. Par exemple:
 
 code{
 
- $ lb config --package-lists "gnome rescue"
+ $ lb config
+ $ echo task-gnome-desktop > config/package-lists/gnome-desktop.list.chroot
 
 }code
 
-L'emplacement par défaut pour les fichiers liste sur votre système est
-#{/usr/share/live/build/package-lists/}#. Pour déterminer les paquets dans
-une liste donnée, lire le fichier correspondant, en accordant une attention
-aux fichiers inclus et les conditionnels tels que décrits dans les sections
-suivantes.
+Ceci remplace l'ancienne méthode des listes prédéfinies soutenue dans
+#{live-build}# 2.x. Contrairement aux listes prédéfinies, les métapaquets ne
+sont pas spécifiques du projet Debian Live. Au lieu de cela, ils sont
+maintenus par des groupes de travail spécialisés dans la distribution et
+reflètent donc le consensus de chaque groupe sur les paquets pour mieux
+servir les besoins des utilisateurs. Ils couvrent également une gamme
+beaucoup plus large des cas d'utilisation que les listes prédéfinies qu'ils
+remplacent.
+
+Tous les métapaquets de tâches sont préfixés avec #{task-}#, donc un moyen
+rapide pour déterminer lesquels sont disponibles (même si elle peut contenir
+une poignée de faux résultats qui correspondent avec le nom, mais ne sont
+pas métapaquets) est de faire correspondre le nom du paquet avec:
+
+code{
+
+ $ apt-cache search --names-only ^task-
+
+}code
+
+En plus, vous trouverez d'autres métapaquets à des fins diverses. Certains
+sont sous-ensembles de paquets de tâches plus larges, comme #{gnome-core}#,
+tandis que d'autres sont pièces individuelles spécialisées d'un Debian Pure
+Blend, comme les métapaquets #{education-*}#. Pour lister tous les
+métapaquets dans l'archive, installer le paquet #{debtags}# et lister tous
+les paquets avec le tag #{role::metapackage}# comme suit:
+
+code{
+
+ $ debtags search role::metapackage
+
+}code
 
 3~ Listes de paquets locaux
 
-Vous pouvez compléter ou remplacer entièrement les listes fournies en
-utilisant listes de paquets locaux stockées dans #{config/package-lists/}#.
+Si vous ajoutez métapaquets dans une liste, des paquets individuels ou une
+combinaison des deux, toutes les listes de paquets locaux sont stockées dans
+#{config/package-lists/}#. Comme plus d'une liste peut être utilisée, cela
+se prête bien à une conception modulaire. Par exemple, vous pouvez décider
+de consacrer une liste à un choix particulier de bureau, l'autre à une
+collection de packages connexes qui pourraient aussi bien être utilisés
+au-dessus d'un bureau différent. Cela vous permet d'expérimenter avec
+différentes combinaisons d'ensembles de paquets avec un minimum de tracas en
+utilisant des listes communes entre les différents projets d'images live.
 
 Les listes de paquets qui existent dans ce répertoire ont besoin d'avoir un
 suffixe #{.list}# pour être traitées, puis un suffixe d'étape supplémentaire
@@ -222,21 +254,25 @@ une des variantes d'installation non-live. Comme mentionné ci-dessus, si
 vous voulez que cette liste soit la même que votre liste pour l'étape
 chroot, utilisez simplement le suffixe #{.list}#. 
 
-3~ Extension d'un liste de paquets fournis à l'aide de «includes»
+3~generated-package-lists Générer listes de paquets
 
-Les listes de paquets qui sont incluses avec live-build font un grand usage
-des «includes». Reportez-vous à celles-ci dans le répertoire
-#{/usr/share/live/build/package-lists/}#, car elles servent d'exemples pour
-savoir comment écrire vos propres listes.
+Il arrive parfois que la meilleure façon de composer une liste est de la
+générer avec un script. Toute ligne commençant par un point d'exclamation
+indique une commande à exécuter dans le chroot lorsque l'image est
+construite. Par exemple, on pourrait inclure la ligne #{! grep-aptavail -n
+-sPackage -FPriority standard | sort}# dans une liste de paquets qui permet
+de produire une liste triée des paquets disponibles avec
 
-Par exemple, pour faire une liste qui comprend la liste prédéfinie
-#{gnome}#, plus /{iceweasel}/, créer #{config/package-lists/my.list.chroot}#
-avec le contenu suivant:
+En fait, la sélection des paquets avec la commande #{grep-aptavail}# (du
+paquet #{dctrl-tools}#) est si utile que #{live-build}# fournit un script
+#{Packages}# à titre de commodité. Ce script accepte deux arguments:
+#{field}# et #{pattern}#. Ainsi, vous pouvez créer une liste avec le contenu
+suivant:
 
 code{
 
- #include <gnome>
- iceweasel
+ $ lb config
+ $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
 
 }code
 
@@ -297,29 +333,6 @@ code{
 
 L'imbrication des conditionnels n'est pas soutenu.
 
-3~ Tâches
-
-L'installateur Debian offre l'utilisateur le choix d'un certain nombre de
-listes présélectionnées de paquets, chacune centrée sur un type particulier
-de système ou d'une tâche pour laquelle un système peut être utilisé, comme
-«environnement de bureau graphique», «serveur de messagerie» ou
-«portable». Ces listes sont appelés «tâches» (Tasks) et sont soutenues par
-APT grâce à l'option «Task:» Vous pouvez spécifier une ou plusieurs tâches à
-live-build en les plaçant dans une liste dans #{config/task-lists/}#, comme
-dans l'exemple ci-dessous.
-
-code{
-
- $ lb config
- $ echo "mail-server file-server" >> config/task-lists/my.list.chroot
-
-}code
-
-Les tâches principales disponibles dans l'installateur Debian peuvent être
-listées avec #{tasksel --list-tasks}# dans le système live. Le contenu de
-n'importe quelle tâche, y compris celles non incluses dans cette liste,
-peuvent être examinées avec #{tasksel --task-packages}#.
-
 3~desktop-and-language-tasks Tâches de bureau et de la langue
 
 Les tâches de bureau et de la langue sont des cas particuliers qui ont
@@ -341,36 +354,19 @@ pour soutenir plusieurs environnements de bureau ou de plusieurs langues et
 offrir à l'utilisateur un choix, mais ce n'est pas le comportement par
 défaut de live-build.
 
-Parce qu'il n'y a pas aucune disposition faite automatiquement pour les
-tâches de la langue, qui comprennent des éléments tels que des polices
-spécifiques de la langue et des paquets de méthodes de saisie, si vous les
-voulez, vous devez les spécifier dans votre configuration. Par exemple, une
-image de bureau GNOME contenant soutien pour le japonais pourrait inclure
-les tâches suivantes:
+Because there is no provision made automatically for language tasks, which
+include such things as language-specific fonts and input-method packages, if
+you want them, you need to specify them in your configuration. For example,
+a GNOME desktop image containing support for Japanese might include these
+task metapackages:
 
 code{
 
  $ lb config
- $ echo "gnome-desktop desktop standard laptop" >> config/task-lists/my.list.chroot
- $ echo "japanese japanese-desktop japanese-gnome-desktop" >> config/task-lists/my.list.chroot
+ $ echo "task-gnome-desktop task-laptop" >> config/package-lists/my.list.chroot
+ $ echo "task-japanese task-japanese-desktop task-japanese-gnome-desktop" >> config/package-lists/my.list.chroot
 
 }code
-
-Comme les tâches de bureau sont des tâches «internes», pour chaque tâche de
-saveur de bureau incluse dans l'image, la valeur correspondante, si elle
-diffère de la valeur par défaut, "gnome", doit être préconfigurée dans la
-variable debconf «tasksel/desktop", ou bien tasksel ne la reconnaîtra pas et
-ne l'installera pas. Ainsi:
-
-code{
-
- $ lb config
- $ echo 'tasksel tasksel/desktop multiselect kde' >> config/preseed/my.preseed.chroot
-
-}code
-
-Ce paramètre peut prendre plusieurs valeurs, par exemple "lxde xfce" au lieu
-de "kde".
 
 2~installing-modified-or-third-party-packages Installation des paquets
 modifiés ou de tiers
@@ -484,7 +480,7 @@ code{
 
 }code
 
-3~ Régler APT pour économiser de l'espace
+3~tweaking-apt-to-save-space Tweaking APT to save space
 
 Vous pouvez avoir besoin d'économiser de l'espace sur les supports d'images,
 auquel cas l'un ou l'autre ou les deux options suivantes peuvent être
@@ -506,8 +502,9 @@ le système live, alors avant de procéder à #{apt-cache search}# ou #{apt-get
 install}#, par exemple, l'utilisateur doit faire #{apt-get update}# pour
 créer ces indices.
 
-Si vous trouvez que l'installation des paquets recommandés gonfle votre
-image trop, vous pouvez désactiver l'option par défaut d'APT avec:
+If you find the installation of recommended packages bloats your image too
+much, provided you are prepared to deal with the consequences discussed
+below, you may disable that default option of APT with:
 
 code{
 
@@ -515,18 +512,27 @@ code{
 
 }code
 
-La contrepartie ici est que si vous n'installez pas les paquets recommandés
-par un paquet, c’est-à-dire, "paquets qu'on trouverai avec celui-ci dans
-toute installation standard" (Debian Policy Manual, section 7.2), certains
-paquets que vous avez vraiment besoin peuvent être omis. Par conséquent,
-nous vous suggérons d'examiner la différence que désactiver recommends rend
-à votre liste de paquets (voir le fichier #{binary.packages}# généré par
-#{lb build}#) et re-incluez dans votre liste tous les paquets manquants que
-vous souhaitez toujours installés. Alternativement, si vous trouvez que vous
-voulez seulement un petit nombre de paquets recommandés exclus, laissez
-recommends activé et définissez une priorité APT pin négative sur les
-paquets sélectionnés pour éviter les installér, comme expliqué dans {APT
-pinning}#apt-pinning.
+The most important consequence of turning off recommends is that
+#{live-boot}# and #{live-config}# themselves recommend some packages that
+provide important functionality used by most Live configurations, such as
+#{user-setup}# which #{live-config}# recommends and is used to create the
+live user. In all but the most exceptional circumstances you need to add
+back at least some of these recommends to your package lists or else your
+image will not work as expected, if at all. Look at the recommended packages
+for each of the #{live-*}# packages included in your build and if you are
+not certain you can omit them, add them back into your package lists.
+
+The more general consequence is that if you don't install recommended
+packages for any given package, that is, "packages that would be found
+together with this one in all but unusual installations" (Debian Policy
+Manual, section 7.2), some packages that users of your Live system actually
+need may be omitted. Therefore, we suggest you review the difference turning
+off recommends makes to your packages list (see the #{binary.packages}# file
+generated by #{lb build}#) and re-include in your list any missing packages
+that you still want installed. Alternatively, if you find you only want a
+small number of recommended packages left out, leave recommends enabled and
+set a negative APT pin priority on selected packages to prevent them from
+being installed, as explained in {APT pinning}#apt-pinning.
 
 3~ Passer des options à apt ou aptitude
 
@@ -576,13 +582,13 @@ $ lb config --distribution wheezy
 
 Une priorité pin négative évitera installér un paquet, comme dans le cas où
 vous ne voulez pas un paquet qui est recommandé par un autre
-paquet. Supposons que vous construisez une image LXDE en utilisant l'option
-#{--package-lists lxde}# mais ne veulez pas que l'utilisateur soit invité à
-stocker les mots de passe wifi dans le trousseau de clés. Cette liste
-comprend /{gdm}/, que dépend de /{gksu}/, que à son tour recommande
-/{gnome-keyring}/. Donc, vous voulez omettre le paquet recommandé
-/{gnome-keyring}/. Cela peut être fait en ajoutant la strophe suivante à
-#{config/chroot_apt/preferences}#:
+paquet. Supposons que vous construisez une image LXDE en utilisant
+#{task-lxde-desktop}# dans #{config/package-lists/lxde-desktop.list.chroot}#
+mais ne veulez pas que l'utilisateur soit invité à stocker les mots de passe
+wifi dans le trousseau de clés. Cette liste comprend /{lxde-core}/, qui
+recommande /{gksu}/, que à son tour recommande /{gnome-keyring}/. Donc, vous
+voulez omettre le paquet recommandé /{gnome-keyring}/. Cela peut être fait
+en ajoutant la strophe suivante à #{config/chroot_apt/preferences}#:
 
 code{
 

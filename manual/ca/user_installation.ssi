@@ -10,11 +10,11 @@ _* Accés de superusuari (root)
 
 _* Una versió actualitzada de live-build
 
-_* Una shell compatible amb POSIX, com ara /{bash}/ o /{dash}/.
+_* Una shell compatible amb POSIX, com ara /{bash}/ o /{dash}/
 
 _* /{debootstrap}/ o /{cdebootstrap}/
 
-_* Linux 2.6.x
+_* Linux 2.6.x o 3.x
 
 Tenir en compte que no cal usar Debian o una distribució derivada de Debian
 ja que live-build funcionarà en gairebé qualsevol distribució amb els
@@ -157,15 +157,30 @@ code{
 
 }code
 
-_* Utilitzar tots el fitxers .deb generats
+_* Utilitzar tots el fitxers .deb generats que calguin
 
-Com live-boot i live-config són instaŀlats pel sistema live-build, instaŀlar
-els paquets en el sistema amfitrió no és suficient: S'han de tractar tots
-els fitxers .deb generats igual que qualsevol altre paquet personalitzat. Si
-us plau veure {Personalització de l'instaŀlació de
-paquets}#customizing-package-installation per a més informació. S'ha de
-prestar especial atenció a {Repositoris
-addicionals}#additional-repositories.
+Com live-boot y live-config són instaŀlats per el sistema de construcció
+live-build, la instaŀlació dels paquets en el sistema amfitrió no és
+suficient: s'ha de tractar els .deb generats com si fossin uns paquets
+personalitzats. Ja que el propòsit per construir aquests paquets a partir
+del codi font és per provar coses noves a curt termini abans del llançament
+oficial, seguir els pasos de {Instaŀlació de paquets modificats o de
+tercers}#installing-modified-or-third-party-packages per incloure
+temporalment els paquets rellevants en la configuració. En particular, cal
+observar que ambdós paquets es divideixen en una part genèrica, una part de
+documentació i un o més back-ends. Incloure la part genèrica, només un dels
+back-end que coincideixi amb la configuració, i, opcionalment, la
+documentació. Suposant que s'està construint una imatge en viu en el
+directori actual i que s'han generat tots els .deb per a una única versió
+dels dos paquets al directori superior, aquestes ordres de bash són per
+copiar tots els paquets importants, incloent-hi els back-ends per defecte:
+
+code{
+
+ $ cp ../live-boot{_,-initramfs-tools,-doc}*.deb  config/packages.chroot/
+ $ cp ../live-config{_,-sysvinit,-doc}*.deb  config/packages.chroot/
+
+}code
 
 3~ A partir d'instantànies
 

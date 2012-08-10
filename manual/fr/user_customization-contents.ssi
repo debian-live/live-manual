@@ -16,7 +16,7 @@ Bien qu'idéalement un système Debian Live comprendrait des fichiers
 entièrement fournis par les paquets Debian non modifiés, on convient parfois
 de fournir ou de modifier certains contenus par le biais de fichiers. Avec
 les includes, il est possible d'ajouter (ou remplacer) des fichiers
-arbitraires dans votre image live de Debian. live-build prévoit trois
+arbitraires dans votre image live de Debian. live-build prévoit deux
 mécanismes pour leur utilisation:
 
 _* Chroot local includes: Ils vous permettent d'ajouter ou remplacer des
@@ -27,11 +27,6 @@ d'informations.
 _* Binary local includes: Ils vous permettent d'ajouter ou de remplacer des
 fichiers dans l'image binaire. S'il vous plaît voir {Binary local
 includes}#binary-local-includes pour plus d'informations.
-
-_* Binary includes: Ils vous permettent d'ajouter ou remplacer des fichiers
-spécifiques de Debian dans l'image binaire, comme des modèles et des
-répertoires d'outils. S'il vous plaît voir {Binary includes}#binary-includes
-pour plus d'informations.
 
 S'il vous plaît voir {Termes}#terms pour plus d'informations sur la
 distinction entre les images "Live" et "binary".
@@ -96,22 +91,6 @@ code{
 
 Ces fichiers apparaissent maintenant dans le répertoire racine du support
 live.
-
-3~binary-includes Binary includes
-
-live-build a certains fichiers standard (comme la documentation) qui seront
-inclus dans la configuration par défaut sur tous les supports live. Ceci
-peut être désactivé avec:
-
-code{
-
- $ lb config --includes none
-
-}code
-
-Sinon, le matériel sera installé par live-build dans #{/includes/}# par
-défaut sur le système de fichiers du support, ou bien vous pouvez spécifier
-un autre chemin d'accès avec #{--includes}#.
 
 2~hooks Hooks
 

@@ -2,23 +2,21 @@
 # This file is distributed under the same license as the live-manual package.
 # Automatically generated, 2011.
 # Translated and revised by:
-# José Luis Zabalza <jlz.3008@gmail.com> and
-# Carlos Zuferri «chals» <chals@altorricon.com>
+# José Luis Zabalza <jlz.3008@gmail.com>, 2011.
+# Carlos Zuferri <chals@altorricon.com>, 2011, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
-"POT-Creation-Date: 2012-07-21 03:48+0300\n"
-"PO-Revision-Date: 2012-07-20 22:58+0100\n"
-"Last-Translator: José Luis Zabalza and Carlos Zuferri «chals» "
-"<jlz.3008@gmail.com> <chals@altorricon.com>\n"
-"Language-Team: Debian live Spanish translation team <debian-live@lists."
-"debian.org>\n"
+"POT-Creation-Date: 2012-07-27 21:48+0300\n"
+"PO-Revision-Date: 2012-08-07 14:27+0200\n"
+"Last-Translator: Carlos Zuferri <chals@altorricon.com>\n"
+"Language-Team: Debian Live <debian-live@lists.debian.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #. type: Plain text
 #: en/about_manual.ssi:88 en/about_manual.ssi:96 en/about_manual.ssi:104
@@ -230,6 +228,10 @@ msgid ""
 "   dip floppy video plugdev netdev powerdev scanner bluetooth fuse \\\n"
 "   >> config/preseed/my.preseed.chroot\n"
 msgstr ""
+" $ lb config\n"
+" $ echo user-setup passwd/user-default-groups string audio cdrom \\\n"
+"   dip floppy video plugdev netdev powerdev scanner bluetooth fuse \\\n"
+"   >> config/preseed/my.preseed.chroot\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:23
@@ -254,7 +256,7 @@ msgstr ""
 #: en/user_customization-runtime.ssi:29
 #, no-wrap
 msgid " $ lb config --bootappend-live \"username=live-user\"\n"
-msgstr ""
+msgstr " $ lb config --bootappend-live \"username=live-user\"\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:33
@@ -311,7 +313,7 @@ msgstr ""
 #: en/user_customization-runtime.ssi:47
 #, no-wrap
 msgid " $ lb config --bootappend-live \"locales=de_CH.UTF-8\"\n"
-msgstr ""
+msgstr " $ lb config --bootappend-live \"locales=de_CH.UTF-8\"\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:51
@@ -340,8 +342,8 @@ msgstr ""
 msgid ""
 "Both the console and X keyboard configuration are performed by #{live-config}"
 "# using the #{console-setup}# package. To configure them, use the #{keyboard-"
-"layouts}#, #{keyboard-variant}#, #{keyboard-options}# and #{keyboard-model}# "
-"boot parameters via the #{--bootappend-live}# option. Valid options for "
+"layouts}#, #{keyboard-variants}#, #{keyboard-options}# and #{keyboard-model}"
+"# boot parameters via the #{--bootappend-live}# option. Valid options for "
 "these can be found in #{/usr/share/X11/xkb/rules/base.lst}#. To find layouts "
 "and variants for a given language, try searching for the English name of the "
 "language and/or the country where the language is spoken, e.g:"
@@ -349,8 +351,8 @@ msgstr ""
 "#{live-config}# se encarga de la configuración del teclado de la consola y "
 "del entorno gráfico X utilizando el paquete #{console-setup}#. Para "
 "configurarlos se puede utilizar los parámetros de arranque #{keyboard-"
-"layouts}#, #{keyboard-variant}#, #{keyboard-options}# y #{keyboard-model}# a "
-"través de la opción #{--bootappend-live}#. Se puede encontrar una lista de "
+"layouts}#, #{keyboard-variants}#, #{keyboard-options}# y #{keyboard-model}# "
+"a través de la opción #{--bootappend-live}#. Se puede encontrar una lista de "
 "opciones válidas para estos parámetros en #{/usr/share/X11/xkb/rules/base."
 "lst}#. Para hallar la distribución del teclado y la variante que corresponde "
 "a un idioma se puede buscar el nombre en inglés de la nación donde se habla "
@@ -371,6 +373,16 @@ msgid ""
 "   de_mac          ch: German (Switzerland, Macintosh)\n"
 " ! option\n"
 msgstr ""
+"$ egrep -i '(^!|german.*switzerland)' /usr/share/X11/xkb/rules/base.lst\n"
+" ! model\n"
+" ! layout\n"
+"   ch              German (Switzerland)\n"
+" ! variant\n"
+"   legacy          ch: German (Switzerland, legacy)\n"
+"   de_nodeadkeys   ch: German (Switzerland, eliminate dead keys)\n"
+"   de_sundeadkeys  ch: German (Switzerland, Sun dead keys)\n"
+"   de_mac          ch: German (Switzerland, Macintosh)\n"
+" ! option\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:72
@@ -393,7 +405,7 @@ msgstr ""
 #: en/user_customization-runtime.ssi:78
 #, no-wrap
 msgid " $ lb config --bootappend-live \"locales=de_CH.UTF-8 keyboard-layouts=ch\"\n"
-msgstr ""
+msgstr " $ lb config --bootappend-live \"locales=de_CH.UTF-8 keyboard-layouts=ch\"\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:82
@@ -412,8 +424,10 @@ msgstr ""
 #, no-wrap
 msgid ""
 " $ lb config --bootappend-live \\\n"
-"     \"locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variant=bepo keyboard-model=tm2030usb\"\n"
+"     \"locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variants=bepo keyboard-model=tm2030usb\"\n"
 msgstr ""
+" $ lb config --bootappend-live \\\n"
+"     \"locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variants=bepo keyboard-model=tm2030usb\"\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:91
@@ -422,17 +436,17 @@ msgid ""
 "{keyboard-*}# options, with the exception of #{keyboard-model}#, which "
 "accepts only one value. Please see the #{keyboard(5)}# man page for details "
 "and examples of #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# and #{XKBOPTIONS}"
-"# variables. If multiple #{keyboard-variant}# values are given, they will be "
-"matched one-to-one with #{keyboard-layouts}# values (see #{setxkbmap(1)}# #{-"
-"variant}# option). Empty values are allowed; e.g. to define two layouts, the "
-"default being US QWERTY and the other being US Dvorak, use:"
+"# variables. If multiple #{keyboard-variants}# values are given, they will "
+"be matched one-to-one with #{keyboard-layouts}# values (see #{setxkbmap(1)}# "
+"#{-variant}# option). Empty values are allowed; e.g. to define two layouts, "
+"the default being US QWERTY and the other being US Dvorak, use:"
 msgstr ""
 "Para cada una de las variables de configuración del teclado #{keyboard-*}# "
 "se puede especificar varios valores separados por comas. A excepción de #"
 "{keyboard-model}#, que sólo acepta un valor. En la página de manual #"
 "{keyboard(5)}# se explican los detalles y algunos ejemplos de cómo utilizar "
 "las variables #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# y #{XKBOPTIONS}#. "
-"Si se especifican diferentes valores en #{keyboard-variant}# estos se "
+"Si se especifican diferentes valores en #{keyboard-variants}# estos se "
 "corresponderan uno a uno con los valores #{keyboard-layouts}# (ver #"
 "{setxkbmap(1)}# opción #{-variant}#). Se admiten valores vacíos; por ejemplo "
 "para definir dos distribuciones de teclado, la que se usa por omisión US "
@@ -443,8 +457,10 @@ msgstr ""
 #, no-wrap
 msgid ""
 " $ lb config --bootappend-live \\\n"
-"     \"keyboard-layouts=us,us keyboard-variant=,dvorak\"\n"
+"     \"keyboard-layouts=us,us keyboard-variants=,dvorak\"\n"
 msgstr ""
+" $ lb config --bootappend-live \\\n"
+"     \"keyboard-layouts=us,us keyboard-variants=,dvorak\"\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:100
@@ -582,7 +598,7 @@ msgstr ""
 #: en/user_customization-runtime.ssi:124
 #, no-wrap
 msgid " # mkfs.ext4 -L persistence /dev/sdb1\n"
-msgstr ""
+msgstr " # mkfs.ext4 -L persistence /dev/sdb1\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:128
@@ -603,7 +619,7 @@ msgstr ""
 #: en/user_customization-runtime.ssi:134
 #, no-wrap
 msgid " # tune2fs -L persistence /dev/sdb1 # for ext2,3,4 filesystems\n"
-msgstr ""
+msgstr " # tune2fs -L persistence /dev/sdb1 # for ext2,3,4 filesystems\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:138
@@ -621,6 +637,8 @@ msgid ""
 " $ dd if=/dev/null of=persistence bs=1G seek=1 # for a 1GB sized image file\n"
 " $ /sbin/mkfs.ext4 -F persistence\n"
 msgstr ""
+" $ dd if=/dev/null of=persistence bs=1G seek=1 # for a 1GB sized image file\n"
+" $ /sbin/mkfs.ext4 -F persistence\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:147
@@ -670,6 +688,10 @@ msgid ""
 " # echo \"/home\" >> /mnt/live-persistence.conf\n"
 " # echo \"/var/cache/apt\" >> /mnt/live-persistence.conf\n"
 msgstr ""
+" # mkfs.ext4 -L persistence /dev/sdb1\n"
+" # mount -t ext4 /dev/sdb1 /mnt\n"
+" # echo \"/home\" >> /mnt/live-persistence.conf\n"
+" # echo \"/var/cache/apt\" >> /mnt/live-persistence.conf\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:164

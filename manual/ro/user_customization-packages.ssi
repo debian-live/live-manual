@@ -10,9 +10,9 @@ are available to install in the image are the distribution and archive
 areas. To ensure decent download speeds, you should choose a nearby
 distribution mirror. You can also add your own repositories for backports,
 experimental or custom packages, or include packages directly as files. You
-can define your own lists of packages to include, use live-build's
-predefined lists, use /{tasksel}/ tasks, or a combination of all
-three. Finally, a number of options give some control over /{apt}/, or if
+can define lists of packages, including metapackages which will install many
+related packages at once, such as packages for a particular desktop or
+language. Finally, a number of options give some control over /{apt}/, or if
 you prefer, /{aptitude}/, at build time when packages are installed. You may
 find these handy if you use a proxy, want to disable installation of
 recommended packages to save space, or need to control which versions of
@@ -148,44 +148,76 @@ code{
 
 There are a number of ways to choose which packages live-build will install
 in your image, covering a variety of different needs. You can simply name
-individual packages to install in a package list. You can also choose
-predefined lists of packages, or use APT tasks. And finally, you may place
-package files in your #{config/}# tree, which is well suited to testing of
-new or experimental packages before they are available from a repository.
+individual packages to install in a package list. You can also use
+metapackages in those lists, or select them using package control file
+fields. And finally, you may place package files in your #{config/}# tree,
+which is well suited to testing of new or experimental packages before they
+are available from a repository.
 
 3~package-lists Package lists
 
 Package lists are a powerful way of expressing which packages should be
 installed. The list syntax supports included files and conditional sections
 which makes it easy to build lists from other lists and adapt them for use
-in multiple configurations. You can use predefined package lists, providing
-in a modular fashion package selections from each of the major desktop
-environments and some special purpose lists, as well as standard lists the
-others are based upon. You can also provide your own package lists, or use a
-combination of both.
+in multiple configurations. Package names may also be injected into the list
+using shell helpers at build time.
 
 *{Note:}* The behaviour of live-build when specifying a package that does not exist is determined by your choice of APT utility. See {Choosing apt or aptitude}#choosing-apt-or-aptitude for more details.
 
-3~ Predefined package lists
+3~using-metapackages Using metapackages
 
-The simplest way to use lists is to specify one or more predefined lists
-with the #{--package-lists}# option. For example:
+The simplest way to populate your package list is to use a task metapackage
+maintained by your distribution. For example:
 
 code{
 
- $ lb config --package-lists "gnome rescue"
+ $ lb config
+ $ echo task-gnome-desktop > config/package-lists/gnome-desktop.list.chroot
 
 }code
 
-The default location for the list files on your system is
-#{/usr/share/live/build/package-lists/}#. To determine the packages in a
-given list, read the corresponding file, paying attention to included files
-and conditionals as described in the following sections.
+This supercedes the older predefined list method supported in #{live-build}#
+2.x. Unlike predefined lists, task metapackages are not specific to the
+Debian Live project. Instead, they are maintained by specialist working
+groups within the distribution and therefore reflect the consensus of each
+group about which packages best serve the needs of the intended users. They
+also cover a much broader range of use cases than the predefined lists they
+replace.
+
+All task metapackages are prefixed #{task-}#, so a quick way to determine
+which are available (though it may contain a handful of false hits that
+match the name but aren't metapackages) is to match on the package name
+with:
+
+code{
+
+ $ apt-cache search --names-only ^task-
+
+}code
+
+In addition to these, you will find other metapackages with various
+purposes. Some are subsets of broader task packages, like #{gnome-core}#,
+while others are individual specialized parts of a Debian Pure Blend, such
+as the #{education-*}# metapackages. To list all metapackages in the
+archive, install the #{debtags}# package and list all packages with the
+#{role::metapackage}# tag as follows:
+
+code{
+
+ $ debtags search role::metapackage
+
+}code
 
 3~ Local package lists
 
-You may supplement the predefined lists using local package lists stored in
-#{config/package-lists/}#.
+Whether you list metapackages, individual packages, or a combination of
+both, all local package lists are stored in #{config/package-lists/}#. Since
+more than one list can be used, this lends itself well to modular
+designs. For example, you may decide to devote one list to a particular
+choice of desktop, another to a collection of related packages that might as
+easily be used on top of a different desktop. This allows you to experiment
+with different combinations of sets of packages with a minimum of fuss,
+sharing common lists between different live image projects.
 
 Package lists that exist in this directory need to have a #{.list}# suffix
 in order to be processed, and then an additional stage suffix, #{.chroot}#
@@ -202,20 +234,25 @@ typically use such a list with one of the non-live installer variants. As
 mentioned above, if you want this list to be the same as your chroot stage
 list, simply use the #{.list}# suffix by itself.
 
-3~ Extending a provided package list using includes
+3~generated-package-lists Generated package lists
 
-The package lists that are included with live-build make extensive use of
-includes. Refer to these in the #{/usr/share/live/build/package-lists/}#
-directory, as they serve as good examples of how to write your own lists.
+It sometimes happens that the best way to compose a list is to generate it
+with a script. Any line starting with an exclamation point indicates a
+command to be executed within the chroot when the image is built. For
+example, one might include the line #{! grep-aptavail -n -sPackage
+-FPriority standard | sort}# in a package list to produce a sorted list of
+available packages with #{Priority: standard}#.
 
-For example, to make a list that includes the predefined #{gnome}# list plus
-/{iceweasel}/, create #{config/package-lists/my.list.chroot}# with the
+In fact, selecting packages with the #{grep-aptavail}# command (from the
+#{dctrl-tools}# package) is so useful that #{live-build}# provides a
+#{Packages}# helper script as a convenience. This script takes two
+arguments: #{field}# and #{pattern}#. Thus, you can create a list with the
 following contents:
 
 code{
 
- #include <gnome>
- iceweasel
+ $ lb config
+ $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
 
 }code
 
@@ -275,28 +312,6 @@ code{
 
 The nesting of conditionals is not supported.
 
-3~ Tasks
-
-The Debian Installer offers the user choices of a number of preselected
-lists of packages, each one focused on a particular kind of system, or task
-a system may be used for, such as "Graphical desktop environment", "Mail
-server" or "Laptop". These lists are called "tasks" and are supported by APT
-through the "Task:" field. You can specify one or more tasks in live-build
-by putting them in a list in #{config/task-lists/}#, as in the example
-below.
-
-code{
-
- $ lb config
- $ echo "mail-server file-server" >> config/task-lists/my.list.chroot
-
-}code
-
-The primary tasks available in the Debian Installer can be listed with
-#{tasksel --list-tasks}# in the live system. The contents of any task,
-including the ones not included in this list, may be examined with #{tasksel
---task-packages}#.
-
 3~desktop-and-language-tasks Desktop and language tasks
 
 Desktop and language tasks are special cases that need some extra planning
@@ -320,29 +335,15 @@ Because there is no provision made automatically for language tasks, which
 include such things as language-specific fonts and input-method packages, if
 you want them, you need to specify them in your configuration. For example,
 a GNOME desktop image containing support for Japanese might include these
-tasks:
+task metapackages:
 
 code{
 
  $ lb config
- $ echo "gnome-desktop desktop standard laptop" >> config/task-lists/my.list.chroot
- $ echo "japanese japanese-desktop japanese-gnome-desktop" >> config/task-lists/my.list.chroot
+ $ echo "task-gnome-desktop task-laptop" >> config/package-lists/my.list.chroot
+ $ echo "task-japanese task-japanese-desktop task-japanese-gnome-desktop" >> config/package-lists/my.list.chroot
 
 }code
-
-Since desktop tasks are "internal" tasks, for every desktop flavour task
-included in the image, the corresponding value, if it differs from the
-default, "gnome", must be preseeded in the "tasksel/desktop" debconf
-variable or else tasksel will not recognize and install it. Thus:
-
-code{
-
- $ lb config
- $ echo 'tasksel tasksel/desktop multiselect kde' >> config/preseed/my.preseed.chroot
-
-}code
-
-This parameter can take multiple values, e.g. "lxde xfce" instead of "kde".
 
 2~installing-modified-or-third-party-packages Installing modified or
 third-party packages
@@ -451,7 +452,7 @@ code{
 
 }code
 
-3~ Tweaking APT to save space
+3~tweaking-apt-to-save-space Tweaking APT to save space
 
 You may find yourself needing to save some space on the image media, in
 which case one or the other or both of the following options may be of
@@ -473,7 +474,8 @@ before performing #{apt-cache search}# or #{apt-get install}#, for instance,
 the user must #{apt-get update}# first to create those indices.
 
 If you find the installation of recommended packages bloats your image too
-much, you may disable that default option of APT with:
+much, provided you are prepared to deal with the consequences discussed
+below, you may disable that default option of APT with:
 
 code{
 
@@ -481,17 +483,27 @@ code{
 
 }code
 
-The tradeoff here is that if you don't install recommended packages for a
-given package, that is, "packages that would be found together with this one
-in all but unusual installations" (Debian Policy Manual, section 7.2), some
-packages that you actually need may be omitted. Therefore, we suggest you
-review the difference turning off recommends makes to your packages list
-(see the #{binary.packages}# file generated by #{lb build}#) and re-include
-in your list any missing packages that you still want
-installed. Alternatively, if you find you only want a small number of
-recommended packages left out, leave recommends enabled and set a negative
-APT pin priority on selected packages to prevent them from being installed,
-as explained in {APT pinning}#apt-pinning.
+The most important consequence of turning off recommends is that
+#{live-boot}# and #{live-config}# themselves recommend some packages that
+provide important functionality used by most Live configurations, such as
+#{user-setup}# which #{live-config}# recommends and is used to create the
+live user. In all but the most exceptional circumstances you need to add
+back at least some of these recommends to your package lists or else your
+image will not work as expected, if at all. Look at the recommended packages
+for each of the #{live-*}# packages included in your build and if you are
+not certain you can omit them, add them back into your package lists.
+
+The more general consequence is that if you don't install recommended
+packages for any given package, that is, "packages that would be found
+together with this one in all but unusual installations" (Debian Policy
+Manual, section 7.2), some packages that users of your Live system actually
+need may be omitted. Therefore, we suggest you review the difference turning
+off recommends makes to your packages list (see the #{binary.packages}# file
+generated by #{lb build}#) and re-include in your list any missing packages
+that you still want installed. Alternatively, if you find you only want a
+small number of recommended packages left out, leave recommends enabled and
+set a negative APT pin priority on selected packages to prevent them from
+being installed, as explained in {APT pinning}#apt-pinning.
 
 3~ Passing options to apt or aptitude
 
@@ -539,10 +551,11 @@ $ lb config --distribution wheezy
 
 Negative pin priorities will prevent a package from being installed, as in
 the case where you do not want a package that is recommended by another
-package. Suppose you are building an LXDE image using #{--package-lists
-lxde}# option, but don't want the user prompted to store wifi passwords in
-the keyring. This list includes /{gdm}/, which depends on /{gksu}/, which in
-turn recommends /{gnome-keyring}/. So you want to omit the recommended
+package. Suppose you are building an LXDE image using #{task-lxde-desktop}#
+in #{config/package-lists/lxde-desktop.list.chroot}#, but don't want the
+user prompted to store wifi passwords in the keyring. This metapackage
+depends on /{lxde-core}/, which recommends /{gksu}/, which in turn
+recommends /{gnome-keyring}/. So you want to omit the recommended
 /{gnome-keyring}/ package. This can be done by adding the following stanza
 to #{config/chroot_apt/preferences}#:
 

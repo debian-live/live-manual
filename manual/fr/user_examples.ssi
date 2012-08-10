@@ -87,8 +87,7 @@ code{
 
  $ mkdir tutorial2
  $ cd tutorial2
- $ lb config -p lxde
- $ echo iceweasel >> config/package-lists/my.list.chroot
+ $ echo "task-lxde-desktop iceweasel" >> config/package-lists/my.list.chroot
 
 }code
 
@@ -143,7 +142,6 @@ code{
  lb config noauto \
      --architectures i386 \
      --linux-flavours 686-pae \
-     --package-lists lxde \
      "${@}"
 
 }code
@@ -161,16 +159,16 @@ Maintenant remplir votre liste de paquets locaux:
 
 code{
 
- $ echo "iceweasel xchat" >> config/package-lists/my.list.chroot
+ $ echo "task-lxde-desktop iceweasel xchat" >> config/package-lists/my.list.chroot
 
 }code
 
 Tout d'abord, #{--architectures i386}# assure que sur notre système de
-construction #{amd64}#, nous construisons une version 32 bits qui peut être
-utilisée sur la plupart des machines. En seconde place, nous utilisons
+construction #{amd64}#, nous construisons une version de 32 bits qui peut
+être utilisée sur la plupart des machines. En seconde place, nous utilisons
 #{--linux-flavours 686-pae}# parce que nous ne prévoyons pas utiliser cette
 image sur des systèmes beaucoup plus anciens. En troisième lieu, nous avons
-choisi la liste de paquets /{lxde}/ pour nous donner un bureau minimal. Et
+choisi la tâche métapaquet /{lxde}/ pour nous donner un bureau minimal. Et
 enfin, nous avons ajouté deux premiers paquets préférés: /{iceweasel}/ et
 /{xchat}/.
 
@@ -261,24 +259,52 @@ expériences recueillies des utilisateurs de Debian Live.
 
 *{Cas d'utilisation:}* Créer une image avec live-build pour démarrer directement à un serveur VNC.
 
-Faire un répertoire de construction et créer une arborescence de fichiers
-construite autour de la liste standard x11, avec /{gdm3}/, /{metacity}/ et
-/{xvnc4viewer}/, désactivant «recommends» pour faire un système minimal:
+Make a build directory and create an skeletal configuration inside it,
+disabling recommends to make a minimal system. And then create two initial
+package lists: the first one generated with a script provided by live-build
+named #{Packages}# (see {Generated package lists}#generated-package-lists),
+and the second one including /{xorg}/, /{gdm3}/, /{metacity}/ and
+/{xvnc4viewer}/.
 
 code{
 
  $ mkdir vnc_kiosk_client
  $ cd vnc_kiosk_client
- $ lb config -a i386 -k 686-pae -p standard-x11 \
-     --apt-recommends false
- $ echo "gdm3 metacity xvnc4viewer" >> config/package-lists/my.list.chroot
+ $ lb config -a i386 -k 686-pae --apt-recommends false
+ $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
+ $ echo "xorg gdm3 metacity xvnc4viewer" > config/package-lists/my.list.chroot
 
 }code
 
-Créez le répertoire #{/etc/skel}# avec une #{.xsession}# personnalisée pour
-l'utilisateur par défaut qui va lancer /{metacity}/ et commencer
-/{xvncviewer}/, en reliant le port #{5901}# sur un serveur à
-#{192.168.1.2}#:
+As explained in {Tweaking APT to save space}#tweaking-apt-to-save-space you
+may need to re-add some recommended packages to make your image work
+properly.
+
+An easy way to list recommends is using /{apt-cache}/. For example:
+
+code{
+
+ $ apt-cache depends live-config live-boot
+
+}code
+
+In this example we found out that we had to re-include several packages
+recommended by live-config and live-boot: #{user-setup}# to make autologin
+work and #{sudo}# as an essential program to shutdown the system. Besides,
+it could be handy to add #{live-tools}# to be able to copy the image to RAM
+and #{eject}# to eventually eject the live media, So:
+
+code{
+
+$ echo "live-tools user-setup sudo eject" >
+config/package-lists/recommends.list.chroot
+
+}code
+
+Créez le répertoire #{/etc/skel}# dans #{config/includes.chroot}# avec un
+fichier #{.xsession}# personnalisée pour l'utilisateur par défaut qui va
+lancer /{metacity}/ et commencer /{xvncviewer}/, en reliant le port #{5901}#
+sur un serveur à #{192.168.1.2}#:
 
 code{
 
@@ -306,23 +332,32 @@ Amusez-vous bien!
 
 2~ Une image de base pour une clé USB de 128M
 
-*{Cas d'utilisation:}* Créer une image standard avec certains composants éliminés afin de l'adapter sur une clé USB de 128M avec espace laissé pour l'utiliser à votre convenance.
+*{Cas d'utilisation:}* Créer une image standard avec certains composants éliminés afin de l'adapter sur une clé USB de 128M avec un peu d'espace laissé pour l'utiliser à votre convenance.
 
-Pour l'optimisation d'une image adaptée à la dimension des certains
-supports, vous avez besoin de comprendre le compromis que vous faites entre
-la taille et la fonctionnalité. Dans cet exemple, nous réduisons la taille
-uniquement que pour faire place au matériel supplémentaire au sein d'une
-taille de 128M, mais sans faire rien pour détruire l'intégrité des paquets
-contenus, telle que la purge des données de localisation via le paquet
-/{localepurge}/, ou d'autres optimisations "intrusives". On notera en
-particulier que vous ne devriez pas utiliser #{--bootstrap-flavour minimal}#
-sauf si vous savez vraiment ce que vous faites et que l'omission des paquets
-de priorité *{importante}* produira probablement un système live cassé.
+Pour l'optimisation d'une image adaptée à la dimension de certains supports,
+vous avez besoin de comprendre le compromis que vous faites entre la taille
+et la fonctionnalité. Dans cet exemple, nous réduisons la taille uniquement
+que pour faire place au matériel supplémentaire au sein d'une taille de
+128M, mais sans faire rien pour détruire l'intégrité des paquets contenus,
+telle que la purge des données de localisation via le paquet
+/{localepurge}/, ou d'autres optimisations "intrusives". Afin de comprendre
+ce que le hook #{minimal.chroot}# fait, voir
+#{/usr/share/doc/live-build/examples/hooks}#
 
 code{
 
- $ lb config -k 486 -p minimal --apt-indices false \
-     --memtest none --apt-recommends false --includes none
+ $ lb config -k 486 --apt-indices false --apt-recommends false --memtest none
+ $ cp /usr/share/doc/live-build/examples/hooks/minimal.chroot config/hooks
+
+}code
+
+To make the image work properly, we must re-add, at least, two recommended
+packages which are left out by the #{--apt-recommends false}# option. See
+{Tweaking APT to save space}#tweaking-apt-to-save-space
+
+code{
+
+ $ echo "user-setup sudo" > config/package-lists/recommends.list.chroot
 
 }code
 
@@ -335,25 +370,27 @@ code{
 }code
 
 Sur le système de l'auteur au moment de l'écriture, la configuration
-ci-dessus produisait une image de 78Mbyte. Cela se compare favorablement
-avec l'image de 166Mbyte produite par la configuration par défaut dans
+ci-dessus produisait une image de 95Mbyte. Cela se compare favorablement
+avec l'image de 182Mbyte produite par la configuration par défaut dans
 {Tutoriel 1}#tutorial-1.
 
-Le plus grand espace-économiseur ici, par rapport à la construction d'une
-image standard sur une architecture #{i386}#, est de sélectionner uniquement
-le saveur du noyau #{486}# au lieu de la valeur par défaut #{-k "486
-686-pae"}#. Laissant hors «APT's indices» avec #{--apt-indices false}#
-permet aussi d'économiser une bonne quantité d'espace, le compromis étant
-que vous devez faire #{apt-get update}# avant d'utiliser apt dans le système
-live. Le choix de la liste #{minimal}# laisse de côté les grands paquets de
-#{locales}# et les services associés. Laissant hors les paquets recommandés
-avec #{--apt-recommends false}# économise d'espace supplémentaire, au
-détriment d'omettre certains paquets que vous pourriez autrement attendre à
-être là, tel que /{firmware-linux-free}/ qui peuvent être nécessaires pour
-soutenir certains supports matériels. Les options restantes économisent
-petites quantités d'espace supplémentaire. C'est à vous de décider si la
-fonctionnalité qui est sacrifiée avec chaque optimisation est en vaut la
-perte de fonctionnalité.
+The biggest space-saver here, compared to building a standard image on an
+#{i386}# architecture system, is to select only the #{486}# kernel flavour
+instead of the default #{-k "486 686-pae"}#. Leaving off APT's indices with
+#{--apt-indices false}# also saves a fair amount of space, the tradeoff
+being that you need to #{apt-get update}# before using apt in the live
+system. Dropping recommended packages with #{--apt-recommends false}# saves
+some additional space, at the expense of omitting some packages you might
+otherwise expect to be there, such as /{firmware-linux-free}/ which may be
+needed to support certain hardware. #{--memtest none}# prevents the
+installation of a memory tester. And finally, the execution of the
+#{minimal.chroot}# hook removes some unused packages and files.
+
+En utilisant d'autres hooks comme par exemple le hook #{stripped.chroot}#
+dans #{/usr/share/doc/live-build/examples/hooks}#, peut gagner de petites
+quantités supplémentaires d'espace et produire une image de 76MB. Mais c'est
+à vous de décider si la fonctionnalité qui est sacrifié à chaque
+optimisation de la taille vaut la perte de fonctionnalité.
 
 2~ Un bureau KDE localisé et installateur 
 
@@ -396,13 +433,12 @@ code{
 
 }code
 
-Au démarrage nous allons générer les paramètres régionaux pt_BR.UTF-8 et
-sélectionner la configuration du clavier pt-latin1. Nous aurons aussi besoin
-de préconfigurer notre choix de bureau, "kde" de sorte que tasksel
-installera la tâche de bureau correcte, car elle diffère de la valeur par
-défaut (Voir {Tâches de bureau et de la
-langue}#desktop-and-language-tasks). Maintenant, nous allons assembler les
-pièces:
+At boot time we will generate the pt_BR.UTF-8 locale and select the
+pt-latin1 keyboard layout. Now let's put the pieces together. Recalling from
+{Using metapackages}#using-metapackages that task metapackages are prefixed
+#{task-}#, we just specify these language boot parameters, then add standard
+priority packages and all our discovered task metapackages to our package
+list as follows:
 
 code{
 
@@ -413,10 +449,10 @@ code{
      -k 486 \
      --bootappend-live "locales=pt_BR.UTF-8 keyboard-layouts=pt-latin1" \
      --debian-installer live
- $ echo kde-desktop brazilian-portuguese brazilian-portuguese-desktop \
-     brazilian-portuguese-kde-desktop >> config/task-lists/my.list.chroot
- $ echo debian-installer-launcher >> config/package-lists/my.list.chroot
- $ echo tasksel tasksel/desktop multiselect kde >> config/preseed/my.preseed.chroot
+ $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
+ $ echo task-kde-desktop task-brazilian-portuguese task-brazilian-portuguese-desktop \
+     task-brazilian-portuguese-kde-desktop >> config/package-lists/desktop.list.chroot
+ $ echo debian-installer-launcher >> config/package-lists/installer.list.chroot
 
 }code
 

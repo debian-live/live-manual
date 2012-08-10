@@ -16,7 +16,7 @@ Tot i que l'ideal seria un sistema Debian Live que inclogués només fitxers
 proporcionats per paquets Debian sense modificació, de vegades és convenient
 proporcionar o modificar part del contingut a través de fitxers. Amb els
 includes, és possible afegir (o substituir) fitxers arbitraris en la imatge
-Debian Live. live-build ofereix tres mecanismes per al seu ús:
+Debian Live. live-build ofereix dos mecanismes per al seu ús:
 
 _* Chroot local includes: Aquests permeten afegir o substituir fitxers
 dintre de chroot/Live en el sistema de fitxers. Consultar {Live/chroot local
@@ -25,11 +25,6 @@ includes}#live-chroot-local-includes per a més informació.
 _* Binary local includes: Aquests et permeten afegir o substituir fitxers a
 la imatge binària. Consultar {Binary local includes}#binary-local-includes
 per a més informació.
-
-_* Binary includes: Aquests et permeten afegir o substituir els fitxers
-específics de Debian a la imatge binària, com ara les plantilles i
-directoris d'eines. Consultar {Binary includes}#binary-includes per a més
-informació.
 
 Consultar {Termes}#terms per a més informació sobre la distinció entre les
 imatges "Live" and "binary".
@@ -93,22 +88,6 @@ code{
 }code
 
 Aquests fitxers apareixeran ara en el directori arrel dels medis en viu.
-
-3~binary-includes Binary includes
-
-live-build té alguns fitxers estàndard (com ara la documentació) que
-s'inclouen en la configuració per defecte de tots els medis en viu. Això es
-pot desactivar amb:
-
-code{
-
- $ lb config --includes none
-
-}code
-
-En cas contrari, el material serà instaŀlat per live-build a #{/includes/}#
-per defecte  en el sistema de fitxers dels medis o bé es pot especificar una
-ruta alternativa amb l'opció #{--includes}#.
 
 2~hooks Scripts ganxo (Hooks)
 

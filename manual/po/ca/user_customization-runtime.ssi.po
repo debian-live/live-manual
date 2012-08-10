@@ -5,15 +5,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
-"POT-Creation-Date: 2012-07-21 03:48+0300\n"
-"PO-Revision-Date: 2012-07-20 21:51+0200\n"
+"POT-Creation-Date: 2012-07-27 21:48+0300\n"
+"PO-Revision-Date: 2012-08-06 23:06+0100\n"
 "Last-Translator: Carlos Zuferri <chals@altorricon.com>\n"
-"Language-Team:  <debian-live@lists.debian.org>\n"
+"Language-Team: Debian Live <debian-live@lists.debian.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #. type: Plain text
 #: en/about_manual.ssi:88 en/about_manual.ssi:96 en/about_manual.ssi:104
@@ -158,12 +158,14 @@ msgstr "}code"
 #. type: Plain text
 #: en/user_customization-runtime.ssi:2
 msgid ":B~ Customizing run time behaviours"
-msgstr ""
+msgstr ":B~ Personalització dels comportaments en temps d'execució"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:4
 msgid "1~customizing-run-time-behaviours Customizing run time behaviours"
 msgstr ""
+"1~customizing-run-time-behaviours Personalització dels comportaments en "
+"temps d'execució"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:6
@@ -173,11 +175,15 @@ msgid ""
 "in. A full list of all possibilities can be found in the manpage of live-"
 "config."
 msgstr ""
+"Tota la configuració que es fa durant l'execució es feta per live-config. "
+"Aquestes són algunes de les opcions més comunes de live-config en que els "
+"usuaris estan interessats. Una llista completa de totes les possibilitats es "
+"poden trobar a la pàgina del manual de live-config."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:8
 msgid "2~ Customizing the live user"
-msgstr ""
+msgstr "2~ Personalitzar l'usuari en viu"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:10
@@ -188,6 +194,12 @@ msgid ""
 "discussed in {Live/chroot local includes}#live-chroot-local-includes, but "
 "also any groups and permissions associated with the live user."
 msgstr ""
+"Una consideració important és que l'usuari en viu es creat per live-boot "
+"durant l'arrencada i no per live-build en temps de construcció. Això "
+"influeix no només en on s'han de introduir els materials relacionats amb "
+"l'usuari durant la construcció, tal i com es va explicar a {Live/chroot "
+"local includes}#live-chroot-local-includes, sinó també en els grups i els "
+"permisos associats amb l'usuari."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:12
@@ -197,6 +209,10 @@ msgid ""
 "add the live user to the #{fuse}# group, add the following preseed under #"
 "{config/preseed/}# for the chroot stage:"
 msgstr ""
+"Es pot especificar grups addicionals als que pertanyerà l'usuari en viu fent "
+"una preconfiguració (preseed) prèvia del valor debconf #{passwd/user-default-"
+"groups}#. Per exemple, per afegir l'usuari en viu al grup #{fuse}#, afegir "
+"la següent configuració preseed a l'etapa chroot:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:19
@@ -207,6 +223,10 @@ msgid ""
 "   dip floppy video plugdev netdev powerdev scanner bluetooth fuse \\\n"
 "   >> config/preseed/my.preseed.chroot\n"
 msgstr ""
+" $ lb config\n"
+" $ echo user-setup passwd/user-default-groups string audio cdrom \\\n"
+"   dip floppy video plugdev netdev powerdev scanner bluetooth fuse \\\n"
+"   >> config/preseed/my.preseed.chroot\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:23
@@ -215,18 +235,23 @@ msgid ""
 "password \"live\". If you want to do that for any reason, you can easily "
 "achieve it as follows:"
 msgstr ""
+"També és possible canviar el nom d'usuari per defecte \"user\" i la "
+"contrasenya per defecte \"live\". Si es vol fer això per alguna raó, es pot "
+"aconseguir fàcilment de la següent manera:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:25
 msgid ""
 "To change the default username you can simply specify it in your config:"
 msgstr ""
+"Per canviar el nom d'usuari per defecte només s'ha d'especificar en la "
+"configuració:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:29
 #, no-wrap
 msgid " $ lb config --bootappend-live \"username=live-user\"\n"
-msgstr ""
+msgstr " $ lb config --bootappend-live \"username=live-user\"\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:33
@@ -237,26 +262,34 @@ msgid ""
 "prefix it accordingly (e.g. 2000-passwd) and add it to #{config/includes."
 "chroot/lib/live/config/}#"
 msgstr ""
+"Una forma possible de canviar la contrasenya per defecte és per mitjà d'un "
+"ganxo com s'explica a {Scripts ganxo durant l'arrencada}#boot-time-hooks. "
+"Per fer això, es pot utilitzar el script ganxo \"passwd\" de #{/usr/share/"
+"doc/live-config/examples/hooks}#, posar-li un prefix adequat (per exemple "
+"2000-passwd) i afegir-lo a #{config/includes.chroot/lib/live/config/}#"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:35
 msgid "2~customizing-locale-and-language Customizing locale and language"
 msgstr ""
+"2~customizing-locale-and-language Personalització de l'entorn local i el "
+"llenguatge"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:37
 msgid "When the live system boots, language is involved in two steps:"
 msgstr ""
+"Quan el sistema en viu arrenca, el llenguatge està implicat en dos passos:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:39
 msgid "_* the locale generation"
-msgstr ""
+msgstr "_* la generació de locales"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:41
 msgid "_* setting the keyboard configuration"
-msgstr ""
+msgstr "_* establir la configuració del teclat"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:43
@@ -265,17 +298,22 @@ msgid ""
 "To define the locale that should be generated, use the #{locales}# parameter "
 "in the #{--bootappend-live}# option of #{lb config}#, e.g."
 msgstr ""
+"L'entorn local per omissió en la construcció d'un sistema viu és #"
+"{locales=en_US.UTF-8}#. Per definir la configuració regional que s'ha de "
+"generar, utilitzar el paràmetre #{locales}# de la opció #{--bootappend-live}"
+"# de #{lb config}#, per exemple. "
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:47
 #, no-wrap
 msgid " $ lb config --bootappend-live \"locales=de_CH.UTF-8\"\n"
-msgstr ""
+msgstr " $ lb config --bootappend-live \"locales=de_CH.UTF-8\"\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:51
 msgid "Multiple locales may be specified as a comma-delimited list."
 msgstr ""
+"Es poden especificar diverses locales en una llista separada per comes."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:53
@@ -286,18 +324,33 @@ msgid ""
 "full #{language_country.encoding}# word. A list of supported locales and the "
 "encoding for each can be found in #{/usr/share/i18n/SUPPORTED}#."
 msgstr ""
+"Aquest paràmetre, així com els paràmetres de configuració del teclat  que "
+"s'indican a continuació, també es pot utilitzar en la línia d'ordres del "
+"nucli. Es pot especificar una configuració regional mitjançant #"
+"{language_country}# (en aquest cas s'utilitza la codificació per defecte) o "
+"la forma completa #{language_country.encoding}#. Una llista de locales "
+"suportades i la codificació per a cadascuna es poden trobar a #{/usr/share/"
+"i18n/SUPPORTED}#."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:55
 msgid ""
 "Both the console and X keyboard configuration are performed by #{live-config}"
 "# using the #{console-setup}# package. To configure them, use the #{keyboard-"
-"layouts}#, #{keyboard-variant}#, #{keyboard-options}# and #{keyboard-model}# "
-"boot parameters via the #{--bootappend-live}# option. Valid options for "
+"layouts}#, #{keyboard-variants}#, #{keyboard-options}# and #{keyboard-model}"
+"# boot parameters via the #{--bootappend-live}# option. Valid options for "
 "these can be found in #{/usr/share/X11/xkb/rules/base.lst}#. To find layouts "
 "and variants for a given language, try searching for the English name of the "
 "language and/or the country where the language is spoken, e.g:"
 msgstr ""
+"#{live-config}# s'encarrega de la configuració del teclat per X i per la "
+"consola utilitzant el paquet #{console-setup}#. Per la seva configuració es "
+"por fer servir els paràmetres d'arrencada #{keyboard-layouts}#, #{keyboard-"
+"variants}#, #{keyboard-options}# i #{keyboard-model}# mitjançant l'opció #{--"
+"bootappend-live}#. Es poden trobar opcions vàlides per a aquests a #{/usr/"
+"share/X11/xkb/rules/base.lst}#. Per trobar distribucions de teclat  i "
+"variants per a un idioma determinat, s'ha d'intentar cercar el nom en anglès "
+"de la llengua i/o el país on es parla l'idioma, per exemple:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:68
@@ -314,6 +367,16 @@ msgid ""
 "   de_mac          ch: German (Switzerland, Macintosh)\n"
 " ! option\n"
 msgstr ""
+"$ egrep -i '(^!|german.*switzerland)' /usr/share/X11/xkb/rules/base.lst\n"
+" ! model\n"
+" ! layout\n"
+"   ch              German (Switzerland)\n"
+" ! variant\n"
+"   legacy          ch: German (Switzerland, legacy)\n"
+"   de_nodeadkeys   ch: German (Switzerland, eliminate dead keys)\n"
+"   de_sundeadkeys  ch: German (Switzerland, Sun dead keys)\n"
+"   de_mac          ch: German (Switzerland, Macintosh)\n"
+" ! option\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:72
@@ -321,6 +384,8 @@ msgid ""
 "Note that each variant lists the layout to which it applies in the "
 "description."
 msgstr ""
+"Tinir en compte que cada variant mostra la distribució que s'aplica en la "
+"descripció."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:74
@@ -328,12 +393,15 @@ msgid ""
 "Often, only the layout needs to be configured. For example, to get the "
 "locale files for German and Swiss German keyboard layout in X use:"
 msgstr ""
+"Sovint, només la distribució necessita ser configurada. Per exemple, per "
+"obtenir els fitxers de configuració regional per a la distribució del teclat "
+"alemany i suís-alemany per l'entorn gràfic X:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:78
 #, no-wrap
 msgid " $ lb config --bootappend-live \"locales=de_CH.UTF-8 keyboard-layouts=ch\"\n"
-msgstr ""
+msgstr " $ lb config --bootappend-live \"locales=de_CH.UTF-8 keyboard-layouts=ch\"\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:82
@@ -342,14 +410,20 @@ msgid ""
 "parameters. For example, to set up a French system with a French-Dvorak "
 "layout (called Bepo) on a TypeMatrix EZ-Reach 2030 USB keyboard, use:"
 msgstr ""
+"No obstant això, per als casos d'ús molt específics, potser es vol incloure "
+"altres paràmetres. Per exemple, per establir un sistema francès, amb un una "
+"distribució de teclat French-Dvorak (anomenat Bepo) en un teclat USB "
+"TypeMatrix EZ-Reach 2030, utilitzar:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:87
 #, no-wrap
 msgid ""
 " $ lb config --bootappend-live \\\n"
-"     \"locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variant=bepo keyboard-model=tm2030usb\"\n"
+"     \"locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variants=bepo keyboard-model=tm2030usb\"\n"
 msgstr ""
+" $ lb config --bootappend-live \\\n"
+"     \"locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variants=bepo keyboard-model=tm2030usb\"\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:91
@@ -358,24 +432,35 @@ msgid ""
 "{keyboard-*}# options, with the exception of #{keyboard-model}#, which "
 "accepts only one value. Please see the #{keyboard(5)}# man page for details "
 "and examples of #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# and #{XKBOPTIONS}"
-"# variables. If multiple #{keyboard-variant}# values are given, they will be "
-"matched one-to-one with #{keyboard-layouts}# values (see #{setxkbmap(1)}# #{-"
-"variant}# option). Empty values are allowed; e.g. to define two layouts, the "
-"default being US QWERTY and the other being US Dvorak, use:"
+"# variables. If multiple #{keyboard-variants}# values are given, they will "
+"be matched one-to-one with #{keyboard-layouts}# values (see #{setxkbmap(1)}# "
+"#{-variant}# option). Empty values are allowed; e.g. to define two layouts, "
+"the default being US QWERTY and the other being US Dvorak, use:"
 msgstr ""
+"Es poden especificar diversos valors per a cada una de les opcions #"
+"{keyboard-*}# en una llista separada per comes amb l'excepció de #{keyboard-"
+"model}#, que només accepta un valor. Veure la pàgina de manual #{keyboard(5)}"
+"# per a més detalls i exemples de les variables #{XKBMODEL}#, #{XKBLAYOUT}#, "
+"#{XKBVARIANT}# y #{XKBOPTIONS}#. Si s'especifican diversos valors de #"
+"{keyboard-variants}# es correspondran un a un amb els valors #{keyboard-"
+"layouts}# (veure #{setxkbmap(1)}# opció #{-variant}#). Es poden utilitzar "
+"valors buits, per exemple, per definir dos dissenys, el valor predeterminat "
+"US QWERTY i l'altre US Dvorak:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:96
 #, no-wrap
 msgid ""
 " $ lb config --bootappend-live \\\n"
-"     \"keyboard-layouts=us,us keyboard-variant=,dvorak\"\n"
+"     \"keyboard-layouts=us,us keyboard-variants=,dvorak\"\n"
 msgstr ""
+" $ lb config --bootappend-live \\\n"
+"     \"keyboard-layouts=us,us keyboard-variants=,dvorak\"\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:100
 msgid "2~persistence Persistence"
-msgstr ""
+msgstr "2~persistence Persistència"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:102
@@ -384,6 +469,9 @@ msgid ""
 "media, like a cdrom, where writes and modifications do not survive reboots "
 "of the host hardware which runs it."
 msgstr ""
+"Un paradigma d'un live cd és ser un sistema pre-instaŀlat, que arrenca desde "
+"medis de només lectura, com un cdrom, on les modificacions no sobreviuen als "
+"reinicis del maquinari que l'executa."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:104
@@ -393,6 +481,10 @@ msgid ""
 "should be considered read-only and all the run-time evolutions of the system "
 "are lost at shutdown."
 msgstr ""
+"Un sistema Debian Live és una generalització d'aquest paradigma i per tant, "
+"compatible amb altres medis, a més dels CDs, però tot i així, en el seu "
+"comportament per defecte, s'ha de considerar de només lectura i totes les "
+"evolucions en temps d'execució del sistema es perden al apagar l'equip."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:106
@@ -404,6 +496,13 @@ msgid ""
 "directories are written on writable media, typically a ram disk (tmpfs) and "
 "ram disks' data do not survive reboots."
 msgstr ""
+"La \"Persistència\" és un nom comú per nomenar els diferents tipus de "
+"solucions per guardar després de reiniciar algunes, o totes, les dades "
+"d'aquesta evolució en temps d'execució del sistema. Per entendre com "
+"funciona, seria útil saber que, encara que el sistema s'inicia i s'executa "
+"des de medis de només lectura, les modificacions als fitxers i directoris "
+"s'escriuen ens medis d'escriptura, en general un ramdisk (tmpfs) i les dades "
+"dels discos ram no sobreviuen als reinicis."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:108
@@ -414,6 +513,12 @@ msgid ""
 "Live in different ways, and all but the last one require a special boot "
 "parameter to be specified at boot time: #{persistence}#."
 msgstr ""
+"Les dades emmagatzemades en aquest disc ram han de ser guardades en un "
+"suport d'escriptura persistent com medis d'emmagatzematge locals, un recurs "
+"compartit de xarxa o fins i tot una sessió d'una multisessió de un CD/DVD "
+"(re)grabable. Tots aquests medis són compatibles amb Debian Live de "
+"diferents maneres, i totes menys l'última d'elles requereixen un paràmetre "
+"d'arrencada especial que s'especifica en l'arrencada: #{persistence}#."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:110
@@ -424,16 +529,25 @@ msgid ""
 "persistence volumes to use by specifying certain boot parameters described "
 "in the live-boot(7) man page. A persistence volume is any of the following:"
 msgstr ""
+"Si s'utilitza el paràmetre d'arrencada #{persistence}# (i no s'utilitza #"
+"{nopersistence}#) es proven els medis locals d'emmagatzematge (per exemple, "
+"discs durs, unitats USB) buscant volums amb persistència durant l'arrencada. "
+"És possible restringir els tipus de volums amb persistència que s'utilitzarà "
+"mitjançant l'especificació de certs paràmetres d'arrencada que es descriuen "
+"a la pàgina del manual de live-boot(7). Un volum amb persistència és "
+"qualsevol dels següents:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:112
 msgid "_* a partition, identified by its GPT name."
-msgstr ""
+msgstr "_* una partició, identificada pel seu nom GPT."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:114
 msgid "_* a filesystem, identified by its filesystem label."
 msgstr ""
+"_* un sistema de fitxers, identificat per la seva etiqueta de sistema de "
+"fitxers."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:116
@@ -443,6 +557,11 @@ msgid ""
 "the file name must also use the containing filesystem as the file extension, "
 "e.g. \"persistence.ext4\"."
 msgstr ""
+"_* un fitxer imatge situat en l'arrel de qualsevol sistema de fitxers "
+"llegibles (fins i tot una partició NTFS d'un altre SO), identificat pel seu "
+"nom de fitxer. En aquest cas el nom del fitxer ha d'utilitzar també el "
+"sistema de fitxers que conté com extensió del nom, per exemple, "
+"\"persistence.ext4\"."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:118
@@ -452,6 +571,10 @@ msgid ""
 "persistence.conf}#. See {The live-persistence.conf file}#live-persistence-"
 "conf"
 msgstr ""
+"L'etiqueta de volum per als overlays ha de ser #{persistence}#. I per tal de "
+"personalitzar completament la persistència del volum hi ha d'haver un arxiu "
+"anomenat #{live-persistence.conf}#. Veure {El fitxer live-persistence.conf}"
+"#live-persistence-conf"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:120
@@ -460,17 +583,22 @@ msgid ""
 "persistence. It can be, for instance, an ext4 partition on a hard disk or on "
 "a usb key created with, e.g.:"
 msgstr ""
+"Aquests són alguns exemples de com preparar un volum que s'utilitzarà per a "
+"la persistència. Pot ser, per exemple, una partició ext4 en un disc dur o en "
+"una clau USB creat amb, per exemple:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:124
 #, no-wrap
 msgid " # mkfs.ext4 -L persistence /dev/sdb1\n"
-msgstr ""
+msgstr " # mkfs.ext4 -L persistence /dev/sdb1\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:128
 msgid "See also {Using the space left on a USB stick}#using-usb-extra-space."
 msgstr ""
+"Veure també {Utilitzar l'espai que queda en una memòria USB}#using-usb-extra-"
+"space."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:130
@@ -478,12 +606,14 @@ msgid ""
 "If you already have a partition on your device, you could just change the "
 "label with one of the following:"
 msgstr ""
+"Si ja hi ha una partició al dispositiu, és pot canviar l'etiqueta amb un "
+"dels següents:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:134
 #, no-wrap
 msgid " # tune2fs -L persistence /dev/sdb1 # for ext2,3,4 filesystems\n"
-msgstr ""
+msgstr " # tune2fs -L persistence /dev/sdb1 # for ext2,3,4 filesystems\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:138
@@ -491,6 +621,8 @@ msgid ""
 "Here's an example of how to create an ext4-based image file used for "
 "persistence:"
 msgstr ""
+"Heus aquí un exemple de com crear un fitxer imatge basat en ext4 utilitzat "
+"per a la persistència:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:143
@@ -499,16 +631,20 @@ msgid ""
 " $ dd if=/dev/null of=persistence bs=1G seek=1 # for a 1GB sized image file\n"
 " $ /sbin/mkfs.ext4 -F persistence\n"
 msgstr ""
+" $ dd if=/dev/null of=persistence bs=1G seek=1 # for a 1GB sized image file\n"
+" $ /sbin/mkfs.ext4 -F persistence\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:147
 msgid "Then copy the #{persistence}# file to the root of a writable partition."
 msgstr ""
+"A continuació, copiar el fitxer #{persistence}# a l'arrel d'una partició "
+"d'escriptura."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:149
 msgid "3~live-persistence-conf The live-persistence.conf file"
-msgstr ""
+msgstr "3~live-persistence-conf El fitxer live-persistence.conf"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:151
@@ -518,6 +654,10 @@ msgid ""
 "volume's filesystem root, controls which directories it makes persistent, "
 "and in which way."
 msgstr ""
+"Un volum amb l'etiqueta #{persistence}# pot ser configurat per fer "
+"directoris arbitraris persistents. El fitxer #{live-persistence.conf}#, "
+"ubicat a l'arrel del sistema de fitxers del volum, controla els directoris "
+"que fa persistents, i de quina manera."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:153
@@ -527,6 +667,11 @@ msgid ""
 "for most uses. Let's say we want to make our home directory and APT cache "
 "persistent in an ext4 filesystem on the /dev/sdb1 partition:"
 msgstr ""
+"A la pàgina de manual de live-persistence.conf(5) s'explica en detall com es "
+"configuran els muntatges de les overlays, però un simple exemple hauria de "
+"ser suficient per la majoria d'usos. Si es vol fer el directori home i el "
+"directori del cache d'APT persistents en un sistema de fitxers ext4 a la "
+"partició /dev/sdb1:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:160
@@ -537,6 +682,10 @@ msgid ""
 " # echo \"/home\" >> /mnt/live-persistence.conf\n"
 " # echo \"/var/cache/apt\" >> /mnt/live-persistence.conf\n"
 msgstr ""
+" # mkfs.ext4 -L persistence /dev/sdb1\n"
+" # mount -t ext4 /dev/sdb1 /mnt\n"
+" # echo \"/home\" >> /mnt/live-persistence.conf\n"
+" # echo \"/var/cache/apt\" >> /mnt/live-persistence.conf\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:164
@@ -549,6 +698,14 @@ msgid ""
 "neither #{/live}# (or any of its sub-directories) nor #{/}# can be made "
 "persistent using custom mounts."
 msgstr ""
+"Després es reinicia el sistema. Durant la primera arrencada el contingut de #"
+"{/home}# i #{/var/cache/apt}# es copiaran en el volum de la persistència, i "
+"d'aquí en endavant tots els canvis en aquests directoris es guardaran en el "
+"volum de la persistència. Tenir en compte que les rutes que apareixen en el "
+"fitxer #{live-persistence.conf}# no poden contenir espais en blanc o els "
+"components especials #{.}# i #{..}#. A més, ni #{/live}# (o qualsevol dels "
+"seus subdirectoris) ni #{/}# es poden fer persistents utilitzant muntatges "
+"personalitzats."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:166
@@ -562,11 +719,21 @@ msgid ""
 "persistence.conf}# file. See the live-persistence.conf(5) man page for how "
 "to handle that case if you really need it (hint: you usually don't)."
 msgstr ""
+"Es poden utilitzar diversos volums diferents de muntatges personalitzats "
+"(amb els seus propis fitxers #{live-persistence.conf}# però si diversos "
+"volums fan que el mateix directori sigui persistent, només s'utilitzarà un "
+"d'ells. Si qualsevol dels dos muntatges són \"imbricats\" (és a dir, un és "
+"un sub-directori de l'altre) el directori pare es muntarà abans que el "
+"directori fill per evitar que amb el muntatge un directori no sigui ocultat "
+"per l'altre. Els muntatges personalitzats imbricats són problemàtics si "
+"estan enumerats en el mateix fitxer #{live-persistence.conf}#. Veure la "
+"pàgina de manual live-persistence.conf(5) per saber com manejar aquest cas, "
+"si realment es necessita (una pista: en general no cal fer-ho)."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:168
 msgid "3~ Using more than one persistence store"
-msgstr ""
+msgstr "3~ Utilitzar més d'un magatzem de persistència"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:169
@@ -579,3 +746,11 @@ msgid ""
 "persistence partition labeled #{persistence-subText}# they would use the "
 "boot parameters of: #{persistence}# #{persistence-label=subText}#."
 msgstr ""
+"Si un usuari necessita múltiples magatzems de persistència del mateix tipus "
+"per a diferents ubicacions o proves, com #{persistence-nonwork}# i #"
+"{persistence-work}#, el paràmetre d'arrencada #{persistence-label}# "
+"utilitzat juntament amb el paràmetre d'arrencada #{persistence}# permetrà "
+"tenir diversos medis amb la mateixa persistència. Un exemple seria si un "
+"usuari vol escollir una partició amb persistència amb l'etiqueta #"
+"{persistence-subText}# utilitzaria els paràmetres d'arrencada: #{persistence}"
+"# #{persistence-label=subText}#."

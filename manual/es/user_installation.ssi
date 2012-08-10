@@ -12,11 +12,11 @@ _* Acceso de superusuario (root)
 _* Una versión actualizada de live-build
 
 _* Un intérprete de comandos compatible con POSIX, como por ejemplo /{bash}/
-o /{dash}/.
+o /{dash}/
 
 _* /{debootstrap}/ o /{cdebootstrap}/
 
-_* Linux 2.6.x
+_* Linux 2.6.x o 3.x
 
 Tener en cuenta que no es necesario el uso de Debian o una distribución
 derivada de Debian - live-build funcionará en casi cualquier distribución
@@ -158,15 +158,31 @@ code{
 
 }code
 
-_* Utilizar todos los ficheros .deb generados
+_* Utilizar los ficheros .deb generados que proceda
 
-Como live-boot y live-config son instalados por el sistema live-build, la
-instalación de estos paquetes en el sistema anfitrión no es suficiente: Se
-deben tratar los archivos .deb generados exáctamente igual que cualquier
-otro paquete personalizado. Véase {Personalización de la instalación de
-paquetes}#customizing-package-installation para más información. Se debe
-prestar especial atención a los {Repositorios
-adicionales}#additional-repositories.
+Como live-boot y live-config son instalados por el sistema de construcción
+live-build, la instalación de esos paquetes en el sistema anfitrión no es
+suficiente: se debe tratar los .deb generados como si fueran paquetes
+personalizados. Puesto que el propósito de la construcción de estos paquetes
+a partir del código fuente es similar a probar cosas nuevas a corto plazo
+antes de su lanzamiento oficial, seguir las instrucciones de {Instalar
+paquetes modificados o de
+terceros}#installing-modified-or-third-party-packages para incluir
+temporalmente los ficheros necesarios en la configuración.  En particular,
+observar que ambos paquetes se dividen en una parte genérica, una parte de
+documentación y uno o más back-ends. Incluir la parte genérica, sólo uno de
+los back-ends que coincida con la configuración, y, opcionalmente, la
+documentación. Suponiendo que se está construyendo una imagen en vivo en el
+directorio actual y se han generado todos los .deb para una única versión de
+los dos paquetes en el directorio superior, estos comandos bash copiaran
+todos los paquetes necesarios, incluyendo sus back-ends por defecto:
+
+code{
+
+ $ cp ../live-boot{_,-initramfs-tools,-doc}*.deb  config/packages.chroot/
+ $ cp ../live-config{_,-sysvinit,-doc}*.deb  config/packages.chroot/
+
+}code
 
 3~ A partir de «instantáneas» 
 

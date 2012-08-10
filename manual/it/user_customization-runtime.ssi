@@ -78,7 +78,7 @@ encoding for each can be found in #{/usr/share/i18n/SUPPORTED}#.
 
 Both the console and X keyboard configuration are performed by
 #{live-config}# using the #{console-setup}# package. To configure them, use
-the #{keyboard-layouts}#, #{keyboard-variant}#, #{keyboard-options}# and
+the #{keyboard-layouts}#, #{keyboard-variants}#, #{keyboard-options}# and
 #{keyboard-model}# boot parameters via the #{--bootappend-live}#
 option. Valid options for these can be found in
 #{/usr/share/X11/xkb/rules/base.lst}#. To find layouts and variants for a
@@ -119,7 +119,7 @@ layout (called Bepo) on a TypeMatrix EZ-Reach 2030 USB keyboard, use:
 code{
 
  $ lb config --bootappend-live \
-     "locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variant=bepo keyboard-model=tm2030usb"
+     "locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variants=bepo keyboard-model=tm2030usb"
 
 }code
 
@@ -127,8 +127,8 @@ Multiple values may be specified as comma-delimited lists for each of the
 #{keyboard-*}# options, with the exception of #{keyboard-model}#, which
 accepts only one value. Please see the #{keyboard(5)}# man page for details
 and examples of #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# and
-#{XKBOPTIONS}# variables. If multiple #{keyboard-variant}# values are given,
-they will be matched one-to-one with #{keyboard-layouts}# values (see
+#{XKBOPTIONS}# variables. If multiple #{keyboard-variants}# values are
+given, they will be matched one-to-one with #{keyboard-layouts}# values (see
 #{setxkbmap(1)}# #{-variant}# option). Empty values are allowed; e.g. to
 define two layouts, the default being US QWERTY and the other being US
 Dvorak, use:
@@ -136,7 +136,7 @@ Dvorak, use:
 code{
 
  $ lb config --bootappend-live \
-     "keyboard-layouts=us,us keyboard-variant=,dvorak"
+     "keyboard-layouts=us,us keyboard-variants=,dvorak"
 
 }code
 

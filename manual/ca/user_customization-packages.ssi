@@ -177,7 +177,7 @@ amb els ajudants de shell en temps de construcció.
 
 *{Nota:}* El comportament de live-build a l'hora d'especificar un paquet que no existeix està determinat per la elecció que es faci de l'eina APT. Veure {Elegir apt or aptitude}#choosing-apt-or-aptitude per més detalls.
 
-3~ Ús dels metapaquets
+3~using-metapackages Using metapackages
 
 La forma més senzilla per omplir la llista de paquets és utilitzar una tasca
 metapaquet mantinguda per una distribució. Per exemple:
@@ -351,35 +351,19 @@ viu no es pugui construir per donar suport a diversos equips d'escriptori o
 diversos idiomes i oferir a l'usuari una opció, però això no és el
 comportament de live-build per defecte.
 
-Com que no hi ha cap ajust automàtic per les tasques de llengua que
-incloguin coses com ara fonts específiques per a una llengua o paquets de
-mètode d'entrada, si es vol, cal especificar-ho en la configuració. Per
-exemple, una imatge d'escriptori GNOME que contingui suport per al japonés
-podrie incloure les següents tasques:
+Because there is no provision made automatically for language tasks, which
+include such things as language-specific fonts and input-method packages, if
+you want them, you need to specify them in your configuration. For example,
+a GNOME desktop image containing support for Japanese might include these
+task metapackages:
 
 code{
 
  $ lb config
- $ echo "gnome-desktop desktop standard laptop" >> config/task-lists/my.list.chroot
- $ echo "japanese japanese-desktop japanese-gnome-desktop" >> config/task-lists/my.list.chroot
+ $ echo "task-gnome-desktop task-laptop" >> config/package-lists/my.list.chroot
+ $ echo "task-japanese task-japanese-desktop task-japanese-gnome-desktop" >> config/package-lists/my.list.chroot
 
 }code
-
-Com les tasques d'escriptori són "internes" per a cada tasca d'escriptori
-inclosa en la imatge, el valor corresponent, si aquest és diferent del valor
-per defecte, "gnome", s'ha de fer servir la variable de preconfiguració
-"tasksel/desktop" o en cas contrari tasksel no la reconeixerà i no la
-instaŀlarà. Així:
-
-code{
-
- $ lb config
- $ echo 'tasksel tasksel/desktop multiselect kde' >> config/preseed/my.preseed.chroot
-
-}code
-
-Aquest paràmetre pot tenir diversos valors, per exemple "lxde xfce" en lloc
-de "kde".
 
 2~installing-modified-or-third-party-packages Instaŀlació de paquets
 modificats o de tercers
@@ -495,7 +479,7 @@ code{
 
 }code
 
-3~ Afinar APT per estalviar espai
+3~tweaking-apt-to-save-space Tweaking APT to save space
 
 Pot ser necessari estalviar espai en els medis destinats a la imatge, en
 aquest cas una o altra o ambdós de les següentes opcions poden ser
@@ -516,8 +500,9 @@ sistema en viu, així que abans d'executar per exemple #{apt-cache search}# o
 #{apt-get install}#, l'usuari primer ha fer un #{apt-get update}# per crear
 aquests índexs.
 
-Si es considera que la instaŀlació de tots els paquets recomanats infla
-massa la imatge, es pot desactivar aquesta opció per defecte d'APT amb:
+If you find the installation of recommended packages bloats your image too
+much, provided you are prepared to deal with the consequences discussed
+below, you may disable that default option of APT with:
 
 code{
 
@@ -525,18 +510,27 @@ code{
 
 }code
 
-El desavantatge aquí és que si no s'instaŀlen els paquets recomanats per un
-paquet determinat, és a dir, "els paquets que es troben junts amb aquest en
-totes les instaŀlacions a menys que siguin inusuals" (Debian Policy Manual,
-secció 7.2), els paquets que en realitat són necessaris poden ser
-omesos. Per tant, suggerim revisar la diferència que desactivar els paquets
-recomanats té en la llista de paquets (veure el fitxer #{binary.packages}#
-generat per #{lb build}#) i tornar a incloure a la llista els paquets que
-falten que haurien de ser instaŀlats. D'altra banda, si només es vol un
-petit nombre de paquets recomanats deixats de banda, es pot deixar els
-paquets recomanats activat i establir una prioritat pin d'APT negativa en
-els paquets seleccionats per impedir la seva instaŀlació, com s'explica a
-{APT pinning}#apt-pinning.
+The most important consequence of turning off recommends is that
+#{live-boot}# and #{live-config}# themselves recommend some packages that
+provide important functionality used by most Live configurations, such as
+#{user-setup}# which #{live-config}# recommends and is used to create the
+live user. In all but the most exceptional circumstances you need to add
+back at least some of these recommends to your package lists or else your
+image will not work as expected, if at all. Look at the recommended packages
+for each of the #{live-*}# packages included in your build and if you are
+not certain you can omit them, add them back into your package lists.
+
+The more general consequence is that if you don't install recommended
+packages for any given package, that is, "packages that would be found
+together with this one in all but unusual installations" (Debian Policy
+Manual, section 7.2), some packages that users of your Live system actually
+need may be omitted. Therefore, we suggest you review the difference turning
+off recommends makes to your packages list (see the #{binary.packages}# file
+generated by #{lb build}#) and re-include in your list any missing packages
+that you still want installed. Alternatively, if you find you only want a
+small number of recommended packages left out, leave recommends enabled and
+set a negative APT pin priority on selected packages to prevent them from
+being installed, as explained in {APT pinning}#apt-pinning.
 
 3~ Passar opcions per a apt o aptitude
 

@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual\n"
-"POT-Creation-Date: 2012-08-10 22:48+0300\n"
-"PO-Revision-Date: 2012-08-08 00:13+0100\n"
+"POT-Creation-Date: 2012-08-12 17:12+0300\n"
+"PO-Revision-Date: 2012-08-12 18:43+0100\n"
 "Last-Translator: Carlos Zuferri <chals@altorricon.com>\n"
 "Language-Team: Debian Live <debian-live@lists.debian.org>\n"
 "Language: fr\n"
@@ -664,14 +664,6 @@ msgstr "*{Cas d'utilisation:}* Créer une image avec live-build pour démarrer d
 
 #. type: Plain text
 #: en/user_examples.ssi:185
-#, fuzzy
-#| msgid ""
-#| "Make a build directory and create an skeletal configuration inside it, "
-#| "disabling recommends to make a minimal system. And then create two "
-#| "package lists: the first one generated with a script provided by live-"
-#| "build named #{Packages}# (see {Generated package lists}#generated-package-"
-#| "lists), and the second one including /{xorg}/, /{gdm3}/, /{metacity}/ "
-#| "and /{xvnc4viewer}/."
 msgid ""
 "Make a build directory and create an skeletal configuration inside it, "
 "disabling recommends to make a minimal system. And then create two initial "
@@ -680,10 +672,10 @@ msgid ""
 "and the second one including /{xorg}/, /{gdm3}/, /{metacity}/ and /"
 "{xvnc4viewer}/."
 msgstr ""
-"Créez un répertoire de construction et créez une configuration du squelette "
-"à l'intérieur, désactiver «recommends» pour faire un système minimal. Et "
-"puis créer deux listes de paquets: la première généré par un script fourni "
-"par live-build nommée {Packages}# (voir {Générer listes de paquets}"
+"Créez un répertoire de construction et créez une configuration arborescent à "
+"l'intérieur, désactiver «recommends» pour faire un système minimal. Et puis "
+"créer deux listes initiales de paquets: la première générée par un script "
+"fourni par live-build nommée {Packages}# (voir {Générer listes de paquets}"
 "#generated-package-lists), et la seconde incluant /{xorg}/, /{gdm3}/, /"
 "{metacity}/ et /{xvnc4viewer}/."
 
@@ -710,17 +702,22 @@ msgid ""
 "may need to re-add some recommended packages to make your image work "
 "properly."
 msgstr ""
+"Comme il est expliqué en {Régler APT pour économiser de l'espace}#tweaking-"
+"apt-to-save-space il peut-être que vous devrez rajouter quelques paquets "
+"recommandés pour faire fonctionner votre image correctement."
 
 #. type: Plain text
 #: en/user_examples.ssi:199
 msgid "An easy way to list recommends is using /{apt-cache}/. For example:"
 msgstr ""
+"Une façon facile d'énumérer les «recommends» est en utilisant /{apt-cache}/. "
+"Par exemple:"
 
 #. type: Plain text
 #: en/user_examples.ssi:203
 #, no-wrap
 msgid " $ apt-cache depends live-config live-boot\n"
-msgstr ""
+msgstr " $ apt-cache depends live-config live-boot\n"
 
 #. type: Plain text
 #: en/user_examples.ssi:207
@@ -729,21 +726,19 @@ msgid ""
 "recommended by live-config and live-boot: #{user-setup}# to make autologin "
 "work and #{sudo}# as an essential program to shutdown the system. Besides, "
 "it could be handy to add #{live-tools}# to be able to copy the image to RAM "
-"and #{eject}# to eventually eject the live media, So:"
+"and #{eject}# to eventually eject the live media. So:"
 msgstr ""
+"Dans cet exemple, nous avons découvert que nous devions ré-inclure plusieurs "
+"paquets recommandés par live-config et live-boot: #{user-setup}# pour "
+"l'autologin et #{sudo}# un logiciel essentiel pour arrêter le système.  En "
+"outre, il pourrait être utile d'ajouter #{live-tools}# pour copier l'image "
+"dans la RAM et #{eject}# pour éjecter le support live. Alors: "
 
 #. type: Plain text
 #: en/user_examples.ssi:211
-#, fuzzy
-#| msgid ""
-#| " $ echo \"task-lxde-desktop iceweasel xchat\" >> config/package-lists/my."
-#| "list.chroot\n"
-msgid ""
-"$ echo \"live-tools user-setup sudo eject\" > config/package-lists/"
-"recommends.list.chroot"
-msgstr ""
-" $ echo \"task-lxde-desktop iceweasel xchat\" >> config/package-lists/my."
-"list.chroot\n"
+#, no-wrap
+msgid " $ echo \"live-tools user-setup sudo eject\" > config/package-lists/recommends.list.chroot\n"
+msgstr " $ echo \"live-tools user-setup sudo eject\" > config/package-lists/recommends.list.chroot\n"
 
 #. type: Plain text
 #: en/user_examples.ssi:215
@@ -850,13 +845,16 @@ msgid ""
 "packages which are left out by the #{--apt-recommends false}# option. See "
 "{Tweaking APT to save space}#tweaking-apt-to-save-space"
 msgstr ""
+"Pour faire que l'image fonctionne correctement, nous devons ajouter à "
+"nouveau, au moins, deux paquets recommandés qui sont laissés de côté par "
+"l'option #{--apt-recommends false}#. Voir {Régler APT pour économiser de "
+"l'espace}#tweaking-apt-to-save-space"
 
 #. type: Plain text
 #: en/user_examples.ssi:258
-#, fuzzy, no-wrap
-#| msgid " $ echo vlc >> config/package-lists/my.list.chroot\n"
+#, no-wrap
 msgid " $ echo \"user-setup sudo\" > config/package-lists/recommends.list.chroot\n"
-msgstr " $ echo vlc >> config/package-lists/my.list.chroot\n"
+msgstr " $ echo \"user-setup sudo\" > config/package-lists/recommends.list.chroot\n"
 
 #. type: Plain text
 #: en/user_examples.ssi:262
@@ -877,19 +875,6 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_examples.ssi:272
-#, fuzzy
-#| msgid ""
-#| "The biggest space-saver here, compared to building a standard image on an "
-#| "#{i386}# architecture system, is to select only the #{486}# kernel "
-#| "flavour instead of the default #{-k \"486 686-pae\"}#. Leaving off APT's "
-#| "indices with #{--apt-indices false}# also saves a fair amount of space, "
-#| "the tradeoff being that you need to #{apt-get update}# before using apt "
-#| "in the live system. Dropping recommended packages with #{--apt-recommends "
-#| "false}# saves some additional space, at the expense of omitting some "
-#| "packages you might otherwise expect to be there, such as /{firmware-linux-"
-#| "free}/ which may be needed to support certain hardware. #{--memtest none}"
-#| "# prevents the installation of a memory tester. And finally, the "
-#| "execution of the #{minimal}# hook removes some unused packages and files."
 msgid ""
 "The biggest space-saver here, compared to building a standard image on an #"
 "{i386}# architecture system, is to select only the #{486}# kernel flavour "
@@ -908,15 +893,14 @@ msgstr ""
 "le saveur du noyau #{486}# au lieu de la valeur par défaut #{-k \"486 686-pae"
 "\"}#. Laissant hors «APT's indices» avec #{--apt-indices false}# permet "
 "aussi d'économiser une bonne quantité d'espace, le compromis étant que vous "
-"devez faire #{apt-get update}# avant d'utiliser apt dans le système live. Le "
-"choix de la liste #{minimal}# laisse de côté les grands paquets de #{locales}"
-"# et les services associés. Laissant hors les paquets recommandés avec #{--"
-"apt-recommends false}# économise d'espace supplémentaire, au détriment "
-"d'omettre certains paquets que vous pourriez autrement attendre à être là, "
-"tel que /{firmware-linux-free}/ qui peuvent être nécessaires pour soutenir "
-"certains supports matériels. #{--memtest none}# prévient l'installation d'un "
-"testeur de mémoire. Et enfin, l'exécution du hook #{minimal}# supprime "
-"certains paquets et fichiers qui ne sont pas utilisés ."
+"devez faire #{apt-get update}# avant d'utiliser apt dans le système live. "
+"Laissant hors les paquets recommandés avec #{--apt-recommends false}# "
+"économise d'espace supplémentaire, au détriment d'omettre certains paquets "
+"que vous pourriez autrement attendre à être là, tel que /{firmware-linux-"
+"free}/ qui peut être nécessaire pour soutenir certains supports matériels. #"
+"{--memtest none}# prévient l'installation d'un testeur de mémoire. Et enfin, "
+"l'exécution du hook #{minimal.chroot}# supprime certains paquets et fichiers "
+"qui ne sont pas utilisés ."
 
 #. type: Plain text
 #: en/user_examples.ssi:274
@@ -1017,36 +1001,31 @@ msgstr ""
 #. type: Plain text
 #: en/user_examples.ssi:309
 msgid ""
-"At boot time we will generate the pt_BR.UTF-8 locale and select the pt-"
-"latin1 keyboard layout. Now let's put the pieces together. Recalling from "
-"{Using metapackages}#using-metapackages that task metapackages are prefixed #"
-"{task-}#, we just specify these language boot parameters, then add standard "
+"At boot time we will generate the *{pt_BR.UTF-8}* locale and select the *{pt}"
+"* keyboard layout. Now let's put the pieces together. Recalling from {Using "
+"metapackages}#using-metapackages that task metapackages are prefixed #{task-}"
+"#, we just specify these language boot parameters, then add standard "
 "priority packages and all our discovered task metapackages to our package "
 "list as follows:"
 msgstr ""
+"Au moment du démarrage nous allons générer la locale *{pt_BR.UTF-8}* et "
+"sélectionner la disposition de clavier *{pt}*. Maintenant, nous allons "
+"mettre les morceaux ensemble. Rappelant de {Utilisation des métapaquets}"
+"#using-metapackages que les métapaquets sont préfixés #{task-}#, nous "
+"précisons ces paramètres de la langue pendant l'amorçage, puis nous ajoutons "
+"les paquets de priorité standard et tous nos métapaquets découverts à notre "
+"liste de paquets comme suit:"
 
 #. type: Plain text
 #: en/user_examples.ssi:323
-#, fuzzy, no-wrap
-#| msgid ""
-#| " $ mkdir live-pt_BR-kde\n"
-#| " $ cd live-pt_BR-kde\n"
-#| " $ lb config \\\n"
-#| "     -a i386 \\\n"
-#| "     -k 486 \\\n"
-#| "     --bootappend-live \"locales=pt_BR.UTF-8 keyboard-layouts=pt-latin1\" \\\n"
-#| "     --debian-installer live\n"
-#| " $ echo kde-desktop brazilian-portuguese brazilian-portuguese-desktop \\\n"
-#| "     brazilian-portuguese-kde-desktop >> config/task-lists/my.list.chroot\n"
-#| " $ echo debian-installer-launcher >> config/package-lists/my.list.chroot\n"
-#| " $ echo tasksel tasksel/desktop multiselect kde >> config/preseed/my.preseed.chroot\n"
+#, no-wrap
 msgid ""
 " $ mkdir live-pt_BR-kde\n"
 " $ cd live-pt_BR-kde\n"
 " $ lb config \\\n"
 "     -a i386 \\\n"
 "     -k 486 \\\n"
-"     --bootappend-live \"locales=pt_BR.UTF-8 keyboard-layouts=pt-latin1\" \\\n"
+"     --bootappend-live \"locales=pt_BR.UTF-8 keyboard-layouts=pt\" \\\n"
 "     --debian-installer live\n"
 " $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot\n"
 " $ echo task-kde-desktop task-brazilian-portuguese task-brazilian-portuguese-desktop \\\n"
@@ -1058,12 +1037,12 @@ msgstr ""
 " $ lb config \\\n"
 "     -a i386 \\\n"
 "     -k 486 \\\n"
-"     --bootappend-live \"locales=pt_BR.UTF-8 keyboard-layouts=pt-latin1\" \\\n"
+"     --bootappend-live \"locales=pt_BR.UTF-8 keyboard-layouts=pt\" \\\n"
 "     --debian-installer live\n"
-" $ echo kde-desktop brazilian-portuguese brazilian-portuguese-desktop \\\n"
-"     brazilian-portuguese-kde-desktop >> config/task-lists/my.list.chroot\n"
-" $ echo debian-installer-launcher >> config/package-lists/my.list.chroot\n"
-" $ echo tasksel tasksel/desktop multiselect kde >> config/preseed/my.preseed.chroot\n"
+" $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot\n"
+" $ echo task-kde-desktop task-brazilian-portuguese task-brazilian-portuguese-desktop \\\n"
+"     task-brazilian-portuguese-kde-desktop >> config/package-lists/desktop.list.chroot\n"
+" $ echo debian-installer-launcher >> config/package-lists/installer.list.chroot\n"
 
 #. type: Plain text
 #: en/user_examples.ssi:326

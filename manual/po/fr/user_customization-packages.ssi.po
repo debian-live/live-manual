@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual\n"
 "POT-Creation-Date: 2012-08-10 22:48+0300\n"
-"PO-Revision-Date: 2012-08-07 15:03+0200\n"
+"PO-Revision-Date: 2012-08-12 18:09+0100\n"
 "Last-Translator: Carlos Zuferri <chals@altorricon.com>\n"
 "Language-Team: Debian Live <debian-live@lists.debian.org>\n"
 "Language: fr\n"
@@ -535,10 +535,8 @@ msgstr "*{Remarque:}* Le comportement de live-build pour spécifier un paquet qu
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:97
-#, fuzzy
-#| msgid "3~ Using metapackages"
 msgid "3~using-metapackages Using metapackages"
-msgstr "3~ Utilisation de métapaquets"
+msgstr "3~using-metapackages  Utilisation des métapaquets"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:99
@@ -894,13 +892,6 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:203
-#, fuzzy
-#| msgid ""
-#| "Because there is no provision made automatically for language tasks, "
-#| "which include such things as language-specific fonts and input-method "
-#| "packages, if you want them, you need to specify them in your "
-#| "configuration. For example, a GNOME desktop image containing support for "
-#| "Japanese might include these tasks:"
 msgid ""
 "Because there is no provision made automatically for language tasks, which "
 "include such things as language-specific fonts and input-method packages, if "
@@ -913,23 +904,19 @@ msgstr ""
 "spécifiques de la langue et des paquets de méthodes de saisie, si vous les "
 "voulez, vous devez les spécifier dans votre configuration. Par exemple, une "
 "image de bureau GNOME contenant soutien pour le japonais pourrait inclure "
-"les tâches suivantes:"
+"les métapaquets suivants:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:209
-#, fuzzy, no-wrap
-#| msgid ""
-#| " $ lb config\n"
-#| " $ echo \"gnome-desktop desktop standard laptop\" >> config/task-lists/my.list.chroot\n"
-#| " $ echo \"japanese japanese-desktop japanese-gnome-desktop\" >> config/task-lists/my.list.chroot\n"
+#, no-wrap
 msgid ""
 " $ lb config\n"
 " $ echo \"task-gnome-desktop task-laptop\" >> config/package-lists/my.list.chroot\n"
 " $ echo \"task-japanese task-japanese-desktop task-japanese-gnome-desktop\" >> config/package-lists/my.list.chroot\n"
 msgstr ""
 " $ lb config\n"
-" $ echo \"gnome-desktop desktop standard laptop\" >> config/task-lists/my.list.chroot\n"
-" $ echo \"japanese japanese-desktop japanese-gnome-desktop\" >> config/task-lists/my.list.chroot\n"
+" $ echo \"task-gnome-desktop task-laptop\" >> config/package-lists/my.list.chroot\n"
+" $ echo \"task-japanese task-japanese-desktop task-japanese-gnome-desktop\" >> config/package-lists/my.list.chroot\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:213
@@ -1208,10 +1195,8 @@ msgstr " $ lb config --apt-http-proxy http://proxy/\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:275
-#, fuzzy
-#| msgid "3~ Tweaking APT to save space"
 msgid "3~tweaking-apt-to-save-space Tweaking APT to save space"
-msgstr "3~ Régler APT pour économiser de l'espace"
+msgstr "3~tweaking-apt-to-save-space Régler APT pour économiser de l'espace"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:277
@@ -1257,17 +1242,14 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:289
-#, fuzzy
-#| msgid ""
-#| "If you find the installation of recommended packages bloats your image "
-#| "too much, you may disable that default option of APT with:"
 msgid ""
 "If you find the installation of recommended packages bloats your image too "
 "much, provided you are prepared to deal with the consequences discussed "
 "below, you may disable that default option of APT with:"
 msgstr ""
 "Si vous trouvez que l'installation des paquets recommandés gonfle votre "
-"image trop, vous pouvez désactiver l'option par défaut d'APT avec:"
+"image trop, à condition que vous êtes prêt à faire face aux conséquences "
+"décrites ci-dessous, vous pouvez désactiver l'option par défaut d'APT avec:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:293
@@ -1288,22 +1270,19 @@ msgid ""
 "of the #{live-*}# packages included in your build and if you are not certain "
 "you can omit them, add them back into your package lists."
 msgstr ""
+"La conséquence la plus importante de la désactivation des «recommends» est "
+"que #{live-boot}# et #{live-config}#  recommandent certains paquets qui "
+"fournissent des fonctionnalités importantes utilisées pour autres "
+"configurations Live, tel que #{user-setup}# recommande par #{live-config}# "
+"qui est utilisé pour créer l'utilisateur live. Avec l'exception des "
+"circonstances exceptionnelles vous avez besoin de rajouter au moins certains "
+"de ces recommandés à vos listes de paquets ou votre image ne ​​fonctionnera "
+"pas comme prévu. Regardez les paquets recommandés pour chacun des paquets #"
+"{live-*}# inclus dans votre construction et si vous n'êtes pas sûr que vous "
+"pouvez les omettre, les ajouter à nouveau dans vos listes de paquets."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:299
-#, fuzzy
-#| msgid ""
-#| "The tradeoff here is that if you don't install recommended packages for a "
-#| "given package, that is, \"packages that would be found together with this "
-#| "one in all but unusual installations\" (Debian Policy Manual, section "
-#| "7.2), some packages that you actually need may be omitted. Therefore, we "
-#| "suggest you review the difference turning off recommends makes to your "
-#| "packages list (see the #{binary.packages}# file generated by #{lb build}"
-#| "#) and re-include in your list any missing packages that you still want "
-#| "installed. Alternatively, if you find you only want a small number of "
-#| "recommended packages left out, leave recommends enabled and set a "
-#| "negative APT pin priority on selected packages to prevent them from being "
-#| "installed, as explained in {APT pinning}#apt-pinning."
 msgid ""
 "The more general consequence is that if you don't install recommended "
 "packages for any given package, that is, \"packages that would be found "
@@ -1317,18 +1296,18 @@ msgid ""
 "set a negative APT pin priority on selected packages to prevent them from "
 "being installed, as explained in {APT pinning}#apt-pinning."
 msgstr ""
-"La contrepartie ici est que si vous n'installez pas les paquets recommandés "
-"par un paquet, c’est-à-dire, \"paquets qu'on trouverai avec celui-ci dans "
-"toute installation standard\" (Debian Policy Manual, section 7.2), certains "
-"paquets que vous avez vraiment besoin peuvent être omis. Par conséquent, "
-"nous vous suggérons d'examiner la différence que désactiver recommends rend "
-"à votre liste de paquets (voir le fichier #{binary.packages}# généré par #"
-"{lb build}#) et re-incluez dans votre liste tous les paquets manquants que "
-"vous souhaitez toujours installés. Alternativement, si vous trouvez que vous "
-"voulez seulement un petit nombre de paquets recommandés exclus, laissez "
-"recommends activé et définissez une priorité APT pin négative sur les "
-"paquets sélectionnés pour éviter les installér, comme expliqué dans {APT "
-"pinning}#apt-pinning."
+"La conséquence la plus générale est que si vous n'installez pas les paquets "
+"recommandés par un paquet, c’est-à-dire, \"paquets qu'on trouverai avec "
+"celui-ci dans toute installation standard\" (Debian Policy Manual, section "
+"7.2), certains paquets que vous avez vraiment besoin peuvent être omis. Par "
+"conséquent, nous vous suggérons d'examiner la différence que désactiver "
+"recommends rend à votre liste de paquets (voir le fichier #{binary.packages}"
+"# généré par #{lb build}#) et re-incluez dans votre liste tous les paquets "
+"manquants que vous souhaitez toujours installés. Alternativement, si vous "
+"trouvez que vous voulez seulement un petit nombre de paquets recommandés "
+"exclus, laissez recommends activés et définissez une priorité APT pin "
+"négative sur les paquets sélectionnés pour éviter les installér, comme "
+"expliqué dans {APT pinning}#apt-pinning."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:301

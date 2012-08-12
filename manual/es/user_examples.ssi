@@ -258,12 +258,12 @@ experiencias recogidas de los usuarios de Debian Live.
 
 *{Caso Práctico:}* Crear una imagen con live-build para arrancar directamente un servidor VNC.
 
-Make a build directory and create an skeletal configuration inside it,
-disabling recommends to make a minimal system. And then create two initial
-package lists: the first one generated with a script provided by live-build
-named #{Packages}# (see {Generated package lists}#generated-package-lists),
-and the second one including /{xorg}/, /{gdm3}/, /{metacity}/ and
-/{xvnc4viewer}/.
+Crear un directorio de construcción y lanzar una configuración de esqueleto
+en su interior, desactivando «recommends» para conseguir un sistema
+mínimo. Y a continuación, crear dos listas iniciales de paquetes: La primera
+generada con un script proporcionado por live-build llamado #{Packages}#
+(ver {Generar listas de paquetes}#generated-package-lists), y la segunda
+lista una que incluya /{xorg}/, /{gdm3}/, /{metacity}/ y /{xvnc4viewer}/.
 
 code{
 
@@ -275,11 +275,12 @@ code{
 
 }code
 
-As explained in {Tweaking APT to save space}#tweaking-apt-to-save-space you
-may need to re-add some recommended packages to make your image work
-properly.
+Como se explica en {Tweaking APT to save space}#tweaking-apt-to-save-space
+puede ser necesario volver a agregar algunos paquetes recomendados para que
+la imagen funcione correctamente.
 
-An easy way to list recommends is using /{apt-cache}/. For example:
+Una manera fácil de conocer todos los «recommends» es utilizar
+/{apt-cache}/. Por ejemplo:
 
 code{
 
@@ -287,11 +288,12 @@ code{
 
 }code
 
-In this example we found out that we had to re-include several packages
-recommended by live-config and live-boot: #{user-setup}# to make autologin
-work and #{sudo}# as an essential program to shutdown the system. Besides,
-it could be handy to add #{live-tools}# to be able to copy the image to RAM
-and #{eject}# to eventually eject the live media, So:
+En este ejemplo, descubrimos que teníamos que volver a incluir varios
+paquetes recomendados por live-config y live-boot: #{user-setup}# para hacer
+funcionar el inicio automático de sesión y  #{sudo}# programa esencial para
+apagar el sistema. Además, podría ser útil añadir #{live-tools}# para poder
+copiar la imagen en la memoria RAM y #{eject}# para finalmente poder
+expulsar los medios en vivo. Por eso:
 
 code{
 
@@ -350,9 +352,10 @@ code{
 
 }code
 
-To make the image work properly, we must re-add, at least, two recommended
-packages which are left out by the #{--apt-recommends false}# option. See
-{Tweaking APT to save space}#tweaking-apt-to-save-space
+Para hacer que la imagen funcione correctamente, tenemos que volver a
+añadir, al menos, dos paquetes recomendados, que son excluidos por la opción
+#{--apt-recommends false}#. Ver {Ajuste de APT para ahorrar
+espacio}#tweaking-apt-to-save-space
 
 code{
 
@@ -373,17 +376,19 @@ anterior produjo una imagen de 95Mbytes. Esto se compara favorablemente en
 tamaño con la imagen de 182Mbytes producida por la configuración por defecto
 en el {Tutorial 1}#tutorial-1.
 
-The biggest space-saver here, compared to building a standard image on an
-#{i386}# architecture system, is to select only the #{486}# kernel flavour
-instead of the default #{-k "486 686-pae"}#. Leaving off APT's indices with
-#{--apt-indices false}# also saves a fair amount of space, the tradeoff
-being that you need to #{apt-get update}# before using apt in the live
-system. Dropping recommended packages with #{--apt-recommends false}# saves
-some additional space, at the expense of omitting some packages you might
-otherwise expect to be there, such as /{firmware-linux-free}/ which may be
-needed to support certain hardware. #{--memtest none}# prevents the
-installation of a memory tester. And finally, the execution of the
-#{minimal.chroot}# hook removes some unused packages and files.
+El mayor ahorro de espacio aquí, en comparación con la creación de una
+imagen estándar en un sistema de arquitectura #{i386}# es seleccionar sólo
+la versión del kernel #{486}# en lugar de la de por defecto #{-k "486
+686-pae"}#. Dejar fuera los índices de APT con #{--apt-indices false}#
+también ahorra una cantidad importante de espacio, la desventaja es que será
+necesario hacer un #{apt-get update}# antes de usar apt en el sistema en
+vivo. Excluyendo los paquetes recomendados con #{--apt-recommends false}# se
+ahorra un poco de espacio adicional a costa de omitir algunos paquetes que
+de otro modo podría esperarse que estuvieran alli, tal como
+/{firmware-linux-free}/ que puede ser necesario para el soporte de cierto
+hardware. #{--memtest none}# evita la instalación de un comprobador de
+memoria. Y por último la ejecución del script gancho #{minimal.chroot}#
+elimina algunos paquetes y ficheros que no se utilizan.
 
 Si se utilizan otros scripts gancho, como por ejemplo el script
 #{stripped.chroot}# que se encuentra en
@@ -432,12 +437,13 @@ code{
 
 }code
 
-At boot time we will generate the pt_BR.UTF-8 locale and select the
-pt-latin1 keyboard layout. Now let's put the pieces together. Recalling from
-{Using metapackages}#using-metapackages that task metapackages are prefixed
-#{task-}#, we just specify these language boot parameters, then add standard
-priority packages and all our discovered task metapackages to our package
-list as follows:
+En el momento del arranque se va a generar la variante regional pt_BR.UTF-8
+y seleccionar la distribución del teclado pt. Ahora vamos a poner las piezas
+juntas. Recordando de {Utilizar metapaquetes}#using-metapackages que los
+metapaquetes tienen el prefijo #{task-}#, especificamos estos parámetros del
+lenguaje en el arranque y a continuación añadimos  los paquetes de prioridad
+estándar y los metapaquetes que hemos descubierto a la lista de paquetes de
+la siguiente manera: 
 
 code{
 

@@ -1,19 +1,19 @@
 # Catalan translations for live-manual package
-# Copyright (C) 2012 Free Software Foundation, Inc.
 # This file is distributed under the same license as the live-manual package.
-# Automatically generated, 2012.
+# Carlos Zuferri <chals@altorricon.com>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
 "POT-Creation-Date: 2012-04-08 12:15+0300\n"
-"PO-Revision-Date: 2012-04-08 12:15+0300\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2012-08-12 19:02+0100\n"
+"Last-Translator: Carlos Zuferri <chals@altorricon.com>\n"
+"Language-Team: Debian Live <debian-live@lists.debian.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #. type: Plain text
 #: en/about_manual.ssi:90 en/about_manual.ssi:98 en/about_manual.ssi:106
@@ -160,17 +160,17 @@ msgstr "}code"
 #. type: Plain text
 #: en/user_customization-binary.ssi:2
 msgid "B~ Customizing the binary image"
-msgstr ""
+msgstr "B~ Personalització de la imatge binària"
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:4
 msgid "1~customizing-binary Customizing the binary image"
-msgstr ""
+msgstr "1~customizing-binary Personalització de la imatge binària"
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:6
 msgid "2~ Bootloader"
-msgstr ""
+msgstr "2~ Carregador d'arrencada"
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:8
@@ -182,6 +182,13 @@ msgid ""
 "examples of customization make use of different methods, like {includes}"
 "#includes or {hooks}#hooks."
 msgstr ""
+"live-build utilitza /{syslinux}/ i alguns dels seus derivats (depenent del "
+"tipus d'imatge) com carregadors d'arrencada per defecte. Es poden "
+"personalitzar fàcilment en un nombre de maneres que van des de proporcionar "
+"un tema complet per canviar el temps d'espera d'arrencada o simplement "
+"afegir una imatge de fons personalitzada. Alguns dels següents exemples de "
+"personalització fan ús de mètodes diferents, com per exemple {includes}"
+"#includes o {hooks}#hooks."
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:10
@@ -190,6 +197,9 @@ msgid ""
 "option (see man #{lb_config}#). live-build will then retrieve the theme from "
 "the mirror and install it."
 msgstr ""
+"Si es vol utilitzar un tema complet es pot especificar l'opció #{--syslinux-"
+"theme}# (veure man #{lb_config}#). live-build descarregarà el tema del "
+"mirall i l'instaŀlarà."
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:12
@@ -198,12 +208,15 @@ msgid ""
 "the server's theme because you want to have the help menu. Then you would "
 "launch #{lb config}# as follows:"
 msgstr ""
+"Imaginar que es vol construir un client progress però es prefereix incloure "
+"el tema del servidor, perquè es vol tenir el menú d'ajuda. S'hauria "
+"d'utilitzar #{lb config}# de la següent manera:"
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:16
 #, no-wrap
 msgid " $ lb config --mode progress --syslinux-theme progress-server\n"
-msgstr ""
+msgstr " $ lb config --mode progress --syslinux-theme progress-server\n"
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:20
@@ -212,6 +225,9 @@ msgid ""
 "you do not have a mirror, you can add the package to #{config/packages."
 "chroot}#. In this case it is not necessary to specify any option."
 msgstr ""
+"També es pot crear un tema propi o modificar un tema ja existent i si no es "
+"disposa d'un mirall, es pot afegir el paquet a #{config/packages.chroot}#. "
+"En aquest cas no cal especificar cap altra opció."
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:22
@@ -221,6 +237,10 @@ msgid ""
 "which means that they will pause indefinitely at their splash screen until "
 "you press a key."
 msgstr ""
+"També hi ha la possibilitat de fer petits canvis. Per exemple, els derivats "
+"de syslinux estan configurats per defecte amb un temps d'espera de 0 (zero) "
+"el que significa que faran una pausa indefinida en la seva pantalla inicial "
+"fins que es premi una tecla."
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:24
@@ -229,6 +249,9 @@ msgid ""
 "default *{isolinux.cfg}* file specifying the timeout in units of seconds and "
 "add it to #{config/includes.binary/isolinux/}#"
 msgstr ""
+"Per modificar el temps d'espera d'arrencada d'una imatge #{iso-hybrid}# es "
+"pot editar el fitxer *{isolinux.cfg}* per defecte especificant el temps "
+"d'espera en segons i afegir-lo a #{config/includes.binary/isolinux/}#"
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:26
@@ -236,6 +259,8 @@ msgid ""
 "A modified *{isolinux.cfg}* to boot after five seconds would be similar to "
 "this:"
 msgstr ""
+"Un *{isolinux.cfg}* modificat per arrencar després de cinc segons seria "
+"semblant a aquest:"
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:33
@@ -246,6 +271,10 @@ msgid ""
 " prompt 0\n"
 " timeout 50\n"
 msgstr ""
+" include menu.cfg\n"
+" default vesamenu.c32\n"
+" prompt 0\n"
+" timeout 50\n"
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:37
@@ -254,18 +283,21 @@ msgid ""
 "adding it to #{config/hooks/}# Remember to add the #{.binary}# suffix to run "
 "in the binary stage. A proposed example:"
 msgstr ""
+"Una forma alternativa d'aconseguir el mateix objectiu podria ser escriure un "
+"script ganxo i afegir-lo a #{config/hooks/}#. Recordar afegir el sufix #{."
+"binary}# perque s'execute durant l'etapa binary. Un exemple proposat:"
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:41 en/user_examples.ssi:95
 #, no-wrap
 msgid " #!/bin/sh\n"
-msgstr ""
+msgstr " #!/bin/sh\n"
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:43
 #, no-wrap
 msgid " sed -i 's|timeout 0|timeout 50|' binary/isolinux/isolinux.cfg\n"
-msgstr ""
+msgstr " sed -i 's|timeout 0|timeout 50|' binary/isolinux/isolinux.cfg\n"
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:47
@@ -273,11 +305,14 @@ msgid ""
 "Likewise, if you want to use a personalized splash.png image you can add a "
 "picture of 640x480 pixels to #{config/includes.binary/isolinux/}#"
 msgstr ""
+"De la mateixa manera, si es vol utilitzar una imatge personalitzada splash."
+"png es pot afegir una imatge de 640x480 píxels a #{config/includes.binary/"
+"isolinux/}#"
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:49
 msgid "2~ ISO metadata"
-msgstr ""
+msgstr "2~ metadades ISO "
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:51
@@ -286,6 +321,10 @@ msgid ""
 "add various textual metadata for your image. This can help you easily "
 "identify the version or configuration of an image without booting it."
 msgstr ""
+"Quan es crea una imatge binària ISO9660, es poden utilitzar les següents "
+"opcions per afegir diverses metadades textuals. Això pot ajudar a "
+"identificar fàcilment la versió o la configuració d'una imatge sense "
+"arrencar-la."
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:53
@@ -294,6 +333,9 @@ msgid ""
 "application that will be on the image. The maximum length for this field is "
 "128 characters."
 msgstr ""
+"_* #{LB_ISO_APPLICATION/--iso-application NAME}#: Ha de descriure "
+"l'aplicació que serà a la imatge. La longitud màxima per aquest camp és de "
+"128 caràcters."
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:55
@@ -303,6 +345,11 @@ msgid ""
 "this option is the live-build version you are using, which may help with "
 "debugging later. The maximum length for this field is 128 characters."
 msgstr ""
+"_* #{LB_ISO_PREPARER/--iso-preparer NAME}#: Ha de descriure al preparador de "
+"la imatge, en general amb algunes dades de contacte. El valor per defecte "
+"per a aquesta opció és la versió de live-build utilitzada, la qual cosa pot "
+"ajudar amb la depuració d'errors posterior. La longitud màxima per aquest "
+"camp és de 128 caràcters."
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:57
@@ -311,6 +358,9 @@ msgid ""
 "publisher of the image, usually with some contact details. The maximum "
 "length for this field is 128 characters."
 msgstr ""
+"_* #{LB_ISO_PUBLISHER/--iso-publisher NAME}#: Ha de descriure l'editor de la "
+"imatge, en general amb algunes dades de contacte. La longitud màxima per "
+"aquest camp és de 128 caràcters."
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:58
@@ -319,3 +369,7 @@ msgid ""
 "the image. This is used as a user-visible label on some platforms such as "
 "Windows and Apple Mac OS. The maximum length for this field is 32 characters."
 msgstr ""
+"_* #{LB_ISO_VOLUME/--iso-volume NAME}#: Això ha d'especificar l'ID de volum "
+"de la imatge. Això s'utilitza com una etiqueta visible per l'usuari en "
+"algunes plataformes com Windows i Apple Mac OS. La longitud màxima per "
+"aquest camp és de 32 caràcters."

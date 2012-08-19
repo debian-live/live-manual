@@ -1,27 +1,30 @@
 :B~ Exemples
 
-1~examples Examples
+1~examples Exemples
 
-This chapter covers example builds for specific use cases with Debian
-Live. If you are new to building your own Debian Live images, we recommend
-you first look at the three tutorials in sequence, as each one teaches new
-techniques that will help you use and understand the remaining examples.
+En aquest capítol s'inclouen exemples de construccions per a casos d'ús
+específics amb Debian Live. Si és nou en la construcció d'imatges de Debian
+Live pròpies, us suggerim mirar els tres tutorials en seqüència, ja que cada
+un ensenya noves tècniques que ajuden a utilitzar i entendre els exemples
+restants.
 
-2~using-the-examples Using the examples
+2~using-the-examples Ús dels exemples
 
-To use these examples you need a system to build them on that meets the
-requirements listed in {Requirements}#requirements and has live-build
-installed as described in {Installing live-build}#installing-live-build.
+Per utilitzar aquests exemples es necessita un sistema de construcció que
+compleixi els requisits enumerats a {Requeriments}#requirements y que tingui
+live-build instaŀlat com es descriu a {Instaŀlació de
+live-build}#installing-live-build.
 
-Note that, for the sake of brevity, in these examples we do not specify a
-local mirror to use for the build. You can speed up downloads considerably
-if you use a local mirror. You may specify the options when you use #{lb
-config}#, as described in {Distribution mirrors used at build
-time}#distribution-mirrors-build-time, or for more convenience, set the
-default for your build system in #{/etc/live/build.conf}#. Simply create
-this file and in it, set the corresponding #{LB_MIRROR_*}# variables to your
-preferred mirror. All other mirrors used in the build will be defaulted from
-these values. For example:
+Cal notar que, en benefici de la brevetat, en aquests exemples no
+s'especifica un mirall local per utilitzar en la construcció. Es poden
+accelerar les descàrregues considerablement si s'utilitza un mirall
+local. Es pot especificar les opcions quan s'utilitza #{lb config}#, com es
+descriu a {Miralls de distribució utilitzats en temps de
+construcció}#distribution-mirrors-build-time, o per a major comoditat,
+establir el valor predeterminat per al sistema de construcció en el fitxer
+#{/etc/live/build.conf}#. Només cal crear aquest fitxer i establir les
+variables al mirall preferit. Tots els altres miralls que s'utilitzen en la
+construcció adoptaran valors per defecte segons aquests valors. Per exemple:
 
 code{
 
@@ -31,15 +34,16 @@ code{
 
 }code
 
-2~tutorial-1 Tutorial 1: A standard image
+2~tutorial-1 Tutorial 1: Una imatge estàndard
 
-*{Use case:}* Create a simple first image, learning the basics of live-build.
+*{Cas d'ús:}* Crear una primera imatge senzilla, aprenent els conceptes bàsics de live-build.
 
-In this tutorial, we will build a default ISO hybrid Debian Live image
-containing only base packages (no Xorg) and some Debian Live support
-packages, as a first exercise in using live-build.
+En aquest tutorial, anem a construir una imatge ISO híbrida per defecte de
+Debian Live que conté només els paquets de base (no té Xorg) i altres
+paquets de suport de Debian Live, com un primer exercici en l'ús de
+live-build.
 
-You can't get much simpler than this:
+No pot ser més senzill que això:
 
 code{
 
@@ -47,11 +51,13 @@ code{
 
 }code
 
-Examine the contents of the #{config/}# directory if you wish. You will see
-stored here a skeletal configuration, ready to customize or, in this case,
-use immediately to build a default image.
+Examinar el contingut del directori #{config/}# si es vol. Es veurà
+emmagatzemada aquí una configuració en esquelet, a punt per ser
+personalitzada o, en aquest cas, per ser utilitzada immediatament per
+construir una imatge per defecte.
 
-Now, as superuser, build the image, saving a log as you build with #{tee}#.
+Ara, com a root, construir la imatge, guardant un log del que es construeix
+amb #{tee}#.
 
 code{
 
@@ -59,21 +65,22 @@ code{
 
 }code
 
-Assuming all goes well, after a while, the current directory will contain
-#{binary.hybrid.iso}#. This ISO hybrid image can be booted directly in a
-virtual machine as described in {Testing an ISO image with
-Qemu}#testing-iso-with-qemu and {Testing an ISO image with
-virtualbox}#testing-iso-with-virtualbox, or else imaged onto optical media
-or a USB flash device as described in {Burning an ISO image to a physical
-medium}#burning-iso-image and {Copying an ISO hybrid image to a USB
-stick}#copying-iso-hybrid-to-usb, respectively.
+Suposant que tot va bé, després d'una estona, el directori actual contindrà
+una #{binary.hybrid.iso}#. Aquesta imatge ISO híbrida es pot arrencar en una
+màquina virtual tal com s'explica a {Provar una imatge ISO amb
+Qemu}#testing-iso-with-qemu i {Provar una imatge ISO amb
+virtualbox}#testing-iso-with-virtualbox, o bé copiada a un dispositiu flash
+USB com es descriu a {Gravar una imatge ISO en un medi
+físic}#burning-iso-image i {Còpiar una imatge ISO híbrida en un dispositiu
+USB}#copying-iso-hybrid-to-usb, respectivament.
 
-2~tutorial-2 Tutorial 2: A web browser utility
+2~tutorial-2 Tutorial 2: Una utilitat de navegador web
 
-*{Use case:}* Create a web browser utility image, learning how to apply customizations.
+*{Cas d'ús:}* Crear una imatge d'una utilitat de navegador web, aprenent a aplicar personalitzacions.
 
-In this tutorial, we will create an image suitable for use as a web browser
-utility, serving as an introduction to customizing Debian Live images.
+En aquest tutorial, anem a crear una imatge adequada per al seu ús com a una
+utilitat de navegador web, que serveix com introducció a la personalització
+de les imatges de Debian Live.
 
 code{
 
@@ -83,16 +90,16 @@ code{
 
 }code
 
-Our choice of LXDE for this example reflects our desire to provide a minimal
-desktop environment, since the focus of the image is the single use we have
-in mind, the web browser. We could go even further and provide a default
-configuration for the web browser in
-#{config/includes.chroot/etc/iceweasel/profile/}#, or additional support
-packages for viewing various kinds of web content, but we leave this as an
-exercise for the reader.
+La nostra elecció de LXDE per a aquest exemple reflecteix el nostre desig
+d'oferir un entorn d'escriptori mínim, ja que l'objectiu de la imatge és
+l'únic ús que tenim al cap, el navegador web. Podríem anar encara més lluny
+i oferir una configuració per defecte per al navegador web a
+#{config/includes.chroot/etc/iceweasel/profile/}#, o paquets addicionals de
+suport per a la visualització de diversos tipus de contingut web, però
+deixem això com un exercici per al lector.
 
-Build the image, again as superuser, keeping a log as in {Tutorial
-1}#tutorial-1:
+Construir la imatge, de nou com a superusuari, guardant un log com al
+{Tutorial 1}#tutorial-1:
 
 code{
 
@@ -100,20 +107,22 @@ code{
 
 }code
 
-Again, verify the image is OK and test, as in {Tutorial 1}#tutorial-1.
+Un cop més, verificar que la imatge està bé i prova-la, com al {Tutorial
+1}#tutorial-1.
 
-2~tutorial-3 Tutorial 3: A personalized image
+2~tutorial-3 Tutorial 3: Una imatge personalitzada
 
-*{Use case:}* Create a project to build a personalized image, containing your favourite software to take with you on a USB stick wherever you go, and evolving in successive revisions as your needs and preferences change.
+*{Cas d'ús:}* Crear un projecte per construir una imatge personalitzada, que contingui el programari favorit per portar en una memòria USB allà on es vagi i que evolucionarà en revisions successives tal i com les necessitats i les preferències canvien.
 
-Since we will be changing our personalized image over a number of revisions,
-and we want to track those changes, trying things experimentally and
-possibly reverting them if things don't work out, we will keep our
-configuration in the popular #{git}# version control system. We will also
-use the best practice of autoconfiguration via #{auto}# scripts as described
-in {Managing a configuration}#managing-a-configuration.
+Com la nostra imatge personalitzada canviarà durant un nombre de revisions i
+volem fer un seguiment d'aquests canvis, provar coses experimentals i
+possiblement revertir-les si les coses no surten bé, anem a mantenir la
+nostra configuració en el popular sistema de control de versions
+#{git}#. També utilitzarem les millors pràctiques de configuració automàtica
+mitjançant scripts #{auto}# com s'explica a {Gestió d'una
+configuració}#managing-a-configuration.
 
-3~ First revision
+3~ Primera revisió
 
 code{
 
@@ -123,7 +132,7 @@ code{
 
 }code
 
-Edit #{auto/config}# to read as follows:
+Editar #{auto/config}# de la manera següent:
 
 code{
 
@@ -136,8 +145,8 @@ code{
 
 }code
 
-Perform #{lb config}# to generate the config tree, using the #{auto/config}#
-script you just created:
+Executar #{lb config}# per crear l'arbre de configuració, utilitzant el
+script #{auto/config}# que s'acaba de crear:
 
 code{
 
@@ -145,7 +154,7 @@ code{
 
 }code
 
-Now populate your local package list:
+Ara, omplir la llista local de paquets:
 
 code{
 
@@ -153,14 +162,15 @@ code{
 
 }code
 
-First, #{--architectures i386}# ensures that on our #{amd64}# build system,
-we build a 32-bit version suitable for use on most machines. Second, we use
-#{--linux-flavours 686-pae}# because we don't anticipate using this image on
-much older systems. Third, we have chosen the /{lxde}/ task metapackage to
-give us a minimal desktop. And finally, we have added two initial favourite
-packages: /{iceweasel}/ and /{xchat}/.
+En primer lloc, amb #{--architectures i386}# s'assegura que al nostre
+sistema de construcció #{amd64}# podem construir una versió de 32 bits
+adequada per al seu ús en la majoria de màquines. En segon lloc, fem servir
+#{--linux-flavours 686-pae}# perquè no creiem que utilitzarem aquesta imatge
+en sistemes molt més vells. En tercer lloc, hem triat la tasca metapaquet
+/{lxde}/ per donar-nos un escriptori mínim. I, finalment, hem afegit dos
+paquets inicials favorits: /{iceweasel}/ i /{xchat}/.
 
-Now, build the image:
+Ara, construir la imatge:
 
 code{
 
@@ -168,12 +178,13 @@ code{
 
 }code
 
-Note that unlike in the first two tutorials, we no longer have to type
-#{2>&1 | tee build.log}# as that is now included in #{auto/build}#.
+Tenir en compte que a diferència dels dos primers tutorials, ja no s'ha
+d'escriure #{2>&1 | tee build.log}# ja que ara s'inclou al #{auto/build}#.
 
-Once you've tested the image (as in {Tutorial 1}#tutorial-1) and are
-satisfied it works, it's time to initialize our #{git}# repository, adding
-only the auto scripts we just created, and then make the first commit:
+Quan s'ha provat la imatge (com al {Tutorial 1}#tutorial-1) i s'està
+satisfet del seu funcionament, és el moment d'iniciar el repositòri #{git}#,
+afegint només els scripts auto que s'han creat, i llavors fer el primer
+commit:
 
 code{
 
@@ -183,15 +194,16 @@ code{
 
 }code
 
-3~ Second revision
+3~ Segona revisió
 
-In this revision, we're going to clean up from the first build, add the
-/{vlc}/ package to our configuration, rebuild, test and commit.
+En aquesta revisió, anem a netejar després de la primera construcció, afegir
+el paquet /{vlc}/ a la nostra configuració, reconstruir, provar i fer el
+commit.
 
-The #{lb clean}# command will clean up all generated files from the previous
-build except for the cache, which saves having to re-download packages. This
-ensures that the subsequent #{lb build}# will re-run all stages to
-regenerate the files from our new configuration.
+L'ordre #{lb clean}# netejarà tots els fitxers generats en la construcció
+anterior a excepció del cache, el que estalvia haver de tornar a descarregar
+els paquets. Això assegura que el #{lb build}# següent tornarà a executar
+totes les etapes per regenerar els arxius de la nostra nova configuració.
 
 code{
 
@@ -199,7 +211,7 @@ code{
 
 }code
 
-Now append the /{vlc}/ package to our local package list in
+Ara afegim el paquet /{vlc}/ al llistat de paquets local a
 #{config/package-lists/my.list.chroot}#:
 
 code{
@@ -208,7 +220,7 @@ code{
 
 }code
 
-Build again:
+Construir de nou:
 
 code{
 
@@ -216,7 +228,7 @@ code{
 
 }code
 
-Test, and when you're satisfied, commit the next revision:
+Provar, i quan s'estigui satisfet, fer el commit de la propera revisió:
 
 code{
 
@@ -224,29 +236,31 @@ code{
 
 }code
 
-Of course, more complicated changes to the configuration are possible,
-perhaps adding files in subdirectories of #{config/}#. When you commit new
-revisions, just take care not to hand edit or commit the top-level files in
-#{config}# containing #{LB_*}# variables, as these are build products, too,
-and are always cleaned up by #{lb clean}# and re-created with #{lb config}#
-via their respective #{auto}# scripts.
+Per descomptat, es possible fer canvis més complicats en la configuració,
+potser afegint fitxers en els subdirectoris de #{config/}#. Quan es fa un
+commit de les noves revisions, s'ha de tenir cura de no editar a mà o
+incloure en el commit els fitxers de nivell superior de #{config}# que
+contenen variables #{LB_*}#, ja que són productes de construcció, també, i
+sempre són netejats per #{lb clean}# i tornats a crear per #{lb config}# a
+través dels seus respectius scripts #{auto}#.
 
-We've come to the end of our tutorial series. While many more kinds of
-customization are possible, even just using the few features explored in
-these simple examples, an almost infinite variety of different images can be
-created. The remaining examples in this section cover several other use
-cases drawn from the collected experiences of users of Debian Live.
+Hem arribat al final de la nostra sèrie de tutorials. Molts més tipus de
+personalització són possibles, amb les poques característiques explorades en
+aquests senzills exemples, es poden crear una varietat gairebé infinita
+d'imatges diferents. Els exemples que queden d'aquesta secció tracten
+diversos altres casos d'ús extrets de les experiències recollides dels
+usuaris de Debian Live.
 
-2~ A VNC Kiosk Client
+2~ Un client per a un quiosc VNC
 
-*{Use case:}* Create an image with live-build to boot directly to a VNC server.
+*{Cas d'ús:}* Crear una imatge amb live-build per arrencar directament a un servidor VNC.
 
-Make a build directory and create an skeletal configuration inside it,
-disabling recommends to make a minimal system. And then create two initial
-package lists: the first one generated with a script provided by live-build
-named #{Packages}# (see {Generated package lists}#generated-package-lists),
-and the second one including /{xorg}/, /{gdm3}/, /{metacity}/ and
-/{xvnc4viewer}/.
+Fer un directori de construcció i crear una configuració d'esquelet en el
+seu interior, desactivant els «recommends» per fer un sistema mínim. I a
+continuació, crear dues llistes inicials de paquets: La primera generada per
+un script proporcionat per live-build anomenat #{Packages}# (veure {Generar
+llistes de paquets}#generated-package-lists), i la segona incloent-hi
+/{xorg}/, /{gdm3}/, /{metacity}/ i /{xvnc4viewer}/.
 
 code{
 
@@ -258,11 +272,12 @@ code{
 
 }code
 
-As explained in {Tweaking APT to save space}#tweaking-apt-to-save-space you
-may need to re-add some recommended packages to make your image work
-properly.
+Com s'explica a {Afinar APT per estalviar espai}#tweaking-apt-to-save-space
+pot ser que s'hagi de tornar a afegir alguns paquets recomanats per fer que
+la imatge funcioni correctament.
 
-An easy way to list recommends is using /{apt-cache}/. For example:
+Una manera fàcil d'enumerar els recommends és utilitzar /{apt-cache}/. Per
+exemple:
 
 code{
 
@@ -270,11 +285,12 @@ code{
 
 }code
 
-In this example we found out that we had to re-include several packages
-recommended by live-config and live-boot: #{user-setup}# to make autologin
-work and #{sudo}# as an essential program to shutdown the system. Besides,
-it could be handy to add #{live-tools}# to be able to copy the image to RAM
-and #{eject}# to eventually eject the live media. So:
+En aquest exemple, ens vam assabentar que havíem de tornar a incloure
+diversos paquets recomanats per live-config i live-boot: #{user-setup}#
+perquè funcioni l'autologin i #{sudo}# com un programa essencial per apagar
+el sistema. A més, podria ser útil afegir #{live-tools}# per poder copiar la
+imatge en la memòria RAM i #{eject}# per expulsar, finalment, els medis en
+viu. Per tant:
 
 code{
 
@@ -282,10 +298,10 @@ code{
 
 }code
 
-Create the directory #{/etc/skel}# in #{config/includes.chroot}# and put a
-custom #{.xsession}# in it for the default user that will launch
-/{metacity}/ and start /{xvncviewer}/, connecting to port #{5901}# on a
-server at #{192.168.1.2}#:
+Crear el directori #{/etc/skel}# a #{config/includes.chroot}# i ​​posar un
+fitxer #{.xsession}# personalitzat per a l'usuari per defecte que posarà en
+marxa /{metacity}/ i iniciarà /{xvncviewer}/, connectant al port #{5901}# de
+un servidor ubicat a #{192.168.1.2}#:
 
 code{
 
@@ -301,7 +317,7 @@ code{
 
 }code
 
-Build the image:
+Construir la imatge:
 
 code{
 
@@ -309,20 +325,21 @@ code{
 
 }code
 
-Enjoy.
+Gaudir.
 
-2~ A base image for a 128M USB key
+2~ Una imatge bàsica per a un dispositiu USB de 128M
 
-*{Use case:}* Create a standard image with some components removed in order to fit on a 128M USB key with a little space left over to use as you see fit.
+*{Cas d'ús:}* Crear una imatge estàndard amb alguns components eliminats per tal que càpiga en una clau USB de 128M amb un petit espai de sobres per utilitzar com millor us sembli.
 
-When optimizing an image to fit a certain media size, you need to understand
-the tradeoffs you are making between size and functionality. In this
-example, we trim only so much as to make room for additional material within
-a 128M media size, but without doing anything to destroy the integrity of
-the packages contained within, such as the purging of locale data via the
-/{localepurge}/ package, or other such "intrusive" optimizations. Of
-particular note, in order to understand what the #{minimal.chroot}# hook
-does you should take a look at #{/usr/share/doc/live-build/examples/hooks}#
+Al optimitzar una imatge per adaptar-la a una mida determinada, cal
+comprendre els avantatges i desavantatges que s'estan fent entre la mida i
+la funcionalitat. En aquest exemple, retallem tant només per donar cabuda a
+material addicional dins d'una mida de 128M, però sense fer res per destruir
+la integritat dels paquets continguts dins, com la depuració de les dades de
+localització a través del paquet /{localepurge}/ o altres optimitzacions
+"intrusives". De particular interès, per tal d'entendre el que fa el script
+#{minimal.chroot}# s'hauria de fer una ullada a
+#{/usr/share/doc/live-build/examples/hooks}#
 
 code{
 
@@ -331,9 +348,10 @@ code{
 
 }code
 
-To make the image work properly, we must re-add, at least, two recommended
-packages which are left out by the #{--apt-recommends false}# option. See
-{Tweaking APT to save space}#tweaking-apt-to-save-space
+Per fer que la imatge funcioni correctament, hem de tornar a afegir, com a
+mínim, dos paquets recomanats, que es queden fora per l'opció
+#{--apt-recommends false}#. Veure { Afinar APT per estalviar
+espai}#tweaking-apt-to-save-space
 
 code{
 
@@ -341,7 +359,7 @@ code{
 
 }code
 
-Now, build the image in the usual way:
+Ara, crear la imatge de la forma habitual:
 
 code{
 
@@ -349,41 +367,45 @@ code{
 
 }code
 
-On the author's system at the time of writing this, the above configuration
-produced a 95Mbyte image. This compares favourably with the 182Mbyte image
-produced by the default configuration in {Tutorial 1}#tutorial-1.
+En el sistema de l'autor en el moment d'escriure això, la configuració
+anterior produeix una imatge de 95Mbytes. Això es compara favorablement amb
+la imatge de 182Mbytes produïda per la configuració per defecte del
+{Tutorial 1}#tutorial-1.
 
-The biggest space-saver here, compared to building a standard image on an
-#{i386}# architecture system, is to select only the #{486}# kernel flavour
-instead of the default #{-k "486 686-pae"}#. Leaving off APT's indices with
-#{--apt-indices false}# also saves a fair amount of space, the tradeoff
-being that you need to #{apt-get update}# before using apt in the live
-system. Dropping recommended packages with #{--apt-recommends false}# saves
-some additional space, at the expense of omitting some packages you might
-otherwise expect to be there, such as /{firmware-linux-free}/ which may be
-needed to support certain hardware. #{--memtest none}# prevents the
-installation of a memory tester. And finally, the execution of the
-#{minimal.chroot}# hook removes some unused packages and files.
+El major estalvi d'espai aquí, en comparació amb la construcció d'una imatge
+estàndard en un sistema d'arquitectura #{i386}#, és seleccionar només la
+variant del nucli #{486}# en comptes del predeterminat #{-k "486
+686-pae"}#. Deixar els índexs d'APT amb #{--apt-indices false}# també permet
+estalviar una bona quantitat d'espai, el desavantatge és que es necessita
+fer #{apt-get update}# abans d'usar apt en el sistema en viu. Deixar els
+paquets recomanats amb #{--apt-recommends false}# estalvia una mica d'espai
+addicional, a costa d'ometre alguns paquets que d'una altra manera es podria
+esperar que hi fossin, com /{firmware-linux-free}/ que pot ser necessàri per
+donar suport a un determinat maquinari. #{--memtest none}# impedeix la
+instaŀlació d'un provador de la memòria. I finalment, l'execució del script
+ganxo #{minimal.chroot}# elimina alguns paquets i fitxers que no
+s'utilitzen.
 
-Using other hooks, like for example the #{stripped.chroot}# hook found in
-#{/usr/share/doc/live-build/examples/hooks}#, may shave off additional small
-amounts of space and produce an image of 76MB. But it is up to you to decide
-if the functionality that is sacrificed with each size optimization is worth
-the loss of functionality.
+Fent servir altres scripts ganxo, com ara el #{stripped.chroot}# de
+#{/usr/share/doc/live-build/examples/hooks}#, es pot guanyar petites
+quantitats addicionals d'espai i produir una imatge de 76MB. Però cal
+decidir si la funcionalitat que es sacrifica amb cada optimització de la
+mida val la pena, tenint en compte la funcionalitat que es perd.
 
-2~ A localized KDE desktop and installer
+2~ Un escriptori KDE localitzat i amb instaŀlador
 
-*{Use case:}* Create a KDE desktop image, localized for Brazilian Portuguese and including an installer.
+*{Cas d'ús:}* Crear una imatge amb l'escriptori KDE, localitzat per al portuguès brasiler i que inclou un instaŀlador.
 
-We want to make an iso-hybrid image for i386 architecture using our
-preferred desktop, in this case KDE, containing all of the same packages
-that would be installed by the standard Debian installer for KDE.
+Volem fer una imatge ISO híbrida per l'arquitectura i386 fent servir el
+nostre escriptori preferit, en aquest cas KDE, que conté tots els mateixos
+paquets que serien instaŀlats per l'instaŀlador estàndard de Debian per a
+KDE.
 
-Our initial problem is the discovery of the names of the appropriate
-language tasks. Currently, live-build cannot help with this. While we might
-get lucky and find this by trial-and-error, there is a tool, #{grep-dctrl}#,
-which can be used to dig it out of the task descriptions in tasksel-data, so
-to prepare, make sure you have both of those things:
+El nostre primer problema és descobrir els noms de les tasques del
+llenguatge apropiades. En l'actualitat, live-build no ens pot ajudar amb
+això. Tot i que es podria tenir sort i trobar-ho per assaig i error, hi ha
+una eina, #{grep-dctrl}#, per extreure les descripcions de les tasques de
+tasksel-data, per preparar-ho tot, assegurar-se de tenir totes dues coses:
 
 code{
 
@@ -391,7 +413,7 @@ code{
 
 }code
 
-Now we can search for the appropriate tasks, first with:
+Ara podem buscar les tasques apropiades, primer amb:
 
 code{
 
@@ -400,8 +422,9 @@ code{
 
 }code
 
-By this command, we discover the task is called, plainly enough,
-brazilian-portuguese. Now to find the related tasks:
+Mitjançant aquesta ordre, es descobreix que la tasca s'anomena, amb
+suficient claredat, brazilian-portuguese. Ara, per trobar les tasques
+relacionades:
 
 code{
 
@@ -411,12 +434,13 @@ code{
 
 }code
 
-At boot time we will generate the *{pt_BR.UTF-8}* locale and select the
-*{pt}* keyboard layout. Now let's put the pieces together. Recalling from
-{Using metapackages}#using-metapackages that task metapackages are prefixed
-#{task-}#, we just specify these language boot parameters, then add standard
-priority packages and all our discovered task metapackages to our package
-list as follows:
+En el moment d'arrencar es generarà la variant regional *{pt_BR.UTF-8}* i es
+seleccionarà la disposició del teclat *{pt}*. Ara posarem les peces
+juntes. Recordant de {Ús dels metapaquets}#using-metapackages que els
+metapaquets tenen el prefix #{task-}#, simplement especificar aquests
+paràmetres del llenguatge a l'arrencada, i després afegir els paquets de
+prioritat estàndard i tots els metapaquets descoberts a la nostra llista de
+paquets de la següent manera:
 
 code{
 
@@ -434,7 +458,7 @@ code{
 
 }code
 
-Note that we have included the debian-installer-launcher package to launch
-the installer from the live desktop, and have also specified the 486 flavour
-kernel, as it is currently necessary to make the installer and live system
-kernels match for the launcher to work properly.
+Tenir en compte que s'ha inclòs el paquet debian-installer-launcher per
+llançar l'instaŀlador des de l'escriptori en viu, i també s'especifica el
+nucli 486, ja que actualment és necessari que l'instaŀlador i el nucli del
+sistema viu coincideixin perquè el llançador funcioni correctament.

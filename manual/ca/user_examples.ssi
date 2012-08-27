@@ -3,15 +3,15 @@
 1~examples Exemples
 
 En aquest capítol s'inclouen exemples de construccions per a casos d'ús
-específics amb Debian Live. Si és nou en la construcció d'imatges de Debian
-Live pròpies, us suggerim mirar els tres tutorials en seqüència, ja que cada
-un ensenya noves tècniques que ajuden a utilitzar i entendre els exemples
-restants.
+específics amb Debian Live. Si s'és nou en la construcció d'imatges de
+Debian Live pròpies, us suggerim mirar els tres tutorials en seqüència, ja
+que cada un ensenya noves tècniques que ajuden a utilitzar i entendre els
+exemples restants.
 
 2~using-the-examples Ús dels exemples
 
 Per utilitzar aquests exemples es necessita un sistema de construcció que
-compleixi els requisits enumerats a {Requeriments}#requirements y que tingui
+compleixi les exigències enumerades a {Requisits}#requirements y que tingui
 live-build instaŀlat com es descriu a {Instaŀlació de
 live-build}#installing-live-build.
 
@@ -107,7 +107,7 @@ code{
 
 }code
 
-Un cop més, verificar que la imatge està bé i prova-la, com al {Tutorial
+Un cop més, verificar que la imatge està bé i provar-la, com al {Tutorial
 1}#tutorial-1.
 
 2~tutorial-3 Tutorial 3: Una imatge personalitzada
@@ -203,7 +203,7 @@ commit.
 L'ordre #{lb clean}# netejarà tots els fitxers generats en la construcció
 anterior a excepció del cache, el que estalvia haver de tornar a descarregar
 els paquets. Això assegura que el #{lb build}# següent tornarà a executar
-totes les etapes per regenerar els arxius de la nostra nova configuració.
+totes les etapes per regenerar els fitxers de la nostra nova configuració.
 
 code{
 
@@ -240,7 +240,7 @@ Per descomptat, es possible fer canvis més complicats en la configuració,
 potser afegint fitxers en els subdirectoris de #{config/}#. Quan es fa un
 commit de les noves revisions, s'ha de tenir cura de no editar a mà o
 incloure en el commit els fitxers de nivell superior de #{config}# que
-contenen variables #{LB_*}#, ja que són productes de construcció, també, i
+contenen variables #{LB_*}#, ja que són productes de construcció també, i
 sempre són netejats per #{lb clean}# i tornats a crear per #{lb config}# a
 través dels seus respectius scripts #{auto}#.
 
@@ -253,7 +253,7 @@ usuaris de Debian Live.
 
 2~ Un client per a un quiosc VNC
 
-*{Cas d'ús:}* Crear una imatge amb live-build per arrencar directament a un servidor VNC.
+*{Cas d'ús:}* Crear una imatge amb live-build per connectar-se directament a un servidor VNC al arrencar.
 
 Fer un directori de construcció i crear una configuració d'esquelet en el
 seu interior, desactivant els «recommends» per fer un sistema mínim. I a
@@ -300,8 +300,8 @@ code{
 
 Crear el directori #{/etc/skel}# a #{config/includes.chroot}# i ​​posar un
 fitxer #{.xsession}# personalitzat per a l'usuari per defecte que posarà en
-marxa /{metacity}/ i iniciarà /{xvncviewer}/, connectant al port #{5901}# de
-un servidor ubicat a #{192.168.1.2}#:
+marxa /{metacity}/ i iniciarà /{xvncviewer}/, connectant al port #{5901}#
+d'un servidor ubicat a #{192.168.1.2}#:
 
 code{
 
@@ -335,7 +335,7 @@ Al optimitzar una imatge per adaptar-la a una mida determinada, cal
 comprendre els avantatges i desavantatges que s'estan fent entre la mida i
 la funcionalitat. En aquest exemple, retallem tant només per donar cabuda a
 material addicional dins d'una mida de 128M, però sense fer res per destruir
-la integritat dels paquets continguts dins, com la depuració de les dades de
+la integritat dels paquets continguts, com la depuració de les dades de
 localització a través del paquet /{localepurge}/ o altres optimitzacions
 "intrusives". De particular interès, per tal d'entendre el que fa el script
 #{minimal.chroot}# s'hauria de fer una ullada a

@@ -3,7 +3,7 @@
 1~customizing-package-installation Personalització de la instaŀlació de
 paquets
 
-La personalització més bàsica d'un sistema Debian viu pot ser la selecció
+La personalització més bàsica d'un sistema Debian live pot ser la selecció
 dels paquets que seran inclosos en la imatge. Aquest capítol explica les
 diverses opcions de live-build per personalitzar la instaŀlació de paquets
 durant la construcció. Les opcions més importants que influeixen en els
@@ -32,7 +32,7 @@ live-build. Qualsevol distribució disponible a l'arxiu de Debian pot ser
 especificada pel seu nom en clau aquí. (Veure {Termes}#terms per més
 detalls.) L'opció #{--distribution}# no només influeix en l'origen dels
 paquets dins l'arxiu, sinó que també instrueix a live-build per comportar-se
-segons sigui necessari per a construir cada distribució compatible. Per
+segons sigui necessari per a construir cada distribució suportada. Per
 exemple, per construir la distribució *{unstable}*, sid, s'ha d'especificar:
 
 code{
@@ -41,11 +41,10 @@ code{
 
 }code
 
-A l'arxiu de la distribució, les àrees d'arxiu són les divisions principals
-de l'arxiu. A Debian, es tracta de #{main}#, #{contrib}# i #{non-free}#.
-Només #{main}# conté el programari que és part de la distribució Debian, pel
-que és el valor per defecte. Un o més valors es poden especificar, per
-exemple:
+A l'arxiu de la distribució, les àrees són les divisions principals de
+l'arxiu. A Debian, es tracta de #{main}#, #{contrib}# i #{non-free}#.  Només
+#{main}# conté el programari que és part de la distribució Debian, per tant
+és el valor per defecte. Es poden especificar un o més valors, per exemple:
 
 code{
 
@@ -72,9 +71,9 @@ quin mirall de distribució s'utilitzara en les diverses etapes de la
 construcció. Recordar de {Etapes de la construcció}#stages-of-the-build que
 l'etapa *{bootstrap}* es quan el chroot s'omple inicialment per
 /{debootstrap}/  amb un sistema mínim i l'etapa *{chroot}* és quan
-s'utilitza el chroot per a la construcció de sistema d'fitxers del sistema
-en viu. D'aquesta manera, s'utilitzan els miralls corresponents per a
-aquestes etapes, i més tard, durant l'etapa *{binary}* s'utilitzan els
+s'utilitza el chroot per a la construcció del sistema d'fitxers del sistema
+en viu. D'aquesta manera, s'utilitzen els miralls corresponents per a
+aquestes etapes, i més tard, durant l'etapa *{binary}* s'utilitzen els
 valors #{--mirror-binary}# i #{--mirror-binary-security}# substituint
 qualsevol mirall utilitzat en una etapa anterior.
 
@@ -128,8 +127,8 @@ configurar repositoris addicionals, crear els fitxers
 *{chroot}*  durant la construcció de la imatge, i a l'étapa *{binary}*, és a
 dir, per ser utilitzades quan s'executa el sistema en viu.
 
-Per exemple, #{config/archives/live.list.chroot}# permet d'instaŀlar paquets
-des del repositori de instantànies de debian live en el moment de creació
+Per exemple, #{config/archives/live.list.chroot}# permet instaŀlar paquets
+des del repositori d'instantànies de debian live en el moment de construcció
 del sistema viu.
 
 code{
@@ -170,7 +169,7 @@ paquets nous o experimentals abans de afegirlos a un repositori.
 
 Les llistes de paquets són una forma eficaç d'expressar quins paquets han de
 ser instaŀlats. La sintaxi de la llista suporta els fitxers inclosos i
-seccions condicionals que fa que sigui fàcil de construir llistes a partir
+seccions condicionals que fa que sigui fàcil construir llistes a partir
 d'altres llistes i adaptar-les per al propi ús en múltiples
 configuracions. Els noms dels paquets també poden ser injectats a la llista
 amb els ajudants de shell en temps de construcció. 
@@ -191,7 +190,7 @@ code{
 
 Això reemplaça l'antic mètode de llistes predefinides de #{live-build}#
 2.x. A diferència de les llistes predefinides, els metapaquets no són
-específics del projecte Debian Live. Per contra, són mantingudes per grups
+específics del projecte Debian Live. Per contra, són mantinguts per grups
 d'especialistes que treballen dins la distribució i per tant, reflecteixen
 el consens de cada grup sobre els paquets que serviran millor a les
 necessitats dels usuaris. A més, abasten una gamma molt més àmplia de casos
@@ -211,9 +210,10 @@ code{
 A més d'aquests, es troben altres metapaquets amb diverses
 finalitats. Alguns són subconjunts de paquets de tasques més àmplies, com
 #{gnome-core}#, mentre que altres són parts individuals especialitzades de
-un Debian Pure Blend, com els metapaquets #{education-*}#. Per a una llista
-de tots els metapaquets a l'arxiu, instaŀlar el paquet #{debtags}# i llistar
-tots els paquets amb l'etiqueta #{role::metapackage}# de la següent manera:
+un Debian Pure Blend, com els metapaquets #{education-*}#. Per obtenir una
+llista de tots els metapaquets que hi ha a l'arxiu, instaŀlar el paquet
+#{debtags}# i llistar tots els paquets amb l'etiqueta #{role::metapackage}#
+de la següent manera:
 
 code{
 
@@ -262,8 +262,8 @@ ordenada de paquets disponibles amb #{Priority: standard}#.
 De fet, la selecció de paquets amb l'ordre #{grep-aptavail}# (del paquet
 #{dctrl-tools}#) és tan útil que #{live-build}# proporciona un script
 #{Packages}# d'ajuda per motius de comoditat. Aquest script accepta dos
-arguments: #{field}# and #{pattern}#. Per tant, pot crear una llista amb els
-següents continguts:
+arguments: #{field}# i #{pattern}#. Per tant, es pot crear una llista amb
+els següents continguts:
 
 code{
 
@@ -293,9 +293,9 @@ code{
 
 }code
 
-És possible fer un test d'un qualsevol d'un nombre de valors, per exemple
-per instaŀlar /{memtest86+}/ si s'especifica #{--architectures i386}# o
-#{--architectures amd64}#:
+És possible fer un test d'un nombre de valors, per exemple per instaŀlar
+/{memtest86+}/ si s'especifica #{--architectures i386}# o #{--architectures
+amd64}#:
 
 code{
 
@@ -335,7 +335,7 @@ Les tasques d'escriptori i el llenguatge són casos especials que necessiten
 una mica de planificació i configuració extra. Les imatges en viu són
 diferentes de les imatges de l'instaŀlador de Debian en aquest sentit. A
 l'instaŀlador de Debian, si el medi es va preparar per obtenir un tipus
-entorn d'escriptori en particular, la tasca corresponent s'instaŀlarà
+d'entorn d'escriptori en particular, la tasca corresponent s'instaŀlarà
 automàticament. Per tant hi ha tasques internes #{gnome-desktop}#,
 #{kde-desktop}#, #{lxde-desktop}# and #{xfce-desktop}# cap de les quals
 s'ofereixen al menú de #{tasksel}#. De la mateixa manera, no hi ha cap
@@ -370,7 +370,7 @@ modificats o de tercers
 
 Si bé està en contra de la filosofia de Debian Live, de vegades pot ser
 necessària la construcció d'un sistema en viu amb versions modificades dels
-paquets que es troben al arxiu de Debian. Pot ser per modificar or donar
+paquets que es troben al arxiu de Debian. Pot ser per modificar o donar
 suport a funcions addicionals, les llengües o les marques, o fins i tot per
 eliminar elements dels paquets existents que són indesitjables. De la
 mateixa manera, es poden utilitzar paquets de tercers per afegir alguna
@@ -430,11 +430,11 @@ modificats.
 
 3~ Paquets personalitzats i APT
 
-live-build utilitza APT per instaŀlar tots els paquets al sistema en viu per
-tant, heretarà els comportaments d'aquest programa. Un exemple rellevant és
-que (assumint una configuració per defecte) si es dóna el cas que un paquet
-està disponible en dos repositoris diferents, amb diferents números de
-versió, APT triarà per instaŀlar el paquet amb la versió més alta.
+live-build utilitza APT per instaŀlar tots els paquets al sistema en viu,
+per tant, heretarà els comportaments d'aquest programa. Un exemple rellevant
+és que (assumint una configuració per defecte) si es dóna el cas que un
+paquet està disponible en dos repositoris diferents, amb diferents números
+de versió, APT triarà per instaŀlar el paquet amb la versió més alta.
 
 A causa d'això, s'aconsella augmentar el nombre de versió dels paquets
 personalitzats als fixers #{debian/changelog}#  per assegurar-se que la
@@ -452,7 +452,7 @@ dir, mitjançant la inclusió de les configuracions adequades a través de
 #{config/includes.chroot/}#.) Per obtenir una llista completa, buscar les
 opcions que comencen amb #{apt}# a la pàgina del manual de #{lb_config}#.
 
-3~choosing-apt-or-aptitude Seleccionar apt o aptitude
+3~choosing-apt-or-aptitude Elegir apt o aptitude
 
 Es pot optar per utilitzar /{apt}/ o /{aptitude}/ a l'hora d'instaŀlar
 paquets en temps de construcció. Quina utilitat s'usa es configura gràcies
@@ -545,16 +545,16 @@ pàgines del manual de #{apt}# i #{aptitude}# per a més detalls.
 3~apt-pinning APT pinning
 
 Com a referència, llegir primer la pàgina del manual
-#{apt_preferences(5)}#. Es pot configurar APT pinning tant pel temps de
-construcció, o bé per temps d'execució. En el primer cas, crear
+#{apt_preferences(5)}#. Es pot configurar APT pinning durant la construcció,
+o bé durant l'execució. En el primer cas, crear
 #{config/chroot_apt/preferences}#. Per aquest últim cas, crear
 #{config/includes.chroot/etc/apt/preferences}#.
 
 Suposem que s'està construint un sistema en viu wheezy però es necessita que
-tots els paquets en viu que acaben en la imatge binària s'instaŀlin desde
+tots els paquets «live-» que acaben en la imatge binària s'instaŀlin desde
 sid en temps de construcció. Cal afegir sid a les fonts d'APT i fer un pin
 de manera que només els paquets que es vol s'instaŀlin en el moment de la
-construcció i tots els altres es preguin de la distribució de destinació,
+construcció i tots els altres es prenguin de la distribució de destinació,
 wheezy. El que segueix aconseguira això:
 
 code{

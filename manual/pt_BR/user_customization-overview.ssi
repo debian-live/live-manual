@@ -1,83 +1,83 @@
 :B~ Personalizando conteúdo
 
-1~customization-overview Personalizando conteúdo
+1~customization-overview Visão geral sobre personalização
 
 Este capítulo apresenta uma visão geral das várias maneiras pelas quais você
 pode personalizar um sistema Debian Live.
 
-2~ Tempo de construção vs configuração tempo de boot
+2~ Configuração de tempo de construção X  tempo de inicialização
 
-As opções de configuração do sistema Live são divididas opções de tempo de
-compilação  que são opções que são aplicadas em tempo de compilação e opções
+As opções de configuração do sistema Live são divididas em opções de tempo
+de compilação que são as opções aplicadas em tempo de compilação e opções de
 tempo de inicialização que são aplicadas em tempo de inicialização. Opções
-inicialização são divididas  naquelas que ocorrem em início do
+de inicialização são divididas naquelas que ocorrem em início do
 inicialização, aplicadas pelo pacote live-boot e aquelas que acontecem no
 final da inicialização, aplicadas pelo live-config. Qualquer opção de
-inicialização pode ser modificada pelo usuário, especificando-a no prompt de
-inicialização. A imagem também podem ser construídas com os parâmetros de
-inicialização padrão para que os usuários possam normalmente só inicializar
-diretamente para o sistema live, sem especificar quaisquer opções quando
-todos os padrões são adequados. Em particular, o argumento para #{lb
+inicialização pode ser modificada pelo usuário, especificando a no prompt de
+inicialização. A imagem também pode ser construída com os parâmetros de
+inicialização padrão para que os usuários possam normalmente apenas
+inicializar diretamente pelo sistema live, sem especificar quaisquer opções
+quando todos os padrões são adequados. Em particular, o argumento para #{lb
 --bootappend-live}# consiste de quaisquer opções padrão de kernel de linha
-de comando para o sistema vivo, tais como persistência, layouts de teclado,
+de comando para o sistema live, tais como persistência, layouts de teclado,
 ou fuso horário. Veja {Personalizando local e
 linguagem}#customizing-locale-and-language, por exemplo.
 
 Opções de configuração de tempo de construção estão descritas na pagina do
 man #{lb config}#. Opções de tempo de inicialização estão descritas nas
 páginas do manual live-boot e live-config. Embora os pacotes live-boot e
-live-config estejam instalados dentro do sistema vivo que você está
-construindo, recomenda-se que você também instalá-le os em seu sistema de
+live-config estejam instalados dentro do sistema live que você está
+construindo, é recomenda que você os instale também em seu sistema de
 construção para fácil referência quando você estiver trabalhando em sua
 configuração. É seguro fazê-lo, já que nenhum dos scripts contidos dentro
 deles estão executados a menos que o sistema esteja configurado como um
-sistema vivo.
+sistema live.
 
 2~stages-of-the-build Etapas da construção
 
 O processo de criação está dividido em etapas, com várias personalizações
-aplicadas em seqüência em cada uma. A primeira etapa para executar é a
+aplicadas em sequencia em cada uma. A primeira etapa para executar é a
 *{inicialização}*. Esta é a fase inicial de povoamento do diretório chroot
 com pacotes para fazer um esqueleto do sistema Debian. Isto é seguido pela
 fase *{chroot}*, o que completa a construção do directório chroot,
 preenchendo-o com todos os pacotes listados na configuração, juntamente com
-quaisquer outros materiais. Mais personalização de conteúdo ocorre nesta
-fase. A fase final de preparação da imagem live é a fase *{binária}*, que
-cria uma imagem de inicialização, usando o conteúdo do diretório chroot para
-construir o sistema de arquivos raiz para o sistema Live, incluindo o
-instalador e qualquer outro material adicional sobre a mídia de destino fora
-do sistema de arquivos do sistema Live. Depois que a imagem live é
-construída, se habilitada, o pacote de código é construído na etapa
-*{fonte}*.
+quaisquer outros materiais. A maior parte da personalização do conteúdo
+ocorre nesta fase. A fase final de preparação da imagem live é a fase
+*{binária}*, que cria uma imagem de inicialização, usando o conteúdo do
+diretório chroot para construir a raiz do sistema de arquivos para o sistema
+Live, incluindo o instalador e qualquer outro material adicional sobre a
+mídia de destino fora do sistema de arquivos do sistema Live. Depois que a
+imagem live é construída, se habilitada, o pacote de código é construído na
+etapa *{fonte}*.
 
 Dentro de cada uma destas etapas, existe uma sequência particular na qual os
 comandos são aplicados. Estes estão dispostos de tal modo a assegurar
 personalizações que podem ser colocadas em camadas de uma forma
 razoável. Por exemplo, dentro do estágio *{chroot}*, sementes são aplicadas
-antes que qualquer pacotes esteja instalado, os pacotes são instalados antes
-de qualquer arquivo localmente incluídos ou atualizações sejam aplicadas, e
-os ganchos são executados mais tarde, depois de todos os materiais estarem
-no lugar.
+antes de qualquer pacote ser instalado, os pacotes são instalados antes de
+qualquer arquivo incluídos localmente ou atualizações sejam aplicadas, e os
+ganchos são executados mais tarde, depois de todos os materiais estarem no
+lugar.
 
 2~ Complementar lb config com arquivos
 
 Embora #{lb config}# crie uma configuração esquelética no diretório config/,
 para realizar seus objetivos, você pode precisar fornecer arquivos
 adicionais em subdiretórios do config/. Dependendo de onde os arquivos são
-armazenados na configuração, que podem ser copiados para o sistema de
+armazenados na configuração, eles podem ser copiados para o sistema de
 arquivos do sistema live, ou no sistema de arquivos de imagem binária, ou
 podem fornecer configurações de tempo de execução do sistema que seria
 complicado passar como de linha de comando. Você pode incluir coisas como
 listas personalizadas de pacotes, obras de arte personalizadas, ou scripts
-para rodar tanto em tempo de compilação ou em tempo de inicialização,
-aumentando a flexibilidade já considerável de debian-live com código de sua
+para rodar em tempo de compilação ou em tempo de inicialização, aumentando a
+flexibilidade já considerável de debian-live com o código de sua
 preferência.
 
 2~ Tarefas de personalização
 
 Os capítulos seguintes são organizados pelos tipos de personalização de
-tarefas que os usuários normalmente executam: {Personalizar instalação do
-pacote}#customizing-package-installation, {Personalizando
-conteúdos}#customizing-package-installation, e {Personalizando localizade e
-linguagem}#customizing-locale-and-language cobrir apenas algumas das coisas
+tarefas que os usuários normalmente executam: {Personalizar a instalação de
+pacote}#customizing-package-installation, {Personalizar
+conteúdos}#customizing-package-installation, e {Personalizar localizade e
+linguagem}#customizing-locale-and-language cobrem apenas algumas das coisas
 que você pode querer fazer.

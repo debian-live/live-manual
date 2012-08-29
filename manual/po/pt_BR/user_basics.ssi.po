@@ -1,13 +1,14 @@
 # Portuguese translations for live-manual package
 # This file is distributed under the same license as the live-manual package.
 # Automatically generated, 2010.
+# Willer Gomes Júnior <willer@ogomes.com>, 2012
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual\n"
 "POT-Creation-Date: 2012-08-14 15:07+0300\n"
-"PO-Revision-Date: 2010-10-20 06:53-0200\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2012-08-29 10:53-0500\n"
+"Last-Translator: Willer Gomes Júnior <willer@ogomes.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -160,12 +161,12 @@ msgstr "}code"
 #. type: Plain text
 #: en/user_basics.ssi:2
 msgid ":B~ The basics"
-msgstr ""
+msgstr ":B~ O básico"
 
 #. type: Plain text
 #: en/user_basics.ssi:4
 msgid "1~the-basics The basics"
-msgstr ""
+msgstr "1~the-basics O básico"
 
 #. type: Plain text
 #: en/user_basics.ssi:6
@@ -182,6 +183,19 @@ msgid ""
 "very convenient way to test and deploy images for booting on the local "
 "network without the hassle of dealing with image media."
 msgstr ""
+"Este capítulo contém uma breve descrição do processo de construção e "
+"instruções para utilização dos três tipos de imagem mais comumente usados. O "
+"tipo de imagem mais versátil, #{iso-hybrid}#, que pode ser usado em uma "
+"máquina virtual, meios ópticos ou dispositivo USB de armazenamento portátil. "
+"Em certos casos especiais, tais como a utilização de persistência, #{hdd}# "
+"pode ser mais adequada para dispositivos USB. O capítulo termina com "
+"instruções para a construção e utilização de um tipo de imagem #{net}#, que "
+"envolve um pouco mais com a configuração necessária no servidor. Este é um "
+"tema um pouco avançado para quem ainda não está familiarizado com a "
+"inicialização pela rede, mas está incluído aqui porque uma vez que a "
+"instalação está feita, é uma maneira muito conveniente para testar e "
+"implantar imagens para a inicialização da rede local sem o incômodo de lidar "
+"a com mídia da imagem."
 
 #. type: Plain text
 #: en/user_basics.ssi:8
@@ -190,11 +204,14 @@ msgid ""
 "produced by live-build. If you are downloading a prebuilt image instead, the "
 "actual filenames may vary."
 msgstr ""
+"Ao longo do capítulo, referem-se frequentemente os nomes de arquivos padrão "
+"produzidos pelo live-build. Se, em vez disso, você estiver baixando uma "
+"imagem pré-construída, os nomes de arquivos reais podem variar."
 
 #. type: Plain text
 #: en/user_basics.ssi:10
 msgid "2~what-is-live What is a live system?"
-msgstr ""
+msgstr "2~what-is-live O que é um sistema live?"
 
 #. type: Plain text
 #: en/user_basics.ssi:12
@@ -204,6 +221,11 @@ msgid ""
 "use without any installation on the usual drive(s), with auto-configuration "
 "done at run time (see {Terms}#terms)."
 msgstr ""
+"Um sistema live normalmente significa um sistema operacional inicializado em "
+"um computador a partir de uma mídia removível, como um CD-ROM ou dispositivo "
+"USB, ou de uma rede, pronto a usar, sem qualquer tipo de instalação na "
+"unidade de costume (s), com a auto-configuração feita em tempo de execução "
+"(veja {Termos}#terms)."
 
 #. type: Plain text
 #: en/user_basics.ssi:14
@@ -212,11 +234,14 @@ msgid ""
 "the supported architectures (currently amd64, i386, powerpc and sparc). It "
 "is made from the following parts:"
 msgstr ""
+"Com Debian Live, que é um sistema Debian GNU/Linux, construído para uma das "
+"arquiteturas suportadas (atualmente amd64, i386, PowerPC e SPARC). Ele é "
+"feita a partir dos seguintes componentes:"
 
 #. type: Plain text
 #: en/user_basics.ssi:16
 msgid "_* *{Linux kernel image}*, usually named #{vmlinuz*}#"
-msgstr ""
+msgstr "_* *{Imagem do kernel do Linux }*, normalmente chamada  #{vmlinuz*}#"
 
 #. type: Plain text
 #: en/user_basics.ssi:18
@@ -225,6 +250,10 @@ msgid ""
 "boot, containing modules possibly needed to mount the System image and some "
 "scripts to do it."
 msgstr ""
+"_* *{Initial RAM disk image (initrd) - Imagem do disco RAM inicial}*: um "
+"disco de RAM configurado para a inicialização do Linux, que contém módulos "
+"que podem ser necessários para montar a imagem do sistema e alguns scripts "
+"para fazê-lo."
 
 #. type: Plain text
 #: en/user_basics.ssi:20
@@ -236,6 +265,14 @@ msgid ""
 "running system. However, all modifications will be lost upon shutdown unless "
 "optional persistence is used (see {Persistence}#persistence)."
 msgstr ""
+"_* *{Imagem do sistema}*: A imagem do sistema de arquivos do sistema "
+"operacional . Normalmente, um sistema de arquivos SquashFS comprimido é "
+"usado para minimizar o tamanho da imagem Debian Live. Observe que é só de "
+"leitura. Então, durante a inicialização do sistema Debian Live vai usar um "
+"disco de RAM e um mecanismo de \"união\" para permitir a gravação de "
+"arquivos dentro do sistema em funcionamento. No entanto, todas as "
+"modificações serão perdidas no desligamento, a menos que a persistência "
+"opcional seja usada {Persistência}#persistence)."
 
 #. type: Plain text
 #: en/user_basics.ssi:22
@@ -250,6 +287,16 @@ msgid ""
 "ext2/3/4 and btrfs partitions, pxelinux for PXE netboot, GRUB for ext2/3/4 "
 "partitions, etc."
 msgstr ""
+"_* *{Bootloader}*: Um pequeno pedaço de código criado para iniciar a partir "
+"dos meios escolhidos, possivelmente apresentando uma solicitação ou menu "
+"para permitir a seleção de opções/configuração. Ele carrega o kernel do "
+"Linux e seu initrd para funcionar com um sistema de arquivos do sistema "
+"associado. Diferentes soluções podem ser usadas, dependendo da mídia destino "
+"e formato do sistema de arquivos que contém os componentes mencionados "
+"anteriormente: isolinux para arrancar a partir de um CD ou DVD no formato "
+"ISO9660, syslinux para HDD ou drive USB inicializar a partir de uma partição "
+"VFAT, extlinux para ext2/3/4 e partiuções btrfs, pxelinux para inicialização "
+"pela rede PXE, GRUB para partições ext2/3/4, etc."
 
 #. type: Plain text
 #: en/user_basics.ssi:24
@@ -258,11 +305,16 @@ msgid ""
 "set up a Linux kernel, its initrd, and a bootloader to run them, all in one "
 "media-dependant format (ISO9660 image, disk image, etc.)."
 msgstr ""
+"Você pode usar o live-build para construir a imagem do sistema a partir de "
+"suas especificações, criar um kernel do Linux, o seu initrd, e um bootloader "
+"para executá-las, tudo em um formato dependendo da  mídia (imagem ISO9660, "
+"imagem de disco, etc.)"
 
 #. type: Plain text
 #: en/user_basics.ssi:26
 msgid "2~building-iso-hybrid First steps: building an ISO hybrid image"
 msgstr ""
+"2~building-iso-hybrid Primeiros passos: construindo uma imagem ISO híbrida"
 
 #. type: Plain text
 #: en/user_basics.ssi:28
@@ -273,6 +325,12 @@ msgid ""
 "containing just the Debian standard system without X.org. It is suitable for "
 "burning to CD or DVD media, and also to copy onto a USB stick."
 msgstr ""
+"Independentemente do tipo de imagem, você vai precisar para realizar os "
+"mesmos passos básicos para a construção de uma imagem de cada vez. Como um "
+"primeiro exemplo, executar a seguinte seqüência de comandos live-build para "
+"criar uma imagem básica ISO híbrida contendo apenas o sistema Debian padrão, "
+"sem X.org. Ele é adequado para a gravação de CD ou DVD, e também para copiar "
+"para um pen drive."
 
 #. type: Plain text
 #: en/user_basics.ssi:30
@@ -280,12 +338,14 @@ msgid ""
 "First, run the #{lb config}# command. This will create a \"config/\" "
 "hierarchy in the current directory for use by other commands:"
 msgstr ""
+"Primeiro, execute o comando #{lb config}#. Isso criará uma hierarquia "
+"\"config/\" no diretório atual para uso por outros comandos:"
 
 #. type: Plain text
 #: en/user_basics.ssi:34 en/user_examples.ssi:107
 #, no-wrap
 msgid " $ lb config\n"
-msgstr ""
+msgstr " $ lb config\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:38
@@ -294,6 +354,9 @@ msgid ""
 "various options will be used. See {The lb config command}#lb-config for more "
 "details."
 msgstr ""
+"Nenhum parâmetro é passado para #{lb config}#, então para todas as "
+"diferentes opções serão utilizadas as padrões. Veja {O comando lb config}#lb-"
+"config para mais detalhes."
 
 #. type: Plain text
 #: en/user_basics.ssi:40
@@ -301,13 +364,15 @@ msgid ""
 "Now that the \"config/\" hierarchy exists, build the image with the #{lb "
 "build}# command:"
 msgstr ""
+"Agora que existe a hierarquia \"config/\", construir a imagem com o comando #"
+"{lb build}#:"
 
 #. type: Plain text
 #: en/user_basics.ssi:44 en/user_basics.ssi:170 en/user_basics.ssi:238
 #: en/user_examples.ssi:125 en/user_examples.ssi:235
 #, no-wrap
 msgid " # lb build\n"
-msgstr ""
+msgstr " # lb build\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:48
@@ -316,11 +381,14 @@ msgid ""
 "connection. When it is complete, there should be a #{binary.hybrid.iso}# "
 "image file, ready to use, in the current directory."
 msgstr ""
+"Este processo pode demorar um pouco, dependendo da velocidade de sua conexão "
+"de rede. Quando estiver completo, deve haver um arquivo de imagem #{binary."
+"hybrid.iso}#, pronto a usar, no diretório atual."
 
 #. type: Plain text
 #: en/user_basics.ssi:50
 msgid "2~using-iso-hybrid Using an ISO hybrid live image"
-msgstr ""
+msgstr "2~using-iso-hybrid Usando uma imagem live ISO hibrida"
 
 #. type: Plain text
 #: en/user_basics.ssi:52
@@ -330,11 +398,15 @@ msgid ""
 "prepare your media for booting, either CD-R(W) or DVD-R(W) optical media or "
 "a USB stick."
 msgstr ""
+"Após a construção ou o download de uma imagem ISO híbrido, que pode ser "
+"obtida em http://www.debian.org/CD/live/, o passo seguinte é habitual é "
+"preparar sua mídia para a inicialização, ou mídia óptica CD-R (W) ou DVD-R "
+"(W)  ou um dispositivo USB."
 
 #. type: Plain text
 #: en/user_basics.ssi:54
 msgid "3~burning-iso-image Burning an ISO image to a physical medium"
-msgstr ""
+msgstr "3~burning-iso-image Queimar uma imagem ISO em um meio físico"
 
 #. type: Plain text
 #: en/user_basics.ssi:56
@@ -342,23 +414,27 @@ msgid ""
 "Burning an ISO image is easy. Just install wodim and use it from the command-"
 "line to burn the image. For instance:"
 msgstr ""
+"Queimar uma imagem ISO é fácil. Basta instalar wodim e usá-lo a partir da "
+"linha de comando para gravar a imagem. Por exemplo:"
 
 #. type: Plain text
 #: en/user_basics.ssi:60
 #, no-wrap
 msgid " # apt-get install wodim\n"
-msgstr ""
+msgstr " # apt-get install wodim\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:62
 #, no-wrap
 msgid " $ wodim binary.hybrid.iso\n"
-msgstr ""
+msgstr " $ wodim binary.hybrid.iso\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:66
 msgid "3~copying-iso-hybrid-to-usb Copying an ISO hybrid image to a USB stick"
 msgstr ""
+"3~copying-iso-hybrid-to-usb Copiar uma imagem ISO híbrida para um "
+"dispositivo USB"
 
 #. type: Plain text
 #: en/user_basics.ssi:68
@@ -372,6 +448,15 @@ msgid ""
 "can find the right device name by looking in #{dmesg}#'s output after "
 "plugging in the stick, or better yet, #{ls -l /dev/disk/by-id}#."
 msgstr ""
+"Imagens ISO preparadas com o comando #{isohybrid}#, como as imagens "
+"produzidas pelo tipo de imagem binária padrão #{iso-híbrido}#, pode ser "
+"simplesmente copiada para um dispositivo USB com o programa  #{dd}# ou um "
+"equivalente. Conecte um dispositivo USB com um tamanho grande o suficiente "
+"para o seu arquivo de imagem e determinar qual dispositivo é, que a seguir "
+"se referem como #{${USBSTICK}}#. Este é o arquivo de dispositivo de sua "
+"chave, como #{/dev/sdb}#, e não uma partição, como #{/dev/sdb1}#! Você pode "
+"encontrar o nome do dispositivo certo olhando na saída do #{dmesg}# depois "
+"de ligar o dispositivo, ou melhor ainda, #{ls -l /dev/disk/by-id}#."
 
 #. type: Plain text
 #: en/user_basics.ssi:71
@@ -380,17 +465,20 @@ msgid ""
 "command to copy the image to the stick.  *{This will definitely overwrite "
 "any previous contents on your stick!}*"
 msgstr ""
+"Uma vez que você tem certeza de que tem o nome correto do dispositivo, use o "
+"comando #{dd}# para copiar a imagem para o pendrive. *{Isso definitivamente "
+"vai substituir todo o conteúdo anterior do seu dispositivo!} *"
 
 #. type: Plain text
 #: en/user_basics.ssi:75
 #, no-wrap
 msgid " $ dd if=binary.hybrid.iso of=${USBSTICK}\n"
-msgstr ""
+msgstr " $ dd if=binary.hybrid.iso of=${USBSTICK}\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:80
 msgid "3~booting-live-media Booting the live media"
-msgstr ""
+msgstr "3~booting-live-media Inicializando a media live"
 
 #. type: Plain text
 #: en/user_basics.ssi:82
@@ -404,6 +492,16 @@ msgid ""
 "order to place the boot device for the live system before your normal boot "
 "device."
 msgstr ""
+"A primeira vez que você iniciar sua mídia live, seja CD, DVD, dispositivo "
+"USB, ou inicializador PXE, alguma configuração na BIOS do seu computador "
+"pode ser necessária em primeiro lugar. Uma vez que as BIOS variam muito em "
+"características e combinações de teclas, não podemos entrar no tema em "
+"profundidade aqui. Algumas BIOS fornecem uma chave para abrir um menu de "
+"dispositivos de inicialização em tempo de inicialização, que é a maneira "
+"mais fácil se estiver disponível no seu sistema. Caso contrário, você "
+"precisa entrar no menu de configuração da BIOS e alterar a ordem de "
+"inicialização para colocar o dispositivo de inicialização para o sistema "
+"live antes do dispositivo de inicialização normal."
 
 #. type: Plain text
 #: en/user_basics.ssi:84
@@ -414,6 +512,12 @@ msgid ""
 "\"help\" entry in the menu and also the live-boot and live-config man pages "
 "found within the live system."
 msgstr ""
+"Uma vez que você tenha iniciado a mídia, você é apresentado com um menu de "
+"inicialização. Se você apenas pressionar enter aqui, o sistema irá "
+"inicializar usando a entrada padrão, #{Live}# e opções padrão. Para mais "
+"informações sobre as opções de inicialização, consulte a entrada \"ajuda\" "
+"no menu e também as páginas do live-boot e live-boot-config encontradas "
+"dentro do sistema live."
 
 #. type: Plain text
 #: en/user_basics.ssi:86
@@ -425,11 +529,18 @@ msgid ""
 "images, you should be automatically logged in on the console to the #{user}# "
 "account and see a shell prompt, ready to use."
 msgstr ""
+"Supondo que você selecionou #{Live}# e inicializou uma imagem de desktop "
+"padrão live, após as mensagens de inicialização rolarem, você deve estar "
+"automaticamente logado na conta #{user}#  e vendo um desktop, pronto para "
+"uso. Se você iniciou uma imagem apenas de console, como as imagens pré-"
+"construídas #{padrão}# ou #{recuperação}#, deve estar automaticamente "
+"conectado no console na conta do usuário #{user}# e vendo uma janela de "
+"comandos, pronta para uso."
 
 #. type: Plain text
 #: en/user_basics.ssi:88
 msgid "2~using-virtual-machine Using a virtual machine for testing"
-msgstr ""
+msgstr "2~using-virtual-machine Usando uma máquina virtual para testar"
 
 #. type: Plain text
 #: en/user_basics.ssi:90
@@ -499,7 +610,7 @@ msgstr ""
 #: en/user_basics.ssi:110
 #, no-wrap
 msgid " # apt-get install qemu-kvm qemu-utils\n"
-msgstr ""
+msgstr " # apt-get install qemu-kvm qemu-utils\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:114
@@ -510,7 +621,7 @@ msgstr ""
 #: en/user_basics.ssi:118
 #, no-wrap
 msgid " $ kvm -cdrom binary.hybrid.iso\n"
-msgstr ""
+msgstr " $ kvm -cdrom binary.hybrid.iso\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:122
@@ -531,13 +642,13 @@ msgstr ""
 #: en/user_basics.ssi:130
 #, no-wrap
 msgid " # apt-get install virtualbox virtualbox-dkms\n"
-msgstr ""
+msgstr " # apt-get install virtualbox virtualbox-dkms\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:132
 #, no-wrap
 msgid " $ virtualbox\n"
-msgstr ""
+msgstr " $ virtualbox\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:136
@@ -556,7 +667,7 @@ msgstr ""
 #: en/user_basics.ssi:142
 #, no-wrap
 msgid " $ echo virtualbox-guest-x11 >> config/package-lists/my.list.chroot\n"
-msgstr ""
+msgstr " $ echo virtualbox-guest-x11 >> config/package-lists/my.list.chroot\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:146
@@ -586,7 +697,7 @@ msgstr ""
 #: en/user_basics.ssi:154 en/user_basics.ssi:220
 #, no-wrap
 msgid " # lb clean --binary\n"
-msgstr ""
+msgstr " # lb clean --binary\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:158
@@ -599,7 +710,7 @@ msgstr ""
 #: en/user_basics.ssi:162
 #, no-wrap
 msgid " $ lb config -b hdd\n"
-msgstr ""
+msgstr " $ lb config -b hdd\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:166 en/user_basics.ssi:234
@@ -646,7 +757,7 @@ msgstr ""
 #: en/user_basics.ssi:186
 #, no-wrap
 msgid " $ kvm -hda binary.img\n"
-msgstr ""
+msgstr " $ kvm -hda binary.img\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:190
@@ -666,7 +777,7 @@ msgstr ""
 #: en/user_basics.ssi:196
 #, no-wrap
 msgid " # gparted ${USBSTICK}\n"
-msgstr ""
+msgstr " # gparted ${USBSTICK}\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:200
@@ -680,7 +791,7 @@ msgstr ""
 #: en/user_basics.ssi:204
 #, no-wrap
 msgid " # mkfs.ext4 ${PARTITION}\n"
-msgstr ""
+msgstr " # mkfs.ext4 ${PARTITION}\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:208
@@ -724,7 +835,7 @@ msgstr ""
 #: en/user_basics.ssi:228
 #, no-wrap
 msgid " $ lb config -b net --net-root-path \"/srv/debian-live\" --net-root-server \"192.168.0.1\"\n"
-msgstr ""
+msgstr " $ lb config -b net --net-root-path \"/srv/debian-live\" --net-root-server \"192.168.0.1\"\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:232
@@ -767,7 +878,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:248
 msgid "3~ DHCP server"
-msgstr ""
+msgstr "3~ Servidor DHCP"
 
 #. type: Plain text
 #: en/user_basics.ssi:250
@@ -794,7 +905,7 @@ msgstr ""
 #: en/user_basics.ssi:258
 #, no-wrap
 msgid " ddns-update-style none;\n"
-msgstr ""
+msgstr " ddns-update-style none;\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:261
@@ -803,6 +914,8 @@ msgid ""
 " option domain-name \"example.org\";\n"
 " option domain-name-servers ns1.example.org, ns2.example.org;\n"
 msgstr ""
+" option domain-name \"example.org\";\n"
+" option domain-name-servers ns1.example.org, ns2.example.org;\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:264
@@ -811,12 +924,14 @@ msgid ""
 " default-lease-time 600;\n"
 " max-lease-time 7200;\n"
 msgstr ""
+" default-lease-time 600;\n"
+" max-lease-time 7200;\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:266
 #, no-wrap
 msgid " log-facility local7;\n"
-msgstr ""
+msgstr " log-facility local7;\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:272
@@ -828,11 +943,16 @@ msgid ""
 "   filename \"pxelinux.0\";\n"
 "}\n"
 msgstr ""
+" subnet 192.168.0.0 netmask 255.255.255.0 {\n"
+"   range 192.168.0.1 192.168.0.254;\n"
+"   next-server servername;\n"
+"   filename \"pxelinux.0\";\n"
+"}\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:276
 msgid "3~ TFTP server"
-msgstr ""
+msgstr "3~ Servidor TFTP"
 
 #. type: Plain text
 #: en/user_basics.ssi:278
@@ -852,7 +972,7 @@ msgstr ""
 #: en/user_basics.ssi:284
 #, no-wrap
 msgid " # dpkg-reconfigure -plow tftpd-hpa\n"
-msgstr ""
+msgstr " # dpkg-reconfigure -plow tftpd-hpa\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:288
@@ -862,7 +982,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:290
 msgid "3~ NFS server"
-msgstr ""
+msgstr "3~ Servidor NFS"
 
 #. type: Plain text
 #: en/user_basics.ssi:292
@@ -888,7 +1008,7 @@ msgstr ""
 #: en/user_basics.ssi:300
 #, no-wrap
 msgid " /srv/debian-live *(ro,async,no_root_squash,no_subtree_check)\n"
-msgstr ""
+msgstr " /srv/debian-live *(ro,async,no_root_squash,no_subtree_check)\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:304
@@ -900,7 +1020,7 @@ msgstr ""
 #: en/user_basics.ssi:308
 #, no-wrap
 msgid " # exportfs -rv\n"
-msgstr ""
+msgstr " # exportfs -rv\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:312
@@ -934,17 +1054,17 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:320
 msgid "3~ Qemu"
-msgstr ""
+msgstr "3~ Qemu"
 
 #. type: Plain text
 #: en/user_basics.ssi:322
 msgid "_* Install /{qemu}/, /{bridge-utils}/, /{sudo}/."
-msgstr ""
+msgstr "_* Install /{qemu}/, /{bridge-utils}/, /{sudo}/."
 
 #. type: Plain text
 #: en/user_basics.ssi:324
 msgid "Edit #{/etc/qemu-ifup}#:"
-msgstr ""
+msgstr "Edit #{/etc/qemu-ifup}#:"
 
 #. type: Plain text
 #: en/user_basics.ssi:335
@@ -959,11 +1079,19 @@ msgid ""
 " sudo /usr/sbin/brctl addif br0 $1\n"
 " sleep 2\n"
 msgstr ""
+" #!/bin/sh\n"
+" sudo -p \"Senha para $0:\" /sbin/ifconfig $1 172.20.0.1\n"
+" echo \"Executando /etc/qemu-ifup\"\n"
+" echo \"Levando o $1 para o modo bridged...\"\n"
+" sudo /sbin/ifconfig $1 0.0.0.0 promisc up\n"
+" echo \"Adicionando $1 to br0...\"\n"
+" sudo /usr/sbin/brctl addif br0 $1\n"
+" sleep 2\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:339
 msgid "Get, or build a #{grub-floppy-netboot}# (in the svn)."
-msgstr ""
+msgstr "Obter, ou construir um #{grub-floppy-netboot}# (no svn)."
 
 #. type: Plain text
 #: en/user_basics.ssi:341
@@ -974,12 +1102,12 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:343
 msgid "3~ VMWare Player"
-msgstr ""
+msgstr "3~ VMWare Player"
 
 #. type: Plain text
 #: en/user_basics.ssi:345
 msgid "_* Install VMWare Player (\"free as in beer\" edition)"
-msgstr ""
+msgstr "_* Instalar o VMWare Player (edição \"free as in beer\")"
 
 #. type: Plain text
 #: en/user_basics.ssi:347

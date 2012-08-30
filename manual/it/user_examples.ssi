@@ -292,8 +292,8 @@ code{
 
 }code
 
-Create the directory #{/etc/skel}# in #{config/includes.chroot}# and put a
-custom #{.xsession}# in it for the default user that will launch
+After that, create the directory #{/etc/skel}# in #{config/includes.chroot}#
+and put a custom #{.xsession}# in it for the default user that will launch
 /{metacity}/ and start /{xvncviewer}/, connecting to port #{5901}# on a
 server at #{192.168.1.2}#:
 
@@ -370,10 +370,9 @@ instead of the default #{-k "486 686-pae"}#. Leaving off APT's indices with
 being that you need to #{apt-get update}# before using apt in the live
 system. Dropping recommended packages with #{--apt-recommends false}# saves
 some additional space, at the expense of omitting some packages you might
-otherwise expect to be there, such as /{firmware-linux-free}/ which may be
-needed to support certain hardware. #{--memtest none}# prevents the
-installation of a memory tester. And finally, the execution of the
-#{minimal.chroot}# hook removes some unused packages and files.
+otherwise expect to be there. #{--memtest none}# prevents the installation
+of a memory tester. And finally, the execution of the #{minimal.chroot}#
+hook removes some unused packages and files.
 
 Using other hooks, like for example the #{stripped.chroot}# hook found in
 #{/usr/share/doc/live-build/examples/hooks}#, may shave off additional small

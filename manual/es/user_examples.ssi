@@ -301,8 +301,8 @@ code{
 
 }code
 
-Crear el directorio #{/etc/skel}# en #{config/includes.chroot}# y poner
-dentro un fichero #{.xsession}# personalizado para el usuario que por
+Después, crear el directorio #{/etc/skel}# en #{config/includes.chroot}# y
+poner dentro un fichero #{.xsession}# personalizado para el usuario que por
 defecto ejecutará /{metacity}/ e iniciará el /{xvncviewer}/, conectándo al
 puerto #{5901}# de un servidor en #{192.168.1.2}#:
 
@@ -383,11 +383,10 @@ también ahorra una cantidad importante de espacio, la desventaja es que será
 necesario hacer un #{apt-get update}# antes de usar apt en el sistema en
 vivo. Excluyendo los paquetes recomendados con #{--apt-recommends false}# se
 ahorra un poco de espacio adicional a costa de omitir algunos paquetes que
-de otro modo podría esperarse que estuvieran alli, tal como
-/{firmware-linux-free}/ que puede ser necesario para el soporte de cierto
-hardware. #{--memtest none}# evita la instalación de un comprobador de
-memoria. Y por último la ejecución del script gancho #{minimal.chroot}#
-elimina algunos paquetes y ficheros que no se utilizan.
+de otro modo podría esperarse que estuvieran alli. #{--memtest none}# evita
+la instalación de un comprobador de memoria. Y por último la ejecución del
+script gancho #{minimal.chroot}# elimina algunos paquetes y ficheros que no
+se utilizan.
 
 Si se utilizan otros scripts gancho, como por ejemplo el script
 #{stripped.chroot}# que se encuentra en

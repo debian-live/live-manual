@@ -112,9 +112,9 @@ _* a partition, identified by its GPT name.
 
 _* a filesystem, identified by its filesystem label.
 
-_* an image file located on the root of any readable filesystem (even an NTFS partition of a foreign OS), identified by its file name. In this case the file name must also use the containing filesystem as the file extension, e.g. "persistence.ext4".
+_* an image file located on the root of any readable filesystem (even an NTFS partition of a foreign OS), identified by its file name.
 
-The volume label for overlays must be #{persistence}#. And in order to fully customize the volume's persistence there must be a file named #{live-persistence.conf}#. See {The live-persistence.conf file}#live-persistence-conf
+The volume label for overlays must be #{persistence}# but it will be ignored unless it contains in its root a file named #{live-persistence.conf}# which is used to fully customize the volume's persistence, this is to say, specifying the directories that you want to save in your persistence volume after a reboot. See {The live-persistence.conf file}#live-persistence-conf for more details.
 
 Here are some examples of how to prepare a volume to be used for persistence. It can be, for instance, an ext4 partition on a hard disk or on a usb key created with, e.g.:
 
@@ -143,7 +143,20 @@ code{
 
 }code
 
-Then copy the #{persistence}# file to the root of a writable partition.
+Then copy the #{persistence}# file to the root of a writable partition. Mount it and create the #{live-persistence.conf}# file *{inside}* the image file.
+
+Imagine you have created your image file in your home directory with an ext4 filesystem. You can copy it to the root of your hard drive's filesystem under #{/persistence}# and mount it in #{/mnt}#, then, if you want to make #{/usr}# persistent but you only want to save the changes you make to that directory and not all the contents of #{/usr}# you can use the "union" option. You can proceed as follows:
+
+code{
+
+ # cp persistence /
+ # mount -t ext4 /persistence /mnt
+ # echo "/usr union" >> /mnt/live-persistence.conf
+ # umount /mnt
+
+}code
+
+You can now reboot and boot your live media with the boot parameter "persistence".
 
 3~live-persistence-conf The live-persistence.conf file
 

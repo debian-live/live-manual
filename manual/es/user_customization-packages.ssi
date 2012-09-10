@@ -557,11 +557,33 @@ explica en {APT pinning}#apt-pinning.
 
 3~ Pasar opciones a apt o a aptitude
 
-Si no existe ninguna opción de #{lb config}# para alterar el comportamiento
-de APT tal y como se desea, se puede utilizar las opciones #{--apt-options}#
-o #{--aptitude-options}# para pasar cualquier opción que se desee a la
-herramienta APT. Para más información, ver las páginas de manual de #{apt}#
-y #{aptitude}#.
+Si no hay una opción #{lb config}# para modificar el comportamiento de APT
+en la forma que se necesita, utilizar #{--apt-options}# o
+#{--aptitude-options}# para pasar opciones a la herramienta APT
+configurada. Consultar las páginas de manual #{apt}# y #{aptitude}# para más
+detalles. Tener en cuenta que ambas opciones tienen valores por defecto que
+tendran que mantenerse, además de las opciones que se pueden
+especificar. Así, por ejemplo, supongamos que se ha incluido algo con fines
+de prueba de #{snapshot.debian.org}# y se desea especificar
+#{Acquire::Check-Valid-Until=false}# para que APT esté feliz con el fichero
+#{Release}# caducado, se haría como en el ejemplo siguiente, añadiendo la
+opción de nuevo después del valor por defecto #{--yes}#:
+
+code{
+
+ $ lb config --apt-options "--yes -oAcquire::Check-Valid-Until=false"
+
+}code
+
+Consultar las páginas de manual para entender completamente estas opciones y
+cuándo utilizarlas. Esto es sólo un ejemplo y no debe ser interpretado como
+consejo para configurar la imagen. Esta opción no sería apropiada para, por
+ejemplo, una versión final de una imagen en vivo.
+
+Para configuraciones más complicadas que implican opciones #{apt.conf}#
+puede ser necesario crear un fichero #{config/chroot_apt/apt.conf}#. Ver
+tambien las otras opciones #{apt-*}# para tener algunos atajos convenientes
+para las opciones que se necesitan con frecuencia.
 
 3~apt-pinning APT pinning
 

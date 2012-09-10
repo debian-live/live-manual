@@ -537,10 +537,33 @@ impedir la seva instaŀlació, com s'explica a {APT pinning}#apt-pinning.
 
 3~ Passar opcions per a apt o aptitude
 
-Si no hi ha una opció #{lb config}# per modificar el comportament d'APT tal
-i com es necessita, utilitzar #{--apt-options}# o #{--aptitude-options}# per
-passar alguna opció a través de l'eina APT configurada. Consultar les
-pàgines del manual de #{apt}# i #{aptitude}# per a més detalls.
+Si no hi ha cap opció #{lb config}# per modificar el comportament d'APT de
+la manera què es necessita, es pot utilitzar #{--apt-options}# o
+#{--aptitude-options}# per passar opcions a l'eina APT
+configurada. Consultar les pàgines del manual per #{apt}# i #{aptitude}# per
+més detalls. Tenir en compte que ambdues opcions tenen valors per defecte
+que s'hauran de mantenir, a més de les opcions que es proporcionen. Així,
+per exemple, suposant que s'ha inclòs algun paquet de
+#{snapshot.debian.org}# per fer proves i es vol especificar
+#{Acquire::Check-Valid-Until=false}# perquè APT no es queixe de que el
+fitxer #{Release}# ja ha caducat es podria fer com en el exemple següent,
+afegint la nova opció després del valor per defecte #{--yes}#:
+
+code{
+
+ $ lb config --apt-options "--yes -oAcquire::Check-Valid-Until=false"
+
+}code
+
+Consultar les págines del manual per entendre completament aquestes opcions
+i quan utilitzar-les. Això és només un exemple i no s'ha d'interpretar com
+un consell per configurar la imatge. Aquesta opció no seria adequada, per
+exemple, per una versió final d'una imatge en viu.
+
+Per configuracions més complicades que impliquen opcions #{apt.conf}# pot
+ser adequat crear un fitxer #{config/chroot_apt/apt.conf}#. Consultar també
+les altres opcions #{apt-*}# per tenir algunes dreceres convenients per les
+opcions que es necessiten amb freqüència.
 
 3~apt-pinning APT pinning
 

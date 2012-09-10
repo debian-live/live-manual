@@ -539,11 +539,32 @@ définissez une priorité APT pin négative sur les paquets sélectionnés pour
 
 3~ Passer des options à apt ou aptitude
 
-S'il n'y a pas une option #{lb config}# pour modifier le comportement d'APT
-dans la façon dont vous avez besoin, utiliser #{--apt-options}# ou
-#{--aptitude-options}# pour passer des options à votre outil APT
-configuré. Voir les pages de manuel #{apt}# et #{aptitude}# pour plus de
-détails
+If there is not a #{lb config}# option to alter APT's behaviour in the way
+you need, use #{--apt-options}# or #{--aptitude-options}# to pass any
+options through to your configured APT tool. See the man pages for #{apt}#
+and #{aptitude}# for details. Note that both options have default values
+that you will need to retain in addition to any overrides you may
+provide. So, for example, suppose you have included something from
+#{snapshot.debian.org}# for testing purposes and want to specify
+#{Acquire::Check-Valid-Until=false}# to make APT happy with the stale
+#{Release}# file, you would do so as per the following example, appending
+the new option after the default value #{--yes}#:
+
+code{
+
+ $ lb config --apt-options "--yes -oAcquire::Check-Valid-Until=false"
+
+}code
+
+Please check the man pages to fully understand these options and when to use
+them. This is an example only and should not be construed as advice to
+configure your image this way. This option would not be appropriate for,
+say, a final release of a live image.
+
+For more complicated APT configurations involving #{apt.conf}# options you
+might want to create a #{config/chroot_apt/apt.conf}# file instead. See also
+the other #{apt-*}# options for a few convenient shortcuts for frequently
+needed options.
 
 3~apt-pinning APT pinning
 

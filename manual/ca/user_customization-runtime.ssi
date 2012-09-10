@@ -188,14 +188,14 @@ fitxers.
 
 _* un fitxer imatge situat en l'arrel de qualsevol sistema de fitxers
 llegibles (fins i tot una partició NTFS d'un altre SO), identificat pel seu
-nom de fitxer. En aquest cas el nom del fitxer ha d'utilitzar també el
-sistema de fitxers que conté com extensió del nom, per exemple,
-"persistence.ext4".
+nom de fitxer.
 
-L'etiqueta de volum per als overlays ha de ser #{persistence}#. I per tal de
-personalitzar completament la persistència del volum hi ha d'haver un fitxer
-anomenat #{live-persistence.conf}#. Veure {El fitxer
-live-persistence.conf}#live-persistence-conf
+L'etiqueta de volum per als overlays ha de ser #{persistence}# però serà
+passat per alt a menys que contingui un fitxer anomenat
+#{live-persistence.conf}# que s'utilitza per personalitzar completament la
+persistència del volum, és a dir, especificar els directoris que es volen
+conservar en el volum de persistència després de reiniciar. Veure {El fitxer
+live-persistence.conf}#live-persistence-conf per més detalls.
 
 Aquests són alguns exemples de com preparar un volum que s'utilitzarà per a
 la persistència. Pot ser, per exemple, una partició ext4 en un disc dur o en
@@ -219,8 +219,8 @@ code{
 
 }code
 
-Heus aquí un exemple de com crear un fitxer imatge basat en ext4 utilitzat
-per a la persistència:
+Heus aquí un exemple de com crear un fitxer imatge basat en ext4 per ser
+utilitzat per a la persistència:
 
 code{
 
@@ -229,8 +229,23 @@ code{
 
 }code
 
-A continuació, copiar el fitxer #{persistence}# a l'arrel d'una partició
-d'escriptura.
+Un cop s'ha creat el fitxer imatge, per exemple, per fer #{/usr}# persistent
+però només guardant els canvis que es fan en aquest directori i no tots els
+continguts de #{/usr}#, es pot utilitzar l'opció "union". Si el fitxer
+imatge es troba en el directori home, copiar-lo a l'arrel del sistema de
+fitxers del disc dur i muntar-lo a #{/mnt}# de la següent manera:
+
+code{
+
+ # cp persistence /
+ # mount -t ext4 /persistence /mnt
+ # echo "/usr union" >> /mnt/live-persistence.conf
+ # umount /mnt
+
+}code
+
+Reiniciar el sistema i arrencar el medi en viu amb el paràmetre d'arrencada
+"persistence".
 
 3~live-persistence-conf El fitxer live-persistence.conf
 

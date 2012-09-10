@@ -187,15 +187,15 @@ _* une partition, identifiée par son nom GPT.
 _* un système de fichiers, identifié par son étiquette de système de
 fichiers.
 
-_* un fichier image situé sur la racine d'un système de fichiers en lecture
-(même une partition NTFS d'un système d'exploitation étranger), identifié
-par son nom de fichier. Dans ce cas, le nom du fichier doit contenir le nom
-du système de fichiers comme extension, par exemple, "persistence.ext4".
+_* an image file located on the root of any readable filesystem (even an
+NTFS partition of a foreign OS), identified by its file name.
 
-L'étiquette du volume pour les couches de persistence doit être
-#{persistence}#. Et afin de personnaliser entièrement la persistance du
-volume il doit y avoir un fichier nommé #{live-persistence.conf}#. Voir {Le
-fichier live-persistence.conf}#live-persistence-conf
+The volume label for overlays must be #{persistence}# but it will be ignored
+unless it contains in its root a file named #{live-persistence.conf}# which
+is used to fully customize the volume's persistence, this is to say,
+specifying the directories that you want to save in your persistence volume
+after a reboot. See {The live-persistence.conf file}#live-persistence-conf
+for more details.
 
 Voici quelques exemples de comment préparer un volume à utiliser pour la
 persistance. Il peut être, par exemple, une partition ext4 sur un disque dur
@@ -219,8 +219,8 @@ code{
 
 }code
 
-Voici un exemple de comment créer un fichier image ext4 utilisé pour la
-persistance:
+Here's an example of how to create an ext4-based image file to be used for
+persistence:
 
 code{
 
@@ -229,8 +229,22 @@ code{
 
 }code
 
-Ensuite, copiez le fichier #{persistence}# à la racine d'une partition
-accessible en écriture.
+Once the image file is created, as an example, to make #{/usr}# persistent
+but only saving the changes you make to that directory and not all the
+contents of #{/usr}#, you can use the "union" option. If the image file is
+located in your home directory, copy it to the root of your hard drive's
+filesystem and mount it in #{/mnt}# as follows:
+
+code{
+
+ # cp persistence /
+ # mount -t ext4 /persistence /mnt
+ # echo "/usr union" >> /mnt/live-persistence.conf
+ # umount /mnt
+
+}code
+
+Reboot into your live media with the boot parameter "persistence".
 
 3~live-persistence-conf Le fichier live-persistence.conf
 

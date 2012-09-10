@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual\n"
 "POT-Creation-Date: 2012-09-10 22:00+0300\n"
-"PO-Revision-Date: 2012-08-31 14:27+0200\n"
+"PO-Revision-Date: 2012-09-10 22:57+0100\n"
 "Last-Translator: Carlos Zuferri <chals@altorricon.com>\n"
 "Language-Team: none\n"
 "Language: fr\n"
@@ -561,29 +561,16 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:116
-#, fuzzy
-#| msgid ""
-#| "_* an image file located on the root of any readable filesystem (even an "
-#| "NTFS partition of a foreign OS), identified by its file name. In this "
-#| "case the file name must also use the containing filesystem as the file "
-#| "extension, e.g. \"persistence.ext4\"."
 msgid ""
 "_* an image file located on the root of any readable filesystem (even an "
 "NTFS partition of a foreign OS), identified by its file name."
 msgstr ""
 "_* un fichier image situé sur la racine d'un système de fichiers en lecture "
 "(même une partition NTFS d'un système d'exploitation étranger), identifié "
-"par son nom de fichier. Dans ce cas, le nom du fichier doit contenir le nom "
-"du système de fichiers comme extension, par exemple, \"persistence.ext4\"."
+"par son nom de fichier."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:118
-#, fuzzy
-#| msgid ""
-#| "The volume label for overlays must be #{persistence}#. And in order to "
-#| "fully customize the volume's persistence there must be a file named #"
-#| "{live-persistence.conf}#. See {The live-persistence.conf file}#live-"
-#| "persistence-conf"
 msgid ""
 "The volume label for overlays must be #{persistence}# but it will be ignored "
 "unless it contains in its root a file named #{live-persistence.conf}# which "
@@ -593,9 +580,12 @@ msgid ""
 "for more details."
 msgstr ""
 "L'étiquette du volume pour les couches de persistence doit être #"
-"{persistence}#. Et afin de personnaliser entièrement la persistance du "
-"volume il doit y avoir un fichier nommé #{live-persistence.conf}#. Voir {Le "
-"fichier live-persistence.conf}#live-persistence-conf"
+"{persistence}# mais il sera ignoré à moins qu'il contient dans sa racine un "
+"fichier nommé #{live-persistence.conf}# qui est utilisé pour personnaliser "
+"entièrement la persistance du volume, c'est-à-dire, spécifier les "
+"répertoires que vous voulez sauvegarder dans votre volume de persistance "
+"après un redémarrage. Voir {Le fichier live-persistence.conf}#live-"
+"persistence-conf pour plus de détails."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:120
@@ -638,16 +628,12 @@ msgstr " # tune2fs -L persistence /dev/sdb1 # for ext2,3,4 filesystems\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:138
-#, fuzzy
-#| msgid ""
-#| "Here's an example of how to create an ext4-based image file used for "
-#| "persistence:"
 msgid ""
 "Here's an example of how to create an ext4-based image file to be used for "
 "persistence:"
 msgstr ""
-"Voici un exemple de comment créer un fichier image ext4 utilisé pour la "
-"persistance:"
+"Voici un exemple de comment créer un fichier image avec un systéme de "
+"fichiers ext4 pour être utilisé pour la persistance:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:143
@@ -668,32 +654,33 @@ msgid ""
 "located in your home directory, copy it to the root of your hard drive's "
 "filesystem and mount it in #{/mnt}# as follows:"
 msgstr ""
+"Une fois que le fichier image est créé, à titre d'exemple, pour faire #{/usr}"
+"# persistante mais seulement enregistrer les modifications que vous apportez "
+"à ce répertoire et non pas tout le contenu de #{/usr}#, vous pouvez utiliser "
+"l'option \"union\". Si le fichier image se trouve dans votre répertoire "
+"home, le copier à la racine du système de fichiers de votre disque dur et le "
+"monter dans #{/mnt}# comme suit:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:154
-#, fuzzy, no-wrap
-#| msgid ""
-#| " # mkfs.ext4 -L persistence /dev/sdb1\n"
-#| " # mount -t ext4 /dev/sdb1 /mnt\n"
-#| " # echo \"/home\" >> /mnt/live-persistence.conf\n"
-#| " # echo \"/var/cache/apt\" >> /mnt/live-persistence.conf\n"
-#| " # umount /mnt\n"
+#, no-wrap
 msgid ""
 " # cp persistence /\n"
 " # mount -t ext4 /persistence /mnt\n"
 " # echo \"/usr union\" >> /mnt/live-persistence.conf\n"
 " # umount /mnt\n"
 msgstr ""
-" # mkfs.ext4 -L persistence /dev/sdb1\n"
-" # mount -t ext4 /dev/sdb1 /mnt\n"
-" # echo \"/home\" >> /mnt/live-persistence.conf\n"
-" # echo \"/var/cache/apt\" >> /mnt/live-persistence.conf\n"
+" # cp persistence /\n"
+" # mount -t ext4 /persistence /mnt\n"
+" # echo \"/usr union\" >> /mnt/live-persistence.conf\n"
 " # umount /mnt\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:158
 msgid "Reboot into your live media with the boot parameter \"persistence\"."
 msgstr ""
+"Redémarrez dans vos supports live avec le paramètre de démarrage "
+"\"persistence\"."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:160

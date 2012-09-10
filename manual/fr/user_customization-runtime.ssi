@@ -187,15 +187,17 @@ _* une partition, identifiée par son nom GPT.
 _* un système de fichiers, identifié par son étiquette de système de
 fichiers.
 
-_* an image file located on the root of any readable filesystem (even an
-NTFS partition of a foreign OS), identified by its file name.
+_* un fichier image situé sur la racine d'un système de fichiers en lecture
+(même une partition NTFS d'un système d'exploitation étranger), identifié
+par son nom de fichier.
 
-The volume label for overlays must be #{persistence}# but it will be ignored
-unless it contains in its root a file named #{live-persistence.conf}# which
-is used to fully customize the volume's persistence, this is to say,
-specifying the directories that you want to save in your persistence volume
-after a reboot. See {The live-persistence.conf file}#live-persistence-conf
-for more details.
+L'étiquette du volume pour les couches de persistence doit être
+#{persistence}# mais il sera ignoré à moins qu'il contient dans sa racine un
+fichier nommé #{live-persistence.conf}# qui est utilisé pour personnaliser
+entièrement la persistance du volume, c'est-à-dire, spécifier les
+répertoires que vous voulez sauvegarder dans votre volume de persistance
+après un redémarrage. Voir {Le fichier
+live-persistence.conf}#live-persistence-conf pour plus de détails.
 
 Voici quelques exemples de comment préparer un volume à utiliser pour la
 persistance. Il peut être, par exemple, une partition ext4 sur un disque dur
@@ -219,8 +221,8 @@ code{
 
 }code
 
-Here's an example of how to create an ext4-based image file to be used for
-persistence:
+Voici un exemple de comment créer un fichier image avec un systéme de
+fichiers ext4 pour être utilisé pour la persistance:
 
 code{
 
@@ -229,11 +231,12 @@ code{
 
 }code
 
-Once the image file is created, as an example, to make #{/usr}# persistent
-but only saving the changes you make to that directory and not all the
-contents of #{/usr}#, you can use the "union" option. If the image file is
-located in your home directory, copy it to the root of your hard drive's
-filesystem and mount it in #{/mnt}# as follows:
+Une fois que le fichier image est créé, à titre d'exemple, pour faire
+#{/usr}# persistante mais seulement enregistrer les modifications que vous
+apportez à ce répertoire et non pas tout le contenu de #{/usr}#, vous pouvez
+utiliser l'option "union". Si le fichier image se trouve dans votre
+répertoire home, le copier à la racine du système de fichiers de votre
+disque dur et le monter dans #{/mnt}# comme suit:
 
 code{
 
@@ -244,7 +247,8 @@ code{
 
 }code
 
-Reboot into your live media with the boot parameter "persistence".
+Redémarrez dans vos supports live avec le paramètre de démarrage
+"persistence".
 
 3~live-persistence-conf Le fichier live-persistence.conf
 

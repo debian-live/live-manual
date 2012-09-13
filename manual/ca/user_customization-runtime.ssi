@@ -224,7 +224,7 @@ utilitzat per a la persistència:
 
 code{
 
- $ dd if=/dev/null of=persistence bs=1G seek=1 # for a 1GB sized image file
+ $ dd if=/dev/null of=persistence bs=1 seek=1G # for a 1GB sized image file
  $ /sbin/mkfs.ext4 -F persistence
 
 }code
@@ -239,13 +239,21 @@ code{
 
  # cp persistence /
  # mount -t ext4 /persistence /mnt
+
+}code
+
+A continuació, crear el fitxer #{live-persistence.conf}# afegint contingut i
+desmuntar el fitxer imatge.
+
+code{
+
  # echo "/usr union" >> /mnt/live-persistence.conf
  # umount /mnt
 
 }code
 
-Reiniciar el sistema i arrencar el medi en viu amb el paràmetre d'arrencada
-"persistence".
+Ara, reiniciar el sistema i arrencar el medi en viu amb el paràmetre
+d'arrencada "persistence".
 
 3~live-persistence-conf El fitxer live-persistence.conf
 

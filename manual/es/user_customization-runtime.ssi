@@ -194,12 +194,12 @@ _* una fichero imagen situado en la raíz de cualquier sistema de ficheros
 que pueda ser leido (incluso una partición NTFS de otro sistema operativo),
 identificado por su nombre de fichero.
 
-La etiqueta del volumen para las capas de persistencia debe ser
-#{persistence}# pero será ignorado a menos que contenga en su raíz un
-fichero llamado #{live-persistence.conf}# que se utiliza para personalizar
-la persistencia del volumen, esto es, especificar los directorios que se
-desea guardar en un volumen de persistencia después de reiniciar. Ver {El
-fichero live-persistence.conf}#live-persistence-conf para más detalles.
+La etiqueta del volumen para las overlays debe ser #{persistence}# pero será
+ignorado a menos que contenga en su raíz un fichero llamado
+#{live-persistence.conf}# que se utiliza para personalizar la persistencia
+del volumen, esto es, especificar los directorios que se desea guardar en un
+volumen de persistencia después de reiniciar. Ver {El fichero
+live-persistence.conf}#live-persistence-conf para más detalles.
 
 He aquí algunos ejemplos de cómo preparar un volumen para ser usado para la
 persistencia. Puede ser, por ejemplo, una partición en un disco duro o en
@@ -227,7 +227,7 @@ para la persistencia:
 
 code{
 
- $ dd if=/dev/null of=persistence bs=1G seek=1 # for a 1GB sized image file
+ $ dd if=/dev/null of=persistence bs=1 seek=1G # for a 1GB sized image file
  $ /sbin/mkfs.ext4 -F persistence
 
 }code
@@ -243,12 +243,20 @@ code{
 
  # cp persistence /
  # mount -t ext4 /persistence /mnt
+
+}code
+
+Después, crear el fichero #{live-persistence.conf}# añadiendo contenido y
+desmontar el fichero imagen.
+
+code{
+
  # echo "/usr union" >> /mnt/live-persistence.conf
  # umount /mnt
 
 }code
 
-Reiniciar y arrancar el medio en vivo con el parámetro de arranque
+Ahora, reiniciar y arrancar el medio en vivo con el parámetro de arranque
 "persistence".
 
 3~live-persistence-conf El fichero live-persistence.conf
@@ -259,7 +267,7 @@ persistentes. Ese fichero, situado en el sistema de ficheros raíz del
 volumen, controla que directorios hace persistentes y también de que manera.
 
 En la página de manual de live-persistence.conf(5) se explica en detalle
-cómo se configura el montaje de las capas, pero un sencillo ejemplo es
+cómo se configura el montaje de las overlays, pero un sencillo ejemplo es
 suficiente para la mayoría de los casos. Supongamos que queremos crear
 nuestro directorio home y APT cache persistentes en un sistema de ficheros
 ext4 en la partición /dev/sdb1:
@@ -282,15 +290,15 @@ pueden contener espacios en blanco ni los componentes especiales #{.}# y
 #{..}#. Además, ni #{/live}# (o ninguno de sus sub-directorios) ni #{/}#
 pueden hacerse persistentes montándolos de forma personalizada.
 
-Se puede usar diferentes volúmenes de capas personalizados al mismo tiempo
-(con sus propios ficheros #{live-persistence.conf}#) pero si varios
-volúmenes hacen que un mismo directorio sea persistente, sólo uno de ellos
-será usado. Si dos unidades montadas están "anidadas" (es decir, una es un
-sub-directorio de la otra) el directorio superior será montado antes que el
-inferior de este modo no quedará uno escondido por el otro. La
-personalización de los montajes anidadados es problemática si están listados
-en el mismo fichero #{live-persistence.conf}#. Consultar la página de manual
-de live-persistence.conf(5) para ver como manejar ese caso si realmente es
+Se puede usar diferentes volúmenes de overlays al mismo tiempo (con sus
+propios ficheros #{live-persistence.conf}#) pero si varios volúmenes hacen
+que un mismo directorio sea persistente, sólo uno de ellos será usado. Si
+dos unidades montadas están "anidadas" (es decir, una es un sub-directorio
+de la otra) el directorio superior será montado antes que el inferior de
+este modo no quedará uno escondido por el otro. La personalización de los
+montajes anidadados es problemática si están listados en el mismo fichero
+#{live-persistence.conf}#. Consultar la página de manual de
+live-persistence.conf(5) para ver como manejar ese caso si realmente es
 necesario. (aclaración: normalmente no lo es).
 
 3~ Utilizar varios medios persistentes

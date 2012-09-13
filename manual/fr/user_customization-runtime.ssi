@@ -191,13 +191,13 @@ _* un fichier image situé sur la racine d'un système de fichiers en lecture
 (même une partition NTFS d'un système d'exploitation étranger), identifié
 par son nom de fichier.
 
-L'étiquette du volume pour les couches de persistence doit être
-#{persistence}# mais il sera ignoré à moins qu'il contient dans sa racine un
-fichier nommé #{live-persistence.conf}# qui est utilisé pour personnaliser
-entièrement la persistance du volume, c'est-à-dire, spécifier les
-répertoires que vous voulez sauvegarder dans votre volume de persistance
-après un redémarrage. Voir {Le fichier
-live-persistence.conf}#live-persistence-conf pour plus de détails.
+L'étiquette du volume pour les overlays doit être #{persistence}# mais il
+sera ignoré à moins qu'il contient dans sa racine un fichier nommé
+#{live-persistence.conf}# qui est utilisé pour personnaliser entièrement la
+persistance du volume, c'est-à-dire, spécifier les répertoires que vous
+voulez sauvegarder dans votre volume de persistance après un
+redémarrage. Voir {Le fichier live-persistence.conf}#live-persistence-conf
+pour plus de détails.
 
 Voici quelques exemples de comment préparer un volume à utiliser pour la
 persistance. Il peut être, par exemple, une partition ext4 sur un disque dur
@@ -226,7 +226,7 @@ fichiers ext4 pour être utilisé pour la persistance:
 
 code{
 
- $ dd if=/dev/null of=persistence bs=1G seek=1 # for a 1GB sized image file
+  $ dd if=/dev/null of=persistence bs=1 seek=1G # for a 1GB sized image file
  $ /sbin/mkfs.ext4 -F persistence
 
 }code
@@ -242,12 +242,20 @@ code{
 
  # cp persistence /
  # mount -t ext4 /persistence /mnt
+
+}code
+
+Ensuite, créez le fichier #{live-persistence.conf}# ajoutant du contenu et
+démontez le fichier image.
+
+code{
+
  # echo "/usr union" >> /mnt/live-persistence.conf
  # umount /mnt
 
 }code
 
-Redémarrez dans vos supports live avec le paramètre de démarrage
+Maintenant, redémarrez dans vos supports live avec le paramètre de démarrage
 "persistence".
 
 3~live-persistence-conf Le fichier live-persistence.conf
@@ -257,11 +265,11 @@ fichier #{live-persistence.conf}# pour créer des répertoires persistants
 arbitraires. Ce fichier, situé sur le système de fichiers racine du volume,
 contrôle quels répertoires il fait persistants, et de quelle manière.
 
-Comment on configure monter des couches personnalisées est décrit en détail
-dans la page de manuel live-persistence.conf(5), mais un simple exemple
-devrait être suffisant pour la plupart des utilisations. Imaginons que nous
-voulons faire notre répertoire personnel et APT cache persistants dans un
-système de fichiers ext4 sur la partition /dev/sdb1:
+Comment on configure monter les overlays est décrit en détail dans la page
+de manuel live-persistence.conf(5), mais un simple exemple devrait être
+suffisant pour la plupart des utilisations. Imaginons que nous voulons faire
+notre répertoire personnel et APT cache persistants dans un système de
+fichiers ext4 sur la partition /dev/sdb1:
 
 code{
 
@@ -282,13 +290,13 @@ contenir des espaces blancs ou les éléments spéciaux #{.}# et #{..}#. En
 outre, ni #{/live}# (ou un de ses sous-répertoires), ni #{/}#  peuvent être
 rendus persistants en utilisant montages personnalisés.
 
-Plusieurs volumes de couches personnalisées différents (avec leurs propres
-fichiers #{live-persistence.conf}#) peuvent être utilisés au même temps,
-mais si plusieurs volumes font le même répertoire persistant, un seul
-d'entre eux sera utilisé. Si les deux sont «imbriqués» (un est un
-sous-répertoire de l'autre) le premier sera monté avant que le secondaire de
-sorte que aucun sera caché par l'autre. Monter des éléments personnalisés
-imbriqués est problématique s'ils sont énumérés dans le même fichier
+Plusieurs volumes overlays différents (avec leurs propres fichiers
+#{live-persistence.conf}#) peuvent être utilisés au même temps, mais si
+plusieurs volumes font le même répertoire persistant, un seul d'entre eux
+sera utilisé. Si les deux sont «imbriqués» (un est un sous-répertoire de
+l'autre) le premier sera monté avant que le secondaire de sorte que aucun
+sera caché par l'autre. Monter des éléments personnalisés imbriqués est
+problématique s'ils sont énumérés dans le même fichier
 #{live-persistence.conf}#. Voir la page de manuel live-persistence.conf(5)
 pour savoir comment gérer ce cas, si vous avez vraiment besoin (remarque:
 vous n'avez généralement pas).

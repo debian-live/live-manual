@@ -214,7 +214,7 @@ persistence:
 
 code{
 
- $ dd if=/dev/null of=persistence bs=1G seek=1 # per un file immagine da 1GB
+ $ dd if=/dev/null of=persistence bs=1 seek=1G # for a 1GB sized image file
  $ /sbin/mkfs.ext4 -F persistence
 
 }code
@@ -229,12 +229,20 @@ code{
 
  # cp persistence /
  # mount -t ext4 /persistence /mnt
+
+}code
+
+Then, create the #{live-persistence.conf}# file adding content and unmount
+the image file.
+
+code{
+
  # echo "/usr union" >> /mnt/live-persistence.conf
  # umount /mnt
 
 }code
 
-Reboot into your live media with the boot parameter "persistence".
+Now, reboot into your live media with the boot parameter "persistence".
 
 3~live-persistence-conf The live-persistence.conf file
 

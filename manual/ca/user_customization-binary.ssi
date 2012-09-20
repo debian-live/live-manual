@@ -1,23 +1,24 @@
-B~ Customizing the binary image
+B~ Personalització de la imatge binària
 
-1~customizing-binary Customizing the binary image
+1~customizing-binary Personalització de la imatge binària
 
-2~ Bootloader
+2~ Carregador d'arrencada
 
-live-build uses /{syslinux}/ and some of its derivatives (depending on the
-image type) as bootloaders by default. You can easily customize them in a
-number of ways that range from providing a full theme to changing the boot
-timeout or simply adding a personalized splash image. Some of the following
-examples of customization make use of different methods, like
-{includes}#includes or {hooks}#hooks.
+live-build utilitza /{syslinux}/ i alguns dels seus derivats (depenent del
+tipus d'imatge) com carregadors d'arrencada per defecte. Es poden
+personalitzar fàcilment en un nombre de maneres que van des de proporcionar
+un tema complet per canviar el temps d'espera d'arrencada o simplement
+afegir una imatge de fons personalitzada. Alguns dels següents exemples de
+personalització fan ús de mètodes diferents, com per exemple
+{includes}#includes o {hooks}#hooks.
 
-If you want to use a full theme you can specify the #{--syslinux-theme}#
-option (see man #{lb_config}#). live-build will then retrieve the theme from
-the mirror and install it.
+Si es vol utilitzar un tema complet es pot especificar l'opció
+#{--syslinux-theme}# (veure man #{lb_config}#). live-build descarregarà el
+tema del mirall i l'instaŀlarà.
 
-Imagine that you want to build a progress client but you prefer to include
-the server's theme because you want to have the help menu. Then you would
-launch #{lb config}# as follows:
+Imaginar que es vol construir un client progress però es prefereix incloure
+el tema del servidor, perquè es vol tenir el menú d'ajuda. S'hauria
+d'utilitzar #{lb config}# de la següent manera:
 
 code{
 
@@ -25,22 +26,22 @@ code{
 
 }code
 
-You can also create your own theme or modify an already existing one and if
-you do not have a mirror, you can add the package to
-#{config/packages.chroot}#. In this case it is not necessary to specify any
-option.
+També es pot crear un tema propi o modificar un tema ja existent i si no es
+disposa d'un mirall, es pot afegir el paquet a
+#{config/packages.chroot}#. En aquest cas no cal especificar cap altra
+opció.
 
-There is also the possibility of making smaller changes. For instance,
-syslinux derivatives are configured by default with a timeout of 0 (zero)
-which means that they will pause indefinitely at their splash screen until
-you press a key.
+També hi ha la possibilitat de fer petits canvis. Per exemple, els derivats
+de syslinux estan configurats per defecte amb un temps d'espera de 0 (zero)
+el que significa que faran una pausa indefinida en la seva pantalla inicial
+fins que es premi una tecla.
 
-To modify the boot timeout of a default #{iso-hybrid}# image you can edit a
-default *{isolinux.cfg}* file specifying the timeout in units of seconds and
-add it to #{config/includes.binary/isolinux/}#
+Per modificar el temps d'espera d'arrencada d'una imatge #{iso-hybrid}# es
+pot editar el fitxer *{isolinux.cfg}* per defecte especificant el temps
+d'espera en segons i afegir-lo a #{config/includes.binary/isolinux/}#
 
-A modified *{isolinux.cfg}* to boot after five seconds would be similar to
-this:
+Un *{isolinux.cfg}* modificat per arrencar després de cinc segons seria
+semblant a aquest:
 
 code{
 
@@ -51,9 +52,9 @@ code{
 
 }code
 
-An alternative way of achieving the same goal could be writing a hook and
-adding it to #{config/hooks/}# Remember to add the #{.binary}# suffix to run
-in the binary stage. A proposed example:
+Una forma alternativa d'aconseguir el mateix objectiu podria ser escriure un
+script ganxo i afegir-lo a #{config/hooks/}#. Recordar afegir el sufix
+#{.binary}# perque s'execute durant l'etapa binary. Un exemple proposat:
 
 code{
 
@@ -63,29 +64,32 @@ code{
 
 }code
 
-Likewise, if you want to use a personalized splash.png image you can add a
-picture of 640x480 pixels to #{config/includes.binary/isolinux/}#
+De la mateixa manera, si es vol utilitzar una imatge personalitzada
+splash.png es pot afegir una imatge de 640x480 píxels a
+#{config/includes.binary/isolinux/}#
 
-2~ ISO metadata
+2~ metadades ISO 
 
-When creating an ISO9660 binary image, you can use the following options to
-add various textual metadata for your image. This can help you easily
-identify the version or configuration of an image without booting it.
+Quan es crea una imatge binària ISO9660, es poden utilitzar les següents
+opcions per afegir diverses metadades textuals. Això pot ajudar a
+identificar fàcilment la versió o la configuració d'una imatge sense
+arrencar-la.
 
-_* #{LB_ISO_APPLICATION/--iso-application NAME}#: This should describe the
-application that will be on the image. The maximum length for this field is
-128 characters.
+_* #{LB_ISO_APPLICATION/--iso-application NAME}#: Ha de descriure
+l'aplicació que serà a la imatge. La longitud màxima per aquest camp és de
+128 caràcters.
 
-_* #{LB_ISO_PREPARER/--iso-preparer NAME}#: This should describe the
-preparer of the image, usually with some contact details. The default for
-this option is the live-build version you are using, which may help with
-debugging later. The maximum length for this field is 128 characters.
+_* #{LB_ISO_PREPARER/--iso-preparer NAME}#: Ha de descriure al preparador de
+la imatge, en general amb algunes dades de contacte. El valor per defecte
+per a aquesta opció és la versió de live-build utilitzada, la qual cosa pot
+ajudar amb la depuració d'errors posterior. La longitud màxima per aquest
+camp és de 128 caràcters.
 
-_* #{LB_ISO_PUBLISHER/--iso-publisher NAME}#: This should describe the
-publisher of the image, usually with some contact details. The maximum
-length for this field is 128 characters.
+_* #{LB_ISO_PUBLISHER/--iso-publisher NAME}#: Ha de descriure l'editor de la
+imatge, en general amb algunes dades de contacte. La longitud màxima per
+aquest camp és de 128 caràcters.
 
-_* #{LB_ISO_VOLUME/--iso-volume NAME}#: This should specify the volume ID of
-the image. This is used as a user-visible label on some platforms such as
-Windows and Apple Mac OS. The maximum length for this field is 32
-characters.
+_* #{LB_ISO_VOLUME/--iso-volume NAME}#: Això ha d'especificar l'ID de volum
+de la imatge. Això s'utilitza com una etiqueta visible per l'usuari en
+algunes plataformes com Windows i Apple Mac OS. La longitud màxima per
+aquest camp és de 32 caràcters.

@@ -63,9 +63,9 @@ Assuming all goes well, after a while, the current directory will contain
 #{binary.hybrid.iso}#. This ISO hybrid image can be booted directly in a
 virtual machine as described in {Testing an ISO image with
 Qemu}#testing-iso-with-qemu and {Testing an ISO image with
-virtualbox-ose}#testing-iso-with-virtualbox, or else imaged onto optical
-media or a USB flash device as described in {Burning an ISO image to a
-physical medium}#burning-iso-image and {Copying an ISO hybrid image to a USB
+virtualbox}#testing-iso-with-virtualbox, or else imaged onto optical media
+or a USB flash device as described in {Burning an ISO image to a physical
+medium}#burning-iso-image and {Copying an ISO hybrid image to a USB
 stick}#copying-iso-hybrid-to-usb, respectively.
 
 2~tutorial-2 Tutorial 2: A web browser utility
@@ -274,17 +274,16 @@ In this example we found out that we had to re-include several packages
 recommended by live-config and live-boot: #{user-setup}# to make autologin
 work and #{sudo}# as an essential program to shutdown the system. Besides,
 it could be handy to add #{live-tools}# to be able to copy the image to RAM
-and #{eject}# to eventually eject the live media, So:
+and #{eject}# to eventually eject the live media. So:
 
 code{
 
-$ echo "live-tools user-setup sudo eject" >
-config/package-lists/recommends.list.chroot
+ $ echo "live-tools user-setup sudo eject" > config/package-lists/recommends.list.chroot
 
 }code
 
-Create the directory #{/etc/skel}# in #{config/includes.chroot}# and put a
-custom #{.xsession}# in it for the default user that will launch
+After that, create the directory #{/etc/skel}# in #{config/includes.chroot}#
+and put a custom #{.xsession}# in it for the default user that will launch
 /{metacity}/ and start /{xvncviewer}/, connecting to port #{5901}# on a
 server at #{192.168.1.2}#:
 
@@ -361,10 +360,9 @@ instead of the default #{-k "486 686-pae"}#. Leaving off APT's indices with
 being that you need to #{apt-get update}# before using apt in the live
 system. Dropping recommended packages with #{--apt-recommends false}# saves
 some additional space, at the expense of omitting some packages you might
-otherwise expect to be there, such as /{firmware-linux-free}/ which may be
-needed to support certain hardware. #{--memtest none}# prevents the
-installation of a memory tester. And finally, the execution of the
-#{minimal.chroot}# hook removes some unused packages and files.
+otherwise expect to be there. #{--memtest none}# prevents the installation
+of a memory tester. And finally, the execution of the #{minimal.chroot}#
+hook removes some unused packages and files.
 
 Using other hooks, like for example the #{stripped.chroot}# hook found in
 #{/usr/share/doc/live-build/examples/hooks}#, may shave off additional small
@@ -412,8 +410,8 @@ code{
 
 }code
 
-At boot time we will generate the pt_BR.UTF-8 locale and select the
-pt-latin1 keyboard layout. Now let's put the pieces together. Recalling from
+At boot time we will generate the *{pt_BR.UTF-8}* locale and select the
+*{pt}* keyboard layout. Now let's put the pieces together. Recalling from
 {Using metapackages}#using-metapackages that task metapackages are prefixed
 #{task-}#, we just specify these language boot parameters, then add standard
 priority packages and all our discovered task metapackages to our package
@@ -426,7 +424,7 @@ code{
  $ lb config \
      -a i386 \
      -k 486 \
-     --bootappend-live "locales=pt_BR.UTF-8 keyboard-layouts=pt-latin1" \
+     --bootappend-live "locales=pt_BR.UTF-8 keyboard-layouts=pt" \
      --debian-installer live
  $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
  $ echo task-kde-desktop task-brazilian-portuguese task-brazilian-portuguese-desktop \

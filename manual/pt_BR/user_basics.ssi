@@ -1,71 +1,80 @@
-:B~ The basics
+:B~ O básico
 
-1~the-basics The basics
+1~the-basics O básico
 
-This chapter contains a brief overview of the build process and instructions
-for using the three most commonly used image types. The most versatile image
-type, #{iso-hybrid}#, may be used on a virtual machine, optical media or USB
-portable storage device. In certain special cases, such as the use of
-persistence, #{hdd}# may be more suitable for USB devices. The chapter
-finishes with instructions for building and using a #{net}# type image,
-which is a bit more involved due to the setup required on the server. This
-is a slightly advanced topic for anyone who is not familiar already with
-netbooting, but is included here because once the setup is done, it is a
-very convenient way to test and deploy images for booting on the local
-network without the hassle of dealing with image media.
+Este capítulo contém uma breve descrição do processo de construção e
+instruções para utilização dos três tipos de imagem mais comumente usados. O
+tipo de imagem mais versátil, #{iso-hybrid}#, que pode ser usado em uma
+máquina virtual, meios ópticos ou dispositivo USB de armazenamento
+portátil. Em certos casos especiais, tais como a utilização de persistência,
+#{hdd}# pode ser mais adequada para dispositivos USB. O capítulo termina com
+instruções para a construção e utilização de um tipo de imagem #{net}#, que
+envolve um pouco mais com a configuração necessária no servidor. Este é um
+tema um pouco avançado para quem ainda não está familiarizado com a
+inicialização pela rede, mas está incluído aqui porque uma vez que a
+instalação está feita, é uma maneira muito conveniente para testar e
+implantar imagens para a inicialização da rede local sem o incômodo de lidar
+a com mídia da imagem.
 
-Throughout the chapter, we will often refer to the default filenames
-produced by live-build. If you are downloading a prebuilt image instead, the
-actual filenames may vary.
+Ao longo do capítulo, referem-se frequentemente os nomes de arquivos padrão
+produzidos pelo live-build. Se, em vez disso, você estiver baixando uma
+imagem pré-construída, os nomes de arquivos reais podem variar.
 
-2~what-is-live What is a live system?
+2~what-is-live O que é um sistema live?
 
-A live system usually means an operating system booted on a computer from a
-removable medium, such as a CD-ROM or USB stick, or from a network, ready to
-use without any installation on the usual drive(s), with auto-configuration
-done at run time (see {Terms}#terms).
+Um sistema live normalmente significa um sistema operacional inicializado em
+um computador a partir de uma mídia removível, como um CD-ROM ou dispositivo
+USB, ou de uma rede, pronto a usar, sem qualquer tipo de instalação na
+unidade de costume (s), com a auto-configuração feita em tempo de execução
+(veja {Termos}#terms).
 
-With Debian Live, it's a Debian GNU/Linux operating system, built for one of
-the supported architectures (currently amd64, i386, powerpc and sparc). It
-is made from the following parts:
+Com Debian Live, que é um sistema Debian GNU/Linux, construído para uma das
+arquiteturas suportadas (atualmente amd64, i386, PowerPC e SPARC). Ele é
+feita a partir dos seguintes componentes:
 
-_* *{Linux kernel image}*, usually named #{vmlinuz*}#
+_* *{Imagem do kernel do Linux }*, normalmente chamada  #{vmlinuz*}#
 
-_* *{Initial RAM disk image (initrd)}*: a RAM disk set up for the Linux
-boot, containing modules possibly needed to mount the System image and some
-scripts to do it.
+_* *{Initial RAM disk image (initrd) - Imagem do disco RAM inicial}*: um
+disco de RAM configurado para a inicialização do Linux, que contém módulos
+que podem ser necessários para montar a imagem do sistema e alguns scripts
+para fazê-lo.
 
-_* *{System image}*: The operating system's filesystem image. Usually, a
-SquashFS compressed filesystem is used to minimize the Debian Live image
-size. Note that it is read-only. So, during boot the Debian Live system will
-use a RAM disk and 'union' mechanism to enable writing files within the
-running system. However, all modifications will be lost upon shutdown unless
-optional persistence is used (see {Persistence}#persistence).
+_* *{Imagem do sistema}*: A imagem do sistema de arquivos do sistema
+operacional . Normalmente, um sistema de arquivos SquashFS comprimido é
+usado para minimizar o tamanho da imagem Debian Live. Observe que é só de
+leitura. Então, durante a inicialização do sistema Debian Live vai usar um
+disco de RAM e um mecanismo de "união" para permitir a gravação de arquivos
+dentro do sistema em funcionamento. No entanto, todas as modificações serão
+perdidas no desligamento, a menos que a persistência opcional seja usada
+{Persistência}#persistence).
 
-_* *{Bootloader}*: A small piece of code crafted to boot from the chosen
-media, possibly presenting a prompt or menu to allow selection of
-options/configuration. It loads the Linux kernel and its initrd to run with
-an associated system filesystem. Different solutions can be used, depending
-on the target media and format of the filesystem containing the previously
-mentioned components: isolinux to boot from a CD or DVD in ISO9660 format,
-syslinux for HDD or USB drive booting from a VFAT partition, extlinux for
-ext2/3/4 and btrfs partitions, pxelinux for PXE netboot, GRUB for ext2/3/4
-partitions, etc.
+_* *{Bootloader}*: Um pequeno pedaço de código criado para iniciar a partir
+dos meios escolhidos, possivelmente apresentando uma solicitação ou menu
+para permitir a seleção de opções/configuração. Ele carrega o kernel do
+Linux e seu initrd para funcionar com um sistema de arquivos do sistema
+associado. Diferentes soluções podem ser usadas, dependendo da mídia destino
+e formato do sistema de arquivos que contém os componentes mencionados
+anteriormente: isolinux para arrancar a partir de um CD ou DVD no formato
+ISO9660, syslinux para HDD ou drive USB inicializar a partir de uma partição
+VFAT, extlinux para ext2/3/4 e partiuções btrfs, pxelinux para inicialização
+pela rede PXE, GRUB para partições ext2/3/4, etc.
 
-You can use live-build to build the system image from your specifications,
-set up a Linux kernel, its initrd, and a bootloader to run them, all in one
-media-dependant format (ISO9660 image, disk image, etc.).
+Você pode usar o live-build para construir a imagem do sistema a partir de
+suas especificações, criar um kernel do Linux, o seu initrd, e um bootloader
+para executá-las, tudo em um formato dependendo da  mídia (imagem ISO9660,
+imagem de disco, etc.)
 
-2~building-iso-hybrid First steps: building an ISO hybrid image
+2~building-iso-hybrid Primeiros passos: construindo uma imagem ISO híbrida
 
-Regardless of the image type, you will need to perform the same basic steps
-to build an image each time. As a first example, execute the following
-sequence of live-build commands to create a basic ISO hybrid image
-containing just the Debian standard system without X.org. It is suitable for
-burning to CD or DVD media, and also to copy onto a USB stick.
+Independentemente do tipo de imagem, você vai precisar para realizar os
+mesmos passos básicos para a construção de uma imagem de cada vez. Como um
+primeiro exemplo, executar a seguinte seqüência de comandos live-build para
+criar uma imagem básica ISO híbrida contendo apenas o sistema Debian padrão,
+sem X.org. Ele é adequado para a gravação de CD ou DVD, e também para copiar
+para um pen drive.
 
-First, run the #{lb config}# command. This will create a "config/" hierarchy
-in the current directory for use by other commands:
+Primeiro, execute o comando #{lb config}#. Isso criará uma hierarquia
+"config/" no diretório atual para uso por outros comandos:
 
 code{
 
@@ -73,12 +82,12 @@ code{
 
 }code
 
-No parameters are passed to #{lb config}#, so defaults for all of its
-various options will be used. See {The lb config command}#lb-config for more
-details.
+Nenhum parâmetro é passado para #{lb config}#, então para todas as
+diferentes opções serão utilizadas as padrões. Veja {O comando lb
+config}#lb-config para mais detalhes.
 
-Now that the "config/" hierarchy exists, build the image with the #{lb
-build}# command:
+Agora que existe a hierarquia "config/", construir a imagem com o comando
+#{lb build}#:
 
 code{
 
@@ -86,21 +95,21 @@ code{
 
 }code
 
-This process can take a while, depending on the speed of your network
-connection. When it is complete, there should be a #{binary.hybrid.iso}#
-image file, ready to use, in the current directory.
+Este processo pode demorar um pouco, dependendo da velocidade de sua conexão
+de rede. Quando estiver completo, deve haver um arquivo de imagem
+#{binary.hybrid.iso}#, pronto a usar, no diretório atual.
 
-2~using-iso-hybrid Using an ISO hybrid live image
+2~using-iso-hybrid Usando uma imagem live ISO hibrida
 
-After either building or downloading an ISO hybrid image, which can be
-obtained at http://www.debian.org/CD/live/, the usual next step is to
-prepare your media for booting, either CD-R(W) or DVD-R(W) optical media or
-a USB stick.
+Após a construção ou o download de uma imagem ISO híbrido, que pode ser
+obtida em http://www.debian.org/CD/live/, o passo seguinte é habitual é
+preparar sua mídia para a inicialização, ou mídia óptica CD-R (W) ou DVD-R
+(W)  ou um dispositivo USB.
 
-3~burning-iso-image Burning an ISO image to a physical medium
+3~burning-iso-image Queimar uma imagem ISO em um meio físico
 
-Burning an ISO image is easy. Just install wodim and use it from the
-command-line to burn the image. For instance:
+Queimar uma imagem ISO é fácil. Basta instalar wodim e usá-lo a partir da
+linha de comando para gravar a imagem. Por exemplo:
 
 code{
 
@@ -110,20 +119,22 @@ code{
 
 }code
 
-3~copying-iso-hybrid-to-usb Copying an ISO hybrid image to a USB stick
+3~copying-iso-hybrid-to-usb Copiar uma imagem ISO híbrida para um
+dispositivo USB
 
-ISO images prepared with the #{isohybrid}# command, like the images produced
-by the default #{iso-hybrid}# binary image type, can be simply copied to a
-USB stick with the #{dd}# program or an equivalent. Plug in a USB stick with
-a size large enough for your image file and determine which device it is,
-which we hereafter refer to as #{${USBSTICK}}#. This is the device file of
-your key, such as #{/dev/sdb}#, not a partition, such as #{/dev/sdb1}#! You
-can find the right device name by looking in #{dmesg}#'s output after
-plugging in the stick, or better yet, #{ls -l /dev/disk/by-id}#.
+Imagens ISO preparadas com o comando #{isohybrid}#, como as imagens
+produzidas pelo tipo de imagem binária padrão #{iso-híbrido}#, pode ser
+simplesmente copiada para um dispositivo USB com o programa  #{dd}# ou um
+equivalente. Conecte um dispositivo USB com um tamanho grande o suficiente
+para o seu arquivo de imagem e determinar qual dispositivo é, que a seguir
+se referem como #{${USBSTICK}}#. Este é o arquivo de dispositivo de sua
+chave, como #{/dev/sdb}#, e não uma partição, como #{/dev/sdb1}#! Você pode
+encontrar o nome do dispositivo certo olhando na saída do #{dmesg}# depois
+de ligar o dispositivo, ou melhor ainda, #{ls -l /dev/disk/by-id}#.
 
-Once you are certain you have the correct device name, use the #{dd}#
-command to copy the image to the stick.  *{This will definitely overwrite
-any previous contents on your stick!}*
+Uma vez que você tem certeza de que tem o nome correto do dispositivo, use o
+comando #{dd}# para copiar a imagem para o pendrive. *{Isso definitivamente
+vai substituir todo o conteúdo anterior do seu dispositivo!} *
 
 code{
 
@@ -132,31 +143,35 @@ code{
 }code
 
 
-3~booting-live-media Booting the live media
+3~booting-live-media Inicializando a media live
 
-The first time you boot your live media, whether CD, DVD, USB key, or PXE
-boot, some setup in your computer's BIOS may be needed first. Since BIOSes
-vary greatly in features and key bindings, we cannot get into the topic in
-depth here. Some BIOSes provide a key to bring up a menu of boot devices at
-boot time, which is the easiest way if it is available on your
-system. Otherwise, you need to enter the BIOS configuration menu and change
-the boot order to place the boot device for the live system before your
-normal boot device.
+A primeira vez que você iniciar sua mídia live, seja CD, DVD, dispositivo
+USB, ou inicializador PXE, alguma configuração na BIOS do seu computador
+pode ser necessária em primeiro lugar. Uma vez que as BIOS variam muito em
+características e combinações de teclas, não podemos entrar no tema em
+profundidade aqui. Algumas BIOS fornecem uma chave para abrir um menu de
+dispositivos de inicialização em tempo de inicialização, que é a maneira
+mais fácil se estiver disponível no seu sistema. Caso contrário, você
+precisa entrar no menu de configuração da BIOS e alterar a ordem de
+inicialização para colocar o dispositivo de inicialização para o sistema
+live antes do dispositivo de inicialização normal.
 
-Once you've booted the media, you are presented with a boot menu. If you
-just press enter here, the system will boot using the default entry,
-#{Live}# and default options. For more information about boot options, see
-the "help" entry in the menu and also the live-boot and live-config man
-pages found within the live system.
+Uma vez que você tenha iniciado a mídia, você é apresentado com um menu de
+inicialização. Se você apenas pressionar enter aqui, o sistema irá
+inicializar usando a entrada padrão, #{Live}# e opções padrão. Para mais
+informações sobre as opções de inicialização, consulte a entrada "ajuda" no
+menu e também as páginas do live-boot e live-boot-config encontradas dentro
+do sistema live.
 
-Assuming you've selected #{Live}# and booted a default desktop live image,
-after the boot messages scroll by, you should be automatically logged into
-the #{user}# account and see a desktop, ready to use. If you've booted a
-console-only image, such as #{standard}# or #{rescue}# flavour prebuilt
-images, you should be automatically logged in on the console to the #{user}#
-account and see a shell prompt, ready to use.
+Supondo que você selecionou #{Live}# e inicializou uma imagem de desktop
+padrão live, após as mensagens de inicialização rolarem, você deve estar
+automaticamente logado na conta #{user}#  e vendo um desktop, pronto para
+uso. Se você iniciou uma imagem apenas de console, como as imagens
+pré-construídas #{padrão}# ou #{recuperação}#, deve estar automaticamente
+conectado no console na conta do usuário #{user}# e vendo uma janela de
+comandos, pronta para uso.
 
-2~using-virtual-machine Using a virtual machine for testing
+2~using-virtual-machine Usando uma máquina virtual para testar
 
 It can be a great time-saver for the development of live images to run them
 in a virtual machine (VM). This is not without its caveats:
@@ -203,13 +218,13 @@ code{
 
 See the man pages for more details.
 
-3~testing-iso-with-virtualbox Testing an ISO image with virtualbox-ose
+3~testing-iso-with-virtualbox Testing an ISO image with virtualbox
 
-In order to test the ISO with /{virtualbox-ose}/:
+In order to test the ISO with /{virtualbox}/:
 
 code{
 
- # apt-get install virtualbox-ose virtualbox-ose-dkms
+ # apt-get install virtualbox virtualbox-dkms
 
  $ virtualbox
 
@@ -218,11 +233,11 @@ code{
 Create a new virtual machine, change the storage settings to use
 #{binary.hybrid.iso}# as the CD/DVD device, and start the machine.
 
-*{Note:}* For live systems containing X.org that you want to test with /{virtualbox-ose}/, you may wish to include the VirtualBox X.org driver package, /{virtualbox-ose-guest-x11}/, in your live-build configuration. Otherwise, the resolution is limited to 800x600.
+*{Note:}* For live systems containing X.org that you want to test with /{virtualbox}/, you may wish to include the VirtualBox X.org driver package, /{virtualbox-guest-x11}/, in your live-build configuration. Otherwise, the resolution is limited to 800x600.
 
 code{
 
- $ echo virtualbox-ose-guest-x11 >> config/package-lists/my.list.chroot
+ $ echo virtualbox-guest-x11 >> config/package-lists/my.list.chroot
 
 }code
 
@@ -366,7 +381,7 @@ in #{tftpboot/debian-live/i386}#.
 We must now configure three services on the server to enable netboot: the
 DHCP server, the TFTP server and the NFS server.
 
-3~ DHCP server
+3~ Servidor DHCP
 
 We must configure our network's DHCP server to be sure to give an IP address
 to the netbooting client system, and to advertise the location of the PXE
@@ -397,7 +412,7 @@ code{
 
 }code
 
-3~ TFTP server
+3~ Servidor TFTP
 
 This serves the kernel and initial ramdisk to the system at run time.
 
@@ -414,7 +429,7 @@ code{
 
 and fill in the new tftp server directory when being asked about it.
 
-3~ NFS server
+3~ Servidor NFS
 
 Once the guest computer has downloaded and booted a Linux kernel and loaded
 its initrd, it will try to mount the Live filesystem image through a NFS
@@ -462,23 +477,23 @@ Edit #{/etc/qemu-ifup}#:
 code{
 
  #!/bin/sh
- sudo -p "Password for $0:" /sbin/ifconfig $1 172.20.0.1
- echo "Executing /etc/qemu-ifup"
- echo "Bringing up $1 for bridged mode..."
+ sudo -p "Senha para $0:" /sbin/ifconfig $1 172.20.0.1
+ echo "Executando /etc/qemu-ifup"
+ echo "Levando o $1 para o modo bridged..."
  sudo /sbin/ifconfig $1 0.0.0.0 promisc up
- echo "Adding $1 to br0..."
+ echo "Adicionando $1 to br0..."
  sudo /usr/sbin/brctl addif br0 $1
  sleep 2
 
 }code
 
-Get, or build a #{grub-floppy-netboot}# (in the svn).
+Obter, ou construir um #{grub-floppy-netboot}# (no svn).
 
 Launch #{qemu}# with "#{-net nic,vlan=0 -net tap,vlan=0,ifname=tun0}#"
 
 3~ VMWare Player
 
-_* Install VMWare Player ("free as in beer" edition)
+_* Instalar o VMWare Player (edição "free as in beer")
 
 _* Create a PXETester directory, and create a text file called #{pxe.vwx}#
 inside

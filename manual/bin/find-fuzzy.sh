@@ -41,7 +41,7 @@ Find_fuzzy ()
 
 		case "$OPENEDITOR" in
 			y*|Y*)
-				$EDITOR $(grep -w 'fuzzy' manual/po/$ANSWER/* | uniq | sed 's|:#, fuzzy.*||')
+				$EDITOR $(grep -w 'fuzzy' manual/po/$ANSWER/* | sed 's|:#, fuzzy.*||' | uniq)
 				;;
 
 			n*|N*)
@@ -81,7 +81,7 @@ case "$ANSWER" in
 
 		case "$OPENEDITOR" in
 			y*|Y*)
-				$EDITOR $(grep -w 'fuzzy' manual/po/*/* | uniq | sed 's|:#, fuzzy.*||')
+				$EDITOR $(grep -w 'fuzzy' manual/po/*/* | sed 's|:#, fuzzy.*||' | uniq)
 				;;
 
 			n*|N*)

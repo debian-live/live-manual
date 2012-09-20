@@ -19,7 +19,7 @@ Molts conceptes són similars als de les eines del paquet Debian
 
 _* Els scripts tenen una ubicació central per a la configuració del seu
 funcionament. Amb /{debhelper}/ aquest és el subdirectori #{debian/}# d'un
-arbre de paquets. Per exemple, dh_install buscarà, entre altres, un arxiu
+arbre de paquets. Per exemple, dh_install buscarà, entre altres, un fitxer
 anomenat #{debian/install}# per determinar quins fitxers han d'existir en un
 paquet binari en particular. De la mateixa manera, live-build emmagatzema la
 seva configuració per complet sota un subdirectori #{config/}#.
@@ -95,7 +95,7 @@ Una llista completa d'opcions està disponible a la pàgina del manual
 3~lb-build L'ordre #{lb build}#
 
 L'ordre #{lb build}# llegeix la configuració del directori #{config/}#. A
-continuació, executa les ordres de nivell inferior necessaries per construir
+continuació, executa les ordres de nivell inferior necessàries per construir
 el sistema en viu.
 
 3~lb-clean L'ordre #{lb clean}#
@@ -103,7 +103,7 @@ el sistema en viu.
 L'ordre #{lb clean}# s'encarrega d'eliminar diverses parts d'una construcció
 per que altres construccions posteriors puguin començar des d'un estat
 net. Per defecte, es netegen les etapes #{chroot}#, #{binary}# i #{source}#,
-però la memòria cau es manté intacta. A més, es poden netejar etapes
+però la caché es manté intacta. A més, es poden netejar etapes
 individuals. Per exemple, si s'han fet canvis que només afecten a la fase
 binary, utilitzar #{lb clean --binary}# abans de construir un nou
 binary. Veure la pàgina del manual de #{lb_clean}# per a una llista completa
@@ -111,10 +111,10 @@ d'opcions.
 
 2~live-boot El paquet live-boot
 
-live-boot és un conjunt de scripts per proporcionar hooks a initramfs-tools,
-que s'utilitzen per generar un initramfs capaç d'arrencar sistemes vius, com
-ara els creats per live-build. Això inclou les ISOs de Debian Live, netboot
-tarballs i imatges per a memòries USB.
+live-boot és un conjunt de scripts per proporcionar hooks a
+/{initramfs-tools}/, que s'utilitzen per generar un initramfs capaç
+d'arrencar sistemes vius, com ara els creats per live-build. Això inclou les
+ISOs de Debian Live, netboot tarballs i imatges per a memòries USB.
 
 En el moment d'arrencar, buscarà medis de només lectura que continguin un
 directori #{/live/}# on s'emmagatzema un sistema de fitxers arrel (sovint
@@ -130,6 +130,6 @@ initramfs.
 
 live-config consta dels scripts que s'executen durant l'arrencada després de
 live-boot per a configurar el sistema en viu de forma automàtica. S'ocupa de
-tasques com ara l'establiment de les locales, el nom d'amfitrió, i la zona
+tasques com ara l'establiment de les locales, el nom d'amfitrió, la zona
 horària, crear l'usuari en viu, l'inhibició de tasques de cron i l'inici
 automàtic de sessió per l'usuari en viu.

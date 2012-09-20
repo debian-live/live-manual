@@ -58,8 +58,8 @@ computer a meno che lo si faccia volontariamente. I sistemi live vengono
 solitamente avviati da supporti quali CD, DVD o penne USB; alcuni possono
 anche avviarsi via rete.
 
-_* *{Debian Live}*: Il sotto-progetto Debian che mantiene i pacchetti
-live-boot, live-build, live-config e live-manual.
+_* *{Debian Live}*: Il sotto-progetto Debian che mantiene, tra gli altri, i
+pacchetti live-boot, live-build, live-config e live-manual.
 
 _* *{Debian Live system}*: Un sistema live che usa software proveniente dal
 sistema operativo Debian e che può essere lanciato da CD, DVD, supporti USB,
@@ -178,8 +178,8 @@ code{
 
 }code
 
-Dato che occorre del tempo per compilare il manuale in tutte le lingue
-supportate, può risultare conveniente farlo per una sola lingua, ad esempio
+Giacché occorre del tempo per compilare il manuale in tutte le lingue
+supportate può risultare conveniente farlo per una sola lingua, ad esempio
 eseguendo:
 
 code{
@@ -247,7 +247,7 @@ code{
 
 }code
 
-_* Si noti che tutte le modifiche vanno eseguite sul ramo debian-next e non
+_* Notare che tutte le modifiche vanno eseguite sul ramo debian-next e non
 su quello debian.
 
 _* Non usare #{make commit}# a meno che nel commit non si stiano aggiornando
@@ -276,23 +276,24 @@ code{
 
 3~translation Traduzione
 
-To start a translation for a new language, follow these steps:
+Per iniziare una traduzione per una nuova lingua, seguire questi passi:
 
-_* Translate the *{about_manual.ssi.pot}*, *{about_project.ssi.pot}* and
-*{index.html.in.pot}* files to your language with your favourite editor
-(such as /{poedit}/). Send the translated #{.po}# files to the mailing list
-so that the translation team can check their integrity.
+_* Tradurre i file *{about_manual.ssi.pot}*, *{about_project.ssi.pot}* e
+*{index.html.in.pot}* nella propria lingua con il proprio editor preferito
+(tipo /{poedit}/). Inviare i file #{.po}# tradotti alla mailing list in modo
+che il team di traduzione possa controllarne l'integrità.
 
-_* To enable a new language in the autobuild it is enough to add the initial
-translated files to #{manual/po/${LANGUAGE}/}# and run #{make commit}#. And
-then edit #{manual/_sisu/home/index.html}#.
+_* Per abilitare una nuova lingua nell'autobuild è sufficiente aggiungere i
+file tradotti iniziali a #{manual/po/${LANGUAGE}/}# ed eseguire #{make
+commit}#. Quindi modificare il file #{manual/_sisu/home/index.html}#.
 
-_* Once the new language is added, you can randomly continue translating the
-remaining po files in #{manual/po/}#.
+_* Una volta che la nuova lingua è stata aggiunta, si può continuare a
+tradurre i restanti file po situati in #{manual/po/}#, nell'ordine che si
+preferisce.
 
 _* Non dimenticare che è necessario usare #{make commit}# per assicurarsi
 che i manuali tradotti siano aggiornati partendo dai file po, quindi si
 possono verificare le modifiche con #{make build}# prima di #{git add .}#,
 #{git commit -a -m "Translating..."}# e #{git push}#.
 
-*{Note:}* You can use #{make clean}# to clean your git tree before pushing. This step is not compulsory thanks to the .gitignore file but it is a good practice to avoid committing files involuntarily.
+*{Nota:}* si può usare #{make clean}# per pulire l'albero del repository git locale prima del push. Grazie al file .gitignore questo passo non è obbligatorio ma è una buona abitudine che evita di fare involontariamente il commit di certi file.

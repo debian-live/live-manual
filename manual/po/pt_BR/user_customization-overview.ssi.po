@@ -1,13 +1,14 @@
 # Portuguese translations for live-manual package
 # This file is distributed under the same license as the live-manual package.
 # Automatically generated, 2010.
+# Willer Gomes Júnior <willer@ogomes.com>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual\n"
 "POT-Creation-Date: 2012-04-14 16:13+0300\n"
-"PO-Revision-Date: 2010-10-22 08:57-0200\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2012-08-28 04:13-0500\n"
+"Last-Translator: Willer Gomes Júnior <willer@ogomes.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -18,12 +19,12 @@ msgstr ""
 #. type: Plain text
 #: en/user_customization-contents.ssi:2 en/user_customization-overview.ssi:2
 msgid ":B~ Customizing contents"
-msgstr ""
+msgstr ":B~ Personalizando conteúdo"
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:4
 msgid "1~customization-overview Customization overview"
-msgstr ""
+msgstr "1~customization-overview Visão geral sobre personalização"
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:6
@@ -31,11 +32,13 @@ msgid ""
 "This chapter gives an overview of the various ways in which you may "
 "customize a Debian Live system."
 msgstr ""
+"Este capítulo apresenta uma visão geral das várias maneiras pelas quais você "
+"pode personalizar um sistema Debian Live."
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:8
 msgid "2~ Build time vs. boot time configuration"
-msgstr ""
+msgstr "2~ Configuração de tempo de construção X  tempo de inicialização"
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:10
@@ -53,6 +56,21 @@ msgid ""
 "system, such as persistence, keyboard layouts, or timezone. See {Customizing "
 "locale and language}#customizing-locale-and-language, for example."
 msgstr ""
+"As opções de configuração do sistema Live são divididas em opções de tempo "
+"de compilação que são as opções aplicadas em tempo de compilação e opções de "
+"tempo de inicialização que são aplicadas em tempo de inicialização. Opções "
+"de inicialização são divididas naquelas que ocorrem em início do "
+"inicialização, aplicadas pelo pacote live-boot e aquelas que acontecem no "
+"final da inicialização, aplicadas pelo live-config. Qualquer opção de "
+"inicialização pode ser modificada pelo usuário, especificando a no prompt de "
+"inicialização. A imagem também pode ser construída com os parâmetros de "
+"inicialização padrão para que os usuários possam normalmente apenas "
+"inicializar diretamente pelo sistema live, sem especificar quaisquer opções "
+"quando todos os padrões são adequados. Em particular, o argumento para #{lb "
+"--bootappend-live}# consiste de quaisquer opções padrão de kernel de linha "
+"de comando para o sistema live, tais como persistência, layouts de teclado, "
+"ou fuso horário. Veja {Personalizando local e linguagem}#customizing-locale-"
+"and-language, por exemplo."
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:12
@@ -65,11 +83,20 @@ msgid ""
 "your configuration. It is safe to do so, as none of the scripts contained "
 "within them are executed unless the system is configured as a live system."
 msgstr ""
+"Opções de configuração de tempo de construção estão descritas na pagina do "
+"man #{lb config}#. Opções de tempo de inicialização estão descritas nas "
+"páginas do manual live-boot e live-config. Embora os pacotes live-boot e "
+"live-config estejam instalados dentro do sistema live que você está "
+"construindo, é recomenda que você os instale também em seu sistema de "
+"construção para fácil referência quando você estiver trabalhando em sua "
+"configuração. É seguro fazê-lo, já que nenhum dos scripts contidos dentro "
+"deles estão executados a menos que o sistema esteja configurado como um "
+"sistema live."
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:14
 msgid "2~stages-of-the-build Stages of the build"
-msgstr ""
+msgstr "2~stages-of-the-build Etapas da construção"
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:16
@@ -88,6 +115,20 @@ msgid ""
 "filesystem. After the live image is built, if enabled, the source tarball is "
 "built in the *{source}* stage."
 msgstr ""
+"O processo de criação está dividido em etapas, com várias personalizações "
+"aplicadas em sequencia em cada uma. A primeira etapa para executar é a *"
+"{inicialização}*. Esta é a fase inicial de povoamento do diretório chroot "
+"com pacotes para fazer um esqueleto do sistema Debian. Isto é seguido pela "
+"fase *{chroot}*, o que completa a construção do directório chroot, "
+"preenchendo-o com todos os pacotes listados na configuração, juntamente com "
+"quaisquer outros materiais. A maior parte da personalização do conteúdo "
+"ocorre nesta fase. A fase final de preparação da imagem live é a fase *"
+"{binária}*, que cria uma imagem de inicialização, usando o conteúdo do "
+"diretório chroot para construir a raiz do sistema de arquivos para o sistema "
+"Live, incluindo o instalador e qualquer outro material adicional sobre a "
+"mídia de destino fora do sistema de arquivos do sistema Live. Depois que a "
+"imagem live é construída, se habilitada, o pacote de código é construído na "
+"etapa *{fonte}*."
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:18
@@ -100,11 +141,18 @@ msgid ""
 "patches are applied, and hooks are run later, after all of the materials are "
 "in place."
 msgstr ""
+"Dentro de cada uma destas etapas, existe uma sequência particular na qual os "
+"comandos são aplicados. Estes estão dispostos de tal modo a assegurar "
+"personalizações que podem ser colocadas em camadas de uma forma razoável. "
+"Por exemplo, dentro do estágio *{chroot}*, sementes são aplicadas antes de "
+"qualquer pacote ser instalado, os pacotes são instalados antes de qualquer "
+"arquivo incluídos localmente ou atualizações sejam aplicadas, e os ganchos "
+"são executados mais tarde, depois de todos os materiais estarem no lugar."
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:20
 msgid "2~ Supplement lb config with files"
-msgstr ""
+msgstr "2~ Complementar lb config com arquivos"
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:22
@@ -120,11 +168,21 @@ msgid ""
 "boosting the already considerable flexibility of debian-live with code of "
 "your own."
 msgstr ""
+"Embora #{lb config}# crie uma configuração esquelética no diretório config/, "
+"para realizar seus objetivos, você pode precisar fornecer arquivos "
+"adicionais em subdiretórios do config/. Dependendo de onde os arquivos são "
+"armazenados na configuração, eles podem ser copiados para o sistema de "
+"arquivos do sistema live, ou no sistema de arquivos de imagem binária, ou "
+"podem fornecer configurações de tempo de execução do sistema que seria "
+"complicado passar como de linha de comando. Você pode incluir coisas como "
+"listas personalizadas de pacotes, obras de arte personalizadas, ou scripts "
+"para rodar em tempo de compilação ou em tempo de inicialização, aumentando a "
+"flexibilidade já considerável de debian-live com o código de sua preferência."
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:24
 msgid "2~ Customization tasks"
-msgstr ""
+msgstr "2~ Tarefas de personalização"
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:25
@@ -135,3 +193,9 @@ msgid ""
 "{Customizing locale and language}#customizing-locale-and-language cover just "
 "a few of the things you might want to do."
 msgstr ""
+"Os capítulos seguintes são organizados pelos tipos de personalização de "
+"tarefas que os usuários normalmente executam: {Personalizar a instalação de "
+"pacote}#customizing-package-installation, {Personalizar conteúdos}"
+"#customizing-package-installation, e {Personalizar localizade e linguagem}"
+"#customizing-locale-and-language cobrem apenas algumas das coisas que você "
+"pode querer fazer."

@@ -2,18 +2,19 @@
 
 1~about-manual Sobre esse manual
 
-This manual serves as a single access point to all documentation related to
-the Debian Live project and in particular applies to the software produced
-by the project for the Debian 7.0 "wheezy" release. An up-to-date version
-can always be found at http://live.debian.net/
+Este manual serve como um ponto de acesso único a toda a documentação
+relacionada ao projeto Debian Live e, em particular se aplica ao software
+produzido pelo projeto para o lançamento do Debian 7,0 "wheezy". Uma versão
+atualizada pode ser sempre encontrada em http://live.debian.net/
 
-While live-manual is primarily focused on helping you build a live system
-and not on end-user topics, an end-user may find some useful information in
-these sections: {The Basics}#the-basics covers preparing images to be booted
-from media or the network, and {Customizing run time
-behaviours}#customizing-run-time-behaviours describes some options that may
-be specified at the boot prompt, such as selecting a keyboard layout and
-locale, and using persistence.
+Embora live-manual esteja principalmente focado em ajudar a construir um
+sistema live e não tópicos do usuário final, um usuário final pode encontrar
+algumas informações úteis nestas seções: {O Básico}#the-basics abrange
+imagens que se preparam para serem iniciadas a partir da mídia ou da rede, e
+{Personalizar comportamentos em tempo de
+execução}#customizing-run-time-behaviours descrevem algumas opções que podem
+ser especificadas no prompt de inicialização, tais como selecionar um layout
+de teclado e localidade, e usar persistência.
 
 Alguns comandos mencionados no texto devem ser executados com privilégios de
 super-usuário, que podem ser obtidos tornando-se usuário root via #{su}# ou
@@ -22,50 +23,51 @@ executados como usuário não privilegiado e aqueles que requerem privilégios
 de super usuário, os comandos são precididos por: #{$}# ou #{#}#
 respectivamente. Esse simbolo não é parte do comando.
 
-2~ For the impatient
+2~ Para os impacientes
 
-While we believe that everything in this manual is important to at least
-some of our users, we realize it is a lot of material to cover and that you
-may wish to experience early success using the software before delving into
-the details. Therefore, we suggest reading in the following order.
+Embora acreditemos que tudo neste manual é importante para pelo menos alguns
+de nossos usuários, percebemos que tem muito material para cobertura e você
+pode querer experimentar o sucesso precoce utilizando o software antes de se
+aprofundar nos detalhes. Portanto, sugerimos a leitura na seguinte ordem.
 
-First, read this chapter, {About this manual}#about-manual, from the
-beginning and ending with the {Terms}#terms section. Next, skip to the three
-tutorials at the front of the {Examples}#examples section designed to teach
-you image building and customization basics. Read {Using the
-examples}#using-the-examples first, followed by {Tutorial 1: A standard
-image}#tutorial-1, {Tutorial 2: A web browser utility}#tutorial-2 and
-finally {Tutorial 3: A personalized image}#tutorial-3. By the end of these
-tutorials, you will have a taste of what can be done with Debian Live.
+Primeiro, leia este capítulo, {Sobre este manual}#about-manual, desde o
+início e terminando com a seção {Termos}#terms. Em seguida, passe para os
+três tutoriais na frente da seção de {exemplos}#examples projetada para
+ensinar conceitos básicos de construção de imagem e personalização. Leia
+primeiro {Usando os exemplos}#using-the-examples, seguido pelo {Tutorial 1:
+Uma imagem padrão}#tutorial-1, {Tutorial 2: Um utilitário de
+navegador}#tutorial-2 e, finalmente, {Tutorial 3: Uma imagem
+personalizada}#tutorial-3. Ao final desses tutoriais, você vai ter um
+gostinho do que pode ser feito com o Debian Live.
 
-We encourage you to return to more in-depth study of the manual, perhaps
-next reading {The basics}#the-basics, skimming or skipping {Building a
-netboot image}#building-netboot-image, and finishing by reading the
-{Customization overview}#customization-overview and the chapters that follow
-it. By this point, we hope you are thoroughly excited by what can be done
-with Debian Live and motivated to read the rest of the manual,
-cover-to-cover.
+Nós te incentivamos a realizar um estudo mais aprofundado do manual, talvez
+na próxima leitura {O Básico}#the-basics, roçando ou pulando {Construindo
+uma imagem de inicialização de rede}#building-netboot-image, e terminando
+com a leitura da {Visão geral sobre personalização}#customization-overview
+e os capítulos que se seguem. Para este ponto, esperamos que você esteja
+completamente animado com o que pode ser feito com Debian Live e motivado
+para ler o restante do manual, capa a capa.
 
 2~terms Terminologia
 
-_* *{Live system}*: Um sistema operacional que pode inicializar sem
+_* *{Sistema Live}*: Um sistema operacional que pode inicializar sem
 instalação em um disco rígido. Sistemas live não devem alterar o(s)
 sistema(s) operacional(s) local(is) ou arquivo(s) já instalados no disco
 rígido do computador a não ser que seja instruido para isso. Sistemas Live
 são tipicamente inicializados a partir de uma mídia como CDs, DVDs ou
 pendrive(s). Alguns também podem inicializar através da rede.
 
-_* *{Debian Live}*: O sub-projeto Debian que manten os pacotes live-boot,
-live-build, live-config, e live-manual.
+_* *{Debian Live}*: The Debian sub-project which maintains, among others,
+the live-boot, live-build, live-config and live-manual packages.
 
-_* *{Debian Live system}*: Um sistema live que usa softwares do sistema
+_* *{Sistema Debian Live}*: Um sistema live que usa softwares do sistema
 operacional Debian que também pode ser inicializado a partir de CD's, DVDs,
-Discos USB, através da rede (via imagens netbook), e através da Internet
-(via parametro de boot #{fetch=URL}#).
+Discos USB, através da rede (via imagens de inicialização via rede), e
+através da Internet (via parametro de inicialização #{fetch=URL}#).
 
-_* *{Host system}*: O ambiente usado para criar o sistema live.
+_* *{Sistema Hospedeiro}*: O ambiente usado para criar o sistema live.
 
-_* *{Target system}*: O ambiente usado para rodar o sistema live.
+_* *{Sistema Destino}*: O ambiente usado para rodar o sistema live.
 
 _* *{live-boot}*: Uma coleção de scripts usados para inicializar sistemas
 live. live-boot era formalmente parte do /{live-initramfs}/.
@@ -81,35 +83,33 @@ live durante o processo de boot. live-config era formalmente parte do
 _* *{live-manual}*: Esse documento é mantido em um pacote chamado
 live-manual.
 
-_* *{Debian Installer (d-i)}*: O sistema oficial de instalação para a
+_* *{Instalador Debian (d-i)}*: O sistema oficial de instalação para a
 distribuição Debian.
 
-_* *{Boot parameters}*: Parametros que podem ser entrados no prompt do
-bootloader para influenciar o kernel ou o live-config.
+_* *{Paramentros de inicialização}*: Parametros que podem ser inseridos no
+prompt do bootloader para influenciar o kernel ou o live-config.
 
 _* *{chroot}*: O programa /{chroot}/, #{chroot(8)}#, nos habilita a rodar
 simultâneamente diferentes instâncias do ambiente do GNU/Linux em um único
 sistema sem reinicialização.
 
-_* *{Binary image}*: Um arquivo contendo o sistema live, como binary.iso ou
-binary.img.
+_* *{Imagem Binaria}*: Um arquivo contendo o sistema live, como binary.iso
+ou binary.img.
 
-_* *{Target distribution}*: A distribuição em que o sistema live será
+_* *{Distribuição Destino}*: A distribuição em que o sistema live será
 baseado. Isso pode diferir da distribuição do seu sistema host.
 
-_* *{stable/testing/unstable}*: The *{stable}* distribution contains the
-latest officially released distribution of Debian. The *{testing}*
-distribution is the staging area for the next *{stable}* release. A major
-advantage of using this distribution is that it has more recent versions of
-software relative to the *{stable}* release. The *{unstable}* distribution
-is where active development of Debian occurs. Generally, this distribution
-is run by developers and those who like to live on the edge. Throughout the
-manual, we tend to use codenames for the releases, such as wheezy or sid, as
-that is what is supported by the tools themselves.
+A distribuição estável (*{stable}*) contem a última versão oficial lançada
+do Debian. A distribuição *{testing}* é a área de estágio para a próxima
+versão estável (*{stable}*). A maior vantagem de usar essa distribuição é
+que ela tem versões mais recentes de software relacionados com a versão
+estável (*{stable}*). A distribuição instável (*{unstable}*) é onde ocorre o
+desenvolvimento ativo do Debian. Geralmente, essa distribuição é mantida por
+desenvolvedores e aqueles que vivem no limite.
 
-2~Autores
+2~ Autores
 
-A lista de autores (em ordem alfabética)
+Lista de autores (em ordem alfabética)
 
 _* Ben Armstrong
 
@@ -137,18 +137,18 @@ _* Trent W. Buck
 
 2~how-to-contribute Contribuindo com esse documento
 
-This manual is intended as a community project and all proposals for
-improvements and contributions are extremely welcome. The preferred way to
-submit a contribution is to send it to the mailing list. Please see the
-section {Contact}#contact for more information.
+Este manual foi concebido como um projeto da comunidade e todas as propostas
+de melhorias e contribuições são muito bem-vindas. A maneira preferida para
+enviar sua contribuição é enviá-la para a lista de discussão. Por favor,
+consulte a seção {Contato}#contact para mais informações.
 
 Quando estiver submetendo uma contribuição, por favor identificar claramente
 o seu titular de direitos autorais e incluir a declaração de
 licenciamento. Note que para ser aceita, a contribuição deve ser licenciada
-obre as mesmas licenças do resto do documento, ou seja, GPL versão 3 ou
+sobre as mesmas licenças do resto do documento, ou seja, GPL versão 3 ou
 superior.
 
-Os fontes para esse manail são mantidos usando o sistema de controle de
+Os fontes para esse manual são mantidos usando o sistema de controle de
 versão Git. Você pode fazer o checkout da ultima cópia executando:
 
 code{
@@ -157,9 +157,9 @@ $ git clone git://live.debian.net/git/live-manual.git
 
 }code
 
-Antes de submeter sua contribuição, por favor pré-visualize seu
-trabalho. Para pré-visualizar o live-manual, tenha certeza que os pacotes
-necessários para contruir estão instalados executando:
+Antes de enviar sua contribuição, por favor pré visualize seu trabalho. Para
+pré visualizar o live-manual, tenha certeza que os pacotes necessários para
+contruir estão instalados, executando:
 
 code{
 
@@ -176,9 +176,9 @@ code{
 
 }code
 
-Since it takes a while to build the manual in all supported languages, you
-may find it convenient when proofing to build for only one language, e.g. by
-executing:
+Uma vez que é demorado construir o manual em todos os idiomas suportados,
+você pode achar que é conveniente, na  prova, construir para apenas um
+idioma, por exemplo, executando:
 
 code{
 
@@ -186,7 +186,7 @@ code{
 
 }code
 
-It is also possible to build by document type, e.g:
+Também é possível construir, por tipo de documento, por exemplo:
 
 code{
 
@@ -194,7 +194,7 @@ code{
 
 }code
 
-Or combine both, e.g:
+Ou a combinação dos dois, por exemplo:
 
 code{
 
@@ -202,12 +202,11 @@ code{
 
 }code
 
-3~ Applying changes
+3~ Aplicando Atualizações
 
-Diretamente cometer ao repoitório é possivel por qualquer um. No entanto,
-nós pedimo que você mande maiores mudanças para a lista de e-mail para
-discuti-las primeiro. Para enviar ao repositório, os seguintes passos são
-necessários:
+Qualquer pode enviar diretamente ao repoitório. No entanto, nós pedimos que
+você mande maiores mudanças para a lista de e-mail para discuti-las
+primeiro. Para enviar ao repositório, os seguintes passos são necessários:
 
 _* Obter a chave publica de commit:
 
@@ -239,23 +238,23 @@ _* Fazer o checkout de um clone do manual por ssh:
 
 code{
 
- $ git clone gitosis@live.debian.net:/live-manual.git
+ $ git clone git@live.debian.net:/live-manual.git
  $ cd live-manual && git checkout debian-next
 
 }code
 
-_* Note that you should commit any changes on the debian-next branch, not on
-the debian branch.
+_* Observe que você acessa quaisquer alterações no ramo debian-next, e não
+no ramo debian.
 
-_* Do not use #{make commit}# unless you are updating translations in this
-commit, and in that case, do not mix changes to the English manual and
-translations in the same commit, but use separate commits for each. See the
-{Translation}#translation section for more details.
+_* Não use #{make commit}# a menos que você esteja atualizando traduções
+neste acesso, e, nesse caso, não misture as alterações no manual de Inglês e
+traduções na submissão, mas acesse separadamente cada uma . Veja a seção de
+{Tradução}#translation para mais detalhes.
 
-_* Write commit messages that consist of complete, meaningful sentences in
-English, starting with a capital letter and ending with a full
-stop. Usually, these will start with the form
-'Fixing/Adding/Removing/Correcting/Translating', e.g.
+_* Escreva mensagens de submissão, que consistem em sentenças úteis
+completas, começando por letra maiuscula e acabando com uma parada
+total. Normalmente iniciando com as formas
+'Fixing/Adding/Removing/Correcting/Translating'.
 
 code{
 
@@ -271,25 +270,25 @@ code{
 
 }code
 
-3~translation Translation
+3~translation Tradução
 
-To start a translation for a new language, follow these steps:
+Para começar uma tradução para uma nova linguagem, siga estes passos:
 
-_* Translate the *{about_manual.ssi.pot}*, *{about_project.ssi.pot}* and
-*{index.html.in.pot}* files to your language with your favourite editor
-(such as /{poedit}/). Send the translated #{.po}# files to the mailing list
-so that the translation team can check their integrity.
+_* Traduza os arquivos *{about_manual.ssi.pot}*, *{about_project.ssi.pot}* e
+*{index.html.in.pot}* para sua linguagem com seu editor preferido (Por
+exemplo /{poedit}/). Envie os arquivos traduzidos #{.po}# para a lista de
+email assim o time de tradução poderá verificar sua integridade.
 
-_* To enable a new language in the autobuild it is enough to add the initial
-translated files to #{manual/po/${LANGUAGE}/}# and run #{make commit}#. And
-then edit #{manual/_sisu/home/index.html}#.
+_* Para ativar uma nova linguagem no autobuild basta adicionar os arquivos
+iniciais traduzidos para #{manual/po/${LANGUAGE}/}# e executar #{make
+commit}#. E então editar #{manual/_sisu/home/index.html}#.
 
-_* Once the new language is added, you can randomly continue translating the
-remaining po files in #{manual/po/}#.
+_* Uma vez que a nova linguagem esteja adicionada, voce pode aleatoriamente
+continuar a traduzir o restante dos arquivos .po na pasta #{manual/po/}#.
 
-_* Don't forget you need #{make commit}# to ensure the translated manuals
-are updated from the po files and then you can review your changes launching
-#{make build}# before #{git add .}#, #{git commit -a -m "Translating..."}#
-and #{git push}#.
+_* Não se esqueça que você precisa executar #{make commit}# para garantir
+que os manuais traduzidos estejem atualizados a partir dos arquivos po e
+então você pode rever as suas alterações #{make build}# antes  #{git add
+.}#, #{git commit -a -m "Translating..."}# e #{git push}#.
 
-*{Note:}* You can use #{make clean}# to clean your git tree before pushing. This step is not compulsory thanks to the .gitignore file but it is a good practice to avoid committing files involuntarily.
+*{Observação:}* Você pode usar #{make clean}# para limpar a sua árvore git antes de enviar. Este passo não é obrigatório graças ao gitignore., Mas é uma boa prática para evitar enviar arquivos involuntariamente.

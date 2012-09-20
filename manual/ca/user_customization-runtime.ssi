@@ -3,7 +3,7 @@
 1~customizing-run-time-behaviours Personalització dels comportaments en
 temps d'execució
 
-Tota la configuració que es fa durant l'execució es feta per
+Tota configuració que es fa durant l'execució es feta per
 live-config. Aquestes són algunes de les opcions més comunes de live-config
 en que els usuaris estan interessats. Una llista completa de totes les
 possibilitats es poden trobar a la pàgina del manual de live-config.
@@ -31,11 +31,11 @@ code{
 
 }code
 
-També és possible canviar el nom d'usuari per defecte "user" i la
+També és possible canviar el nom de l'usuari per defecte "user" i la
 contrasenya per defecte "live". Si es vol fer això per alguna raó, es pot
 aconseguir fàcilment de la següent manera:
 
-Per canviar el nom d'usuari per defecte només s'ha d'especificar en la
+Per canviar el nom de l'usuari per defecte només s'ha d'especificar en la
 configuració:
 
 code{
@@ -60,10 +60,10 @@ _* la generació de locales
 
 _* establir la configuració del teclat
 
-L'entorn local per omissió en la construcció d'un sistema viu és
-#{locales=en_US.UTF-8}#. Per definir la configuració regional que s'ha de
-generar, utilitzar el paràmetre #{locales}# de la opció
-#{--bootappend-live}# de #{lb config}#, per exemple. 
+La configuració local per defecte en la construcció d'un sistema viu és
+#{locales=en_US.UTF-8}#. Per definir la locale que s'ha de generar,
+utilitzar el paràmetre #{locales}# de la opció #{--bootappend-live}# de #{lb
+config}#, per exemple. 
 
 code{
 
@@ -74,7 +74,7 @@ code{
 Es poden especificar diverses locales en una llista separada per comes.
 
 Aquest paràmetre, així com els paràmetres de configuració del teclat  que
-s'indican a continuació, també es pot utilitzar en la línia d'ordres del
+s'indiquen a continuació, també es pot utilitzar en la línia d'ordres del
 nucli. Es pot especificar una configuració regional mitjançant
 #{language_country}# (en aquest cas s'utilitza la codificació per defecte) o
 la forma completa #{language_country.encoding}#. Una llista de locales
@@ -119,7 +119,7 @@ code{
 }code
 
 No obstant això, per als casos d'ús molt específics, potser es vol incloure
-altres paràmetres. Per exemple, per establir un sistema francès, amb un una
+altres paràmetres. Per exemple, per establir un sistema francès, amb una
 distribució de teclat French-Dvorak (anomenat Bepo) en un teclat USB
 TypeMatrix EZ-Reach 2030, utilitzar:
 
@@ -132,9 +132,9 @@ code{
 
 Es poden especificar diversos valors per a cada una de les opcions
 #{keyboard-*}# en una llista separada per comes amb l'excepció de
-#{keyboard-model}#, que només accepta un valor. Veure la pàgina de manual
+#{keyboard-model}#, que només accepta un valor. Veure la pàgina del manual
 #{keyboard(5)}# per a més detalls i exemples de les variables #{XKBMODEL}#,
-#{XKBLAYOUT}#, #{XKBVARIANT}# y #{XKBOPTIONS}#. Si s'especifican diversos
+#{XKBLAYOUT}#, #{XKBVARIANT}# i #{XKBOPTIONS}#. Si s'especifiquen diversos
 valors de #{keyboard-variants}# es correspondran un a un amb els valors
 #{keyboard-layouts}# (veure #{setxkbmap(1)}# opció #{-variant}#). Es poden
 utilitzar valors buits, per exemple, per definir dos dissenys, el valor
@@ -188,14 +188,14 @@ fitxers.
 
 _* un fitxer imatge situat en l'arrel de qualsevol sistema de fitxers
 llegibles (fins i tot una partició NTFS d'un altre SO), identificat pel seu
-nom de fitxer. En aquest cas el nom del fitxer ha d'utilitzar també el
-sistema de fitxers que conté com extensió del nom, per exemple,
-"persistence.ext4".
+nom de fitxer.
 
-L'etiqueta de volum per als overlays ha de ser #{persistence}#. I per tal de
-personalitzar completament la persistència del volum hi ha d'haver un arxiu
-anomenat #{live-persistence.conf}#. Veure {El fitxer
-live-persistence.conf}#live-persistence-conf
+L'etiqueta de volum per als overlays ha de ser #{persistence}# però serà
+passat per alt a menys que contingui un fitxer anomenat
+#{live-persistence.conf}# que s'utilitza per personalitzar completament la
+persistència del volum, és a dir, especificar els directoris que es volen
+conservar en el volum de persistència després de reiniciar. Veure {El fitxer
+live-persistence.conf}#live-persistence-conf per més detalls.
 
 Aquests són alguns exemples de com preparar un volum que s'utilitzarà per a
 la persistència. Pot ser, per exemple, una partició ext4 en un disc dur o en
@@ -207,7 +207,7 @@ code{
 
 }code
 
-Veure també {Utilitzar l'espai que queda en una memòria
+Veure també {Utilitzar l'espai lliure en una memòria
 USB}#using-usb-extra-space.
 
 Si ja hi ha una partició al dispositiu, és pot canviar l'etiqueta amb un
@@ -219,29 +219,52 @@ code{
 
 }code
 
-Heus aquí un exemple de com crear un fitxer imatge basat en ext4 utilitzat
-per a la persistència:
+Heus aquí un exemple de com crear un fitxer imatge basat en ext4 per ser
+utilitzat per a la persistència:
 
 code{
 
- $ dd if=/dev/null of=persistence bs=1G seek=1 # for a 1GB sized image file
+ $ dd if=/dev/null of=persistence bs=1 seek=1G # for a 1GB sized image file
  $ /sbin/mkfs.ext4 -F persistence
 
 }code
 
-A continuació, copiar el fitxer #{persistence}# a l'arrel d'una partició
-d'escriptura.
+Un cop s'ha creat el fitxer imatge, per exemple, per fer #{/usr}# persistent
+però només guardant els canvis que es fan en aquest directori i no tots els
+continguts de #{/usr}#, es pot utilitzar l'opció "union". Si el fitxer
+imatge es troba en el directori home, copiar-lo a l'arrel del sistema de
+fitxers del disc dur i muntar-lo a #{/mnt}# de la següent manera:
+
+code{
+
+ # cp persistence /
+ # mount -t ext4 /persistence /mnt
+
+}code
+
+A continuació, crear el fitxer #{live-persistence.conf}# afegint contingut i
+desmuntar el fitxer imatge.
+
+code{
+
+ # echo "/usr union" >> /mnt/live-persistence.conf
+ # umount /mnt
+
+}code
+
+Ara, reiniciar el sistema i arrencar el medi en viu amb el paràmetre
+d'arrencada "persistence".
 
 3~live-persistence-conf El fitxer live-persistence.conf
 
-Un volum amb l'etiqueta #{persistence}# pot ser configurat per fer
-directoris arbitraris persistents. El fitxer #{live-persistence.conf}#,
-ubicat a l'arrel del sistema de fitxers del volum, controla els directoris
-que fa persistents, i de quina manera.
+Un volum amb l'etiqueta #{persistence}# ha de ser configurat mitjançant un
+fitxer #{live-persistence.conf}# per fer directoris arbitraris
+persistents. Aquest fitxer, ubicat a l'arrel del sistema de fitxers del
+volum, controla els directoris que fa persistents, i de quina manera.
 
-A la pàgina de manual de live-persistence.conf(5) s'explica en detall com es
-configuran els muntatges de les overlays, però un simple exemple hauria de
-ser suficient per la majoria d'usos. Si es vol fer el directori home i el
+A la pàgina del manual de live-persistence.conf(5) s'explica en detall com
+es configuran els muntatges de les overlays, però un simple exemple hauria
+de ser suficient per la majoria d'usos. Si es vol fer el directori home i el
 directori del cache d'APT persistents en un sistema de fitxers ext4 a la
 partició /dev/sdb1:
 
@@ -251,6 +274,7 @@ code{
  # mount -t ext4 /dev/sdb1 /mnt
  # echo "/home" >> /mnt/live-persistence.conf
  # echo "/var/cache/apt" >> /mnt/live-persistence.conf
+ # umount /mnt
 
 }code
 
@@ -271,7 +295,7 @@ sub-directori de l'altre) el directori pare es muntarà abans que el
 directori fill per evitar que amb el muntatge un directori no sigui ocultat
 per l'altre. Els muntatges personalitzats imbricats són problemàtics si
 estan enumerats en el mateix fitxer #{live-persistence.conf}#. Veure la
-pàgina de manual live-persistence.conf(5) per saber com manejar aquest cas,
+pàgina del manual live-persistence.conf(5) per saber com manejar aquest cas,
 si realment es necessita (una pista: en general no cal fer-ho).
 
 3~ Utilitzar més d'un magatzem de persistència

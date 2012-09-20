@@ -112,9 +112,9 @@ _* a partition, identified by its GPT name.
 
 _* a filesystem, identified by its filesystem label.
 
-_* an image file located on the root of any readable filesystem (even an NTFS partition of a foreign OS), identified by its file name. In this case the file name must also use the containing filesystem as the file extension, e.g. "persistence.ext4".
+_* an image file located on the root of any readable filesystem (even an NTFS partition of a foreign OS), identified by its file name.
 
-The volume label for overlays must be #{persistence}#. And in order to fully customize the volume's persistence there must be a file named #{live-persistence.conf}#. See {The live-persistence.conf file}#live-persistence-conf
+The volume label for overlays must be #{persistence}# but it will be ignored unless it contains in its root a file named #{live-persistence.conf}# which is used to fully customize the volume's persistence, this is to say, specifying the directories that you want to save in your persistence volume after a reboot. See {The live-persistence.conf file}#live-persistence-conf for more details.
 
 Here are some examples of how to prepare a volume to be used for persistence. It can be, for instance, an ext4 partition on a hard disk or on a usb key created with, e.g.:
 
@@ -134,20 +134,38 @@ code{
 
 }code
 
-Here's an example of how to create an ext4-based image file used for persistence:
+Here's an example of how to create an ext4-based image file to be used for persistence:
 
 code{
 
- $ dd if=/dev/null of=persistence bs=1G seek=1 # for a 1GB sized image file
+ $ dd if=/dev/null of=persistence bs=1 seek=1G # for a 1GB sized image file
  $ /sbin/mkfs.ext4 -F persistence
 
 }code
 
-Then copy the #{persistence}# file to the root of a writable partition.
+Once the image file is created, as an example, to make #{/usr}# persistent but only saving the changes you make to that directory and not all the contents of #{/usr}#, you can use the "union" option. If the image file is located in your home directory, copy it to the root of your hard drive's filesystem and mount it in #{/mnt}# as follows:
+
+code{
+
+ # cp persistence /
+ # mount -t ext4 /persistence /mnt
+
+}code
+
+Then, create the #{live-persistence.conf}# file adding content and unmount the image file.
+
+code{
+
+ # echo "/usr union" >> /mnt/live-persistence.conf
+ # umount /mnt
+
+}code
+
+Now, reboot into your live media with the boot parameter "persistence".
 
 3~live-persistence-conf The live-persistence.conf file
 
-A volume with the label #{persistence}# can be configured to make arbitrary directories persistent. The file #{live-persistence.conf}#, located on the volume's filesystem root, controls which directories it makes persistent, and in which way.
+A volume with the label #{persistence}# must be configured by means of the #{live-persistence.conf}# file to make arbitrary directories persistent. That file, located on the volume's filesystem root, controls which directories it makes persistent, and in which way.
 
 How custom overlay mounts are configured is described in full detail in the live-persistence.conf(5) man page, but a simple example should be sufficient for most uses. Let's say we want to make our home directory and APT cache persistent in an ext4 filesystem on the /dev/sdb1 partition:
 
@@ -157,6 +175,7 @@ code{
  # mount -t ext4 /dev/sdb1 /mnt
  # echo "/home" >> /mnt/live-persistence.conf
  # echo "/var/cache/apt" >> /mnt/live-persistence.conf
+ # umount /mnt
 
 }code
 

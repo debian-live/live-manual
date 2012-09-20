@@ -12,24 +12,23 @@ Les configuracions en viu poques vegades són perfectes al primer
 intent. Passar opcions de #{lb config}# des de la línea d'ordres pot estar
 be per construir una imatge una vegada, però és més típic revisar aquestes
 opcions i construir de nou fins que se'n estigui satisfet. Per donar suport
-a aquests canvis, es poden utilitzar scripts auto que assegurin que la seva
-configuració es manté en un estat coherent.
+a aquests canvis, es poden utilitzar scripts auto que assegurin que la
+configuració es manté en un estat consistent.
 
 3~ Per què utilitzar scripts auto? Què fan?
 
-L'ordre #{lb config}# emmagatzema les opcions que se li passen en els
-fitxers de #{config/*}#, juntament amb moltes altres opcions que estan
-establertes als valors per defecte. Si s'executa un cop més, #{lb config}#
-no restablirà cap de les opcios dependents basades en les opcions
-inicials. Així, per exemple, si s'executa #{lb config}# de nou amb un nou
-valor per #{--distribution}#, totes les opcions que en depenen que es van
-omplir per a la distribució per defecte ja no poden funcionar amb la
-nova. Tampoc són aquests fitxers destinats a ser llegits o
-editats. S'emmagatzemen els valors per més de cent opcions, i ningú serà
-capaç de veure aquestes opcions que s'han especificat realment. I,
-finalment, si s'executa #{lb config}# i a continuació s'actualitza
-live-build i canvia el nom d'una opció, #{config/*}# encara conté les
-variables de l'opció vella que ja no són vàlides.
+L'ordre #{lb config}# emmagatzema les opcions que se li passen als fitxers
+de #{config/*}#, juntament amb moltes altres opcions que estan establertes
+als valors per defecte. Si s'executa un cop més, #{lb config}# no restablirà
+cap de les opcios dependents basades en les opcions inicials. Així, per
+exemple, si s'executa #{lb config}# de nou amb un nou valor per
+#{--distribution}#, totes les opcions que en depenen que es van omplir per a
+la distribució per defecte ja no poden funcionar amb la nova. Tampoc són
+aquests fitxers destinats a ser llegits o editats. S'emmagatzemen els valors
+per més de cent opcions, i ningú pot veure les opcions que s'han especificat
+realment. I finalment, si s'executa #{lb config}# i a continuació
+s'actualitza live-build i el nom d'una opció canvia, #{config/*}# encara
+contindrà les variables de l'opció vella que ja no són vàlides.
 
  Per totes aquestes raons, els scripts #{auto/*}# ens fan la vida més
 fàcil. Són simples embolcalls per les ordres #{lb config}#, #{lb build}# i
@@ -82,13 +81,7 @@ juntament amb els altres productes de construcció. I, finalment, quan
 s'utilitza #{lb build}#, es crea un log de la construcció mitjançant
 #{auto/build}# anomenat #{build.log}#.
 
-Nota: Aquí s'utilitza un paràmetre especial #{noauto}# per suprimir un altra
-crida a #{auto/config}#, la qual cosa impedeix la recursivitat
-infinita. Assegurar-se de no eliminarlo accidentalment fent canvis. També,
-tenir cura de que quan es divideix l'ordre #{lb config}# a través de
-diverses línies per facilitar la lectura, com es mostra en l'exemple
-anterior, no s'oblidi la barra invertida (\) al final de cada línia que
-segueix a la següent.
+*{Nota:}* Aquí s'utilitza un paràmetre especial #{noauto}# per suprimir un altra crida a #{auto/config}#, la qual cosa impedeix la recursivitat infinita. Assegurar-se de no eliminarlo accidentalment fent canvis. També, tenir cura de que quan es divideix l'ordre #{lb config}# a través de diverses línies per facilitar la lectura, com es mostra en l'exemple anterior, no s'oblidi la barra invertida (\) al final de cada línia que segueix a la següent.
 
 2~ Clonar una configuració publicada via Git
 
@@ -121,7 +114,7 @@ code{
 }code
 
 Això permet utilitzar #{ldn:}# en qualsevol lloc on cal especificar la
-direcció d'un repositori git. També es pot omitir el sufix #{.git}#,
+direcció d'un repositori git. També es pot omitir el sufix #{.git}#, i així,
 començar una nova imatge amb aquesta configuració és tan fàcil com:
 
 code{

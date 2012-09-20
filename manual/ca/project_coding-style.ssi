@@ -1,31 +1,33 @@
-B~ Coding Style
+B~ Estil de Codi
 
-1~coding-style Coding Style
+1~coding-style Estil de Codi
 
-This chapter documents the coding style used in live-boot and others.
+En aquest capítol es documenta l'estil de codi utilitzat en live-boot i
+altres.
 
-2~ Compatibility
+2~ Compatibilitat
 
-_* Don't use syntax or semantics that are unique to the Bash shell. For
-example, the use of array constructs.
+_* No utilitzar una sintaxi o semàntica que sigui exclusiva de la shell
+Bash. Per exemple, l'ús dels arrays.
 
-_* Only use the POSIX subset - for example, use $(foo) over `foo`.
+_* Utilitzar només el subconjunt POSIX - per exemple, utilitzar $(foo) en
+lloc de `foo`.
 
-_* You can check your scripts with 'sh -n' and 'checkbashisms'.
+_* Es pot comprovar els scripts amb 'sh -n' i 'checkbashisms'.
 
-_* Make sure all shell code runs with 'set -e'.
+_* Assegurar-se que tot el codi funciona amb 'set -e'.
 
-2~ Indenting
+2~ Indentació
 
-_* Always use tabs over spaces.
+_* Utilitzar sempre tabuladors en lloc d'espais.
 
-2~ Wrapping
+2~ Ajust de línia
 
-_* Generally, lines are 80 chars at maximum.
+_* En general, les línies són de 80 caràcters com a màxim.
 
-_* Use the "Linux style" of line breaks:
+_* Utilitzar "l'estil Linux" de salts de línia:
 
-Bad:
+Mal:
 
 code{
 
@@ -35,7 +37,7 @@ code{
 
 }code
 
-Good:
+Bé:
 
 code{
 
@@ -46,9 +48,9 @@ code{
 
 }code
 
-_* The same holds for functions:
+_* El mateix val per a les funcions:
 
-Bad:
+Mal:
 
 code{
 
@@ -58,7 +60,7 @@ code{
 
 }code
 
-Good:
+Bé:
 
 code{
 
@@ -71,29 +73,31 @@ code{
 
 2~ Variables
 
-_* Variables are always in capital letters.
+_* Les variables van sempre en majúscules.
 
-_* Variables that used in #{lb config}# always start with #{LB_}# prefix.
+_* Les variables que s'utilitzen a #{lb config}# sempre comencen amb el
+prefix #{LB_}#
 
-_* Internal temporary variables in live-build should start with the
-#{\_LB_}# prefix.
+_* Les variables temporals internes de live-build comencen amb el prefix
+#{\_LB_}#
 
-_* Local variables start with live-build #{\_\_LB_}# prefix.
+_* Les variables locals comencen amb el prefix live-build #{\_\_LB_}#
 
-_* Variables in connection to a boot parameter in live-config start with
-#{LIVE_}#.
+_* Les variables en relació a un paràmetre d'arrencada de live-config
+comencen amb #{LIVE_}#.
 
-_* All other variables in live-config start with #{_}# prefix.
+_* Totes les altres variables de live-config comencen amb el prefix #{_}#
 
-_* Use braces around variables; e.g. write #{${FOO}}# instead of #{$FOO}#.
+_* Utilitzar claus al voltant de les variables, per exemple, escriure
+#{${FOO}}# en lloc de #{$FOO}#.
 
-_* Always protect variables with quotes to respect potential whitespaces:
-write #{"${FOO}"}# not #{${FOO}}#.
+_* Protegir sempre les variables amb cometes per respectar els espais en
+blanc potencials: escriure #{"${FOO}"}# no #{${FOO}}#.
 
-_* For consistency reasons, always use quotes when assigning values to
-variables:
+_* Per raons de coherència, utilitzar sempre cometes al assignar valors a
+les variables:
 
-Bad:
+Mal:
 
 code{
 
@@ -101,7 +105,7 @@ code{
 
 }code
 
-Good:
+Bé:
 
 code{
 
@@ -109,9 +113,9 @@ code{
 
 }code
 
-_* If multiple variables are used, quote the full expression:
+_* Si s'utilitzen múltiples variables, posar cometes a l'expressió completa:
 
-Bad:
+Mal:
 
 code{
 
@@ -122,7 +126,7 @@ code{
 
 }code
 
-Good:
+Bé:
 
 code{
 
@@ -133,17 +137,17 @@ code{
 
 }code
 
-2~ Miscellaneous
+2~ Misceŀlània
 
-_* Use "#{|}#" (without the surround quotes) as a separator in calls to sed,
-e.g. "#{sed -e 's|foo|bar|'}#" (without "").
+_* Utilitzar "#{|}#" (sense les cometes) com separador en l'ús de sed, per
+exemple, "#{sed -e 's|foo|bar|'}#" (sense "").
 
-_* Don't use the #{test}# command for comparisons or tests, use "#{[}#"
-"#{]}#" (without ""); e.g. "#{if [ -x /bin/foo ]; ...}#" and not "#{if test
--x /bin/foo; ...}#".
+_* No utilitzar l'ordre #{test}# per fer comparacions o tests, utilitzar
+"#{[}#" "#{]}#" (sense ""); per exemple, "#{if [ -x /bin/foo ]; ...}#" i no
+"#{if test -x /bin/foo; ...}#".
 
-_* Use #{case}# wherever possible over #{test}#, as it's easier to read and
-faster in execution.
+_* Utilitzar #{case}# sempre que sigui possible en lloc de #{test}#, ja que
+és més fàcil de llegir i més ràpid en l'execució.
 
-_* Use capitalized names for functions to limit messing with the users
-environment.
+_* Fer servir noms en majúscula per les funcions per evitar conflictes amb
+l'entorn dels usuaris.

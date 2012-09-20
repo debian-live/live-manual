@@ -3,21 +3,24 @@
 1~customizing-package-installation Personalizzare l'installazione dei
 pacchetti
 
-Perhaps the most basic customization of a Debian live system is the
-selection of packages to be included in the image. This chapter guides you
-through the various build-time options to customize live-build's
-installation of packages. The broadest choices influencing which packages
-are available to install in the image are the distribution and archive
-areas. To ensure decent download speeds, you should choose a nearby
-distribution mirror. You can also add your own repositories for backports,
-experimental or custom packages, or include packages directly as files. You
-can define lists of packages, including metapackages which will install many
-related packages at once, such as packages for a particular desktop or
-language. Finally, a number of options give some control over /{apt}/, or if
-you prefer, /{aptitude}/, at build time when packages are installed. You may
-find these handy if you use a proxy, want to disable installation of
-recommended packages to save space, or need to control which versions of
-packages are installed via APT pinning, to name a few possibilities.
+Probabilmente la personalizzazione basilare di un sistema Debian Live è la
+scelta dei pacchetti da includere nell'immagine. Questo capitolo vi guiderà
+tra le varie opzioni in fase di costruzione per personalizzare
+l'installazione dei pacchetti di live-build. Le ampie scelte che influenzano
+quali pacchetti siano disponibili da installare nell'immagine sono le aree
+di distribuzione e archivio. Per essere sicuri di avere una ragionevole
+velocità di scaricamento, dovreste usare un mirror a voi vicino. Si possono
+inoltre aggiungere i propri repository per pacchetti di backport,
+sperimentali o personalizzati, o aggiungere i pacchetti direttamente come
+file. È possibile definire liste di pacchetti, inclusi i metapacchetti che
+installeranno molti pacchetti in una volta sola, come quelli per un certo
+desktop o una certa lingua. Infine una serie di opzioni fornisce un certo
+controllo su /{apt}/, o /{aptitude}/ se si preferisce, in fase di
+compilazione quando i pacchetti sono installati. Ciò può tornare utile se si
+usa un proxy, se si vuole disabilitare l'installazione dei pacchetti
+raccomandati per risparmiare spazio o controllare quali versioni dei
+pacchetti vengono installate con il pinning, giusto per citare alcune
+possibilità.
 
 2~ Sorgenti dei pacchetti
 
@@ -65,7 +68,7 @@ comportamento di live-build per adattarlo alle derivate.
 
 L'archivio Debian è replicato attraverso una vasta rete di mirror in tutto
 il mondo cosicché chiunque in ogni nazione può selezionare il mirror più
-vicino per la migliore velocità di scaricamento. Ciascuna delle opzioni
+vicino per una migliore velocità di scaricamento. Ciascuna delle opzioni
 #{--mirror-*}# determina quale mirror della distribuzione è usato nei vari
 stadi della compilazione. Ricordando dalle {Fasi della
 creazione}#stages-of-the-build che la fase di *{avvio}* è quando il chroot è
@@ -140,7 +143,7 @@ Se si aggiunge la stessa riga in #{config/archives/live.list.binary}#, il
 repository verrà aggiunto alla directory #{/etc/apt/sources.list.d/}# del
 sistema live.
 
-Se il file esiste, saranno prelevati automaticamente.
+Se questi file esistono saranno prelevati automaticamente.
 
 Bisogna inoltre inserire la chiave GPG usata per firmare il repository nei
 file #{config/archives/vostro-repository.key.{binary,chroot}}#.
@@ -155,28 +158,28 @@ code{
 
 2~choosing-packages-to-install Scegliere i pacchetti da installare
 
-There are a number of ways to choose which packages live-build will install
-in your image, covering a variety of different needs. You can simply name
-individual packages to install in a package list. You can also use
-metapackages in those lists, or select them using package control file
-fields. And finally, you may place package files in your #{config/}# tree,
-which is well suited to testing of new or experimental packages before they
-are available from a repository.
+Ci sono diversi modi per scegliere quali pacchetti live-build installerà
+nell'immagine, coprendo una gamma di esigenze diverse. Si possono richiamare
+i singoli pacchetti da un elenco, usare i metapacchetti o selezionarli
+tramite il file control. E infine inserire i file dei pacchetti nell'albero
+#{config/}#, che ben si adatta a provare pacchetti nuovi o sperimentali
+prima che siano disponibili in un repository.
 
 3~package-lists Elenchi di pacchetti
 
-Package lists are a powerful way of expressing which packages should be
-installed. The list syntax supports included files and conditional sections
-which makes it easy to build lists from other lists and adapt them for use
-in multiple configurations. Package names may also be injected into the list
-using shell helpers at build time.
+Gli elenchi di pacchetti sono un potente mezzo per esprimere quali pacchetti
+devono essere installati. La sintassi gestisce file inclusi e sezioni
+condizionali rendendo semplice la creazione di elenchi da altri elenchi e
+adattarli per l'uso in molteplici configurazioni. I nomi dei pacchetti
+possono inoltre essere inseriti nell'elenco utilizzando script shell in fase
+di compilazione.
 
 *{Nota:}* quando si specifica un pacchetto che non esiste, il comportamento di live-build è determinato dalla scelta delle utilità di APT. Per ulteriori dettagli si veda {Scegliere apt o aptitude}#choosing-apt-or-aptitude.
 
-3~using-metapackages Using metapackages
+3~using-metapackages Usare metapacchetti
 
-The simplest way to populate your package list is to use a task metapackage
-maintained by your distribution. For example:
+Il metodo più semplice per popolare una lista di pacchetti è utilizzare un
+metapacchetto task manutenuto dalla distribuzione. Ad esempio:
 
 code{
 
@@ -185,18 +188,18 @@ code{
 
 }code
 
-This supercedes the older predefined list method supported in #{live-build}#
-2.x. Unlike predefined lists, task metapackages are not specific to the
-Debian Live project. Instead, they are maintained by specialist working
-groups within the distribution and therefore reflect the consensus of each
-group about which packages best serve the needs of the intended users. They
-also cover a much broader range of use cases than the predefined lists they
-replace.
+Questo sostituisce il vecchio metodo predefinito dell'elenco supportato in
+#{live-build}# 2.x. A differenza delle liste predefinite, i metapacchetti
+task non sono specifici del progetto Debian Live, ma mantenuti da gruppi
+specializzati all'interno della distribuzione e quindi riflettono il
+consenso di ogni gruppo su quali pacchetti soddisfano meglio le esigenze
+degli utenti. Rispetto al vecchio metodo coprono inoltre una gamma molto più
+ampia di casi d'uso.
 
-All task metapackages are prefixed #{task-}#, so a quick way to determine
-which are available (though it may contain a handful of false hits that
-match the name but aren't metapackages) is to match on the package name
-with:
+Tutti i metapacchetti task iniziano per #{task-}#, un modo per determinare
+quali siano disponibili (sebbene possa contenere alcuni falsi positivi che
+corrispondono al nome ma non sono metapacchetti) è di controllare il nome
+del pacchetto con:
 
 code{
 
@@ -204,12 +207,11 @@ code{
 
 }code
 
-In addition to these, you will find other metapackages with various
-purposes. Some are subsets of broader task packages, like #{gnome-core}#,
-while others are individual specialized parts of a Debian Pure Blend, such
-as the #{education-*}# metapackages. To list all metapackages in the
-archive, install the #{debtags}# package and list all packages with the
-#{role::metapackage}# tag as follows:
+In aggiunta a questi si trovano altri metapacchetti per vari scopi. Alcuni
+sono dei sottoinsiemi dei pacchetti task generici, come #{gnome-core}#,
+mentre altri sono parti individuali di un Debian Pure Blend, come il
+metapacchetto #{education-*}#. Per elencarli tutti installare il pacchetto
+#{debtags}# e usare il tag #{role::metapackage}# come segue:
 
 code{
 
@@ -219,14 +221,14 @@ code{
 
 3~ Elenchi locali dei pacchetti
 
-Whether you list metapackages, individual packages, or a combination of
-both, all local package lists are stored in #{config/package-lists/}#. Since
-more than one list can be used, this lends itself well to modular
-designs. For example, you may decide to devote one list to a particular
-choice of desktop, another to a collection of related packages that might as
-easily be used on top of a different desktop. This allows you to experiment
-with different combinations of sets of packages with a minimum of fuss,
-sharing common lists between different live image projects.
+Se si richiede l'elenco di metapacchetti, pacchetti individuali o una
+combinazione di entrambi tutte le liste dei pacchetti locali vengono salvate
+in #{config/package-lists/}#. Giacché è possibile usare più di una lista,
+ciò si presta bene a progetti modulari. Si può ad esempio decidere di
+dedicare un elenco ad un particolare desktop, un altro ad un insieme di
+pacchetti correlati utilizzabili con desktop differenti. Questo permette di
+sperimentare diverse combinazioni di insiemi di pacchetti con il minimo
+sforzo condividendo gli elenchi tra progetti live differenti.
 
 Per essere processati, gli elenchi dei pacchetti che si trovano in questa
 directory devono avere un suffisso #{.list}# e un suffisso #{.chroot}# o
@@ -243,20 +245,19 @@ installati nel filesystem ma inclusi sul dispositivo live sotto
 dell'installatore; come detto sopra, se si vuole che questo sia identico
 all'elenco della fase chroot, usare semplicemente il suffisso #{.list}#.
 
-3~generated-package-lists Generated package lists
+3~generated-package-lists Elenchi di pacchetti generati
 
-It sometimes happens that the best way to compose a list is to generate it
-with a script. Any line starting with an exclamation point indicates a
-command to be executed within the chroot when the image is built. For
-example, one might include the line #{! grep-aptavail -n -sPackage
--FPriority standard | sort}# in a package list to produce a sorted list of
-available packages with #{Priority: standard}#.
+Talvolta succede che il modo migliore per ottenere un elenco è di generarlo
+con uno script. Ogni riga che inizia con un punto esclamativo indica un
+comando da eseguire nel chroot quando viene creata l'immagine. Ad esempio si
+potrebbe includere la riga #{! grep-aptavail -n -sPackage -FPriority
+standard | sort}# in una lista di pacchetti per produrne una contenente i
+pacchetti con #{Priority: standard}#. disponibili
 
-In fact, selecting packages with the #{grep-aptavail}# command (from the
-#{dctrl-tools}# package) is so useful that #{live-build}# provides a
-#{Packages}# helper script as a convenience. This script takes two
-arguments: #{field}# and #{pattern}#. Thus, you can create a list with the
-following contents:
+Infatti selezionare i pacchetti con il comando #{grep-aptavail}# (presente
+nel pacchetto #{dctrl-tools}#) è talmente utile che #{live-build}# fornisce
+uno script #{Packages}# per comodità; accetta due argomenti: #{field}# e
+#{pattern}#.Per cui si può creare un elenco con il seguente contenuto:
 
 code{
 
@@ -286,8 +287,8 @@ code{
 
 }code
 
-Si può verificare per ognuna di una serie di valori, ad esempio per
-installare /{memtest86+}/ specificando sia #{--architectures i386}# sia
+Si può provare per ognuna di una serie di valori, ad esempio per installare
+/{memtest86+}/ specificando sia #{--architectures i386}# sia
 #{--architectures amd64}#:
 
 code{
@@ -343,11 +344,11 @@ essere creata con un supporto per desktop o lingue multipli per offrire
 all'utente una scelta, ma che non è il comportamento predefinito nella
 creazione di una live.
 
-Because there is no provision made automatically for language tasks, which
-include such things as language-specific fonts and input-method packages, if
-you want them, you need to specify them in your configuration. For example,
-a GNOME desktop image containing support for Japanese might include these
-task metapackages:
+Poiché automaticamente non viene fatta alcuna preparazione sui task della
+lingua, i quali includono cose come caratteri specifici per la lingua e
+pacchetti per i metodi di input, se li si vogliono, vanno specificati nella
+configurazione. Per esempio, un'immagine del desktop GNOME contenente il
+supporto per il giapponese può includere questi metapacchetti task:
 
 code{
 
@@ -430,7 +431,7 @@ propria versione avrà la precedenza sui repository Debian ufficiali. È anche
 ottenibile modificando le preferenze del APT pinning del sistema live, si
 veda {APT pinning}#apt-pinning per maggiori informazioni.
 
-2~ Configurare APT in fase di costruzione
+2~ Configurare APT in fase di compilazione
 
 APT è configurabile tramite una serie di opzioni applicate solo in fase di
 costruzione (la configurazione di APT utilizzata nel sistema live in
@@ -465,7 +466,7 @@ code{
 
 }code
 
-3~tweaking-apt-to-save-space Tweaking APT to save space
+3~tweaking-apt-to-save-space Modificare APT per risparmiare spazio
 
 Si può aver bisogno di risparmiare dello spazio sul supporto dell'immagine,
 in tal caso una o entrambe delle seguenti opzioni possono essere
@@ -485,9 +486,9 @@ che APT necessita di quegli indici per operar enel sistema live, perciò
 prima di eseguire #{apt-cache search}# o #{apt-get install}#, per esempio,
 l'utente deve usare prima #{apt-get update}# per crearli.
 
-If you find the installation of recommended packages bloats your image too
-much, provided you are prepared to deal with the consequences discussed
-below, you may disable that default option of APT with:
+In caso si trovi che l'installazione dei pacchetti raccomandati appesantisca
+troppo l'immagine, a patto si è preparati ad affrontare le conseguenze
+discusse prima, si può disabilitare l'opzione predefinita di APT con:
 
 code{
 
@@ -495,40 +496,40 @@ code{
 
 }code
 
-The most important consequence of turning off recommends is that
-#{live-boot}# and #{live-config}# themselves recommend some packages that
-provide important functionality used by most Live configurations, such as
-#{user-setup}# which #{live-config}# recommends and is used to create the
-live user. In all but the most exceptional circumstances you need to add
-back at least some of these recommends to your package lists or else your
-image will not work as expected, if at all. Look at the recommended packages
-for each of the #{live-*}# packages included in your build and if you are
-not certain you can omit them, add them back into your package lists.
+La conseguenza più importante di disattivare i raccomandati è che
+#{live-boot}# e #{live-config}# raccomandano a loro volta alcuni pacchetti
+che forniscono funzionalità importanti utilizzate da molte configurazioni,
+come #{user-setup}# che #{live-config}# raccomanda ed è usato per creare
+l'utente live. Salvo eccezioni ci sarà bisogno di riaggiungere all'elenco
+almeno alcuni di questi o l'immagine non funzionerà come ci si
+aspetta. Controllare i raccomandati per ognuno dei pacchetti #{live-*}#
+inclusi nella compilazione, se non si è certi di poterli omettere
+aggiungerli nuovamente agli elenchi.
 
-The more general consequence is that if you don't install recommended
-packages for any given package, that is, "packages that would be found
-together with this one in all but unusual installations" (Debian Policy
-Manual, section 7.2), some packages that users of your Live system actually
-need may be omitted. Therefore, we suggest you review the difference turning
-off recommends makes to your packages list (see the #{binary.packages}# file
-generated by #{lb build}#) and re-include in your list any missing packages
-that you still want installed. Alternatively, if you find you only want a
-small number of recommended packages left out, leave recommends enabled and
-set a negative APT pin priority on selected packages to prevent them from
-being installed, as explained in {APT pinning}#apt-pinning.
+La conseguenza generica è che se non si installano i raccomandati per un
+certo pacchetto, ovvero "pacchetti che si trovano assieme a questo eccetto
+in installazioni non usuali" (Debian Policy Manual, paragrafo 7.2), saranno
+omessi alcuni di quelli realmente necessari. Si suggerisce pertanto di
+verificare la differenza ottenuta nel proprio elenco di pacchetti
+disabilitando i raccomandati (vedere il file #{binary.packages}# generato da
+#{lb build}#) e includere nuovamente in esso quelli omessi che si desiderano
+installare. In alternativa, se si desidera tenere un modesto numero di
+raccomandati, li si lasci abilitati e si assegni ad APT un pin di priorità
+negativo sui pacchetti selezionati affinché non vengano installati, come
+spiegato in {APT pinning}#apt-pinning.
 
 3~ Passare opzioni ad apt o aptitude
 
-If there is not a #{lb config}# option to alter APT's behaviour in the way
-you need, use #{--apt-options}# or #{--aptitude-options}# to pass any
-options through to your configured APT tool. See the man pages for #{apt}#
-and #{aptitude}# for details. Note that both options have default values
-that you will need to retain in addition to any overrides you may
-provide. So, for example, suppose you have included something from
-#{snapshot.debian.org}# for testing purposes and want to specify
-#{Acquire::Check-Valid-Until=false}# to make APT happy with the stale
-#{Release}# file, you would do so as per the following example, appending
-the new option after the default value #{--yes}#:
+Se non esiste un'opzione di #{lb config}# per modificare il comportamento di
+APT come si desidera, utilizzare #{--apt-options}# o #{--aptitude-options}#
+per passare qualsiasi argomento tramite lo strumento APT scelto. Per i
+dettagli consultare le pagine di manuale di #{apt}# e #{aptitude}#. Notare
+che entrambe le opzioni hanno valori predefiniti che servirà mantenere in
+aggiunta a qualsiasi altra fornita. Per cui supponendo di aver incluso
+qualcosa da #{snapshot.debian.org}# per fare dei test e volendo specificare
+#{Acquire::Check-Valid-Until=false}# per soddisfare APT con il vecchio file
+#{Release}#, si procederà come nell'esempio riportato di seguito, appendendo
+la nuova opzione al valore predefinito #{--yes}#:
 
 code{
 
@@ -536,15 +537,15 @@ code{
 
 }code
 
-Please check the man pages to fully understand these options and when to use
-them. This is an example only and should not be construed as advice to
-configure your image this way. This option would not be appropriate for,
-say, a final release of a live image.
+Per apprendere a pieno queste opzioni e sapere quando usarle consultare i
+manuali. Questo è solo un esempio e non va interpretato come il modo per
+configurare la propria immagine, non sarebbe appropriato per il rilascio
+finale.
 
-For more complicated APT configurations involving #{apt.conf}# options you
-might want to create a #{config/chroot_apt/apt.conf}# file instead. See also
-the other #{apt-*}# options for a few convenient shortcuts for frequently
-needed options.
+Per configurazioni di APT più complesse che comportano l'uso di opzioni in
+#{apt.conf}# si può voler creare invece il file
+#{config/chroot_apt/apt.conf}#. Vedere anche le altre opzioni #{apt-*}# per
+alcune comode scorciatoie di operazioni di uso frequente.
 
 3~apt-pinning APT pinning
 
@@ -583,15 +584,15 @@ $ lb config --distribution wheezy
 
 }code
 
-Negative pin priorities will prevent a package from being installed, as in
-the case where you do not want a package that is recommended by another
-package. Suppose you are building an LXDE image using #{task-lxde-desktop}#
-in #{config/package-lists/lxde-desktop.list.chroot}#, but don't want the
-user prompted to store wifi passwords in the keyring. This metapackage
-depends on /{lxde-core}/, which recommends /{gksu}/, which in turn
-recommends /{gnome-keyring}/. So you want to omit the recommended
-/{gnome-keyring}/ package. This can be done by adding the following stanza
-to #{config/chroot_apt/preferences}#:
+Un valore negativo della priorità evita che un pacchetto venga installato,
+come nel caso in cui non se ne voglia uno raccomandato da un
+altro. Supponiamo di costruire un'immagine di LXDE utilizzando l'opzione
+#{task-lxde-desktop}# in #{config/package-lists/lxde-desktop.list.chroot} ma
+non si desidera che all'utente venga richiesto di salvare la password del
+wifi nel portachiavi. Questo metapacchetto dipende da /{lxde-core}/ che
+raccomanda /{gksu}/ e che a sua volta raccomanda /{gnome-keyring}/, in
+questo caso si vorrà omettere il pacchetto /{gnome-keyring}/ aggiungendo a
+#{config/chroot_apt/preferences}# la seguente istruzione:
 
 code{
 

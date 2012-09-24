@@ -4,16 +4,17 @@ B~ Personnalisation de l'image binaire
 
 2~ Chargeur d'amorçage
 
-live-build utilise /{syslinux}/  et certains de ses dérivés (selon le type
+live-build utilise /{syslinux}/ et certains de ses dérivés (selon le type
 d'image) comme chargeurs d'amorçage par défaut. Vous pouvez facilement les
 personnaliser de différentes façons qui vont de fournir un thème complet à
+seulement modifier quelques fichiers qui vous permettent, par exemple,
 changer le délai de démarrage ou tout simplement ajouter une image splash
-personnalisée. Certains des exemples de personnalisation suivants utilisent
-méthodes différentes, comme {includes}#includes ou {hooks}#hooks.
+personnalisée.
 
 Si vous souhaitez utiliser un thème complet, vous pouvez spécifier l'option
 #{--syslinux-theme}# (voir man #{lb_config}#). live-build téléchargera le
-thème du miroir et l'installera.
+thème du miroir et l'installera. Vous pouvez également créer votre propre
+thème ou modifier un déjà existant et le télécharger sur votre miroir local.
 
 Imaginez que vous voulez construire un client progress, mais vous voulez
 inclure le thème du serveur parce que vous voulez avoir le menu
@@ -25,10 +26,10 @@ code{
 
 }code
 
-Vous pouvez également créer votre propre thème ou modifier un déjà existant
-et si vous n'avez pas un miroir, vous pouvez ajouter le paquet à
-#{config/packages.chroot}#. Dans ce cas, il n'est pas nécessaire de
-spécifier une autre option.
+Si vous ne voulez pas vous préoccuper de la construction d'un .deb,  ajoutez
+simplement vos fichiers de configuration locaux pour une image par défaut a
+#{config/bootloaders/isolinux}#. Remplaçant  "isolinux" pour *{extlinux}*,
+*{pxelinux}* ou *{syslinux}* en fonction de votre cas d'utilisation.
 
 Il y a aussi la possibilité de faire des petits changements. Par exemple,
 les dérivés de syslinux sont configurés par défaut avec un timeout de 0

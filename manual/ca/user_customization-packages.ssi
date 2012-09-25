@@ -365,6 +365,54 @@ code{
 
 }code
 
+3~kernel-flavour-and-version Kernel flavour and version
+
+Your choice of architecture determines the default flavour or flavours of
+kernel images included in the live system. Each flavour is suffixed to the
+default stub #{linux-image}# to form each metapackage name which in turn
+depends on an exact kernel package to be included in your image.
+
+Thus by default, an #{amd64}# architecture image will include the
+#{linux-image-amd64}# flavour metapackage, and an #{i386}# architecture
+image will include the #{linux-image-486}# and #{linux-image-686-pae}#
+metapackages. At time of writing, these packages depend on
+#{linux-image-3.2.0-4-amd64}#, #{linux-image-3.2.0-4-486}# and
+#{linux-image-3.2.0-4-686-pae}#, respectively.
+
+When more than one kernel package version is available in your configured
+archives, you can specify a different kernel package name stub with the
+#{--linux-packages}# option. For example, supposing you are building an
+#{amd64}# architecture image and add the experimental archive for testing
+purposes so you can install the #{linux-image-3.5-trunk-amd64}# kernel. You
+would configure that image as follows:
+
+code{
+
+ $ lb config --linux-packages linux-image-3.5-trunk
+ $ echo "deb http://ftp.debian.org/debian/ experimental main" > config/archives/experimental.list.chroot
+
+}code
+
+Please note that live-build directly supports only kernels that are
+integrated within the Debian package management system and does not support
+kernels not built as #{.deb}# packages.
+
+The proper and recommended way to deploy your own kernel packages is to
+follow the instructions in the #{kernel-handbook}#, bump the kernel ABI and
+include a complete build of the #{linux}# and matching #{linux-latest}#
+packages in your repository.
+
+When not using a full kernel build with matching metapackages, kernels
+without metapackages can be included in your configuration just the way you
+would any other package and specifying an appropriate #{--linux-packages}#
+stub.
+
+Remember when building custom kernel configurations you must of course
+satisfy the minimum requirements for running a live environment, i.e. at
+least include any kernel modules needed to handle the live filesystem
+(usually aufs and squashfs) and don't forget to suffix the package names
+with the flavour (e.g. #{-amd64}#).
+
 2~installing-modified-or-third-party-packages Instaŀlació de paquets
 modificats o de tercers
 

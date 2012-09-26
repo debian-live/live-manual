@@ -365,27 +365,28 @@ code{
 
 }code
 
-3~kernel-flavour-and-version Kernel flavour and version
+3~kernel-flavour-and-version Tipus i versió del nucli
 
-One or more kernel flavours will be included in your image by default,
-depending on the architecture. You can choose different flavours via the
-#{--linux-flavours}# option. Each flavour is suffixed to the default stub
-#{linux-image}# to form each metapackage name which in turn depends on an
-exact kernel package to be included in your image.
+Depenent de l'arquitectura, s'inclouran per defecte en la imatge un o més
+tipus de nuclis. Es pot triar diferents tipus a través de l'opció
+#{--linux-flavours}#. Cada tipus té un sufix per l'arrel per defecte
+#{linux-image}# per formar el nom de cada metapaquet que al seu torn depèn
+d'un paquet del nucli exacte que s'ha d'incloure en la imatge.
 
-Thus by default, an #{amd64}# architecture image will include the
-#{linux-image-amd64}# flavour metapackage, and an #{i386}# architecture
-image will include the #{linux-image-486}# and #{linux-image-686-pae}#
-metapackages. At time of writing, these packages depend on
-#{linux-image-3.2.0-4-amd64}#, #{linux-image-3.2.0-4-486}# and
-#{linux-image-3.2.0-4-686-pae}#, respectively.
+Així, per defecte, una imatge per l'arquitectura #{amd64}# inclourà el
+metapaquet #{linux-image-amd64}# i una imatge per l'arquitectura #{i386}#
+inclourà els metapaquets #{linux-image-486}# i #{linux-image-686-pae}#. Al
+moment d'escriure, aquests paquets depenen de #{linux-image-3.2.0-4-amd64}#,
+#{linux-image-3.2.0-4-486}# i #{linux-image-3.2.0-4-686-pae}#,
+respectivament.
 
-When more than one kernel package version is available in your configured
-archives, you can specify a different kernel package name stub with the
-#{--linux-packages}# option. For example, supposing you are building an
-#{amd64}# architecture image and add the experimental archive for testing
-purposes so you can install the #{linux-image-3.5-trunk-amd64}# kernel. You
-would configure that image as follows:
+Quan hi ha més d'una versió del nucli disponible en els arxius configurats,
+es pot especificar el nom d'un paquet del nucli amb l'opció
+#{--linux-packages}#. Per exemple, suposem que s'està construint una imatge
+d'arquitectura #{amd64}# i es vol afegir l'arxiu experimental amb propòsits
+de fer proves perquè es pugui instaŀlar el nucli
+#{linux-image-3.5-trunk-amd64}#. Es podria configurar la imatge de la
+següent manera:
 
 code{
 
@@ -394,38 +395,38 @@ code{
 
 }code
 
-3~custom-kernels Custom kernels
+3~custom-kernels Nuclis personalitzats
 
-You can build and include your own custom kernels, so long as they are
-integrated within the Debian package management system. The live-build
-system does not support kernels not built as #{.deb}# packages.
+Es pot construir i incloure nuclis propis personalitzats, sempre que
+s'integrin en el sistema de gestió de paquets de Debian. El sistema de
+live-build no és compatible amb nuclis no construïts com paquets #{.deb}#.
 
-The proper and recommended way to deploy your own kernel packages is to
-follow the instructions in the #{kernel-handbook}#. Remember to modify the
-ABI and flavour suffixes appropriately, then include a complete build of the
-#{linux}# and matching #{linux-latest}# packages in your reposistory.
+La manera apropiada i recomanable d'implementar els propis paquets del nucli
+és seguir les instruccions del #{kernel-handbook}#. Recordar que s'ha de
+modificar l'ABI i els sufixos del tipus apropiadament, i a continuació,
+incloure un conjunt complet dels packets que corresponen amb #{linux}# i
+#{linux-latest}# al repositori.
 
-If you opt to build the kernel packages without the matching metapackages,
-you need to specify an appropriate #{--linux-packages}# stub as discussed in
-{Kernel flavour and version}#kernel-flavour-and-version. As we explain in
-{Installing modified or third-party
-packages}#installing-modified-or-third-party-packages, it is best if you
-include your custom kernel packages in your own repository, though the
-alternatives discussed in that section work as well.
+Si s'opta per construir els paquets del nucli sense els metapaquets a joc,
+cal especificar una arrel #{--linux-packages}# apropiada com s'indica a
+{Tipus i versió del nucli}#kernel-flavour-and-version. Com expliquem a
+{Instaŀlació de paquets modificats o de
+tercers}#installing-modified-or-third-party-packages, és millor si
+s'inclouen els paquets del nucli personalitzat en un repositori propi, tot i
+que les alternatives discutides en aquella secció també funcionen.
 
-It is beyond the scope of this document to give advice on how to customize
-your kernel. However, you must at least ensure your configuration satisfies
-these minimum requirements:
+Està més enllà de l'abast d'aquest document donar consells sobre com
+personalitzar un nucli. No obstant això, cal, almenys, assegurar-se que la
+configuració compleix els següents requisits mínims:
 
-_* Use an initial ramdisk.
+_* Utilitzar una ramdisk inicial.
 
-_* Include the union filesystem module (i.e. usually #{aufs}#).
+_* Incloure el mòdul d'unió del sistema de fitxers (normalment #{aufs}#).
 
-_* Include any other filesystem modules required by your configuration
-(i.e. usually #{squashfs}#).
+_* Incloure tots els mòduls del sistema d'arxius requerits per la
+configuració (normalment #{squashfs}#).
 
-_* Suffix each kernel package name with the kernel flavour
-(e.g. #{-amd64}#).
+_* Afegir el tipus al nom de cada paquet del nucli (e.g. #{-amd64}#).
 
 2~installing-modified-or-third-party-packages Instaŀlació de paquets
 modificats o de tercers

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual\n"
 "POT-Creation-Date: 2012-09-26 17:09+0300\n"
-"PO-Revision-Date: 2012-09-10 23:37+0100\n"
+"PO-Revision-Date: 2012-09-26 19:26+0100\n"
 "Last-Translator: Carlos Zuferri <chals@altorricon.com>\n"
 "Language-Team: none\n"
 "Language: ca\n"
@@ -927,7 +927,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_customization-packages.ssi:213
 msgid "3~kernel-flavour-and-version Kernel flavour and version"
-msgstr ""
+msgstr "3~kernel-flavour-and-version Tipus i versió del nucli"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:215
@@ -938,6 +938,11 @@ msgid ""
 "{linux-image}# to form each metapackage name which in turn depends on an "
 "exact kernel package to be included in your image."
 msgstr ""
+"Depenent de l'arquitectura, s'inclouran per defecte en la imatge un o més "
+"tipus de nuclis. Es pot triar diferents tipus a través de l'opció #{--linux-"
+"flavours}#. Cada tipus té un sufix per l'arrel per defecte #{linux-image}# "
+"per formar el nom de cada metapaquet que al seu torn depèn d'un paquet del "
+"nucli exacte que s'ha d'incloure en la imatge."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:217
@@ -948,6 +953,12 @@ msgid ""
 "time of writing, these packages depend on #{linux-image-3.2.0-4-amd64}#, #"
 "{linux-image-3.2.0-4-486}# and #{linux-image-3.2.0-4-686-pae}#, respectively."
 msgstr ""
+"Així, per defecte, una imatge per l'arquitectura #{amd64}# inclourà el "
+"metapaquet #{linux-image-amd64}# i una imatge per l'arquitectura #{i386}# "
+"inclourà els metapaquets #{linux-image-486}# i #{linux-image-686-pae}#. Al "
+"moment d'escriure, aquests paquets depenen de #{linux-image-3.2.0-4-amd64}#, "
+"#{linux-image-3.2.0-4-486}# i #{linux-image-3.2.0-4-686-pae}#, "
+"respectivament."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:219
@@ -959,6 +970,12 @@ msgid ""
 "so you can install the #{linux-image-3.5-trunk-amd64}# kernel. You would "
 "configure that image as follows:"
 msgstr ""
+"Quan hi ha més d'una versió del nucli disponible en els arxius configurats, "
+"es pot especificar el nom d'un paquet del nucli amb l'opció #{--linux-"
+"packages}#. Per exemple, suposem que s'està construint una imatge "
+"d'arquitectura #{amd64}# i es vol afegir l'arxiu experimental amb propòsits "
+"de fer proves perquè es pugui instaŀlar el nucli #{linux-image-3.5-trunk-"
+"amd64}#. Es podria configurar la imatge de la següent manera:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:224
@@ -967,11 +984,13 @@ msgid ""
 " $ lb config --linux-packages linux-image-3.5-trunk\n"
 " $ echo \"deb http://ftp.debian.org/debian/ experimental main\" > config/archives/experimental.list.chroot\n"
 msgstr ""
+" $ lb config --linux-packages linux-image-3.5-trunk\n"
+" $ echo \"deb http://ftp.debian.org/debian/ experimental main\" > config/archives/experimental.list.chroot\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:228
 msgid "3~custom-kernels Custom kernels"
-msgstr ""
+msgstr "3~custom-kernels Nuclis personalitzats"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:230
@@ -980,6 +999,9 @@ msgid ""
 "integrated within the Debian package management system. The live-build "
 "system does not support kernels not built as #{.deb}# packages."
 msgstr ""
+"Es pot construir i incloure nuclis propis personalitzats, sempre que "
+"s'integrin en el sistema de gestió de paquets de Debian. El sistema de live-"
+"build no és compatible amb nuclis no construïts com paquets #{.deb}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:232
@@ -989,6 +1011,11 @@ msgid ""
 "ABI and flavour suffixes appropriately, then include a complete build of the "
 "#{linux}# and matching #{linux-latest}# packages in your reposistory."
 msgstr ""
+"La manera apropiada i recomanable d'implementar els propis paquets del nucli "
+"és seguir les instruccions del #{kernel-handbook}#. Recordar que s'ha de "
+"modificar l'ABI i els sufixos del tipus apropiadament, i a continuació, "
+"incloure un conjunt complet dels packets que corresponen amb #{linux}# i #"
+"{linux-latest}# al repositori."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:234
@@ -1001,6 +1028,13 @@ msgid ""
 "your own repository, though the alternatives discussed in that section work "
 "as well."
 msgstr ""
+"Si s'opta per construir els paquets del nucli sense els metapaquets a joc, "
+"cal especificar una arrel #{--linux-packages}# apropiada com s'indica a "
+"{Tipus i versió del nucli}#kernel-flavour-and-version. Com expliquem a "
+"{Instaŀlació de paquets modificats o de tercers}#installing-modified-or-"
+"third-party-packages, és millor si s'inclouen els paquets del nucli "
+"personalitzat en un repositori propi, tot i que les alternatives discutides "
+"en aquella secció també funcionen."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:236
@@ -1009,16 +1043,20 @@ msgid ""
 "your kernel. However, you must at least ensure your configuration satisfies "
 "these minimum requirements:"
 msgstr ""
+"Està més enllà de l'abast d'aquest document donar consells sobre com "
+"personalitzar un nucli. No obstant això, cal, almenys, assegurar-se que la "
+"configuració compleix els següents requisits mínims:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:238
 msgid "_* Use an initial ramdisk."
-msgstr ""
+msgstr "_* Utilitzar una ramdisk inicial."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:240
 msgid "_* Include the union filesystem module (i.e. usually #{aufs}#)."
 msgstr ""
+"_* Incloure el mòdul d'unió del sistema de fitxers (normalment #{aufs}#)."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:242
@@ -1026,12 +1064,14 @@ msgid ""
 "_* Include any other filesystem modules required by your configuration (i.e. "
 "usually #{squashfs}#)."
 msgstr ""
+"_* Incloure tots els mòduls del sistema d'arxius requerits per la "
+"configuració (normalment #{squashfs}#)."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:244
 msgid ""
 "_* Suffix each kernel package name with the kernel flavour (e.g. #{-amd64}#)."
-msgstr ""
+msgstr "_* Afegir el tipus al nom de cada paquet del nucli (e.g. #{-amd64}#)."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:246

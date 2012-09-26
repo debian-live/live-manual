@@ -382,11 +382,12 @@ code{
 
 3~kernel-flavour-and-version Versión y tipo de kernel 
 
-La elección de la arquitectura determina el tipo o tipos de las imágenes del
-kernel incluidas por defecto en el sistema en vivo. Cada tipo tiene el
-sufijo de la raíz predeterminada #{linux-image}# para formar el nombre de
-cada metapaquete que a su vez depende del paquete del kernel exacto que debe
-incluirse en la imagen.
+Dependiendo de la arquitectura, se incluyen por defecto en las imágenes uno
+o más tipos de kernels. Se puede elegir entre diferentes tipos utilizando la
+opción #{--linux-flavours}#. Cada tipo tiene el sufijo de la raíz
+predeterminada #{linux-image}# para formar el nombre de cada metapaquete que
+a su vez depende del paquete del kernel exacto que debe incluirse en la
+imagen.
 
 Así, por defecto, una imagen de arquitectura #{amd64}# incluirá el
 metapaquete #{linux-image-amd64}# y una imagen de arquitectura #{i386}#
@@ -395,13 +396,13 @@ el momento de escribir esto, los paquetes dependen, respectivamente, de
 #{linux-image-3.2.0-4-amd64}#, #{linux-image-3.2.0-4-486}# y
 #{linux-image-3.2.0-4-686-pae}#
 
-Cuando hay más de una versión del paquete kernel disponible en los archivos
-configurados, se puede especificar el nombre de un paquete del kernel
-diferente con la opción #{--linux-packages}#. Por ejemplo, suponer que se
-está construyendo una image de arquitectura #{amd64}# y se quiere añadir el
-archivo experimental con propósitos de prueba para que se pueda instalar el
-kernel #{linux-image-3.5-trunk-amd64}#. Se podría configurar la imagen de la
-siguiente manera:
+Cuando hay más de una versión del paquete del kernel disponible en los
+archivos configurados, se puede especificar el nombre de un paquete del
+kernel diferente con la opción #{--linux-packages}#. Por ejemplo, suponer
+que se está construyendo una image de arquitectura #{amd64}# y se quiere
+añadir el archivo experimental a fin de realizar pruebas para que se pueda
+instalar el kernel #{linux-image-3.5-trunk-amd64}#. Se podría configurar la
+imagen de la siguiente manera:
 
 code{
 
@@ -410,26 +411,41 @@ code{
 
 }code
 
-Tener en cuenta que live-build sólo soporta directamente los kernels que se
-integran en el sistema de gestión de paquetes de Debian y no es compatible
-con kernels que no esten en paquetes deb.
+3~custom-kernels Kernels personalizados
+
+Se pueden crear e incluir kernels personalizados, pero hay que tener en
+cuenta que live-build sólo soporta los kernels que se integran en el sistema
+de gestión de paquetes de Debian y no es compatible con kernels que no esten
+en paquetes #{.deb}#.
 
 La manera apropiada y recomendada de implementar los propios paquetes del
-kernel es seguir las instrucciones del #{kernel-handbook}#, añadir el ABI
-del kernel e incluir los paquetes del kernel completo en un repositorio que
-coincidan con los paquetes #{linux}# y #{linux-latest}#.
+kernel es seguir las instrucciones del #{kernel-handbook}#. Recordar
+modificar el ABI y los sufijos de los tipos del kernel e incluir los
+paquetes del kernel completo en un repositorio que coincidan con los
+paquetes #{linux}# y #{linux-latest}#.
 
-Si no se utiliza un kernel completo con los metapaquetes adecuados, se puede
-añadir kernels sin metapaquetes en la configuración tal y como se haría con
-cualquier otro paquete y especificar una raíz adecuada con
-#{--linux-packages}#
+Si se opta por construir los paquetes del kernel sin los metapaquetes
+adecuados, es necesario especificar una raíz #{--linux-packages}# apropiada
+como se indica en {Versión y tipo de kernel}#kernel-flavour-and-version. Tal
+y como se explica en {Instalar paquetes modificados o de
+terceros}#installing-modified-or-third-party-packages, es mejor si se
+incluyen los paquetes del kernel personalizado en un repositorio propio,
+aunque las alternativas discutidas en esa sección también funcionan.
 
-Recordar cuando se construyen configuraciones personalizadas del kernel que,
-por supuesto, se deben cumplir los requisitos mínimos para el funcionamiento
-de un entorno en vivo, es decir, como mínimo, alguna módulos del kernel
-necesarios para manejar el sistema de archivos en vivo (generalmente aufs y
-squashfs) y no olvidarse del sufijo de los nombres de los paquetes con el
-tipo de kernel (por ejemplo, #{-amd64}#).
+Está más allá del alcance de este documento dar consejos sobre cómo
+personalizar un kernel. Sin embargo, se debe por lo menos, asegurarse de que
+la configuración cumple los siguientes requisitos mínimos:
+
+_* Utilizar un ramdisk inicial.
+
+_* Incluir el módulo de unión de sistemas de ficheros (normalmente
+#{aufs}#).
+
+_* Incluir todos los módulos de sistemas de ficheros requeridos por la
+configuración (normalmente #{squashfs}#).
+
+_* Añadir el sufijo al nombre de cada paquete del kernel con el tipo de
+kernel (por ejemplo #{-amd64}#). 
 
 2~installing-modified-or-third-party-packages Instalar paquetes modificados
 o de terceros

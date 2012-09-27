@@ -2,7 +2,7 @@
 
 1~examples Esempi
 
-Questo capitolo affronta alcune costruzioni di esempio per specifici casi
+Questo capitolo affronta alcune compilazioni di esempio per casi specifici
 d'uso con Debian Live. Se si è nuovi nella costruzione di immagini Debian
 Live, raccomandiamo di dare innanzitutto un'occhiata ai tre tutorial in
 sequenza, dato che ciascuno insegna nuove tecniche che aiuteranno nell'uso e
@@ -14,7 +14,7 @@ Per usare questi esempi è necessario un sistema per costruirveli sopra che
 soddisfi i requisiti elencati in {Requisiti}#requirements e avere live-build
 installato come descritto in {Installare live-build}#installing-live-build.
 
-Si noti che, per brevità, in questi esempi non specifichiamo un mirror
+È da notare che per brevità in questi esempi non specifichiamo un mirror
 locale da usare per la costruzione. Usando un mirror locale, si possono
 accelerare considerevolmente i download. Si possono specificare le opzioni
 quando si usa #{lb config}#, come descritto in {Mirror delle distribuzioni
@@ -53,7 +53,7 @@ Esaminare i contenuti della directory #{config/}#; si noterà uno scheletro
 di configurazione pronto per essere personalizzato o, in questo caso, usato
 immediatamente per costruire un'immagine predefinita.
 
-Ora, come utente root, si generi l'immagine salvando un log con #{tee}#.
+Ora, come utente root, generare l'immagine salvando un log con #{tee}#.
 
 code{
 
@@ -61,14 +61,15 @@ code{
 
 }code
 
-Assuming all goes well, after a while, the current directory will contain
-#{binary.hybrid.iso}#. This ISO hybrid image can be booted directly in a
-virtual machine as described in {Testing an ISO image with
-Qemu}#testing-iso-with-qemu and {Testing an ISO image with
-virtualbox}#testing-iso-with-virtualbox, or else imaged onto optical media
-or a USB flash device as described in {Burning an ISO image to a physical
-medium}#burning-iso-image and {Copying an ISO hybrid image to a USB
-stick}#copying-iso-hybrid-to-usb, respectively.
+Presupponendo che tutto vada per il verso giusto, dopo un po' la directory
+corrente conterrà #{binary.hybrid.iso}#. Questa immagine ISO ibrida può
+essere avviata direttamente in una macchina virtuale come descritto in
+{Provare un'immagine ISO con Qemu}#testing-iso-with-qemu e {Provare
+un'immagine ISO con virtualbox-ose}#testing-iso-with-virtualbox, oppure
+masterizzata su un supporto ottico o ancora su una chiavetta USB come
+descritto rispettivamente in {Masterizzare un'immagine ISO su un supporto
+fisico}#burning-iso-image e {Copiare un'immagine ISO ibrida su una penna
+USB}#copying-iso-hybrid-to-usb.
 
 2~tutorial-2 Tutorial 2: servizio browser web
 
@@ -94,7 +95,7 @@ oltre e fornire una configurazione predefinita per il browser web in
 di supporto per la fruizione di vari tipi di contenuti web, ma lasciamo
 questo come esercizio per il lettore.
 
-Si generi l'immagine, ancora come utente root, conservando un log come in
+Generare l'immagine, ancora come utente root, conservando un log come in
 {Tutorial 1}#tutorial-1:
 
 code{
@@ -103,7 +104,7 @@ code{
 
 }code
 
-Di nuovo, si verifichi che l'immagine sia a posto e la si collaudi, come in
+Di nuovo, verificare che l'immagine sia a posto e collaudarla, come in
 {Tutorial 1}#tutorial-1.
 
 2~tutorial-3 Tutorial 3: un'immagine personalizzata
@@ -111,7 +112,7 @@ Di nuovo, si verifichi che l'immagine sia a posto e la si collaudi, come in
 *{Caso d'uso:}* creazione di un progetto per costruire un'immagine personalizzata che contiene i pacchetti preferiti da portare con sé in una chiavetta USB ovunque si vada, e che evolve in revisioni successive allorché i bisogni o le preferenze cambino.
 
 Dal momento che la nostra immagine personalizzata cambierà con le successive
-revisioni, e che vogliamo tener traccia di questi cambiamenti, andando per
+revisioni e che vogliamo tener traccia di questi cambiamenti, andando per
 tentativi ed eventualmente tornando indietro se qualcosa non funziona,
 conserveremo la nostra configurazione nel popolare sistema di controllo di
 versione #{git}#. Useremo anche le migliori pratiche di auto-configurazione
@@ -141,8 +142,8 @@ code{
 
 }code
 
-Perform #{lb config}# to generate the config tree, using the #{auto/config}#
-script you just created:
+Eseguire #{lb config}# per generare l'albero di configurazione utilizzando
+lo script #{auto/config}# appena creato:
 
 code{
 
@@ -158,12 +159,13 @@ code{
 
 }code
 
-First, #{--architectures i386}# ensures that on our #{amd64}# build system,
-we build a 32-bit version suitable for use on most machines. Second, we use
-#{--linux-flavours 686-pae}# because we don't anticipate using this image on
-much older systems. Third, we have chosen the /{lxde}/ task metapackage to
-give us a minimal desktop. And finally, we have added two initial favourite
-packages: /{iceweasel}/ and /{xchat}/.
+Per prima cosa, #{--architectures i386}# assicura che sul nostro sistema
+#{amd64}# costruiamo una versione a 32-bit utilizzabile sulla maggior parte
+delle macchine. In secondo luogo, usiamo #{--linux-flavours 686-pae}# dato
+che non prevediamo di usare questa immagine su sistemi troppo vecchi. Terzo,
+abbiamo scelto il metapacchetto task /{lxde}/ per avere un desktop
+minimale. Infine abbiamo aggiunto due pacchetti preferiti: /{iceweasel}/ e
+/{xchat}/.
 
 Costruire quindi l'immagine:
 
@@ -173,7 +175,7 @@ code{
 
 }code
 
-Si noti che diversamente dai primi due tutorial, non occorre più digitare
+Notare che diversamente dai primi due tutorial non occorre più digitare
 #{2>&1 | tee build.log}# dato che questo è ora incluso in #{auto/build}#.
 
 Una volta che l'immagine è stata collaudata (come in {Tutorial
@@ -223,7 +225,7 @@ code{
 
 }code
 
-Verificare, e quando soddisfatti, eseguire il commit della revisione
+Verificare e, quando soddisfatti, eseguire il commit della revisione
 successiva:
 
 code{
@@ -251,12 +253,12 @@ utenti Debian Live.
 
 *{Caso d'uso:}* creazione di un'immagine con live-build per avviare direttamente un server VNC.
 
-Make a build directory and create an skeletal configuration inside it,
-disabling recommends to make a minimal system. And then create two initial
-package lists: the first one generated with a script provided by live-build
-named #{Packages}# (see {Generated package lists}#generated-package-lists),
-and the second one including /{xorg}/, /{gdm3}/, /{metacity}/ and
-/{xvnc4viewer}/.
+Creare una directory per la compilazione e una configurazione di base al suo
+interno disabilitando i raccomandati per ottenere un sistema
+minimale. Quindi creare due elenchi di pacchetti: il primo generato con uno
+script fornito da live-build chiamato #{Packages}# (vedere {Elenchi di
+pacchetti generati}#generated-package-lists) e il secondo che include
+/{xorg}/, /{gdm3}/, /{metacity}/ e /{xvnc4viewer}/.
 
 code{
 
@@ -268,11 +270,13 @@ code{
 
 }code
 
-As explained in {Tweaking APT to save space}#tweaking-apt-to-save-space you
-may need to re-add some recommended packages to make your image work
-properly.
+Come spiegato in {Modificare APT per risparmiare
+spazio}#tweaking-apt-to-save-space potrebbe essere necessario riaggiungere
+alcuni pacchetti raccomandati al fine di far funzionare l'immagine
+correttamente.
 
-An easy way to list recommends is using /{apt-cache}/. For example:
+Un modo semplice per elencare i raccomandati è usare /{apt-cache}/, ad
+esempio:
 
 code{
 
@@ -280,11 +284,12 @@ code{
 
 }code
 
-In this example we found out that we had to re-include several packages
-recommended by live-config and live-boot: #{user-setup}# to make autologin
-work and #{sudo}# as an essential program to shutdown the system. Besides,
-it could be handy to add #{live-tools}# to be able to copy the image to RAM
-and #{eject}# to eventually eject the live media. So:
+In questo esempio abbiamo scoperto che dobbiamo iserire nuovamente svariati
+pacchetti raccommandati da live-config e live-boot: #{user-setup}# perché il
+login automatico funzioni e #{sudo}# come programma essenziale per spegnere
+il sistema. Oltretutto può essere comodo aggiungere #{live-tools}# per poter
+copiare l'immagine in RAM e #{eject}# per espellere il supporto live alla
+fine. Quindi:
 
 code{
 
@@ -292,10 +297,10 @@ code{
 
 }code
 
-After that, create the directory #{/etc/skel}# in #{config/includes.chroot}#
-and put a custom #{.xsession}# in it for the default user that will launch
-/{metacity}/ and start /{xvncviewer}/, connecting to port #{5901}# on a
-server at #{192.168.1.2}#:
+Successivamente creare la directory #{/etc/skel}# in
+#{config/includes.chroot}# e inserirvi un #{.xsession}# personalizzato per
+l'utente predefinito che lancerà /{metacity}/ e avvierà /{xvncviewer}/
+connesso alla porta #{5901}# su un server con indirizzo #{192.168.1.2}#:
 
 code{
 
@@ -311,7 +316,7 @@ code{
 
 }code
 
-Costruire l'immagine:
+Compilare l'immagine:
 
 code{
 
@@ -323,16 +328,16 @@ Buon divertimento.
 
 2~ Un'immagine base per una chiavetta USB da 128M
 
-*{Use case:}* Create a standard image with some components removed in order to fit on a 128M USB key with a little space left over to use as you see fit.
+*{Caso d'uso:}* creazione di un'immagine standard con alcuni componenti rimossi affinché possa stare su una chiavetta USB da 128M, con un po' di spazio libero da usarsi come meglio si crede.
 
-When optimizing an image to fit a certain media size, you need to understand
-the tradeoffs you are making between size and functionality. In this
-example, we trim only so much as to make room for additional material within
-a 128M media size, but without doing anything to destroy the integrity of
-the packages contained within, such as the purging of locale data via the
-/{localepurge}/ package, or other such "intrusive" optimizations. Of
-particular note, in order to understand what the #{minimal.chroot}# hook
-does you should take a look at #{/usr/share/doc/live-build/examples/hooks}#
+Quando si cerca di ottimizzare un'immagine affinché sia contenuta in un
+supporto, è necessario capire il compromesso che si deve fare tra la
+dimensione e la funzionalità. In questo esempio, taglieremo solo quanto
+basta per far sì che il tutto stia in 128M, senza fare nient'altro che
+distrugga l'integrità dei pacchetti contenuti, come eliminare localizzazioni
+con il pacchetto /{localepurge}/ o altre ottimizzazioni "intrusive". È da
+notare che, per capire cosa fa l'hook #{minimal.chroot}#, si consiglia di
+consultare #{/usr/share/doc/live-build/examples/hooks}#
 
 code{
 
@@ -341,9 +346,10 @@ code{
 
 }code
 
-To make the image work properly, we must re-add, at least, two recommended
-packages which are left out by the #{--apt-recommends false}# option. See
-{Tweaking APT to save space}#tweaking-apt-to-save-space
+Affinché l'immagine funzioni correttamente dobbiamo riaggiungere almeno due
+pacchetti raccomandati lasciati fuori dall'opzione #{--apt-recommends
+false}#. Vedere {Modificare APT per risparmiare
+spazio}#tweaking-apt-to-save-space
 
 code{
 
@@ -359,28 +365,27 @@ code{
 
 }code
 
-On the author's system at the time of writing this, the above configuration
-produced a 95Mbyte image. This compares favourably with the 182Mbyte image
-produced by the default configuration in {Tutorial 1}#tutorial-1.
+All'autore del sistema al momento di scrivere, la seguente configurazione ha
+prodotto un'immagine di 95Mbyte. Comparabile favorevolmente con i 182Mbyte
+prodotta dalla configurazione predefinita nel {Tutorial 1}#tutorial-1.
 
-The biggest space-saver here, compared to building a standard image on an
-#{i386}# architecture system, is to select only the #{486}# kernel flavour
-instead of the default #{-k "486 686-pae"}#. Leaving off APT's indices with
-#{--apt-indices false}# also saves a fair amount of space, the tradeoff
-being that you need to #{apt-get update}# before using apt in the live
-system. Dropping recommended packages with #{--apt-recommends false}# saves
-some additional space, at the expense of omitting some packages you might
-otherwise expect to be there. #{--memtest none}# prevents the installation
-of a memory tester. And finally, the execution of the #{minimal.chroot}#
-hook removes some unused packages and files.
+Ciò che salva più spazio, comparato alla costruzione di un'immagine standard
+su un sistema con architettura #{i386}#, è la selezione del solo kernel
+#{486}# invece che quello predefinito #{-k "486 686-pae"}#. Lasciando fuori
+anche gli indici di APT con #{--apt-indices false}# si può salvare una certa
+quantità di spazio, il compromesso è usare #{apt-get update}# prima di usare
+apt nel sistema live. Saltare i pacchetti raccomandati con
+#{--apt-recommends  false}# salva altro spazio, a scapito di alcuni
+pacchetti che ci si aspetta di trovare. #{--memtest none}# evita
+l'installazione del programma per testare la memoria, infine l'esecuzione
+dell'hook #{minimal.chroot}# rimuove alcuni pacchetti e file non utilizzati.
 
-Using other hooks, like for example the #{stripped.chroot}# hook found in
-#{/usr/share/doc/live-build/examples/hooks}#, may shave off additional small
-amounts of space and produce an image of 76MB. But it is up to you to decide
-if the functionality that is sacrificed with each size optimization is worth
-the loss of functionality.
+Utilizzando altri hook, come #{stripped.chroot}# situato in
+#{/usr/share/doc/live-build/examples/hooks}#, si può ridurre un'ulteriore
+quantità di spazio occupato che produce un'immagine di 76MB. Sta a voi
+decidere se queste ottimizzazioni valgono la perdita di funzionalità.
 
-2~ Un desktop KDE localizzato e l'installer
+2~ Un desktop KDE localizzato e l'installatore
 
 *{Caso d'uso:}* creazione di un'immagine con il desktop KDE, localizzato per il portoghese brasiliano e che includa l'installatore.
 
@@ -410,8 +415,8 @@ code{
 
 }code
 
-Con questo comando, si è scoperto che il task si chiama, abbastanza
-chiaramente, brazilian-portuguese. Ora per trovare i task correlati:
+Con questo comando, si è chiaramente scoperto che il task si chiama
+brazilian-portuguese. Ora per trovare i task correlati:
 
 code{
 
@@ -421,12 +426,12 @@ code{
 
 }code
 
-At boot time we will generate the *{pt_BR.UTF-8}* locale and select the
-*{pt}* keyboard layout. Now let's put the pieces together. Recalling from
-{Using metapackages}#using-metapackages that task metapackages are prefixed
-#{task-}#, we just specify these language boot parameters, then add standard
-priority packages and all our discovered task metapackages to our package
-list as follows:
+Durante il boot verrà generata la localizzazione *{pt_BR.UTF-8}* e
+selezionato il layout di tastiera *{pt}, mettiamo ora insieme questi
+pezzi. Ricordando che i metapacchetti task iniziano con #{task-}# (come
+descritto in {Usare metapacchetti}#using-metapackages), specifichiamo questi
+parametri d'avvio per la lingua, quindi aggiungiamo i pacchetti con priorità
+standard e tutti i metapacchetti task al nostro elenco in questo modo:
 
 code{
 
@@ -444,8 +449,8 @@ code{
 
 }code
 
-Si noti che è stato incluso il pacchetto debian-installer-launcher in modo
-da poter lanciare l'installer dal desktop della live, e che è stato anche
+Notare che è stato incluso il pacchetto debian-installer-launcher in modo da
+poter lanciare l'installer dal desktop della live, e che è stato anche
 specificato il kernel 486, dato che attualmente è necessario che il kernel
 dell'installer e quello del sistema live coincidano affinché il launcher
 funzioni correttamente.

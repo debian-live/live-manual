@@ -181,11 +181,10 @@ _* an image file located on the root of any readable filesystem (even an
 NTFS partition of a foreign OS), identified by its file name.
 
 The volume label for overlays must be #{persistence}# but it will be ignored
-unless it contains in its root a file named #{live-persistence.conf}# which
-is used to fully customize the volume's persistence, this is to say,
-specifying the directories that you want to save in your persistence volume
-after a reboot. See {The live-persistence.conf file}#live-persistence-conf
-for more details.
+unless it contains in its root a file named #{persistence.conf}# which is
+used to fully customize the volume's persistence, this is to say, specifying
+the directories that you want to save in your persistence volume after a
+reboot. See {The persistence.conf file}#persistence-conf for more details.
 
 Here are some examples of how to prepare a volume to be used for
 persistence. It can be, for instance, an ext4 partition on a hard disk or on
@@ -232,27 +231,27 @@ code{
 
 }code
 
-Then, create the #{live-persistence.conf}# file adding content and unmount
-the image file.
+Then, create the #{persistence.conf}# file adding content and unmount the
+image file.
 
 code{
 
- # echo "/usr union" >> /mnt/live-persistence.conf
+ # echo "/usr union" >> /mnt/persistence.conf
  # umount /mnt
 
 }code
 
 Now, reboot into your live media with the boot parameter "persistence".
 
-3~live-persistence-conf The live-persistence.conf file
+2~persistence Persistenza
 
-A volume with the label #{persistence}# must be configured by means of the
-#{live-persistence.conf}# file to make arbitrary directories
-persistent. That file, located on the volume's filesystem root, controls
-which directories it makes persistent, and in which way.
+Un volume con una label #{persistence}# può essere configurato per creare
+directory persistenti arbitrarie. Il file #{persistence.conf}#, situato
+nella directory radice del filesystem del volume, controlla quali rendere
+persistenti e in che modo.
 
-Nella manpage di live-persistence.conf(5) è descritto dettagliatamente come
-è configurato il mount degli strati personalizzati, ma un semplice esempio
+Nella manpage di persistence.conf(5) è descritto dettagliatamente come è
+configurato il mount degli strati personalizzati, ma un semplice esempio
 dovrebbe essere sufficiente per la maggior parte degli usi. Supponendo di
 voler creare la directory home e quella della cache di APT in modo
 persistente in un filesystem ext4 sulla partizione /dev/sdb1:
@@ -261,8 +260,8 @@ code{
 
  # mkfs.ext4 -L persistence /dev/sdb1
  # mount -t ext4 /dev/sdb1 /mnt
- # echo "/home" >> /mnt/live-persistence.conf
- # echo "/var/cache/apt" >> /mnt/live-persistence.conf
+ # echo "/home" >> /mnt/persistence.conf
+ # echo "/var/cache/apt" >> /mnt/persistence.conf
  # umount /mnt
 
 }code
@@ -271,19 +270,19 @@ Quindi riavviare. Durante il primo avvio il contenuto di #{/home}# e
 #{/var/cache/apt}# saranno copiati nel volume persistente e da allora tutte
 le modifiche a queste directory risiederanno in modo persistente sul
 volume. C'è da considerare che tutti i path elencati nel file
-#{live-persistence.conf}# non possono contenere spazi o i caratteri speciali
+#{persistence.conf}# non possono contenere spazi o i caratteri speciali
 #{.}# e #{..}#; inoltre, né #{/live}# (o nessuna delle sue sottodirectory)
 né #{/}# può essere resa persistente tramite i mount personalizzati.
 
 Possono essere utilizzati svariati volumi di stratificazione personalizzati
-(con i rispettivi file #{live-persistence.conf}#) allo stesso tempo ma se
-questi creano la stessa directory persistente, ne verrà usata solo una. Se
-due directory montate sono "nidificate" (una è la sottodirectory
-dell'altra), la superiore sarà montata per prima, per cui nessuna operazione
-di mount verrà sovrastata dall'altra. I mount nidificati personalizzati sono
-problematici se sono elencati nello stesso file #{live-persistence.conf}. Se
-si ha davvero la necessità (in genere non si dovrebbe averla), consultare la
-manpage di live-persistence.conf(5) per sapere come gestire questo caso.
+(con i rispettivi file #{persistence.conf}#) allo stesso tempo ma se questi
+creano la stessa directory persistente, ne verrà usata solo una. Se due
+directory montate sono "nidificate" (una è la sottodirectory dell'altra), la
+superiore sarà montata per prima, per cui nessuna operazione di mount verrà
+sovrastata dall'altra. I mount nidificati personalizzati sono problematici
+se sono elencati nello stesso file #{persistence.conf}. Se si ha davvero la
+necessità (in genere non si dovrebbe averla), consultare la manpage di
+persistence.conf(5) per sapere come gestire questo caso.
 
 3~ Using more than one persistence store
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual\n"
 "POT-Creation-Date: 2012-09-26 17:09+0300\n"
-"PO-Revision-Date: 2012-09-11 00:10+0100\n"
+"PO-Revision-Date: 2012-09-27 18:06+0100\n"
 "Last-Translator: Carlos Zuferri <chals@altorricon.com>\n"
 "Language-Team: none\n"
 "Language: fr\n"
@@ -927,7 +927,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_customization-packages.ssi:213
 msgid "3~kernel-flavour-and-version Kernel flavour and version"
-msgstr ""
+msgstr "3~kernel-flavour-and-version Version et type de noyau"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:215
@@ -938,6 +938,11 @@ msgid ""
 "{linux-image}# to form each metapackage name which in turn depends on an "
 "exact kernel package to be included in your image."
 msgstr ""
+"Un ou plusieurs types de noyau seront inclus dans votre image par défaut, en "
+"fonction de l'architecture. Vous pouvez choisir différents types avec "
+"l'option #{--linux-flavours}#. Chaque type est suffixé au bout par défaut #"
+"{linux-image}# pour former le nom de chaque métapaquet qui dépend à son tour "
+"d'un paquet noyau exacte à inclure dans votre image."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:217
@@ -948,6 +953,12 @@ msgid ""
 "time of writing, these packages depend on #{linux-image-3.2.0-4-amd64}#, #"
 "{linux-image-3.2.0-4-486}# and #{linux-image-3.2.0-4-686-pae}#, respectively."
 msgstr ""
+"Ainsi, par défaut, une image pour l'architecture #{amd64}# comprendra le "
+"métapaquet #{linux-image-amd64}#, et une image pour l'architecture #{i386}# "
+"comprendra les métapaquets #{linux-image-486}# et #{linux-image-686-pae}#. "
+"Au moment de la rédaction, ces paquets dépendent de #{linux-image-3.2.0-4-"
+"amd64}#, #{linux-image-3.2.0-4-486}# et #{linux-image-3.2.0-4-686-pae}#, "
+"respectivement."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:219
@@ -959,6 +970,13 @@ msgid ""
 "so you can install the #{linux-image-3.5-trunk-amd64}# kernel. You would "
 "configure that image as follows:"
 msgstr ""
+"Lorsque plus d'une version du paquet du noyau est disponible dans vos "
+"archives configurées, vous pouvez spécifier un nom du paquet du noyau "
+"différent avec l'option #{--linux-packages}#. Par exemple, supposons que "
+"vous construisez une image pour l'architecture #{amd64}# et ajoutez "
+"l'archive expérimentale pour faire des test afin que vous puissiez installer "
+"le noyau #{linux-image-3.5-trunk-amd64}#. Vous devez configurer cette image "
+"comme suit:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:224
@@ -967,11 +985,13 @@ msgid ""
 " $ lb config --linux-packages linux-image-3.5-trunk\n"
 " $ echo \"deb http://ftp.debian.org/debian/ experimental main\" > config/archives/experimental.list.chroot\n"
 msgstr ""
+" $ lb config --linux-packages linux-image-3.5-trunk\n"
+" $ echo \"deb http://ftp.debian.org/debian/ experimental main\" > config/archives/experimental.list.chroot\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:228
 msgid "3~custom-kernels Custom kernels"
-msgstr ""
+msgstr "3~custom-kernels Noyaux personnalisés"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:230
@@ -980,6 +1000,10 @@ msgid ""
 "integrated within the Debian package management system. The live-build "
 "system does not support kernels not built as #{.deb}# packages."
 msgstr ""
+"Vous pouvez créer et inclure vos propres noyaux personnalisés, à condition "
+"qu'ils soient intégrés dans le système de gestion des paquets Debian. Le "
+"système de live-build ne supporte pas les noyaux qui ne sont pas construits "
+"sous forme de paquets #{.deb}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:232
@@ -989,6 +1013,11 @@ msgid ""
 "ABI and flavour suffixes appropriately, then include a complete build of the "
 "#{linux}# and matching #{linux-latest}# packages in your reposistory."
 msgstr ""
+"La bonne façon et recommandée de déployer vos propres paquets du noyau est "
+"de suivre les instructions dans le #{kernel-handbook}#. N'oubliez pas de "
+"modifier l'ABI et les suffixes de manière appropriée, puis inclure une "
+"construction complète des paquets #{linux}# et #{linux-latest}# dans votre "
+"dépôt."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:234
@@ -1001,6 +1030,13 @@ msgid ""
 "your own repository, though the alternatives discussed in that section work "
 "as well."
 msgstr ""
+"Si vous optez pour construire les paquets du noyau sans les métapaquets "
+"correspondants, vous devez spécifier un bout #{--linux-packages}# appropriée "
+"tel que discuté dans {Version et type de noyau}#kernel-flavour-and-version. "
+"Comme nous l'expliquons dans {Installation de paquets modifiés ou de tiers}"
+"#installing-modified-or-third-party-packages, il est préférable si vous "
+"incluez vos paquets de noyau personnalisé à votre propre dépôt, bien que les "
+"alternatives discutées dans cette section fonctionnent aussi bien."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:236
@@ -1009,16 +1045,20 @@ msgid ""
 "your kernel. However, you must at least ensure your configuration satisfies "
 "these minimum requirements:"
 msgstr ""
+"Il est hors cadre de ce document donner des conseils sur la façon de "
+"personnaliser votre noyau. Toutefois, vous devez au moins vous assurer que "
+"votre configuration répond à ces exigences minimales:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:238
 msgid "_* Use an initial ramdisk."
-msgstr ""
+msgstr "_* Utilisez un ramdisk initial."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:240
 msgid "_* Include the union filesystem module (i.e. usually #{aufs}#)."
 msgstr ""
+"_* Inclure un module d'union de systèmes de fichiers (par exemple #{aufs}#)."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:242
@@ -1026,12 +1066,16 @@ msgid ""
 "_* Include any other filesystem modules required by your configuration (i.e. "
 "usually #{squashfs}#)."
 msgstr ""
+"_* Inclure tous les autres modules du système de fichiers requis pour votre "
+"configuration (habituellement #{squashfs}#)."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:244
 msgid ""
 "_* Suffix each kernel package name with the kernel flavour (e.g. #{-amd64}#)."
 msgstr ""
+"_* Suffixe chaque nom de paquet du noyau avec le type du noyau (par exemple#"
+"{-amd64}#)."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:246
@@ -1039,7 +1083,7 @@ msgid ""
 "2~installing-modified-or-third-party-packages Installing modified or third-"
 "party packages"
 msgstr ""
-"2~installing-modified-or-third-party-packages Installation des paquets "
+"2~installing-modified-or-third-party-packages Installation de paquets "
 "modifiés ou de tiers"
 
 #. type: Plain text

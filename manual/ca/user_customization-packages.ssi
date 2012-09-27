@@ -365,6 +365,69 @@ code{
 
 }code
 
+3~kernel-flavour-and-version Tipus i versió del nucli
+
+Depenent de l'arquitectura, s'inclouran per defecte en la imatge un o més
+tipus de nuclis. Es pot triar diferents tipus a través de l'opció
+#{--linux-flavours}#. Cada tipus té un sufix per l'arrel per defecte
+#{linux-image}# per formar el nom de cada metapaquet que al seu torn depèn
+d'un paquet del nucli exacte que s'ha d'incloure en la imatge.
+
+Així, per defecte, una imatge per l'arquitectura #{amd64}# inclourà el
+metapaquet #{linux-image-amd64}# i una imatge per l'arquitectura #{i386}#
+inclourà els metapaquets #{linux-image-486}# i #{linux-image-686-pae}#. Al
+moment d'escriure, aquests paquets depenen de #{linux-image-3.2.0-4-amd64}#,
+#{linux-image-3.2.0-4-486}# i #{linux-image-3.2.0-4-686-pae}#,
+respectivament.
+
+Quan hi ha més d'una versió del nucli disponible en els arxius configurats,
+es pot especificar el nom d'un paquet del nucli amb l'opció
+#{--linux-packages}#. Per exemple, suposem que s'està construint una imatge
+d'arquitectura #{amd64}# i es vol afegir l'arxiu experimental amb propòsits
+de fer proves perquè es pugui instaŀlar el nucli
+#{linux-image-3.5-trunk-amd64}#. Es podria configurar la imatge de la
+següent manera:
+
+code{
+
+ $ lb config --linux-packages linux-image-3.5-trunk
+ $ echo "deb http://ftp.debian.org/debian/ experimental main" > config/archives/experimental.list.chroot
+
+}code
+
+3~custom-kernels Nuclis personalitzats
+
+Es pot construir i incloure nuclis propis personalitzats, sempre que
+s'integrin en el sistema de gestió de paquets de Debian. El sistema de
+live-build no és compatible amb nuclis no construïts com paquets #{.deb}#.
+
+La manera apropiada i recomanable d'implementar els propis paquets del nucli
+és seguir les instruccions del #{kernel-handbook}#. Recordar que s'ha de
+modificar l'ABI i els sufixos del tipus apropiadament, i a continuació,
+incloure un conjunt complet dels packets que corresponen amb #{linux}# i
+#{linux-latest}# al repositori.
+
+Si s'opta per construir els paquets del nucli sense els metapaquets a joc,
+cal especificar una arrel #{--linux-packages}# apropiada com s'indica a
+{Tipus i versió del nucli}#kernel-flavour-and-version. Com expliquem a
+{Instaŀlació de paquets modificats o de
+tercers}#installing-modified-or-third-party-packages, és millor si
+s'inclouen els paquets del nucli personalitzat en un repositori propi, tot i
+que les alternatives discutides en aquella secció també funcionen.
+
+Està més enllà de l'abast d'aquest document donar consells sobre com
+personalitzar un nucli. No obstant això, cal, almenys, assegurar-se que la
+configuració compleix els següents requisits mínims:
+
+_* Utilitzar una ramdisk inicial.
+
+_* Incloure el mòdul d'unió del sistema de fitxers (normalment #{aufs}#).
+
+_* Incloure tots els mòduls del sistema d'arxius requerits per la
+configuració (normalment #{squashfs}#).
+
+_* Afegir el tipus al nom de cada paquet del nucli (e.g. #{-amd64}#).
+
 2~installing-modified-or-third-party-packages Instaŀlació de paquets
 modificats o de tercers
 

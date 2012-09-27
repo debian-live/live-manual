@@ -191,11 +191,11 @@ llegibles (fins i tot una partició NTFS d'un altre SO), identificat pel seu
 nom de fitxer.
 
 L'etiqueta de volum per als overlays ha de ser #{persistence}# però serà
-passat per alt a menys que contingui un fitxer anomenat
-#{live-persistence.conf}# que s'utilitza per personalitzar completament la
-persistència del volum, és a dir, especificar els directoris que es volen
-conservar en el volum de persistència després de reiniciar. Veure {El fitxer
-live-persistence.conf}#live-persistence-conf per més detalls.
+passat per alt a menys que contingui un fitxer anomenat #{persistence.conf}#
+que s'utilitza per personalitzar completament la persistència del volum, és
+a dir, especificar els directoris que es volen conservar en el volum de
+persistència després de reiniciar. Veure {El fitxer
+persistence.conf}#persistence-conf per més detalls.
 
 Aquests són alguns exemples de com preparar un volum que s'utilitzarà per a
 la persistència. Pot ser, per exemple, una partició ext4 en un disc dur o en
@@ -242,12 +242,12 @@ code{
 
 }code
 
-A continuació, crear el fitxer #{live-persistence.conf}# afegint contingut i
+A continuació, crear el fitxer #{persistence.conf}# afegint contingut i
 desmuntar el fitxer imatge.
 
 code{
 
- # echo "/usr union" >> /mnt/live-persistence.conf
+ # echo "/usr union" >> /mnt/persistence.conf
  # umount /mnt
 
 }code
@@ -255,16 +255,16 @@ code{
 Ara, reiniciar el sistema i arrencar el medi en viu amb el paràmetre
 d'arrencada "persistence".
 
-3~live-persistence-conf El fitxer live-persistence.conf
+3~persistence-conf El fitxer persistence.conf
 
 Un volum amb l'etiqueta #{persistence}# ha de ser configurat mitjançant un
-fitxer #{live-persistence.conf}# per fer directoris arbitraris
+fitxer #{persistence.conf}# per fer directoris arbitraris
 persistents. Aquest fitxer, ubicat a l'arrel del sistema de fitxers del
 volum, controla els directoris que fa persistents, i de quina manera.
 
-A la pàgina del manual de live-persistence.conf(5) s'explica en detall com
-es configuran els muntatges de les overlays, però un simple exemple hauria
-de ser suficient per la majoria d'usos. Si es vol fer el directori home i el
+A la pàgina del manual de persistence.conf(5) s'explica en detall com es
+configuran els muntatges de les overlays, però un simple exemple hauria de
+ser suficient per la majoria d'usos. Si es vol fer el directori home i el
 directori del cache d'APT persistents en un sistema de fitxers ext4 a la
 partició /dev/sdb1:
 
@@ -272,8 +272,8 @@ code{
 
  # mkfs.ext4 -L persistence /dev/sdb1
  # mount -t ext4 /dev/sdb1 /mnt
- # echo "/home" >> /mnt/live-persistence.conf
- # echo "/var/cache/apt" >> /mnt/live-persistence.conf
+ # echo "/home" >> /mnt/persistence.conf
+ # echo "/var/cache/apt" >> /mnt/persistence.conf
  # umount /mnt
 
 }code
@@ -282,21 +282,21 @@ Després es reinicia el sistema. Durant la primera arrencada el contingut de
 #{/home}# i #{/var/cache/apt}# es copiaran en el volum de la persistència, i
 d'aquí en endavant tots els canvis en aquests directoris es guardaran en el
 volum de la persistència. Tenir en compte que les rutes que apareixen en el
-fitxer #{live-persistence.conf}# no poden contenir espais en blanc o els
+fitxer #{persistence.conf}# no poden contenir espais en blanc o els
 components especials #{.}# i #{..}#. A més, ni #{/live}# (o qualsevol dels
 seus subdirectoris) ni #{/}# es poden fer persistents utilitzant muntatges
 personalitzats.
 
 Es poden utilitzar diversos volums diferents de muntatges personalitzats
-(amb els seus propis fitxers #{live-persistence.conf}# però si diversos
-volums fan que el mateix directori sigui persistent, només s'utilitzarà un
+(amb els seus propis fitxers #{persistence.conf}# però si diversos volums
+fan que el mateix directori sigui persistent, només s'utilitzarà un
 d'ells. Si qualsevol dels dos muntatges són "imbricats" (és a dir, un és un
 sub-directori de l'altre) el directori pare es muntarà abans que el
 directori fill per evitar que amb el muntatge un directori no sigui ocultat
 per l'altre. Els muntatges personalitzats imbricats són problemàtics si
-estan enumerats en el mateix fitxer #{live-persistence.conf}#. Veure la
-pàgina del manual live-persistence.conf(5) per saber com manejar aquest cas,
-si realment es necessita (una pista: en general no cal fer-ho).
+estan enumerats en el mateix fitxer #{persistence.conf}#. Veure la pàgina
+del manual persistence.conf(5) per saber com manejar aquest cas, si realment
+es necessita (una pista: en general no cal fer-ho).
 
 3~ Utilitzar més d'un magatzem de persistència
 

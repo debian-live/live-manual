@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual\n"
-"POT-Creation-Date: 2012-09-13 23:09+0300\n"
+"POT-Creation-Date: 2012-09-27 11:12+0300\n"
 "PO-Revision-Date: 2010-11-30 11:40+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -53,13 +53,14 @@ msgstr ""
 #: en/user_customization-packages.ssi:177
 #: en/user_customization-packages.ssi:187
 #: en/user_customization-packages.ssi:205
-#: en/user_customization-packages.ssi:269
-#: en/user_customization-packages.ssi:281
-#: en/user_customization-packages.ssi:291
-#: en/user_customization-packages.ssi:305
-#: en/user_customization-packages.ssi:321
+#: en/user_customization-packages.ssi:221
+#: en/user_customization-packages.ssi:302
+#: en/user_customization-packages.ssi:314
+#: en/user_customization-packages.ssi:324
 #: en/user_customization-packages.ssi:338
-#: en/user_customization-packages.ssi:346 en/user_customization-runtime.ssi:14
+#: en/user_customization-packages.ssi:354
+#: en/user_customization-packages.ssi:371
+#: en/user_customization-packages.ssi:379 en/user_customization-runtime.ssi:14
 #: en/user_customization-runtime.ssi:27 en/user_customization-runtime.ssi:45
 #: en/user_customization-runtime.ssi:57 en/user_customization-runtime.ssi:76
 #: en/user_customization-runtime.ssi:84 en/user_customization-runtime.ssi:93
@@ -126,13 +127,14 @@ msgstr "code{"
 #: en/user_customization-packages.ssi:183
 #: en/user_customization-packages.ssi:193
 #: en/user_customization-packages.ssi:211
-#: en/user_customization-packages.ssi:273
-#: en/user_customization-packages.ssi:285
-#: en/user_customization-packages.ssi:295
-#: en/user_customization-packages.ssi:309
-#: en/user_customization-packages.ssi:334
+#: en/user_customization-packages.ssi:226
+#: en/user_customization-packages.ssi:306
+#: en/user_customization-packages.ssi:318
+#: en/user_customization-packages.ssi:328
 #: en/user_customization-packages.ssi:342
-#: en/user_customization-packages.ssi:351 en/user_customization-runtime.ssi:21
+#: en/user_customization-packages.ssi:367
+#: en/user_customization-packages.ssi:375
+#: en/user_customization-packages.ssi:384 en/user_customization-runtime.ssi:21
 #: en/user_customization-runtime.ssi:31 en/user_customization-runtime.ssi:49
 #: en/user_customization-runtime.ssi:70 en/user_customization-runtime.ssi:80
 #: en/user_customization-runtime.ssi:89 en/user_customization-runtime.ssi:98
@@ -453,11 +455,10 @@ msgstr ""
 #: en/user_customization-runtime.ssi:118
 msgid ""
 "The volume label for overlays must be #{persistence}# but it will be ignored "
-"unless it contains in its root a file named #{live-persistence.conf}# which "
-"is used to fully customize the volume's persistence, this is to say, "
-"specifying the directories that you want to save in your persistence volume "
-"after a reboot. See {The live-persistence.conf file}#live-persistence-conf "
-"for more details."
+"unless it contains in its root a file named #{persistence.conf}# which is "
+"used to fully customize the volume's persistence, this is to say, specifying "
+"the directories that you want to save in your persistence volume after a "
+"reboot. See {The persistence.conf file}#persistence-conf for more details."
 msgstr ""
 
 #. type: Plain text
@@ -528,15 +529,15 @@ msgstr ""
 #. type: Plain text
 #: en/user_customization-runtime.ssi:156
 msgid ""
-"Then, create the #{live-persistence.conf}# file adding content and unmount "
-"the image file."
+"Then, create the #{persistence.conf}# file adding content and unmount the "
+"image file."
 msgstr ""
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:161
 #, no-wrap
 msgid ""
-" # echo \"/usr union\" >> /mnt/live-persistence.conf\n"
+" # echo \"/usr union\" >> /mnt/persistence.conf\n"
 " # umount /mnt\n"
 msgstr ""
 
@@ -548,14 +549,14 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:167
-msgid "3~live-persistence-conf The live-persistence.conf file"
+msgid "3~persistence-conf The persistence.conf file"
 msgstr ""
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:169
 msgid ""
 "A volume with the label #{persistence}# must be configured by means of the #"
-"{live-persistence.conf}# file to make arbitrary directories persistent. That "
+"{persistence.conf}# file to make arbitrary directories persistent. That "
 "file, located on the volume's filesystem root, controls which directories it "
 "makes persistent, and in which way."
 msgstr ""
@@ -564,8 +565,8 @@ msgstr ""
 #: en/user_customization-runtime.ssi:171
 msgid ""
 "How custom overlay mounts are configured is described in full detail in the "
-"live-persistence.conf(5) man page, but a simple example should be sufficient "
-"for most uses. Let's say we want to make our home directory and APT cache "
+"persistence.conf(5) man page, but a simple example should be sufficient for "
+"most uses. Let's say we want to make our home directory and APT cache "
 "persistent in an ext4 filesystem on the /dev/sdb1 partition:"
 msgstr ""
 
@@ -575,8 +576,8 @@ msgstr ""
 msgid ""
 " # mkfs.ext4 -L persistence /dev/sdb1\n"
 " # mount -t ext4 /dev/sdb1 /mnt\n"
-" # echo \"/home\" >> /mnt/live-persistence.conf\n"
-" # echo \"/var/cache/apt\" >> /mnt/live-persistence.conf\n"
+" # echo \"/home\" >> /mnt/persistence.conf\n"
+" # echo \"/var/cache/apt\" >> /mnt/persistence.conf\n"
 " # umount /mnt\n"
 msgstr ""
 
@@ -586,23 +587,23 @@ msgid ""
 "Then we reboot. During the first boot the contents of #{/home}# and #{/var/"
 "cache/apt}# will be copied into the persistence volume, and from then on all "
 "changes to these directories will live in the persistence volume. Please "
-"note that any paths listed in the #{live-persistence.conf}# file cannot "
-"contain white spaces or the special #{.}# and #{..}# path components. Also, "
-"neither #{/live}# (or any of its sub-directories) nor #{/}# can be made "
-"persistent using custom mounts."
+"note that any paths listed in the #{persistence.conf}# file cannot contain "
+"white spaces or the special #{.}# and #{..}# path components. Also, neither #"
+"{/live}# (or any of its sub-directories) nor #{/}# can be made persistent "
+"using custom mounts."
 msgstr ""
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:185
 msgid ""
-"Several different custom overlay volumes (with their own #{live-persistence."
-"conf}# files) can be used at the same time, but if several volumes make the "
-"same directory persistent, only one of them will be used. If any two mounts "
-"are \"nested\" (i.e. one is a sub-directory of the other) the parent will be "
+"Several different custom overlay volumes (with their own #{persistence.conf}"
+"# files) can be used at the same time, but if several volumes make the same "
+"directory persistent, only one of them will be used. If any two mounts are "
+"\"nested\" (i.e. one is a sub-directory of the other) the parent will be "
 "mounted before the child so no mount will be hidden by the other. Nested "
-"custom mounts are problematic if they are listed in the same #{live-"
-"persistence.conf}# file. See the live-persistence.conf(5) man page for how "
-"to handle that case if you really need it (hint: you usually don't)."
+"custom mounts are problematic if they are listed in the same #{persistence."
+"conf}# file. See the persistence.conf(5) man page for how to handle that "
+"case if you really need it (hint: you usually don't)."
 msgstr ""
 
 #. type: Plain text

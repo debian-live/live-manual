@@ -7,14 +7,14 @@ B~ Personalització de la imatge binària
 live-build utilitza /{syslinux}/ i alguns dels seus derivats (depenent del
 tipus d'imatge) com carregadors d'arrencada per defecte. Es poden
 personalitzar fàcilment en un nombre de maneres que van des de proporcionar
-un tema complet per canviar el temps d'espera d'arrencada o simplement
-afegir una imatge de fons personalitzada. Alguns dels següents exemples de
-personalització fan ús de mètodes diferents, com per exemple
-{includes}#includes o {hooks}#hooks.
+un tema complet a només modificar alguns fitxers que permeten, per exemple,
+canviar el temps d'espera d'arrencada o simplement afegir una imatge de fons
+personalitzada.
 
 Si es vol utilitzar un tema complet es pot especificar l'opció
 #{--syslinux-theme}# (veure man #{lb_config}#). live-build descarregarà el
-tema del mirall i l'instaŀlarà.
+tema del mirall i l'instaŀlarà. També es pot empaquetar en un .deb un tema
+propi o modificar-ne un ja existent i pujar-lo a un servidor local.
 
 Imaginar que es vol construir un client progress però es prefereix incloure
 el tema del servidor, perquè es vol tenir el menú d'ajuda. S'hauria
@@ -26,10 +26,10 @@ code{
 
 }code
 
-També es pot crear un tema propi o modificar un tema ja existent i si no es
-disposa d'un mirall, es pot afegir el paquet a
-#{config/packages.chroot}#. En aquest cas no cal especificar cap altra
-opció.
+Si un no es vol preocupar de crear un .deb, només cal afegir localment els
+fitxers de configuració per a una imatge predeterminada a
+#{config/bootloaders/isolinux}#. Canviant "isolinux" per *{extlinux}*,
+*{pxelinux}* o *{syslinux}* depenent del cas d'ús.
 
 També hi ha la possibilitat de fer petits canvis. Per exemple, els derivats
 de syslinux estan configurats per defecte amb un temps d'espera de 0 (zero)

@@ -176,11 +176,10 @@ _* an image file located on the root of any readable filesystem (even an
 NTFS partition of a foreign OS), identified by its file name.
 
 The volume label for overlays must be #{persistence}# but it will be ignored
-unless it contains in its root a file named #{live-persistence.conf}# which
-is used to fully customize the volume's persistence, this is to say,
-specifying the directories that you want to save in your persistence volume
-after a reboot. See {The live-persistence.conf file}#live-persistence-conf
-for more details.
+unless it contains in its root a file named #{persistence.conf}# which is
+used to fully customize the volume's persistence, this is to say, specifying
+the directories that you want to save in your persistence volume after a
+reboot. See {The persistence.conf file}#persistence-conf for more details.
 
 Here are some examples of how to prepare a volume to be used for
 persistence. It can be, for instance, an ext4 partition on a hard disk or on
@@ -226,36 +225,36 @@ code{
 
 }code
 
-Then, create the #{live-persistence.conf}# file adding content and unmount
-the image file.
+Then, create the #{persistence.conf}# file adding content and unmount the
+image file.
 
 code{
 
- # echo "/usr union" >> /mnt/live-persistence.conf
+ # echo "/usr union" >> /mnt/persistence.conf
  # umount /mnt
 
 }code
 
 Now, reboot into your live media with the boot parameter "persistence".
 
-3~live-persistence-conf The live-persistence.conf file
+3~persistence-conf The persistence.conf file
 
 A volume with the label #{persistence}# must be configured by means of the
-#{live-persistence.conf}# file to make arbitrary directories
-persistent. That file, located on the volume's filesystem root, controls
-which directories it makes persistent, and in which way.
+#{persistence.conf}# file to make arbitrary directories persistent. That
+file, located on the volume's filesystem root, controls which directories it
+makes persistent, and in which way.
 
 How custom overlay mounts are configured is described in full detail in the
-live-persistence.conf(5) man page, but a simple example should be sufficient
-for most uses. Let's say we want to make our home directory and APT cache
+persistence.conf(5) man page, but a simple example should be sufficient for
+most uses. Let's say we want to make our home directory and APT cache
 persistent in an ext4 filesystem on the /dev/sdb1 partition:
 
 code{
 
  # mkfs.ext4 -L persistence /dev/sdb1
  # mount -t ext4 /dev/sdb1 /mnt
- # echo "/home" >> /mnt/live-persistence.conf
- # echo "/var/cache/apt" >> /mnt/live-persistence.conf
+ # echo "/home" >> /mnt/persistence.conf
+ # echo "/var/cache/apt" >> /mnt/persistence.conf
  # umount /mnt
 
 }code
@@ -263,20 +262,19 @@ code{
 Then we reboot. During the first boot the contents of #{/home}# and
 #{/var/cache/apt}# will be copied into the persistence volume, and from then
 on all changes to these directories will live in the persistence
-volume. Please note that any paths listed in the #{live-persistence.conf}#
-file cannot contain white spaces or the special #{.}# and #{..}# path
+volume. Please note that any paths listed in the #{persistence.conf}# file
+cannot contain white spaces or the special #{.}# and #{..}# path
 components. Also, neither #{/live}# (or any of its sub-directories) nor
 #{/}# can be made persistent using custom mounts.
 
 Several different custom overlay volumes (with their own
-#{live-persistence.conf}# files) can be used at the same time, but if
-several volumes make the same directory persistent, only one of them will be
+#{persistence.conf}# files) can be used at the same time, but if several
+volumes make the same directory persistent, only one of them will be
 used. If any two mounts are "nested" (i.e. one is a sub-directory of the
 other) the parent will be mounted before the child so no mount will be
 hidden by the other. Nested custom mounts are problematic if they are listed
-in the same #{live-persistence.conf}# file. See the live-persistence.conf(5)
-man page for how to handle that case if you really need it (hint: you
-usually don't).
+in the same #{persistence.conf}# file. See the persistence.conf(5) man page
+for how to handle that case if you really need it (hint: you usually don't).
 
 3~ Using more than one persistence store
 

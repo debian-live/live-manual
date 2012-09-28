@@ -1,0 +1,43 @@
+B~ Git repositories
+
+1~git-repositories Git repositories
+
+The git tree of the Debian Live Project is made up of several different branches. There is a list of all the available repositories at http://live.debian.net/gitweb The *{debian}* and the *{debian-next}* branches are particularly noteworthy because they contain the actual work that will eventually be included in each new release.
+
+The project's git URLs have the form: #{protocol://live.debian.net/git/repository}#. 
+
+Thus, in order to clone live-manual read-only, launch:
+
+code{
+
+ $ git clone git://live.debian.net/git/live-manual.git
+
+}code
+
+Or,
+
+code{
+
+ $ git clone http://live.debian.net/git/live-manual.git
+
+}code
+
+The cloning addresses with write permission have the form: #{git@live.debian.net:/repository}#. 
+
+So, again, to clone live-manual but over ssh you must type:
+
+code{
+
+ $ git@live.debian.net:/live-manual.git
+
+}code
+
+After cloning any of the existing repositories. You will be on the *{debian}* branch. This is appropriate to take a look at the state of the project's latest release but before starting work it is crucial to switch to the *{debian-next}* branch. To do so:
+
+code{
+
+ $ git checkout debian-next
+
+}code
+
+The *{debian-next}* branch, which is not always fast-forward, is where all the changes are committed first before being merged into the *{debian}* branch. To make an analogy, it is like a testing ground. If you are working on this branch and need to pull, you will have to do a #{git pull --rebase}# so that your local modifications are staged while pulling from the server and then your changes will be put on top of it all.

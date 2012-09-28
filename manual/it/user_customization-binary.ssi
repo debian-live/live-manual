@@ -4,16 +4,17 @@ B~ Personalizzare l'immagine binaria
 
 2~ Bootloader
 
-live-build uses /{syslinux}/ and some of its derivatives (depending on the
-image type) as bootloaders by default. They can be easily customized in a
-number of ways that range from providing a full theme to only modifying some
-files that allow you to, for example, change the boot timeout or simply add
-a personalized splash image.
+live-build usa /{syslinux}/ e alcuni dei suoi derivati (a seconda del tipo
+di immagine) come bootloader predefiniti. Si possono facilmente
+personalizzare in vari modi che vanno dal fornire un tema completo per
+modificare solo alcuni file che vi permettono ad esempio di cambiare il
+timeout d'avvio o semplicemente per aggiungere un'immagine splash
+personalizzata.
 
-In order to use a full theme, specify the #{--syslinux-theme}# option (see
-man #{lb_config}#). live-build will then retrieve the theme from the mirror
-and install it. You can also package your own theme or modify an already
-existing one and upload it to your local mirror.
+Per cambiare un intero tema specificare l'opzione #{--syslinux-theme}#
+(vedere man #{lb_config}#); live-build recupera quindi il tema dal mirror e
+lo installa. Si può inoltre pacchettizzare il proprio o modificarne uno
+esistente e caricarlo sul mirror locale.
 
 Si immagini di voler creare un client progress ma si preferisce includere il
 tema del server per avere il menù di aiuto. Si lancerà #{lb config}# come
@@ -25,19 +26,19 @@ code{
 
 }code
 
-If you do not want to bother building a .deb, simply add your local
-configuration files for a default image to
-#{config/bootloaders/isolinux}#. Replacing "isolinux" for *{extlinux}*,
-*{pxelinux}* or *{syslinux}* depending on your use case.
+Se non si desidera creare un .deb, aggiungere semplicemente i propri file di
+configurazione per un'immagine predefinita a
+#{config/bootloaders/isolinux}#. Sostituire "isolinux" con *{extlinux}*,
+*{pxelinux}* o *{syslinux}* dipende dalle necessità.
 
 Si può anche fare piccole modifiche. Per esempio i derivati di syslinux sono
 configurati con un timeout impostato a 0 (zero) in modo predefinito,
 significa che resteranno in pausa al loro splash screen fino a quando non si
 preme un tasto.
 
-To modify the boot timeout of a default #{iso-hybrid}# image just edit a
-default *{isolinux.cfg}* file specifying the timeout in units of seconds and
-add it to #{config/includes.binary/isolinux/}#
+Per modificare il timeout di avvio di un'immagine #{iso-hybrid}# modificare
+un file *{isolinux.cfg}* predefinito specificando il timeout in unità di
+secondi e aggiungerlo a #{config/includes.binary/isolinux/}#
 
 Un file *{isolinux.cfg}* modificato per fare il boot dopo cinque secondi
 sarà simile a questo:
@@ -63,8 +64,9 @@ code{
 
 }code
 
-Likewise, if you want to use a personalized splash.png image, add a picture
-of 640x480 pixels to #{config/includes.binary/isolinux/}#
+Allo stesso modo, se si vuole utilizzare un'immagine splash.png
+personalizzata basta aggiungerne una di 640x480 pixel a
+#{config/includes.binary/isolinux/}#
 
 2~ Metadati ISO
 

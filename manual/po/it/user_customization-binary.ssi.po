@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual\n"
 "POT-Creation-Date: 2012-09-24 16:32+0300\n"
-"PO-Revision-Date: 2012-06-07 07:57+0200\n"
+"PO-Revision-Date: 2012-09-28 09:13+0200\n"
 "Last-Translator: skizzhg <skizzhg@gmx.com>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -175,18 +175,10 @@ msgstr "1~customizing-binary Personalizzare l'immagine binaria"
 #. type: Plain text
 #: en/user_customization-binary.ssi:6
 msgid "2~ Bootloader"
-msgstr ""
+msgstr "2~ Bootloader"
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:8
-#, fuzzy
-#| msgid ""
-#| "live-build uses /{syslinux}/ and some of its derivatives (depending on "
-#| "the image type) as bootloaders by default. You can easily customize them "
-#| "in a number of ways that range from providing a full theme to changing "
-#| "the boot timeout or simply adding a personalized splash image. Some of "
-#| "the following examples of customization make use of different methods, "
-#| "like {includes}#includes or {hooks}#hooks."
 msgid ""
 "live-build uses /{syslinux}/ and some of its derivatives (depending on the "
 "image type) as bootloaders by default. They can be easily customized in a "
@@ -197,26 +189,22 @@ msgstr ""
 "live-build usa /{syslinux}/ e alcuni dei suoi derivati (a seconda del tipo "
 "di immagine) come bootloader predefiniti. Si possono facilmente "
 "personalizzare in vari modi che vanno dal fornire un tema completo per "
-"modificare il timeout d'avvio o semplicemente per aggiungere un'immagine "
-"splash personalizzata. Alcuni dei seguenti esempi di personalizzazione fanno "
-"uso di metodi diversi, come {include}#includes o {hook}#hooks."
+"modificare solo alcuni file che vi permettono ad esempio di cambiare il "
+"timeout d'avvio o semplicemente per aggiungere un'immagine splash "
+"personalizzata."
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:10
-#, fuzzy
-#| msgid ""
-#| "If you want to use a full theme you can specify the #{--syslinux-theme}# "
-#| "option (see man #{lb_config}#). live-build will then retrieve the theme "
-#| "from the mirror and install it."
 msgid ""
 "In order to use a full theme, specify the #{--syslinux-theme}# option (see "
 "man #{lb_config}#). live-build will then retrieve the theme from the mirror "
 "and install it. You can also package your own theme or modify an already "
 "existing one and upload it to your local mirror."
 msgstr ""
-"Se si desidera utilizzare un tema completo è possibile specificare l'opzione "
-"#{--syslinux-theme}# (vedere man #{lb_config}#). live-build recupera quindi "
-"il tema dal mirror e lo installa."
+"Per cambiare un intero tema specificare l'opzione #{--syslinux-theme}# "
+"(vedere man #{lb_config}#); live-build recupera quindi il tema dal mirror e "
+"lo installa. Si può inoltre pacchettizzare il proprio o modificarne uno "
+"esistente e caricarlo sul mirror locale."
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:12
@@ -233,7 +221,7 @@ msgstr ""
 #: en/user_customization-binary.ssi:16
 #, no-wrap
 msgid " $ lb config --mode progress --syslinux-theme progress-server\n"
-msgstr ""
+msgstr " $ lb config --mode progress --syslinux-theme progress-server\n"
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:20
@@ -243,6 +231,10 @@ msgid ""
 "Replacing \"isolinux\" for *{extlinux}*, *{pxelinux}* or *{syslinux}* "
 "depending on your use case."
 msgstr ""
+"Se non si desidera creare un .deb, aggiungere semplicemente i propri file di "
+"configurazione per un'immagine predefinita a #{config/bootloaders/isolinux}"
+"#. Sostituire \"isolinux\" con *{extlinux}*, *{pxelinux}* o *{syslinux}* "
+"dipende dalle necessità."
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:22
@@ -259,19 +251,14 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:24
-#, fuzzy
-#| msgid ""
-#| "To modify the boot timeout of a default #{iso-hybrid}# image you can edit "
-#| "a default *{isolinux.cfg}* file specifying the timeout in units of "
-#| "seconds and add it to #{config/includes.binary/isolinux/}#"
 msgid ""
 "To modify the boot timeout of a default #{iso-hybrid}# image just edit a "
 "default *{isolinux.cfg}* file specifying the timeout in units of seconds and "
 "add it to #{config/includes.binary/isolinux/}#"
 msgstr ""
-"Per modificare il timeout di avvio di un'immagine #{iso-hybrid}# si può "
-"modificare un file *{isolinux.cfg}* predefinito specificando il timeout in "
-"unità di secondi e aggiungerlo a #{config/includes.binary/isolinux/}#"
+"Per modificare il timeout di avvio di un'immagine #{iso-hybrid}# modificare "
+"un file *{isolinux.cfg}* predefinito specificando il timeout in unità di "
+"secondi e aggiungerlo a #{config/includes.binary/isolinux/}#"
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:26
@@ -291,6 +278,10 @@ msgid ""
 " prompt 0\n"
 " timeout 50\n"
 msgstr ""
+" include menu.cfg\n"
+" default vesamenu.c32\n"
+" prompt 0\n"
+" timeout 50\n"
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:37
@@ -313,14 +304,10 @@ msgstr " #!/bin/sh\n"
 #: en/user_customization-binary.ssi:43
 #, no-wrap
 msgid " sed -i 's|timeout 0|timeout 50|' binary/isolinux/isolinux.cfg\n"
-msgstr ""
+msgstr " sed -i 's|timeout 0|timeout 50|' binary/isolinux/isolinux.cfg\n"
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:47
-#, fuzzy
-#| msgid ""
-#| "Likewise, if you want to use a personalized splash.png image you can add "
-#| "a picture of 640x480 pixels to #{config/includes.binary/isolinux/}#"
 msgid ""
 "Likewise, if you want to use a personalized splash.png image, add a picture "
 "of 640x480 pixels to #{config/includes.binary/isolinux/}#"

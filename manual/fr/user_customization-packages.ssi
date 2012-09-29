@@ -101,15 +101,17 @@ valeur #{--mirror-bootstrap}#.
 
 3~ Miroirs de distribution utilisés au moment de l'exécution
 
-The #{--mirror-binary*}# options govern the distribution mirrors placed in
-the binary image. These may be used to install additional packages while
-running the live system. The defaults employ #{http.debian.net}#, a service
-that chooses a geographically close mirror based, among other things, on the
-user's IP family and the availability of the mirrors. This is a suitable
-choice when you cannot predict which mirror will be best for all of your
-users. Or you may specify your own values as shown in the example below. An
-image built from this configuration would only be suitable for users on a
-network where "#{mirror}#" is reachable.
+Les options #{--mirror-binary*}# régissent les miroirs de distribution
+placés dans l'image binaire. Ils peuvent être utilisés pour installer des
+paquets supplémentaires lors de l'exécution du système live. Les valeurs par
+défaut emploient #{http.debian.net}#, un service qui choisit un miroir
+géographiquement proche basé, entre autres choses, sur la famille IP de
+l'utilisateur et de la disponibilité des miroirs. C'est un choix approprié
+lorsque vous ne pouvez pas prédire quel miroir sera mieux pour tous vos
+utilisateurs. Ou vous pouvez spécifier vos propres valeurs, comme indiqué
+dans l'exemple ci-dessous. Une image construite avec cette configuration
+seulement serait appropriée pour les utilisateurs sur un réseau où
+"#{mirror}#" est accessible.
 
 code{
 
@@ -650,9 +652,9 @@ cible, wheezy. Ce qui suit devrait accomplir ça:
 
 code{
 
- $ echo "deb http://mirror/debian/ sid main" > config/archives/sid.list.chroot
+ $ echo "deb http://mirror/debian sid main" > config/archives/sid.list.chroot
  $ cat >> config/chroot_apt/preferences << EOF
- Package: live-*
+ Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit
  Pin: release n=sid
  Pin-Priority: 600
 

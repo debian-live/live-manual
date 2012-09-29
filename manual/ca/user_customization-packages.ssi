@@ -98,15 +98,15 @@ defecte pren el mateix valor que #{--mirror-bootstrap}#
 
 3~ Miralls de distribució utilitzats en temps d'execució
 
-Les opcions #{--mirror-binary*}# governen els miralls de distribució
-coŀlocats a la imatge binària. Aquestes poden ser utilitzades per instaŀlar
-paquets addicionals mentre s'executa el sistema en viu. Els valors per
-defecte utilitzan #{cdn.debian.net}#, un servei que tria un mirall
-geogràficament a prop en funció del número IP de l'usuari. Aquesta és una
-opció adequada quan no es pot predir quin serà el millor mirall per tots els
-usuaris. O es pot especificar els valors propis com es mostra en l'exemple
-següent. Una imatge construïda a partir d'aquesta configuració només seria
-convenient per als usuaris en una xarxa on "#{mirror}#" és abastable.
+The #{--mirror-binary*}# options govern the distribution mirrors placed in
+the binary image. These may be used to install additional packages while
+running the live system. The defaults employ #{http.debian.net}#, a service
+that chooses a geographically close mirror based, among other things, on the
+user's IP family and the availability of the mirrors. This is a suitable
+choice when you cannot predict which mirror will be best for all of your
+users. Or you may specify your own values as shown in the example below. An
+image built from this configuration would only be suitable for users on a
+network where "#{mirror}#" is reachable.
 
 code{
 
@@ -645,24 +645,16 @@ wheezy. El que segueix aconseguira això:
 
 code{
 
- $ echo "deb http://mirror/debian sid main" > config/archives/sid.list.chroot
- $ cat >> config/chroot_apt/preferences << END
- Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit
+ $ echo "deb http://mirror/debian/ sid main" > config/archives/sid.list.chroot
+ $ cat >> config/chroot_apt/preferences << EOF
+ Package: live-*
  Pin: release n=sid
  Pin-Priority: 600
 
  Package: *
  Pin: release n=sid
  Pin-Priority: 1
- END
-
-}code
-
-*{Nota:}* Es poden usar comodins en els noms dels paquets (per exemple, *{Package: live-*}*) amb la versió 0.8.14 o superior d'Apt. Això significa que funciona amb wheezy utilitzant:
-
-code{
-
-$ lb config --distribution wheezy
+ EOF
 
 }code
 

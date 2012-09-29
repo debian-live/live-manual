@@ -29,9 +29,9 @@ ces valeurs. Par exemple:
 
 code{
 
- LB_MIRROR_BOOTSTRAP="http://mirror/debian"
- LB_MIRROR_CHROOT_SECURITY="http://mirror/debian-security"
- LB_MIRROR_CHROOT_BACKPORTS="http://mirror/debian-updates"
+ LB_MIRROR_BOOTSTRAP="http://mirror/debian/"
+ LB_MIRROR_CHROOT_SECURITY="http://mirror/debian-security/"
+ LB_MIRROR_CHROOT_BACKPORTS="http://mirror/debian-backports/"
 
 }code
 
@@ -310,14 +310,14 @@ qui va lancer /{metacity}/ et commencer /{xvncviewer}/, en reliant le port
 code{
 
  $ mkdir -p config/includes.chroot/etc/skel
- $ cat > config/includes.chroot/etc/skel/.xsession << END
+ $ cat > config/includes.chroot/etc/skel/.xsession << EOF
  #!/bin/sh
 
  /usr/bin/metacity &
  /usr/bin/xvncviewer 192.168.1.2:1
 
  exit
- END
+ EOF
 
 }code
 

@@ -105,16 +105,15 @@ para la opción #{--mirror-bootstrap}# si esta no es indicada.
 
 3~ Réplicas de distribución Debian utilizadas en la ejecución.
 
-Las opciones #{--mirror-binary*}# gobiernan las réplicas configuradas en la
-imagen binaria que serán utilizadas para instalar paquetes adicionales
-mientras se ejecuta el sistema en vivo. Por defecto se utiliza
-#{cdn.debian.net}#, que es un servicio que selecciona la réplica más cercana
-basándose en el número de IP. Es una elección bastante acertada siempre que
-no se pueda predecir que réplica será la mejor para todos los
-usuarios. También se puede especificar valores personalizados como se
-muestra en el siguiente ejemplo. Una imagen construida con esta
-configuración solamente sería accesible a los usuarios de una red donde
-"#{mirror}#" fuese alcanzable.
+The #{--mirror-binary*}# options govern the distribution mirrors placed in
+the binary image. These may be used to install additional packages while
+running the live system. The defaults employ #{http.debian.net}#, a service
+that chooses a geographically close mirror based, among other things, on the
+user's IP family and the availability of the mirrors. This is a suitable
+choice when you cannot predict which mirror will be best for all of your
+users. Or you may specify your own values as shown in the example below. An
+image built from this configuration would only be suitable for users on a
+network where "#{mirror}#" is reachable.
 
 code{
 
@@ -670,24 +669,16 @@ se puede realizar de la siguiente forma:
 
 code{
 
- $ echo "deb http://mirror/debian sid main" > config/archives/sid.list.chroot
- $ cat >> config/chroot_apt/preferences << END
- Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit
+ $ echo "deb http://mirror/debian/ sid main" > config/archives/sid.list.chroot
+ $ cat >> config/chroot_apt/preferences << EOF
+ Package: live-*
  Pin: release n=sid
  Pin-Priority: 600
 
  Package: *
  Pin: release n=sid
  Pin-Priority: 1
- END
-
-}code
-
-*{Nota:}* Se pueden usar comodines en los nombres de los paquetes a fijar (p.ej. *{Package: live-*}*) si se usa una versión de apt igual o superior a 0.8.14. Esto significa que funciona con wheezy usando:
-
-code{
-
-$ lb config --distribution wheezy
+ EOF
 
 }code
 

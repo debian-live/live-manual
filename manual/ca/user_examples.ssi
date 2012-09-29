@@ -28,9 +28,9 @@ construcció adoptaran valors per defecte segons aquests valors. Per exemple:
 
 code{
 
- LB_MIRROR_BOOTSTRAP="http://mirror/debian"
- LB_MIRROR_CHROOT_SECURITY="http://mirror/debian-security"
- LB_MIRROR_CHROOT_BACKPORTS="http://mirror/debian-updates"
+ LB_MIRROR_BOOTSTRAP="http://mirror/debian/"
+ LB_MIRROR_CHROOT_SECURITY="http://mirror/debian-security/"
+ LB_MIRROR_CHROOT_BACKPORTS="http://mirror/debian-backports/"
 
 }code
 
@@ -306,14 +306,14 @@ posarà en marxa /{metacity}/ i iniciarà /{xvncviewer}/, connectant al port
 code{
 
  $ mkdir -p config/includes.chroot/etc/skel
- $ cat > config/includes.chroot/etc/skel/.xsession << END
+ $ cat > config/includes.chroot/etc/skel/.xsession << EOF
  #!/bin/sh
 
  /usr/bin/metacity &
  /usr/bin/xvncviewer 192.168.1.2:1
 
  exit
- END
+ EOF
 
 }code
 

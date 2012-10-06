@@ -5,30 +5,20 @@ B~ Procedure
 Questo capitolo documenta le procedure all'interno del progetto Debian Live
 per vari compiti che necessitano di cooperazione con altri team Debian.
 
-2~ Aggiornamenti degli udeb
-
-Prima di effettuare dei commit di un udeb nel repository svn
-dell'installatore Debian va eseguito:
-
-code{
-
- $ ../../scripts/l10n/output-l10n-changes . -d
-
-}code
-
 2~ Rilasci importanti
 
 Rilasciare una nuova versione stabile di Debian implica che molti team
 differenti lavorino insieme; ad un certo punto si inserisce il team Live che
 prepara le immagini del sistema live. I requisiti per fare ciò sono:
 
-_* A mirror containing the released versions for the debian and
-debian-security archives which the debian-live buildd can access.
+_* Un mirror contenente le versioni rilasciate per l'archivio debian e
+debian-security al quale possa accedere il debian-live buildd.
 
 _* Vanno resi noti i nomi dell'immagine
 (debian-live-VERSION-ARCH-FLAVOUR.iso).
 
-_* Bisogna sincronizzare i dati dal cd Debian (udeb esclusi gli elenchi).
+_* Bisogna sincronizzare i dati dal cd Debian (gli udeb escludono gli
+elenchi).
 
 _* Bisogna sincronizzare i file inclusi dal cd Debian (README.*, doc/*,
 ecc.).
@@ -37,7 +27,7 @@ _* Le immagini vengono create e ospitate su cdimage.debian.org.
 
 2~ Rilasci minori
 
-_* Again, we need updated mirrors of debian and debian-security.
+_* Bisogna nuovamente aggiornare i mirror di debian e debian-security.
 
 _* Le immagini vengono create e ospitate su cdimage.debian.org.
 
@@ -59,10 +49,10 @@ sottostante e il seguente comando:
 code{
 
  $ sed \
-     -e 's|%major%|5.0|g' \
-     -e 's|%minor%|5.0.2|g' \
-     -e 's|%codename%|lenny|g' \
-     -e 's|%release_mail%|2009/msg00007.html|g'
+     -e 's|@MAJOR@|6.0|g' \
+     -e 's|@MINOR@|6.0.6|g' \
+     -e 's|@CODENAME@|squeeze|g' \
+     -e 's|@ANNOUNCE@|2012/msg00012.html|g'
 
 }code
 
@@ -71,76 +61,44 @@ altri per le correzioni.
 
 code{
 
- Debian Live images for Debian GNU/Linux %major% updated
+ Updated Debian Live @MAJOR@: @MINOR@ released
 
- The Debian Live project is pleased to announce the availability of
- updated Live images for its stable distribution Debian GNU/Linux %major%
- (codename "%codename%").
+ The Debian Live project is pleased to announce the @MINOR@ update of the
+ Live images for the stable distribution Debian @MAJOR@ (codename "@CODENAME@").
 
  The images are available for download at:
 
-     <http://cdimage.debian.org/cdimage/release/current-live/>
+   <http://live.debian.net/cdimage/release/current/>
 
- This update incorporates the changes made in the %minor% point release,
- which adds corrections for security problems to the stable release
- along with a few adjustments for serious problems. A full list of the
- changes may be viewed at:
+ and later at:
 
-     <http://lists.debian.org/debian-announce/%release_mail%>
+   <http://cdimage.debian.org/cdimage/release/current-live/>
 
- It also includes the following Live-specific changes:
+ This update includes the changes of the Debian @MINOR@ release:
+
+   <http://lists.debian.org/debian-announce/@ANNOUNCE@>
+
+ Additionally it includes the following Live-specific changes:
 
   * [INSERT LIVE-SPECIFIC CHANGE HERE]
   * [INSERT LIVE-SPECIFIC CHANGE HERE]
   * [LARGER ISSUES MAY DESERVE THEIR OWN SECTION]
 
-
- URLs
- ----
-
- Download location of updated images:
-
-   <http://cdimage.debian.org/cdimage/release/current-live/>
-
- Debian Live project homepage:
-
-   <http://live.debian.net/>
-
- The current stable distribution:
-
-   <http://ftp.debian.org/debian/dists/stable>
-
- stable distribution information (release notes, errata etc.):
-
-   <http://www.debian.org/releases/stable/>
-
- Security announcements and information:
-
-   <http://www.debian.org/security/>
-
-
- About Debian
- -------------
-
- The Debian Project is an association of Free Software developers who
- volunteer their time and effort in order to produce the completely free
- operating system Debian GNU/Linux.
-
-
  About Debian Live
  -----------------
+ The Debian Live project produces the tools used to build official
+ Debian Live systems and the official Debian Live images themselves.
 
- Debian Live is an official sub-project of Debian which produces Debian
- systems that do not require a classical installer. Images are available
- for CD/DVD discs, USB sticks and PXE netbooting as well as a bare
- filesystem images for booting directly from the internet.
-
+ About Debian
+ ------------
+ The Debian Project is an association of Free Software developers who
+ volunteer their time and effort in order to produce the completely free
+ operating system Debian.
 
  Contact Information
  -------------------
-
  For further information, please visit the Debian Live web pages at
- <http://live.debian.net/> or alternatively send mail to
+ <http://live.debian.net/>, or contact the Debian Live team at
  <debian-live@lists.debian.org>.
 
 }code

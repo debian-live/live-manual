@@ -1,0 +1,58 @@
+B~ Repository Git
+
+1~git-repositories Repository Git
+
+Il ramo git del progetto Debian Live è costituito da molteplici branch
+differenti, all'indirizzo http://live.debian.net/gitweb c'è l'elenco di
+tutti i repository disponibili. I branch *{debian}* e *{debian-next}* sono
+particolarmente degni di nota in quanto contengono il lavoro attuale che
+verrà incluso in ogni nuovo rilascio.
+
+Gli URL del progetto git sono nella fomra
+#{protocollo://live.debian.net/git/repository}#.
+
+Per clonare live-manual in sola lettura eseguire:
+
+code{
+
+ $ git clone git://live.debian.net/git/live-manual.git
+
+}code
+
+oppure
+
+code{
+
+ $ git clone http://live.debian.net/git/live-manual.git
+
+}code
+
+Gli indirizzi per clonare con permessi di scrittura sono nella forma
+#{git@live.debian.net:/repository}#.
+
+Quindi per clonare live-manual via ssh si userà:
+
+code{
+
+ $ git clone git@live.debian.net:/live-manual.git
+
+}code
+
+Dopp aver clonato uno dei repository esistenti sarete nel branch
+*{debian}.Questo è adatto per prendere visione dello stato dell'ultimo
+rilascio del progetto ma prima di iniziare a lavorarci è cruciale passare a
+*{debian-next}*. Per farlo eseguire:
+
+code{
+
+ $ git checkout debian-next
+
+}code
+
+Il branch *{debian-next}*, che non è sempre soggetto al fast-forward, è dove
+si fa il commit di tutte le modifiche prima di essere incluse nel branch
+*{debian}*. È come un terreno di test, per fare un analogia. Se si sta
+lavorando in questo branch e si necessita di eseguire il pull, bisogna usare
+#{git pull --rebase}# in modo che le modifiche locali siano preparate per il
+commit (stage) quando si fa il pull dal server, in questo modo saranno poste
+in cima a tutto il resto.

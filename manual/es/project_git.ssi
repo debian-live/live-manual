@@ -1,0 +1,58 @@
+B~ Repositorios Git
+
+1~git-repositories Repositorios Git
+
+El árbol git del Proyecto Debian Live se compone de varias ramas
+diferentes. Hay una lista de todos los repositorios disponibles en
+http://live.debian.net/gitweb Las ramas *{debian}* y *{debian-next}* son
+particularmente notables porque contienen el trabajo real que, con el
+tiempo, será incluido en cada nueva versión.
+
+Las URLs git del proyecto tienen la forma:
+#{protocolo://live.debian.net/git/repositorio}#.
+
+Por lo tanto, para clonar live-manual en sólo lectura, lanzar:
+
+code{
+
+ $ git clone git://live.debian.net/git/live-manual.git
+
+}code
+
+O,
+
+code{
+
+ $ git clone http://live.debian.net/git/live-manual.git
+
+}code
+
+Las direcciones para clonar con permiso de escritura tienen la forma:
+#{git@live.debian.net:/repositorio}#.
+
+Así que, de nuevo, para clonar live-manual, pero a través de ssh escribir:
+
+code{
+
+ $ git clone git@live.debian.net:/live-manual.git
+
+}code
+
+Después de clonar cualquiera de los repositorios existentes, nos encontramos
+en la rama *{debian}*. Esto es apropiado para echar un vistazo al estado de
+la última versión del proyecto, pero antes de empezar a trabajar es
+fundamental cambiar a la rama *{debian-next}*. Para ello:
+
+code{
+
+ $ git checkout debian-next
+
+}code
+
+La rama *{debian-next}*, la cual no es siempre fast-forward, es donde se
+realizan todos los cambios antes de que se fusionen en la rama
+*{debian}*. Para hacer una analogía, es como un campo de pruebas. Si se está
+trabajando en esta rama y se necesita hacer un pull, se tendrá que hacer un
+#{git pull --rebase}# para que las modificaciones locales se guarden
+mientras se actualiza desde el servidor y entonces los cambios locales se
+pondrán encima de todos los demás.

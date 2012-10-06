@@ -38,7 +38,7 @@ Per cambiare il nome utente specificare quanto segue nella configurazione:
 
 code{
 
- $ lb config --bootappend-live "username=live-user"
+ $ lb config --bootappend-live "boot=live config username=live-user"
 
 }code
 
@@ -51,39 +51,38 @@ in fase di avvio}#boot-time-hooks. Si può usare l'hook "passwd" da
 2~customizing-locale-and-language Personalizzare la localizzazione e la
 lingua
 
-When the live system boots, language is involved in two steps:
+Quando il sistema live si avvia, la lingua è inserita in due fasi:
 
 _* generazione della localizzazione
 
-_* setting the keyboard configuration
+impostare la configurazione della tastiera
 
-The default locale when building a Live system is
-#{locales=en_US.UTF-8}#. To define the locale that should be generated, use
-the #{locales}# parameter in the #{--bootappend-live}# option of #{lb
-config}#, e.g.
+Quando si crea un sistema live la localizzazione predefinita è
+#{locales=en_US.UTF-8}#. Per definire quale generare, si usi il parametro
+#{locales}# nell'opzione #{--bootappend-live}# di #{lb config}#:
 
 code{
 
- $ lb config --bootappend-live "locales=de_CH.UTF-8"
+ $ lb config --bootappend-live "boot=live config locales=de_CH.UTF-8"
 
 }code
 
-Multiple locales may be specified as a comma-delimited list.
+Possono essere specificate più lingue separate da una virgola.
 
-This parameter, as well as the keyboard configuration parameters indicated
-below, can also be used at the kernel command line. You can specify a locale
-by #{language_country}# (in which case the default encoding is used) or the
-full #{language_country.encoding}# word. A list of supported locales and the
-encoding for each can be found in #{/usr/share/i18n/SUPPORTED}#.
+Questo parametro, così come quelli della tastiera indicati più avanti, può
+essere usato anche dalla riga di comando del kernel specificando una lingua
+con #{language_country}# (nel qual caso verrà usata la codifica predefinita)
+o l'intera stringa #{language_country.encoding}#. In
+#{/usr/share/i18n/SUPPORTED}# è possibile trovare un elenco delle lingue
+supportate e la codifica per ognuna di esse.
 
-Both the console and X keyboard configuration are performed by
-#{live-config}# using the #{console-setup}# package. To configure them, use
-the #{keyboard-layouts}#, #{keyboard-variants}#, #{keyboard-options}# and
-#{keyboard-model}# boot parameters via the #{--bootappend-live}#
-option. Valid options for these can be found in
-#{/usr/share/X11/xkb/rules/base.lst}#. To find layouts and variants for a
-given language, try searching for the English name of the language and/or
-the country where the language is spoken, e.g:
+Sia la configurazione della tastiera in console sia di X sono eseguite da
+#{live-config}# con il pacchetto #{console-setup}#. Per fare ciò usare i
+parametri #{keyboard-layouts}#, #{keyboard-variants}#, #{keyboard-options}#
+e #{keyboard-model}# tramite l'opzione #{--bootappend-live}#. Le opzioni
+valide si trovano in #{/usr/share/X11/xkb/rules/base.lst}#. Per ottenere i
+layout e le varianti di una data lingua, provare a cercare il loro nome
+inglese o il paese in cui è usata, esempio:
 
 code{
 
@@ -100,43 +99,44 @@ $ egrep -i '(^!|german.*switzerland)' /usr/share/X11/xkb/rules/base.lst
 
 }code
 
-Note that each variant lists the layout to which it applies in the
-description.
+Notare che ogni variante mostra nella descrizione il layout alla quale viene
+applicata.
 
-Often, only the layout needs to be configured. For example, to get the
-locale files for German and Swiss German keyboard layout in X use:
+Spesso c'è bisogno di configurare solo il layout. Ad esempio per ottenere i
+file di localizzazione per il layout di tastiera tedesco e svizzero-tedesco
+in X:
 
 code{
 
- $ lb config --bootappend-live "locales=de_CH.UTF-8 keyboard-layouts=ch"
+ $ lb config --bootappend-live "boot=live config locales=de_CH.UTF-8 keyboard-layouts=ch"
 
 }code
 
-However, for very specific use cases, you may wish to include other
-parameters. For example, to set up a French system with a French-Dvorak
-layout (called Bepo) on a TypeMatrix EZ-Reach 2030 USB keyboard, use:
+Tuttavia per casi molto particolari si vorrà includere altri parametri. Ad
+esempio per configurare un sistema in francese con un layout Dvorak
+(chiamato Bepo) su una tastiera USB TypeMatrix EZ-Reach 2030:
 
 code{
 
  $ lb config --bootappend-live \
-     "locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variants=bepo keyboard-model=tm2030usb"
+     "boot=live config locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variants=bepo keyboard-model=tm2030usb"
 
 }code
 
-Multiple values may be specified as comma-delimited lists for each of the
-#{keyboard-*}# options, with the exception of #{keyboard-model}#, which
-accepts only one value. Please see the #{keyboard(5)}# man page for details
-and examples of #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# and
-#{XKBOPTIONS}# variables. If multiple #{keyboard-variants}# values are
-given, they will be matched one-to-one with #{keyboard-layouts}# values (see
-#{setxkbmap(1)}# #{-variant}# option). Empty values are allowed; e.g. to
-define two layouts, the default being US QWERTY and the other being US
-Dvorak, use:
+Per ogni opzione #{keyboard-*}# si possono specificare più valori separati
+da una virgola, con l'eccezione di #{keyboard-model}# che ne accetta uno
+solo. Consultare la pagina di manuale di #{keyboard(5)}# per dettagli ed
+esempi delle variabili #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# e
+#{XKBOPTIONS}#. Se vengono forniti più valori per #{keyboard-variants}#,
+questi verranno combinati uno ad uno con quelli di #{keyboard-layouts}#
+(vedere l'opzione #{-variant}# in #{setxkbmap(1)}# ). Sono permessi valori
+vuoti, ad esempio per definire due layout, US QWERTY come predefinito e US
+Dvorak, usare:
 
 code{
 
  $ lb config --bootappend-live \
-     "keyboard-layouts=us,us keyboard-variants=,dvorak"
+     "boot=live config keyboard-layouts=us,us keyboard-variants=,dvorak"
 
 }code
 
@@ -177,18 +177,20 @@ _* una partizione, identificata dal suo nome GPT (GUID Partition Table).
 
 _* un filesystem, identificato dalla sua label.
 
-_* an image file located on the root of any readable filesystem (even an
-NTFS partition of a foreign OS), identified by its file name.
+_* un file immagine situato nella directory radice di un qualsiasi
+filesystem leggibile (anche una partizione NTFS di un sistema estraneo),
+identificato dal nome del file.
 
-The volume label for overlays must be #{persistence}# but it will be ignored
-unless it contains in its root a file named #{persistence.conf}# which is
-used to fully customize the volume's persistence, this is to say, specifying
-the directories that you want to save in your persistence volume after a
-reboot. See {The persistence.conf file}#persistence-conf for more details.
+La label del volume per le stratificazioni deve essere #{persistence}# ma
+verrà ignorata a meno che non sia presente nella directory radice un file
+chiamato #{persistence.conf}# che viene usato per personalizzare la
+persistenza del volume, in altre parole, specificare le directory che si
+vogliono salvare dopo un riavvio. Per maggiori dettagli vedere {Il file
+persistence.conf}#persistence-conf.
 
-Here are some examples of how to prepare a volume to be used for
-persistence. It can be, for instance, an ext4 partition on a hard disk or on
-a usb key created with, e.g.:
+Ecco alcuni esempi per preparare un volume da utilizzare per la
+persistenza. Può ad esempio essere una partizione ext4 su un hard disk o una
+penna USB creata con:
 
 code{
 
@@ -204,25 +206,25 @@ l'etichetta con una delle seguenti:
 
 code{
 
- # tune2fs -L persistence /dev/sdb1 # for ext2,3,4 filesystems
+ # tune2fs -L persistence /dev/sdb1 # per filesystem ext2,3,4
 
 }code
 
-Here's an example of how to create an ext4-based image file to be used for
-persistence:
+Un esempio di come creare un file immagine ext4 da utilizzare per la
+persistenza:
 
 code{
 
- $ dd if=/dev/null of=persistence bs=1 seek=1G # for a 1GB sized image file
+ $ dd if=/dev/null of=persistence bs=1 seek=1G # per un file immagine da 1GB
  $ /sbin/mkfs.ext4 -F persistence
 
 }code
 
-Once the image file is created, as an example, to make #{/usr}# persistent
-but only saving the changes you make to that directory and not all the
-contents of #{/usr}#, you can use the "union" option. If the image file is
-located in your home directory, copy it to the root of your hard drive's
-filesystem and mount it in #{/mnt}# as follows:
+Una volta che il file immagine è stato creato, ad esempio per rendere
+#{/usr}# persistente salvando solo le modifiche fatte a quella directory e
+non tutto il contenuto di #{/usr}#, si può usare l'opzione "union". Se
+l'immagine è situata nella propria home copiarla nella radice del filesystem
+sul disco e montarla in #{/mnt}# come segue:
 
 code{
 
@@ -231,8 +233,8 @@ code{
 
 }code
 
-Then, create the #{persistence.conf}# file adding content and unmount the
-image file.
+Creare quindi il file #{persistence.conf}# aggiungendovi il contenuto e
+smontare il file immagine.
 
 code{
 
@@ -241,14 +243,14 @@ code{
 
 }code
 
-Now, reboot into your live media with the boot parameter "persistence".
+Ora riavviare il dispositivo live con il parametro d'avvio "persistence".
 
-2~persistence Persistenza
+3~persistence-conf Il file persistence.conf
 
-Un volume con una label #{persistence}# può essere configurato per creare
-directory persistenti arbitrarie. Il file #{persistence.conf}#, situato
-nella directory radice del filesystem del volume, controlla quali rendere
-persistenti e in che modo.
+Un volume con la label #{persistence}# deve essere configurato mediante il
+file #{persistence.conf}# per creare directory persistenti arbitrarie. Tale
+file, situato nella directory radice del filesystem del volume, controlla
+quali rendere persistenti e in che modo.
 
 Nella manpage di persistence.conf(5) è descritto dettagliatamente come è
 configurato il mount degli strati personalizzati, ma un semplice esempio
@@ -271,8 +273,8 @@ Quindi riavviare. Durante il primo avvio il contenuto di #{/home}# e
 le modifiche a queste directory risiederanno in modo persistente sul
 volume. C'è da considerare che tutti i path elencati nel file
 #{persistence.conf}# non possono contenere spazi o i caratteri speciali
-#{.}# e #{..}#; inoltre, né #{/live}# (o nessuna delle sue sottodirectory)
-né #{/}# può essere resa persistente tramite i mount personalizzati.
+#{.}# e #{..}#, inoltre né #{/live}# (o nessuna delle sue sottodirectory) né
+#{/}# può essere resa persistente tramite i mount personalizzati.
 
 Possono essere utilizzati svariati volumi di stratificazione personalizzati
 (con i rispettivi file #{persistence.conf}#) allo stesso tempo ma se questi
@@ -284,12 +286,12 @@ se sono elencati nello stesso file #{persistence.conf}. Se si ha davvero la
 necessità (in genere non si dovrebbe averla), consultare la manpage di
 persistence.conf(5) per sapere come gestire questo caso.
 
-3~ Using more than one persistence store
+3~ Utilizzare più di un'archiviazione persistente
 
-If a user would need multiple persistence store of the same type for
-different locations or testing, such as #{persistence-nonwork}# and
-#{persistence-work}#, the boot parameter #{persistence-label}# used in
-conjunction with the boot parameter #{persistence}# will allow for multiple
-but unique persistence media. An example would be if a user wanted to use a
-persistence partition labeled #{persistence-subText}# they would use the
-boot parameters of: #{persistence}# #{persistence-label=subText}#.
+Se un utente avesse bisogno di spazi di archiviazione multipli dello stesso
+tipo per posizioni differenti o per test, come #{persistence-casa}# e
+#{persistence-lavoro}#, il parametro d'avvio #{persistence-label}# usato in
+congiunzione con #{persistent}# permetterà supporti persistenti multipli ma
+univoci. Un esempio potrebbe essere un utente che vuole usare una partizione
+etichettata come #{persistence-sottotesto}#, userebbe: #{persistence}#
+#{persistence-label=sottotesto}#.

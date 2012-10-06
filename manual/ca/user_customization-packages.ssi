@@ -101,12 +101,13 @@ defecte pren el mateix valor que #{--mirror-bootstrap}#
 Les opcions #{--mirror-binary*}# governen els miralls de distribució
 coŀlocats a la imatge binària. Aquestes poden ser utilitzades per instaŀlar
 paquets addicionals mentre s'executa el sistema en viu. Els valors per
-defecte utilitzan #{cdn.debian.net}#, un servei que tria un mirall
-geogràficament a prop en funció del número IP de l'usuari. Aquesta és una
-opció adequada quan no es pot predir quin serà el millor mirall per tots els
-usuaris. O es pot especificar els valors propis com es mostra en l'exemple
-següent. Una imatge construïda a partir d'aquesta configuració només seria
-convenient per als usuaris en una xarxa on "#{mirror}#" és abastable.
+defecte utilitzan #{http.debian.net}#, un servei que tria un mirall
+geogràficament a prop en funció, entre altres coses, de la familia de la IP
+de l'usuari i de la disponibilitat del mirall. Aquesta és una opció adequada
+quan no es pot predir quin serà el millor mirall per tots els usuaris. O es
+pot especificar els valors propis com es mostra en l'exemple següent. Una
+imatge construïda a partir d'aquesta configuració només seria convenient per
+als usuaris en una xarxa on "#{mirror}#" és abastable.
 
 code{
 
@@ -646,7 +647,7 @@ wheezy. El que segueix aconseguira això:
 code{
 
  $ echo "deb http://mirror/debian sid main" > config/archives/sid.list.chroot
- $ cat >> config/chroot_apt/preferences << END
+ $ cat >> config/chroot_apt/preferences << EOF
  Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit
  Pin: release n=sid
  Pin-Priority: 600
@@ -654,15 +655,7 @@ code{
  Package: *
  Pin: release n=sid
  Pin-Priority: 1
- END
-
-}code
-
-*{Nota:}* Es poden usar comodins en els noms dels paquets (per exemple, *{Package: live-*}*) amb la versió 0.8.14 o superior d'Apt. Això significa que funciona amb wheezy utilitzant:
-
-code{
-
-$ lb config --distribution wheezy
+ EOF
 
 }code
 

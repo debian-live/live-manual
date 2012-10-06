@@ -104,13 +104,14 @@ valeur #{--mirror-bootstrap}#.
 Les options #{--mirror-binary*}# régissent les miroirs de distribution
 placés dans l'image binaire. Ils peuvent être utilisés pour installer des
 paquets supplémentaires lors de l'exécution du système live. Les valeurs par
-défaut emploient #{cdn.debian.net}#, un service qui choisit un miroir
-géographiquement proche basé sur le numéro IP de l'utilisateur. C'est un
-choix approprié lorsque vous ne pouvez pas prédire quel miroir sera mieux
-pour tous vos utilisateurs. Ou vous pouvez spécifier vos propres valeurs,
-comme indiqué dans l'exemple ci-dessous. Une image construite avec cette
-configuration seulement serait appropriée pour les utilisateurs sur un
-réseau où "#{mirror}#" est accessible.
+défaut emploient #{http.debian.net}#, un service qui choisit un miroir
+géographiquement proche basé, entre autres choses, sur la famille IP de
+l'utilisateur et de la disponibilité des miroirs. C'est un choix approprié
+lorsque vous ne pouvez pas prédire quel miroir sera mieux pour tous vos
+utilisateurs. Ou vous pouvez spécifier vos propres valeurs, comme indiqué
+dans l'exemple ci-dessous. Une image construite avec cette configuration
+seulement serait appropriée pour les utilisateurs sur un réseau où
+"#{mirror}#" est accessible.
 
 code{
 
@@ -369,27 +370,28 @@ code{
 
 }code
 
-3~kernel-flavour-and-version Kernel flavour and version
+3~kernel-flavour-and-version Version et type de noyau
 
-One or more kernel flavours will be included in your image by default,
-depending on the architecture. You can choose different flavours via the
-#{--linux-flavours}# option. Each flavour is suffixed to the default stub
-#{linux-image}# to form each metapackage name which in turn depends on an
-exact kernel package to be included in your image.
+Un ou plusieurs types de noyau seront inclus dans votre image par défaut, en
+fonction de l'architecture. Vous pouvez choisir différents types avec
+l'option #{--linux-flavours}#. Chaque type est suffixé au bout par défaut
+#{linux-image}# pour former le nom de chaque métapaquet qui dépend à son
+tour d'un paquet noyau exacte à inclure dans votre image.
 
-Thus by default, an #{amd64}# architecture image will include the
-#{linux-image-amd64}# flavour metapackage, and an #{i386}# architecture
-image will include the #{linux-image-486}# and #{linux-image-686-pae}#
-metapackages. At time of writing, these packages depend on
-#{linux-image-3.2.0-4-amd64}#, #{linux-image-3.2.0-4-486}# and
-#{linux-image-3.2.0-4-686-pae}#, respectively.
+Ainsi, par défaut, une image pour l'architecture #{amd64}# comprendra le
+métapaquet #{linux-image-amd64}#, et une image pour l'architecture #{i386}#
+comprendra les métapaquets #{linux-image-486}# et
+#{linux-image-686-pae}#. Au moment de la rédaction, ces paquets dépendent de
+#{linux-image-3.2.0-4-amd64}#, #{linux-image-3.2.0-4-486}# et
+#{linux-image-3.2.0-4-686-pae}#, respectivement.
 
-When more than one kernel package version is available in your configured
-archives, you can specify a different kernel package name stub with the
-#{--linux-packages}# option. For example, supposing you are building an
-#{amd64}# architecture image and add the experimental archive for testing
-purposes so you can install the #{linux-image-3.5-trunk-amd64}# kernel. You
-would configure that image as follows:
+Lorsque plus d'une version du paquet du noyau est disponible dans vos
+archives configurées, vous pouvez spécifier un nom du paquet du noyau
+différent avec l'option #{--linux-packages}#. Par exemple, supposons que
+vous construisez une image pour l'architecture #{amd64}# et ajoutez
+l'archive expérimentale pour faire des test afin que vous puissiez installer
+le noyau #{linux-image-3.5-trunk-amd64}#. Vous devez configurer cette image
+comme suit:
 
 code{
 
@@ -398,40 +400,43 @@ code{
 
 }code
 
-3~custom-kernels Custom kernels
+3~custom-kernels Noyaux personnalisés
 
-You can build and include your own custom kernels, so long as they are
-integrated within the Debian package management system. The live-build
-system does not support kernels not built as #{.deb}# packages.
+Vous pouvez créer et inclure vos propres noyaux personnalisés, à condition
+qu'ils soient intégrés dans le système de gestion des paquets Debian. Le
+système de live-build ne supporte pas les noyaux qui ne sont pas construits
+sous forme de paquets #{.deb}#.
 
-The proper and recommended way to deploy your own kernel packages is to
-follow the instructions in the #{kernel-handbook}#. Remember to modify the
-ABI and flavour suffixes appropriately, then include a complete build of the
-#{linux}# and matching #{linux-latest}# packages in your reposistory.
+La bonne façon et recommandée de déployer vos propres paquets du noyau est
+de suivre les instructions dans le #{kernel-handbook}#. N'oubliez pas de
+modifier l'ABI et les suffixes de manière appropriée, puis inclure une
+construction complète des paquets #{linux}# et #{linux-latest}# dans votre
+dépôt.
 
-If you opt to build the kernel packages without the matching metapackages,
-you need to specify an appropriate #{--linux-packages}# stub as discussed in
-{Kernel flavour and version}#kernel-flavour-and-version. As we explain in
-{Installing modified or third-party
-packages}#installing-modified-or-third-party-packages, it is best if you
-include your custom kernel packages in your own repository, though the
-alternatives discussed in that section work as well.
+Si vous optez pour construire les paquets du noyau sans les métapaquets
+correspondants, vous devez spécifier un bout #{--linux-packages}# appropriée
+tel que discuté dans {Version et type de
+noyau}#kernel-flavour-and-version. Comme nous l'expliquons dans
+{Installation de paquets modifiés ou de
+tiers}#installing-modified-or-third-party-packages, il est préférable si
+vous incluez vos paquets de noyau personnalisé à votre propre dépôt, bien
+que les alternatives discutées dans cette section fonctionnent aussi bien.
 
-It is beyond the scope of this document to give advice on how to customize
-your kernel. However, you must at least ensure your configuration satisfies
-these minimum requirements:
+Il est hors cadre de ce document donner des conseils sur la façon de
+personnaliser votre noyau. Toutefois, vous devez au moins vous assurer que
+votre configuration répond à ces exigences minimales:
 
-_* Use an initial ramdisk.
+_* Utilisez un ramdisk initial.
 
-_* Include the union filesystem module (i.e. usually #{aufs}#).
+_* Inclure un module d'union de systèmes de fichiers (par exemple #{aufs}#).
 
-_* Include any other filesystem modules required by your configuration
-(i.e. usually #{squashfs}#).
+_* Inclure tous les autres modules du système de fichiers requis pour votre
+configuration (habituellement #{squashfs}#).
 
-_* Suffix each kernel package name with the kernel flavour
-(e.g. #{-amd64}#).
+_* Suffixe chaque nom de paquet du noyau avec le type du noyau (par
+exemple#{-amd64}#).
 
-2~installing-modified-or-third-party-packages Installation des paquets
+2~installing-modified-or-third-party-packages Installation de paquets
 modifiés ou de tiers
 
 Tandis qu'il est contre la philosophie de Debian Live, il peut parfois être
@@ -648,7 +653,7 @@ cible, wheezy. Ce qui suit devrait accomplir ça:
 code{
 
  $ echo "deb http://mirror/debian sid main" > config/archives/sid.list.chroot
- $ cat >> config/chroot_apt/preferences << END
+ $ cat >> config/chroot_apt/preferences << EOF
  Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit
  Pin: release n=sid
  Pin-Priority: 600
@@ -656,15 +661,7 @@ code{
  Package: *
  Pin: release n=sid
  Pin-Priority: 1
- END
-
-}code
-
-*{Remarque:}* Caractères génériques peuvent être utilisés dans les noms des paquets (par exemple *{Package: live-*}*) avec la version 0.8.14 ou supérieure d'Apt. Cela signifie qu'il fonctionne avec wheezy en utilisant:
-
-code{
-
-$ lb config --distribution wheezy
+ EOF
 
 }code
 

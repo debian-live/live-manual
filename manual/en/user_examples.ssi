@@ -12,9 +12,9 @@ Note that, for the sake of brevity, in these examples we do not specify a local 
 
 code{
 
- LB_MIRROR_BOOTSTRAP="http://mirror/debian"
- LB_MIRROR_CHROOT_SECURITY="http://mirror/debian-security"
- LB_MIRROR_CHROOT_BACKPORTS="http://mirror/debian-updates"
+ LB_MIRROR_BOOTSTRAP="http://mirror/debian/"
+ LB_MIRROR_CHROOT_SECURITY="http://mirror/debian-security/"
+ LB_MIRROR_CHROOT_BACKPORTS="http://mirror/debian-backports/"
 
 }code
 
@@ -216,14 +216,14 @@ After that, create the directory #{/etc/skel}# in #{config/includes.chroot}# and
 code{
 
  $ mkdir -p config/includes.chroot/etc/skel
- $ cat > config/includes.chroot/etc/skel/.xsession << END
+ $ cat > config/includes.chroot/etc/skel/.xsession << EOF
  #!/bin/sh
 
  /usr/bin/metacity &
  /usr/bin/xvncviewer 192.168.1.2:1
 
  exit
- END
+ EOF
 
 }code
 
@@ -314,7 +314,7 @@ code{
  $ lb config \
      -a i386 \
      -k 486 \
-     --bootappend-live "locales=pt_BR.UTF-8 keyboard-layouts=pt" \
+     --bootappend-live "boot=live config locales=pt_BR.UTF-8 keyboard-layouts=pt" \
      --debian-installer live
  $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
  $ echo task-kde-desktop task-brazilian-portuguese task-brazilian-portuguese-desktop \

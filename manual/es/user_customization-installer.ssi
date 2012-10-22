@@ -60,16 +60,17 @@ code{
 
 2~ Personalizando el Instalador de Debian mediante preconfiguración
 
-As described in the Debian Installer Manual, Appendix B at
-http://www.debian.org/releases/stable/i386/apb.html, "Preseeding provides a
-way to set answers to questions asked during the installation process,
-without having to manually enter the answers while the installation is
-running. This makes it possible to fully automate most types of installation
-and even offers some features not available during normal installations."
-This kind of customization is best accomplished with live-build by placing
-the configuration in a #{preseed.cfg}# file included in
-#{config/debian-installer/}#. For example, to preseed setting the locale to
-#{en_US}#:
+Tal y como se describe en el apéndice B del manual del Instalador de Debian
+que puede consultarse en
+http://www.debian.org/releases/stable/i386/apb.html, «La preconfiguración
+permite asociar respuestas a preguntas que aparecen en el proceso de
+instalación, sin tener que responderlas manualmente en el momento se se
+ejecuta dicho proceso. Esto hace posible automatizar totalmente la mayoria
+de las instalaciones e incluso ofrece alguna característica que no está
+disponible durante una instalación normal.»  Con live-build se puede llevar
+a cabo esta personalización depositando un fichero llamado #{preseed.cfg}#
+en el directorio de configuración #{config/debian-installer/}#. Por ejemplo,
+para preconfigurar la variante local a #{es_ES}# se puede hacer:
 
 code{
 
@@ -80,10 +81,12 @@ code{
 
 2~ Personalizar el contenido del Instalador de Debian
 
-For experimental or debugging purposes, you might want to include locally
-built #{d-i}# component udeb packages. Place these in
-#{config/packages.binary/}# to include them in the image. Additional or
-replacement files and directories may be included in the installer initrd as
-well, in a similar fashion to {Live/chroot local
-includes}#live-chroot-local-includes, by placing the material in
-#{config/includes.debian-installer/}#.
+Es posible que, con propósitos experimentales o para depuración de errores,
+se desee incluir paquetes udeb creados localmente para el #{d-i}#. Estos
+paquetes udeb son componentes del Instalador de Debian que definen su
+comportamiento. Para incluirlos en la imagen, basta con depositarlos en el
+directorio de configuración #{config/packages.binary/}#. También pueden
+incluirse o reemplazarse ficheros y directorios en el initrd del instalador
+de una manera similar a la que se describe en {Includes locales en
+Live/chroot}#live-chroot-local-includes, depositando el material en el
+directorio #{config/includes.debian-installer/}#.

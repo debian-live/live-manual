@@ -58,30 +58,30 @@ code{
 
 2~ Personalizzare il Debian Installer con la preconfigurazione
 
-Come descritto nell'appendice B del manuale dell'Installatore Debian
-all'indirizzo http://www.debian.org/releases/stable/i386/apb.html, "La
-preconfigurazione fornisce un modo per impostare le risposte alle domande
-poste durante il processo d'installazione senza la necessità di inserirle
-manualmente. Ciò permette di automatizzare totalmente molti tipi di
-installazione offrendo anche alcune caratteristiche normalmente non
-disponibili." Questo tipo di personalizzazione è compiuta in modo ottimale
-con live-build mettendo la configurazione in un file #{preseed.cfg}# incluso
-in #{config/binary_debian-installer/}#. Ad esempio per preconfigurare
-l'impostazione della localizzazione su #{en_US}#:
+As described in the Debian Installer Manual, Appendix B at
+http://www.debian.org/releases/stable/i386/apb.html, "Preseeding provides a
+way to set answers to questions asked during the installation process,
+without having to manually enter the answers while the installation is
+running. This makes it possible to fully automate most types of installation
+and even offers some features not available during normal installations."
+This kind of customization is best accomplished with live-build by placing
+the configuration in a #{preseed.cfg}# file included in
+#{config/debian-installer/}#. For example, to preseed setting the locale to
+#{en_US}#:
 
 code{
 
  $ echo "d-i debian-installer/locale string en_US" \
-     >> config/binary_debian-installer/preseed.cfg
+     >> config/debian-installer/preseed.cfg
 
 }code
 
 2~ Personalizzare il contenuto dell'Installatore Debian
 
-Si può voler includere pacchetti udeb compilati localmente come componenti
-del #{d-i}# per scopi di sperimentazione o debug; per includerli
-nell'immagine inserirli in #{config/packages.binary/}#. I file e le
-directory aggiuntivi o di rimpiazzo si possono includere nell'initrd
-dell'installatore in maniera simile agli {Include locali del
-Live/chroot}#live-chroot-local-includes, inserendo il materiale in
-#{config/includes.binary_debian-installer/}#.
+For experimental or debugging purposes, you might want to include locally
+built #{d-i}# component udeb packages. Place these in
+#{config/packages.binary/}# to include them in the image. Additional or
+replacement files and directories may be included in the installer initrd as
+well, in a similar fashion to {Live/chroot local
+includes}#live-chroot-local-includes, by placing the material in
+#{config/includes.debian-installer/}#.

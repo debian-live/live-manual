@@ -648,17 +648,16 @@ cuándo utilizarlas. Esto es sólo un ejemplo y no debe ser interpretado como
 consejo para configurar la imagen. Esta opción no sería apropiada para, por
 ejemplo, una versión final de una imagen en vivo.
 
-Para configuraciones más complicadas que implican opciones #{apt.conf}#
-puede ser necesario crear un fichero #{config/chroot_apt/apt.conf}#. Ver
-tambien las otras opciones #{apt-*}# para tener algunos atajos convenientes
-para las opciones que se necesitan con frecuencia.
+For more complicated APT configurations involving #{apt.conf}# options you
+might want to create a #{config/apt/apt.conf}# file instead. See also the
+other #{apt-*}# options for a few convenient shortcuts for frequently needed
+options.
 
 3~apt-pinning APT pinning
 
-Como información básica, sería recomendable leer la página de manual
-#{apt_preferences(5)}#. APT pinning puede ser configurado o en tiempo de
-creación de la imagen, creando el fichero #{config/chroot_apt/preferences}#
-o en tiempo de ejecución del sistema en vivo creando el fichero
+For background, please first read the #{apt_preferences(5)}# man page. APT
+pinning can be configured either for build time, or else for run time. For
+the former, create #{config/apt/preferences}#. For the latter, create
 #{config/includes.chroot/etc/apt/preferences}#.
 
 Supongamos que se está creando un sistema en vivo basado en wheezy pero se
@@ -671,9 +670,9 @@ se puede realizar de la siguiente forma:
 
 code{
 
- $ echo "deb http://mirror/debian sid main" > config/archives/sid.list.chroot
- $ cat >> config/chroot_apt/preferences << EOF
- Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit
+ $ echo "deb http://mirror/debian/ sid main" > config/archives/sid.list.chroot
+ $ cat >> config/apt/preferences << EOF
+ Package: live-*
  Pin: release n=sid
  Pin-Priority: 600
 
@@ -684,17 +683,15 @@ code{
 
 }code
 
-Una prioridad pin negativa previene la instalación de un paquete, como puede
-ser el caso de que no se desee que un paquete recomendado por otro sea
-instalado al instalar el primero. Supongamos que se está creando una imagen
-LXDE añadiendo #{task-lxde-desktop}# en
-#{config/package-lists/lxde-desktop.list.chroot}#, pero no se desea
-preguntar al usuario si desea almacenar las claves wifi en el almacen de
-claves. Este metapaquete depende de /{lxde-core}/, el cual recomienda
-/{gksu}/ que a su vez recomienda /{gnome-keyring}/. Así que el objetivo es
-omitir la instalación del paquete /{gnome-keyring}/, que puede conseguirse
-añadiendo un fichero con el siguiente contenido a
-#{config/chroot_apt/preferences}#:
+Negative pin priorities will prevent a package from being installed, as in
+the case where you do not want a package that is recommended by another
+package. Suppose you are building an LXDE image using #{task-lxde-desktop}#
+in #{config/package-lists/lxde-desktop.list.chroot}#, but don't want the
+user prompted to store wifi passwords in the keyring. This metapackage
+depends on /{lxde-core}/, which recommends /{gksu}/, which in turn
+recommends /{gnome-keyring}/. So you want to omit the recommended
+/{gnome-keyring}/ package. This can be done by adding the following stanza
+to #{config/apt/preferences}#:
 
 code{
 

@@ -593,15 +593,15 @@ configure your image this way. This option would not be appropriate for,
 say, a final release of a live image.
 
 For more complicated APT configurations involving #{apt.conf}# options you
-might want to create a #{config/chroot_apt/apt.conf}# file instead. See also
-the other #{apt-*}# options for a few convenient shortcuts for frequently
-needed options.
+might want to create a #{config/apt/apt.conf}# file instead. See also the
+other #{apt-*}# options for a few convenient shortcuts for frequently needed
+options.
 
 3~apt-pinning APT pinning
 
 For background, please first read the #{apt_preferences(5)}# man page. APT
 pinning can be configured either for build time, or else for run time. For
-the former, create #{config/chroot_apt/preferences}#. For the latter, create
+the former, create #{config/apt/preferences}#. For the latter, create
 #{config/includes.chroot/etc/apt/preferences}#.
 
 Let's say you are building a wheezy live system but need all the live
@@ -614,7 +614,7 @@ accomplish this:
 code{
 
  $ echo "deb http://mirror/debian/ sid main" > config/archives/sid.list.chroot
- $ cat >> config/chroot_apt/preferences << EOF
+ $ cat >> config/apt/preferences << EOF
  Package: live-*
  Pin: release n=sid
  Pin-Priority: 600
@@ -634,7 +634,7 @@ user prompted to store wifi passwords in the keyring. This metapackage
 depends on /{lxde-core}/, which recommends /{gksu}/, which in turn
 recommends /{gnome-keyring}/. So you want to omit the recommended
 /{gnome-keyring}/ package. This can be done by adding the following stanza
-to #{config/chroot_apt/preferences}#:
+to #{config/apt/preferences}#:
 
 code{
 

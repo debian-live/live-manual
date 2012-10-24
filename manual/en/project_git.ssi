@@ -39,3 +39,17 @@ code{
 }code
 
 The *{debian-next}* branch, which is not always fast-forward, is where all the changes are committed first before being merged into the *{debian}* branch. To make an analogy, it is like a testing ground. If you are working on this branch and need to pull, you will have to do a #{git pull --rebase}# so that your local modifications are staged while pulling from the server and then your changes will be put on top of it all.
+
+2~ Handling multiple repositories
+
+If you intend to clone several of the Debian Live repositories and
+switch to the *{debian-next}* branch right away to check the latest code,
+write a patch or contribute with a translation you ought to know that the git server provides a #{mrconfig}# file to ease the handling of several repositories. In order to use it you need to install the /{mr}/ package and launch:
+
+code{
+
+ $  mr bootstrap http://live.debian.net/other/mr/mrconfig
+
+}code
+
+This command will automatically clone and checkout the configurations used for the prebuilt images that the project publishes for general use and also the development repositories of the debian packages produced by the project.

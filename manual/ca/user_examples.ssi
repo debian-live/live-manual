@@ -327,24 +327,22 @@ code{
 
 Gaudir.
 
-2~ Una imatge bàsica per a un dispositiu USB de 128M
+2~ A base image for a 128MB USB key
 
-*{Cas d'ús:}* Crear una imatge estàndard amb alguns components eliminats per tal que càpiga en una clau USB de 128M amb un petit espai de sobres per utilitzar com millor us sembli.
+*{Use case:}* Create an hdd image with some components removed in order to fit on a 128MB USB key with a little space left over to use as you see fit.
 
-Al optimitzar una imatge per adaptar-la a una mida determinada, cal
-comprendre els avantatges i desavantatges que s'estan fent entre la mida i
-la funcionalitat. En aquest exemple, retallem tant només per donar cabuda a
-material addicional dins d'una mida de 128M, però sense fer res per destruir
-la integritat dels paquets continguts, com la depuració de les dades de
-localització a través del paquet /{localepurge}/ o altres optimitzacions
-"intrusives". De particular interès, per tal d'entendre el que fa el script
-#{minimal.chroot}# s'hauria de fer una ullada a
-#{/usr/share/doc/live-build/examples/hooks}#
+When optimizing an image to fit a certain media size, you need to understand
+the tradeoffs you are making between size and functionality. In this
+example, we trim only so much as to make room for additional material within
+a 128MB media size, but without doing anything to destroy the integrity of
+the packages contained within, such as the purging of locale data via the
+/{localepurge}/ package, or other such "intrusive" optimizations. Of
+particular note, we use #{--debootstrap-options}# to create a minimal system
+from scratch.
 
 code{
 
- $ lb config -k 486 --apt-indices false --apt-recommends false --memtest none
- $ cp /usr/share/doc/live-build/examples/hooks/minimal.chroot config/hooks
+ $ lb config -b hdd -k 486 --apt-indices false --apt-recommends false --debootstrap-options "--variant=minbase" --memtest none
 
 }code
 
@@ -367,28 +365,22 @@ code{
 
 }code
 
-En el sistema de l'autor en el moment d'escriure això, la configuració
-anterior produeix una imatge de 95Mbytes. Això es compara favorablement amb
-la imatge de 182Mbytes produïda per la configuració per defecte del
-{Tutorial 1}#tutorial-1.
+On the author's system at the time of writing this, the above configuration
+produced an 80MB image. This compares favourably with the 182MB image
+produced by the default configuration in {Tutorial 1}#tutorial-1.
 
-El major estalvi d'espai aquí, en comparació amb la construcció d'una imatge
-estàndard en un sistema d'arquitectura #{i386}#, és seleccionar només la
-variant del nucli #{486}# en comptes del predeterminat #{-k "486
-686-pae"}#. Deixar els índexs d'APT amb #{--apt-indices false}# també permet
-estalviar una bona quantitat d'espai, el desavantatge és que es necessita
-fer #{apt-get update}# abans d'usar apt en el sistema en viu. Deixar els
-paquets recomanats amb #{--apt-recommends false}# estalvia una mica d'espai
-addicional, a costa d'ometre alguns paquets que d'una altra manera es podria
-esperar que hi fossin. #{--memtest none}# impedeix la instaŀlació d'un
-comprovador de la memòria. I finalment, l'execució del script ganxo
-#{minimal.chroot}# elimina alguns paquets i fitxers que no s'utilitzen.
+The biggest space-saver here, compared to building a standard image on an
+#{i386}# architecture system, is to select only the #{486}# kernel flavour
+instead of the default #{-k "486 686-pae"}#. Leaving off APT's indices with
+#{--apt-indices false}# also saves a fair amount of space, the tradeoff
+being that you need to do an #{apt-get update}# before using /{apt}/ in the
+live system. Dropping recommended packages with #{--apt-recommends false}#
+saves some additional space, at the expense of omitting some packages you
+might otherwise expect to be there. #{--debootstrap-options
+"--variant=minbase"}# bootstraps a minimal system from the start. And
+finally, #{--memtest none}# prevents the installation of a memory tester.
 
-Fent servir altres scripts ganxo, com ara el #{stripped.chroot}# de
-#{/usr/share/doc/live-build/examples/hooks}#, es pot guanyar petites
-quantitats addicionals d'espai i produir una imatge de 76MB. Però cal
-decidir si la funcionalitat que es sacrifica amb cada optimització de la
-mida val la pena, tenint en compte la funcionalitat que es perd.
+*{Note:}* A minimal system can also be achieved using hooks, like for example the #{stripped.chroot}# hook found in #{/usr/share/doc/live-build/examples/hooks}#. It may shave off additional small amounts of space and produce an image of 76MB. But it is far better to bootstrap a minimal system from the start than downloading all the packages just to have them removed by a hook later. That is why using /{debootstrap}/ is the recommended way of achieving this goal.
 
 2~ Un escriptori KDE localitzat i amb instaŀlador
 

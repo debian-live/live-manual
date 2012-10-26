@@ -21,6 +21,14 @@ code{
 
 }code
 
+oppure
+
+code{
+
+ $ git clone https://live.debian.net/git/live-manual.git
+
+}code
+
 Gli indirizzi per clonare con permessi di scrittura sono nella forma
 #{git@live.debian.net:/repository}#.
 
@@ -55,3 +63,22 @@ lavorando in questo branch e si necessita di eseguire il pull, bisogna usare
 #{git pull --rebase}# in modo che le modifiche locali siano preparate per il
 commit (stage) quando si fa il pull dal server, in questo modo saranno poste
 in cima a tutto il resto.
+
+2~ Handling multiple repositories
+
+If you intend to clone several of the Debian Live repositories and switch to
+the *{debian-next}* branch right away to check the latest code, write a
+patch or contribute with a translation you ought to know that the git server
+provides a #{mrconfig}# file to ease the handling of several
+repositories. In order to use it you need to install the /{mr}/ package and
+launch:
+
+code{
+
+ $  mr bootstrap http://live.debian.net/other/mr/mrconfig
+
+}code
+
+This command will automatically clone and checkout the configurations used
+for the prebuilt images that the project publishes for general use and also
+the development repositories of the debian packages produced by the project.

@@ -330,18 +330,18 @@ code{
 
 Disfrutarlo.
 
-2~ A base image for a 128MB USB key
+2~ Una imagen básica para un pendrive USB de 128MB
 
-*{Use case:}* Create an hdd image with some components removed in order to fit on a 128MB USB key with a little space left over to use as you see fit.
+*{Caso Práctico:}* Crear una imagen hdd quitando algunos componentes para que quepa en un pendrive USB de 128MB dejándo un poco de espacio libre para poder usarlo para lo que se quiera.
 
-When optimizing an image to fit a certain media size, you need to understand
-the tradeoffs you are making between size and functionality. In this
-example, we trim only so much as to make room for additional material within
-a 128MB media size, but without doing anything to destroy the integrity of
-the packages contained within, such as the purging of locale data via the
-/{localepurge}/ package, or other such "intrusive" optimizations. Of
-particular note, we use #{--debootstrap-options}# to create a minimal system
-from scratch.
+Al optimizar una imagen para adaptarla al tamaño de algunos medios de
+almacenamiento, es necesario comprender el equilibrio que se está haciendo
+entre tamaño y funcionalidad. En este ejemplo, se recorta tanto sólo para
+dar cabida a material adicional dentro de un tamaño de 128MB, pero sin hacer
+nada para destruir la integridad de los paquetes que contiene, tales como la
+depuración de las variantes locales a través del paquete /{localepurge}/ u
+otro tipo de optimizaciones «intrusivas». Cabe destacar que se utiliza
+#{--debootstrap-options}# para crear un sistema mínimo desde el principio.
 
 code{
 
@@ -368,22 +368,25 @@ code{
 
 }code
 
-On the author's system at the time of writing this, the above configuration
-produced an 80MB image. This compares favourably with the 182MB image
-produced by the default configuration in {Tutorial 1}#tutorial-1.
+En el sistema del autor, en el momento de escribir esto, la configuración
+anterior produjo una imagen de 80MB. Esto se compara favorablemente en
+tamaño con la imagen de 182MB producida por la configuración por defecto en
+el {Tutorial 1}#tutorial-1.
 
-The biggest space-saver here, compared to building a standard image on an
-#{i386}# architecture system, is to select only the #{486}# kernel flavour
-instead of the default #{-k "486 686-pae"}#. Leaving off APT's indices with
-#{--apt-indices false}# also saves a fair amount of space, the tradeoff
-being that you need to do an #{apt-get update}# before using /{apt}/ in the
-live system. Dropping recommended packages with #{--apt-recommends false}#
-saves some additional space, at the expense of omitting some packages you
-might otherwise expect to be there. #{--debootstrap-options
-"--variant=minbase"}# bootstraps a minimal system from the start. And
-finally, #{--memtest none}# prevents the installation of a memory tester.
+El mayor ahorro de espacio aquí, en comparación con la creación de una
+imagen estándar en un sistema de arquitectura #{i386}# es seleccionar sólo
+la versión del kernel #{486}# en lugar de la de por defecto #{-k "486
+686-pae"}#. Dejar fuera los índices de APT con #{--apt-indices false}#
+también ahorra una cantidad importante de espacio, la desventaja es que será
+necesario hacer un #{apt-get update}# antes de usar apt en el sistema en
+vivo. Excluyendo los paquetes recomendados con #{--apt-recommends false}# se
+ahorra un poco de espacio adicional a costa de omitir algunos paquetes que
+de otro modo podría esperarse que estuvieran alli. #{--debootstrap-options
+"--variant=minbase"}# preinstala un sistema mínimo desde el
+principio. #{--memtest none}# evita la instalación de un comprobador de
+memoria. 
 
-*{Note:}* A minimal system can also be achieved using hooks, like for example the #{stripped.chroot}# hook found in #{/usr/share/doc/live-build/examples/hooks}#. It may shave off additional small amounts of space and produce an image of 76MB. But it is far better to bootstrap a minimal system from the start than downloading all the packages just to have them removed by a hook later. That is why using /{debootstrap}/ is the recommended way of achieving this goal.
+*{Nota:}* También se puede conseguir un sistema mínimo utilizando scripts gancho como por ejemplo el script #{stripped.chroot}# que se encuentra en #{/usr/share/doc/live-build/examples/hooks}#,  que puede reducir aún más el tamaño de la imagen hasta 76MB. Pero es mucho mejor preinstalar un sistema mínimo desde el principo que descargar todos los paquetes para eliminarlos después con un script. Es por eso por lo que el uso de /{debootstrap}/ es el método recomendado de conseguir este objetivo.
 
 2~ Un escritorio KDE con variante local e instalador
 

@@ -333,7 +333,7 @@ Amusez-vous bien!
 
 2~ Une image de base pour une clé USB de 128MB
 
-*{Cas d'utilisation:}* Créer une image standard avec certains composants éliminés afin de l'adapter sur une clé USB de 128MB avec un peu d'espace laissé pour l'utiliser à votre convenance.
+*{Cas d'utilisation:}* Créer une image hdd avec certains composants éliminés afin de l'adapter sur une clé USB de 128MB avec un peu d'espace laissé pour l'utiliser à votre convenance.
 
 Pour l'optimisation d'une image adaptée à la dimension de certains supports,
 vous avez besoin de comprendre le compromis que vous faites entre la taille
@@ -384,8 +384,9 @@ que vous devez faire #{apt-get update}# avant d'utiliser apt dans le système
 live. Laissant hors les paquets recommandés avec #{--apt-recommends false}#
 économise d'espace supplémentaire, au détriment d'omettre certains paquets
 que vous pourriez autrement attendre à être là. #{--debootstrap-options
-"--variant=minbase"}# construit un système minimal dès le début
-. #{--memtest none}# prévient l'installation d'un testeur de mémoire.
+"--variant=minbase"}# construit un système minimal dès le début. Et
+finalement #{--memtest none}# prévient l'installation d'un testeur de
+mémoire.
 
 *{Note:}*Un système minimal peut également être obtenu en utilisant hooks comme par exemple le hook #{stripped.chroot}# dans #{/usr/share/doc/live-build/examples/hooks}#, il peut gagner de petites quantités supplémentaires d'espace et produire une image de 76MB. Mais il est de loin préférable d'installer un système minimal dès le début que le téléchargement de tous les paquets juste pour les faire enlever par un hook plus tard. C'est pourquoi l'utilisation de /{debootstrap}/ est la méthode recommandée pour atteindre cet objectif.
 

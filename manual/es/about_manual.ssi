@@ -155,30 +155,17 @@ _* Trent W. Buck
 
 2~how-to-contribute Cómo contribuir en este documento
 
-Este manual se ha creado como un proyecto comunitario y cualquier propuesta
-para su mejora u otras contribuciones son siempre bienvenidas. La mejor
-forma de hacer una contribución es enviarla a la lista de correo. Ver la
-sección {Contacto}#contact para más información.
+This manual is intended as a community project and all proposals for
+improvements and contributions are extremely welcome. Please see the section
+{Contributing to the project}#contributing-to-project for detailed
+information on how to fetch the commit key and make good commits.
 
-Cuando se envía una contribución se debe identificar claramente su copyright
-e incluir la declaración de licencia. Se hace notar que para ser aceptada,
-una contribución debe ser licenciada bajo la misma licencia que el resto del
-documento, esto es, GPL versión 3 o posterior.
+3~ Aplicar cambios
 
-Los originales de este manual se mantienen utilizando el sistema de control
-de versiones Git (ver {Repositorios Git}#git-repositories). Se puede obtener
-la copia más actualizada ejecutando la siguiente orden:
-
-code{
-
-$ git clone git://live.debian.net/git/live-manual.git
-
-}code
-
-Antes de enviar una contribución se debería realizar una visualización del
-trabajo realizado. Para ello asegurarse de tener instalados los paquetes
-necesarios para la construcción de live-manual ejecutando la siguiente
-orden:
+In order to make changes to the English manual you have to edit the right
+files in #{manual/en/}# but prior to the submission of your contribution,
+please preview your work. To preview the live-manual, ensure the packages
+needed for building it are installed by executing:
 
 code{
 
@@ -222,76 +209,11 @@ code{
 
 }code
 
-3~ Aplicar cambios
-
-Cualquiera puede hacer una entrega en el repositorio. Sin embargo, a la hora
-de hacer grandes cambios, es conveniente enviarlos a la lista de correo para
-discutirlos primero. Para realizar una entrega al repositorio se debe seguir
-el siguiente procedimiento:
-
-_* Obtener la clave pública de entrega:
-
-code{
-
- $ mkdir -p ~/.ssh/identity.d
- $ wget http://live.debian.net/other/keys/git@live.debian.net \
-     -O ~/.ssh/identity.d/git@live.debian.net
- $ wget http://live.debian.net/other/keys/git@live.debian.net.pub \
-     -O ~/.ssh/identity.d/git@live.debian.net.pub
- $ chmod 0600 ~/.ssh/identity.d/git@live.debian.net*
-
-}code
-
-_* Añadir la siguiente sección en el fichero de configuración de
-openssh-client:
-
-code{
-
- $ cat >> ~/.ssh/config << EOF
- Host live.debian.net
-     Hostname live.debian.net
-     User git
-     IdentityFile ~/.ssh/identity.d/git@live.debian.net
- EOF
-
-}code
-
-_* Obtener un clon del manual mediante git utilizando ssh:
-
-code{
-
- $ git clone git@live.debian.net:/live-manual.git
- $ cd live-manual && git checkout debian-next
-
-}code
-
-_* Asegurarse de enviar los cambios a la rama debian-next y no a la rama
-Debian.
-
-_* No ejecutar #{make commit}# a menos de que se actualicen las traducciones
-al mismo tiempo, y en ese caso, no mezclar los cambios del manual en inglés
-con las traducciones en el mismo commit, sino en commits separados. Ver la
-sección {Tranducción}#translation para más detalles.
-
-_* Hay que escribir un mensaje de entrega que consistirá en una o varias
-frases en ingles con significado completo, comenzando con una letra
-mayúscula y acabando con un punto final. Es habitual comenzar estas frases
-con la forma 'Fixing/Adding/Removing/Correcting/Translating', por ejemplo:
-
-code{
-
- $ git commit -a -m "Adding a section on applying patches."
-
-}code
-
-_* Para finalizar se realizará la entrega al servidor utilizando el
-siguiente comando:
-
-code{
-
- $ git push
-
-}code
+After revising your work and making sure that everything is fine, do not use
+#{make commit}# unless you are updating translations in the commit, and in
+that case, do not mix changes to the English manual and translations in the
+same commit, but use separate commits for each. See the
+{Translation}#translation section for more details.
 
 3~translation Traducción
 
@@ -316,5 +238,18 @@ que los manuales traducidos son actualizados desde los ficheros
 .po. Entonces se puede revisar los cambios ejecutando #{make build}# antes
 de realizar la entrega mediante #{git add .}#, #{git commit -m
 "Translating..."}# y #{git push}#.
+
+After running #{make commit}# you will see some text scroll by. They are
+basically informative messages about the processing status and also some
+hints about what can be done in order to improve live-manual. Unless you see
+a fatal error, you can usually proceed and submit your contribution.
+
+live-manual comes with two utilities that can greatly help translators to
+find untranslated and fuzzy strings. The first one is "make check". It
+launches a po file integrity check script that tells you in detail how many
+untranslated and fuzzy strings there are in each po file. It stops whenever
+it finds a fatal error and verbosely informs about what the problem is. The
+second one, the "make translate" target, only acts upon fuzzy strings but it
+helps you to find and fix them one by one.
 
 *{Nota:}* Se puede utilizar #{make clean}# para limpiar el árbol git antes de enviar los cambios. Este paso no es obligatorio, gracias al fichero .gitignore, pero es una buena práctica para evitar enviar ficheros involuntariamente.

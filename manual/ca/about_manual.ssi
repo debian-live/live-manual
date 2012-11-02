@@ -144,30 +144,17 @@ _* Trent W. Buck
 
 2~how-to-contribute Contribuir en aquest document
 
-Aquest manual està pensat com un projecte comunitari i totes les propostes
-per millorar-lo i les contribucions són molt benvingudes. La millor forma
-d'enviar una contribució és enviar-la a la llista de correu. Consultar la
-secció {Contacte}#contact per més informació.
+This manual is intended as a community project and all proposals for
+improvements and contributions are extremely welcome. Please see the section
+{Contributing to the project}#contributing-to-project for detailed
+information on how to fetch the commit key and make good commits.
 
-Quan es presenta una contribució, identificar clarament el titular dels
-drets d'autor i s'ha d'incloure la declaració de concessió de
-llicències. Recordar que per ser acceptada, la contribució ha de tenir una
-llicencia igual que la resta del document, a saber, la versió de la GPL 3 o
-superior.
+3~ Aplicar canvis
 
-Les fonts d'aquest manual es mantenen utilitzant el sistema de control de
-versions Git (veure {Repositoris Git}#git-repositories). Es pot obtenir una
-còpia actualitzada mitjançant l'execució de:
-
-code{
-
-$ git clone git://live.debian.net/git/live-manual.git
-
-}code
-
-Abans de presentar una contribució, previsualitzar el treball. Per
-previsualitzar el live-manual, assegurar-se que s'han instaŀlat els paquets
-necessaris per a la seva construcció  mitjançant l'execució de:
+In order to make changes to the English manual you have to edit the right
+files in #{manual/en/}# but prior to the submission of your contribution,
+please preview your work. To preview the live-manual, ensure the packages
+needed for building it are installed by executing:
 
 code{
 
@@ -210,74 +197,11 @@ code{
 
 }code
 
-3~ Aplicar canvis
-
-Qualsevol persona pot fer un commit directament al repositori. No obstant
-això, demanem que s'enviïn els canvis grans a la llista de correu per
-parlar-ne en primer lloc. Per fer un push al repositori, s'ha de seguir el
-següent procediment:
-
-_* Obtenir la clau pública:
-
-code{
-
- $ mkdir -p ~/.ssh/identity.d
- $ wget http://live.debian.net/other/keys/git@live.debian.net \
-     -O ~/.ssh/identity.d/git@live.debian.net
- $ wget http://live.debian.net/other/keys/git@live.debian.net.pub \
-     -O ~/.ssh/identity.d/git@live.debian.net.pub
- $ chmod 0600 ~/.ssh/identity.d/git@live.debian.net*
-
-}code
-
-_* Afegir la següent secció a la configuració del vostre openssh-client:
-
-code{
-
- $ cat >> ~/.ssh/config << EOF
- Host live.debian.net
-     Hostname live.debian.net
-     User git
-     IdentityFile ~/.ssh/identity.d/git@live.debian.net
- EOF
-
-}code
-
-_* Fer una còpia del manual a través de ssh:
-
-code{
-
- $ git clone git@live.debian.net:/live-manual.git
- $ cd live-manual && git checkout debian-next
-
-}code
-
-_* Tenir en compte que s'han d'enviar els canvis a la branca debian-next, no
-a la branca debian.
-
-_* No fer un #{make commit}# a menys que s'actualitzen les traduccions al
-mateix temps, i en aquest cas, no barrejar els canvis al manual en anglès i
-les traduccions en el mateix commit, fer-ne un altre separat per cada
-un. Veure la secció {Traducció}#translation per a més detalls.
-
-_* Escriure missatges de commit que consisteixen en oracions completes i
-significatives en anglès, començant amb una lletra majúscula i acabant amb
-un punt. En general, aquests començaran amb la forma
-'Fixing/Adding/Removing/Correcting/Translating', per exemple:
-
-code{
-
- $ git commit -a -m "Adding a section on applying patches."
-
-}code
-
-_* Fer un push al servidor:
-
-code{
-
- $ git push
-
-}code
+After revising your work and making sure that everything is fine, do not use
+#{make commit}# unless you are updating translations in the commit, and in
+that case, do not mix changes to the English manual and translations in the
+same commit, but use separate commits for each. See the
+{Translation}#translation section for more details.
 
 3~translation Traducció
 
@@ -299,5 +223,18 @@ _* No oblidar que es necessari fer #{make commit}# per garantir que els
 manuals traduïts s'actualitzen a partir del fitxers po i llavors es poden
 revisar els canvis executant #{make build}# abans de #{git add .}#, #{git
 commit -m "Translating..."}# i #{git push}#.
+
+After running #{make commit}# you will see some text scroll by. They are
+basically informative messages about the processing status and also some
+hints about what can be done in order to improve live-manual. Unless you see
+a fatal error, you can usually proceed and submit your contribution.
+
+live-manual comes with two utilities that can greatly help translators to
+find untranslated and fuzzy strings. The first one is "make check". It
+launches a po file integrity check script that tells you in detail how many
+untranslated and fuzzy strings there are in each po file. It stops whenever
+it finds a fatal error and verbosely informs about what the problem is. The
+second one, the "make translate" target, only acts upon fuzzy strings but it
+helps you to find and fix them one by one.
 
 *{Nota:}* Es pot utilitzar #{make clean}# per netejar l'arbre git abans de fer un push.  Aquest  pas no és obligatori, gràcies al fitxer .gitignore, però és una bona pràctica per evitar enviar fitxers de forma involuntària.

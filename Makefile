@@ -88,7 +88,7 @@ commit: tidy test
 	@echo "You may now proceed...please do:"
 	@echo
 	@echo "  * git add ."
-	@echo "  * git commit -a -m \"Your commit message.\""
+	@echo "  * git commit -m \"Your commit message.\""
 	@echo "  * git push "
 
 install:

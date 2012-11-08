@@ -81,7 +81,6 @@ commit: tidy test
 	then \
 		echo "" ; \
 		echo "There are some fuzzy strings. You can run 'make translate' to fix them." ; \
-		exit 1 ; \
 	fi
 
 	@echo

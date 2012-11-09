@@ -80,7 +80,7 @@ commit: tidy test
 	@if grep -qs fuzzy manual/po/*/*; \
 	then \
 		echo "" ; \
-		echo "There are some fuzzy strings. You can run 'make translate' to fix them." ; \
+		echo "There are $(shell grep -w 'fuzzy' manual/po/*/* | wc -l) fuzzy strings. You can run 'make translate' to fix them." ; \
 	fi
 
 	@echo

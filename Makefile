@@ -104,6 +104,7 @@ uninstall:
 clean:
 	rm -rf build
 	rm -f manual/en/*~
+	rm -f manual/po/*/*~
 	rm -f manual/po/*/*.mo
 
 distclean: clean

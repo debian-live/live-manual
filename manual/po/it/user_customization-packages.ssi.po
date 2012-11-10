@@ -380,16 +380,6 @@ msgstr "3~ Mirror delle distribuzioni usate durante l'esecuzione"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:52
-#, fuzzy
-#| msgid ""
-#| "The #{--mirror-binary*}# options govern the distribution mirrors placed "
-#| "in the binary image. These may be used to install additional packages "
-#| "while running the live system. The defaults employ #{cdn.debian.net}#, a "
-#| "service that chooses a geographically close mirror based on the user's IP "
-#| "number. This is a suitable choice when you cannot predict which mirror "
-#| "will be best for all of your users. Or you may specify your own values as "
-#| "shown in the example below. An image built from this configuration would "
-#| "only be suitable for users on a network where \"#{mirror}#\" is reachable."
 msgid ""
 "The #{--mirror-binary*}# options govern the distribution mirrors placed in "
 "the binary image. These may be used to install additional packages while "
@@ -404,7 +394,7 @@ msgstr ""
 "Le opzioni #{--mirror-binary*}# determinano i mirror delle distribuzioni "
 "inseriti nell'immagine binaria. Questi possono essere usati per installare "
 "pacchetti aggiuntivi mentre il sistema live è in funzione. Le impostazioni "
-"predefinite impiegano #{cdn.debian.net}#, un servizio che sceglie un mirror "
+"predefinite impiegano #{http.debian.net}#, un servizio che sceglie un mirror "
 "geograficamente vicino basandosi sul numero IP dell'utente. Questo è una "
 "scelta conveniente quando non si può pronosticare quale sarà il mirror "
 "migliore per tutti gli utenti. Oppure si può specificare il proprio valore "
@@ -1051,14 +1041,6 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:248
-#, fuzzy
-#| msgid ""
-#| "Whilst it is against the philosophy of Debian Live, it may sometimes be "
-#| "necessary to build a Live system with modified versions of packages that "
-#| "are in the Debian repository. This may be to modify or support additional "
-#| "features, languages and branding, or even to remove elements of existing "
-#| "packages that are undesirable. Similarly, \"third-party\" packages may be "
-#| "used to add bespoke and/or proprietary functionality."
 msgid ""
 "While it is against the philosophy of Debian Live, it may sometimes be "
 "necessary to build a Live system with modified versions of packages that are "
@@ -1108,11 +1090,6 @@ msgstr "_* Utilizzare repository APT personalizzati"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:258
-#, fuzzy
-#| msgid ""
-#| "Using #{packages.chroot}# is simpler to achieve and useful for \"one-off"
-#| "\" customizations but has a number of drawbacks, whilst using a custom "
-#| "APT repository is more time-consuming to set up."
 msgid ""
 "Using #{packages.chroot}# is simpler to achieve and useful for \"one-off\" "
 "customizations but has a number of drawbacks, while using a custom APT "
@@ -1202,11 +1179,6 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:278
-#, fuzzy
-#| msgid ""
-#| "Whilst it may seem unnecessary effort to create an APT repository to "
-#| "install custom packages, the infrastructure can be easily re-used at a "
-#| "later date to offer updates of the modified packages."
 msgid ""
 "While it may seem unnecessary effort to create an APT repository to install "
 "custom packages, the infrastructure can be easily re-used at a later date to "
@@ -1494,12 +1466,6 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:346
-#, fuzzy
-#| msgid ""
-#| "For more complicated APT configurations involving #{apt.conf}# options "
-#| "you might want to create a #{config/chroot_apt/apt.conf}# file instead. "
-#| "See also the other #{apt-*}# options for a few convenient shortcuts for "
-#| "frequently needed options."
 msgid ""
 "For more complicated APT configurations involving #{apt.conf}# options you "
 "might want to create a #{config/apt/apt.conf}# file instead. See also the "
@@ -1507,8 +1473,8 @@ msgid ""
 "options."
 msgstr ""
 "Per configurazioni di APT più complesse che comportano l'uso di opzioni in #"
-"{apt.conf}# si può voler creare invece il file #{config/chroot_apt/apt.conf}"
-"#. Vedere anche le altre opzioni #{apt-*}# per alcune comode scorciatoie di "
+"{apt.conf}# si può voler creare invece il file #{config/apt/apt.conf}#. "
+"Vedere anche le altre opzioni #{apt-*}# per alcune comode scorciatoie di "
 "operazioni di uso frequente."
 
 #. type: Plain text
@@ -1518,12 +1484,6 @@ msgstr "3~apt-pinning APT pinning"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:350
-#, fuzzy
-#| msgid ""
-#| "For background, please first read the #{apt_preferences(5)}# man page. "
-#| "APT pinning can be configured either for build time, or else for run "
-#| "time. For the former, create #{config/chroot_apt/preferences}#. For the "
-#| "latter, create #{config/includes.chroot/etc/apt/preferences}#."
 msgid ""
 "For background, please first read the #{apt_preferences(5)}# man page. APT "
 "pinning can be configured either for build time, or else for run time. For "
@@ -1532,8 +1492,8 @@ msgid ""
 msgstr ""
 "Si prega di leggere prima il manuale di #{apt_preferences(5)}#. Il pinning "
 "può essere configurato sia in fase di costruzione sia di esecuzione; per la "
-"prima creare #{config/chroot_apt/preferences}# mentre per l'ultima creare #"
-"{config/includes.chroot/etc/apt/preferences}#."
+"prima creare #{config/apt/preferences}# mentre per l'ultima creare #{config/"
+"includes.chroot/etc/apt/preferences}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:352
@@ -1554,13 +1514,7 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:360
-#, fuzzy, no-wrap
-#| msgid ""
-#| " $ echo \"deb http://mirror/debian/ sid main\" > config/archives/sid.list.chroot\n"
-#| " $ cat >> config/chroot_apt/preferences << EOF\n"
-#| " Package: live-*\n"
-#| " Pin: release n=sid\n"
-#| " Pin-Priority: 600\n"
+#, no-wrap
 msgid ""
 " $ echo \"deb http://mirror/debian/ sid main\" > config/archives/sid.list.chroot\n"
 " $ cat >> config/apt/preferences << EOF\n"
@@ -1568,9 +1522,9 @@ msgid ""
 " Pin: release n=sid\n"
 " Pin-Priority: 600\n"
 msgstr ""
-" $ echo \"deb http://mirror/debian sid main\" > config/archives/sid.list.chroot\n"
-" $ cat >> config/chroot_apt/preferences << EOF\n"
-" Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit\n"
+" $ echo \"deb http://mirror/debian/ sid main\" > config/archives/sid.list.chroot\n"
+" $ cat >> config/apt/preferences << EOF\n"
+" Package: live-*\n"
 " Pin: release n=sid\n"
 " Pin-Priority: 600\n"
 
@@ -1590,17 +1544,6 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:369
-#, fuzzy
-#| msgid ""
-#| "Negative pin priorities will prevent a package from being installed, as "
-#| "in the case where you do not want a package that is recommended by "
-#| "another package. Suppose you are building an LXDE image using #{task-lxde-"
-#| "desktop}# in #{config/package-lists/lxde-desktop.list.chroot}#, but don't "
-#| "want the user prompted to store wifi passwords in the keyring. This "
-#| "metapackage depends on /{lxde-core}/, which recommends /{gksu}/, which in "
-#| "turn recommends /{gnome-keyring}/. So you want to omit the recommended /"
-#| "{gnome-keyring}/ package. This can be done by adding the following stanza "
-#| "to #{config/chroot_apt/preferences}#:"
 msgid ""
 "Negative pin priorities will prevent a package from being installed, as in "
 "the case where you do not want a package that is recommended by another "
@@ -1619,8 +1562,8 @@ msgstr ""
 "desidera che all'utente venga richiesto di salvare la password del wifi nel "
 "portachiavi. Questo metapacchetto dipende da /{lxde-core}/ che raccomanda /"
 "{gksu}/ e che a sua volta raccomanda /{gnome-keyring}/, in questo caso si "
-"vorrà omettere il pacchetto /{gnome-keyring}/ aggiungendo a #{config/"
-"chroot_apt/preferences}# la seguente istruzione:"
+"vorrà omettere il pacchetto /{gnome-keyring}/ aggiungendo a #{config/apt/"
+"preferences}# la seguente istruzione:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:375

@@ -348,7 +348,7 @@ For more complicated APT configurations involving #{apt.conf}# options you might
 
 For background, please first read the #{apt_preferences(5)}# man page. APT pinning can be configured either for build time, or else for run time. For the former, create #{config/apt/preferences}#. For the latter, create #{config/includes.chroot/etc/apt/preferences}#.
 
-Let's say you are building a wheezy live system but need all the live packages that end up in the binary image to be installed from sid at build time. You need to add sid to your APT sources and pin it so that only the packages you want are installed from it at build time and all others are taken from the target system distribution, wheezy. The following will accomplish this:
+Let's say you are building a wheezy live system but need all the live packages that end up in the binary image to be installed from sid at build time. You need to add sid to your APT sources and pin it lower than the default priority so that only the packages you want are installed from it at build time and all others are taken from the target system distribution, wheezy. The following will accomplish this:
 
 code{
 

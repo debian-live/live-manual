@@ -616,12 +616,12 @@ può essere configurato sia in fase di costruzione sia di esecuzione; per la
 prima creare #{config/apt/preferences}# mentre per l'ultima creare
 #{config/includes.chroot/etc/apt/preferences}#.
 
-Nell'ipotesi di creare un sistema live wheezy e avendo la necessità di
-installare da sid tutti i pacchetti live destinati all'immagine binaria
-questa fase, bisogna aggiungere sid alle fonti di APT e farne il pinning
-affinché verranno installati da lì solo i pacchetti voluti, mentre per tutti
-gli altri si attingerà dalla distribuzione principale, wheezy. Quanto segue
-servirà allo scopo:
+Let's say you are building a wheezy live system but need all the live
+packages that end up in the binary image to be installed from sid at build
+time. You need to add sid to your APT sources and pin it lower than the
+default priority so that only the packages you want are installed from it at
+build time and all others are taken from the target system distribution,
+wheezy. The following will accomplish this:
 
 code{
 

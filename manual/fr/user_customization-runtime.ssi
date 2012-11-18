@@ -17,20 +17,20 @@ l'utilisateur live sont introduits dans votre construction, tel que discuté
 dans {Live/chroot local includes}#live-chroot-local-includes, mais aussi
 tous les groupes et les autorisations associées à l'utilisateur live.
 
-Vous pouvez spécifier d'autres groupes pour l'utilisateur live en
-préconfigurant la valeur debconf #{passwd/user-default-groups}#. Par
-exemple, pour ajouter l'utilisateur live au groupe #{fuse}# pendant l'étape
-chroot, ajoutez la ligne suivante à un fichier dans le répertoire
-#{config/chroot_local-preseed}#:
+You can specify additional groups that the live user will belong to by using
+any of the possibilities to configure live-config. For example, to add the
+live user to the #{fuse}# group, you can either add the following file in
+#{config/includes.chroot/etc/live/config/user-setup.conf}#:
 
 code{
 
- $ lb config
- $ echo user-setup passwd/user-default-groups string audio cdrom \
-   dip floppy video plugdev netdev powerdev scanner bluetooth fuse \
-   >> config/preseed/my.preseed.chroot
+ LIVE_USER_DEFAULT_GROUPS="audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse
 
 }code
+
+or use
+#{live-config.user-default-groups=audio,cdrom,dip,floppy,video,plugdev,netdev,powerdev,scanner,bluetooth,fuse}#
+as a boot parameter.
 
 Il est également possible de changer le nom de l'utilisateur par défaut
 «user» et du mot de passe par défaut "live". Si vous voulez pour quelque

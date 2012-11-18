@@ -17,19 +17,20 @@ l'usuari durant la construcció, tal i com es va explicar a {Live/chroot
 local includes}#live-chroot-local-includes, sinó també en els grups i els
 permisos associats amb l'usuari.
 
-Es pot especificar grups addicionals als que pertanyerà l'usuari en viu fent
-una preconfiguració (preseed) prèvia del valor debconf
-#{passwd/user-default-groups}#. Per exemple, per afegir l'usuari en viu al
-grup #{fuse}#, afegir la següent configuració preseed a l'etapa chroot:
+You can specify additional groups that the live user will belong to by using
+any of the possibilities to configure live-config. For example, to add the
+live user to the #{fuse}# group, you can either add the following file in
+#{config/includes.chroot/etc/live/config/user-setup.conf}#:
 
 code{
 
- $ lb config
- $ echo user-setup passwd/user-default-groups string audio cdrom \
-   dip floppy video plugdev netdev powerdev scanner bluetooth fuse \
-   >> config/preseed/my.preseed.chroot
+ LIVE_USER_DEFAULT_GROUPS="audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse
 
 }code
+
+or use
+#{live-config.user-default-groups=audio,cdrom,dip,floppy,video,plugdev,netdev,powerdev,scanner,bluetooth,fuse}#
+as a boot parameter.
 
 També és possible canviar el nom de l'usuari per defecte "user" i la
 contrasenya per defecte "live". Si es vol fer això per alguna raó, es pot

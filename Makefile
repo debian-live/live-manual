@@ -122,3 +122,6 @@ fuzzy:
 
 check:
 	@./manual/bin/po-integrity-check.sh
+	
+translate:
+	@./manual/bin/find-untranslated.sh

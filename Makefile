@@ -21,9 +21,14 @@ all: build
 test:
 	@echo "Checking for syntax errors... [not implemented yet - FIXME]"
 	@echo "Checking for spelling errors... [not implemented yet - FIXME]"
-	@echo ""
-	@echo "You can check the integrity of po files using 'make check'."
-	@echo ""
+	@echo "Checking the integrity of po files..."
+	@echo
+	
+	for POFILE in manual/po/*/*; \
+	do \
+		msgfmt --check --output-file=/dev/null $${POFILE}; \
+	done
+	
 tidy:
 	# Removing useless whitespaces at EOL
 	for FILE in manual/en/*.ssm manual/en/*.ssi; \

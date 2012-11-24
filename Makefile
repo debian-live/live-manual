@@ -119,7 +119,7 @@ distclean: clean
 
 rebuild: distclean build
 
-fuzzy:
+fixfuzzy:
 	@if grep -qs fuzzy manual/po/*/*; \
 	then \
 		./manual/bin/find-fuzzy.sh ; \

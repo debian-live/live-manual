@@ -601,8 +601,9 @@ options.
 
 For background, please first read the #{apt_preferences(5)}# man page. APT
 pinning can be configured either for build time, or else for run time. For
-the former, create #{config/apt/preferences}#. For the latter, create
-#{config/includes.chroot/etc/apt/preferences}#.
+the former, create #{config/archives/*.pref}#,
+#{config/archives/*.pref.chroot}#, and #{config/apt/preferences}#. For the
+latter, create #{config/includes.chroot/etc/apt/preferences}#.
 
 Let's say you are building a wheezy live system but need all the live
 packages that end up in the binary image to be installed from sid at build
@@ -614,7 +615,7 @@ wheezy. The following will accomplish this:
 code{
 
  $ echo "deb http://mirror/debian/ sid main" > config/archives/sid.list.chroot
- $ cat >> config/apt/preferences << EOF
+ $ cat >> config/archives/sid.pref.chroot << EOF
  Package: live-*
  Pin: release n=sid
  Pin-Priority: 600

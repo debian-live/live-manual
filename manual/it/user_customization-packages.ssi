@@ -611,10 +611,11 @@ comode scorciatoie di operazioni di uso frequente.
 
 3~apt-pinning APT pinning
 
-Si prega di leggere prima il manuale di #{apt_preferences(5)}#. Il pinning
-può essere configurato sia in fase di costruzione sia di esecuzione; per la
-prima creare #{config/apt/preferences}# mentre per l'ultima creare
-#{config/includes.chroot/etc/apt/preferences}#.
+For background, please first read the #{apt_preferences(5)}# man page. APT
+pinning can be configured either for build time, or else for run time. For
+the former, create #{config/archives/*.pref}#,
+#{config/archives/*.pref.chroot}#, and #{config/apt/preferences}#. For the
+latter, create #{config/includes.chroot/etc/apt/preferences}#.
 
 Let's say you are building a wheezy live system but need all the live
 packages that end up in the binary image to be installed from sid at build
@@ -626,7 +627,7 @@ wheezy. The following will accomplish this:
 code{
 
  $ echo "deb http://mirror/debian/ sid main" > config/archives/sid.list.chroot
- $ cat >> config/apt/preferences << EOF
+ $ cat >> config/archives/sid.pref.chroot << EOF
  Package: live-*
  Pin: release n=sid
  Pin-Priority: 600

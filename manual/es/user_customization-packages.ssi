@@ -655,11 +655,11 @@ opciones que se necesitan con frecuencia.
 
 3~apt-pinning APT pinning
 
-Como información básica, sería recomendable leer la página de manual
-#{apt_preferences(5)}#. APT pinning puede ser configurado o en tiempo de
-creación de la imagen, creando el fichero #{config/apt/preferences}# o en
-tiempo de ejecución del sistema en vivo creando el fichero
-#{config/includes.chroot/etc/apt/preferences}#.
+For background, please first read the #{apt_preferences(5)}# man page. APT
+pinning can be configured either for build time, or else for run time. For
+the former, create #{config/archives/*.pref}#,
+#{config/archives/*.pref.chroot}#, and #{config/apt/preferences}#. For the
+latter, create #{config/includes.chroot/etc/apt/preferences}#.
 
 Supongamos que se está creando un sistema en vivo basado en wheezy pero se
 necesita instalar todos los paquetes "live" que terminan instalados en la
@@ -672,8 +672,8 @@ realizar de la siguiente forma:
 
 code{
 
- $ echo "deb http://mirror/debian sid main" > config/archives/sid.list.chroot
- $ cat >> config/chroot_apt/preferences << EOF
+ $ echo "deb http://mirror/debian/ sid main" > config/archives/sid.list.chroot
+ $ cat >> config/archives/sid.pref.chroot << EOF
  Package: live-*
  Pin: release n=sid
  Pin-Priority: 600

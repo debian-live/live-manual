@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual\n"
 "POT-Creation-Date: 2012-11-29 22:06+0100\n"
-"PO-Revision-Date: 2012-09-27 18:06+0100\n"
+"PO-Revision-Date: 2012-11-29 22:23+0100\n"
 "Last-Translator: Carlos Zuferri <chals@altorricon.com>\n"
 "Language-Team: none\n"
 "Language: fr\n"
@@ -1545,12 +1545,6 @@ msgstr "3~apt-pinning APT pinning"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:350
-#, fuzzy
-#| msgid ""
-#| "For background, please first read the #{apt_preferences(5)}# man page. "
-#| "APT pinning can be configured either for build time, or else for run "
-#| "time. For the former, create #{config/apt/preferences}#. For the latter, "
-#| "create #{config/includes.chroot/etc/apt/preferences}#."
 msgid ""
 "For background, please first read the #{apt_preferences(5)}# man page. APT "
 "pinning can be configured either for build time, or else for run time. For "
@@ -1561,7 +1555,8 @@ msgstr ""
 "Pour le contexte, s'il vous plaît lire d'abord la page de manuel #"
 "{apt_preferences(5)}#. APT pinning peut être configuré soit au temps de "
 "construction, ou encore pendant l'exécution. Pour le premier, créez #{config/"
-"apt/preferences}#. Pour ce dernier, créez #{config/includes.chroot/etc/apt/"
+"archives/*.pref}#, #{config/archives/*.pref.chroot}#, et #{config/apt/"
+"preferences}#. Dans le second cas, créez #{config/includes.chroot/etc/apt/"
 "preferences}#."
 
 #. type: Plain text
@@ -1584,13 +1579,7 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:360
-#, fuzzy, no-wrap
-#| msgid ""
-#| " $ echo \"deb http://mirror/debian/ sid main\" > config/archives/sid.list.chroot\n"
-#| " $ cat >> config/apt/preferences << EOF\n"
-#| " Package: live-*\n"
-#| " Pin: release n=sid\n"
-#| " Pin-Priority: 600\n"
+#, no-wrap
 msgid ""
 " $ echo \"deb http://mirror/debian/ sid main\" > config/archives/sid.list.chroot\n"
 " $ cat >> config/archives/sid.pref.chroot << EOF\n"
@@ -1598,8 +1587,8 @@ msgid ""
 " Pin: release n=sid\n"
 " Pin-Priority: 600\n"
 msgstr ""
-" $ echo \"deb http://mirror/debian sid main\" > config/archives/sid.list.chroot\n"
-" $ cat >> config/chroot_apt/preferences << EOF\n"
+" $ echo \"deb http://mirror/debian/ sid main\" > config/archives/sid.list.chroot\n"
+" $ cat >> config/archives/sid.pref.chroot << EOF\n"
 " Package: live-*\n"
 " Pin: release n=sid\n"
 " Pin-Priority: 600\n"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual\n"
 "POT-Creation-Date: 2012-11-29 22:06+0100\n"
-"PO-Revision-Date: 2012-09-26 19:26+0100\n"
+"PO-Revision-Date: 2012-11-29 22:14+0100\n"
 "Last-Translator: Carlos Zuferri <chals@altorricon.com>\n"
 "Language-Team: none\n"
 "Language: ca\n"
@@ -1541,12 +1541,6 @@ msgstr "3~apt-pinning APT pinning"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:350
-#, fuzzy
-#| msgid ""
-#| "For background, please first read the #{apt_preferences(5)}# man page. "
-#| "APT pinning can be configured either for build time, or else for run "
-#| "time. For the former, create #{config/apt/preferences}#. For the latter, "
-#| "create #{config/includes.chroot/etc/apt/preferences}#."
 msgid ""
 "For background, please first read the #{apt_preferences(5)}# man page. APT "
 "pinning can be configured either for build time, or else for run time. For "
@@ -1556,8 +1550,9 @@ msgid ""
 msgstr ""
 "Com a referència, llegir primer la pàgina del manual #{apt_preferences(5)}#. "
 "Es pot configurar APT pinning durant la construcció, o bé durant l'execució. "
-"En el primer cas, crear #{config/apt/preferences}#. Per aquest últim cas, "
-"crear #{config/includes.chroot/etc/apt/preferences}#."
+"En el primer cas, crear #{config/archives/*.pref}#, #{config/archives/*.pref."
+"chroot}#, i #{config/apt/preferences}#. Per al segon cas, crear #{config/"
+"includes.chroot/etc/apt/preferences}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:352
@@ -1579,13 +1574,7 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:360
-#, fuzzy, no-wrap
-#| msgid ""
-#| " $ echo \"deb http://mirror/debian/ sid main\" > config/archives/sid.list.chroot\n"
-#| " $ cat >> config/apt/preferences << EOF\n"
-#| " Package: live-*\n"
-#| " Pin: release n=sid\n"
-#| " Pin-Priority: 600\n"
+#, no-wrap
 msgid ""
 " $ echo \"deb http://mirror/debian/ sid main\" > config/archives/sid.list.chroot\n"
 " $ cat >> config/archives/sid.pref.chroot << EOF\n"
@@ -1593,8 +1582,8 @@ msgid ""
 " Pin: release n=sid\n"
 " Pin-Priority: 600\n"
 msgstr ""
-" $ echo \"deb http://mirror/debian sid main\" > config/archives/sid.list.chroot\n"
-" $ cat >> config/apt/preferences << EOF\n"
+" $ echo \"deb http://mirror/debian/ sid main\" > config/archives/sid.list.chroot\n"
+" $ cat >> config/archives/sid.pref.chroot << EOF\n"
 " Package: live-*\n"
 " Pin: release n=sid\n"
 " Pin-Priority: 600\n"

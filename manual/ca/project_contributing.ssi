@@ -1,0 +1,119 @@
+:B~ Contribuir al projecte
+
+1~contributing-to-project Contribuir al projecte
+
+Quan es presenta una contribució, identificar clarament el titular dels
+drets d'autor i s'ha d'incloure la declaració de concessió de
+llicències. Recordar que per ser acceptada, la contribució ha de tenir una
+llicencia igual que la resta del document, a saber, la versió de la GPL 3 o
+superior.
+
+Les contribucions al projecte, com ara traduccions i pegats, són molt
+benvingudes. Qualsevol persona pot fer un lliurament directe al
+repositori. No obstant això, demanem que s'enviïn els canvis grans a la
+llista de correu per parlar-ne en primer lloc. Veure la secció
+{Contacte}#contact per més informació.
+
+El projecte Debian Live utilitza Git com a sistema de control de versions i
+gestió de codi font. Com s'explica en {Repositoris Git}#git-repositories hi
+ha dues branques principals de desenvolupament: *{debian}* i
+*{debian-next}*. Tothom pot fer lliuraments a les branques debian-next dels
+repositoris live-boot, live-build, live-config, live-debconfig, live-manual
+i live-tools.
+
+No obstant això, hi ha certes restriccions. El servidor rebutja:
+
+_* Push que no són fast-forward.
+
+_* Commits merge.
+
+_* Afegir o eliminar etiquetes o branques.
+
+Tot i que tots els lliuraments poden ser revisats, demanem que s'utilitzi el
+sentit comú i es facin bons lliuraments amb bons missatges.
+
+_* Escriure missatges de lliurament que consisteixen en oracions completes i
+significatives en anglès, començant amb una lletra majúscula i acabant amb
+un punt. En general, aquests començaran amb la forma
+'Fixing/Adding/Removing/Correcting/Translating/...'.
+
+_* Escriure bons missatges de lliurament. La primera línia ha de ser un
+resum exacte dels continguts del lliurament, que s'inclourà en la llista de
+canvis. Si es necessita fer algunes explicacions més, escriure a sota
+deixant una línia en blanc després de la primera línea i després una altra
+línia en blanc després de cada paràgraf. Les línies dels paràgrafs no han de
+superar els 80 caràcters de longitud.
+
+_* Fer lliuraments de manera atòmica, és a dir, no barrejar coses no
+relacionades en el mateix lliurament. Fer un lliurament diferent per a cada
+canvi que es faci.
+
+2~ Fer canvis
+
+Per tal de fer un push als repositoris, s'ha de seguir el següent
+procediment. Aquí s'utilitza live-manual com un exemple, per tant, cal
+substituir-lo pel nom del repositori amb que es desitja treballar. Per
+obtenir informació detallada sobre com editar live-manual veure {Contribuir
+a aquest document}#how-to-contribute.
+
+_* Obtenir la clau pública:
+
+code{
+
+ $ mkdir -p ~/.ssh/identity.d
+ $ wget http://live.debian.net/other/keys/git@live.debian.net -O ~/.ssh/identity.d/git@live.debian.net
+ $ wget http://live.debian.net/other/keys/git@live.debian.net.pub -O ~/.ssh/identity.d/git@live.debian.net.pub
+ $ chmod 0600 ~/.ssh/identity.d/git@live.debian.net*
+
+}code
+
+_* Afegir la següent secció a la configuració del vostre openssh-client:
+
+code{
+
+ $ cat >> ~/.ssh/config << EOF
+ Host live.debian.net
+     Hostname live.debian.net
+     User git
+     IdentityFile ~/.ssh/identity.d/git@live.debian.net
+ EOF
+
+}code
+
+_* Fer una còpia del manual a través de ssh:
+
+code{
+
+ $ git clone git@live.debian.net:/live-manual.git
+ $ cd live-manual && git checkout debian-next
+
+}code
+
+_* Assegurar-se de tenir el autor i el correu electrònic configurats al Git:
+
+code{
+
+  $ git config user.name "John Doe"
+  $ git config user.email john@example.org
+
+}code
+
+*{Important:}* Tenir en compte que s'han d'enviar els canvis a la branca *{debian-next}*.
+
+_* Fer els canvis. En aquest exemple s'hauria d'escriure primer una nova
+secció sobre aplicar pegats i després preparar-se per afegir els fitxers i
+escriure el missatge de la següent manera:
+
+code{
+
+ $ git commit -a -m "Adding a section on applying patches."
+
+}code
+
+_* Fer un push al servidor:
+
+code{
+
+ $ git push
+
+}code

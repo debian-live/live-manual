@@ -330,24 +330,22 @@ code{
 
 Disfrutarlo.
 
-2~ Una imagen básica para un pendrive USB de 128M
+2~ Una imagen básica para un pendrive USB de 128MB
 
-*{Caso Práctico:}* Crear una imagen estándar quitando algunos componentes para que quepa en un pendrive USB de 128M dejándo un poco de espacio libre para poder usarlo para lo que se quiera.
+*{Caso Práctico:}* Crear una imagen hdd quitando algunos componentes para que quepa en un pendrive USB de 128MB dejándo un poco de espacio libre para poder usarlo para lo que se quiera.
 
 Al optimizar una imagen para adaptarla al tamaño de algunos medios de
 almacenamiento, es necesario comprender el equilibrio que se está haciendo
 entre tamaño y funcionalidad. En este ejemplo, se recorta tanto sólo para
-dar cabida a material adicional dentro de un tamaño de 128M, pero sin hacer
+dar cabida a material adicional dentro de un tamaño de 128MB, pero sin hacer
 nada para destruir la integridad de los paquetes que contiene, tales como la
 depuración de las variantes locales a través del paquete /{localepurge}/ u
-otro tipo de optimizaciones «intrusivas». Cabe destacar que para entender lo
-que hace el script gancho #{minimal.chroot}# se debería mirar en
-#{/usr/share/doc/live-build/examples/hooks}#
+otro tipo de optimizaciones «intrusivas». Cabe destacar que se utiliza
+#{--debootstrap-options}# para crear un sistema mínimo desde el principio.
 
 code{
 
- $ lb config -k 486 --apt-indices false --apt-recommends false --memtest none
- $ cp /usr/share/doc/live-build/examples/hooks/minimal.chroot config/hooks
+ $ lb config -b hdd -k 486 --apt-indices false --apt-recommends false --debootstrap-options "--variant=minbase" --memtest none
 
 }code
 
@@ -371,9 +369,9 @@ code{
 }code
 
 En el sistema del autor, en el momento de escribir esto, la configuración
-anterior produjo una imagen de 95Mbytes. Esto se compara favorablemente en
-tamaño con la imagen de 182Mbytes producida por la configuración por defecto
-en el {Tutorial 1}#tutorial-1.
+anterior produjo una imagen de 80MB. Esto se compara favorablemente en
+tamaño con la imagen de 182MB producida por la configuración por defecto en
+el {Tutorial 1}#tutorial-1.
 
 El mayor ahorro de espacio aquí, en comparación con la creación de una
 imagen estándar en un sistema de arquitectura #{i386}# es seleccionar sólo
@@ -383,16 +381,12 @@ también ahorra una cantidad importante de espacio, la desventaja es que será
 necesario hacer un #{apt-get update}# antes de usar apt en el sistema en
 vivo. Excluyendo los paquetes recomendados con #{--apt-recommends false}# se
 ahorra un poco de espacio adicional a costa de omitir algunos paquetes que
-de otro modo podría esperarse que estuvieran alli. #{--memtest none}# evita
-la instalación de un comprobador de memoria. Y por último la ejecución del
-script gancho #{minimal.chroot}# elimina algunos paquetes y ficheros que no
-se utilizan.
+de otro modo podría esperarse que estuvieran alli. #{--debootstrap-options
+"--variant=minbase"}# preinstala un sistema mínimo desde el
+principio. #{--memtest none}# evita la instalación de un comprobador de
+memoria. 
 
-Si se utilizan otros scripts gancho, como por ejemplo el script
-#{stripped.chroot}# que se encuentra en
-#{/usr/share/doc/live-build/examples/hooks}#,  se puede reducir aún más el
-tamaño de la imagen hasta 76MB. Pero es necesario decidir si vale la pena la
-funcionalidad que se sacrifica con cada optimización del tamaño.
+*{Nota:}* También se puede conseguir un sistema mínimo utilizando scripts gancho como por ejemplo el script #{stripped.chroot}# que se encuentra en #{/usr/share/doc/live-build/examples/hooks}#,  que puede reducir aún más el tamaño de la imagen hasta 76MB. Sin embargo, el script elimina documentación y otros ficheros de los paquetes instalados en el sistema. Esto viola la integridad de los paquetes y como se comenta en el encabezado del script, puede tener consecuencias imprevistas. Es por eso por lo que el uso de /{debootstrap}/ es el método recomendado para conseguir este objetivo.
 
 2~ Un escritorio KDE con variante local e instalador
 

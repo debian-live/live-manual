@@ -1,17 +1,11 @@
-B~ Dépôts Git 
+:B~ Dépôts Git 
 
 1~git-repositories Dépôts Git
 
-L'arbre git du projet Debian Live est composé de plusieurs branches
-différentes. Il y a une liste de tous les dépôts disponibles à
-http://live.debian.net/gitweb Les branches *{debian}* et *{debian-next}*
-sont particulièrement remarquables car elles contiennent le travail réel qui
-sera finalement inclus dans chaque nouvelle version.
-
-Les URLs git du projet ont la forme:
-#{protocole://live.debian.net/git/dépôt}#.
-
-Ainsi, afin de cloner live-manual en lecture seule, lancez:
+La liste de tous les dépôts disponibles est à
+http://live.debian.net/gitweb. Les URLs git du projet ont la forme:
+#{protocole://live.debian.net/git/dépôt}#. Ainsi, afin de cloner live-manual
+en lecture seule, lancez:
 
 code{
 
@@ -27,6 +21,14 @@ code{
 
 }code
 
+Ou,
+
+code{
+
+ $ git clone https://live.debian.net/git/live-manual.git
+
+}code
+
 Les adresses pour cloner avec autorisation d'écriture ont la forme:
 #{git@live.debian.net:/dépôt}#.
 
@@ -38,6 +40,11 @@ code{
  $ git clone git@live.debian.net:/live-manual.git
 
 }code
+
+L'arbre git est composé de plusieurs branches différentes. Les branches
+*{debian}* et *{debian-next}* sont particulièrement remarquables car elles
+contiennent le travail réel qui sera finalement inclus dans chaque nouvelle
+version.
 
 Après de cloner quelques-uns des dépôts existants, vous serez sur la branche
 *{debian}*. Ceci est approprié pour jeter un oeil à l'état de la dernière
@@ -58,3 +65,23 @@ faire un pull, vous devrez faire un #{git pull --rebase}# de sorte que vos
 modifications locales sont stockées tandis qu'on fait une mise à jour à
 partir du serveur, puis vos changements seront mis sur le dessus de tout
 cela.
+
+2~ Gestion de multiples dépôts
+
+Si vous avez l'intention de cloner plusieurs des dépôts Debian Live et
+passer à la branche *{debian-next}* tout de suite pour vérifier le dernier
+code, écrire un correctif ou contribuer avec une traduction, vous devriez
+savoir que le serveur git fournit un fichier #{mrconfig}# pour faciliter la
+manipulation de plusieurs dépôts. Pour l'utiliser, vous devez installer le
+paquet /{mr}/ et lancer:
+
+code{
+
+ $  mr bootstrap http://live.debian.net/other/mr/mrconfig
+
+}code
+
+Cette commande va automatiquement cloner et checkout les configurations
+utilisées pour les images prédéfinies que le projet publie pour l'usage
+général ainsi que les dépôts de développement des paquets debian produits
+par le projet.

@@ -331,24 +331,23 @@ code{
 
 Amusez-vous bien!
 
-2~ Une image de base pour une clé USB de 128M
+2~ Une image de base pour une clé USB de 128MB
 
-*{Cas d'utilisation:}* Créer une image standard avec certains composants éliminés afin de l'adapter sur une clé USB de 128M avec un peu d'espace laissé pour l'utiliser à votre convenance.
+*{Cas d'utilisation:}* Créer une image hdd avec certains composants éliminés afin de l'adapter sur une clé USB de 128MB avec un peu d'espace laissé pour l'utiliser à votre convenance.
 
 Pour l'optimisation d'une image adaptée à la dimension de certains supports,
 vous avez besoin de comprendre le compromis que vous faites entre la taille
 et la fonctionnalité. Dans cet exemple, nous réduisons la taille uniquement
 que pour faire place au matériel supplémentaire au sein d'une taille de
-128M, mais sans faire rien pour détruire l'intégrité des paquets contenus,
+128MB, mais sans faire rien pour détruire l'intégrité des paquets contenus,
 telle que la purge des données de localisation via le paquet
-/{localepurge}/, ou d'autres optimisations "intrusives". Afin de comprendre
-ce que le hook #{minimal.chroot}# fait, voir
-#{/usr/share/doc/live-build/examples/hooks}#
+/{localepurge}/, ou d'autres optimisations "intrusives". On notera en
+particulier, que nous utilisons #{--debootstrap-options}# pour créer un
+système minimal de zéro.
 
 code{
 
- $ lb config -k 486 --apt-indices false --apt-recommends false --memtest none
- $ cp /usr/share/doc/live-build/examples/hooks/minimal.chroot config/hooks
+ $ lb config -b hdd -k 486 --apt-indices false --apt-recommends false --debootstrap-options "--variant=minbase" --memtest none
 
 }code
 
@@ -372,9 +371,9 @@ code{
 }code
 
 Sur le système de l'auteur au moment de l'écriture, la configuration
-ci-dessus produisait une image de 95Mbyte. Cela se compare favorablement
-avec l'image de 182Mbyte produite par la configuration par défaut dans
-{Tutoriel 1}#tutorial-1.
+ci-dessus produisait une image de 80MB. Cela se compare favorablement avec
+l'image de 182MB produite par la configuration par défaut dans {Tutoriel
+1}#tutorial-1.
 
 Le plus grand espace-économiseur ici, par rapport à la construction d'une
 image standard sur une architecture #{i386}#, est de sélectionner uniquement
@@ -384,16 +383,12 @@ permet aussi d'économiser une bonne quantité d'espace, le compromis étant
 que vous devez faire #{apt-get update}# avant d'utiliser apt dans le système
 live. Laissant hors les paquets recommandés avec #{--apt-recommends false}#
 économise d'espace supplémentaire, au détriment d'omettre certains paquets
-que vous pourriez autrement attendre à être là. #{--memtest none}# prévient
-l'installation d'un testeur de mémoire. Et enfin, l'exécution du hook
-#{minimal.chroot}# supprime certains paquets et fichiers qui ne sont pas
-utilisés .
+que vous pourriez autrement attendre à être là. #{--debootstrap-options
+"--variant=minbase"}# construit un système minimal dès le début. Et
+finalement #{--memtest none}# prévient l'installation d'un testeur de
+mémoire.
 
-En utilisant d'autres hooks comme par exemple le hook #{stripped.chroot}#
-dans #{/usr/share/doc/live-build/examples/hooks}#, peut gagner de petites
-quantités supplémentaires d'espace et produire une image de 76MB. Mais c'est
-à vous de décider si la fonctionnalité qui est sacrifié à chaque
-optimisation de la taille vaut la perte de fonctionnalité.
+*{Note:}* Un système minimal peut également être obtenu en utilisant hooks comme par exemple le hook #{stripped.chroot}# dans #{/usr/share/doc/live-build/examples/hooks}#, il peut gagner de petites quantités supplémentaires d'espace et produire une image de 76MB. Cependant, il le fait par l'élimination de la documentation et d'autres fichiers des paquets installés sur le système. Cela atteinte à l'intégrité de ces paquets et ça, comme le commentaire en-tête avertit, peut avoir des conséquences imprévues. C'est pourquoi l'utilisation de /{debootstrap}/ est la méthode recommandée pour atteindre cet objectif.
 
 2~ Un bureau KDE localisé et installateur 
 

@@ -21,9 +21,14 @@ all: build
 test:
 	@echo "Checking for syntax errors... [not implemented yet - FIXME]"
 	@echo "Checking for spelling errors... [not implemented yet - FIXME]"
-	@echo ""
-	@echo "You can check the integrity of po files using 'make check'."
-	@echo ""
+	@echo "Checking the integrity of po files..."
+	@echo
+	
+	for POFILE in manual/po/*/*; \
+	do \
+		msgfmt --check --output-file=/dev/null $${POFILE}; \
+	done
+	
 tidy:
 	# Removing useless whitespaces at EOL
 	for FILE in manual/en/*.ssm manual/en/*.ssi; \
@@ -80,15 +85,16 @@ commit: tidy test
 	@if grep -qs fuzzy manual/po/*/*; \
 	then \
 		echo "" ; \
-		echo "There are some fuzzy strings. You can run 'make translate' to fix them." ; \
-		exit 1 ; \
+		echo "There are $(shell grep -w 'fuzzy' manual/po/*/* | wc -l) fuzzy strings. You can run 'make fixfuzzy' to fix them." ; \
 	fi
+	@echo
+	@echo "In order to find untranslated strings type 'make translate'."
 
 	@echo
 	@echo "You may now proceed...please do:"
 	@echo
 	@echo "  * git add ."
-	@echo "  * git commit -a -m \"Your commit message.\""
+	@echo "  * git commit -m \"Your commit message.\""
 	@echo "  * git push "
 
 install:
@@ -105,6 +111,7 @@ uninstall:
 clean:
 	rm -rf build
 	rm -f manual/en/*~
+	rm -f manual/po/*/*~
 	rm -f manual/po/*/*.mo
 
 distclean: clean
@@ -112,7 +119,7 @@ distclean: clean
 
 rebuild: distclean build
 
-translate:
+fixfuzzy:
 	@if grep -qs fuzzy manual/po/*/*; \
 	then \
 		./manual/bin/find-fuzzy.sh ; \
@@ -122,3 +129,6 @@ translate:
 
 check:
 	@./manual/bin/po-integrity-check.sh
+	
+translate:
+	@./manual/bin/find-untranslated.sh

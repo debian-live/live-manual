@@ -99,15 +99,16 @@ di #{--mirror-bootstrap}#.
 
 3~ Mirror delle distribuzioni usate durante l'esecuzione
 
-The #{--mirror-binary*}# options govern the distribution mirrors placed in
-the binary image. These may be used to install additional packages while
-running the live system. The defaults employ #{http.debian.net}#, a service
-that chooses a geographically close mirror based, among other things, on the
-user's IP family and the availability of the mirrors. This is a suitable
-choice when you cannot predict which mirror will be best for all of your
-users. Or you may specify your own values as shown in the example below. An
-image built from this configuration would only be suitable for users on a
-network where "#{mirror}#" is reachable.
+Le opzioni #{--mirror-binary*}# determinano i mirror delle distribuzioni
+inseriti nell'immagine binaria. Questi possono essere usati per installare
+pacchetti aggiuntivi mentre il sistema live è in funzione. Le impostazioni
+predefinite impiegano #{http.debian.net}#, un servizio che sceglie un mirror
+geograficamente vicino basandosi sul numero IP dell'utente. Questo è una
+scelta conveniente quando non si può pronosticare quale sarà il mirror
+migliore per tutti gli utenti. Oppure si può specificare il proprio valore
+come mostrato nell'esempio qui sotto. Un'immagine compilata con questa
+configurazione sarebbe adatta solamente ad utenti di una rete dove sia
+raggiungibile il "#{mirror}#".
 
 code{
 
@@ -605,28 +606,29 @@ finale.
 
 Per configurazioni di APT più complesse che comportano l'uso di opzioni in
 #{apt.conf}# si può voler creare invece il file
-#{config/chroot_apt/apt.conf}#. Vedere anche le altre opzioni #{apt-*}# per
-alcune comode scorciatoie di operazioni di uso frequente.
+#{config/apt/apt.conf}#. Vedere anche le altre opzioni #{apt-*}# per alcune
+comode scorciatoie di operazioni di uso frequente.
 
 3~apt-pinning APT pinning
 
-Si prega di leggere prima il manuale di #{apt_preferences(5)}#. Il pinning
-può essere configurato sia in fase di costruzione sia di esecuzione; per la
-prima creare #{config/chroot_apt/preferences}# mentre per l'ultima creare
-#{config/includes.chroot/etc/apt/preferences}#.
+For background, please first read the #{apt_preferences(5)}# man page. APT
+pinning can be configured either for build time, or else for run time. For
+the former, create #{config/archives/*.pref}#,
+#{config/archives/*.pref.chroot}#, and #{config/apt/preferences}#. For the
+latter, create #{config/includes.chroot/etc/apt/preferences}#.
 
-Nell'ipotesi di creare un sistema live wheezy e avendo la necessità di
-installare da sid tutti i pacchetti live destinati all'immagine binaria
-questa fase, bisogna aggiungere sid alle fonti di APT e farne il pinning
-affinché verranno installati da lì solo i pacchetti voluti, mentre per tutti
-gli altri si attingerà dalla distribuzione principale, wheezy. Quanto segue
-servirà allo scopo:
+Let's say you are building a wheezy live system but need all the live
+packages that end up in the binary image to be installed from sid at build
+time. You need to add sid to your APT sources and pin it lower than the
+default priority so that only the packages you want are installed from it at
+build time and all others are taken from the target system distribution,
+wheezy. The following will accomplish this:
 
 code{
 
- $ echo "deb http://mirror/debian sid main" > config/archives/sid.list.chroot
- $ cat >> config/chroot_apt/preferences << EOF
- Package: live-boot live-boot-initramfs-tools live-config live-config-sysvinit
+ $ echo "deb http://mirror/debian/ sid main" > config/archives/sid.list.chroot
+ $ cat >> config/archives/sid.pref.chroot << EOF
+ Package: live-*
  Pin: release n=sid
  Pin-Priority: 600
 
@@ -645,7 +647,7 @@ non si desidera che all'utente venga richiesto di salvare la password del
 wifi nel portachiavi. Questo metapacchetto dipende da /{lxde-core}/ che
 raccomanda /{gksu}/ e che a sua volta raccomanda /{gnome-keyring}/, in
 questo caso si vorrà omettere il pacchetto /{gnome-keyring}/ aggiungendo a
-#{config/chroot_apt/preferences}# la seguente istruzione:
+#{config/apt/preferences}# la seguente istruzione:
 
 code{
 

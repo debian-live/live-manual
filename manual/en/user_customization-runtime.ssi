@@ -8,16 +8,15 @@ All configuration that is done during run time is done by live-config. Here are 
 
 One important consideration is that the live user is created by live-boot at boot time, not by live-build at build time. This not only influences where materials relating to the live user are introduced in your build, as discussed in {Live/chroot local includes}#live-chroot-local-includes, but also any groups and permissions associated with the live user.
 
-You can specify additional groups that the live user will belong to by preseeding the #{passwd/user-default-groups}# debconf value. For example, to add the live user to the #{fuse}# group, add the following preseed under #{config/preseed/}# for the chroot stage:
+You can specify additional groups that the live user will belong to by using any of the possibilities to configure live-config. For example, to add the live user to the #{fuse}# group, you can either add the following file in #{config/includes.chroot/etc/live/config/user-setup.conf}#:
 
 code{
 
- $ lb config
- $ echo user-setup passwd/user-default-groups string audio cdrom \
-   dip floppy video plugdev netdev powerdev scanner bluetooth fuse \
-   >> config/preseed/my.preseed.chroot
+ LIVE_USER_DEFAULT_GROUPS="audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse
 
 }code
+
+or use #{live-config.user-default-groups=audio,cdrom,dip,floppy,video,plugdev,netdev,powerdev,scanner,bluetooth,fuse}# as a boot parameter.
 
 It is also possible to change the default username "user" and the default password "live". If you want to do that for any reason, you can easily achieve it as follows:
 
@@ -138,7 +137,7 @@ Here's an example of how to create an ext4-based image file to be used for persi
 
 code{
 
- $ dd if=/dev/null of=persistence bs=1 seek=1G # for a 1GB sized image file
+ $ dd if=/dev/null of=persistence bs=1 count=0 seek=1G # for a 1GB sized image file
  $ /sbin/mkfs.ext4 -F persistence
 
 }code

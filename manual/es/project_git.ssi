@@ -1,17 +1,11 @@
-B~ Repositorios Git
+:B~ Repositorios Git
 
 1~git-repositories Repositorios Git
 
-El árbol git del Proyecto Debian Live se compone de varias ramas
-diferentes. Hay una lista de todos los repositorios disponibles en
-http://live.debian.net/gitweb Las ramas *{debian}* y *{debian-next}* son
-particularmente notables porque contienen el trabajo real que, con el
-tiempo, será incluido en cada nueva versión.
-
-Las URLs git del proyecto tienen la forma:
-#{protocolo://live.debian.net/git/repositorio}#.
-
-Por lo tanto, para clonar live-manual en sólo lectura, lanzar:
+La lista de todos los repositorios disponibles está en
+http://live.debian.net/gitweb. Las URLs git del proyecto tienen la forma:
+#{protocolo://live.debian.net/git/repositorio}#. Por lo tanto, para clonar
+live-manual en sólo lectura, lanzar: 
 
 code{
 
@@ -27,6 +21,14 @@ code{
 
 }code
 
+O,
+
+code{
+
+ $ git clone https://live.debian.net/git/live-manual.git
+
+}code
+
 Las direcciones para clonar con permiso de escritura tienen la forma:
 #{git@live.debian.net:/repositorio}#.
 
@@ -37,6 +39,10 @@ code{
  $ git clone git@live.debian.net:/live-manual.git
 
 }code
+
+El árbol git se compone de varias ramas diferentes. Las ramas *{debian}* y
+*{debian-next}* son particularmente notables porque contienen el trabajo
+real que, con el tiempo, será incluido en cada nueva versión.
 
 Después de clonar cualquiera de los repositorios existentes, nos encontramos
 en la rama *{debian}*. Esto es apropiado para echar un vistazo al estado de
@@ -56,3 +62,23 @@ trabajando en esta rama y se necesita hacer un pull, se tendrá que hacer un
 #{git pull --rebase}# para que las modificaciones locales se guarden
 mientras se actualiza desde el servidor y entonces los cambios locales se
 pondrán encima de todos los demás.
+
+2~ Manejo de múltiples repositorios
+
+Si se tiene la intención de clonar varios de los repositorios de Debian Live
+y cambiar a la rama *{debian-next}* de inmediato para comprobar el último
+código, escribir un parche o contribuir con una traducción se debe saber que
+el servidor proporciona un fichero #{mrconfig}# para facilitar el manejo de
+varios repositorios. Para utilizarlo es necesario instalar el paquete /{mr}/
+y lanzar:
+
+code{
+
+ $  mr bootstrap http://live.debian.net/other/mr/mrconfig
+
+}code
+
+Este comando automáticamente clonará y hará un checkout de las
+configuraciones utilizadas para construir las imágenes que el proyecto
+publica para su utilización general y también los repositorios de desarrollo
+de los paquetes debian producidos por el proyecto.

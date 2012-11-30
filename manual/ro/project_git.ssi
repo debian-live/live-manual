@@ -1,17 +1,11 @@
-B~ Git repositories
+:B~ Git repositories
 
 1~git-repositories Git repositories
 
-The git tree of the Debian Live Project is made up of several different
-branches. There is a list of all the available repositories at
-http://live.debian.net/gitweb The *{debian}* and the *{debian-next}*
-branches are particularly noteworthy because they contain the actual work
-that will eventually be included in each new release.
-
-The project's git URLs have the form:
-#{protocol://live.debian.net/git/repository}#.
-
-Thus, in order to clone live-manual read-only, launch:
+The list of all the available repositories of the Debian Live Project can be
+found at http://live.debian.net/gitweb. The project's git URLs have the
+form: #{protocol://live.debian.net/git/repository}#. Thus, in order to clone
+live-manual read-only, launch:
 
 code{
 
@@ -27,6 +21,14 @@ code{
 
 }code
 
+Or,
+
+code{
+
+ $ git clone https://live.debian.net/git/live-manual.git
+
+}code
+
 The cloning addresses with write permission have the form:
 #{git@live.debian.net:/repository}#.
 
@@ -37,6 +39,11 @@ code{
  $ git clone git@live.debian.net:/live-manual.git
 
 }code
+
+The git tree is made up of several different branches. The *{debian}* and
+the *{debian-next}* branches are particularly noteworthy because they
+contain the actual work that will eventually be included in each new
+release.
 
 After cloning any of the existing repositories, you will be on the
 *{debian}* branch. This is appropriate to take a look at the state of the
@@ -55,3 +62,22 @@ branch. To make an analogy, it is like a testing ground. If you are working
 on this branch and need to pull, you will have to do a #{git pull --rebase}#
 so that your local modifications are staged while pulling from the server
 and then your changes will be put on top of it all.
+
+2~ Handling multiple repositories
+
+If you intend to clone several of the Debian Live repositories and switch to
+the *{debian-next}* branch right away to check the latest code, write a
+patch or contribute with a translation you ought to know that the git server
+provides a #{mrconfig}# file to ease the handling of several
+repositories. In order to use it you need to install the /{mr}/ package and
+launch:
+
+code{
+
+ $  mr bootstrap http://live.debian.net/other/mr/mrconfig
+
+}code
+
+This command will automatically clone and checkout the configurations used
+for the prebuilt images that the project publishes for general use and also
+the development repositories of the debian packages produced by the project.

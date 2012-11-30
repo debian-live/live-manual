@@ -1,17 +1,11 @@
-B~ Repository Git
+:B~ Repository Git
 
 1~git-repositories Repository Git
 
-Il ramo git del progetto Debian Live è costituito da molteplici branch
-differenti, all'indirizzo http://live.debian.net/gitweb c'è l'elenco di
-tutti i repository disponibili. I branch *{debian}* e *{debian-next}* sono
-particolarmente degni di nota in quanto contengono il lavoro attuale che
-verrà incluso in ogni nuovo rilascio.
-
-Gli URL del progetto git sono nella fomra
-#{protocollo://live.debian.net/git/repository}#.
-
-Per clonare live-manual in sola lettura eseguire:
+The list of all the available repositories of the Debian Live Project can be
+found at http://live.debian.net/gitweb. The project's git URLs have the
+form: #{protocol://live.debian.net/git/repository}#. Thus, in order to clone
+live-manual read-only, launch:
 
 code{
 
@@ -27,6 +21,14 @@ code{
 
 }code
 
+oppure
+
+code{
+
+ $ git clone https://live.debian.net/git/live-manual.git
+
+}code
+
 Gli indirizzi per clonare con permessi di scrittura sono nella forma
 #{git@live.debian.net:/repository}#.
 
@@ -38,8 +40,13 @@ code{
 
 }code
 
+Il ramo git del progetto Debian Live è costituito da molteplici branch
+differenti. I branch *{debian}* e *{debian-next}* sono particolarmente degni
+di nota in quanto contengono il lavoro attuale che verrà incluso in ogni
+nuovo rilascio.
+
 Dopp aver clonato uno dei repository esistenti sarete nel branch
-*{debian}.Questo è adatto per prendere visione dello stato dell'ultimo
+*{debian}*.Questo è adatto per prendere visione dello stato dell'ultimo
 rilascio del progetto ma prima di iniziare a lavorarci è cruciale passare a
 *{debian-next}*. Per farlo eseguire:
 
@@ -56,3 +63,22 @@ lavorando in questo branch e si necessita di eseguire il pull, bisogna usare
 #{git pull --rebase}# in modo che le modifiche locali siano preparate per il
 commit (stage) quando si fa il pull dal server, in questo modo saranno poste
 in cima a tutto il resto.
+
+2~ Handling multiple repositories
+
+If you intend to clone several of the Debian Live repositories and switch to
+the *{debian-next}* branch right away to check the latest code, write a
+patch or contribute with a translation you ought to know that the git server
+provides a #{mrconfig}# file to ease the handling of several
+repositories. In order to use it you need to install the /{mr}/ package and
+launch:
+
+code{
+
+ $  mr bootstrap http://live.debian.net/other/mr/mrconfig
+
+}code
+
+This command will automatically clone and checkout the configurations used
+for the prebuilt images that the project publishes for general use and also
+the development repositories of the debian packages produced by the project.

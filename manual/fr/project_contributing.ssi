@@ -1,0 +1,119 @@
+:B~ Contribuer au projet
+
+1~contributing-to-project Contribuer au projet
+
+Lorsque vous soumettez une contribution, veuillez indiquer clairement le
+copyright et inclure la mention légale relative à la licence. Notez que pour
+être acceptée, la contribution doit être déposée sous la même licence que le
+reste du document, c'est-à-dire, la GPL version 3 ou ultérieure.
+
+Les contributions au projet, comme les traductions et les correctifs sont
+bienvenues. Les livraisons au dépôt sont possibles pour tout le monde,
+cependant, nous vous demandons d'envoyer les changements importants sur la
+liste de diffusion au préalable. S'il vous plaît voir {Contacter}#contact
+pour plus d'informations.
+
+Le projet Debian Live utilise Git en tant que système de contrôle de version
+et de gestion du code source. Comme expliqué dans {Dépôts
+Git}#git-repositories il existe deux branches de développement principaux:
+*{debian}* et *{debian-next}*. Tout le monde peut faire des livraisons aux
+branches debian-next des dépôts live-boot, live-build, live-config,
+live-debconfig, live-manual et live-tools.
+
+Cependant, il y a certaines restrictions. Le serveur rejette:
+
+_* Push non fast-forward.
+
+_* Commits merge.
+
+_* Ajout ou suppression d'étiquettes ou des branches.
+
+Même si tous les livraisons pourraient être révisés, nous vous demandons
+d'utiliser votre bon sens et de faire bones livraisons avec bons messages de
+livraison.
+
+_* Veuillez écrire les commentaires de livraison à l'aide de phrases
+complètes, en commençant par une majuscule et en terminant par un point, et
+avec la forme 'Fixing/Adding/Removing/Correcting/Translating/...'.
+
+_* Ecrire bons messages de livraison. La première ligne doit être un résumé
+précis du contenu du commit qui sera inclus dans le changelog. Si vous avez
+besoin de faire quelques explications supplémentaires, écrivez-les
+au-dessous en laissant une ligne vide après la première, puis une autre
+ligne vide après chaque paragraphe. Les lignes des paragraphes ne doivent
+pas dépasser 80 caractères.
+
+_* Faire les livraisons de façon atomique, c'est-à-dire, ne pas mélanger des
+choses sans liens entre eux dans la même livraison. Faire un commit
+différent pour chaque modification que vous apportez.
+
+2~ Faire des changements
+
+Afin de faire un push sur les dépôts, vous devez suivre la procédure
+suivante. Ici, nous utilisons live-manual comme un exemple pour le remplacer
+par le nom du dépôt dans lequel vous souhaitez travailler. Pour plus
+d'informations sur la façon de modifier live-manual voir {Contribuer à ce
+document}#how-to-contribute.
+
+_* Téléchargez la clé publique:
+
+code{
+
+ $ mkdir -p ~/.ssh/identity.d
+ $ wget http://live.debian.net/other/keys/git@live.debian.net -O ~/.ssh/identity.d/git@live.debian.net
+ $ wget http://live.debian.net/other/keys/git@live.debian.net.pub -O ~/.ssh/identity.d/git@live.debian.net.pub
+ $ chmod 0600 ~/.ssh/identity.d/git@live.debian.net*
+
+}code
+
+_* Ajoutez la section suivante à votre configuration openssh-client:
+
+code{
+
+ $ cat >> ~/.ssh/config << EOF
+ Host live.debian.net
+     Hostname live.debian.net
+     User git
+     IdentityFile ~/.ssh/identity.d/git@live.debian.net
+ EOF
+
+}code
+
+_* Clonez live-manual avec ssh:
+
+code{
+
+ $ git clone git@live.debian.net:/live-manual.git
+ $ cd live-manual && git checkout debian-next
+
+}code
+
+_* Assurez-vous que vous avez l'auteur et l'email dans Git:
+
+code{
+
+  $ git config user.name "John Doe"
+  $ git config user.email john@example.org
+
+}code
+
+*{Important:}* Rappelez-vous que vous devez livrer les changements sur la branche *{debian-next}*.
+
+_* Effectuez vos modifications. Dans cet exemple, vous devriez commencer par
+écrire une nouvelle section traitant l'application des correctifs et ensuite
+se préparer à ajouter les fichiers et écrire le message de livraison comme
+ceci:
+
+code{
+
+ $ git commit -a -m "Adding a section on applying patches."
+
+}code
+
+_* Envoyez votre commit au serveur:
+
+code{
+
+ $ git push
+
+}code

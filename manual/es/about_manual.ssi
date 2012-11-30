@@ -153,32 +153,21 @@ _* Richard Nelson
 
 _* Trent W. Buck
 
-2~how-to-contribute Cómo contribuir en este documento
+2~how-to-contribute Cómo contribuir a este documento
 
 Este manual se ha creado como un proyecto comunitario y cualquier propuesta
-para su mejora u otras contribuciones son siempre bienvenidas. La mejor
-forma de hacer una contribución es enviarla a la lista de correo. Ver la
-sección {Contacto}#contact para más información.
+para su mejora u otras contribuciones son siempre bienvenidas. Ver la
+sección {Contribuir al proyecto}#contributing-to-project para obtener
+información detallada sobre cómo obtener la clave pública y hacer buenos
+commits.
 
-Cuando se envía una contribución se debe identificar claramente su copyright
-e incluir la declaración de licencia. Se hace notar que para ser aceptada,
-una contribución debe ser licenciada bajo la misma licencia que el resto del
-documento, esto es, GPL versión 3 o posterior.
+3~ Aplicar cambios
 
-Los originales de este manual se mantienen utilizando el sistema de control
-de versiones Git (ver {Repositorios Git}#git-repositories). Se puede obtener
-la copia más actualizada ejecutando la siguiente orden:
-
-code{
-
-$ git clone git://live.debian.net/git/live-manual.git
-
-}code
-
-Antes de enviar una contribución se debería realizar una visualización del
-trabajo realizado. Para ello asegurarse de tener instalados los paquetes
-necesarios para la construcción de live-manual ejecutando la siguiente
-orden:
+Para realizar cambios en el manual en Inglés se debe editar los ficheros
+adecuados en #{manual/en/}# pero antes de enviar una contribución se debería
+realizar una visualización del trabajo realizado. Para ello asegurarse de
+tener instalados los paquetes necesarios para la construcción de live-manual
+ejecutando la siguiente orden:
 
 code{
 
@@ -197,8 +186,8 @@ code{
 }code
 
 Ya que la construcción del manual para todos los idiomas soportados tarda un
-rato, puede ser mejor crear un solo idioma. Esto puede realizarse ejecutando
-la siguiente orden:
+buen rato, puede ser mejor crear un solo idioma. Esto puede realizarse
+ejecutando la siguiente orden:
 
 code{
 
@@ -222,76 +211,11 @@ code{
 
 }code
 
-3~ Aplicar cambios
-
-Cualquiera puede hacer una entrega en el repositorio. Sin embargo, a la hora
-de hacer grandes cambios, es conveniente enviarlos a la lista de correo para
-discutirlos primero. Para realizar una entrega al repositorio se debe seguir
-el siguiente procedimiento:
-
-_* Obtener la clave pública de entrega:
-
-code{
-
- $ mkdir -p ~/.ssh/identity.d
- $ wget http://live.debian.net/other/keys/git@live.debian.net \
-     -O ~/.ssh/identity.d/git@live.debian.net
- $ wget http://live.debian.net/other/keys/git@live.debian.net.pub \
-     -O ~/.ssh/identity.d/git@live.debian.net.pub
- $ chmod 0600 ~/.ssh/identity.d/git@live.debian.net*
-
-}code
-
-_* Añadir la siguiente sección en el fichero de configuración de
-openssh-client:
-
-code{
-
- $ cat >> ~/.ssh/config << EOF
- Host live.debian.net
-     Hostname live.debian.net
-     User git
-     IdentityFile ~/.ssh/identity.d/git@live.debian.net
- EOF
-
-}code
-
-_* Obtener un clon del manual mediante git utilizando ssh:
-
-code{
-
- $ git clone git@live.debian.net:/live-manual.git
- $ cd live-manual && git checkout debian-next
-
-}code
-
-_* Asegurarse de enviar los cambios a la rama debian-next y no a la rama
-Debian.
-
-_* No ejecutar #{make commit}# a menos de que se actualicen las traducciones
-al mismo tiempo, y en ese caso, no mezclar los cambios del manual en inglés
-con las traducciones en el mismo commit, sino en commits separados. Ver la
-sección {Tranducción}#translation para más detalles.
-
-_* Hay que escribir un mensaje de entrega que consistirá en una o varias
-frases en ingles con significado completo, comenzando con una letra
-mayúscula y acabando con un punto final. Es habitual comenzar estas frases
-con la forma 'Fixing/Adding/Removing/Correcting/Translating', por ejemplo:
-
-code{
-
- $ git commit -a -m "Adding a section on applying patches."
-
-}code
-
-_* Para finalizar se realizará la entrega al servidor utilizando el
-siguiente comando:
-
-code{
-
- $ git push
-
-}code
+Después de revisar el trabajo y asegurarse de que todo está bien, no
+ejecutar #{make commit}# a menos de que se actualicen las traducciones al
+mismo tiempo, y en ese caso, no mezclar los cambios al manual en inglés con
+las traducciones en el mismo commit, sino en commits separados. Ver la
+sección {Traducción}#translation para más detalles.
 
 3~translation Traducción
 
@@ -314,7 +238,27 @@ aleatoria.
 _* No se debe olvidar la ejecución del comando #{make commit}# para asegurar
 que los manuales traducidos son actualizados desde los ficheros
 .po. Entonces se puede revisar los cambios ejecutando #{make build}# antes
-de realizar la entrega mediante #{git add .}#, #{git commit -a -m
+de realizar la entrega mediante #{git add .}#, #{git commit -m
 "Translating..."}# y #{git push}#.
+
+Después de ejecutar #{make commit}# se podrá observar bastante texto en la
+pantalla.  Básicamente son mensajes informativos sobre el estado del proceso
+y también algunas pistas sobre lo que se puede hacer para mejorar
+live-manual. A menos que se vea un error fatal, generalmente se puede
+proceder y enviar la contribución.
+
+live-manual incluye dos utilidades que pueden ser de gran ayuda para los
+traductores a la hora de encontrar mensajes sin traducir y mensajes
+difusos. La primera es "make translate". Esta activa un script que muestra
+en detalle cuántos mensajes sin traducir hay en cada fichero po. La segunda,
+"make fixfuzzy", sólo actúa sobre los mensajes difusos pero ayuda a
+encontrarlos y corregirlos uno por uno.
+
+Hay que tener en cuenta que aunque estas utilidades pueden ser de gran ayuda
+para traducir en la linea de comandos, se recomienda el uso de una
+herramienta especializada como por ejemplo /{poedit}/. Además es una buena
+idea leer la documentación de debian sobre localizacion (l10n) y,
+especificamente para live-manual,  las {Directrices para los
+traductores}#guidelines-translators.
 
 *{Nota:}* Se puede utilizar #{make clean}# para limpiar el árbol git antes de enviar los cambios. Este paso no es obligatorio, gracias al fichero .gitignore, pero es una buena práctica para evitar enviar ficheros involuntariamente.

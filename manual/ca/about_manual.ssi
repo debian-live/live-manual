@@ -110,7 +110,7 @@ en relació amb l'edició *{stable}*. La distribució *{unstable}* és on es
 produeix el desenvolupament actiu de Debian. En general, aquesta distribució
 és utilitzada pels desenvolupadors i els que els agrada viure en risc. Al
 llarg del manual, es tendeix a utilitzar els seus noms en clau, com ara
-wheezy or sid, ja que és el que fan servir les pròpies eines.
+wheezy o sid, ja que és el que fan servir les pròpies eines.
 
 2~ Autors
 
@@ -142,32 +142,20 @@ _* Richard Nelson
 
 _* Trent W. Buck
 
-2~how-to-contribute Contribuir en aquest document
+2~how-to-contribute Contribuir a aquest document
 
 Aquest manual està pensat com un projecte comunitari i totes les propostes
-per millorar-lo i les contribucions són molt benvingudes. La millor forma
-d'enviar una contribució és enviar-la a la llista de correu. Consultar la
-secció {Contacte}#contact per més informació.
+per millorar-lo i les contribucions són molt benvingudes. Veure la secció
+{Contribuir al projecte}#contributing-to-project per obtenir informació
+detallada sobre com obtenir la clau i fer bons commits.
 
-Quan es presenta una contribució, identificar clarament el titular dels
-drets d'autor i s'ha d'incloure la declaració de concessió de
-llicències. Recordar que per ser acceptada, la contribució ha de tenir una
-llicencia igual que la resta del document, a saber, la versió de la GPL 3 o
-superior.
+3~ Aplicar canvis
 
-Les fonts d'aquest manual es mantenen utilitzant el sistema de control de
-versions Git (veure {Repositoris Git}#git-repositories). Es pot obtenir una
-còpia actualitzada mitjançant l'execució de:
-
-code{
-
-$ git clone git://live.debian.net/git/live-manual.git
-
-}code
-
-Abans de presentar una contribució, previsualitzar el treball. Per
-previsualitzar el live-manual, assegurar-se que s'han instaŀlat els paquets
-necessaris per a la seva construcció  mitjançant l'execució de:
+Per tal de realitzar canvis en el manual anglès s'ha d'editar els fitxers
+correctes a #{manual/en/}# però abans de presentar una contribució,
+previsualitzar el treball. Per previsualitzar el live-manual, assegurar-se
+que s'han instaŀlat els paquets necessaris per a la seva construcció
+mitjançant l'execució de:
 
 code{
 
@@ -185,8 +173,8 @@ code{
 }code
 
 Com es necessita un cert temps per construir el manual en tots els idiomes
-suportats, potser resulti convenient quan es fa una prova construir per un
-sol idioma, per exemple, mitjançant l'execució de:
+suportats, potser resulti convenient quan es fa una prova construir un sol
+idioma, per exemple, mitjançant l'execució de:
 
 code{
 
@@ -210,74 +198,11 @@ code{
 
 }code
 
-3~ Aplicar canvis
-
-Qualsevol persona pot fer un commit directament al repositori. No obstant
-això, demanem que s'enviïn els canvis grans a la llista de correu per
-parlar-ne en primer lloc. Per fer un push al repositori, s'ha de seguir el
-següent procediment:
-
-_* Obtenir la clau pública:
-
-code{
-
- $ mkdir -p ~/.ssh/identity.d
- $ wget http://live.debian.net/other/keys/git@live.debian.net \
-     -O ~/.ssh/identity.d/git@live.debian.net
- $ wget http://live.debian.net/other/keys/git@live.debian.net.pub \
-     -O ~/.ssh/identity.d/git@live.debian.net.pub
- $ chmod 0600 ~/.ssh/identity.d/git@live.debian.net*
-
-}code
-
-_* Afegir la següent secció a la configuració del vostre openssh-client:
-
-code{
-
- $ cat >> ~/.ssh/config << EOF
- Host live.debian.net
-     Hostname live.debian.net
-     User git
-     IdentityFile ~/.ssh/identity.d/git@live.debian.net
- EOF
-
-}code
-
-_* Fer una còpia del manual a través de ssh:
-
-code{
-
- $ git clone git@live.debian.net:/live-manual.git
- $ cd live-manual && git checkout debian-next
-
-}code
-
-_* Tenir en compte que s'han d'enviar els canvis a la branca debian-next, no
-a la branca debian.
-
-_* No fer un #{make commit}# a menys que s'actualitzen les traduccions al
-mateix temps, i en aquest cas, no barrejar els canvis al manual en anglès i
-les traduccions en el mateix commit, fer-ne un altre separat per cada
-un. Veure la secció {Traducció}#translation per a més detalls.
-
-_* Escriure missatges de commit que consisteixen en oracions completes i
-significatives en anglès, començant amb una lletra majúscula i acabant amb
-un punt. En general, aquests començaran amb la forma
-'Fixing/Adding/Removing/Correcting/Translating', per exemple:
-
-code{
-
- $ git commit -a -m "Adding a section on applying patches."
-
-}code
-
-_* Fer un push al servidor:
-
-code{
-
- $ git push
-
-}code
+Després de revisar el treball i assegurar-se que tot està bé, no fer un
+#{make commit}# a menys que s'actualitzen les traduccions al mateix temps, i
+en aquest cas, no barrejar els canvis al manual anglès i les traduccions en
+el mateix commit, fer-ne un altre separat per cada canvi. Veure la secció
+{Traducció}#translation per a més detalls.
 
 3~translation Traducció
 
@@ -295,9 +220,28 @@ llavors editar #{manual/_sisu/home/index.html}#.
 _* Una vegada que s'ha afegit la nova llengua, es pot continuar traduint la
 resta de fitxers dins de #{manual/po/}# a l'atzar.
 
-_* No oblidar que es necessari fer #{make commit}# per garantir que els
-manuals traduïts s'actualitzen a partir del fitxers po i llavors es poden
+_* No oblidar que es necessari fer un #{make commit}# per garantir que els
+manuals traduïts s'actualitzen a partir dels fitxers po i llavors es poden
 revisar els canvis executant #{make build}# abans de #{git add .}#, #{git
-commit -a -m "Translating..."}# i #{git push}#.
+commit -m "Translating..."}# i #{git push}#.
 
-*{Nota:}* Es pot utilitzar #{make clean}# per netejar l'arbre git abans de fer un push.  Aquest  pas no és obligatori, gràcies al fitxer .gitignore, però és una bona pràctica per evitar enviar fitxers de forma involuntària.
+Després d'executar #{make commit}# es podrà veure una mica de text a la
+pantalla. Bàsicament són missatges informatius sobre l'estat del procés i
+també algunes pistes sobre el que es pot fer per millorar live-manual. Si no
+es veu cap error fatal, generalment es pot procedir i enviar la contribució.
+
+live-manual ve amb dues utilitats que poden ser de gran ajuda pels
+traductors a l'hora de trobar missatges sense traduir i difusos. La primera
+és "make translate". Aquesta activa un script que diu en detall quants
+missatges sense traduir hi ha a cada fitxer po. La segona, "make fixfuzzy",
+només actua sobre els missatges difusos però ajuda a trobar-los i
+corregir-los un per un.
+
+Tenir en compte que tot i que aquestes utilitats poden ser molt útils per
+fer la feina de traducció en la línia d'ordres, l'ús d'una eina
+especialitzada com /{poedit}/ és la forma recomanada per fer la tasca. També
+és una bona idea llegir la documentació de localització de debian (l10n) i,
+específicament a live-manual, les {Directrius per a
+traductors}#guidelines-translators.
+
+*{Nota:}* Es pot utilitzar #{make clean}# per netejar l'arbre git abans de fer un push. Aquest  pas no és obligatori, gràcies al fitxer .gitignore, però és una bona pràctica per evitar enviar fitxers de forma involuntària.

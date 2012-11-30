@@ -244,7 +244,7 @@ _* Suffix each kernel package name with the kernel flavour (e.g. #{-amd64}#).
 
 2~installing-modified-or-third-party-packages Installing modified or third-party packages
 
-Whilst it is against the philosophy of Debian Live, it may sometimes be necessary to build a Live system with modified versions of packages that are in the Debian repository. This may be to modify or support additional features, languages and branding, or even to remove elements of existing packages that are undesirable. Similarly, "third-party" packages may be used to add bespoke and/or proprietary functionality.
+While it is against the philosophy of Debian Live, it may sometimes be necessary to build a Live system with modified versions of packages that are in the Debian repository. This may be to modify or support additional features, languages and branding, or even to remove elements of existing packages that are undesirable. Similarly, "third-party" packages may be used to add bespoke and/or proprietary functionality.
 
 This section does not cover advice regarding building or maintaining modified packages. Joachim Breitner's 'How to fork privately' method from http://www.joachim-breitner.de/blog/archives/282-How-to-fork-privately.html may be of interest, however. The creation of bespoke packages is covered in the Debian New Maintainers' Guide at http://www.debian.org/doc/maint-guide/ and elsewhere.
 
@@ -254,7 +254,7 @@ _* #{packages.chroot}#
 
 _* Using a custom APT repository
 
-Using #{packages.chroot}# is simpler to achieve and useful for "one-off" customizations but has a number of drawbacks, whilst using a custom APT repository is more time-consuming to set up.
+Using #{packages.chroot}# is simpler to achieve and useful for "one-off" customizations but has a number of drawbacks, while using a custom APT repository is more time-consuming to set up.
 
 3~ Using #{packages.chroot}# to install custom packages
 
@@ -274,7 +274,7 @@ _* It does not lend itself to storing Debian Live configurations in revision con
 
 Unlike using #{packages.chroot}#, when using a custom APT repository you must ensure that you specify the packages elsewhere. See {Choosing packages to install}#choosing-packages-to-install for details.
 
-Whilst it may seem unnecessary effort to create an APT repository to install custom packages, the infrastructure can be easily re-used at a later date to offer updates of the modified packages.
+While it may seem unnecessary effort to create an APT repository to install custom packages, the infrastructure can be easily re-used at a later date to offer updates of the modified packages.
 
 3~ Custom packages and APT
 
@@ -342,18 +342,18 @@ code{
 
 Please check the man pages to fully understand these options and when to use them. This is an example only and should not be construed as advice to configure your image this way. This option would not be appropriate for, say, a final release of a live image.
 
-For more complicated APT configurations involving #{apt.conf}# options you might want to create a #{config/chroot_apt/apt.conf}# file instead. See also the other #{apt-*}# options for a few convenient shortcuts for frequently needed options.
+For more complicated APT configurations involving #{apt.conf}# options you might want to create a #{config/apt/apt.conf}# file instead. See also the other #{apt-*}# options for a few convenient shortcuts for frequently needed options.
 
 3~apt-pinning APT pinning
 
-For background, please first read the #{apt_preferences(5)}# man page. APT pinning can be configured either for build time, or else for run time. For the former, create #{config/chroot_apt/preferences}#. For the latter, create #{config/includes.chroot/etc/apt/preferences}#.
+For background, please first read the #{apt_preferences(5)}# man page. APT pinning can be configured either for build time, or else for run time. For the former, create #{config/archives/*.pref}#, #{config/archives/*.pref.chroot}#, and #{config/apt/preferences}#. For the latter, create #{config/includes.chroot/etc/apt/preferences}#.
 
-Let's say you are building a wheezy live system but need all the live packages that end up in the binary image to be installed from sid at build time. You need to add sid to your APT sources and pin it so that only the packages you want are installed from it at build time and all others are taken from the target system distribution, wheezy. The following will accomplish this:
+Let's say you are building a wheezy live system but need all the live packages that end up in the binary image to be installed from sid at build time. You need to add sid to your APT sources and pin it lower than the default priority so that only the packages you want are installed from it at build time and all others are taken from the target system distribution, wheezy. The following will accomplish this:
 
 code{
 
  $ echo "deb http://mirror/debian/ sid main" > config/archives/sid.list.chroot
- $ cat >> config/chroot_apt/preferences << EOF
+ $ cat >> config/archives/sid.pref.chroot << EOF
  Package: live-*
  Pin: release n=sid
  Pin-Priority: 600
@@ -365,7 +365,7 @@ code{
 
 }code
 
-Negative pin priorities will prevent a package from being installed, as in the case where you do not want a package that is recommended by another package. Suppose you are building an LXDE image using #{task-lxde-desktop}# in #{config/package-lists/lxde-desktop.list.chroot}#, but don't want the user prompted to store wifi passwords in the keyring. This metapackage depends on /{lxde-core}/, which recommends /{gksu}/, which in turn recommends /{gnome-keyring}/. So you want to omit the recommended /{gnome-keyring}/ package. This can be done by adding the following stanza to #{config/chroot_apt/preferences}#:
+Negative pin priorities will prevent a package from being installed, as in the case where you do not want a package that is recommended by another package. Suppose you are building an LXDE image using #{task-lxde-desktop}# in #{config/package-lists/lxde-desktop.list.chroot}#, but don't want the user prompted to store wifi passwords in the keyring. This metapackage depends on /{lxde-core}/, which recommends /{gksu}/, which in turn recommends /{gnome-keyring}/. So you want to omit the recommended /{gnome-keyring}/ package. This can be done by adding the following stanza to #{config/apt/preferences}#:
 
 code{
 

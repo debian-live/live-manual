@@ -17,19 +17,21 @@ l'usuari durant la construcció, tal i com es va explicar a {Live/chroot
 local includes}#live-chroot-local-includes, sinó també en els grups i els
 permisos associats amb l'usuari.
 
-Es pot especificar grups addicionals als que pertanyerà l'usuari en viu fent
-una preconfiguració (preseed) prèvia del valor debconf
-#{passwd/user-default-groups}#. Per exemple, per afegir l'usuari en viu al
-grup #{fuse}#, afegir la següent configuració preseed a l'etapa chroot:
+Es poden especificar grups addicionals als que pertanyerà l'usuari en viu
+mitjançant l'ús de qualsevol de les possibilitats de configuraciò de
+live-config. Per exemple, per afegir l'usuari en viu al grup #{fuse}#, es
+pot afegir el següent fitxer a
+#{config/includes.chroot/etc/live/config/user-setup.conf}#:
 
 code{
 
- $ lb config
- $ echo user-setup passwd/user-default-groups string audio cdrom \
-   dip floppy video plugdev netdev powerdev scanner bluetooth fuse \
-   >> config/preseed/my.preseed.chroot
+ LIVE_USER_DEFAULT_GROUPS="audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse
 
 }code
+
+o utilitzar
+#{live-config.user-default-groups=audio,cdrom,dip,floppy,video,plugdev,netdev,powerdev,scanner,bluetooth,fuse}#
+com paràmetre d'arrencada.
 
 També és possible canviar el nom de l'usuari per defecte "user" i la
 contrasenya per defecte "live". Si es vol fer això per alguna raó, es pot
@@ -224,7 +226,7 @@ utilitzat per a la persistència:
 
 code{
 
- $ dd if=/dev/null of=persistence bs=1 seek=1G # for a 1GB sized image file
+ $ dd if=/dev/null of=persistence bs=1 count=0 seek=1G # for a 1GB sized image file
  $ /sbin/mkfs.ext4 -F persistence
 
 }code

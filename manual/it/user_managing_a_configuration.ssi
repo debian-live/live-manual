@@ -84,18 +84,20 @@ della compilazione in #{build.log}#.
 
 2~ Clonare una configurazione pubblicata tramite Git.
 
-Per clonare un repository Git che contiene una configurazione Debian Live
-usare l'opzione #{lb config --config}#. Se si desidera basarsi su una
-mantenuta dal progetto Debian Live vedere i repository che iniziano con
-#{debian-}# all'indirizzo http://live.debian.net/gitweb .
+Use the #{lb config --config}# option to clone a Git repository that
+contains a Debian Live configuration. If you would like to base your
+configuration on one maintained by the Debian Live project, look at
+http://live.debian.net/gitweb for the repository named #{live-images}# in
+the category #{Packages}#.
 
-Ad esempio, per creare un'immagine d'emergenza usare il repository
-#{debian-rescue}# come segue:
+For example, to build a rescue image, use the #{live-images}# repository as
+follows:
 
 code{
 
- $ mkdir live-rescue && cd live-rescue
- $ lb config --config git://live.debian.net/git/debian-rescue.git
+ $ mkdir live-images && cd live-images
+ $ lb config --config git://live.debian.net/git/live-images.git
+ $ cd images/rescue
 
 }code
 
@@ -119,6 +121,6 @@ facile:
 
 code{
 
- $ lb config --config ldn:debian-rescue
+ $ lb config --config ldn:live-images
 
 }code

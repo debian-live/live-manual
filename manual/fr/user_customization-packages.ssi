@@ -644,13 +644,13 @@ construction, ou encore pendant l'exécution. Pour le premier, créez
 #{config/apt/preferences}#. Dans le second cas, créez
 #{config/includes.chroot/etc/apt/preferences}#.
 
-Imaginons que vous voulez construire un système live wheezy mais il faut
-installer tous les paquets live qui finissent dans l'image binaire de sid au
-moment de la construction. Vous devez ajouter sid à vos APT sources et le
-fixer avec une priorité inférieure à la priorité par défaut de sorte que
-seulement les paquets que vous voulez sont installés au temps de
-construction et tous les autres sont de la distribution du système cible,
-wheezy. Ce qui suit devrait accomplir ça:
+Let's say you are building a wheezy live system but need all the live
+packages that end up in the binary image to be installed from sid at build
+time. You need to add sid to your APT sources and pin the live packages from
+it higher, but all other packages from it lower, than the default
+priority. Thus, only the packages you want are installed from sid at build
+time and all others are taken from the target system distribution,
+wheezy. The following will accomplish this:
 
 code{
 

@@ -283,15 +283,16 @@ code{
 
 }code
 
-Then we reboot. During the first boot the contents of #{/home}# and
-#{/var/cache/apt}# will be copied into the persistence volume, and from then
-on all changes to these directories will live in the persistence
-volume. Please note that any paths listed in the #{persistence.conf}# file
-cannot contain white spaces or the special #{.}# and #{..}# path
-components. Also, neither #{/lib}#, #{/lib/live}# (or any of their
-sub-directories) nor #{/}# can be made persistent using custom mounts. As a
-workaround for this limitation you can add #{/ union}# to your
-#{persistence.conf}# file to achieve full persistence.
+Entonces reiniciamos. Durante el primer arranque los contenidos de #{/home}#
+y #{/var/cache/apt}# se copiarán en el volumen persistente y a partir de ese
+momento todos los cambios en esos directorios se guardarán allí. Tener en
+cuenta que las rutas listadas en el fichero #{persistence.conf}# no pueden
+contener espacios en blanco ni los componentes especiales #{.}# y
+#{..}#. Además, ni #{/lib}#, #{/lib/live}# (o ninguno de sus
+sub-directorios) ni #{/}# pueden hacerse persistentes montándolos de forma
+personalizada. Una posible alternativa a esta limitación es añadir #{/
+union}# al fichero #{persistence.conf}# para conseguir una persistencia
+completa.
 
 Se puede usar diferentes volúmenes de overlays al mismo tiempo (con sus
 propios ficheros #{persistence.conf}#) pero si varios volúmenes hacen que un

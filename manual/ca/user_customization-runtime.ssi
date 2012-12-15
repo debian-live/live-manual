@@ -172,8 +172,8 @@ Les dades emmagatzemades en aquest disc ram han de ser guardades en un
 suport d'escriptura persistent com medis d'emmagatzematge locals, un recurs
 compartit de xarxa o fins i tot una sessió d'una multisessió de un CD/DVD
 (re)grabable. Tots aquests medis són compatibles amb Debian Live de
-diferents maneres, i totes menys l'última d'elles requereixen un paràmetre
-d'arrencada especial que s'especifica en l'arrencada: #{persistence}#.
+diferents maneres, i tots menys l'últim, requereixen un paràmetre especial
+que s'especifica en l'arrencada: #{persistence}#.
 
 Si s'utilitza el paràmetre d'arrencada #{persistence}# (i no s'utilitza
 #{nopersistence}#) es proven els medis locals d'emmagatzematge (per exemple,
@@ -280,15 +280,15 @@ code{
 
 }code
 
-Després es reinicia el sistema. Durant la primera arrencada el contingut de
-#{/home}# i #{/var/cache/apt}# es copiaran en el volum de la persistència, i
-d'aquí en endavant tots els canvis en aquests directoris es guardaran en el
-volum de la persistència. Tenir en compte que les rutes que apareixen en el
+Després es reinicia el sistema. Durant la primera arrencada els continguts
+de #{/home}# i #{/var/cache/apt}# es copiaran en el volum de la
+persistència, i d'aquí en endavant tots els canvis en aquests directoris es
+guardaran en aquest volum. Tenir en compte que les rutes que apareixen en el
 fitxer #{persistence.conf}# no poden contenir espais en blanc o els
 components especials #{.}# i #{..}#. A més, ni #{/lib}#, #{/lib/live}# (o
 qualsevol dels seus subdirectoris) ni #{/}# es poden fer persistents
-utilitzant muntatges personalitzats. Com una solució per aquesta limitació
-es pot afegir #{/ union}# al fitxer #{persistence.conf}# per aconseguir una
+utilitzant muntatges personalitzats. Com a solució per aquesta limitació es
+pot afegir #{/ union}# al fitxer #{persistence.conf}# per aconseguir una
 persistència completa.
 
 Es poden utilitzar diversos volums diferents de muntatges personalitzats
@@ -302,7 +302,7 @@ estan enumerats en el mateix fitxer #{persistence.conf}#. Veure la pàgina
 del manual persistence.conf(5) per saber com manejar aquest cas, si realment
 es necessita (una pista: en general no cal fer-ho).
 
-3~ Utilitzar més d'un magatzem de persistència
+3~ Utilitzar diversos medis persistents
 
 Si un usuari necessita múltiples magatzems de persistència del mateix tipus
 per a diferents ubicacions o proves, com #{persistence-nonwork}# i

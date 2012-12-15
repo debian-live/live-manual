@@ -23,7 +23,7 @@ mitjançant la tècnica pinning d'APT, per nomenar algunes possibilitats.
 
 2~ Fonts dels paquets
 
-3~ Distribució, zones d'arxiu i mode 
+3~ Distribució, àrees d'arxiu i mode 
 
 La distribució que es tria té una gran importància en els paquets que estan
 disponibles per incloure en una imatge en viu. Només cal especificar el nom
@@ -53,14 +53,14 @@ code{
 }code
 
 És dona suport experimental a alguns derivats de Debian a través de l'opció
-#{--mode}#. Per defecte, aquesta opció està establerta en #{debian}#, tot i
+#{--mode}#. Per defecte, aquesta opció és, per defecte, #{debian}#, tot i
 que se estigui construint en un sistema que no sigui Debian. Si s'especifica
 #{--mode ubuntu}# o #{--mode emdebian}#, s'utilitzen els noms de distribució
 i les àrees dels arxius dels derivats especificats en lloc dels de
 Debian. El «mode» també modifica el comportament de live-build per
 adaptar-lo als derivats.
 
-*{Nota:}* Els projectes per als quals aquests modes s'han afegit són els principals responsables de donar suport als usuaris d'aquestes opcions. El projecte Debian Live, al seu torn, dona suport de desenvolupament només sobre una base de millor esforç, basada en les informacions proporcionades pels projectes derivats ja que nosaltres no desenvolupem ni donem suport a aquests derivats.
+*{Nota:}* Els projectes per als quals s'han afegit aquests modes són els principals responsables de donar suport als usuaris d'aquestes opcions. El projecte Debian Live, al seu torn, dona suport de desenvolupament només sobre una base de millor esforç, basada en les informacions proporcionades pels projectes derivats ja que nosaltres no desenvolupem ni donem suport a aquests derivats.
 
 3~ Miralls de distribució
 
@@ -98,10 +98,10 @@ defecte pren el mateix valor que #{--mirror-bootstrap}#
 
 3~ Miralls de distribució utilitzats en temps d'execució
 
-Les opcions #{--mirror-binary*}# governen els miralls de distribució
-coŀlocats a la imatge binària. Aquestes poden ser utilitzades per instaŀlar
+Les opcions #{--mirror-binary*}# governen els miralls de distribució que
+acaben a la imatge binària. Aquestes poden ser utilitzades per instaŀlar
 paquets addicionals mentre s'executa el sistema en viu. Els valors per
-defecte utilitzan #{http.debian.net}#, un servei que tria un mirall
+defecte fan servir #{http.debian.net}#, un servei que tria un mirall
 geogràficament a prop en funció, entre altres coses, de la familia de la IP
 de l'usuari i de la disponibilitat del mirall. Aquesta és una opció adequada
 quan no es pot predir quin serà el millor mirall per tots els usuaris. O es
@@ -142,12 +142,12 @@ Si s'afegeix la mateixa línia a #{config/archives/live.list.binary}#, el
 repositori sera afegit al directori #{/etc/apt/sources.list.d/}# del sistema
 viu.
 
-Si aquests fitxers existeixen, seran utilitzats de forma automàtica.
+Si aquests fitxers existeixen, són utilitzats de forma automàtica.
 
 També s'ha de posar la clau GPG utilitzada per signar el repositori en
 fitxers #{config/archives/your-repository.key.{binary,chroot}}#.
 
-*{Nota:}* alguns repositoris preconfigurats de paquets estan disponibles per facilitar la selecció a través de l'opció #{--archives}#, per exemple, per habilitar instantànies en viu, una ordre simple és suficient per activar-ho:
+*{Nota:}* Hi ha alguns repositoris de paquets preconfigurats que estan disponibles per facilitar la seva selecció a través de l'opció #{--archives}#, per exemple, per habilitar instantànies en viu, una simple ordre és suficient:
 
 code{
 
@@ -169,11 +169,11 @@ paquets nous o experimentals abans de afegirlos a un repositori.
 3~package-lists Llistes de paquets
 
 Les llistes de paquets són una forma eficaç d'expressar quins paquets han de
-ser instaŀlats. La sintaxi de la llista suporta els fitxers inclosos i
-seccions condicionals que fa que sigui fàcil construir llistes a partir
-d'altres llistes i adaptar-les per al propi ús en múltiples
+ser instaŀlats. La sintaxi de la llista suporta els fitxers que s'hi
+incloent i seccions condicionals que fa que sigui fàcil construir llistes a
+partir d'altres llistes i adaptar-les per al propi ús en múltiples
 configuracions. Els noms dels paquets també poden ser injectats a la llista
-amb els ajudants de shell en temps de construcció. 
+amb els ajudants de l'intèrpret d'ordres en temps de construcció. 
 
 *{Nota:}* El comportament de live-build a l'hora d'especificar un paquet que no existeix està determinat per la elecció que es faci de l'eina APT. Veure {Elegir apt or aptitude}#choosing-apt-or-aptitude per més detalls.
 
@@ -226,7 +226,7 @@ code{
 
 Ja sigui afegint metapaquets a una llista, paquets individuals, o una
 combinació d'ambdós, totes les llistes de paquets locals s'emmagatzemen a
-#{config/package-lists/}#. Ja que es pot utilitzar més d'una llista, això es
+#{config/package-lists/}#. Es pot utilitzar més d'una llista i això es
 presta molt bé als dissenys modulars. Per exemple, es pot decidir dedicar
 una llista a una elecció particular d'escriptori, l'altra a una coŀlecció de
 paquets relacionats que puguin ser fàcilment utilitzats al damunt d'un
@@ -245,11 +245,11 @@ llista.
 
 Per crear una llista per a l'etapa binary, crear un fitxer amb el sufix
 #{.list.binary}# a #{config/package-lists/}#. Aquests paquets no s'instaŀlan
-al sistema de fitxers en viu però s'inclouen en els medis en viu a
-#{pool/}#. Un ús típic d'aquesta llista seria amb una de les variants del
-instaŀlador non-live. Com s'ha esmentat anteriorment, si es vol que aquesta
-llista sigui la mateixa que la llista de l'etapa chroot, simplement
-utilitzar el sufix #{.list}#.
+al sistema de fitxers en viu però s'inclouen en els medis en viu al
+directori #{pool/}#. Un ús típic d'aquesta llista seria amb una de les
+variants del instaŀlador non-live. Com s'ha esmentat anteriorment, si es vol
+que aquesta llista sigui la mateixa que la llista de l'etapa chroot,
+simplement utilitzar el sufix #{.list}#.
 
 3~generated-package-lists Generar llistes de paquets
 
@@ -338,10 +338,10 @@ diferentes de les imatges de l'instaŀlador de Debian en aquest sentit. A
 l'instaŀlador de Debian, si el medi es va preparar per obtenir un tipus
 d'entorn d'escriptori en particular, la tasca corresponent s'instaŀlarà
 automàticament. Per tant hi ha tasques internes #{gnome-desktop}#,
-#{kde-desktop}#, #{lxde-desktop}# and #{xfce-desktop}# cap de les quals
+#{kde-desktop}#, #{lxde-desktop}# i #{xfce-desktop}#, cap de les quals
 s'ofereixen al menú de #{tasksel}#. De la mateixa manera, no hi ha cap
-entrada de menú per a les tasques de les llengües, però l'elecció del idioma
-de l'usuari durant la instaŀlació influeix en la selecció de les tasques de
+entrada de menú per a tasques de llengües, però l'elecció del idioma de
+l'usuari durant la instaŀlació influeix en la selecció de les tasques de les
 llengües corresponents.
 
 En el desenvolupament d'una imatge en viu d'escriptori, la imatge sol
@@ -457,7 +457,7 @@ _* L'ús d'un repositori APT personalitzat
 Utilitzar #{packages.chroot}#  és més fàcil d'aconseguir i útil per a
 personalitzacions "ràpides", però té una sèrie d'inconvenients, mentre que
 l'ús d'un repositori APT personalitzat és més costós en la quantitat de
-temps necessari.
+temps necessari per posar-lo en marxa.
 
 3~ Fer servir #{packages.chroot}# per instaŀar paquets personalitzats
 
@@ -500,7 +500,7 @@ per tant, heretarà els comportaments d'aquest programa. Un exemple rellevant
 paquet està disponible en dos repositoris diferents, amb diferents números
 de versió, APT triarà per instaŀlar el paquet amb la versió més alta.
 
-A causa d'això, s'aconsella augmentar el nombre de versió dels paquets
+A causa d'això, s'aconsella augmentar el nombre de la versió dels paquets
 personalitzats als fixers #{debian/changelog}#  per assegurar-se que la
 versió modificada és la que s'instaŀla en lloc d'una dels repositoris
 oficials de Debian. Això també es pot aconseguir mitjançant l'alteració de
@@ -594,17 +594,17 @@ necessaris per als usuaris del sistema Live poden ser omesos. Per tant,
 suggerim revisar la diferència que desactivar els paquets recomanats té en
 la llista de paquets (veure el fitxer #{binary.packages}# generat per #{lb
 build}#) i tornar a incloure a la llista els paquets que falten que haurien
-de ser instaŀlats. D'altra banda, si només es vol deixar de banda un petit
-nombre de paquets recomanats, es pot deixar els «recommends» activats i
-establir una prioritat pin d'APT negativa en els paquets seleccionats per
-impedir la seva instaŀlació, com s'explica a {APT pinning}#apt-pinning.
+de ser instaŀlats. Si només es vol deixar de banda un petit nombre de
+paquets recomanats, es pot deixar els «recommends» activats i establir una
+prioritat pin d'APT negativa en els paquets seleccionats per impedir la seva
+instaŀlació, com s'explica a {APT pinning}#apt-pinning.
 
 3~ Passar opcions per a apt o aptitude
 
 Si no hi ha cap opció #{lb config}# per modificar el comportament d'APT de
 la manera què es necessita, es pot utilitzar #{--apt-options}# o
 #{--aptitude-options}# per passar opcions a l'eina APT
-configurada. Consultar les pàgines del manual per #{apt}# i #{aptitude}# per
+configurada. Consultar les pàgines dels manual #{apt}# i #{aptitude}# per
 més detalls. Tenir en compte que ambdues opcions tenen valors per defecte
 que s'hauran de mantenir, a més de les opcions que es proporcionen. Així,
 per exemple, suposant que s'ha inclòs algun paquet de
@@ -644,7 +644,7 @@ pin dels paquets live amb una prioritat més alta, però tots els altres
 paquets amb una prioritat més baixa que la prioritat per defecte de manera
 que només els paquets que es vol s'instaŀlin desde sid en el moment de la
 construcció i tots els altres es prenguin de la distribució de destinació,
-wheezy. El que segueix aconseguira això:
+wheezy. Això es pot aconseguir de la manera següent:
 
 code{
 

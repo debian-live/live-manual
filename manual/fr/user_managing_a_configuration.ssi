@@ -44,7 +44,7 @@ révision à l'autre. En outre, il sera plus facile pour vous identifier et
 corriger les options qui doivent changer lorsque vous mettez à niveau
 live-build après avoir lu la documentation mise à jour.
 
-2~ Utilisez scripts auto d'exemple
+3~ Utilisez scripts auto d'exemple
 
 Pour votre commodité, live-build est fourni avec shell scripts d'exemple,
 pour copier et modifier. Lancer une nouvelle configuration par défaut, puis
@@ -87,17 +87,18 @@ de la construction sera écrit par #{auto/build}# dans #{build.log}#.
 
 Utilisez l'option #{lb config --config}# pour cloner un dépôt Git qui
 contient une configuration de Debian Live. Si vous souhaitez baser votre
-configuration sur une maintenue par le projet Debian Live, voir les dépôts
-sur http://live.debian.net/gitweb avec le préfixe #{debian-}# sous le titre
-#{Configurations}#.
+configuration sur une maintenue par le projet Debian Live, voir le dépôt sur
+http://live.debian.net/gitweb avec le som #{live-images}# sous le titre
+#{Packages}#.
 
 Par exemple, pour construire une image de récupération, utiliser le dépôt
-#{debian-rescue}# comme suit:
+#{live-images}# comme suit:
 
 code{
 
- $ mkdir live-rescue && cd live-rescue
- $ lb config --config git://live.debian.net/git/debian-rescue.git
+ $ mkdir live-images && cd live-images
+ $ lb config --config git://live.debian.net/git/live-images.git
+ $ cd images/rescue
 
 }code
 
@@ -121,6 +122,6 @@ configuration est aussi simple que:
 
 code{
 
- $ lb config --config ldn:debian-rescue
+ $ lb config --config ldn:live-images
 
 }code

@@ -269,13 +269,15 @@ code{
 
 }code
 
-Quindi riavviare. Durante il primo avvio il contenuto di #{/home}# e
-#{/var/cache/apt}# saranno copiati nel volume persistente e da allora tutte
-le modifiche a queste directory risiederanno in modo persistente sul
-volume. C'è da considerare che tutti i path elencati nel file
-#{persistence.conf}# non possono contenere spazi o i caratteri speciali
-#{.}# e #{..}#, inoltre né #{/live}# (o nessuna delle sue sottodirectory) né
-#{/}# può essere resa persistente tramite i mount personalizzati.
+Then we reboot. During the first boot the contents of #{/home}# and
+#{/var/cache/apt}# will be copied into the persistence volume, and from then
+on all changes to these directories will live in the persistence
+volume. Please note that any paths listed in the #{persistence.conf}# file
+cannot contain white spaces or the special #{.}# and #{..}# path
+components. Also, neither #{/lib}#, #{/lib/live}# (or any of their
+sub-directories) nor #{/}# can be made persistent using custom mounts. As a
+workaround for this limitation you can add #{/ union}# to your
+#{persistence.conf}# file to achieve full persistence.
 
 Possono essere utilizzati svariati volumi di stratificazione personalizzati
 (con i rispettivi file #{persistence.conf}#) allo stesso tempo ma se questi

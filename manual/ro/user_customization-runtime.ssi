@@ -265,8 +265,10 @@ Then we reboot. During the first boot the contents of #{/home}# and
 on all changes to these directories will live in the persistence
 volume. Please note that any paths listed in the #{persistence.conf}# file
 cannot contain white spaces or the special #{.}# and #{..}# path
-components. Also, neither #{/live}# (or any of its sub-directories) nor
-#{/}# can be made persistent using custom mounts.
+components. Also, neither #{/lib}#, #{/lib/live}# (or any of their
+sub-directories) nor #{/}# can be made persistent using custom mounts. As a
+workaround for this limitation you can add #{/ union}# to your
+#{persistence.conf}# file to achieve full persistence.
 
 Several different custom overlay volumes (with their own
 #{persistence.conf}# files) can be used at the same time, but if several

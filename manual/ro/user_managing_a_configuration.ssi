@@ -83,16 +83,17 @@ a log of the build will be written by #{auto/build}# in #{build.log}#.
 Use the #{lb config --config}# option to clone a Git repository that
 contains a Debian Live configuration. If you would like to base your
 configuration on one maintained by the Debian Live project, look at
-http://live.debian.net/gitweb for the repositories prefixed with #{debian-}#
-in the category #{Configurations}#.
+http://live.debian.net/gitweb for the repository named #{live-images}# in
+the category #{Packages}#.
 
-For example, to build a rescue image, use the #{debian-rescue}# repository
-as follows:
+For example, to build a rescue image, use the #{live-images}# repository as
+follows:
 
 code{
 
- $ mkdir live-rescue && cd live-rescue
- $ lb config --config git://live.debian.net/git/debian-rescue.git
+ $ mkdir live-images && cd live-images
+ $ lb config --config git://live.debian.net/git/live-images.git
+ $ cd images/rescue
 
 }code
 
@@ -115,6 +116,6 @@ suffix, starting a new image using this configuration is as easy as:
 
 code{
 
- $ lb config --config ldn:debian-rescue
+ $ lb config --config ldn:live-images
 
 }code

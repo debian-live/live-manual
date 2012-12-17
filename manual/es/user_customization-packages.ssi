@@ -35,8 +35,8 @@ en los repositorios Debian indicando su nombre en clave. (Para más detalles
 ver {Términos}#terms). La opción #{--distribution}# no solamente influencia
 la fuente de los paquetes dentro del archivo Debian, sino que instruye a
 live-build a comportarse tal y como se necesita para construir cada una de
-las distribuciones. Por ejemplo, para construir contra la versión
-*{inestable}*, sid, se debe indicar: 
+las distribuciones. Por ejemplo, para construir la versión *{inestable}*,
+sid, se debe indicar: 
 
 code{
 
@@ -101,7 +101,7 @@ code{
 }code
 
 El valor indicado en #{--mirror-chroot}# es utilizado como valor por defecto
-para la opción #{--mirror-bootstrap}# si esta no es indicada.
+para la opción #{--mirror-bootstrap}# si esta no es especificada.
 
 3~ Réplicas de distribución Debian utilizadas en la ejecución.
 
@@ -252,7 +252,7 @@ lista.
 
 *{Nota:}* Si no se especifica el sufijo, la lista será usada en las dos etapas. En consecuencia, es conveniente especificar #{.list.chroot}# de modo que los paquetes se instalen únicamente en el sistema en vivo y no exista otra copia extra del paquete #{.deb}#.
 
-3~ Listas de paquetes locales para binary
+3~ Listas de paquetes locales para la etapa binary
 
 Para crear una lista para la etapa «binary» crear un fichero con el sufijo
 #{.list.binary}# en #{config/package-lists/}#. Estos paquetes no son
@@ -291,7 +291,7 @@ En las sentencias condicionales de las listas de paquetes pueden utilizarse
 cualquier variable disponible en #{config/*}# (excepto las que tienen el
 prefijo #{LB_}#). En general esto significa que puede utilizarse cualquier
 opción válida para #{lb config}# cambiando las letras minúsculas por
-mayúsculas y los guiones por subrayados. En la práctica solamente tiene
+mayúsculas y los guiones por barras bajas. En la práctica solamente tiene
 sentido utilizar aquellas variables relacionadas con la selección de
 paquetes, como pueden ser #{DISTRIBUTION}#, #{ARCHITECTURES}# o
 #{ARCHIVE_AREAS}#.
@@ -333,11 +333,11 @@ code{
 
 }code
 
-Es habitual que una condición incluya una directiva «include»:
+Es habitual que una condición incluya una directiva #{#include}#:
 
 code{
 
-  #if ARCHITECTURES amd64
+ #if ARCHITECTURES amd64
  #include <gnome-full>
  #endif
 
@@ -474,17 +474,16 @@ _* #{packages.chroot}#
 _* Utilizando un repositorio APT personalizado
 
 El método #{packages.chroot}# es el más simple para añadir paquetes
-personalizados. Es muy útil para personalizaciones «rápidas» (one-off) pero
-tiene unos cuantos inconvenientes mientras que la utilización de un
-repositorio APT personalizado es más lento de poner en marcha.
+personalizados. Es muy útil para personalizaciones «rápidas» pero tiene unos
+cuantos inconvenientes mientras que la utilización de un repositorio APT
+personalizado es más lento de poner en marcha.
 
 3~ Método #{packages.chroot}# para instalar paquetes personalizados
 
 Para instalar paquetes personalizados solamente hay que copiar el paquete en
 el directorio #{config/packages.chroot/}#. Los paquetes contenidos en este
 directorio serán automáticamente instalados en el sistema en vivo durante el
-proceso de creación. No es necesario especificar de dónde se deben obtener
-los paquetes.
+proceso de creación. No es necesario especificar nada más.
 
 Los paquetes *{deben}* nombrarse de la forma prescrita. La forma más simple
 es usar #{dpkg-name}#.
@@ -502,7 +501,7 @@ control de versiones.
 
 3~ Método de repositorio APT para instalar paquetes personalizados
 
-Al contrario del método #{packages.chroot}#, cuando se utiliza el método de
+A diferencia del método #{packages.chroot}#, cuando se utiliza el método de
 repositorio APT personalizado se debe asegurar que se especifica dónde se
 deben buscar los paquetes a instalar. Para más información ver {Selección de
 los paquetes a instalar}#choosing-packages-to-install.
@@ -603,7 +602,7 @@ proporcionan una funcionalidad importante y que son utilizados por la
 mayoría de las configuraciones en vivo, como por ejemplo #{user-setup}#
 recomendado por #{live-config}# que se utiliza para crear el usuario en
 vivo. En todas menos en las circunstancias más excepcionales es necesario
-volver a añadir por lo menos algunos de los recommends en las listas de
+volver a añadir por lo menos algunos de los «recommends» en las listas de
 paquetes o de lo contrario la imagen no funcionará como se espera, si es que
 funciona en lo más minimo. Mirar los paquetes recomendados por cada uno de
 los paquetes #{live-*}# incluidos en la construcción y si no se está seguro
@@ -665,9 +664,10 @@ de ejecución del sistema en vivo creando el fichero
 Supongamos que se está creando un sistema en vivo basado en wheezy pero se
 necesita instalar todos los paquetes "live" que terminan instalados en la
 imagen binaria final desde la versión inestable «sid» en el momento de crear
-la imagen. Se deberá añadir sid a los orígenes (sources) de APT y fijarlo
-(pin) con una prioridad más baja que la prioridad por defecto de manera que
-solamente los paquetes fijados sean instalados desde sid mientras que el
+la imagen. Se deberá añadir sid a los orígenes (sources) de APT y fijar
+(pin) los paquetes live con una prioridad más alta pero todos los otros
+paquetes con una prioridad más baja que la prioridad por defecto de manera
+que solamente los paquetes fijados sean instalados desde sid mientras que el
 resto será obtenido desde la distribución base, wheezy. Esto se puede
 realizar de la siguiente forma:
 

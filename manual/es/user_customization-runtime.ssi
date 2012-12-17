@@ -169,7 +169,7 @@ ejecución tras reiniciar el sistema. Para entender cómo funciona es útil
 saber que incluso si el sistema se inicia y se ejecuta desde los medios de
 almacenamiento de sólo lectura, las modificaciones de los ficheros y
 directorios se escriben en medios de escritura, por lo general en la memoria
-ram (tmpfs) y los datos guardados en la ram no se guardan tras reiniciar.
+ram (tmpfs) y los datos guardados en la ram se pierden al reiniciar.
 
 Los datos almacenados en esta memoria ram se pueden guardar en un soporte
 grabable, como un medio de almacenamiento local, un recurso compartido en
@@ -288,8 +288,11 @@ y #{/var/cache/apt}# se copiarán en el volumen persistente y a partir de ese
 momento todos los cambios en esos directorios se guardarán allí. Tener en
 cuenta que las rutas listadas en el fichero #{persistence.conf}# no pueden
 contener espacios en blanco ni los componentes especiales #{.}# y
-#{..}#. Además, ni #{/live}# (o ninguno de sus sub-directorios) ni #{/}#
-pueden hacerse persistentes montándolos de forma personalizada.
+#{..}#. Además, ni #{/lib}#, #{/lib/live}# (o ninguno de sus
+sub-directorios) ni #{/}# pueden hacerse persistentes montándolos de forma
+personalizada. Una posible alternativa a esta limitación es añadir #{/
+union}# al fichero #{persistence.conf}# para conseguir una persistencia
+completa.
 
 Se puede usar diferentes volúmenes de overlays al mismo tiempo (con sus
 propios ficheros #{persistence.conf}#) pero si varios volúmenes hacen que un

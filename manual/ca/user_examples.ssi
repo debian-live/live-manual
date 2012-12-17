@@ -15,15 +15,15 @@ compleixi les exigències enumerades a {Requisits}#requirements y que tingui
 live-build instaŀlat com es descriu a {Instaŀlació de
 live-build}#installing-live-build.
 
-Cal notar que, en benefici de la brevetat, en aquests exemples no
-s'especifica un mirall local per utilitzar en la construcció. Es poden
-accelerar les descàrregues considerablement si s'utilitza un mirall
-local. Es pot especificar les opcions quan s'utilitza #{lb config}#, com es
-descriu a {Miralls de distribució utilitzats en temps de
+Cal notar que, per abreujar, en aquests exemples no s'especifica un mirall
+local per utilitzar en la construcció. Es poden accelerar les descàrregues
+considerablement si s'utilitza un mirall local. Es pot especificar les
+opcions quan s'utilitza #{lb config}#, com es descriu a {Miralls de
+distribució utilitzats en temps de
 construcció}#distribution-mirrors-build-time, o per a major comoditat,
 establir el valor predeterminat per al sistema de construcció en el fitxer
-#{/etc/live/build.conf}#. Només cal crear aquest fitxer i establir les
-variables al mirall preferit. Tots els altres miralls que s'utilitzen en la
+#{/etc/live/build.conf}#. Només cal crear aquest fitxer i establir a les
+variables al mirall preferit. Tots els altres miralls que s'utilitzin en la
 construcció adoptaran valors per defecte segons aquests valors. Per exemple:
 
 code{
@@ -39,7 +39,7 @@ code{
 *{Cas d'ús:}* Crear una primera imatge senzilla, aprenent els conceptes bàsics de live-build.
 
 En aquest tutorial, anem a construir una imatge ISO híbrida per defecte de
-Debian Live que conté només els paquets de base (no té Xorg) i altres
+Debian Live que contingui només els paquets de base (no té Xorg) i altres
 paquets de suport de Debian Live, com un primer exercici en l'ús de
 live-build.
 
@@ -56,8 +56,8 @@ emmagatzemada aquí una configuració en esquelet, a punt per ser
 personalitzada o, en aquest cas, per ser utilitzada immediatament per
 construir una imatge per defecte.
 
-Ara, com a root, construir la imatge, guardant un log del que es construeix
-amb #{tee}#.
+Ara, com a superusuari, construir la imatge, guardant un log del que es
+construeix amb #{tee}#.
 
 code{
 
@@ -69,9 +69,9 @@ Suposant que tot va bé, després d'una estona, el directori actual contindrà
 una #{binary.hybrid.iso}#. Aquesta imatge ISO híbrida es pot arrencar en una
 màquina virtual tal com s'explica a {Provar una imatge ISO amb
 Qemu}#testing-iso-with-qemu i {Provar una imatge ISO amb
-virtualbox}#testing-iso-with-virtualbox, o bé copiada a un dispositiu flash
-USB com es descriu a {Gravar una imatge ISO en un medi
-físic}#burning-iso-image i {Còpiar una imatge ISO híbrida en un dispositiu
+virtualbox}#testing-iso-with-virtualbox, o bé copiada a un dispositiu USB
+com es descriu a {Gravar una imatge ISO en un medi físic}#burning-iso-image
+i {Còpiar una imatge ISO híbrida en un dispositiu
 USB}#copying-iso-hybrid-to-usb, respectivament.
 
 2~tutorial-2 Tutorial 2: Una utilitat de navegador web
@@ -96,7 +96,7 @@ l'únic ús que tenim al cap, el navegador web. Podríem anar encara més lluny
 i oferir una configuració per defecte per al navegador web a
 #{config/includes.chroot/etc/iceweasel/profile/}#, o paquets addicionals de
 suport per a la visualització de diversos tipus de contingut web, però
-deixem això com un exercici per al lector.
+deixem això com a un exercici per al lector.
 
 Construir la imatge, de nou com a superusuari, guardant un log com al
 {Tutorial 1}#tutorial-1:
@@ -179,12 +179,13 @@ code{
 }code
 
 Tenir en compte que a diferència dels dos primers tutorials, ja no s'ha
-d'escriure #{2>&1 | tee build.log}# ja que ara s'inclou al #{auto/build}#.
+d'escriure #{2>&1 | tee build.log}# ja que ara s'inclou al script
+#{auto/build}#.
 
 Quan s'ha provat la imatge (com al {Tutorial 1}#tutorial-1) i s'està
 satisfet del seu funcionament, és el moment d'iniciar el repositòri #{git}#,
 afegint només els scripts auto que s'han creat, i llavors fer el primer
-commit:
+lliurament:
 
 code{
 
@@ -198,7 +199,7 @@ code{
 
 En aquesta revisió, anem a netejar després de la primera construcció, afegir
 el paquet /{vlc}/ a la nostra configuració, reconstruir, provar i fer el
-commit.
+lliurament.
 
 L'ordre #{lb clean}# netejarà tots els fitxers generats en la construcció
 anterior a excepció del cache, el que estalvia haver de tornar a descarregar
@@ -228,7 +229,7 @@ code{
 
 }code
 
-Provar, i quan s'estigui satisfet, fer el commit de la propera revisió:
+Provar, i quan s'estigui satisfet, fer el lliurament de la propera revisió:
 
 code{
 
@@ -238,8 +239,8 @@ code{
 
 Per descomptat, es possible fer canvis més complicats en la configuració,
 potser afegint fitxers en els subdirectoris de #{config/}#. Quan es fa un
-commit de les noves revisions, s'ha de tenir cura de no editar a mà o
-incloure en el commit els fitxers de nivell superior de #{config}# que
+lliurament de les noves revisions, s'ha de tenir cura de no editar a mà o
+incloure en el lliurament els fitxers de nivell superior de #{config}# que
 contenen variables #{LB_*}#, ja que són productes de construcció també, i
 sempre són netejats per #{lb clean}# i tornats a crear per #{lb config}# a
 través dels seus respectius scripts #{auto}#.
@@ -248,15 +249,15 @@ Hem arribat al final de la nostra sèrie de tutorials. Molts més tipus de
 personalització són possibles, amb les poques característiques explorades en
 aquests senzills exemples, es poden crear una varietat gairebé infinita
 d'imatges diferents. Els exemples que queden d'aquesta secció tracten
-diversos altres casos d'ús extrets de les experiències recollides dels
-usuaris de Debian Live.
+diferents casos d'ús extrets de les experiències recollides dels usuaris de
+Debian Live.
 
 2~ Un client per a un quiosc VNC
 
 *{Cas d'ús:}* Crear una imatge amb live-build per connectar-se directament a un servidor VNC al arrencar.
 
-Fer un directori de construcció i crear una configuració d'esquelet en el
-seu interior, desactivant els «recommends» per fer un sistema mínim. I a
+Fer un directori de treball i crear una configuració d'esquelet en el seu
+interior, desactivant els «recommends» per fer un sistema mínim. I a
 continuació, crear dues llistes inicials de paquets: La primera generada per
 un script proporcionat per live-build anomenat #{Packages}# (veure {Generar
 llistes de paquets}#generated-package-lists), i la segona incloent-hi
@@ -287,7 +288,7 @@ code{
 
 En aquest exemple, ens vam assabentar que havíem de tornar a incloure
 diversos paquets recomanats per live-config i live-boot: #{user-setup}#
-perquè funcioni l'autologin i #{sudo}# com un programa essencial per apagar
+perquè funcioni l'autologin i #{sudo}# com a programa essencial per apagar
 el sistema. A més, podria ser útil afegir #{live-tools}# per poder copiar la
 imatge en la memòria RAM i #{eject}# per expulsar, finalment, els medis en
 viu. Per tant:
@@ -325,15 +326,15 @@ code{
 
 }code
 
-Gaudir.
+Gaudir-ne.
 
 2~ Una imatge bàsica per a un dispositiu USB de 128MB
 
 *{Cas d'ús:}* Crear una imatge hdd amb alguns components eliminats per tal que càpiga en una clau USB de 128MB amb un petit espai de sobres per utilitzar com millor us sembli.
 
 Al optimitzar una imatge per adaptar-la a una mida determinada, cal
-comprendre els avantatges i desavantatges que s'estan fent entre la mida i
-la funcionalitat. En aquest exemple, retallem tant només per donar cabuda a
+comprendre la compensació que s'estan fent entre la mida i la
+funcionalitat. En aquest exemple, retallem tant només per donar cabuda a
 material addicional dins d'una mida de 128MB, però sense fer res per
 destruir la integritat dels paquets continguts, com la depuració de les
 dades de localització a través del paquet /{localepurge}/ o altres
@@ -380,7 +381,7 @@ paquets recomanats amb #{--apt-recommends false}# estalvia una mica d'espai
 addicional, a costa d'ometre alguns paquets que d'una altra manera es podria
 esperar que hi fossin. #{--debootstrap-options "--variant=minbase"}#
 preinstaŀla un sistema mínim des del principi. I finalment, #{--memtest
-none}# impedeix la instaŀlació d'un comprovador de la memòria.
+none}# impedeix la instaŀlació d'un comprovador de memòria.
 
 *{Nota:}* Un sistema mínim es pot aconseguir també fent servir un script ganxo, com ara el #{stripped.chroot}# de #{/usr/share/doc/live-build/examples/hooks}#. Es pot guanyar petites quantitats addicionals d'espai i produir una imatge de 76MB. No obstant, el script ganxo aconsegueix això eliminant documentació i altres fitxers dels paquets instaŀlats al sistema. Això viola la integritat dels paquets i com és comenta a l'encapçalament del script, pot tenir conseqüències imprevistes. És per això que l'ús d'un /{debootstrap}/ mínim és el mètode recomanat per aconseguir aquest objectiu.
 
@@ -397,7 +398,7 @@ El nostre primer problema és descobrir els noms de les tasques del
 llenguatge apropiades. En l'actualitat, live-build no ens pot ajudar amb
 això. Tot i que es podria tenir sort i trobar-ho per assaig i error, hi ha
 una eina, #{grep-dctrl}#, per extreure les descripcions de les tasques de
-tasksel-data, per preparar-ho tot, assegurar-se de tenir totes dues coses:
+tasksel-data. Per preparar-ho tot, assegurar-se de tenir totes dues coses:
 
 code{
 

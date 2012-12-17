@@ -7,12 +7,12 @@ en vivo desde el principio, pasando por sucesivas versiones tanto de la
 herramienta live-build como de la imagen del sistema en vivo propiamente
 dicha.
 
-2~ Gestionar los cambios de configuración
+2~ Gestionar cambios en la configuración
 
 Las configuraciones en vivo rara vez son perfectas al primer intento. Puede
 estar bien pasar opciones a #{lb config}# en la línea de comandos para
 realizar una construcción única, pero es más típico revisar esas opciones y
-construir de nuevo hasta quedar satisfecho. Para apoyar estos cambios, se
+construir de nuevo hasta quedar satisfecho. Para gestionar estos cambios, se
 pueden utilizar scripts auto que garanticen que la configuración se mantiene
 en un estado coherente.
 
@@ -34,7 +34,7 @@ todavía tendrá variables con las opciones viejas que ya no son válidas.
 
 Por todas estas razones, los scripts #{auto/*}# nos hacen la vida más
 fácil. Son simples envoltorios para los comandos #{lb config}#, #{lb build}#
-y #{lb clean}# diseñados para ayudar a administrar una configuración. El
+y #{lb clean}# diseñados para ayudar a gestionar una configuración. El
 script #{auto/config}# contiene el comando #{lb config}# con todas las
 opciones que se desea, el script #{auto/clean}# elimina los ficheros que
 contienen variables de configuración y el fichero #{auto/build}# crea un
@@ -46,10 +46,10 @@ siguiente. Además, será mucho más fácil identificar y corregir las opciones
 que necesitan cambiarse tras actualizar live-build y leer la documentación
 actualizada.
 
-2~ Usar scripts auto de ejemplo
+3~ Usar scripts auto de ejemplo
 
-Para mayor comodidad, live-build contiene shell scripts auto de ejemplo que
-se pueden copiar y editar. Iniciar una nueva configuración por defecto y a
+Para mayor comodidad, live-build incluye scripts auto de ejemplo que se
+pueden copiar y editar. Iniciar una nueva configuración por defecto y a
 continuación, copiar los ejemplos:
 
 code{
@@ -88,21 +88,22 @@ proceso de construcción llamado #{build.log}#.
 
 Utilizar la opción #{lb config --config}# para clonar un repositorio Git que
 contenga una configuración de Debian Live. Si se desea basar la
-configuración en una mantenida por el proyecto Debian Live, visitar los
-repositorios en http://live.debian.net/gitweb con el prefijo #{debian-}#
-bajo el título #{Configurations}#.
+configuración en una mantenida por el proyecto Debian Live, visitar el
+repositorio en http://live.debian.net/gitweb con el nombre #{live-images}#
+bajo el título #{Packages}#.
 
 Por ejemplo, para construir una imagen de rescate, utilizar el repositorio
-#{debian-rescue}# de la siguiente manera:
+#{live-images}# de la siguiente manera:
 
 code{
 
- $ mkdir live-rescue && cd live-rescue
- $ lb config --config git://live.debian.net/git/debian-rescue.git
+ $ mkdir live-images && cd live-images
+ $ lb config --config git://live.debian.net/git/live-images.git
+ $ cd images/rescue
 
 }code
 
-Editar #{auto/config}#y cualquier otra cosa que se necesite en el árbol
+Editar #{auto/config}# y cualquier otra cosa que se necesite en el árbol
 #{config}# para adaptarlo a las propias necesidades.
 
 Si se desea, se puede definir un método abreviado en la configuración de
@@ -122,6 +123,6 @@ es tan fácil como:
 
 code{
 
- $ lb config --config ldn:debian-rescue
+ $ lb config --config ldn:live-images
 
 }code

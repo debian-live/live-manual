@@ -2,15 +2,16 @@
 
 1~managing-a-configuration Gestió d'una configuració
 
-En aquest capítol s'explica com gestionar una configuració en viu des de la
-seva creació inicial, a través de revisions i versions successives de tant
-el programari live-build com de la imatge en viu en si mateixa.
+En aquest capítol s'explica com gestionar una configuració d'un sistema en
+viu des de la seva creació inicial, a través de revisions i versions
+successives de tant el programari live-build com de la imatge en viu en si
+mateixa.
 
 2~ Gestionar canvis en la configuració
 
-Les configuracions en viu poques vegades són perfectes al primer
-intent. Passar opcions de #{lb config}# des de la línea d'ordres pot estar
-be per construir una imatge una vegada, però és més típic revisar aquestes
+Les configuracions de sistemes en viu poques vegades són perfectes al primer
+intent. Passar opcions a #{lb config}# des de la línea d'ordres pot estar be
+per construir una imatge una vegada, però és més típic revisar aquestes
 opcions i construir de nou fins que se'n estigui satisfet. Per donar suport
 a aquests canvis, es poden utilitzar scripts auto que assegurin que la
 configuració es manté en un estat consistent.
@@ -19,16 +20,17 @@ configuració es manté en un estat consistent.
 
 L'ordre #{lb config}# emmagatzema les opcions que se li passen als fitxers
 de #{config/*}#, juntament amb moltes altres opcions que estan establertes
-als valors per defecte. Si s'executa un cop més, #{lb config}# no restablirà
-cap de les opcios dependents basades en les opcions inicials. Així, per
-exemple, si s'executa #{lb config}# de nou amb un nou valor per
-#{--distribution}#, totes les opcions que en depenen que es van omplir per a
-la distribució per defecte ja no poden funcionar amb la nova. Tampoc són
-aquests fitxers destinats a ser llegits o editats. S'emmagatzemen els valors
-per més de cent opcions, i ningú pot veure les opcions que s'han especificat
-realment. I finalment, si s'executa #{lb config}# i a continuació
-s'actualitza live-build i el nom d'una opció canvia, #{config/*}# encara
-contindrà les variables de l'opció vella que ja no són vàlides.
+als valors per defecte. Si s'executa un cop més, #{lb config}# no es
+restablirà cap de les opcios dependents basades en les opcions
+inicials. Així, per exemple, si s'executa #{lb config}# de nou amb un nou
+valor per #{--distribution}#, totes les opcions que en depenen que es van
+omplir per a la distribució per defecte ja no poden funcionar amb la
+nova. Aquests fitxers no estan destinats a ser llegits o
+editats. S'emmagatzemen els valors de més de cent opcions, i ningú pot veure
+les opcions que s'han especificat realment. I finalment, si s'executa #{lb
+config}# i a continuació s'actualitza live-build i el nom d'una opció
+canvia, #{config/*}# encara contindrà les variables de l'opció vella que ja
+no són vàlides.
 
  Per totes aquestes raons, els scripts #{auto/*}# ens fan la vida més
 fàcil. Són simples embolcalls per les ordres #{lb config}#, #{lb build}# i
@@ -44,7 +46,7 @@ una altra. A més a més serà més fàcil identificar i solucionar les opcions
 que s'han de canviar al actualitzar d'una versió de live-build a la següent
 després de llegir la documentació.
 
-2~ Utilitzar scripts auto d'exemple
+3~ Utilitzar scripts auto d'exemple
 
 Per a més comoditat, live-build ve amb uns scripts d'exemple per copiar i
 editar. Iniciar una nova configuració per defecte, i a continuació, copiar
@@ -57,8 +59,7 @@ code{
 
 }code
 
-Editar #{auto/config}#, afegint les opcions com millor li sembli. Per
-exemple:
+Editar #{auto/config}#, afegint les opcions més adients. Per exemple:
 
 code{
 
@@ -74,7 +75,7 @@ code{
 }code
 
 Ara, cada vegada que s'utilitzi #{lb config}#, #{auto/config}# restablirà la
-configuració basada en aquestes opcions. Quan es vulguin fer canvis, editar
+configuració basada en aquestes opcions. Quan es vulgui fer canvis, editar
 les opcions d'aquest fitxer en lloc de passar-les a #{lb config}#. Quan
 s'utilitza #{lb clean}#, #{auto/clean}# netejarà els fitxers de #{config/*}#
 juntament amb els altres productes de construcció. I, finalment, quan
@@ -87,17 +88,18 @@ s'utilitza #{lb build}#, es crea un log de la construcció mitjançant
 
 Utilitzar l'opció #{lb config --config}# per clonar un repositori Git que
 contingui una configuració de Debian Live. Si es vol basar la configuració
-en un repositori mantingut pel projecte Debian Live, mirar els repositoris a
-http://live.debian.net/gitweb amb el prefix #{debian-}# sota el títol
-#{Configurations}#.
+en un repositori mantingut pel projecte Debian Live, mirar el repositori a
+http://live.debian.net/gitweb amb el nom #{live-images}# sota el títol
+#{Packages}#.
 
 Per exemple, per construir una imatge de rescat, utilitzar el repositori
-#{debian-rescue}# de la manera següent:
+#{live-images}# de la manera següent:
 
 code{
 
- $ mkdir live-rescue && cd live-rescue
- $ lb config --config git://live.debian.net/git/debian-rescue.git
+ $ mkdir live-images && cd live-images
+ $ lb config --config git://live.debian.net/git/live-images.git
+ $ cd images/rescue
 
 }code
 
@@ -120,6 +122,6 @@ començar una nova imatge amb aquesta configuració és tan fàcil com:
 
 code{
 
- $ lb config --config ldn:debian-rescue
+ $ lb config --config ldn:live-images
 
 }code

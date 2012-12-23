@@ -31,7 +31,7 @@ code{
 
 }code
 
-2~tutorial-1 Tutorial 1: A standard image
+2~tutorial-1 Tutorial 1: A default image
 
 *{Use case:}* Create a simple first image, learning the basics of live-build.
 
@@ -313,7 +313,7 @@ Enjoy.
 
 2~ A base image for a 128MB USB key
 
-*{Use case:}* Create an hdd image with some components removed in order to fit on a 128MB USB key with a little space left over to use as you see fit.
+*{Use case:}* Create a default image with some components removed in order to fit on a 128MB USB key with a little space left over to use as you see fit.
 
 When optimizing an image to fit a certain media size, you need to understand
 the tradeoffs you are making between size and functionality. In this
@@ -326,7 +326,7 @@ from scratch.
 
 code{
 
- $ lb config -b hdd -k 486 --apt-indices false --apt-recommends false --debootstrap-options "--variant=minbase" --memtest none
+ $ lb config -k 486 --apt-indices false --apt-recommends false --debootstrap-options "--variant=minbase" --memtest none
 
 }code
 
@@ -349,10 +349,10 @@ code{
 }code
 
 On the author's system at the time of writing this, the above configuration
-produced an 80MB image. This compares favourably with the 182MB image
+produced a 77MB image. This compares favourably with the 182MB image
 produced by the default configuration in {Tutorial 1}#tutorial-1.
 
-The biggest space-saver here, compared to building a standard image on an
+The biggest space-saver here, compared to building a default image on an
 #{i386}# architecture system, is to select only the #{486}# kernel flavour
 instead of the default #{-k "486 686-pae"}#. Leaving off APT's indices with
 #{--apt-indices false}# also saves a fair amount of space, the tradeoff

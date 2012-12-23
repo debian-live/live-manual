@@ -35,7 +35,7 @@ code{
 
 }code
 
-2~tutorial-1 Tutorial 1: Una imagen estándar
+2~tutorial-1 Tutorial 1: A default image
 
 *{Caso práctico:}* Crear una primera imagen sencilla, aprendiendo los fundamentos de live-build.
 
@@ -332,7 +332,7 @@ Disfrutarlo.
 
 2~ Una imagen básica para un pendrive USB de 128MB
 
-*{Caso Práctico:}* Crear una imagen hdd quitando algunos componentes para que quepa en un pendrive USB de 128MB dejándo un poco de espacio libre para poder usarlo para lo que se quiera.
+*{Use case:}* Create a default image with some components removed in order to fit on a 128MB USB key with a little space left over to use as you see fit.
 
 Al optimizar una imagen para adaptarla al tamaño de algunos medios de
 almacenamiento, es necesario comprender el equilibrio que se está haciendo
@@ -345,7 +345,7 @@ otro tipo de optimizaciones «intrusivas». Cabe destacar que se utiliza
 
 code{
 
- $ lb config -b hdd -k 486 --apt-indices false --apt-recommends false --debootstrap-options "--variant=minbase" --memtest none
+ $ lb config -k 486 --apt-indices false --apt-recommends false --debootstrap-options "--variant=minbase" --memtest none
 
 }code
 
@@ -368,23 +368,20 @@ code{
 
 }code
 
-En el sistema del autor, en el momento de escribir esto, la configuración
-anterior produjo una imagen de 80MB. Esto se compara favorablemente en
-tamaño con la imagen de 182MB producida por la configuración por defecto en
-el {Tutorial 1}#tutorial-1.
+On the author's system at the time of writing this, the above configuration
+produced a 77MB image. This compares favourably with the 182MB image
+produced by the default configuration in {Tutorial 1}#tutorial-1.
 
-El mayor ahorro de espacio aquí, en comparación con la creación de una
-imagen estándar en un sistema de arquitectura #{i386}# es seleccionar sólo
-la versión del kernel #{486}# en lugar de la de por defecto #{-k "486
-686-pae"}#. Dejar fuera los índices de APT con #{--apt-indices false}#
-también ahorra una cantidad importante de espacio, la desventaja es que será
-necesario hacer un #{apt-get update}# antes de usar apt en el sistema en
-vivo. Excluyendo los paquetes recomendados con #{--apt-recommends false}# se
-ahorra un poco de espacio adicional a costa de omitir algunos paquetes que
-de otro modo podría esperarse que estuvieran alli. #{--debootstrap-options
-"--variant=minbase"}# preinstala un sistema mínimo desde el
-principio. #{--memtest none}# evita la instalación de un comprobador de
-memoria. 
+The biggest space-saver here, compared to building a default image on an
+#{i386}# architecture system, is to select only the #{486}# kernel flavour
+instead of the default #{-k "486 686-pae"}#. Leaving off APT's indices with
+#{--apt-indices false}# also saves a fair amount of space, the tradeoff
+being that you need to do an #{apt-get update}# before using /{apt}/ in the
+live system. Dropping recommended packages with #{--apt-recommends false}#
+saves some additional space, at the expense of omitting some packages you
+might otherwise expect to be there. #{--debootstrap-options
+"--variant=minbase"}# bootstraps a minimal system from the start. And
+finally, #{--memtest none}# prevents the installation of a memory tester.
 
 *{Nota:}* También se puede conseguir un sistema mínimo utilizando scripts gancho como por ejemplo el script #{stripped.chroot}# que se encuentra en #{/usr/share/doc/live-build/examples/hooks}#,  que puede reducir aún más el tamaño de la imagen hasta 76MB. Sin embargo, el script elimina documentación y otros ficheros de los paquetes instalados en el sistema. Esto viola la integridad de los paquetes y como se comenta en el encabezado del script, puede tener consecuencias imprevistas. Es por eso por lo que el uso de /{debootstrap}/ es el método recomendado para conseguir este objetivo.
 

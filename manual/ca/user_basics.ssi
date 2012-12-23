@@ -2,17 +2,19 @@
 
 1~the-basics Conceptes bàsics
 
-This chapter contains a brief overview of the build process and instructions
-for using the three most commonly used image types. The most versatile image
-type, #{iso-hybrid}#, may be used on a virtual machine, optical media or USB
-portable storage device. In certain special cases, as explained later, the
-#{hdd}# type may be more suitable. The chapter finishes with instructions
-for building and using a #{net}# type image, which is a bit more involved
-due to the setup required on the server. This is an slightly advanced topic
-for anyone who is not familiar already with netbooting, but it is included
-here because once the setup is done, it is a very convenient way to test and
-deploy images for booting on the local network without the hassle of dealing
-with image media.
+Aquest capítol conté una breu descripció del procés de construcció i les
+instruccions per a l'utilització dels tres tipus d'imatge més comunes. El
+tipus d'imatge més versàtil #{iso-hybrid}# es pot utilitzar en una màquina
+virtual, en medis òptics o qualsevol altre dispositiu d'emmagatzematge
+USB. En certs casos especials, com s'explica més endavant, el tipus #{hdd}#
+pot ser el més adequat. El capítol acaba amb instruccions per a la
+construcció d'una imatge tipus #{net}#, que és una mica més complicat a
+causa de la configuració necessària en el servidor. Aquest és un tema una
+mica avançat per a algú que no està familiaritzat ja amb l'arrencada en
+xarxa, però s'inclou aquí perquè un cop que la configuració es porta a
+terme, es tracta d'una forma molt convenient per provar i desplegar imatges
+per a l'arrencada en xarxa local sense la molèstia de tractar amb els
+dispositius de les imatges.
 
 Al llarg del capítol, sovint es fa referència als noms dels fitxers produïts
 per defecte per live-build. Si es descarrega una imatge prefabricada, els
@@ -64,19 +66,19 @@ medis (imatge ISO9660, imatge de disc, etc.)
 
 2~building-iso-hybrid Primers passos: construcció d'una imatge ISO híbrida
 
-Regardless of the image type, you will need to perform the same basic steps
-to build an image each time. As a first example, create a build directory,
-change to that directory and then execute the following sequence of
-live-build commands to create a basic ISO hybrid image containing a default
-live system without X.org. It is suitable for burning to CD or DVD media,
-and also to copy onto a USB stick.
+Independentment del tipus d'imatge, s'haurà de fer els mateixos passos
+bàsics per construir una imatge cada vegada. Com a primer exemple, crear un
+directori de treball, canviar a aquest directori i executar la següent
+seqüència d'ordres live-build per crear una imatge ISO híbrida de base que
+conté només el sistema per defecte de Debian sense X.org. És adequat per
+gravar en un CD o DVD, i també per copiar en una memòria USB.
 
-The name of the working directory is absolutely up to you, but if you take a
-look at the examples used throughout live-manual, it is a good idea to use a
-name that helps you identify the image you are working with in each
-directory, especially if you are working or experimenting with different
-image types. In this case you are going to build a default system so let's
-call it, for example, live-default.
+El nom del directori de treball és absolutament indiferent, però si es fa un
+cop d'ull als exemples utilitzats a live-manual, és una bona idea utilitzar
+un nom que ajudi a identificar la imatge amb que s'està treballant en cada
+directori, especialment si s'està treballant o experimentant amb diferents
+tipus d'imatges. En aquest cas, anem a construir un sistema per defecte així
+que l'anomenarem, per exemple, live-default.
 
 code{
 
@@ -132,13 +134,14 @@ code{
 3~copying-iso-hybrid-to-usb Còpiar una imatge ISO híbrida en un dispositiu
 USB
 
-ISO images prepared with #{xorriso}#, can be simply copied to a USB stick
-with the #{dd}# program or an equivalent. Plug in a USB stick with a size
-large enough for your image file and determine which device it is, which we
-hereafter refer to as #{${USBSTICK}}#. This is the device file of your key,
-such as #{/dev/sdb}#, not a partition, such as #{/dev/sdb1}#! You can find
-the right device name by looking in #{dmesg}#'s output after plugging in the
-stick, or better yet, #{ls -l /dev/disk/by-id}#.
+Les imatges ISO preparades amb #{xorriso}#, és poden copiar directament a
+una memòria USB utilitzant el programa #{dd}# o un altre
+d'equivalent. Connectar una memòria USB amb una mida prou gran per al fitxer
+de la imatge i determinar quin dispositiu és, que d'ara endavant anomenarem
+#{${USBSTICK}}#. Aquest és el dispositiu de la memòria com per exemple
+#{/dev/sdb}#, no una partició, com ara #{/dev/sdb1}#! Es pot trobar el nom
+del dispositiu correcte mirant la sortida de #{dmesg}# després de connectar
+la memòria usb o encara millor, #{ls -l /dev/disk/by-id}#.
 
 Quan s'estigui segur de tenir el nom del dispositiu correcte, utilitzar
 l'ordre #{dd}# per a copiar la imatge a la memòria. *{Fent això es perdran
@@ -152,10 +155,10 @@ code{
 
 3~using-usb-extra-space Utilitzar l'espai lliure en una memòria USB
 
-To use the remaining free space after copying #{binary.hybrid.iso}# to a USB
-stick, use a partitioning tool such as /{gparted}/ or /{parted}/ to create a
-new partition on the stick. The first partition will be used by the Debian
-Live system.
+Per poder utilitzar l'espai que queda lliure després de copiar
+#{binary.hybrid.iso}# en un dispositiu USB, utilitzar una eina de
+particionament com /{gparted}/ o /{parted}/ per crear una nova partició. La
+primera partició serà utilitzada pel sistema Debian Live.
 
 code{
 
@@ -175,7 +178,7 @@ code{
 
 *{Nota:}* Si es vol utilitzar l'espai addicional amb Windows, pel que sembla, aquest sistema operatiu normalment no pot accedir a altres particions més que a la primera. Algunes solucions a aquest problema han estat discutides a la nostra {llista de correu}#contact, però sembla que no hi ha respostes fàcils.
 
-*{Remember: Every time you install a new binary.hybrid.iso on the stick, all data on the stick will be lost because the partition table is overwritten by the contents of the image, so back up your extra partition first to restore again after updating the live image.}*
+*{Recordar: Cada vegada que s'instaŀli una nova binary.hybrid.iso al dispositiu, es perdran totes les dades perquè la taula de particions se sobreescriu amb el contingut de la imatge, de manera que es assenyat fer una còpia de seguretat de la partició addicional per restaurar les dades de nou després d'actualitzar la imatge en viu.}*
 
 3~booting-live-media Arrencar els medis en viu
 
@@ -195,12 +198,13 @@ per defecte. Per obtenir més informació sobre les opcions d'arrencada,
 llegir la «ajuda» (help) al menú i també les pàgines del manual de live-boot
 i live-config que es troben dins del sistema en viu.
 
-Assuming you've selected #{Live}# and booted a default desktop live image,
-after the boot messages scroll by, you should be automatically logged into
-the #{user}# account and see a desktop, ready to use. If you have booted a
-console-only image, such as #{standard}# or #{rescue}# flavour prebuilt
-images, you should be automatically logged in on the console to the #{user}#
-account and see a shell prompt, ready to use.
+Suposant que s'ha seleccionat #{Live}# i s'ha arrencat una imatge
+d'escriptori per defecte, després que els missatges d'arrencada hagin passat
+s'haurà iniciat una sessió com a usuari #{user}# i es veurà un escriptori, a
+punt per ser utilitzat. Si s'ha arrencat una imatge de la consola només, com
+les imatges preconfigurades #{standard}# o #{rescue}# s'iniciarà una sessió
+com a usuari #{user}# i es veurà el indicador de la shell, a punt per ser
+utilitzat.
 
 2~using-virtual-machine Utilitzar una màquina virtual per fer proves
 
@@ -278,15 +282,15 @@ code{
 
 }code
 
-2~using-hdd-image Building and using an HDD image
+2~using-hdd-image Construir i utilitzar una imatge HDD
 
-Building an HDD image is similar to an ISO hybrid one in all respects except
-you specify #{-b hdd}# and the resulting filename is #{binary.img}# which
-cannot be burnt to optical media. It is suitable for booting from USB
-sticks, USB hard drives, and various other portable storage
-devices. Normally, an ISO hybrid image can be used for this purpose instead,
-but if you have a BIOS which does not handle hybrid images properly, you
-need an HDD image.
+Construir una imatge HDD és similar a una ISO híbrida en tots els aspectes,
+excepte que s'especifica #{-b hdd}#, que el nom del fitxer resultant és
+#{binary.img}# i que no es pot gravar en medis òptics. És adequada per
+arrencar des de dispositius USB, discs durs USB, i altres dispositius
+d'emmagatzematge portàtils. Normalment, una imatge ISO híbrida es pot
+utilitzar per aquest propòsit en el seu lloc, però si el BIOS no maneja
+adequadament les imatges híbrides, cal utilitzar una imatge HDD.
 
 *{Nota:}* si s'ha creat una imatge ISO híbrida amb l'exemple anterior, s'haurà de netejar el directori de treball amb l'ordre #{lb clean}# (veure {L'ordre lb clean}#lb-clean):
 
@@ -316,16 +320,18 @@ code{
 Quan la construcció acabi, hauria d'haver un fitxer #{binary.img}# al
 directori actual.
 
-The generated binary image contains a VFAT partition and the syslinux
-bootloader, ready to be directly written on a USB device. Once again, using
-an HDD image is just like using an ISO hybrid one on USB. Follow the
-instructions in {Using an ISO hybrid live image}#using-iso-hybrid, except
-use the filename #{binary.img}# instead of #{binary.hybrid.iso}#.
+La imatge binària generada conté una partició VFAT i el carregador
+d'arrencada syslinux, llestos per ser escrits directament a una memòria
+USB. Un cop més, donat que l'ús d'una imatge HDD és com utilitzar una imatge
+ISO híbrida en un USB, seguir les instruccions de {Usar una imatge ISO
+híbrida en viu}#using-iso-hybrid, però amb el nom de fitxer #{binary.img}#
+en lloc de #{binary.hybrid.iso}#.
 
-Likewise, to test an HDD image with Qemu, install /{qemu}/ as described
-above in {Testing an ISO image with QEMU}#testing-iso-with-qemu. Then run
-#{kvm}# or #{qemu}#, depending on which version your host system needs,
-specifying #{binary.img}# as the first hard drive.
+Igualment, per provar una imatge HDD amb Qemu, instaŀlar /{qemu}/ com s'ha
+descrit anteriorment a {Provar una imatge ISO amb
+QEMU}#testing-iso-with-qemu. A continuació, executar #{kvm}# o #{qemu}#,
+segons la versió instaŀlada al sistema amfitrió, especificant #{binary.img}#
+com a primer disc dur.
 
 code{
 
@@ -335,9 +341,9 @@ code{
 
 2~building-netboot-image Construir una imatge netboot
 
-The following sequence of commands will create a basic netboot image
-containing a default live system without X.org. It is suitable for booting
-over the network.
+La següent seqüència d'ordres crearà una imatge netboot bàsica que conté el
+sistema per defecte de Debian sense X.org. És adequada per a l'arrencada en
+xarxa.
 
 *{Nota:}* si s'ha realitzat algun dels exemples anteriors, s'haurà de netejar el directori de treball amb l'ordre #{lb clean}#:
 

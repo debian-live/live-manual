@@ -26,6 +26,18 @@ You can use live-build to build the system image from your specifications, set u
 
 While the focus of this manual is developing and building your own live images, you may simply wish to try one of our prebuilt images, either as an introduction to their use or instead of building your own. These images are built using our {live-images git repository}#clone-configuration-via-git and official stable releases are published at http://www.debian.org/CD/live/. In addition, older and upcoming releases, and unofficial images containing non-free firmware and drivers are available at http://live.debian.net/cdimage/release/.
 
+2~using-web-builder Using web live image builder
+
+As a service to the community, we run a web-based live image builder service at http://live-build.debian.net. This site is maintained on a best effort basis. That is, although we strive to keep it up-to-date and operational at all times, and do issue notices for significant operational outages, it is subject to be taken down without warning and occasionally has issues that take time to resolve. If you have problems or questions about the service, please {contact us}#contact, providing us with the link to your build.
+
+3~ Web builder usage and caveats
+
+The web interface currently makes no provision to prevent the use of illegal combinations of options, and in particular, where changing an option would normally (i.e. using live-build directly) change defaults of other options listed in the web form, the web builder does not change these defaults. Most notably, if you change #{--architectures}# from the default #{i386}# to #{amd64}#, you must change the corresponding option #{--linux-flavours}# from the default #{486}# to #{amd64}#. See the #{lb_config}# man page for the version of live-build installed on the web builder for more details. The version number of live-build is listed at the bottom of the web builder page.
+
+The web builder is limited in the kinds of images it can build. This keeps it simple and efficient to use and maintain. If you would like to make customizations that are not provided for by the web interface, the rest of this manual explains how to build your own images using live-build.
+
+The time estimate given by the web builder is a crude estimate only and may not reflect how long your build actually takes. Nor is the estimate updated once it is displayed. Please be patient. Do not refresh the page you land on after submitting the build, as this will resubmit a new build with the same parameters. You should {contact us}#contact if you don't receive notification of your build only once you are certain you've waited long enough and verified the notification e-mail did not get caught by your own e-mail spam filter.
+
 2~building-iso-hybrid First steps: building an ISO hybrid image
 
 Regardless of the image type, you will need to perform the same basic steps to build an image each time. As a first example, create a build directory, change to that directory and then execute the following sequence of live-build commands to create a basic ISO hybrid image containing a default live system without X.org. It is suitable for burning to CD or DVD media, and also to copy onto a USB stick.

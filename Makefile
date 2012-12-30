@@ -10,11 +10,11 @@
 
 SHELL := sh -e
 
-LANGUAGES = en $(shell cd manual/po && ls)
+LANGUAGES := en $(shell cd manual/po && ls)
 
-FORMATS = epub html odf pdf txt
+FORMATS := epub html odf pdf txt
 
-DEBUG = 0
+DEBUG := 0
 
 all: build
 

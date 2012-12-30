@@ -4,24 +4,24 @@
 paquets
 
 La personnalisation la plus fondamentale d'un système Debian Live peut-être
-la sélection de paquets à inclure dans l'image. Ce chapitre vous guide tout
+la sélection des paquets à inclure dans l'image. Ce chapitre vous guide tout
 au long des différentes options dans certains moments de la construction
 pour personnaliser l'installation des paquets avec live-build. Le plus large
 choix influençant les paquets qui sont disponibles pour l'installation dans
-l'image sont les zones de distribution et les sections (archive areas). Afin
-de garantir des vitesses de téléchargement décentes, vous devez choisir un
-miroir de distribution proche. Vous pouvez également ajouter vos propres
-dépôts pour les backports, paquets expérimentaux ou personnalisés, ou
-inclure des paquets directement en tant que fichiers. Vous pouvez définir
-des listes de paquets, incluant les métapaquets qui installent nombreux
-paquets liés à la fois, telles que les paquets pour un ordinateur de bureau
-ou langue particulière. Enfin, un certain nombre d'options donnent un
-certain contrôle sur /{apt}/, ou si vous préférez, /{aptitude}/, au moment
-de la construction quand les paquets sont installés. Vous pouvez trouver ces
-très pratique si vous utilisez un proxy, vous voulez désactiver
-l'installation des paquets recommandés pour économiser l'espace, ou avez
-besoin de contrôler quels versions des paquets sont installés via APT
-pinning, pour n'en nommer quelques possibilités.
+l'image sont la distribution et les archive areas. Afin de garantir des
+vitesses de téléchargement décentes, vous devez choisir un miroir de
+distribution proche. Vous pouvez également ajouter vos propres dépôts pour
+les backports, paquets expérimentaux ou personnalisés, ou inclure des
+paquets directement comme fichiers. Vous pouvez définir des listes de
+paquets, incluant des métapaquets qui installent nombreux paquets liés à la
+fois, telles que les paquets pour un ordinateur de bureau ou une langue
+particulière. Enfin, un certain nombre d'options donnent un certain contrôle
+sur /{apt}/, ou si vous préférez, /{aptitude}/, au moment de la construction
+quand les paquets sont installés. Vous pouvez trouver ces très pratique si
+vous utilisez un proxy, vous voulez désactiver l'installation des paquets
+recommandés pour économiser l'espace, ou avez besoin de contrôler quels
+versions des paquets sont installés via APT pinning, pour n'en nommer
+quelques possibilités.
 
 2~ Sources des paquets
 
@@ -96,10 +96,10 @@ code{
 
 }code
 
-Le miroir chroot, spécifié par #{--mirror-chroot}#, par défaut, c'est la
-valeur #{--mirror-bootstrap}#.
+Le miroir chroot, spécifié avec #{--mirror-chroot}#, est par défaut la
+valeur de #{--mirror-bootstrap}#.
 
-3~ Miroirs de distribution utilisés au moment de l'exécution
+3~ Miroirs de distribution utilisés pendant l'exécution
 
 Les options #{--mirror-binary*}# régissent les miroirs de distribution
 placés dans l'image binaire. Ils peuvent être utilisés pour installer des
@@ -110,7 +110,7 @@ l'utilisateur et de la disponibilité des miroirs. C'est un choix approprié
 lorsque vous ne pouvez pas prédire quel miroir sera mieux pour tous vos
 utilisateurs. Ou vous pouvez spécifier vos propres valeurs, comme indiqué
 dans l'exemple ci-dessous. Une image construite avec cette configuration
-seulement serait appropriée pour les utilisateurs sur un réseau où
+seulement serait appropriée pour les utilisateurs sur un réseau où le
 "#{mirror}#" est accessible.
 
 code{
@@ -124,11 +124,11 @@ code{
 
 Vous pouvez ajouter d'autres dépôts, élargissant votre choix de paquets
 au-delà ceux disponibles dans votre distribution cible. Il peut être, par
-exemple, pour backports, expérimentaux ou des paquets personnalisés. Pour
+exemple, pour backports ou des paquets personnalisés ou expérimentaux. Pour
 configurer des dépôts supplémentaires, créer les fichiers
 #{config/archives/your-repository.list.chroot}#, et/ou
 #{config/archives/your-repository.list.binary}#. Comme avec les options
-#{--mirror-*}#, elles gouvernent les dépôts utilisés dans l'étape *{chroot}*
+#{--mirror-*}#, ils gouvernent les dépôts utilisés dans l'étape *{chroot}*
 lors de la construction de l'image, et dans l'étape *{binary}*, c'est à dire
 pour les utiliser au moment de l'exécution du système live.
 
@@ -165,8 +165,8 @@ Il y a un certain nombre de façons pour choisir quels paquets live-build
 installera dans votre image, couvrant une variété de besoins
 différentes. Vous pouvez tout simplement nommer les paquets individuels à
 installer dans une liste de paquets. Vous pouvez également choisir
-métapaquets dans ces listes, ou sélectionner-les en utilisant des champs de
-paquets de contrôle de fichiers. Et enfin, vous pouvez placer paquets dans
+métapaquets dans ces listes, ou les sélectionner en utilisant les champs de
+contrôle de fichiers des paquets. Et enfin, vous pouvez placer paquets dans
 votre arbre #{config/}# qui est bien adapté aux essais de nouveaux paquets
 ou expérimentaux avant qu'ils ne soient disponibles sur un dépôt.
 
@@ -179,7 +179,7 @@ d'autres listes et de les adapter pour une utilisation dans configurations
 multiples. Les noms des paquets peuvent également être injectés dans la
 liste en utilisant assistants de shell au moment de la construction.
 
-*{Remarque:}* Le comportement de live-build pour spécifier un paquet qui n'existe pas est déterminé par votre choix de l'utilité APT. Voir {Choisir apt ou aptitude}#choosing-apt-or-aptitude pour plus de détails.
+*{Remarque:}* Le comportement de live-build pour spécifier un paquet qui n'existe pas est déterminé par votre choix de l'utilitaire APT. Voir {Choisir apt ou aptitude}#choosing-apt-or-aptitude pour plus de détails.
 
 3~using-metapackages  Utilisation des métapaquets
 
@@ -203,7 +203,7 @@ beaucoup plus large des cas d'utilisation que les listes prédéfinies qu'ils
 remplacent.
 
 Tous les métapaquets de tâches sont préfixés avec #{task-}#, donc un moyen
-rapide pour déterminer lesquels sont disponibles (même si elle peut contenir
+rapide pour déterminer lesquels sont disponibles (même si ça peut contenir
 une poignée de faux résultats qui correspondent avec le nom, mais ne sont
 pas métapaquets) est de faire correspondre le nom du paquet avec:
 
@@ -245,7 +245,7 @@ destinée.
 
 *{Remarque:}* Si vous ne spécifiez pas le suffixe de l'étape, la liste sera utilisée pour les deux étapes. Normalement, vous voulez spécifier #{.list.chroot}# de sorte que les paquets seront seulement installés dans le système de fichiers live et ne pas avoir une copie supplémentaire des #{.deb}# placée sur le support.
 
-3~ Listes locaux de paquets binaires
+3~ Listes locaux de paquets pour l'étape binary
 
 Pour faire une liste pour l'étape binary, placez un fichier avec le suffixe
 #{.list.binary}# dans #{config/package-lists/}#. Ces paquets ne sont pas
@@ -257,12 +257,13 @@ chroot, utilisez simplement le suffixe #{.list}#.
 
 3~generated-package-lists Générer listes de paquets
 
-Il arrive parfois que la meilleure façon de composer une liste est de la
+Il arrive parfois que la meilleure façon de composer une liste est la
 générer avec un script. Toute ligne commençant par un point d'exclamation
 indique une commande à exécuter dans le chroot lorsque l'image est
 construite. Par exemple, on pourrait inclure la ligne #{! grep-aptavail -n
 -sPackage -FPriority standard | sort}# dans une liste de paquets qui permet
-de produire une liste triée des paquets disponibles avec
+de produire une liste triée des paquets disponibles avec #{Priority:
+standard}#.
 
 En fait, la sélection des paquets avec la commande #{grep-aptavail}# (du
 paquet #{dctrl-tools}#) est si utile que #{live-build}# fournit un script
@@ -282,7 +283,7 @@ code{
 Toutes les variables de configuration de live-build stockées dans
 #{config/*}# (sans le préfixe #{LB_}#) peuvent être utilisées dans
 instructions conditionnelles dans les listes de paquets. Généralement, cela
-signifie une option #{lb config}# majuscule et avec tirets changés en
+signifie une option #{lb config}# en majuscule et avec tirets changés en
 caractères de soulignement. Mais en pratique, c'est seulement ceux qui
 influencent la sélection des paquets qui font sens, comme #{DISTRIBUTION}#,
 #{ARCHITECTURES}# ou #{ARCHIVE_AREAS}#.
@@ -433,8 +434,8 @@ _* Inclure un module d'union de systèmes de fichiers (par exemple #{aufs}#).
 _* Inclure tous les autres modules du système de fichiers requis pour votre
 configuration (habituellement #{squashfs}#).
 
-_* Suffixe chaque nom de paquet du noyau avec le type du noyau (par
-exemple#{-amd64}#).
+_* Suffixe chaque nom de paquet du noyau avec le type du noyau (par exemple
+#{-amd64}#).
 
 2~installing-modified-or-third-party-packages Installation de paquets
 modifiés ou de tiers
@@ -442,7 +443,7 @@ modifiés ou de tiers
 Tandis qu'il est contre la philosophie de Debian Live, il peut parfois être
 nécessaire de construire un système live avec des versions modifiées des
 paquets qui sont dans le dépôt Debian. C'est peut-être pour modifier ou
-soutenir des fonctionnalités supplémentaires, des langues et branding, ou
+soutenir des fonctionnalités supplémentaires, des langues et le branding, ou
 même pour supprimer des éléments dans les paquets existants qui sont
 indésirables. De même, les paquets "de tiers" peuvent être utilisés pour
 ajouter des fonctionnalités sur mesure et/ou propriétaires.
@@ -551,7 +552,7 @@ code{
 3~tweaking-apt-to-save-space Régler APT pour économiser de l'espace
 
 Vous pouvez avoir besoin d'économiser de l'espace sur les supports d'images,
-auquel cas l'un ou l'autre ou les deux options suivantes peuvent être
+auquel cas l'une ou l'autre ou les deux options suivantes peuvent être
 d'intérêt.
 
 Si vous ne voulez pas inclure les indices d'APT dans l'image, vous les

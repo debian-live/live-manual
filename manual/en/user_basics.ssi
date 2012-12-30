@@ -4,7 +4,7 @@
 
 This chapter contains a brief overview of the build process and instructions for using the three most commonly used image types. The most versatile image type, #{iso-hybrid}#, may be used on a virtual machine, optical media or USB portable storage device. In certain special cases, as explained later, the #{hdd}# type may be more suitable. The chapter finishes with instructions for building and using a #{net}# type image, which is a bit more involved due to the setup required on the server. This is an slightly advanced topic for anyone who is not familiar already with netbooting, but it is included here because once the setup is done, it is a very convenient way to test and deploy images for booting on the local network without the hassle of dealing with image media.
 
-Throughout the chapter, we will often refer to the default filenames produced by live-build. If you are downloading a prebuilt image instead, the actual filenames may vary.
+Throughout the chapter, we will often refer to the default filenames produced by live-build. If you are {downloading a prebuilt image}#downloading-prebuilt-images instead, the actual filenames may vary.
 
 2~what-is-live What is a live system?
 
@@ -21,6 +21,10 @@ _* *{System image}*: The operating system's filesystem image. Usually, a SquashF
 _* *{Bootloader}*: A small piece of code crafted to boot from the chosen media, possibly presenting a prompt or menu to allow selection of options/configuration. It loads the Linux kernel and its initrd to run with an associated system filesystem. Different solutions can be used, depending on the target media and format of the filesystem containing the previously mentioned components: isolinux to boot from a CD or DVD in ISO9660 format, syslinux for HDD or USB drive booting from a VFAT partition, extlinux for ext2/3/4 and btrfs partitions, pxelinux for PXE netboot, GRUB for ext2/3/4 partitions, etc.
 
 You can use live-build to build the system image from your specifications, set up a Linux kernel, its initrd, and a bootloader to run them, all in one media-dependant format (ISO9660 image, disk image, etc.).
+
+2~downloading-prebuilt-images Downloading prebuilt images
+
+While the focus of this manual is developing and building your own live images, you may simply wish to try one of our prebuilt images, either as an introduction to their use or instead of building your own. These images are built using our {live-images git repository}#clone-configuration-via-git and official stable releases are published at http://www.debian.org/CD/live/. In addition, older and upcoming releases, and unofficial images containing non-free firmware and drivers are available at http://live.debian.net/cdimage/release/.
 
 2~building-iso-hybrid First steps: building an ISO hybrid image
 
@@ -111,7 +115,7 @@ The first time you boot your live media, whether CD, DVD, USB key, or PXE boot, 
 
 Once you've booted the media, you are presented with a boot menu. If you just press enter here, the system will boot using the default entry, #{Live}# and default options. For more information about boot options, see the "help" entry in the menu and also the live-boot and live-config man pages found within the live system.
 
-Assuming you've selected #{Live}# and booted a default desktop live image, after the boot messages scroll by, you should be automatically logged into the #{user}# account and see a desktop, ready to use. If you have booted a console-only image, such as #{standard}# or #{rescue}# flavour prebuilt images, you should be automatically logged in on the console to the #{user}# account and see a shell prompt, ready to use.
+Assuming you've selected #{Live}# and booted a default desktop live image, after the boot messages scroll by, you should be automatically logged into the #{user}# account and see a desktop, ready to use. If you have booted a console-only image, such as #{standard}# or #{rescue}# flavour {prebuilt images}#downloading-prebuilt-images, you should be automatically logged in on the console to the #{user}# account and see a shell prompt, ready to use.
 
 2~using-virtual-machine Using a virtual machine for testing
 

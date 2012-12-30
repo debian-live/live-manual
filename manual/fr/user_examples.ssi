@@ -35,7 +35,7 @@ code{
 
 }code
 
-2~tutorial-1 Tutorial 1: Une image standard
+2~tutorial-1 Tutorial 1: Une image par défaut
 
 *{Cas d'utilisation:}* Créer une image simple d'abord, apprenant les bases de live-build.
 
@@ -75,9 +75,9 @@ optique ou un périphérique USB comme décrit dans {Graver une image ISO sur
 un support physique}#burning-iso-image et {Copie d'un image ISO hybride sur
 une clé USB}#copying-iso-hybrid-to-usb, respectivement.
 
-2~tutorial-2 Tutoriel 2: Un utilitaire de navigateur Web
+2~tutorial-2 Tutoriel 2: Un utilitaire d'un navigateur Web
 
-*{Cas d'utilisation:}* Créer une image d'un utilitaire de navigateur Web, en apprenant à appliquer des personnalisations. 
+*{Cas d'utilisation:}* Créer une image d'un utilitaire d'un navigateur Web, en apprenant à appliquer des personnalisations. 
 
 Dans ce tutoriel, nous allons créer une image utilisable comme un utilitaire
 de navigateur Web, en servant d'introduction à la personnalisation d'images
@@ -186,8 +186,8 @@ inclus dans #{auto/build}#.
 
 Une fois que vous avez testé l'image (comme dans {Tutoriel 1}#tutorial-1) et
 vous êtes satisfait avec son fonctionnement, il est temps pour initialiser
-notre dépôt #{git}#, ajoutant que les scripts d'auto que nous avons juste
-créé, et ensuite faire le premier commit: 
+notre dépôt #{git}#, ajoutant que les scripts auto que nous avons juste
+créés, et ensuite faire le premier commit: 
 
 code{
 
@@ -232,7 +232,8 @@ code{
 
 }code
 
-Tester, et quand vous soyez satisfaits, commit la prochaine révision:
+Tester, et quand vous soyez satisfaits, faire le commit de la prochaine
+révision:
 
 code{
 
@@ -259,10 +260,10 @@ expériences recueillies des utilisateurs de Debian Live.
 
 *{Cas d'utilisation:}* Créer une image avec live-build pour démarrer directement à un serveur VNC.
 
-Créez un répertoire de construction et créez une configuration arborescent à
+Créer un répertoire de construction et créer une configuration arborescent à
 l'intérieur, désactiver «recommends» pour faire un système minimal. Et puis
 créer deux listes initiales de paquets: la première générée par un script
-fourni par live-build nommée {Packages}# (voir {Générer listes de
+fourni par live-build nommée #{Packages}# (voir {Générer listes de
 paquets}#generated-package-lists), et la seconde incluant /{xorg}/,
 /{gdm3}/, /{metacity}/ et /{xvnc4viewer}/.
 
@@ -302,10 +303,10 @@ code{
 
 }code
 
-Aprés, créez le répertoire #{/etc/skel}# dans #{config/includes.chroot}#
+Aprés, créer le répertoire #{/etc/skel}# dans #{config/includes.chroot}#
 avec un fichier #{.xsession}# personnalisée pour l'utilisateur par défaut
-qui va lancer /{metacity}/ et commencer /{xvncviewer}/, en reliant le port
-#{5901}# sur un serveur à #{192.168.1.2}#:
+qui va lancer /{metacity}/ et  /{xvncviewer}/, en reliant le port #{5901}#
+sur un serveur à #{192.168.1.2}#:
 
 code{
 
@@ -333,7 +334,7 @@ Amusez-vous bien!
 
 2~ Une image de base pour une clé USB de 128MB
 
-*{Cas d'utilisation:}* Créer une image hdd avec certains composants éliminés afin de l'adapter sur une clé USB de 128MB avec un peu d'espace laissé pour l'utiliser à votre convenance.
+*{Cas d'utilisation:}* Créer une image par défaut avec certains composants éliminés afin de l'adapter sur une clé USB de 128MB avec un peu d'espace laissé pour l'utiliser à votre convenance.
 
 Pour l'optimisation d'une image adaptée à la dimension de certains supports,
 vous avez besoin de comprendre le compromis que vous faites entre la taille
@@ -343,11 +344,11 @@ que pour faire place au matériel supplémentaire au sein d'une taille de
 telle que la purge des données de localisation via le paquet
 /{localepurge}/, ou d'autres optimisations "intrusives". On notera en
 particulier, que nous utilisons #{--debootstrap-options}# pour créer un
-système minimal de zéro.
+système minimal à partir de zéro.
 
 code{
 
- $ lb config -b hdd -k 486 --apt-indices false --apt-recommends false --debootstrap-options "--variant=minbase" --memtest none
+ $ lb config -k 486 --apt-indices false --apt-recommends false --debootstrap-options "--variant=minbase" --memtest none
 
 }code
 
@@ -371,14 +372,14 @@ code{
 }code
 
 Sur le système de l'auteur au moment de l'écriture, la configuration
-ci-dessus produisait une image de 80MB. Cela se compare favorablement avec
+ci-dessus produisait une image de 77MB. Cela se compare favorablement avec
 l'image de 182MB produite par la configuration par défaut dans {Tutoriel
 1}#tutorial-1.
 
-Le plus grand espace-économiseur ici, par rapport à la construction d'une
-image standard sur une architecture #{i386}#, est de sélectionner uniquement
-le saveur du noyau #{486}# au lieu de la valeur par défaut #{-k "486
-686-pae"}#. Laissant hors «APT's indices» avec #{--apt-indices false}#
+Le plus grand espace-économiseur ici, en comparaison avec la construction
+d'une image par défaut sur une architecture #{i386}#, est de sélectionner
+uniquement le saveur du noyau #{486}# au lieu de la valeur par défaut #{-k
+"486 686-pae"}#. Laissant hors «APT's indices» avec #{--apt-indices false}#
 permet aussi d'économiser une bonne quantité d'espace, le compromis étant
 que vous devez faire #{apt-get update}# avant d'utiliser apt dans le système
 live. Laissant hors les paquets recommandés avec #{--apt-recommends false}#
@@ -390,7 +391,7 @@ mémoire.
 
 *{Note:}* Un système minimal peut également être obtenu en utilisant hooks comme par exemple le hook #{stripped.chroot}# dans #{/usr/share/doc/live-build/examples/hooks}#, il peut gagner de petites quantités supplémentaires d'espace et produire une image de 76MB. Cependant, il le fait par l'élimination de la documentation et d'autres fichiers des paquets installés sur le système. Cela atteinte à l'intégrité de ces paquets et ça, comme le commentaire en-tête avertit, peut avoir des conséquences imprévues. C'est pourquoi l'utilisation de /{debootstrap}/ est la méthode recommandée pour atteindre cet objectif.
 
-2~ Un bureau KDE localisé et installateur 
+2~ Un bureau KDE localisé avec un installateur 
 
 *{Cas d'utilisation:}* Créer une image de bureau KDE, localisée pour le portugais brésilien et incluant un installateur.
 

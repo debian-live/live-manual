@@ -5,16 +5,16 @@
 Este capítulo contiene una breve descripción del proceso de creación de las
 imágenes en vivo y las instrucciones para el uso de los tres tipos de
 imágenes más utilizadas. El tipo de imagen más versátil, #{iso-hybrid}#, se
-puede utilizar en una máquina virtual, en medios ópticos u otros dispositivo
-de almacenamiento USB. En ciertos casos especiales, como para el uso de la
-persistencia, las imágenes #{hdd}#, pueden ser las más adecuadas para
-dispositivos USB. El capítulo termina con instrucciones para crear y usar
-una imagen de tipo #{net}#, que es un poco más complicado debido a la
-configuración necesaria en el servidor. Es un tema ligeramente avanzado para
-cualquier persona que no esté familiarizada con el arranque en red, pero se
-incluye aquí porque una vez que se realiza la instalación, es una forma muy
-conveniente para probar y desplegar imágenes de arranque en red local sin la
-molestia de tratar con los dispositivos de almacenamiento de la imagen.
+puede utilizar en una máquina virtual, en medios ópticos u otros
+dispositivos de almacenamiento USB. En ciertos casos especiales, como se
+explica más adelante, las imágenes #{hdd}#, pueden ser las más adecuadas. El
+capítulo termina con instrucciones para crear y usar una imagen de tipo
+#{net}#, que es un poco más complicado debido a la configuración necesaria
+en el servidor. Es un tema ligeramente avanzado para cualquier persona que
+no esté familiarizada con el arranque en red, pero se incluye aquí porque
+una vez que se realiza la instalación, es una forma muy conveniente para
+probar y desplegar imágenes de arranque en red local sin la molestia de
+tratar con los dispositivos de almacenamiento de la imagen.
 
 A lo largo de todo el capítulo se hace a menudo referencia al nombre de las
 imágenes producidas por defecto por live-build. Si se descarga una imagen ya
@@ -71,19 +71,20 @@ Independientemente del tipo de imagen, cada vez se tendrá que realizar los
 mismos pasos básicos para construir una imagen. Como primer ejemplo, crear
 un directorio de trabajo, cambiar a ese directorio y ejecutar la siguiente
 secuencia de comandos live-build para crear una imagen ISO híbrida básica
-que contiene sólo el sistema estándar de Debian sin X.org. Es adecuada para
-grabarla en un CD o DVD y también para copiarla en un dispositivo USB. 
+que contiene sólo el sistema por defecto de Debian sin X.org. Es adecuada
+para grabarla en un CD o DVD y también para copiarla en un dispositivo USB. 
 
 El nombre del directorio de trabajo es indiferente, pero si se da un vistazo
 a los ejemplos utilizados en live-manual, es una buena idea utilizar un
 nombre que ayude a identificar la imagen con la que está trabajando en cada
 directorio, especialmente si se está trabajando o experimentando con
 distintos tipos de imágenes. En este caso, vamos a construir un sistema
-estándar, así que lo vamos a llamar, por ejemplo, live-standard.
+utilizando los valores por defecto, así que lo vamos a llamar, por ejemplo,
+live-default.
 
 code{
 
- $ mkdir live-standard && cd live-standard
+ $ mkdir live-default && cd live-default
 
 }code
 
@@ -136,16 +137,14 @@ code{
 3~copying-iso-hybrid-to-usb Copiar una imagen ISO híbrida a un dispositivo
 USB
 
-Las imágenes ISO preparadas con el comando #{isohybrid}# igual que las
-imágenes del tipo #{iso-hybrid}# producidas por defecto, pueden
-sencillamente copiarse a una llave USB con #{dd}# o con un programa
-equivalente. Insertar una llave USB con un tamaño suficiente para la imagen
-y determinar qué dispositivo es, al cual nos referiremos de ahora en
-adelante como #{${USBSTICK}}#. Este nombre de «dispositivo» se refiere a la
-llave entera como por ejemplo #{/dev/sdb}# y ¡No a una partición como
-#{/dev/sdb1}#! Se puede encontrar el nombre del dispositivo correcto mirando
-la salida de #{dmesg}# después de conectar la llave, o mejor aún ejecutando
-#{ls -l /dev/disk/by-id}#.
+Las imágenes ISO preparadas con #{xorriso}#, pueden sencillamente copiarse a
+una llave USB con #{dd}# o con un programa  equivalente. Insertar una llave
+USB con un tamaño suficiente para la imagen y determinar qué dispositivo es,
+al cual nos referiremos de ahora en adelante como #{${USBSTICK}}#. Este
+nombre de «dispositivo» se refiere a la llave entera como por ejemplo
+#{/dev/sdb}# y ¡No a una partición como #{/dev/sdb1}#! Se puede encontrar el
+nombre del dispositivo correcto mirando la salida de #{dmesg}# después de
+conectar la llave, o mejor aún ejecutando #{ls -l /dev/disk/by-id}#.
 
 Cuando se esté seguro de tener el nombre del dispositivo correcto, usar el
 comando #{dd}# para copiar la imagen a la llave. *{¡Esto borrará de forma
@@ -157,6 +156,33 @@ code{
 
 }code
 
+3~using-usb-extra-space Usar el espacio libre en el dispositivo USB
+
+Si se desea usar el espacio libre después de haber instalado la imagen
+#{binary.hybrid.iso}# en una llave USB, se puede usar un programa de
+particionado como /{gparted}/ o /{parted}/ para crear una partición nueva en
+el dispositivo. La primera partición será usada por el sistema Debian en
+vivo.
+
+code{
+
+ # gparted ${USBSTICK}
+
+}code
+
+Después de crear la partición, dónde #{${PARTITION}}# es el nombre de la
+partición, por ejemplo #{/dev/sdb2}# se tiene que crear un sistema de
+ficheros en él. Una opción posible sería ext4.
+
+code{
+
+ # mkfs.ext4 ${PARTITION}
+
+}code
+
+*{Nota:}* Si se desea usar el espacio extra con Windows, segun parece, ese sistema operativo no puede acceder normalmente a otra partición más que a la primera. Se han comentado algunas soluciones a este problema en nuestra {lista de correo}#contact pero según parece no hay una solución fácil.
+
+*{Recordar: Cada vez que se instale una nueva binary.hybrid.iso en el dispositivo, todos los datos del dispositivo se perderán debido a que la tabla de particiones se sobrescribe con el contenido de la imagen, así pues, realizar primero una copia de seguridad de la partición para poder restaurarla trás actualizar la imagen en vivo.}*
 
 3~booting-live-media Arrancar los medios en vivo
 
@@ -259,17 +285,16 @@ code{
 
 }code
 
-2~building-hdd Crear una imagen HDD
+2~using-hdd-image Construir y utilizar una imágen HDD
 
 Crear una imagen HDD es similar a una de tipo ISO híbrida en todos los
 aspectos, con la diferencia de que hay que especificar #{-b hdd}# y de que
-el nombre de la imagen final es #{binary.img}# que se puede copiar en medios
-ópticos. Es adecuada para el arranque desde dispositivos USB, discos duros
-USB y otros sistemas de almacenamiento portátil. Normalmente, se puede
+el nombre de la imagen final es #{binary.img}# que no se puede copiar en
+medios ópticos. Es adecuada para el arranque desde dispositivos USB, discos
+duros USB y otros sistemas de almacenamiento portátil. Normalmente, se puede
 utilizar para este propósito una imagen ISO híbrida, pero es posible que la
-BIOS no maneje adecuadamente las imágenes híbridas. También es interesante
-una imagen HDD si se desea utilizar el espacio restante en los medios de
-almacenamiento para una partición con persistencia.
+BIOS no maneje adecuadamente las imágenes híbridas, entonces es mejor
+utilizar una imagen hdd.
 
 *{Nota:}* si se ha creado una imagen ISO híbrida con el ejemplo anterior, se tendrá que limpiar el directorio de trabajo con el comando #{lb clean}# (ver {El comando lb clean}#lb-clean):
 
@@ -299,21 +324,18 @@ code{
 Cuando termine el proceso de creación, debe haber un fichero llamado
 #{binary.img}# en el directorio actual .
 
-2~using-hdd-image Utilizar una imágen HDD
-
 La imagen binaria generada contiene una partición VFAT y el gestor de
 arranque syslinux, lista para ser copiada directamente en un dispositivo
-USB. Dado que utilizar una imagen HDD es igual a usar una imagen ISO híbrida
-en un USB, seguir las instrucciones de {Usar una imagen ISO
+USB. De nuevo, dado que utilizar una imagen HDD es igual a usar una imagen
+ISO híbrida en un USB, seguir las instrucciones de {Usar una imagen ISO
 híbrida}#using-iso-hybrid con la diferencia de usar el nombre #{binary.img}#
 en lugar de #{binary.hybrid.iso}#.
 
-3~testing-hdd-with-qemu Probar una imágen HDD con Qemu
-
-En primer lugar, instalar /{qemu}/ como se describe más arriba en {Probar
-una imágen ISO con QEMU}#testing-iso-with-qemu A continuación, ejecutar
-#{kvm}# o #{qemu}#, según qué versión necesita el sistema anfitrión y
-especificando #{binary.img}# como primer disco duro.
+Del mismo modo, para probar una imagen HDD con Qemu, instalar /{qemu}/ como
+se describe más arriba en {Probar una imágen ISO con
+QEMU}#testing-iso-with-qemu. A continuación, ejecutar #{kvm}# o #{qemu}#,
+según qué versión necesita el sistema anfitrión y especificando
+#{binary.img}# como primer disco duro.
 
 code{
 
@@ -321,38 +343,11 @@ code{
 
 }code
 
-3~using-usb-extra-space Usar el espacio libre en el dispositivo USB
-
-Si se desea usar el espacio libre después de haber instalado la imagen
-#{binary.img}# en una llave USB, se puede usar un programa de particionado
-como /{gparted}/ o /{parted}/ para crear una partición nueva en el
-dispositivo. La primera partición será usada por el sistema Debian en vivo.
-
-code{
-
- # gparted ${USBSTICK}
-
-}code
-
-Después de crear la partición, dónde #{${PARTITION}}# es el nombre de la
-partición, por ejemplo #{/dev/sdb2}# se tiene que crear un sistema de
-ficheros en él. Una opción posible sería ext4.
-
-code{
-
- # mkfs.ext4 ${PARTITION}
-
-}code
-
-*{Nota:}* Si se desea usar el espacio extra con Windows, segun parece, ese sistema operativo no puede acceder normalmente a otra partición más que a la primera. Se han comentado algunas soluciones a este problema en nuestra {lista de correo}#contact pero según parece no hay una solución fácil.
-
-*{Recordar: Cada vez que se instale una nueva binary.img en el dispositivo, todos los datos del dispositivo se perderán debido a que la tabla de particiones se sobrescribe con el contenido de la imagen, así pues, realizar primero una copia de seguridad de la partición para poder restaurarla trás actualizar la imagen en vivo.}*
-
 2~building-netboot-image Creación de una imagen de arranque en red
 
 La siguiente secuencia de comandos creará una imagen de arranque en red
-básica que contendrá el sistema estándar de Debian sin X.org. Se puede usar
-para el arranque en red.
+básica que contendrá el sistema por defecto de Debian sin X.org. Se puede
+usar para el arranque en red.
 
 *{Nota:}* si se ha seguido algúno de los ejemplos anteriores, se tendrá que limpiar el directorio de trabajo con el comando #{lb clean}#:
 

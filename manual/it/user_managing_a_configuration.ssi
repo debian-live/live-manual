@@ -82,7 +82,7 @@ della compilazione in #{build.log}#.
 
 *{Nota:}* il parametro speciale #{noauto}# viene qui usato per impedire un'ulteriore chiamata di #{auto/config}#, impedendo quindi infinite chiamate ricorsive; assicurarsi di non rimuoverlo facendo modifiche. Quando si dividono comandi lunghi di #{lb config}# su più righe per agevolarne la leggibilità, non dimenticare il backslash (\) alla fine di ogni riga che continua sulla successiva, come mostrato poc'anzi nell'esempio di script.
 
-2~ Clonare una configurazione pubblicata tramite Git.
+2~clone-configuration-via-git Clone a configuration published via Git
 
 Use the #{lb config --config}# option to clone a Git repository that
 contains a Debian Live configuration. If you would like to base your
@@ -124,3 +124,11 @@ code{
  $ lb config --config ldn:live-images
 
 }code
+
+Cloning the entire #{live-images}# repository pulls the configurations used
+for several images. If you feel like building a different image after you
+have finished with the first one, change to another directory and again and
+optionally, make any changes to suit your needs.
+
+In any case, remember that every time you will have to build the image as
+superuser: #{lb build}#

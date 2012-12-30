@@ -6,26 +6,25 @@ Ce chapitre contient un bref aperçu du procès de construction et des
 instructions pour utiliser les trois types d'images les plus couramment
 utilisées. Le type d'image le plus polyvalent, #{iso-hybrid}#, peut être
 utilisé sur une machine virtuelle, supports optiques ou un périphérique USB
-de stockage portable. Dans certains cas particuliers, tels que l'utilisation
-de la persistance, le type #{hdd}# peut être plus approprié pour les
-périphériques USB. Le chapitre se termine avec des instructions pour la
-construction et l'utilisation d'une image #{net}# , qui est un peu plus
-compliqué en raison de la configuration requise sur le serveur. C'est un
-sujet un peu avancé pour tous ceux qui ne connaissent pas déjà le démarrage
-sur le réseau, mais est inclus ici car une fois la configuration est
-terminée, il est un moyen très pratique pour tester et déployer des images
-pour le démarrage sur le réseau local sans le tracas des supports de
-l'image.
+de stockage portable. Dans certains cas particuliers, comme expliqué plus
+loin, le type #{hdd}# peut être plus approprié. Le chapitre se termine avec
+des instructions pour la construction et l'utilisation d'une image #{net}#,
+qui est un peu plus compliqué en raison de la configuration requise sur le
+serveur. C'est un sujet un peu avancé pour tous ceux qui ne connaissent pas
+déjà le démarrage sur le réseau, mais est inclus ici car une fois la
+configuration est terminée, il est un moyen très pratique pour tester et
+déployer des images pour le démarrage sur le réseau local sans le tracas des
+supports de l'image.
 
 Tout au long du chapitre, nous ferons souvent référence à la valeur par
 défaut des noms de fichiers produits par live-build. Si vous téléchargez une
 image précompilée les noms de fichiers peuvent varier.
 
-2~what-is-live Qu'est-ce c'est un système live?
+2~what-is-live Qu'est ce qu'un système live?
 
 Un système live signifie généralement un système d'exploitation démarré sur
 un ordinateur à partir d'un support amovible, tel qu'un CD-ROM, une clé USB
-ou d'un réseau, prêt à l'emploi sans aucune installation sur le disque
+ou sur un réseau, prêt à l'emploi sans aucune installation sur le disque
 habituel, avec auto-configuration fait lors de l'exécution (voir
 {Termes}#terms).
 
@@ -71,7 +70,7 @@ Quel que soit le type d'image, vous devrez effectuer les mêmes étapes de
 base pour créer une image chaque fois. Comme premier exemple, créer un
 répertoire de travail, passer à ce répertoire et exécuter la séquence
 suivante de commandes live-build pour créer une image ISO hybride de base
-contenant tout le système Debian standard sans X.org. Elle est appropriée
+contenant tout le système Debian par défaut sans X.org. Elle est appropriée
 pour être gravée sur CD ou DVD, et également peut être copiée sur une clé
 USB.
 
@@ -80,17 +79,17 @@ un oeil aux exemples utilisés dans live-manual, c'est une bonne idée
 d'utiliser un nom qui vous aide à identifier l'image avec laquelle vous
 travaillez dans chaque répertoire, surtout si vous travaillez ou
 expérimentez avec différents types d'images. Dans ce cas, vous allez
-construire un système standard nous allons donc l'appeler, par exemple,
-live-standard.
+construire un système par défaut, nous allons donc l'appeler, par exemple,
+live-default.
 
 code{
 
- $ mkdir live-standard && cd live-standard
+ $ mkdir live-default && cd live-default
 
 }code
 
 Alors, exécutez la commande #{lb config}#. Cela va créer une hiérarchie
-"config/" dans le répertoire courant pour l'utilisation par d'autres
+"config/" dans le répertoire courant pour être utilisée par d'autres
 commandes:
 
 code{
@@ -99,8 +98,8 @@ code{
 
 }code
 
-Aucun paramètre n'est passé à #{lb config}#, donc défauts seront utilisés
-pour l'ensemble de ses diverses options. Voir {La commande lb
+Aucun paramètre n'est passé à #{lb config}#, donc les défauts seront
+utilisés pour l'ensemble de ses diverses options. Voir {La commande lb
 config}#lb-config pour plus de détails.
 
 Maintenant que la hiérarchie "config/" existe, créez l'image avec la
@@ -138,15 +137,14 @@ code{
 
 3~copying-iso-hybrid-to-usb Copie d'une image ISO hybride sur une clé USB
 
-Les images ISO préparées avec la commande #{isohybrid}# comme les images
-#{iso-hybrid}# produites par défaut, peuvent être simplement copiées sur une
-clé USB avec #{dd}# ou un logiciel équivalent. Brancher une clé USB avec une
-capacité suffisamment grande pour votre fichier image et déterminez quel
-dispositif elle est, que nous appellons ci-dessous #{${USBSTICK}}#. C'est le
-fichier de périphérique de votre clé, tel que #{/dev/sdb}#, pas une
-partition, tel que #{/dev/sdb1}#! Vous pouvez trouver le nom du périphérique
-en regardant la sortie de #{dmesg}# après avoir branché le dispositif, ou
-mieux encore, #{ls -l /dev/disk/by-id}#.
+Les images ISO préparées avec #{xorriso}#, peuvent être simplement copiées
+sur une clé USB avec #{dd}# ou un logiciel équivalent. Brancher une clé USB
+avec une capacité suffisamment grande pour votre fichier image et déterminez
+quel dispositif elle est, que nous appellons ci-dessous
+#{${USBSTICK}}#. C'est le fichier de périphérique de votre clé, tel que
+#{/dev/sdb}#, pas une partition, tel que #{/dev/sdb1}#! Vous pouvez trouver
+le nom du périphérique en regardant la sortie de #{dmesg}# après avoir
+branché le dispositif, ou mieux encore, #{ls -l /dev/disk/by-id}#.
 
 Une fois que vous êtes sûr d'avoir le nom correct de l'appareil, utilisez la
 commande #{dd}# pour copier l'image sur la clé. *{Ceci écrasera tout fichier
@@ -158,6 +156,32 @@ code{
 
 }code
 
+3~using-usb-extra-space Utilisation de l'espace disponible sur une clé USB
+
+Pour utiliser l'espace libre restant après avoir copié #{binary.hybrid.iso}#
+sur une clé USB, utilisez un outil de partitionnement tel que /{gparted}/ ou
+/{parted}/ afin de créer une nouvelle partition sur la clé. La première
+partition sera utilisée par le système Debian Live.
+
+code{
+
+ # gparted ${USBSTICK}
+
+}code
+
+Après la partition est créée, où #{${PARTITION}}# est le nom de la
+partition, tel que #{/dev/sdb2}#, vous devez créer un système de fichiers
+sur elle. Un choix possible serait ext4.
+
+code{
+
+ # mkfs.ext4 ${PARTITION}
+
+}code
+
+*{Remarque:}* Si vous voulez utiliser l'espace supplémentaire avec Windows, apparemment cet système d’exploitation ne peut pas normalement accéder à n'importe quelle partition, mais la première. Certaines solutions à ce problème ont été discutées sur notre {liste de diffusion}#contact, mais il semble qu'il n'y a pas de réponses faciles.
+
+*{Rappelez-vous: Chaque fois que vous installez une nouvelle binary.hybrid.iso sur la clé, toutes les données sur la clé seront perdues parce que la table de partition est écrasée par le contenu de l'image, vous devez sauvegarder votre partition supplémentaire d'abord la restaurer à nouveau après la mise à jour de l'image live.}*
 
 3~booting-live-media Démarrer le support live
 
@@ -174,17 +198,18 @@ votre périphérique de démarrage normal.
 
 Une fois que vous avez démarré le support, vous êtes présenté avec un menu
 de démarrage. Si vous appuyez simplement sur enter ici, le système va
-démarrer en utilisant l'entrée par défaut, #{Live}# Pour plus d'informations
-sur les options de démarrage, consultez l'entrée «Help» dans le menu et
-aussi les pages de manuel de live-boot et live-config dans le système live.
+démarrer en utilisant l'entrée par défaut, #{Live}#. Pour plus
+d'informations sur les options de démarrage, consultez l'entrée «Help» dans
+le menu et aussi les pages de manuel de live-boot et live-config dans le
+système live.
 
 En supposant que vous avez sélectionné #{Live}# et démarré une image de
 bureau live par défaut, après les messages de démarrage défilent, vous
 devriez être automatiquement connecté au compte #{user}# et voir un bureau,
 prêt à l'emploi. Si vous avez démarré une image de la console uniquement,
-tels que saveurs #{standard}# ou #{rescue}# des images précompilées, vous
-devriez être automatiquement connecté à la console pour le compte #{user}#
-et voir une invite du shell, prêt à l'emploi.
+tels que les saveurs #{standard}# ou #{rescue}# des images précompilées,
+vous devriez être automatiquement connecté à la console pour le compte
+#{user}# et voir une invite du shell, prêt à l'emploi.
 
 2~using-virtual-machine Utiliser une machine virtuelle pour les tests
 
@@ -192,8 +217,9 @@ Il peut être un gain de temps important pour le développement des images
 live les faire fonctionner dans une machine virtuelle (VM). Ce n'est pas
 sans ses avertissements:
 
-_* L'exécution d'une VM demande assez de RAM pour l'OS client et l'hôte et
-un CPU avec support matériel pour la virtualisation est recommandée.
+_* L'exécution d'une VM demande assez de RAM pour le système d’exploitation
+client et l'hôte et un CPU avec support matériel pour la virtualisation est
+recommandée.
 
 _* Il y a quelques limitations inhérentes à l'exécution sur une VM, par
 exemple performance de vidéo médiocre, ou choix limité de matériel émulé.
@@ -248,7 +274,7 @@ code{
 
 }code
 
-Créer une nouvelle machine virtuelle, modifiez les paramètres de stockage
+Créer une nouvelle machine virtuelle, modifier les paramètres de stockage
 pour utiliser #{binary.hybrid.iso}# comme le périphérique CD/DVD et démarrer
 la machine.
 
@@ -260,7 +286,7 @@ code{
 
 }code
 
-2~building-hdd Construction d'une image HDD
+2~using-hdd-image Construire et utiliser une image HDD
 
 La construction d'une image HDD est similaire à une ISO hybride à tous les
 régards, sauf que vous spécifiez #{-b hdd}# et le nom du fichier résultant
@@ -268,9 +294,8 @@ est #{binary.img}# qui ne peut être brûlé sur des supports optiques. Il
 convient pour le démarrage à partir de clés USB, disques durs USB, et divers
 autres dispositifs de stockage portables. Normalement, une image ISO hybride
 peut être utilisée à cette fin au lieu, mais si vous avez un BIOS qui ne
-gère pas correctement les images hybrides, ou si vous voulez utiliser
-l'espace disponible sur le support à certaines fins, tel que la persistance
-d'une partition, vous devez utiliser une image HDD. 
+gère pas correctement les images hybrides, vous devez utiliser une image
+HDD. 
 
 *{Remarque:}* si vous avez créé une image ISO hybride avec l'exemple précédent, vous devrez nettoyer votre répertoire de travail avec la commande #{lb clean}# (voir {La commande lb clean}#lb-clean):
 
@@ -300,21 +325,18 @@ code{
 Quand la création de l'image est finie, un fichier #{binary.img}# doit être
 présent dans le répertoire courant.
 
-2~using-hdd-image Utiliser une image HDD
-
 L'image binaire générée contient une partition VFAT et le chargeur de
-démarrage syslinux, prêtes à être écrites directement sur une clé USB. Comme
-l'utilisation d'une image HDD est juste comme l'utilisation d'une image ISO
-hybride sur USB, suivez les instructions {Utiliser une image live ISO
-hybride}#using-iso-hybrid, à l'exception du nom de fichier #{binary.img}# en
-lieu de #{binary.hybrid.iso}#.
+démarrage syslinux, prêtes à être écrites directement sur une clé
+USB. Encore une fois, comme l'utilisation d'une image HDD est juste comme
+l'utilisation d'une image ISO hybride sur USB, suivez les instructions
+{Utiliser une image live ISO hybride}#using-iso-hybrid, à l'exception du nom
+de fichier #{binary.img}# en lieu de #{binary.hybrid.iso}#.
 
-3~testing-hdd-with-qemu Test d'une image HDD avec Qemu
-
-D'abord, installer /{qemu}/ comme décrit ci-dessus dans {Test d'une image
-ISO avec QEMU}#testing-iso-with-qemu. Ensuite, exécutez #{kvm}# ou #{qemu}#,
-selon la version que votre système hôte a besoin, précisant #{binary.img}#
-comme le premier disque dur.
+De même, pour tester une image HDD avec Qemu, installer /{qemu}/ comme
+décrit ci-dessus dans {Test d'une image ISO avec
+QEMU}#testing-iso-with-qemu. Ensuite, exécutez #{kvm}# ou #{qemu}#, selon la
+version que votre système hôte a besoin, précisant #{binary.img}# comme le
+premier disque dur.
 
 code{
 
@@ -322,38 +344,11 @@ code{
 
 }code
 
-3~using-usb-extra-space Utilisation de l'espace disponible sur une clé USB
-
-Pour utiliser l'espace libre restant après avoir copié #{binary.img}# sur
-une clé USB, utilisez un outil de partitionnement tel que /{gparted}/ ou
-/{parted}/ afin de créer une nouvelle partition sur la clé. La première
-partition sera utilisée par le système Debian Live.
-
-code{
-
- # gparted ${USBSTICK}
-
-}code
-
-Après la partition est créée, où #{${PARTITION}}# est le nom de la
-partition, tel que #{/dev/sdb2}#, vous devez créer un système de fichiers
-sur elle. Un choix possible serait ext4.
-
-code{
-
- # mkfs.ext4 ${PARTITION}
-
-}code
-
-*{Remarque:}* Si vous voulez utiliser l'espace supplémentaire avec Windows, apparemment cet OS ne peut normalement pas accéder à n'importe quelle partition, mais la première. Certaines solutions à ce problème ont été discutées sur notre {liste de diffusion}#contact, mais il semble qu'il n'y a pas de réponses faciles.
-
-*{Rappelez-vous: Chaque fois que vous installez une nouvelle binary.img sur la clé, toutes les données sur la clé seront perdues parce que la table de partition est écrasée par le contenu de l'image, vous devez sauvegarder votre partition supplémentaire d'abord la restaurer à nouveau après la mise à jour de l'image live.}*
-
 2~building-netboot-image Construction d'une image netboot
 
 La séquence de commandes suivante va créer une image NetBoot de base
-contenant le système Debian standard sans X.org. Elle peut être démarrée sur
-le réseau.
+contenant le système Debian par défaut sans X.org. Elle peut être démarrée
+sur le réseau.
 
 *{Remarque:}* Si vous avez réalisé quelque des exemples précédents, vous aurez besoin de nettoyer votre répertoire de travail avec la commande #{lb clean}#:
 
@@ -527,7 +522,7 @@ _* Installer VMWare Player (édition "free as in beer")
 _* Créer un répertoire PXETester, et créer un fichier texte appelé
 #{pxe.vwx}# à l'intérieur
 
-_* Collez ce texte à l'intérieur:
+_* Coller ce texte à l'intérieur:
 
 code{
 
@@ -562,4 +557,5 @@ la limite de mémoire à 256)
 _* Double-cliquez sur ce fichier (ou exécuter VMware Player et sélectionnez
 ce fichier).
 
-_* Lors de l'exécution presse l'espace si cette question étrange arrive ...
+_* Lors de l'exécution appuyer sur la barre d'espace si cette question
+étrange arrive ...

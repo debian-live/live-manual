@@ -2,19 +2,17 @@
 
 1~the-basics O básico
 
-Este capítulo contém uma breve descrição do processo de construção e
-instruções para utilização dos três tipos de imagem mais comumente usados. O
-tipo de imagem mais versátil, #{iso-hybrid}#, que pode ser usado em uma
-máquina virtual, meios ópticos ou dispositivo USB de armazenamento
-portátil. Em certos casos especiais, tais como a utilização de persistência,
-#{hdd}# pode ser mais adequada para dispositivos USB. O capítulo termina com
-instruções para a construção e utilização de um tipo de imagem #{net}#, que
-envolve um pouco mais com a configuração necessária no servidor. Este é um
-tema um pouco avançado para quem ainda não está familiarizado com a
-inicialização pela rede, mas está incluído aqui porque uma vez que a
-instalação está feita, é uma maneira muito conveniente para testar e
-implantar imagens para a inicialização da rede local sem o incômodo de lidar
-a com mídia da imagem.
+This chapter contains a brief overview of the build process and instructions
+for using the three most commonly used image types. The most versatile image
+type, #{iso-hybrid}#, may be used on a virtual machine, optical media or USB
+portable storage device. In certain special cases, as explained later, the
+#{hdd}# type may be more suitable. The chapter finishes with instructions
+for building and using a #{net}# type image, which is a bit more involved
+due to the setup required on the server. This is an slightly advanced topic
+for anyone who is not familiar already with netbooting, but it is included
+here because once the setup is done, it is a very convenient way to test and
+deploy images for booting on the local network without the hassle of dealing
+with image media.
 
 Ao longo do capítulo, referem-se frequentemente os nomes de arquivos padrão
 produzidos pelo live-build. Se, em vez disso, você estiver baixando uma
@@ -69,20 +67,20 @@ imagem de disco, etc.)
 Regardless of the image type, you will need to perform the same basic steps
 to build an image each time. As a first example, create a build directory,
 change to that directory and then execute the following sequence of
-live-build commands to create a basic ISO hybrid image containing just the
-Debian standard system without X.org. It is suitable for burning to CD or
-DVD media, and also to copy onto a USB stick.
+live-build commands to create a basic ISO hybrid image containing a default
+live system without X.org. It is suitable for burning to CD or DVD media,
+and also to copy onto a USB stick.
 
 The name of the working directory is absolutely up to you, but if you take a
 look at the examples used throughout live-manual, it is a good idea to use a
 name that helps you identify the image you are working with in each
 directory, especially if you are working or experimenting with different
-image types. In this case you are going to build an standard system so let's
-call it, for example, live-standard.
+image types. In this case you are going to build a default system so let's
+call it, for example, live-default.
 
 code{
 
- $ mkdir live-standard && cd live-standard
+ $ mkdir live-default && cd live-default
 
 }code
 
@@ -135,15 +133,13 @@ code{
 3~copying-iso-hybrid-to-usb Copiar uma imagem ISO híbrida para um
 dispositivo USB
 
-Imagens ISO preparadas com o comando #{isohybrid}#, como as imagens
-produzidas pelo tipo de imagem binária padrão #{iso-híbrido}#, pode ser
-simplesmente copiada para um dispositivo USB com o programa  #{dd}# ou um
-equivalente. Conecte um dispositivo USB com um tamanho grande o suficiente
-para o seu arquivo de imagem e determinar qual dispositivo é, que a seguir
-se referem como #{${USBSTICK}}#. Este é o arquivo de dispositivo de sua
-chave, como #{/dev/sdb}#, e não uma partição, como #{/dev/sdb1}#! Você pode
-encontrar o nome do dispositivo certo olhando na saída do #{dmesg}# depois
-de ligar o dispositivo, ou melhor ainda, #{ls -l /dev/disk/by-id}#.
+ISO images prepared with #{xorriso}#, can be simply copied to a USB stick
+with the #{dd}# program or an equivalent. Plug in a USB stick with a size
+large enough for your image file and determine which device it is, which we
+hereafter refer to as #{${USBSTICK}}#. This is the device file of your key,
+such as #{/dev/sdb}#, not a partition, such as #{/dev/sdb1}#! You can find
+the right device name by looking in #{dmesg}#'s output after plugging in the
+stick, or better yet, #{ls -l /dev/disk/by-id}#.
 
 Uma vez que você tem certeza de que tem o nome correto do dispositivo, use o
 comando #{dd}# para copiar a imagem para o pendrive. *{Isso definitivamente
@@ -155,6 +151,32 @@ code{
 
 }code
 
+3~using-usb-extra-space Using the space left on a USB stick
+
+To use the remaining free space after copying #{binary.hybrid.iso}# to a USB
+stick, use a partitioning tool such as /{gparted}/ or /{parted}/ to create a
+new partition on the stick. The first partition will be used by the Debian
+Live system.
+
+code{
+
+ # gparted ${USBSTICK}
+
+}code
+
+After the partition is created, where #{${PARTITION}}# is the name of the
+partition, such as #{/dev/sdb2}#, you have to create a filesystem on it. One
+possible choice would be ext4.
+
+code{
+
+ # mkfs.ext4 ${PARTITION}
+
+}code
+
+*{Note:}* If you want to use the extra space with Windows, apparently that OS cannot normally access any partitions but the first. Some solutions to this problem have been discussed on our {mailing list}#contact, but it seems there are no easy answers.
+
+*{Remember: Every time you install a new binary.hybrid.iso on the stick, all data on the stick will be lost because the partition table is overwritten by the contents of the image, so back up your extra partition first to restore again after updating the live image.}*
 
 3~booting-live-media Inicializando a media live
 
@@ -176,13 +198,12 @@ informações sobre as opções de inicialização, consulte a entrada "ajuda" n
 menu e também as páginas do live-boot e live-boot-config encontradas dentro
 do sistema live.
 
-Supondo que você selecionou #{Live}# e inicializou uma imagem de desktop
-padrão live, após as mensagens de inicialização rolarem, você deve estar
-automaticamente logado na conta #{user}#  e vendo um desktop, pronto para
-uso. Se você iniciou uma imagem apenas de console, como as imagens
-pré-construídas #{padrão}# ou #{recuperação}#, deve estar automaticamente
-conectado no console na conta do usuário #{user}# e vendo uma janela de
-comandos, pronta para uso.
+Assuming you've selected #{Live}# and booted a default desktop live image,
+after the boot messages scroll by, you should be automatically logged into
+the #{user}# account and see a desktop, ready to use. If you have booted a
+console-only image, such as #{standard}# or #{rescue}# flavour prebuilt
+images, you should be automatically logged in on the console to the #{user}#
+account and see a shell prompt, ready to use.
 
 2~using-virtual-machine Usando uma máquina virtual para testar
 
@@ -254,15 +275,14 @@ code{
 
 }code
 
-2~building-hdd Building an HDD image
+2~using-hdd-image Building and using an HDD image
 
-Building an HDD image is similar to ISO hybrid in all respects except you
-specify #{-b hdd}# and the resulting filename is #{binary.img}# which cannot
-be burnt to optical media. It is suitable for booting from USB sticks, USB
-hard drives, and various other portable storage devices. Normally, an ISO
-hybrid image can be used for this purpose instead, but if you have a BIOS
-which does not handle hybrid images properly, or want to use the remaining
-space on the media for some purpose, such as a persistence partition, you
+Building an HDD image is similar to an ISO hybrid one in all respects except
+you specify #{-b hdd}# and the resulting filename is #{binary.img}# which
+cannot be burnt to optical media. It is suitable for booting from USB
+sticks, USB hard drives, and various other portable storage
+devices. Normally, an ISO hybrid image can be used for this purpose instead,
+but if you have a BIOS which does not handle hybrid images properly, you
 need an HDD image.
 
 *{Note:}* if you created an ISO hybrid image with the previous example, you will need to clean up your working directory with the #{lb clean}# command (see {The lb clean command}#lb-clean):
@@ -293,20 +313,16 @@ code{
 When the build finishes, a #{binary.img}# file should be present in the
 current directory.
 
-2~using-hdd-image Using an HDD image
-
 The generated binary image contains a VFAT partition and the syslinux
-bootloader, ready to be directly written on a USB stick. Since using an HDD
-image is just like using an ISO hybrid image on USB, follow the instructions
-in {Using an ISO hybrid live image}#using-iso-hybrid, except use the
-filename #{binary.img}# instead of #{binary.hybrid.iso}#.
+bootloader, ready to be directly written on a USB device. Once again, using
+an HDD image is just like using an ISO hybrid one on USB. Follow the
+instructions in {Using an ISO hybrid live image}#using-iso-hybrid, except
+use the filename #{binary.img}# instead of #{binary.hybrid.iso}#.
 
-3~testing-hdd-with-qemu Testing an HDD image with Qemu
-
-First, install /{qemu}/ as described above in {Testing an ISO image with
-QEMU}#testing-iso-with-qemu. Then run #{kvm}# or #{qemu}#, depending on
-which version your host system needs, specifying #{binary.img}# as the first
-hard drive.
+Likewise, to test an HDD image with Qemu, install /{qemu}/ as described
+above in {Testing an ISO image with QEMU}#testing-iso-with-qemu. Then run
+#{kvm}# or #{qemu}#, depending on which version your host system needs,
+specifying #{binary.img}# as the first hard drive.
 
 code{
 
@@ -314,38 +330,11 @@ code{
 
 }code
 
-3~using-usb-extra-space Using the space left on a USB stick
-
-To use the remaining free space after copying #{binary.img}# to a USB stick,
-use a partitioning tool such as /{gparted}/ or /{parted}/ to create a new
-partition on the stick. The first partition will be used by the Debian Live
-system.
-
-code{
-
- # gparted ${USBSTICK}
-
-}code
-
-After the partition is created, where #{${PARTITION}}# is the name of the
-partition, such as #{/dev/sdb2}#, you have to create a filesystem on it. One
-possible choice would be ext4.
-
-code{
-
- # mkfs.ext4 ${PARTITION}
-
-}code
-
-*{Note:}* If you want to use the extra space with Windows, apparently that OS cannot normally access any partitions but the first. Some solutions to this problem have been discussed on our {mailing list}#contact, but it seems there are no easy answers.
-
-*{Remember: Every time you install a new binary.img on the stick, all data on the stick will be lost because the partition table is overwritten by the contents of the image, so back up your extra partition first to restore again after updating the live image.}*
-
 2~building-netboot-image Building a netboot image
 
 The following sequence of commands will create a basic netboot image
-containing the Debian standard system without X.org. It is suitable for
-booting over the network.
+containing a default live system without X.org. It is suitable for booting
+over the network.
 
 *{Note:}* if you performed any previous examples, you will need to clean up your working directory with the #{lb clean}# command:
 

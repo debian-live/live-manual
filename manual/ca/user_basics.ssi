@@ -5,16 +5,16 @@
 Aquest capítol conté una breu descripció del procés de construcció i les
 instruccions per a l'utilització dels tres tipus d'imatge més comunes. El
 tipus d'imatge més versàtil #{iso-hybrid}# es pot utilitzar en una màquina
-virtual, en medis òptics o qualsevol altre dispositiu d'emmagatzematge USB
-portàtil. En certs casos especials, com ara l'ús de la persistència, el
-tipus #{hdd}# pot ser el més adequat per als dispositius USB. El capítol
-acaba amb instruccions per a la construcció d'una imatge tipus #{net}#, que
-és una mica més complicat a causa de la configuració necessària en el
-servidor. Aquest és un tema una mica avançat per a algú que no està
-familiaritzat ja amb l'arrencada en xarxa, però s'inclou aquí perquè un cop
-que la configuració es porta a terme, es tracta d'una forma molt convenient
-per provar i desplegar imatges per a l'arrencada en xarxa local sense la
-molèstia de tractar amb els dispositius de les imatges.
+virtual, en medis òptics o qualsevol altre dispositiu d'emmagatzematge
+USB. En certs casos especials, com s'explica més endavant, el tipus #{hdd}#
+pot ser el més adequat. El capítol acaba amb instruccions per a la
+construcció d'una imatge tipus #{net}#, que és una mica més complicat a
+causa de la configuració necessària en el servidor. Aquest és un tema una
+mica avançat per a algú que no està familiaritzat ja amb l'arrencada en
+xarxa, però s'inclou aquí perquè un cop que la configuració es porta a
+terme, es tracta d'una forma molt convenient per provar i desplegar imatges
+per a l'arrencada en xarxa local sense la molèstia de tractar amb els
+dispositius de les imatges.
 
 Al llarg del capítol, sovint es fa referència als noms dels fitxers produïts
 per defecte per live-build. Si es descarrega una imatge prefabricada, els
@@ -70,19 +70,19 @@ Independentment del tipus d'imatge, s'haurà de fer els mateixos passos
 bàsics per construir una imatge cada vegada. Com a primer exemple, crear un
 directori de treball, canviar a aquest directori i executar la següent
 seqüència d'ordres live-build per crear una imatge ISO híbrida de base que
-conté només el sistema estàndard de Debian sense X.org. És adequat per
+conté només el sistema per defecte de Debian sense X.org. És adequat per
 gravar en un CD o DVD, i també per copiar en una memòria USB.
 
 El nom del directori de treball és absolutament indiferent, però si es fa un
 cop d'ull als exemples utilitzats a live-manual, és una bona idea utilitzar
 un nom que ajudi a identificar la imatge amb que s'està treballant en cada
 directori, especialment si s'està treballant o experimentant amb diferents
-tipus d'imatges. En aquest cas, anem a construir un sistema estàndard així
-que l'anomenarem, per exemple, live-standard.
+tipus d'imatges. En aquest cas, anem a construir un sistema per defecte així
+que l'anomenarem, per exemple, live-default.
 
 code{
 
- $ mkdir live-standard && cd live-standard
+ $ mkdir live-default && cd live-default
 
 }code
 
@@ -134,9 +134,8 @@ code{
 3~copying-iso-hybrid-to-usb Còpiar una imatge ISO híbrida en un dispositiu
 USB
 
-Les imatges ISO preparades amb l'ordre #{isohybrid}#, com les imatges
-binàries del tipus #{iso-hybrid}# produïdes per defecte és poden copiar
-directament a una memòria USB utilitzant el programa #{dd}# o un altre
+Les imatges ISO preparades amb #{xorriso}#, és poden copiar directament a
+una memòria USB utilitzant el programa #{dd}# o un altre
 d'equivalent. Connectar una memòria USB amb una mida prou gran per al fitxer
 de la imatge i determinar quin dispositiu és, que d'ara endavant anomenarem
 #{${USBSTICK}}#. Aquest és el dispositiu de la memòria com per exemple
@@ -154,6 +153,32 @@ code{
 
 }code
 
+3~using-usb-extra-space Utilitzar l'espai lliure en una memòria USB
+
+Per poder utilitzar l'espai que queda lliure després de copiar
+#{binary.hybrid.iso}# en un dispositiu USB, utilitzar una eina de
+particionament com /{gparted}/ o /{parted}/ per crear una nova partició. La
+primera partició serà utilitzada pel sistema Debian Live.
+
+code{
+
+ # gparted ${USBSTICK}
+
+}code
+
+Després de crear la partició, on #{${PARTITION}}# és el nom de la partició,
+com ara #{/dev/sdb2}#, s'ha de crear un sistema de fitxers. Una opció
+possible seria ext4.
+
+code{
+
+ # mkfs.ext4 ${PARTITION}
+
+}code
+
+*{Nota:}* Si es vol utilitzar l'espai addicional amb Windows, pel que sembla, aquest sistema operatiu normalment no pot accedir a altres particions més que a la primera. Algunes solucions a aquest problema han estat discutides a la nostra {llista de correu}#contact, però sembla que no hi ha respostes fàcils.
+
+*{Recordar: Cada vegada que s'instaŀli una nova binary.hybrid.iso al dispositiu, es perdran totes les dades perquè la taula de particions se sobreescriu amb el contingut de la imatge, de manera que es assenyat fer una còpia de seguretat de la partició addicional per restaurar les dades de nou després d'actualitzar la imatge en viu.}*
 
 3~booting-live-media Arrencar els medis en viu
 
@@ -257,17 +282,15 @@ code{
 
 }code
 
-2~building-hdd Construir una imatge HDD
+2~using-hdd-image Construir i utilitzar una imatge HDD
 
 Construir una imatge HDD és similar a una ISO híbrida en tots els aspectes,
-excepte que s'especifiqua #{-b hdd}# que el nom del fitxer resultant és
+excepte que s'especifica #{-b hdd}#, que el nom del fitxer resultant és
 #{binary.img}# i que no es pot gravar en medis òptics. És adequada per
 arrencar des de dispositius USB, discs durs USB, i altres dispositius
 d'emmagatzematge portàtils. Normalment, una imatge ISO híbrida es pot
 utilitzar per aquest propòsit en el seu lloc, però si el BIOS no maneja
-adequadament les imatges híbrides, o es desitja utilitzar l'espai lliure en
-els medis per a algun propòsit, com una partició per a la persistència, cal
-una imatge HDD.
+adequadament les imatges híbrides, cal utilitzar una imatge HDD.
 
 *{Nota:}* si s'ha creat una imatge ISO híbrida amb l'exemple anterior, s'haurà de netejar el directori de treball amb l'ordre #{lb clean}# (veure {L'ordre lb clean}#lb-clean):
 
@@ -297,21 +320,18 @@ code{
 Quan la construcció acabi, hauria d'haver un fitxer #{binary.img}# al
 directori actual.
 
-2~using-hdd-image Utilitzar una imatge HDD
-
 La imatge binària generada conté una partició VFAT i el carregador
 d'arrencada syslinux, llestos per ser escrits directament a una memòria
-USB. Donat que l'ús d'una imatge HDD és com utilitzar una imatge ISO híbrida
-en un USB, seguir les instruccions de {Usar una imatge ISO híbrida en
-viu}#using-iso-hybrid, però amb el nom de fitxer #{binary.img}# en lloc de
-#{binary.hybrid.iso}#.
+USB. Un cop més, donat que l'ús d'una imatge HDD és com utilitzar una imatge
+ISO híbrida en un USB, seguir les instruccions de {Usar una imatge ISO
+híbrida en viu}#using-iso-hybrid, però amb el nom de fitxer #{binary.img}#
+en lloc de #{binary.hybrid.iso}#.
 
-3~testing-hdd-with-qemu Provar una imatge HDD amb Qemu
-
-Primer, instaŀlar /{qemu}/ com s'ha descrit anteriorment a {Provar una
-imatge ISO amb QEMU}#testing-iso-with-qemu. A continuació, executar #{kvm}#
-o #{qemu}#, segons la versió instaŀlada al sistema amfitrió, especificant
-#{binary.img}# com a primer disc dur.
+Igualment, per provar una imatge HDD amb Qemu, instaŀlar /{qemu}/ com s'ha
+descrit anteriorment a {Provar una imatge ISO amb
+QEMU}#testing-iso-with-qemu. A continuació, executar #{kvm}# o #{qemu}#,
+segons la versió instaŀlada al sistema amfitrió, especificant #{binary.img}#
+com a primer disc dur.
 
 code{
 
@@ -319,37 +339,10 @@ code{
 
 }code
 
-3~using-usb-extra-space Utilitzar l'espai lliure en una memòria USB
-
-Per poder utilitzar l'espai que queda lliure després de copiar
-#{binary.img}# en un dispositiu USB, utilitzar una eina de particionament
-com /{gparted}/ o /{parted}/ per crear una nova partició. La primera
-partició serà utilitzada pel sistema Debian Live.
-
-code{
-
- # gparted ${USBSTICK}
-
-}code
-
-Després de crear la partició, on #{${PARTITION}}# és el nom de la partició,
-com ara #{/dev/sdb2}#, s'ha de crear un sistema de fitxers. Una opció
-possible seria ext4.
-
-code{
-
- # mkfs.ext4 ${PARTITION}
-
-}code
-
-*{Nota:}* Si es vol utilitzar l'espai addicional amb Windows, pel que sembla, aquest sistema operatiu normalment no pot accedir a altres particions més que a la primera. Algunes solucions a aquest problema han estat discutides a la nostra {llista de correu}#contact, però sembla que no hi ha respostes fàcils.
-
-*{Recordar: Cada vegada que s'instaŀli una nova binary.img al dispositiu, es perdran totes les dades perquè la taula de particions se sobreescriu amb el contingut de la imatge, de manera que es assenyat fer una còpia de seguretat de la partició addicional per restaurar les dades de nou després d'actualitzar la imatge en viu.}*
-
 2~building-netboot-image Construir una imatge netboot
 
 La següent seqüència d'ordres crearà una imatge netboot bàsica que conté el
-sistema estàndard de Debian sense X.org. És adequada per a l'arrencada en
+sistema per defecte de Debian sense X.org. És adequada per a l'arrencada en
 xarxa.
 
 *{Nota:}* si s'ha realitzat algun dels exemples anteriors, s'haurà de netejar el directori de treball amb l'ordre #{lb clean}#:

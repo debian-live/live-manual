@@ -16,9 +16,9 @@ configuration est terminée, il est un moyen très pratique pour tester et
 déployer des images pour le démarrage sur le réseau local sans le tracas des
 supports de l'image.
 
-Tout au long du chapitre, nous ferons souvent référence à la valeur par
-défaut des noms de fichiers produits par live-build. Si vous téléchargez une
-image précompilée les noms de fichiers peuvent varier.
+Throughout the chapter, we will often refer to the default filenames
+produced by live-build. If you are {downloading a prebuilt
+image}#downloading-prebuilt-images instead, the actual filenames may vary.
 
 2~what-is-live Qu'est ce qu'un système live?
 
@@ -28,9 +28,9 @@ ou sur un réseau, prêt à l'emploi sans aucune installation sur le disque
 habituel, avec auto-configuration fait lors de l'exécution (voir
 {Termes}#terms).
 
-Avec Debian Live, c'est un système Debian GNU/Linux, construit pour une des
-architectures supportées (actuellement amd64, i386, PowerPC et SPARC). Il
-est fait à partir des éléments suivants:
+With Debian Live, it's a Debian GNU/Linux operating system, built for one of
+the supported architectures (currently amd64 and i386). It is made from the
+following parts:
 
 _* *{Image du noyau Linux}*, d'habitude appelé #{vmlinuz*}#
 
@@ -62,6 +62,55 @@ Vous pouvez utiliser live-build pour construire l'image du système à partir
 de vos spécifications, configurer un noyau Linux, son initrd, et un chargeur
 d'amorçage pour les exécuter, tout dans un format en fonction du support
 (image ISO9660, image disque, etc.)
+
+2~downloading-prebuilt-images Downloading prebuilt images
+
+While the focus of this manual is developing and building your own live
+images, you may simply wish to try one of our prebuilt images, either as an
+introduction to their use or instead of building your own. These images are
+built using our {live-images git repository}#clone-configuration-via-git and
+official stable releases are published at http://www.debian.org/CD/live/. In
+addition, older and upcoming releases, and unofficial images containing
+non-free firmware and drivers are available at
+http://live.debian.net/cdimage/release/.
+
+2~using-web-builder Using the web live image builder
+
+As a service to the community, we run a web-based live image builder service
+at http://live-build.debian.net. This site is maintained on a best effort
+basis. That is, although we strive to keep it up-to-date and operational at
+all times, and do issue notices for significant operational outages, we
+cannot guarantee 100% availability or fast image building, and the service
+may occasionally have issues that take some time to resolve. If you have
+problems or questions about the service, please {contact us}#contact,
+providing us with the link to your build.
+
+3~ Web builder usage and caveats
+
+The web interface currently makes no provision to prevent the use of invalid
+combinations of options, and in particular, where changing an option would
+normally (i.e. using live-build directly) change defaults of other options
+listed in the web form, the web builder does not change these defaults. Most
+notably, if you change #{--architectures}# from the default #{i386}# to
+#{amd64}#, you must change the corresponding option #{--linux-flavours}#
+from the default #{486}# to #{amd64}#. See the #{lb_config}# man page for
+the version of live-build installed on the web builder for more details. The
+version number of live-build is listed at the bottom of the web builder
+page.
+
+The time estimate given by the web builder is a crude estimate only and may
+not reflect how long your build actually takes. Nor is the estimate updated
+once it is displayed. Please be patient. Do not refresh the page you land on
+after submitting the build, as this will resubmit a new build with the same
+parameters. You should {contact us}#contact if you don't receive
+notification of your build only once you are certain you've waited long
+enough and verified the notification e-mail did not get caught by your own
+e-mail spam filter.
+
+The web builder is limited in the kinds of images it can build. This keeps
+it simple and efficient to use and maintain. If you would like to make
+customizations that are not provided for by the web interface, the rest of
+this manual explains how to build your own images using live-build.
 
 2~building-iso-hybrid Premières étapes: la construction d'une image ISO
 hybride
@@ -203,13 +252,12 @@ d'informations sur les options de démarrage, consultez l'entrée «Help» dans
 le menu et aussi les pages de manuel de live-boot et live-config dans le
 système live.
 
-En supposant que vous avez sélectionné #{Live}# et démarré une image de
-bureau live par défaut, après les messages de démarrage défilent, vous
-devriez être automatiquement connecté au compte #{user}# et voir un bureau,
-prêt à l'emploi. Si vous avez démarré une image de la console uniquement,
-tels que les saveurs #{standard}# ou #{rescue}# des images précompilées,
-vous devriez être automatiquement connecté à la console pour le compte
-#{user}# et voir une invite du shell, prêt à l'emploi.
+Assuming you've selected #{Live}# and booted a default desktop live image,
+after the boot messages scroll by, you should be automatically logged into
+the #{user}# account and see a desktop, ready to use. If you have booted a
+console-only image, such as #{standard}# or #{rescue}# flavour {prebuilt
+images}#downloading-prebuilt-images, you should be automatically logged in
+on the console to the #{user}# account and see a shell prompt, ready to use.
 
 2~using-virtual-machine Utiliser une machine virtuelle pour les tests
 

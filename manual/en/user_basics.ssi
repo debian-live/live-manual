@@ -247,6 +247,8 @@ code{
 
 }code
 
+In this specific case, a #{lb clean --binary}# would be not enough to clean up the necessary stages. The cause for this is that in netboot setups, a different initramfs configuration needs to be used which live-build performes automatically when building netboot images. Since the initramfs creation belongs to the chroot stage, switching to netboot in an existing build directory means to rebuild the chroot stage too. Therefore, #{lb clean}# (which will remove the chroot stage, too) needs to be used.
+
 Run the #{lb config}# command as follows to configure your image for netbooting:
 
 code{

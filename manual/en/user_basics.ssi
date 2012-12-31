@@ -179,11 +179,19 @@ code{
 
 Create a new virtual machine, change the storage settings to use #{binary.hybrid.iso}# as the CD/DVD device, and start the machine.
 
-*{Note:}* For live systems containing X.org that you want to test with /{virtualbox}/, you may wish to include the VirtualBox X.org driver package, /{virtualbox-guest-x11}/, in your live-build configuration. Otherwise, the resolution is limited to 800x600.
+*{Note:}* For live systems containing X.org that you want to test with /{virtualbox}/, you may wish to include the VirtualBox X.org driver package, /{virtualbox-guest-dkms}/ and /{virtualbox-guest-x11}/, in your live-build configuration. Otherwise, the resolution is limited to 800x600.
 
 code{
 
- $ echo virtualbox-guest-x11 >> config/package-lists/my.list.chroot
+ $ echo "virtualbox-guest-dkms virtualbox-guest-x11" >> config/package-lists/my.list.chroot
+
+}code
+
+In order to make the dkms package work, also the kernel headers for the kernel flavour used in your image need to be installed. Instead of manually listing the correct /{linux-headers}/ package in above created package list, the selection of the right package can be done automatically by live-build.
+
+code{
+
+  $ lb config --linux-packages "linux-image linux-header"
 
 }code
 

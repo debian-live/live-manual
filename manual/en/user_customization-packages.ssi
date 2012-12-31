@@ -275,7 +275,7 @@ Because of this, you may wish to increment the version number in your custom pac
 
 2~ Configuring APT at build time
 
-You can configure APT through a number of options applied only at build time. (APT configuration used in the running live system may be configured in the normal way for live system contents, that is, by including the appropriate configurations through #{config/includes.chroot/}#.) For a complete list, look for options starting with #{apt}# in the #{lb_config}# manpage.
+You can configure APT through a number of options applied only at build time. (APT configuration used in the running live system may be configured in the normal way for live system contents, that is, by including the appropriate configurations through #{config/includes.chroot/}#.) For a complete list, look for options starting with #{apt}# in the #{lb_config}# man page.
 
 3~choosing-apt-or-aptitude Choosing apt or aptitude
 
@@ -323,7 +323,7 @@ The more general consequence is that if you don't install recommended packages f
 
 3~ Passing options to apt or aptitude
 
-If there is not a #{lb config}# option to alter APT's behaviour in the way you need, use #{--apt-options}# or #{--aptitude-options}# to pass any options through to your configured APT tool. See the manpages for #{apt}# and #{aptitude}# for details. Note that both options have default values that you will need to retain in addition to any overrides you may provide. So, for example, suppose you have included something from #{snapshot.debian.org}# for testing purposes and want to specify #{Acquire::Check-Valid-Until=false}# to make APT happy with the stale #{Release}# file, you would do so as per the following example, appending the new option after the default value #{--yes}#:
+If there is not a #{lb config}# option to alter APT's behaviour in the way you need, use #{--apt-options}# or #{--aptitude-options}# to pass any options through to your configured APT tool. See the man pages for #{apt}# and #{aptitude}# for details. Note that both options have default values that you will need to retain in addition to any overrides you may provide. So, for example, suppose you have included something from #{snapshot.debian.org}# for testing purposes and want to specify #{Acquire::Check-Valid-Until=false}# to make APT happy with the stale #{Release}# file, you would do so as per the following example, appending the new option after the default value #{--yes}#:
 
 code{
 
@@ -331,13 +331,13 @@ code{
 
 }code
 
-Please check the manpages to fully understand these options and when to use them. This is an example only and should not be construed as advice to configure your image this way. This option would not be appropriate for, say, a final release of a live image.
+Please check the man pages to fully understand these options and when to use them. This is an example only and should not be construed as advice to configure your image this way. This option would not be appropriate for, say, a final release of a live image.
 
 For more complicated APT configurations involving #{apt.conf}# options you might want to create a #{config/apt/apt.conf}# file instead. See also the other #{apt-*}# options for a few convenient shortcuts for frequently needed options.
 
 3~apt-pinning APT pinning
 
-For background, please first read the #{apt_preferences(5)}# manpage. APT pinning can be configured either for build time, or else for run time. For the former, create #{config/archives/*.pref}#, #{config/archives/*.pref.chroot}#, and #{config/apt/preferences}#. For the latter, create #{config/includes.chroot/etc/apt/preferences}#.
+For background, please first read the #{apt_preferences(5)}# man page. APT pinning can be configured either for build time, or else for run time. For the former, create #{config/archives/*.pref}#, #{config/archives/*.pref.chroot}#, and #{config/apt/preferences}#. For the latter, create #{config/includes.chroot/etc/apt/preferences}#.
 
 Let's say you are building a wheezy live system but need all the live packages that end up in the binary image to be installed from sid at build time. You need to add sid to your APT sources and pin the live packages from it higher, but all other packages from it lower, than the default priority. Thus, only the packages you want are installed from sid at build time and all others are taken from the target system distribution, wheezy. The following will accomplish this:
 

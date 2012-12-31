@@ -2,7 +2,7 @@
 
 1~customizing-run-time-behaviours Customizing run time behaviours
 
-All configuration that is done during run time is done by live-config. Here are some of the most common options of live-config that users are interested in. A full list of all possibilities can be found in the manpage of live-config.
+All configuration that is done during run time is done by live-config. Here are some of the most common options of live-config that users are interested in. A full list of all possibilities can be found in the man page of live-config.
 
 2~ Customizing the live user
 
@@ -86,7 +86,7 @@ code{
 
 }code
 
-Multiple values may be specified as comma-delimited lists for each of the #{keyboard-*}# options, with the exception of #{keyboard-model}#, which accepts only one value. Please see the #{keyboard(5)}# manpage for details and examples of #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# and #{XKBOPTIONS}# variables. If multiple #{keyboard-variants}# values are given, they will be matched one-to-one with #{keyboard-layouts}# values (see #{setxkbmap(1)}# #{-variant}# option). Empty values are allowed; e.g. to define two layouts, the default being US QWERTY and the other being US Dvorak, use:
+Multiple values may be specified as comma-delimited lists for each of the #{keyboard-*}# options, with the exception of #{keyboard-model}#, which accepts only one value. Please see the #{keyboard(5)}# man page for details and examples of #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# and #{XKBOPTIONS}# variables. If multiple #{keyboard-variants}# values are given, they will be matched one-to-one with #{keyboard-layouts}# values (see #{setxkbmap(1)}# #{-variant}# option). Empty values are allowed; e.g. to define two layouts, the default being US QWERTY and the other being US Dvorak, use:
 
 code{
 
@@ -105,7 +105,7 @@ A Debian Live system is a generalization of this paradigm and thus supports othe
 
 The data stored on this ramdisk should be saved on a writable persistent medium like local storage media, a network share or even a session of a multisession (re)writable CD/DVD. All these media are supported in Debian Live in different ways, and all but the last one require a special boot parameter to be specified at boot time: #{persistence}#.
 
-If the boot parameter #{persistence}# is set (and #{nopersistence}# is not set), local storage media (e.g. hard disks, USB drives) will be probed for persistence volumes during boot. It is possible to restrict which types of persistence volumes to use by specifying certain boot parameters described in the live-boot(7) manpage. A persistence volume is any of the following:
+If the boot parameter #{persistence}# is set (and #{nopersistence}# is not set), local storage media (e.g. hard disks, USB drives) will be probed for persistence volumes during boot. It is possible to restrict which types of persistence volumes to use by specifying certain boot parameters described in the live-boot(7) man page. A persistence volume is any of the following:
 
 _* a partition, identified by its GPT name.
 
@@ -166,7 +166,7 @@ Now, reboot into your live media with the boot parameter "persistence".
 
 A volume with the label #{persistence}# must be configured by means of the #{persistence.conf}# file to make arbitrary directories persistent. That file, located on the volume's filesystem root, controls which directories it makes persistent, and in which way.
 
-How custom overlay mounts are configured is described in full detail in the persistence.conf(5) manpage, but a simple example should be sufficient for most uses. Let's say we want to make our home directory and APT cache persistent in an ext4 filesystem on the /dev/sdb1 partition:
+How custom overlay mounts are configured is described in full detail in the persistence.conf(5) man page, but a simple example should be sufficient for most uses. Let's say we want to make our home directory and APT cache persistent in an ext4 filesystem on the /dev/sdb1 partition:
 
 code{
 
@@ -180,7 +180,7 @@ code{
 
 Then we reboot. During the first boot the contents of #{/home}# and #{/var/cache/apt}# will be copied into the persistence volume, and from then on all changes to these directories will live in the persistence volume. Please note that any paths listed in the #{persistence.conf}# file cannot contain white spaces or the special #{.}# and #{..}# path components. Also, neither #{/lib}#, #{/lib/live}# (or any of their sub-directories) nor #{/}# can be made persistent using custom mounts. As a workaround for this limitation you can add #{/ union}# to your #{persistence.conf}# file to achieve full persistence.
 
-Several different custom overlay volumes (with their own #{persistence.conf}# files) can be used at the same time, but if several volumes make the same directory persistent, only one of them will be used. If any two mounts are "nested" (i.e. one is a sub-directory of the other) the parent will be mounted before the child so no mount will be hidden by the other. Nested custom mounts are problematic if they are listed in the same #{persistence.conf}# file. See the persistence.conf(5) manpage for how to handle that case if you really need it (hint: you usually don't).
+Several different custom overlay volumes (with their own #{persistence.conf}# files) can be used at the same time, but if several volumes make the same directory persistent, only one of them will be used. If any two mounts are "nested" (i.e. one is a sub-directory of the other) the parent will be mounted before the child so no mount will be hidden by the other. Nested custom mounts are problematic if they are listed in the same #{persistence.conf}# file. See the persistence.conf(5) man page for how to handle that case if you really need it (hint: you usually don't).
 
 3~ Using more than one persistence store
 

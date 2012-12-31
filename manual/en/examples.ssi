@@ -272,11 +272,11 @@ The biggest space-saver here, compared to building a default image on an #{i386}
 
 *{Note:}* A minimal system can also be achieved using hooks, like for example the #{stripped.chroot}# hook found in #{/usr/share/doc/live-build/examples/hooks}#. It may shave off additional small amounts of space and produce an image of 76MB. However, it does so by removal of documentation and other files from packages installed on the system. This violates the integrity of those packages and that, as the comment header warns, may have unforeseen consequences. That is why using a minimal /{debootstrap}/ is the recommended way of achieving this goal.
 
-2~ A localized KDE desktop and installer
+2~ A localized GNOME desktop and installer
 
-*{Use case:}* Create a KDE desktop image, localized for Brazilian Portuguese and including an installer.
+*{Use case:}* Create a GNOME desktop image, localized for Switzerland and including an installer.
 
-We want to make an iso-hybrid image for i386 architecture using our preferred desktop, in this case KDE, containing all of the same packages that would be installed by the standard Debian installer for KDE.
+We want to make an iso-hybrid image for i386 architecture using our preferred desktop, in this case GNOME, containing all of the same packages that would be installed by the standard Debian installer for GNOME.
 
 Our initial problem is the discovery of the names of the appropriate language tasks. Currently, live-build cannot help with this. While we might get lucky and find this by trial-and-error, there is a tool, #{grep-dctrl}#, which can be used to dig it out of the task descriptions in tasksel-data, so to prepare, make sure you have both of those things:
 
@@ -290,35 +290,34 @@ Now we can search for the appropriate tasks, first with:
 
 code{
 
- $ grep-dctrl -FTest-lang pt_BR /usr/share/tasksel/descs/debian-tasks.desc -sTask
- Task: brazilian-portuguese
+ $ grep-dctrl -FTest-lang de /usr/share/tasksel/descs/debian-tasks.desc -sTask
+ Task: german
 
 }code
 
-By this command, we discover the task is called, plainly enough, brazilian-portuguese. Now to find the related tasks:
+By this command, we discover the task is called, plainly enough, german. Now to find the related tasks:
 
 code{
 
- $ grep-dctrl -FEnhances brazilian-portuguese /usr/share/tasksel/descs/debian-tasks.desc -sTask
- Task: brazilian-portuguese-desktop
- Task: brazilian-portuguese-kde-desktop
+ $ grep-dctrl -FEnhances german /usr/share/tasksel/descs/debian-tasks.desc -sTask
+ Task: german-desktop
+ Task: german-kde-desktop
 
 }code
 
-At boot time we will generate the *{pt_BR.UTF-8}* locale and select the *{pt}* keyboard layout. Now let's put the pieces together. Recalling from {Using metapackages}#using-metapackages that task metapackages are prefixed #{task-}#, we just specify these language boot parameters, then add standard priority packages and all our discovered task metapackages to our package list as follows:
+At boot time we will generate the *{de_CH.UTF-8}* locale and select the *{ch}* keyboard layout. Now let's put the pieces together. Recalling from {Using metapackages}#using-metapackages that task metapackages are prefixed #{task-}#, we just specify these language boot parameters, then add standard priority packages and all our discovered task metapackages to our package list as follows:
 
 code{
 
- $ mkdir live-pt_BR-kde
- $ cd live-pt_BR-kde
+ $ mkdir live-ch-gnome
+ $ cd live-ch-gnome
  $ lb config \
      -a i386 \
      -k 486 \
-     --bootappend-live "boot=live config locales=pt_BR.UTF-8 keyboard-layouts=pt" \
+     --bootappend-live "boot=live config locales=de_CH.UTF-8 keyboard-layouts=ch" \
      --debian-installer live
  $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
- $ echo task-kde-desktop task-brazilian-portuguese task-brazilian-portuguese-desktop \
-     task-brazilian-portuguese-kde-desktop >> config/package-lists/desktop.list.chroot
+ $ echo task-gnome-desktop task-german task-german-desktop >> config/package-lists/desktop.list.chroot
  $ echo debian-installer-launcher >> config/package-lists/installer.list.chroot
 
 }code

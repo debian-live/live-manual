@@ -2,19 +2,17 @@
 
 1~the-basics Les bases
 
-Ce chapitre contient un bref aperçu du procès de construction et des
-instructions pour utiliser les trois types d'images les plus couramment
-utilisées. Le type d'image le plus polyvalent, #{iso-hybrid}#, peut être
-utilisé sur une machine virtuelle, supports optiques ou un périphérique USB
-de stockage portable. Dans certains cas particuliers, comme expliqué plus
-loin, le type #{hdd}# peut être plus approprié. Le chapitre se termine avec
-des instructions pour la construction et l'utilisation d'une image #{net}#,
-qui est un peu plus compliqué en raison de la configuration requise sur le
-serveur. C'est un sujet un peu avancé pour tous ceux qui ne connaissent pas
-déjà le démarrage sur le réseau, mais est inclus ici car une fois la
-configuration est terminée, il est un moyen très pratique pour tester et
-déployer des images pour le démarrage sur le réseau local sans le tracas des
-supports de l'image.
+This chapter contains a brief overview of the build process and instructions
+for using the three most commonly used image types. The most versatile image
+type, #{iso-hybrid}#, may be used on a virtual machine, optical media or USB
+portable storage device. In certain special cases, as explained later, the
+#{hdd}# type may be more suitable. The chapter finishes with instructions
+for building and using a #{netboot}# type image, which is a bit more
+involved due to the setup required on the server. This is an slightly
+advanced topic for anyone who is not familiar already with netbooting, but
+it is included here because once the setup is done, it is a very convenient
+way to test and deploy images for booting on the local network without the
+hassle of dealing with image media.
 
 Throughout the chapter, we will often refer to the default filenames
 produced by live-build. If you are {downloading a prebuilt
@@ -77,7 +75,7 @@ http://live.debian.net/cdimage/release/.
 2~using-web-builder Using the web live image builder
 
 As a service to the community, we run a web-based live image builder service
-at http://live-build.debian.net. This site is maintained on a best effort
+at http://live-build.debian.net/. This site is maintained on a best effort
 basis. That is, although we strive to keep it up-to-date and operational at
 all times, and do issue notices for significant operational outages, we
 cannot guarantee 100% availability or fast image building, and the service
@@ -160,9 +158,9 @@ code{
 
 }code
 
-Ce processus peut prendre un certain temps, en fonction de la vitesse de
-votre connexion réseau. Quand il est complet, il devrait y avoir un fichier
-image #{binary.hybrid.iso}# prêt à l'emploi, dans le répertoire courant.
+This process can take a while, depending on the speed of your computer and
+your network connection. When it is complete, there should be a
+#{binary.hybrid.iso}# image file, ready to use, in the current directory.
 
 2~using-iso-hybrid Utilisation d'une image ISO hybride live
 
@@ -173,14 +171,14 @@ DVD-R(W), des supports optiques ou une clé USB.
 
 3~burning-iso-image Graver une image ISO sur un support physique
 
-Graver une image ISO est facile. Il suffit d'installer wodim et l'utiliser à
-partir de la ligne de commande pour graver l'image. Par exemple:
+Burning an ISO image is easy. Just install xorriso and use it from the
+command-line to burn the image. For instance:
 
 code{
 
- # apt-get install wodim
+ # apt-get install xorriso
 
- $ wodim binary.hybrid.iso
+ $ xorriso -as cdrecord -v dev=/dev/sr0 blank=as_needed binary.hybrid.iso
 
 }code
 
@@ -316,7 +314,7 @@ Afin de tester l'ISO avec /{virtualbox}/:
 
 code{
 
- # apt-get install virtualbox virtualbox-dkms
+ # apt-get install virtualbox virtualbox-qt virtualbox-dkms
 
  $ virtualbox
 
@@ -326,11 +324,22 @@ Créer une nouvelle machine virtuelle, modifier les paramètres de stockage
 pour utiliser #{binary.hybrid.iso}# comme le périphérique CD/DVD et démarrer
 la machine.
 
-*{Remarque:}* Pour les systèmes live contenant X.org que vous voulez essayer avec /{virtualbox}/, vous pouvez inclure le paquet des pilotes VirtualBox X.org, /{virtualbox-guest-x11}/, dans votre configuration de live-build. Sinon, la résolution est limitée à 800x600.
+*{Note:}* For live systems containing X.org that you want to test with /{virtualbox}/, you may wish to include the VirtualBox X.org driver package, /{virtualbox-guest-dkms}/ and /{virtualbox-guest-x11}/, in your live-build configuration. Otherwise, the resolution is limited to 800x600.
 
 code{
 
- $ echo virtualbox-guest-x11 >> config/package-lists/my.list.chroot
+ $ echo "virtualbox-guest-dkms virtualbox-guest-x11" >> config/package-lists/my.list.chroot
+
+}code
+
+In order to make the dkms package work, also the kernel headers for the
+kernel flavour used in your image need to be installed. Instead of manually
+listing the correct /{linux-headers}/ package in above created package list,
+the selection of the right package can be done automatically by live-build.
+
+code{
+
+  $ lb config --linux-packages "linux-image linux-header"
 
 }code
 
@@ -402,26 +411,34 @@ sur le réseau.
 
 code{
 
- # lb clean --binary
+ # lb clean
 
 }code
+
+In this specific case, a #{lb clean --binary}# would be not enough to clean
+up the necessary stages. The cause for this is that in netboot setups, a
+different initramfs configuration needs to be used which live-build
+performes automatically when building netboot images. Since the initramfs
+creation belongs to the chroot stage, switching to netboot in an existing
+build directory means to rebuild the chroot stage too. Therefore, #{lb
+clean}# (which will remove the chroot stage, too) needs to be used.
 
 Exécutez la commande comme suit pour configurer votre image pour démarrer
 sur le réseau:
 
 code{
 
- $ lb config -b net --net-root-path "/srv/debian-live" --net-root-server "192.168.0.1"
+ $ lb config -b netboot --net-root-path "/srv/debian-live" --net-root-server "192.168.0.1"
 
 }code
 
-Contrairement à les images ISO et HDD le démarrage sur le réseau ne serve
-pas l'image du système de fichiers pour le client, afin que les fichiers
-doivent être servis via NFS. Les options #{--net-root-path}# et
-#{--net-root-server}# spécifien l'emplacement et le serveur, respectivement,
-du serveur NFS sur lequel l'image du système de fichiers sera située au
-moment du démarrage. Assurez-vous que ceux-ci sont fixées à des valeurs
-appropriées pour votre réseau et serveur.
+In contrast with the ISO and HDD images, netbooting does not, itself, serve
+the filesystem image to the client, so the files must be served via
+NFS. Different network filesystems can be chosen through lb config. The
+#{--net-root-path}# and #{--net-root-server}# options specify the location
+and server, respectively, of the NFS server where the filesytem image will
+be located at boot time. Make sure these are set to suitable values for your
+network and server.
 
 Maintenant construire l'image avec la commande #{lb build}#
 
@@ -439,11 +456,10 @@ chargeur d'amorçage de niveau supérieur via le protocole TFTP. Cela pourrait
 être pxelinux, GRUB, ou démarrer directement à un système d'exploitation
 comme Linux.
 
-Par exemple, si vous décompressez le fichier généré
-#{binary.netboot.tar.xz}# dans le répertoire #{/srv/debian-live}#, vous
-trouverez l'image du système de fichiers dans #{live/filesystem.squashfs}#
-et le noyau, initrd et le chargeur d'amorçage pxelinux dans
-#{tftpboot/debian-live/i386}#.
+For example, if you unpack the generated #{binary.netboot.tar}# archive in
+the #{/srv/debian-live}# directory, you'll find the filesystem image in
+#{live/filesystem.squashfs}# and the kernel, initrd and pxelinux bootloader
+in #{tftpboot/debian-live/i386}#.
 
 Nous devons maintenant configurer trois services sur le serveur pour activer
 le démarrage sur le réseau: le serveur DHCP, serveur TFTP et le serveur NFS.
@@ -523,19 +539,17 @@ code{
 
 }code
 
-La configuation de ces trois services peut être un peu dificile. Vous
-pourriez avoir besoin de patience pour obtenir que tous travaillent
-ensemble. Pour plus d'informations, consultez le wiki syslinux à
-http://syslinux.zytor.com/wiki/index.php/PXELINUX ou la section Debian
-Installer Manual's TFTP Net Booting à
-http://d-i.alioth.debian.org/manual/en.i386/ch04s05.html. Ils pourraient
-aider parce que leurs processus sont très semblables.
+Setting up these three services can be a little tricky. You might need some
+patience to get all of them working together. For more information, see the
+syslinux wiki at http://www.syslinux.org/wiki/index.php/PXELINUX or the
+Debian Installer Manual's TFTP Net Booting section at
+http://d-i.alioth.debian.org/manual/en.i386/ch04s05.html. They might help,
+as their processes are very similar.
 
 3~ Guide pratique pour expérimenter avec une image Netboot
 
-La création d'images NetBoot est facile avec la magie de live-build, mais
-les essais des images sur des machines physiques peuvent prendre vraiment
-beaucoup de temps. 
+Netboot image creation is made easy with live-build, but testing the images
+on physical machines can be really time consuming.
 
 Afin de rendre notre vie plus facile, nous pouvons utiliser la
 virtualisation. Il y a deux solutions.
@@ -559,51 +573,6 @@ code{
 
 }code
 
-Obtenir, ou construire un #{grub-floppy-netboot}# (dans le svn).
+Get, or build a #{grub-floppy-netboot}#.
 
 Lancer #{qemu}# avec "#{-net nic,vlan=0 -net tap,vlan=0,ifname=tun0}#"
-
-3~ VMWare Player
-
-_* Installer VMWare Player (édition "free as in beer")
-
-_* Créer un répertoire PXETester, et créer un fichier texte appelé
-#{pxe.vwx}# à l'intérieur
-
-_* Coller ce texte à l'intérieur:
-
-code{
-
- #!/usr/bin/vmware
- config.version = "8"
- virtualHW.version = "4"
- memsize = "512"
- MemAllowAutoScaleDown = "FALSE"
-
- ide0:0.present = "FALSE"
- ide1:0.present = "FALSE"
- floppy0.present = "FALSE"
- sound.present = "FALSE"
- tools.remindInstall = "FALSE"
-
- ethernet0.present = "TRUE"
- ethernet0.addressType = "generated"
-
- displayName = "Test Boot PXE"
- guestOS = "other"
-
- ethernet0.generatedAddress = "00:0c:29:8d:71:3b"
- uuid.location = "56 4d 83 72 5c c4 de 3f-ae 9e 07 91 1d 8d 71 3b"
- uuid.bios = "56 4d 83 72 5c c4 de 3f-ae 9e 07 91 1d 8d 71 3b"
- ethernet0.generatedAddressOffset = "0"
-
-}code
-
-_* Vous pouvez jouer avec ce fichier de configuration (par exemple, changer
-la limite de mémoire à 256)
-
-_* Double-cliquez sur ce fichier (ou exécuter VMware Player et sélectionnez
-ce fichier).
-
-_* Lors de l'exécution appuyer sur la barre d'espace si cette question
-étrange arrive ...

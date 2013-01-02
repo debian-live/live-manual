@@ -53,36 +53,34 @@ muestra en el siguiente ejemplo:
 
 code{
 
- $ lb config --archive-areas "main contrib"
+ $ lb config --archive-areas "main contrib non-free"
 
 }code
 
-Experimentalmente hay soporte para alguna distribución derivada de Debian
-mediante la opción #{--mode}#. Por defecto, esta opción toma el valor de
-#{debian}# incluso si live-build se está ejecutando en un sistema no
-Debian. Si se especifica #{--mode ubuntu}# o #{--mode emdebian}# se
-utilizará el nombre de la distribución y las áreas de archivos específicas
-de la distribución derivada en lugar de los propios de Debian y live-build
-modificará su comportamiento para adecuarlo al modo seleccionado.
+Experimental support is available for some Debian derivatives through a
+#{--mode}# option. By default, this option is set to #{debian}# only if you
+are building on a Debian or on an unknown system. If #{lb config}# is
+invoked on any of the supported derivatives, it will default to create an
+image of that derivative. If #{lb config}# is run in e.g. #{ubuntu}# mode,
+the distribution names and archive areas for the specified derivative are
+supported instead of the ones for Debian. The mode also modifies live-build
+behaviour to suit the derivatives.
 
 *{Nota:}* La ayuda a los usuarios de las distribuciones para las cuales se añadieron estos modos son responsabilidad de los desarrolladores de dichas distribuciones. El proyecto Debian Live proporciona ayuda al desarrollo de la mejor manera posible, basándose en la información recogida de dichas distribuciones derivadas a pesar de que no desarrolla ni da soporte a las mismas.
 
 3~ Réplicas de Distribución Debian
 
-Los repositorios de Debian están replicados en una gran red alrededor del
-mundo, de manera que se puede seleccionar la réplica más cercana con el fin
-de obtener la mejor velocidad de descarga. Cada una de las opciones
-#{--mirror-*}# gobierna qué réplica de repositorio Debian se utiliza en las
-diferentes etapas de creación. Si se recuerda de {Etapas de la
-creación}#stages-of-the-build, en la etapa de preinstalación (bootstrap) es
-cuando se crea el directorio chroot y se rellena con un sistema mínimo
-mediante  la herramienta /{debootstrap}/, y en la etapa *{chroot}* es cuando
-el directorio chroot es completado con los paquetes necesarios para crear el
-sistema de ficheros que será utilizado en el sistema en vivo. A cada una de
-estas etapas le corresponde su propia opción #{--mirror-*}#. Posteriormente,
-en la etapa *{binary}* se utilizarán las réplicas Debian indicadas en los
-valores de las opciones #{--mirror-binary}# y #{--mirror-binary-security}#
-en lugar de utilizar los indicados para las etapas anteriores.
+The Debian archive is replicated across a large network of mirrors around
+the world so that people in each region can choose a nearby mirror for best
+download speed. Each of the #{--mirror-*}# options governs which
+distribution mirror is used at various stages of the build. Recall from
+{Stages of the build}#stages-of-the-build that the *{bootstrap}* stage is
+when the chroot is initially populated by /{debootstrap}/ with a minimal
+system, and the *{chroot}* stage is when the chroot used to construct the
+live system's filesystem is built. Thus, the corresponding mirror switches
+are used for those stages, and later, in the *{binary}* stage, the
+#{--mirror-binary}# and #{--mirror-binary-security}# values are used,
+superseding any mirrors used in an earlier stage.
 
 3~distribution-mirrors-build-time Réplicas de Distribution utilizadas
 durante la creación
@@ -95,8 +93,8 @@ a continuación.
 code{
 
  $ lb config --mirror-bootstrap http://localhost/debian/ \
-             --mirror-chroot-security http://localhost/debian-security/ \
-	     --mirror-chroot-backports http://localhost/debian-backports/
+          --mirror-chroot-security http://localhost/debian-security/ \
+          --mirror-chroot-backports http://localhost/debian-backports/
 
 }code
 
@@ -120,7 +118,8 @@ configuración solamente sería accesible a los usuarios de una red donde
 code{
 
  $ lb config --mirror-binary http://mirror/debian/ \
-             --mirror-binary-security http://mirror/debian-security/
+          --mirror-binary-security http://mirror/debian-security/ \
+          --mirror-binary-backports http://mirror/debian-backports/
 
 }code
 
@@ -136,9 +135,8 @@ opciones #{--mirror-*}#, estos ficheros gobiernan los repositorios
 utilizados en las etapas *{chroot}* y *{binary}* respectivamente, esto es,
 los repositorios que serán utilizados cuando se ejecute el sistema en vivo.
 
-Por ejemplo, #{config/archives/live.list.chroot}# permite instalar paquetes
-de las instantáneas del repositorio Debian Live en el momento de crear la
-imagen.
+For example, #{config/archives/live.list.chroot}# allows you to install
+packages from the debian-live snapshot repository at live system build time.
 
 code{
 
@@ -155,6 +153,11 @@ Estos ficheros serán seleccionados automáticamente si existen.
 Se debería también incluir en el fichero
 #{config/archives/your-repository.key.{binary,chroot}}# la clave GPG a
 utilizar para firmar dicho repositorio.
+
+Should you need custom APT pinning, such APT preferences snippets can be
+placed in #{config/archives/your-repository.pref.{binary,chroot}}# files and
+will be automatically added to your live system's
+#{/etc/apt/preferences.d/}# directory.
 
 *{Nota:}* Existen algunos repositorios de paquetes ya preconfigurados para facilitar la selección mediante la opción #{--archives}#. Por ejemplo, para utilizar las instantáneas del repositorio de Debian Live, sería suficiente con activarlo mediante:
 
@@ -178,12 +181,10 @@ directorios #{config/}#.
 
 3~package-lists Listas de paquetes
 
-Las listas de paquetes proporcionan una potente forma de expresar qué
-paquetes deberían ser instalados. La sintaxis de la listas soporta la
-inclusión de ficheros y secciones condicionales, que facilitan la creación
-de listas a partir de otras listas, adaptando su utilización a diversas
-configuraciones. También se pueden añadir nombre de paquetes en la listas
-utilizando shell helpers en tiempo de construcción. 
+Package lists are a powerful way of expressing which packages should be
+installed. The list syntax supports conditional sections which makes it easy
+to build lists and adapt them for use in multiple configurations. Package
+names may also be injected into the list using shell helpers at build time.
 
 *{Nota:}* El comportamiento de live-build cuando se especifica un paquete que no existe es determinado por lo que se haya configurado en la utilidad APT. Para más detalles ver {Utilizar apt o aptitude}#choosing-apt-or-aptitude.
 
@@ -195,7 +196,7 @@ tarea metapaquete mantenida por una distribución. Por ejemplo:
 code{
 
  $ lb config
- $ echo task-gnome-desktop > config/package-lists/gnome-desktop.list.chroot
+ $ echo task-gnome-desktop > config/package-lists/desktop.list.chroot
 
 }code
 
@@ -356,18 +357,17 @@ una imagen en vivo no pueda ser creada para admitir múltiples escritorios o
 varios idiomas y ofrecer al usuario una elección, pero ese no es un
 comportamiento por defecto de live-build.
 
-Ya que no se ha previsto la instalación automática de tareas de idiomas, que
-incluyen cosas tales como tipos de letra específicos de cada lengua o
-paquetes de métodos de entrada, si se quiere incluirlos, es necesario
-especificarlo en la configuración. Por ejemplo, una imagen de escritorio
-GNOME que contenga soporte para el japonés podría incluir los siguientes
-metapaquetes:
+Because there is no provision made automatically for language tasks, which
+include such things as language-specific fonts and input-method packages, if
+you want them, you need to specify them in your configuration. For example,
+a GNOME desktop image containing support for German might include these task
+metapackages:
 
 code{
 
  $ lb config
  $ echo "task-gnome-desktop task-laptop" >> config/package-lists/my.list.chroot
- $ echo "task-japanese task-japanese-desktop task-japanese-gnome-desktop" >> config/package-lists/my.list.chroot
+ $ echo "task-german task-german-desktop task-german-gnome-desktop" >> config/package-lists/my.list.chroot
 
 }code
 
@@ -387,17 +387,16 @@ el momento de escribir esto, los paquetes dependen, respectivamente, de
 #{linux-image-3.2.0-4-amd64}#, #{linux-image-3.2.0-4-486}# y
 #{linux-image-3.2.0-4-686-pae}#
 
-Cuando hay más de una versión del paquete del kernel disponible en los
-archivos configurados, se puede especificar el nombre de un paquete del
-kernel diferente con la opción #{--linux-packages}#. Por ejemplo, suponer
-que se está construyendo una image de arquitectura #{amd64}# y se quiere
-añadir el archivo experimental a fin de realizar pruebas para que se pueda
-instalar el kernel #{linux-image-3.5-trunk-amd64}#. Se podría configurar la
-imagen de la siguiente manera:
+When more than one kernel package version is available in your configured
+archives, you can specify a different kernel package name stub with the
+#{--linux-packages}# option. For example, supposing you are building an
+#{amd64}# architecture image and add the experimental archive for testing
+purposes so you can install the #{linux-image-3.7-trunk-amd64}# kernel. You
+would configure that image as follows:
 
 code{
 
- $ lb config --linux-packages linux-image-3.5-trunk
+ $ lb config --linux-packages linux-image-3.7-trunk
  $ echo "deb http://ftp.debian.org/debian/ experimental main" > config/archives/experimental.list.chroot
 
 }code
@@ -434,9 +433,6 @@ _* Incluir el módulo de unión de sistemas de ficheros (normalmente
 
 _* Incluir todos los módulos de sistemas de ficheros requeridos por la
 configuración (normalmente #{squashfs}#).
-
-_* Añadir el sufijo al nombre de cada paquete del kernel con el tipo de
-kernel (por ejemplo #{-amd64}#). 
 
 2~installing-modified-or-third-party-packages Instalar paquetes modificados
 o de terceros
@@ -676,16 +672,14 @@ code{
 
 }code
 
-Una prioridad pin negativa previene la instalación de un paquete, como puede
-ser el caso de que no se desee que un paquete recomendado por otro sea
-instalado al instalar el primero. Supongamos que se está creando una imagen
-LXDE añadiendo #{task-lxde-desktop}# en
-#{config/package-lists/lxde-desktop.list.chroot}#, pero no se desea
-preguntar al usuario si desea almacenar las claves wifi en el almacen de
-claves. Este metapaquete depende de /{lxde-core}/, el cual recomienda
-/{gksu}/ que a su vez recomienda /{gnome-keyring}/. Así que el objetivo es
-omitir la instalación del paquete /{gnome-keyring}/, que puede conseguirse
-añadiendo un fichero con el siguiente contenido a
+Negative pin priorities will prevent a package from being installed, as in
+the case where you do not want a package that is recommended by another
+package. Suppose you are building an LXDE image using #{task-lxde-desktop}#
+in #{config/package-lists/desktop.list.chroot}#, but don't want the user
+prompted to store wifi passwords in the keyring. This metapackage depends on
+/{lxde-core}/, which recommends /{gksu}/, which in turn recommends
+/{gnome-keyring}/. So you want to omit the recommended /{gnome-keyring}/
+package. This can be done by adding the following stanza to
 #{config/apt/preferences}#:
 
 code{

@@ -58,8 +58,8 @@ menys que així se'ls ho indiqui. Els sistemes vius normalment s'inician des
 de dispositius, com ara CD, DVD o memòries USB. Alguns també poden arrencar
 des de la xarxa.
 
-_* *{Debian Live}*: Un subprojecte de Debian, que manté, entre altres, els
-paquets live-boot, live-build, live-config i live-manual. 
+_* *{Debian Live}*: The Debian sub-project which maintains, among others,
+the live-boot, live-build, live-config, live-tools and live-manual packages.
 
 _* *{Sistema Debian Live}*: Un sistema viu que utilitza el programari del
 sistema operatiu Debian que es pot arrencar des d'un CD, DVD, memòries USB,
@@ -71,16 +71,17 @@ _* *{Sistema amfitrió}*: L'entorn utilitzat per crear el sistema en viu.
 _* *{Sistema objectiu}*: L'entorn que s'utilitza per executar el sistema en
 viu.
 
-_* *{live-boot}*: Una coŀlecció de scripts per arrencar els sistemes
-vius. live-boot abans havia estat part de /{live-initramfs}/.
+_* *{live-boot}*: A collection of scripts used to boot live systems.
 
 _* *{live-build}*: Una coŀlecció de scripts utilitzats per construir
 sistemes personalitzats de Debian Live. live-build era anteriorment conegut
 com /{live-helper}/ i fins i tot abans conegut com /{live-package}/.
 
-_* *{live-config}*: Una coŀlecció de scripts utilitzats per configurar un
-sistema en viu durant el procés d'arrencada. live-config abans va ser part
-de /{live-initramfs}/.
+_* *{live-config}*: A collection of scripts used to configure a live system
+during the boot process.
+
+_* *{live-tools}*: A collection of additional scripts used to perform useful
+tasks within a running live system.
 
 _* *{live-manual}*: Aquest document és mantingut en un paquet anomenat
 live-manual
@@ -158,7 +159,7 @@ mitjançant l'execució de:
 
 code{
 
-# apt-get install make po4a sisu-complete libnokogiri-ruby
+ # apt-get install make po4a ruby ruby-nokogiri sisu-complete texlive-generic-recommended
 
 }code
 
@@ -193,7 +194,7 @@ O combinar tot dos, per exemple:
 
 code{
 
- $ make build LANGUAGES=it FORMATS=html
+ $ make build LANGUAGES=de FORMATS=html
 
 }code
 
@@ -219,15 +220,15 @@ llavors editar #{manual/_sisu/home/index.html}#.
 _* Una vegada que s'ha afegit la nova llengua, es pot continuar traduint la
 resta de fitxers dins de #{manual/po/}# a l'atzar.
 
-_* No oblidar que es necessari fer un #{make commit}# per garantir que els
-manuals traduïts s'actualitzen a partir dels fitxers po i llavors es poden
-revisar els canvis executant #{make build}# abans de #{git add .}#, #{git
-commit -m "Translating..."}# i #{git push}#.
+_* Don't forget that you need #{make commit}# to ensure the translated
+manuals are updated from the po files and then you can review your changes
+launching #{make build}# before #{git add .}#, #{git commit -m
+"Translating..."}# and #{git push}#.
 
-Després d'executar #{make commit}# es podrà veure bastant text a la
-pantalla. Bàsicament són missatges informatius sobre l'estat del procés i
-també algunes pistes sobre el que es pot fer per millorar live-manual. Si no
-es veu cap error fatal, generalment es pot procedir i enviar la contribució.
+After running #{make commit}# you will see some text scroll by. These are
+basically informative messages about the processing status and also some
+hints about what can be done in order to improve live-manual. Unless you see
+a fatal error, you usually can proceed and submit your contribution.
 
 live-manual ve amb dues utilitats que poden ser de gran ajuda pels
 traductors a l'hora de trobar missatges sense traduir i difusos. La primera
@@ -236,10 +237,10 @@ missatges sense traduir hi ha a cada fitxer po. La segona, "make fixfuzzy",
 només actua sobre els missatges difusos però ajuda a trobar-los i
 corregir-los un per un.
 
-Tenir en compte que tot i que aquestes utilitats poden ser molt útils per
-fer traduccions en la línia d'ordres, l'ús d'una eina especialitzada com
-/{poedit}/ és la manera recomanada de fer la tasca. També és una bona idea
-llegir la documentació de localització de debian (l10n) i, específicament
-dins live-manual, les {Directrius per a traductors}#guidelines-translators.
+Keep in mind that even though these utilities might be really helpful to do
+translation work on the command like, the use of an specialized tool like
+/{poedit}/ is the recommended way to do the task. It is also a good idea to
+read the Debian localization (l10n) documentation and, specifically to
+live-manual, the {Guidelines for translators}#guidelines-translators.
 
 *{Nota:}* Es pot utilitzar #{make clean}# per netejar l'arbre git abans de fer un push. Aquest  pas no és obligatori, gràcies al fitxer .gitignore, però és una bona pràctica per evitar enviar fitxers de forma involuntària.

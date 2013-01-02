@@ -54,7 +54,7 @@ acest lucru. Sistemele livefolosesc spre pornire medii ca CDs, DVDs sau chei
 USB. Unele chiar pot porni prin retaua de net.
 
 _* *{Debian Live}*: The Debian sub-project which maintains, among others,
-the live-boot, live-build, live-config and live-manual packages.
+the live-boot, live-build, live-config, live-tools and live-manual packages.
 
 _* *{Debian Live system}*: Un sistem live care foloseste programe din
 sitemul de operare Debian, si care poate fi pornit folosind CDs, DVDs, chei
@@ -66,16 +66,17 @@ sistem dat.
 
 _* *{Target system}*: Mediul folosit pentru rularea sistemului live.
 
-_* *{live-boot}*: O coloctie se scripte folosite la pornirea sistemului
-live. live-boot a facul parte formal din /{live-initramfs}/.
+_* *{live-boot}*: A collection of scripts used to boot live systems.
 
 _* *{live-build}*: O colectie de scripte folosite la particularizatrea
 sistemelor Debian Live. live-build a fost cunoscut ca /{live-helper}/, iar
 mai inainte ca /{live-package}/.
 
-_* *{live-config}*: O colectie de scripte folosite la configurarea sitemului
-live in timpul procesului de pornire. live-config a fost cunoscut ca parte
-din /{live-initramfs}/.
+_* *{live-config}*: A collection of scripts used to configure a live system
+during the boot process.
+
+_* *{live-tools}*: A collection of additional scripts used to perform useful
+tasks within a running live system.
 
 _* *{live-manual}*: Acest document face parte din pachetul numit
 live-manual.
@@ -152,7 +153,7 @@ needed for building it are installed by executing:
 
 code{
 
- # apt-get install make po4a sisu-complete libnokogiri-ruby
+ # apt-get install make po4a ruby ruby-nokogiri sisu-complete texlive-generic-recommended
 
 }code
 
@@ -187,7 +188,7 @@ Or combine both, e.g:
 
 code{
 
- $ make build LANGUAGES=it FORMATS=html
+ $ make build LANGUAGES=de FORMATS=html
 
 }code
 
@@ -213,15 +214,15 @@ then edit #{manual/_sisu/home/index.html}#.
 _* Once the new language is added, you can randomly continue translating the
 remaining po files in #{manual/po/}#.
 
-_* Don't forget you need #{make commit}# to ensure the translated manuals
-are updated from the po files and then you can review your changes launching
-#{make build}# before #{git add .}#, #{git commit -m "Translating..."}# and
-#{git push}#.
+_* Don't forget that you need #{make commit}# to ensure the translated
+manuals are updated from the po files and then you can review your changes
+launching #{make build}# before #{git add .}#, #{git commit -m
+"Translating..."}# and #{git push}#.
 
-After running #{make commit}# you will see some text scroll by. They are
+After running #{make commit}# you will see some text scroll by. These are
 basically informative messages about the processing status and also some
 hints about what can be done in order to improve live-manual. Unless you see
-a fatal error, you can usually proceed and submit your contribution.
+a fatal error, you usually can proceed and submit your contribution.
 
 live-manual comes with two utilities that can greatly help translators to
 find untranslated and changed strings. The first one is "make translate". It
@@ -232,7 +233,7 @@ acts upon changed strings but it helps you to find and fix them one by one.
 Keep in mind that even though these utilities might be really helpful to do
 translation work on the command like, the use of an specialized tool like
 /{poedit}/ is the recommended way to do the task. It is also a good idea to
-read the debian localization (l10n) documentation and, specifically to
+read the Debian localization (l10n) documentation and, specifically to
 live-manual, the {Guidelines for translators}#guidelines-translators.
 
 *{Note:}* You can use #{make clean}# to clean your git tree before pushing. This step is not compulsory thanks to the .gitignore file but it is a good practice to avoid committing files involuntarily.

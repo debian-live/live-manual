@@ -15,12 +15,11 @@ altra cosa. Es veu sovint abreujat com "d-i".
 
 Els tres principals tipus d'instaŀlador són els següents:
 
-*{Instaŀlador de Debian "Normal"}*: Aquesta és una imatge normal de Debian Live amb un nucli i initrd independents que (quan es seleccionen des del carregador d'arrencada adequat) realitzen una instaŀlació estàndard de Debian, igual que si s'hagués descarregat i arrencat una imatge de Debian des d'un CD. Les imatges que contenen un sistema viu i aquest tipus d'instaŀlador independent s'anomenen sovint "imatges combinades".
+*{"Normal" Debian Installer}*: This is a normal Debian Live image with a separate kernel and initrd which (when selected from the appropriate bootloader) launches into a standard Debian Installer instance, just as if you had downloaded a CD image of Debian and booted it. Images containing a live system and such an otherwise independent installer are often referred to as "combined images".
 
-Amb aquest tipus d'imatges, Debian s'instaŀla descarregant i instaŀlant
-paquets .deb mitjançant /{debootstrap}/ o /{cdebootstrap}/, des dels medis
-locals o alguna xarxa, aixó resulta en un sistema Debian per defecte
-instaŀlat al disc dur .
+On such images, Debian is installed by fetching and installing .deb packages
+using /{debootstrap}/, from the local media or some network-based network,
+resulting in a default Debian system being installed to the hard disk.
 
 Tot aquest procés pot ser preconfigurat i personalitzadat de moltes formes,
 veure les pàgines corresponents al manual de l'instaŀlador de Debian per a
@@ -29,11 +28,11 @@ live-build pot posar-lo automàticament a la imatge i activar-lo.
 
 *{Instaŀlador de Debian "Live"}*: Aquesta és una imatge Debian Live amb un nucli i initrd independents que (quan es seleccionen des del carregador d'arrencada adequat) llancen un instaŀlador de Debian.
 
-La instaŀlació continuarà de forma idèntica a l'instaŀlació que s'ha descrit
-anteriorment, però en la fase d'instaŀlació dels paquets, en lloc
-d'utilitzar /{debootstrap}/ per buscar-los i instalar-los, es copia el
-sistema de fitxers viu a la destinació. Això s'aconsegueix amb un udeb
-especial anomenat live-installer.
+Installation will proceed in an identical fashion to the "normal"
+installation described above, but at the actual package installation stage,
+instead of using /{debootstrap}/ to fetch and install packages, the live
+filesystem image is copied to the target. This is achieved with a special
+udeb called live-installer.
 
 Després d'aquesta etapa, l'instaŀlador de Debian continua de forma normal,
 instaŀlant i configurant elements com ara els gestors d'arrencada i els
@@ -52,7 +51,7 @@ l'instaŀlador de Debian en les imatges, ha de ser específicament activat amb
 code{
 
  $ lb config --architectures i386 --linux-flavours 486 \
-     --debian-installer live
+         --debian-installer live
  $ echo debian-installer-launcher >> config/package-lists/my.list.chroot
 
 }code
@@ -73,7 +72,7 @@ preconfigurar la variant local #{en_US}#:
 code{
 
  $ echo "d-i debian-installer/locale string en_US" \
-     >> config/debian-installer/preseed.cfg
+         >> config/debian-installer/preseed.cfg
 
 }code
 

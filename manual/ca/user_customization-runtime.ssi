@@ -3,10 +3,10 @@
 1~customizing-run-time-behaviours Personalització dels comportaments en
 temps d'execució
 
-Tota configuració que es fa durant l'execució es feta per
-live-config. Aquestes són algunes de les opcions més comunes de live-config
-en que els usuaris estan interessats. Una llista completa de totes les
-possibilitats es poden trobar a la pàgina del manual de live-config.
+All configuration that is done during run time is done by live-config. Here
+are some of the most common options of live-config that users are interested
+in. A full list of all possibilities can be found in the man page of
+live-config.
 
 2~ Personalitzar l'usuari en viu
 
@@ -25,7 +25,7 @@ pot afegir el següent fitxer a
 
 code{
 
- LIVE_USER_DEFAULT_GROUPS="audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse
+ LIVE_USER_DEFAULT_GROUPS="audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse"
 
 }code
 
@@ -188,9 +188,8 @@ _* una partició, identificada pel seu nom GPT.
 _* un sistema de fitxers, identificat per la seva etiqueta de sistema de
 fitxers.
 
-_* un fitxer imatge situat en l'arrel de qualsevol sistema de fitxers
-llegibles (fins i tot una partició NTFS d'un altre SO), identificat pel seu
-nom de fitxer.
+_* an image file located on the root of any readable filesystem (even an
+NTFS partition of a foreign OS), identified by its filename.
 
 L'etiqueta de volum per als overlays ha de ser #{persistence}# però serà
 passat per alt a menys que contingui un fitxer anomenat #{persistence.conf}#
@@ -304,11 +303,10 @@ es necessita (una pista: en general no cal fer-ho).
 
 3~ Utilitzar diversos medis persistents
 
-Si un usuari necessita múltiples magatzems de persistència del mateix tipus
-per a diferents ubicacions o proves, com #{persistence-nonwork}# i
-#{persistence-work}#, el paràmetre d'arrencada #{persistence-label}#
-utilitzat juntament amb el paràmetre d'arrencada #{persistence}# permetrà
-tenir diversos medis amb la mateixa persistència. Un exemple seria si un
-usuari vol escollir una partició amb persistència amb l'etiqueta
-#{persistence-subText}# utilitzaria els paràmetres d'arrencada:
-#{persistence}# #{persistence-label=subText}#.
+If a user would need multiple persistence store of the same type for
+different locations or testing, such as #{persistence-private}# and
+#{persistence-work}#, the boot parameter #{persistence-label}# used in
+conjunction with the boot parameter #{persistence}# will allow for multiple
+but unique persistence media. An example would be if a user wanted to use a
+persistence partition labeled #{persistence-subText}# they would use the
+boot parameters of: #{persistence}# #{persistence-label=subText}#.

@@ -74,19 +74,17 @@ _* L'architecture du système hôte
 
 _* Version de live-build sur le système hôte
 
-_* Version de live-boot sur le système live
-
-_* Version de live-config sur le système live
-
-_* Version de live-tools sur le système live
-
 _* Version de /{debootstrap}/ et/ou /{cdebootstrap}/ sur le système hôte
 
 _* L'architecture du système live
 
 _* Répartition du système live
 
-_* Version du noyau sur le système live
+_* Version de live-boot sur le système live
+
+_* Version de live-config sur le système live
+
+_* Version de live-tools sur le système live
 
 Vous pouvez générer un journal du processus de construction en utilisant la
 commande #{tee}#. Nous recommandons de faire cela automatiquement avec un
@@ -99,7 +97,8 @@ code{
 
 }code
 
-Au démarrage, live-boot stocke un journal dans #{/var/log/live-boot.log}#.
+At boot time, live-boot and live-config store their logfiles in
+#{/var/log/live/}#. Check them for error messages.
 
 Par ailleurs, pour écarter d'autres erreurs, c'est toujours une bonne idée
 faire un tar de votre répertoire #{config/}# et de le télécharger quelque
@@ -168,14 +167,13 @@ un miroir officiel.
 
 3~ Au moment du démarrage
 
-Si votre image ne démarre pas, s'il vous plaît le signaler à la liste de
-diffusion avec les informations demandées dans {Recueillir
-l'information}#collect-information. Ne pas oublier de mentionner,
-comment/quand l'image a échoué, soit dans Qemu, VirtualBox, VMWare ou
-matériel réel. Si vous utilisez une technologie de virtualisation de
-quelconque sorte, s'il vous plaît toujours tester sur matériel réel avant de
-rapporter un bogue. Fournir une copie d'écran de l'échec est également très
-utile.
+If your image does not boot, please report it to the mailing list together
+with the information requested in {Collect
+information}#collect-information. Do not forget to mention, how/when the
+image failed exactly, whether using virtualization or real hardware. If you
+are using a virtualization technology of any kind, please always run it on
+real hardware before reporting a bug. Providing a screenshot of the failure
+is also very helpful.
 
 3~ Au moment de l'exécution
 

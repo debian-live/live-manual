@@ -56,8 +56,8 @@ computer a meno che lo si faccia volontariamente. I sistemi live vengono
 solitamente avviati da supporti quali CD, DVD o penne USB; alcuni possono
 anche avviarsi via rete.
 
-_* *{Debian Live}*: Il sotto-progetto Debian che mantiene, tra gli altri, i
-pacchetti live-boot, live-build, live-config e live-manual.
+_* *{Debian Live}*: The Debian sub-project which maintains, among others,
+the live-boot, live-build, live-config, live-tools and live-manual packages.
 
 _* *{Debian Live system}*: Un sistema live che usa software proveniente dal
 sistema operativo Debian e che può essere lanciato da CD, DVD, supporti USB,
@@ -68,16 +68,17 @@ _* *{Host system}*: L'ambiente utilizzato per creare il sistema live.
 
 _* *{Target system}*: L'ambiente usato per eseguire il sistema live.
 
-_* *{live-boot}*: Una raccolta di script usati per avviare sistemi
-live. live-boot era una parte di /{live-initramfs}/.
+_* *{live-boot}*: A collection of scripts used to boot live systems.
 
 _* *{live-build}*: Una raccolta di script usati per creare sistemi Debian
 Live personalizzati. live-build era conosciuto come /{live-helper}/, ed
 ancora prima come /{live-package}/.
 
-_* *{live-config}*: Una raccolta di script usati per configurare un sistema
-live durante il processo di inizializzazione. live-config era una parte di
-/{live-initramfs}/.
+_* *{live-config}*: A collection of scripts used to configure a live system
+during the boot process.
+
+_* *{live-tools}*: A collection of additional scripts used to perform useful
+tasks within a running live system.
 
 _* *{live-manual}*: Questo documento è inserito nel pacchetto chiamato
 live-manual.
@@ -154,7 +155,7 @@ needed for building it are installed by executing:
 
 code{
 
- # apt-get install make po4a sisu-complete libnokogiri-ruby
+ # apt-get install make po4a ruby ruby-nokogiri sisu-complete texlive-generic-recommended
 
 }code
 
@@ -189,7 +190,7 @@ O entrambi:
 
 code{
 
- $ make build LANGUAGES=it FORMATS=html
+ $ make build LANGUAGES=de FORMATS=html
 
 }code
 
@@ -216,15 +217,15 @@ _* Una volta che la nuova lingua è stata aggiunta, si può continuare a
 tradurre i restanti file po situati in #{manual/po/}#, nell'ordine che si
 preferisce.
 
-_* Non dimenticare che è necessario usare #{make commit}# per assicurarsi
-che i manuali tradotti siano aggiornati partendo dai file po, quindi si
-possono verificare le modifiche con #{make build}# prima di #{git add .}#,
-#{git commit -m "Translating..."}# e #{git push}#.
+_* Don't forget that you need #{make commit}# to ensure the translated
+manuals are updated from the po files and then you can review your changes
+launching #{make build}# before #{git add .}#, #{git commit -m
+"Translating..."}# and #{git push}#.
 
-After running #{make commit}# you will see some text scroll by. They are
+After running #{make commit}# you will see some text scroll by. These are
 basically informative messages about the processing status and also some
 hints about what can be done in order to improve live-manual. Unless you see
-a fatal error, you can usually proceed and submit your contribution.
+a fatal error, you usually can proceed and submit your contribution.
 
 live-manual comes with two utilities that can greatly help translators to
 find untranslated and changed strings. The first one is "make translate". It
@@ -235,7 +236,7 @@ acts upon changed strings but it helps you to find and fix them one by one.
 Keep in mind that even though these utilities might be really helpful to do
 translation work on the command like, the use of an specialized tool like
 /{poedit}/ is the recommended way to do the task. It is also a good idea to
-read the debian localization (l10n) documentation and, specifically to
+read the Debian localization (l10n) documentation and, specifically to
 live-manual, the {Guidelines for translators}#guidelines-translators.
 
 *{Nota:}* si può usare #{make clean}# per pulire l'albero del repository git locale prima del push. Grazie al file .gitignore questo passo non è obbligatorio ma è una buona abitudine che evita di fare involontariamente il commit di certi file.

@@ -3,10 +3,10 @@
 1~customizing-run-time-behaviours Personalizzare i comportamenti durante
 l'esecuzione
 
-Tutte le configurazioni durante l'esecuzione sono eseguite da
-live-config. Vengono qui presentate alcune delle opzioni di live-config più
-comuni alle quali gli utenti sono interessati; una lista completa può essere
-trovata nel suo manuale.
+All configuration that is done during run time is done by live-config. Here
+are some of the most common options of live-config that users are interested
+in. A full list of all possibilities can be found in the man page of
+live-config.
 
 2~ Personalizzare l'utente live
 
@@ -24,7 +24,7 @@ live user to the #{fuse}# group, you can either add the following file in
 
 code{
 
- LIVE_USER_DEFAULT_GROUPS="audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse
+ LIVE_USER_DEFAULT_GROUPS="audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse"
 
 }code
 
@@ -178,9 +178,8 @@ _* una partizione, identificata dal suo nome GPT (GUID Partition Table).
 
 _* un filesystem, identificato dalla sua label.
 
-_* un file immagine situato nella directory radice di un qualsiasi
-filesystem leggibile (anche una partizione NTFS di un sistema estraneo),
-identificato dal nome del file.
+_* an image file located on the root of any readable filesystem (even an
+NTFS partition of a foreign OS), identified by its filename.
 
 La label del volume per le stratificazioni deve essere #{persistence}# ma
 verrà ignorata a meno che non sia presente nella directory radice un file
@@ -291,10 +290,10 @@ persistence.conf(5) per sapere come gestire questo caso.
 
 3~ Utilizzare più di un'archiviazione persistente
 
-Se un utente avesse bisogno di spazi di archiviazione multipli dello stesso
-tipo per posizioni differenti o per test, come #{persistence-casa}# e
-#{persistence-lavoro}#, il parametro d'avvio #{persistence-label}# usato in
-congiunzione con #{persistent}# permetterà supporti persistenti multipli ma
-univoci. Un esempio potrebbe essere un utente che vuole usare una partizione
-etichettata come #{persistence-sottotesto}#, userebbe: #{persistence}#
-#{persistence-label=sottotesto}#.
+If a user would need multiple persistence store of the same type for
+different locations or testing, such as #{persistence-private}# and
+#{persistence-work}#, the boot parameter #{persistence-label}# used in
+conjunction with the boot parameter #{persistence}# will allow for multiple
+but unique persistence media. An example would be if a user wanted to use a
+persistence partition labeled #{persistence-subText}# they would use the
+boot parameters of: #{persistence}# #{persistence-label=subText}#.

@@ -190,7 +190,8 @@ lliurament:
 code{
 
  $ git init
- $ git add auto
+ $ cp /usr/share/doc/live-build/examples/gitignore .gitignore
+ $ git add .
  $ git commit -a -m "Initial import."
 
 }code
@@ -265,8 +266,8 @@ llistes de paquets}#generated-package-lists), i la segona incloent-hi
 
 code{
 
- $ mkdir vnc_kiosk_client
- $ cd vnc_kiosk_client
+ $ mkdir vnc-kiosk-client
+ $ cd vnc-kiosk-client
  $ lb config -a i386 -k 686-pae --apt-recommends false
  $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
  $ echo "xorg gdm3 metacity xvnc4viewer" > config/package-lists/my.list.chroot
@@ -343,7 +344,7 @@ optimitzacions "intrusives". De particular interès, utilitzem
 
 code{
 
- $ lb config -k 486 --apt-indices false --apt-recommends false --debootstrap-options "--variant=minbase" --memtest none
+ $ lb config -k 486 --apt-indices false --apt-recommends false --debootstrap-options "--variant=minbase" --firmware-chroot false --memtest none
 
 }code
 
@@ -366,34 +367,32 @@ code{
 
 }code
 
-En el sistema de l'autor en el moment d'escriure això, la configuració
-anterior produeix una imatge de 77MB. Això es compara favorablement amb la
-imatge de 182MB produïda per la configuració per defecte del {Tutorial
-1}#tutorial-1.
+On the author's system at the time of writing this, the above configuration
+produced a 77MB image. This compares favourably with the 177MB image
+produced by the default configuration in {Tutorial 1}#tutorial-1.
 
-El estalvi d'espai més gran aquí, en comparació amb la construcció d'una
-imatge  per defecte en un sistema d'arquitectura #{i386}#, és seleccionar
-només la variant del nucli #{486}# en comptes del predeterminat #{-k "486
-686-pae"}#. Deixar els índexs d'APT amb #{--apt-indices false}# també permet
-estalviar una bona quantitat d'espai, el desavantatge és que es necessita
-fer #{apt-get update}# abans d'utilitzar apt en el sistema en viu. Deixar
-els paquets recomanats amb #{--apt-recommends false}# estalvia una mica
-d'espai addicional, a costa d'ometre alguns paquets que d'una altra manera
-es podria esperar que hi fossin. #{--debootstrap-options
-"--variant=minbase"}# preinstaŀla un sistema mínim des del principi. I
-finalment, #{--memtest none}# impedeix la instaŀlació d'un comprovador de
-memòria.
+The biggest space-saver here, compared to building a default image on an
+#{i386}# architecture system, is to select only the #{486}# kernel flavour
+instead of the default #{-k "486 686-pae"}#. Leaving off APT's indices with
+#{--apt-indices false}# also saves a fair amount of space, the tradeoff
+being that you need to do an #{apt-get update}# before using /{apt}/ in the
+live system. Dropping recommended packages with #{--apt-recommends false}#
+saves some additional space, at the expense of omitting some packages you
+might otherwise expect to be there. #{--debootstrap-options
+"--variant=minbase"}# bootstraps a minimal system from the start. Not
+automatically including firmware packages with #{--firmware-chroot false}#
+saves some space too. And finally, #{--memtest none}# prevents the
+installation of a memory tester.
 
-*{Nota:}* Un sistema mínim es pot aconseguir també fent servir un script ganxo, com ara el #{stripped.chroot}# de #{/usr/share/doc/live-build/examples/hooks}#. Es pot guanyar petites quantitats addicionals d'espai i produir una imatge de 76MB. No obstant, el script ganxo aconsegueix això eliminant documentació i altres fitxers dels paquets instaŀlats al sistema. Això viola la integritat dels paquets i com és comenta a l'encapçalament del script, pot tenir conseqüències imprevistes. És per això que l'ús d'un /{debootstrap}/ mínim és el mètode recomanat per aconseguir aquest objectiu.
+*{Note:}* A minimal system can also be achieved using hooks, like for example the #{stripped.chroot}# hook found in #{/usr/share/doc/live-build/examples/hooks}#. It may shave off additional small amounts of space and produce an image of 62MB. However, it does so by removal of documentation and other files from packages installed on the system. This violates the integrity of those packages and that, as the comment header warns, may have unforeseen consequences. That is why using a minimal /{debootstrap}/ is the recommended way of achieving this goal.
 
-2~ Un escriptori KDE localitzat i amb instaŀlador
+2~ A localized GNOME desktop and installer
 
-*{Cas d'ús:}* Crear una imatge amb l'escriptori KDE, localitzat per al portuguès brasiler i que inclou un instaŀlador.
+*{Use case:}* Create a GNOME desktop image, localized for Switzerland and including an installer.
 
-Volem fer una imatge ISO híbrida per l'arquitectura i386 fent servir el
-nostre escriptori preferit, en aquest cas KDE, que conté tots els mateixos
-paquets que serien instaŀlats per l'instaŀlador estàndard de Debian per a
-KDE.
+We want to make an iso-hybrid image for i386 architecture using our
+preferred desktop, in this case GNOME, containing all of the same packages
+that would be installed by the standard Debian installer for GNOME.
 
 El nostre primer problema és descobrir els noms de les tasques del
 llenguatge apropiades. En l'actualitat, live-build no ens pot ajudar amb
@@ -411,43 +410,40 @@ Ara podem buscar les tasques apropiades, primer amb:
 
 code{
 
- $ grep-dctrl -FTest-lang pt_BR /usr/share/tasksel/descs/debian-tasks.desc -sTask
- Task: brazilian-portuguese
+ $ grep-dctrl -FTest-lang de /usr/share/tasksel/descs/debian-tasks.desc -sTask
+ Task: german
 
 }code
 
-Mitjançant aquesta ordre, es descobreix que la tasca s'anomena, amb
-suficient claredat, brazilian-portuguese. Ara, per trobar les tasques
-relacionades:
+By this command, we discover the task is called, plainly enough, german. Now
+to find the related tasks:
 
 code{
 
- $ grep-dctrl -FEnhances brazilian-portuguese /usr/share/tasksel/descs/debian-tasks.desc -sTask
- Task: brazilian-portuguese-desktop
- Task: brazilian-portuguese-kde-desktop
+ $ grep-dctrl -FEnhances german /usr/share/tasksel/descs/debian-tasks.desc -sTask
+ Task: german-desktop
+ Task: german-kde-desktop
 
 }code
 
-En el moment d'arrencar es generarà la variant regional *{pt_BR.UTF-8}* i es
-seleccionarà la disposició del teclat *{pt}*. Ara posarem les peces
-juntes. Recordant de {Ús dels metapaquets}#using-metapackages que els
-metapaquets tenen el prefix #{task-}#, simplement especificar aquests
-paràmetres del llenguatge a l'arrencada, i després afegir els paquets de
-prioritat estàndard i tots els metapaquets descoberts a la nostra llista de
-paquets de la següent manera:
+At boot time we will generate the *{de_CH.UTF-8}* locale and select the
+*{ch}* keyboard layout. Now let's put the pieces together. Recalling from
+{Using metapackages}#using-metapackages that task metapackages are prefixed
+#{task-}#, we just specify these language boot parameters, then add standard
+priority packages and all our discovered task metapackages to our package
+list as follows:
 
 code{
 
- $ mkdir live-pt_BR-kde
- $ cd live-pt_BR-kde
+ $ mkdir live-ch-gnome
+ $ cd live-ch-gnome
  $ lb config \
      -a i386 \
      -k 486 \
-     --bootappend-live "boot=live config locales=pt_BR.UTF-8 keyboard-layouts=pt" \
+     --bootappend-live "boot=live config locales=de_CH.UTF-8 keyboard-layouts=ch" \
      --debian-installer live
  $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
- $ echo task-kde-desktop task-brazilian-portuguese task-brazilian-portuguese-desktop \
-     task-brazilian-portuguese-kde-desktop >> config/package-lists/desktop.list.chroot
+ $ echo task-gnome-desktop task-german task-german-desktop >> config/package-lists/desktop.list.chroot
  $ echo debian-installer-launcher >> config/package-lists/installer.list.chroot
 
 }code

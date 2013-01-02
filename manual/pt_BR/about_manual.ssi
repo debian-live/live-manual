@@ -57,7 +57,7 @@ são tipicamente inicializados a partir de uma mídia como CDs, DVDs ou
 pendrive(s). Alguns também podem inicializar através da rede.
 
 _* *{Debian Live}*: The Debian sub-project which maintains, among others,
-the live-boot, live-build, live-config and live-manual packages.
+the live-boot, live-build, live-config, live-tools and live-manual packages.
 
 _* *{Sistema Debian Live}*: Um sistema live que usa softwares do sistema
 operacional Debian que também pode ser inicializado a partir de CD's, DVDs,
@@ -68,16 +68,17 @@ _* *{Sistema Hospedeiro}*: O ambiente usado para criar o sistema live.
 
 _* *{Sistema Destino}*: O ambiente usado para rodar o sistema live.
 
-_* *{live-boot}*: Uma coleção de scripts usados para inicializar sistemas
-live. live-boot era formalmente parte do /{live-initramfs}/.
+_* *{live-boot}*: A collection of scripts used to boot live systems.
 
 _* *{live-build}*: Uma coleção de scripts usados para construir sistemas
 Debian live customizados. live-build era formalmente conhecido como
 /{live-helper}/, e ainda antes conhecido como /{live-package}/.
 
-_* *{live-config}*: Uma coleção de scripts usados para configurar um sistema
-live durante o processo de boot. live-config era formalmente parte do
-/{live-initramfs}/.
+_* *{live-config}*: A collection of scripts used to configure a live system
+during the boot process.
+
+_* *{live-tools}*: A collection of additional scripts used to perform useful
+tasks within a running live system.
 
 _* *{live-manual}*: Esse documento é mantido em um pacote chamado
 live-manual.
@@ -152,7 +153,7 @@ needed for building it are installed by executing:
 
 code{
 
- # apt-get install make po4a sisu-complete libnokogiri-ruby
+ # apt-get install make po4a ruby ruby-nokogiri sisu-complete texlive-generic-recommended
 
 }code
 
@@ -187,7 +188,7 @@ Ou a combinação dos dois, por exemplo:
 
 code{
 
- $ make build LANGUAGES=it FORMATS=html
+ $ make build LANGUAGES=de FORMATS=html
 
 }code
 
@@ -213,15 +214,15 @@ commit}#. E então editar #{manual/_sisu/home/index.html}#.
 _* Uma vez que a nova linguagem esteja adicionada, voce pode aleatoriamente
 continuar a traduzir o restante dos arquivos .po na pasta #{manual/po/}#.
 
-_* Não se esqueça que você precisa executar #{make commit}# para garantir
-que os manuais traduzidos estejem atualizados a partir dos arquivos po e
-então você pode rever as suas alterações #{make build}# antes  #{git add
-.}#, #{git commit -m "Translating..."}# e #{git push}#.
+_* Don't forget that you need #{make commit}# to ensure the translated
+manuals are updated from the po files and then you can review your changes
+launching #{make build}# before #{git add .}#, #{git commit -m
+"Translating..."}# and #{git push}#.
 
-After running #{make commit}# you will see some text scroll by. They are
+After running #{make commit}# you will see some text scroll by. These are
 basically informative messages about the processing status and also some
 hints about what can be done in order to improve live-manual. Unless you see
-a fatal error, you can usually proceed and submit your contribution.
+a fatal error, you usually can proceed and submit your contribution.
 
 live-manual comes with two utilities that can greatly help translators to
 find untranslated and changed strings. The first one is "make translate". It
@@ -232,7 +233,7 @@ acts upon changed strings but it helps you to find and fix them one by one.
 Keep in mind that even though these utilities might be really helpful to do
 translation work on the command like, the use of an specialized tool like
 /{poedit}/ is the recommended way to do the task. It is also a good idea to
-read the debian localization (l10n) documentation and, specifically to
+read the Debian localization (l10n) documentation and, specifically to
 live-manual, the {Guidelines for translators}#guidelines-translators.
 
 *{Observação:}* Você pode usar #{make clean}# para limpar a sua árvore git antes de enviar. Este passo não é obrigatório graças ao gitignore., Mas é uma boa prática para evitar enviar arquivos involuntariamente.

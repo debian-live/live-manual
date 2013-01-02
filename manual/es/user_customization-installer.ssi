@@ -15,12 +15,11 @@ más ni a ningún otro instalador. A menudo se abrevia con «d-i».
 
 Principalmente existen tres tipos de imágenes según el instalador:
 
-*{Imágenes con Instalador Debian «official»}*: Esta imagen de Debian Live se puede considerar como la imagen habitual. Dispone de un kernel y un initrd diferenciados que, al ser seleccionados desde el gestor de arranque, ejecuta un Instalador de Debian estándar, de la misma manera que lo haría si se arrancase desde una imagen de CD descargada desde el sitio oficial de Debian. Las imágenes que contienen un sistema en vivo con otro instalador independiente se suelen llamar «imágenes combinadas».
+*{"Normal" Debian Installer}*: This is a normal Debian Live image with a separate kernel and initrd which (when selected from the appropriate bootloader) launches into a standard Debian Installer instance, just as if you had downloaded a CD image of Debian and booted it. Images containing a live system and such an otherwise independent installer are often referred to as "combined images".
 
-En estas imágenes, el sistema operativo Debian se instala mediante la
-herramienta /{debootstrap}/ o /{cdebootstrap}/ que descarga paquetes .deb
-desde medios locales o por red. El resultado final es un sistema Debian por
-defecto instalado en el disco duro.
+On such images, Debian is installed by fetching and installing .deb packages
+using /{debootstrap}/, from the local media or some network-based network,
+resulting in a default Debian system being installed to the hard disk.
 
 El conjunto de este proceso puede ser preconfigurado (preseeded) y
 personalizado de muchas maneras; Para más información, ver las páginas
@@ -30,11 +29,11 @@ encargarse de depositarlo en la imagen y activarlo de forma automática.
 
 *{Imágenes con Instalador Debian «Live»}*: Estas imágenes de Debian Live también disponen de un kernel y un initrd diferenciados que, al ser seleccionados desde el gestor de arranque, ejecutan un Instalador de Debian algo diferente.
 
-El procedimiento de instalación es idéntico al realizado por las imagenes
-«Regulares» pero, en lugar de utilizar /{debootstrap}/ para obtener e
-instalar paquetes .deb, lo que hace es copiar al disco duro la imagen del
-sistema de ficheros que se había preparado para lanzar el sistema en
-vivo. Esto se logra mediante un .udeb especial llamado live-installer.
+Installation will proceed in an identical fashion to the "normal"
+installation described above, but at the actual package installation stage,
+instead of using /{debootstrap}/ to fetch and install packages, the live
+filesystem image is copied to the target. This is achieved with a special
+udeb called live-installer.
 
 Una vez finalizada esta etapa, el Instalador de Debian continua normalmente,
 instalando y configurando los siguientes elementos como pueden ser gestor de
@@ -53,7 +52,7 @@ kernel que utiliza #{d-i}# en la arquitectura especificada. Por ejemplo:
 code{
 
  $ lb config --architectures i386 --linux-flavours 486 \
-     --debian-installer live
+         --debian-installer live
  $ echo debian-installer-launcher >> config/package-lists/my.list.chroot
 
 }code
@@ -75,7 +74,7 @@ para preconfigurar la variante local a #{en_US}# se puede hacer:
 code{
 
  $ echo "d-i debian-installer/locale string en_US" \
-     >> config/debian-installer/preseed.cfg
+         >> config/debian-installer/preseed.cfg
 
 }code
 

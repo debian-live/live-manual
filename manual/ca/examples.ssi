@@ -367,9 +367,10 @@ code{
 
 }code
 
-On the author's system at the time of writing this, the above configuration
-produced a 77MB image. This compares favourably with the 177MB image
-produced by the default configuration in {Tutorial 1}#tutorial-1.
+En el sistema de l'autor en el moment d'escriure això, la configuració
+anterior produeix una imatge de 77MB. Això es compara favorablement amb la
+imatge de 177MB produïda per la configuració per defecte del {Tutorial
+1}#tutorial-1.
 
 The biggest space-saver here, compared to building a default image on an
 #{i386}# architecture system, is to select only the #{486}# kernel flavour
@@ -386,13 +387,14 @@ installation of a memory tester.
 
 *{Note:}* A minimal system can also be achieved using hooks, like for example the #{stripped.chroot}# hook found in #{/usr/share/doc/live-build/examples/hooks}#. It may shave off additional small amounts of space and produce an image of 62MB. However, it does so by removal of documentation and other files from packages installed on the system. This violates the integrity of those packages and that, as the comment header warns, may have unforeseen consequences. That is why using a minimal /{debootstrap}/ is the recommended way of achieving this goal.
 
-2~ A localized GNOME desktop and installer
+2~ Un escriptori GNOME localitzat i amb instaŀlador
 
 *{Use case:}* Create a GNOME desktop image, localized for Switzerland and including an installer.
 
-We want to make an iso-hybrid image for i386 architecture using our
-preferred desktop, in this case GNOME, containing all of the same packages
-that would be installed by the standard Debian installer for GNOME.
+Volem fer una imatge ISO híbrida per l'arquitectura i386 fent servir el
+nostre escriptori preferit, en aquest cas GNOME, que conté tots els mateixos
+paquets que serien instaŀlats per l'instaŀlador estàndard de Debian per a
+GNOME.
 
 El nostre primer problema és descobrir els noms de les tasques del
 llenguatge apropiades. En l'actualitat, live-build no ens pot ajudar amb
@@ -426,12 +428,13 @@ code{
 
 }code
 
-At boot time we will generate the *{de_CH.UTF-8}* locale and select the
-*{ch}* keyboard layout. Now let's put the pieces together. Recalling from
-{Using metapackages}#using-metapackages that task metapackages are prefixed
-#{task-}#, we just specify these language boot parameters, then add standard
-priority packages and all our discovered task metapackages to our package
-list as follows:
+En el moment d'arrencar es generarà la variant regional *{de_CH.UTF-8}* i es
+seleccionarà la disposició del teclat *{ch}*. Ara posarem les peces
+juntes. Recordant de {Ús dels metapaquets}#using-metapackages que els
+metapaquets tenen el prefix #{task-}#, simplement especificar aquests
+paràmetres del llenguatge a l'arrencada, i després afegir els paquets de
+prioritat estàndard i tots els metapaquets descoberts a la nostra llista de
+paquets de la següent manera:
 
 code{
 

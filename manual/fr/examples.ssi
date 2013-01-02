@@ -372,9 +372,10 @@ code{
 
 }code
 
-On the author's system at the time of writing this, the above configuration
-produced a 77MB image. This compares favourably with the 177MB image
-produced by the default configuration in {Tutorial 1}#tutorial-1.
+Sur le système de l'auteur au moment de l'écriture, la configuration
+ci-dessus produisait une image de 77MB. Cela se compare favorablement avec
+l'image de 177MB produite par la configuration par défaut dans {Tutoriel
+1}#tutorial-1.
 
 The biggest space-saver here, compared to building a default image on an
 #{i386}# architecture system, is to select only the #{486}# kernel flavour
@@ -391,13 +392,14 @@ installation of a memory tester.
 
 *{Note:}* A minimal system can also be achieved using hooks, like for example the #{stripped.chroot}# hook found in #{/usr/share/doc/live-build/examples/hooks}#. It may shave off additional small amounts of space and produce an image of 62MB. However, it does so by removal of documentation and other files from packages installed on the system. This violates the integrity of those packages and that, as the comment header warns, may have unforeseen consequences. That is why using a minimal /{debootstrap}/ is the recommended way of achieving this goal.
 
-2~ A localized GNOME desktop and installer
+2~ Un bureau GNOME localisé avec un installateur 
 
 *{Use case:}* Create a GNOME desktop image, localized for Switzerland and including an installer.
 
-We want to make an iso-hybrid image for i386 architecture using our
-preferred desktop, in this case GNOME, containing all of the same packages
-that would be installed by the standard Debian installer for GNOME.
+Nous voulons faire une image iso-hybrid pour l'architecture i386 en
+utilisant notre bureau préféré, dans ce cas, GNOME, contenant tous les
+paquets qui seraient installés par l'installateur Debian standard pour
+GNOME.
 
 Notre premier problème est la découverte des noms des tâches
 appropriées. Actuellement, live-build ne peut pas aider à faire ça. Alors
@@ -421,8 +423,8 @@ code{
 
 }code
 
-By this command, we discover the task is called, plainly enough, german. Now
-to find the related tasks:
+Par cette commande, nous découvrons que la tâche est appelée, assez
+clairement, german. Maintenant, pour trouver les tâches liées:
 
 code{
 
@@ -432,12 +434,13 @@ code{
 
 }code
 
-At boot time we will generate the *{de_CH.UTF-8}* locale and select the
-*{ch}* keyboard layout. Now let's put the pieces together. Recalling from
-{Using metapackages}#using-metapackages that task metapackages are prefixed
-#{task-}#, we just specify these language boot parameters, then add standard
-priority packages and all our discovered task metapackages to our package
-list as follows:
+Au moment du démarrage nous allons générer la locale *{de_CH.UTF-8}* et
+sélectionner la disposition de clavier *{ch}*. Maintenant, nous allons
+mettre les morceaux ensemble. Rappelant de {Utilisation des
+métapaquets}#using-metapackages que les métapaquets sont préfixés #{task-}#,
+nous précisons ces paramètres de la langue pendant l'amorçage, puis nous
+ajoutons les paquets de priorité standard et tous nos métapaquets découverts
+à notre liste de paquets comme suit:
 
 code{
 

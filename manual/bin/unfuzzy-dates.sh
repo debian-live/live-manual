@@ -8,7 +8,7 @@ set -e
 #
 # 'XY' is the start line number of the fuzzy strings in the dates.
 
-XY="50"
+XY="47"
 
 # Getting the unfuzzying done.
 

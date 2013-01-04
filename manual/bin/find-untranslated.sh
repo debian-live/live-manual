@@ -43,7 +43,7 @@ Check_untranslated_strings
 # The output of the style_guide.ssi.po is suppressed for the time being since it
 # is not translated into any of the languages.
 
-IGNORED="style_guide.ssi.po"
+IGNORED="appendix_style-guide.ssi.po"
 
 Find_untranslated ()
 {

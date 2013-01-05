@@ -2,21 +2,24 @@
 
 1~the-basics Conceptes bàsics
 
-This chapter contains a brief overview of the build process and instructions
-for using the three most commonly used image types. The most versatile image
-type, #{iso-hybrid}#, may be used on a virtual machine, optical media or USB
-portable storage device. In certain special cases, as explained later, the
-#{hdd}# type may be more suitable. The chapter finishes with instructions
-for building and using a #{netboot}# type image, which is a bit more
-involved due to the setup required on the server. This is an slightly
-advanced topic for anyone who is not familiar already with netbooting, but
-it is included here because once the setup is done, it is a very convenient
-way to test and deploy images for booting on the local network without the
-hassle of dealing with image media.
+Aquest capítol conté una breu descripció del procés de construcció i les
+instruccions per a l'utilització dels tres tipus d'imatge més comunes. El
+tipus d'imatge més versàtil #{iso-hybrid}# es pot utilitzar en una màquina
+virtual, en medis òptics o qualsevol altre dispositiu d'emmagatzematge
+USB. En certs casos especials, com s'explica més endavant, el tipus #{hdd}#
+pot ser el més adequat. El capítol acaba amb instruccions per a la
+construcció d'una imatge tipus #{netboot}#, que és una mica més complicat a
+causa de la configuració necessària en el servidor. Aquest és un tema una
+mica avançat per a algú que no està familiaritzat ja amb l'arrencada en
+xarxa, però s'inclou aquí perquè un cop que la configuració es porta a
+terme, es tracta d'una forma molt convenient per provar i desplegar imatges
+per a l'arrencada en xarxa local sense la molèstia de tractar amb els
+dispositius de les imatges.
 
-Throughout the chapter, we will often refer to the default filenames
-produced by live-build. If you are {downloading a prebuilt
-image}#downloading-prebuilt-images instead, the actual filenames may vary.
+Al llarg del capítol, sovint es fa referència als noms dels fitxers produïts
+per defecte per live-build. Si es {descarrega una imatge
+prefabricada}#downloading-prebuilt-images, els noms dels fitxers poden ser
+direrents.
 
 2~what-is-live Què és un sistema viu?
 
@@ -62,54 +65,62 @@ especificacions pròpies, configurar un nucli de Linux, el initrd, i un
 carregador d'arrencada per executar-los, tot això en un format depenent dels
 medis (imatge ISO9660, imatge de disc, etc.)
 
-2~downloading-prebuilt-images Downloading prebuilt images
+2~downloading-prebuilt-images Descàrrega d'imatges prefabricades
 
-While the focus of this manual is developing and building your own live
-images, you may simply wish to try one of our prebuilt images, either as an
-introduction to their use or instead of building your own. These images are
-built using our {live-images git repository}#clone-configuration-via-git and
-official stable releases are published at http://www.debian.org/CD/live/. In
-addition, older and upcoming releases, and unofficial images containing
-non-free firmware and drivers are available at
+Si bé l'objectiu d'aquest manual és el desenvolupament i la construcció
+d'imatges en viu pròpies, es pot simplement voler provar una de les nostres
+imatges prefabricades, ja sigui com una introducció al seu ús o a la
+construcció d'imatges personalitzades. Aquestes imatges estan construïdes
+utilitzant el nostre {repositori git
+live-images}#clone-configuration-via-git i les versions oficials estables es
+publiquen a http://www.debian.org/CD/live/. A més, les versions antigues i
+les futures, i les imatges no oficials que contenen microprogramari i
+controladors no lliures estan disponibles a
 http://live.debian.net/cdimage/release/.
 
-2~using-web-builder Using the web live image builder
+2~using-web-builder Ús del servei de construcció d'imatges en viu web
 
-As a service to the community, we run a web-based live image builder service
-at http://live-build.debian.net/. This site is maintained on a best effort
-basis. That is, although we strive to keep it up-to-date and operational at
-all times, and do issue notices for significant operational outages, we
-cannot guarantee 100% availability or fast image building, and the service
-may occasionally have issues that take some time to resolve. If you have
-problems or questions about the service, please {contact us}#contact,
-providing us with the link to your build.
+Com un servei a la comunitat, oferim un servei web capaç de construïr
+imatges en viu a http://live-build.debian.net/. Aquest lloc es mantingut
+sobre una base del millor esforç. És a dir, encara que ens esforcem per
+mantenir-lo al dia i que estigui operatiu en tot moment, i de fer anuncis
+d'interrupcions importants del servei, no podem garantir una disponibilitat
+del 100% o una creació d'imatges ràpida. Tanmateix, el servei pot tenir, de
+tant en tant, problemes que triguin algun temps en resoldre's. Si es té
+problemes o preguntes sobre aquest servei, posar-se en {contacte amb
+nosaltres}#contact, proporcionant l'enllaç a la pàgina web de la imatge
+construïda.
 
-3~ Web builder usage and caveats
+3~ Ús i advertències sobre el servei web
 
-The web interface currently makes no provision to prevent the use of invalid
-combinations of options, and in particular, where changing an option would
-normally (i.e. using live-build directly) change defaults of other options
-listed in the web form, the web builder does not change these defaults. Most
-notably, if you change #{--architectures}# from the default #{i386}# to
-#{amd64}#, you must change the corresponding option #{--linux-flavours}#
-from the default #{486}# to #{amd64}#. See the #{lb_config}# man page for
-the version of live-build installed on the web builder for more details. The
-version number of live-build is listed at the bottom of the web builder
-page.
+La interfície web actualment no pot prevenir l'ús de combinacions d'opcions
+no vàlides, i en particular, quan el canvi d'una opció que normalment (és a
+dir, utilitzant live-build directament) canviaria els valors predeterminats
+d'altres opcions que figuren en el formulari de la web, el constructor web
+no canvia aquests valors predeterminats. En particular, si es canvia
+#{--architectures}# del valor per defecte #{i386}# a #{amd64}#, s'ha de
+canviar l'opció corresponent #{--linux-flavours}# del valor per defecte
+#{486}# a #{amd64}#. Veure la pàgina del manual #{lb_config}# per a la
+versió de live-build instaŀlada al constructor web per més detalls. El
+nombre de la versió de live-build apareix a la part inferior de la pàgina
+web.
 
-The time estimate given by the web builder is a crude estimate only and may
-not reflect how long your build actually takes. Nor is the estimate updated
-once it is displayed. Please be patient. Do not refresh the page you land on
-after submitting the build, as this will resubmit a new build with the same
-parameters. You should {contact us}#contact if you don't receive
-notification of your build only once you are certain you've waited long
-enough and verified the notification e-mail did not get caught by your own
-e-mail spam filter.
+El càlcul de temps donat pel constructor web és només una estimació
+aproximada i pot no reflectir acuradament el temps que realment es necessita
+per finalitzar la construcció d'una imatge. Tenir en compte que aquesta
+estimació tampoc s'actualitza tal i com va passant el temps. Cal tenir una
+mica de paciència. No tornar a carregar la pàgina després de enviar la
+proposta de construcció, ja que això pot tornar a reenviar una nova petició
+amb els mateixos paràmetres. Posar-se {en contacte amb nosaltres}#contact si
+no es rep la notificació de la construcció un cop que s'estigui segur que
+s'ha esperat prou i verificat que la notificació per correu electrònic no ha
+anat a parar al spam.
 
-The web builder is limited in the kinds of images it can build. This keeps
-it simple and efficient to use and maintain. If you would like to make
-customizations that are not provided for by the web interface, the rest of
-this manual explains how to build your own images using live-build.
+El servei web està limitat en el tipus d'imatges que es poden
+construir. Això el manté simple i eficient d'utilitzar i mantenir. Si es
+desitja realitzar personalitzacions que no es contemplen en la interfície
+web, a la resta d'aquest manual s'explica com crear imatges pròpies amb
+live-build.
 
 2~building-iso-hybrid Primers passos: construcció d'una imatge ISO híbrida
 
@@ -154,9 +165,9 @@ code{
 
 }code
 
-This process can take a while, depending on the speed of your computer and
-your network connection. When it is complete, there should be a
-#{binary.hybrid.iso}# image file, ready to use, in the current directory.
+Aquest procés tardarà una mica, depenent de la velocitat del ordinador i de
+la connexió de la xarxa. Quan hagi acabat, ha d'haver un fitxer imatge
+#{binary.hybrid.iso}#, a punt per ser utilitzar, en el directori actual.
 
 2~using-iso-hybrid Usar una imatge ISO híbrida en viu
 
@@ -167,8 +178,8 @@ CD-R(W) o DVD-R(W) o una memòria USB.
 
 3~burning-iso-image Gravar una imatge ISO en un medi físic
 
-Burning an ISO image is easy. Just install /{xorriso}/ and use it from the
-command-line to burn the image. For instance:
+Gravar una imatge ISO és fàcil. Simplement cal instaŀlar /{xorriso}/ i
+utilitzar-lo des de la línia d'ordres per gravar la imatge. Per exemple:
 
 code{
 
@@ -245,12 +256,13 @@ per defecte. Per obtenir més informació sobre les opcions d'arrencada,
 llegir la «ajuda» (help) al menú i també les pàgines del manual de live-boot
 i live-config que es troben dins del sistema en viu.
 
-Assuming you've selected #{Live}# and booted a default desktop live image,
-after the boot messages scroll by, you should be automatically logged into
-the #{user}# account and see a desktop, ready to use. If you have booted a
-console-only image, such as #{standard}# or #{rescue}# flavour {prebuilt
-images}#downloading-prebuilt-images, you should be automatically logged in
-on the console to the #{user}# account and see a shell prompt, ready to use.
+Suposant que s'ha seleccionat #{Live}# i s'ha arrencat una imatge
+d'escriptori per defecte, després que els missatges d'arrencada hagin passat
+s'haurà iniciat una sessió com a usuari #{user}# i es veurà un escriptori, a
+punt per ser utilitzat. Si s'ha arrencat una imatge de només consola, com
+les {imatges prefabricades}#downloading-prebuilt-images, #{standard}# o
+#{rescue}# s'iniciarà una sessió com a usuari #{user}# i es veurà el
+indicador de la shell, a punt per ser utilitzat.
 
 2~using-virtual-machine Utilitzar una màquina virtual per fer proves
 
@@ -328,10 +340,11 @@ code{
 
 }code
 
-In order to make the dkms package work, also the kernel headers for the
-kernel flavour used in your image need to be installed. Instead of manually
-listing the correct /{linux-headers}/ package in above created package list,
-the selection of the right package can be done automatically by live-build.
+Per tal de fer que el paquet dkms funcioni, s'han d'instaŀlar també les
+capçaleres del nucli per la variant del nucli de la imatge. En lloc
+d'enumerar manualment el paquet /{linux-headers}/ correcte en la llista de
+paquets creat anteriorment, la selecció del paquet adequat es pot fer
+automàticament amb live-build.
 
 code{
 
@@ -410,13 +423,14 @@ code{
 
 }code
 
-In this specific case, a #{lb clean --binary}# would be not enough to clean
-up the necessary stages. The cause for this is that in netboot setups, a
-different initramfs configuration needs to be used which live-build performs
-automatically when building netboot images. Since the initramfs creation
-belongs to the chroot stage, switching to netboot in an existing build
-directory means to rebuild the chroot stage too. Therefore, #{lb clean}#
-(which will remove the chroot stage, too) needs to be used.
+En aquest cas concret, un #{lb clean --binary}# no seria insuficient per
+netejar les etapes necessàries. La causa d'això és que en les configuracions
+d'arrencada en xarxa, es necessita una configuració initramfs diferent que
+live-build realitza automàticament quan es construeixen imatges netboot. Ja
+que la creació del initramfs pertany a l'etapa chroot, fer el canvi a
+netboot en un directori de construcció existent significa reconstruir
+l'etapa chroot també. Per tant, s'ha de fer un #{lb clean}# (que eliminarà
+l'etapa chroot, també).
 
 Executar l'ordre següent per configurar la imatge per arrencar en xarxa:
 
@@ -426,13 +440,13 @@ code{
 
 }code
 
-In contrast with the ISO and HDD images, netbooting does not, itself, serve
-the filesystem image to the client, so the files must be served via
-NFS. Different network filesystems can be chosen through lb config. The
-#{--net-root-path}# and #{--net-root-server}# options specify the location
-and server, respectively, of the NFS server where the filesytem image will
-be located at boot time. Make sure these are set to suitable values for your
-network and server.
+A diferència de les imatges ISO i HDD, l'arrencada en xarxa no serveix el
+sistema de fitxers al client, per tant els fitxers han de ser servits a
+través de NFS. Amb lb config es poden elegir diferents sistemes de fitxers
+de xarxa. Les opcions #{--net-root-path}# i #{--net-root-server}#
+especifiquen la ubicació i el servidor, respectivament,  del servidor NFS on
+es troba la imatge del sistema de fitxers a l'hora d'arrencar. Assegurar-se
+que aquests s'ajusten als valors adequats per la xarxa i el servidor.
 
 Ara construir la imatge amb l'ordre #{lb build}#:
 
@@ -532,19 +546,20 @@ code{
 
 }code
 
-Setting up these three services can be a little tricky. You might need some
-patience to get all of them working together. For more information, see the
-syslinux wiki at http://www.syslinux.org/wiki/index.php/PXELINUX or the
-Debian Installer Manual's TFTP Net Booting section at
-http://d-i.alioth.debian.org/manual/en.i386/ch04s05.html. They might help,
-as their processes are very similar.
+La configuració d'aquests tres serveis pot ser una mica difícil. És possible
+que es necessiti una mica de paciència per aconseguir que tots tres
+funcionin plegats. Per obtenir més informació, veure el wiki de syslinux a
+http://www.syslinux.org/wiki/index.php/PXELINUX o la secció TFTP Net Booting
+al Manual del Instaŀlador de Debian a
+http://d-i.alioth.debian.org/manual/en.i386/ch04s05.html. Això pot ajudar,
+ja que els seus processos són molt similars.
 
 3~ Com provar l'arrencada en xarxa
 
-Netboot image creation is made easy with live-build, but testing the images
-on physical machines can be really time consuming.
+La creació d'imatges d'arrencada en xarxa es senzilla amb live-build, però
+provar les imatges en màquines físiques pot costar molt de temps.
 
-To make our life easier, we can use virtualization.
+Per fer la nostra vida més fàcil, podem utilitzar la virtualització.
 
 3~ Qemu
 

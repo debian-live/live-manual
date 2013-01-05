@@ -2,21 +2,23 @@
 
 1~the-basics Conceptos básicos
 
-This chapter contains a brief overview of the build process and instructions
-for using the three most commonly used image types. The most versatile image
-type, #{iso-hybrid}#, may be used on a virtual machine, optical media or USB
-portable storage device. In certain special cases, as explained later, the
-#{hdd}# type may be more suitable. The chapter finishes with instructions
-for building and using a #{netboot}# type image, which is a bit more
-involved due to the setup required on the server. This is an slightly
-advanced topic for anyone who is not familiar already with netbooting, but
-it is included here because once the setup is done, it is a very convenient
-way to test and deploy images for booting on the local network without the
-hassle of dealing with image media.
+Este capítulo contiene una breve descripción del proceso de creación de las
+imágenes en vivo y las instrucciones para el uso de los tres tipos de
+imágenes más utilizadas. El tipo de imagen más versátil, #{iso-hybrid}#, se
+puede utilizar en una máquina virtual, en medios ópticos u otros
+dispositivos de almacenamiento USB. En ciertos casos especiales, como se
+explica más adelante, las imágenes #{hdd}#, pueden ser las más adecuadas. El
+capítulo termina con instrucciones para crear y utilizar una imagen de tipo
+#{netboot}#, que es un poco más complicado debido a la configuración
+necesaria en el servidor. Es un tema ligeramente avanzado para cualquier
+persona que no esté familiarizada con el arranque en red, pero se incluye
+aquí porque una vez que se realiza toda la configuración, es una forma muy
+conveniente para probar y desplegar imágenes de arranque en red local sin la
+molestia de tratar con los dispositivos de almacenamiento de la imagen.
 
-Throughout the chapter, we will often refer to the default filenames
-produced by live-build. If you are {downloading a prebuilt
-image}#downloading-prebuilt-images instead, the actual filenames may vary.
+A lo largo de todo el capítulo se hace a menudo referencia al nombre de las
+imágenes producidas por defecto por live-build. Si se {descarga una imagen
+ya creada}#downloading-prebuilt-images el nombre puede variar.
 
 2~what-is-live ¿Qué es un sistema en vivo?
 
@@ -63,54 +65,61 @@ de arranque para ponerlos en funcionamiento, todo ello en un formato que
 depende del medio de almacenamiento elegido (imagen ISO9660, imagen de
 disco, etc.)
 
-2~downloading-prebuilt-images Downloading prebuilt images
+2~building-netboot-image Descarga de imágenes preconstruidas
 
-While the focus of this manual is developing and building your own live
-images, you may simply wish to try one of our prebuilt images, either as an
-introduction to their use or instead of building your own. These images are
-built using our {live-images git repository}#clone-configuration-via-git and
-official stable releases are published at http://www.debian.org/CD/live/. In
-addition, older and upcoming releases, and unofficial images containing
-non-free firmware and drivers are available at
+Si bien el objetivo de este manual es el desarrollo y la construcción de
+imágenes en vivo propias, puede que simplemente se desee probar una de
+nuestras imágenes preconstruidas, ya sea como una iniciación a su uso o como
+paso previo a la construcción de imágenes personalizadas. Estas imágenes
+están construidas utilizando nuestro {repositorio git
+live-images}#clone-configuration-via-git y las versiones estables oficiales
+se publican en http://www.debian.org/CD/live/. Además, las versiones
+antiguas y las futuras, así como las imágenes no oficiales que contienen
+firmware y drivers no libres están disponibles en
 http://live.debian.net/cdimage/release/.
 
-2~using-web-builder Using the web live image builder
+2~using-iso-hybrid Uso del servicio de creación de imágenes web
 
-As a service to the community, we run a web-based live image builder service
-at http://live-build.debian.net/. This site is maintained on a best effort
-basis. That is, although we strive to keep it up-to-date and operational at
-all times, and do issue notices for significant operational outages, we
-cannot guarantee 100% availability or fast image building, and the service
-may occasionally have issues that take some time to resolve. If you have
-problems or questions about the service, please {contact us}#contact,
-providing us with the link to your build.
+Como un servicio a la comunidad, se ofrece una interfaz web de construcción
+de imágenes en vivo en http://live-build.debian.net/. Este sitio se mantiene
+en base al mejor esfuerzo. Es decir, aunque nos esforzamos por mantenerlo al
+día y de que esté operativo en todo momento, así como emitir anuncios de
+interrupciones importantes en el servicio, no podemos garantizar un 100% de
+disponibilidad o una creación de imágenes rápida, y el servicio de vez en
+cuando pueden tener problemas que tarden algún tiempo en resolverse. Si se
+tiene problemas o preguntas acerca de este servicio, ponerse en contacto con
+nosotros, proporcionando el enlace a la página dónde se recoge la
+información pertinente a la imagen.
 
-3~ Web builder usage and caveats
+3~ Uso y advertencias del servicio de creación de imágenes web
 
-The web interface currently makes no provision to prevent the use of invalid
-combinations of options, and in particular, where changing an option would
-normally (i.e. using live-build directly) change defaults of other options
-listed in the web form, the web builder does not change these defaults. Most
-notably, if you change #{--architectures}# from the default #{i386}# to
-#{amd64}#, you must change the corresponding option #{--linux-flavours}#
-from the default #{486}# to #{amd64}#. See the #{lb_config}# man page for
-the version of live-build installed on the web builder for more details. The
-version number of live-build is listed at the bottom of the web builder
-page.
+La interfaz web actualmente no prevé la prevención del uso de combinaciones
+de opciones no válidas, y en particular, cuando el cambio de una opción que
+normalmente (es decir, utilizando live-build directamente) cambiaría los
+valores predeterminados de otras opciones que figuran en el formulario web,
+el constructor web no cambia estos valores predeterminados. En particular,
+si se cambia #{--architectures}# del valor por defecto #{i386}# a #{amd64}#,
+se debe cambiar la opción correspondiente #{--linux-flavours}# del valor por
+defecto #{486}# to #{amd64}#. Ver la página de manual de #{lb_config}# para
+para más detalles sobre la versión de live-build instalada en el constructor
+web. El número de versión de live-build aparece en la parte inferior de la
+página web del servicio de creación de imágenes.
 
-The time estimate given by the web builder is a crude estimate only and may
-not reflect how long your build actually takes. Nor is the estimate updated
-once it is displayed. Please be patient. Do not refresh the page you land on
-after submitting the build, as this will resubmit a new build with the same
-parameters. You should {contact us}#contact if you don't receive
-notification of your build only once you are certain you've waited long
-enough and verified the notification e-mail did not get caught by your own
-e-mail spam filter.
+El tiempo de creación de la imagen mostrado en la web es sólo una estimación
+aproximada y puede no reflejar con exactitud la duración que la construcción
+realmente necesita. Tampoco se actualiza esta estimación una vez
+mostrada. Hay que tener un poco de paciencia. No volver a recargar la
+página, ya que esto puede volver a lanzar una nueva creación de otra imagen
+con los mismos parámetros. {Ponerse en contacto}#contact con nosotros si no
+se recibe la notificación de que la imagen está terminada una vez que se
+esté seguro de que se ha esperado lo suficiente y verificado que la
+notificación por correo electrónico no ha ido a parar a la bandeja de spam.
 
-The web builder is limited in the kinds of images it can build. This keeps
-it simple and efficient to use and maintain. If you would like to make
-customizations that are not provided for by the web interface, the rest of
-this manual explains how to build your own images using live-build.
+El servicio web está limitado en el tipo de imágenes que se pueden
+construir. Esto lo hace simple y a la vez eficiente de usar y mantener. Si
+se desea realizar personalizaciones que no se contemplan en la interfaz web,
+en el resto de este manual se explica cómo crear imágenes propias con
+live-build.
 
 2~building-iso-hybrid Primeros pasos: creación de una imagen ISO híbrida
 
@@ -157,9 +166,9 @@ code{
 
 }code
 
-This process can take a while, depending on the speed of your computer and
-your network connection. When it is complete, there should be a
-#{binary.hybrid.iso}# image file, ready to use, in the current directory.
+Este proceso puede llevar un tiempo, dependiendo de la velocidad del
+ordenador y de la conexión de red. Cuando haya terminado, debería haber un
+fichero #{binary.hybrid.iso}# listo para ser usado en el directorio actual.
 
 2~using-iso-hybrid Usar una imagen ISO híbrida
 
@@ -170,8 +179,8 @@ CD-R(W) o DVD-R(W) o llaves USB.
 
 3~burning-iso-image Grabar una imagen ISO en un medio físico.
 
-Burning an ISO image is easy. Just install /{xorriso}/ and use it from the
-command-line to burn the image. For instance:
+Grabar una imagen ISO es fácil. Simplemente instalar /{xorriso}/ y usarlo
+desde el intérprete de comandos para grabar la imagen. Por ejemplo:
 
 code{
 
@@ -248,12 +257,14 @@ predeterminadas. Para obtener más información acerca de las opciones de
 arranque, ver la opción  «help» del menú y también las páginas del manual de
 live-boot y live-config que se encuentran en el sistema en vivo.
 
-Assuming you've selected #{Live}# and booted a default desktop live image,
-after the boot messages scroll by, you should be automatically logged into
-the #{user}# account and see a desktop, ready to use. If you have booted a
-console-only image, such as #{standard}# or #{rescue}# flavour {prebuilt
-images}#downloading-prebuilt-images, you should be automatically logged in
-on the console to the #{user}# account and see a shell prompt, ready to use.
+Suponiendo que se ha seleccionado #{Live}# y arrancado una imagen en vivo
+por defecto con escritorio gráfico, después de que los mensajes de arranque
+hayan pasado, se habrá iniciado automáticamente una sesión como usuario
+#{user}# y se verá el escritorio preparado para ser usado. Si se ha
+arrancado una imagen sólo de consola como por ejemplo {las imágenes
+prefabricadas}#downloading-prebuilt-images, #{standard}# o #{rescue}# se
+habrá iniciado automáticamente una sesión como usuario #{user}# y se verá el
+cursor del intérprete de comandos preparado para ser usado.
 
 2~using-virtual-machine Usar una máquina virtual para pruebas
 
@@ -330,10 +341,11 @@ code{
 
 }code
 
-In order to make the dkms package work, also the kernel headers for the
-kernel flavour used in your image need to be installed. Instead of manually
-listing the correct /{linux-headers}/ package in above created package list,
-the selection of the right package can be done automatically by live-build.
+Para que el paquete dkms funcione, hace falta tener instalados también los
+kernel-headers para la variante del kernel utilizado. En lugar de enumerar
+manualmente el paquete /{linux-headers}/ correspondiente en la lista de
+paquetes creados anteriormente, live-build puede seleccionarlo
+automáticamente.
 
 code{
 
@@ -413,13 +425,14 @@ code{
 
 }code
 
-In this specific case, a #{lb clean --binary}# would be not enough to clean
-up the necessary stages. The cause for this is that in netboot setups, a
-different initramfs configuration needs to be used which live-build performs
-automatically when building netboot images. Since the initramfs creation
-belongs to the chroot stage, switching to netboot in an existing build
-directory means to rebuild the chroot stage too. Therefore, #{lb clean}#
-(which will remove the chroot stage, too) needs to be used.
+En este caso concreto, un #{lb clean --binary}# no sería suficiente para
+eliminar las etapas necesarias. La razón de esto es que en las
+configuraciones de arranque en red, se debe utilizar una configuración
+initramfs diferente que live-build ejecuta automáticamente al crear imágenes
+netboot. Ya que la creación del initramfs pertenece a la etapa chroot,
+realizar el cambio a netboot en un directorio de construcción ya existente
+significa reconstruir la etapa chroot también. Por lo tanto, se tiene que
+ejecutar un #{lb clean}# (que también eliminará la etapa chroot).
 
 Ejecutar el comando #{lb config}# de la siguiente manera para configurar la
 imagen de arranque en red:
@@ -430,13 +443,14 @@ code{
 
 }code
 
-In contrast with the ISO and HDD images, netbooting does not, itself, serve
-the filesystem image to the client, so the files must be served via
-NFS. Different network filesystems can be chosen through lb config. The
-#{--net-root-path}# and #{--net-root-server}# options specify the location
-and server, respectively, of the NFS server where the filesytem image will
-be located at boot time. Make sure these are set to suitable values for your
-network and server.
+A diferencia de las imágenes ISO y HDD, el sistema de arranque en red en sí
+mismo no envía la imagen del sistema de ficheros al cliente, por eso los
+ficheros se deben enviar mediante NFS. Con lb config se puede seleccionar
+diferentes sistemas de ficheros en red. Las opciones #{--net-root-path}# y
+#{--net-root-server}# especifican la ubicación y el servidor,
+respectivamente, del servidor NFS en el que se encuentra la imagen del
+sistema de ficheros en el arranque. Se debe asegurar que estos se ajustan a
+los valores adecuados para la red y el servidor deseados.
 
 Crear ahora la imagen con el comando #{lb build}#:
 
@@ -454,10 +468,10 @@ conseguir un gestor de arranque de alto nivel a través del protocolo
 TFTP. Este gestor podría ser PXELINUX, GRUB, o incluso arrancar directamente
 un sistema operativo como Linux.
 
-For example, if you unpack the generated #{binary.netboot.tar}# archive in
-the #{/srv/debian-live}# directory, you'll find the filesystem image in
-#{live/filesystem.squashfs}# and the kernel, initrd and pxelinux bootloader
-in #{tftpboot/debian-live/i386}#.
+Por ejemplo, si se descomprime el archivo generado #{binary.netboot.tar}# en
+el directorio #{/srv/debian-live}#, se verá la imagen del sistema de
+ficheros en #{live/filesystem.squashfs}# y el kernel, initrd y el gestor de
+arranque pxelinux en #{tftpboot/debian-live/i386}#.
 
 Ahora se debe configurar tres servicios en el servidor para que arranque en
 red: el servidor DHCP, el servidor TFTP y el servidor NFS.
@@ -549,10 +563,11 @@ http://d-i.alioth.debian.org/manual/en.i386/ch04s05.html Esto puede ser
 
 3~ Cómo probar el arranque en red
 
-Netboot image creation is made easy with live-build, but testing the images
-on physical machines can be really time consuming.
+La creación de una imagen de arranque en red es sencilla con live-build,
+pero probar las imágenes en máquinas físicas puede ser un proceso mucho más
+lento.
 
-To make our life easier, we can use virtualization.
+Para hacer nuestra vida más fácil, se puede utilizar la virtualización.
 
 3~ Qemu
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 3.0~b1-1\n"
 "POT-Creation-Date: 2013-01-02 14:24+0100\n"
-"PO-Revision-Date: 2012-11-25 12:20+0100\n"
+"PO-Revision-Date: 2013-01-05 13:01+0100\n"
 "Last-Translator: Carlos Zuferri <chals@altorricon.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -282,14 +282,6 @@ msgstr " $ lb config --archive-areas \"main contrib non-free\"\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:28
-#, fuzzy
-#| msgid ""
-#| "Experimental support is available for some Debian derivatives through a #"
-#| "{--mode}# option. By default, this option is set to #{debian}#, even if "
-#| "you are building on a non-Debian system. If you specify #{--mode ubuntu}# "
-#| "or #{--mode emdebian}#, the distribution names and archive areas for the "
-#| "specified derivative are supported instead of the ones for Debian. The "
-#| "mode also modifies live-build behaviour to suit the derivatives."
 msgid ""
 "Experimental support is available for some Debian derivatives through a #{--"
 "mode}# option. By default, this option is set to #{debian}# only if you are "
@@ -300,13 +292,15 @@ msgid ""
 "supported instead of the ones for Debian. The mode also modifies live-build "
 "behaviour to suit the derivatives."
 msgstr ""
-"Experimentalmente hay soporte para alguna distribución derivada de Debian "
-"mediante la opción #{--mode}#. Por defecto, esta opción toma el valor de #"
-"{debian}# incluso si live-build se está ejecutando en un sistema no Debian. "
-"Si se especifica #{--mode ubuntu}# o #{--mode emdebian}# se utilizará el "
-"nombre de la distribución y las áreas de archivos específicas de la "
-"distribución derivada en lugar de los propios de Debian y live-build "
-"modificará su comportamiento para adecuarlo al modo seleccionado."
+"Experimentalmente se da soporte a alguna distribución derivada de Debian "
+"mediante la opción #{--mode}#. Por defecto, esta opción toma el valor #"
+"{debian}# sólo si se está construyendo en un sistema Debian o en un sistema "
+"desconocido. Si se utiliza #{lb config}# en cualquiera de las distribuciones "
+"derivadas a las que se da soporte, por defecto se construirá una imagen de "
+"esa distribución derivada. Por ejemplo, si #{lb config}# se ejecuta en modo #"
+"{ubuntu}# se utilizará el nombre de esa distribución y las áreas de archivos "
+"específicas de esa distribución derivada en lugar de los propios de Debian y "
+"live-build modificará su comportamiento para adecuarlo al modo seleccionado."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:30
@@ -321,19 +315,6 @@ msgstr "3~ Réplicas de Distribución Debian"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:34
-#, fuzzy
-#| msgid ""
-#| "The Debian archive is replicated across a large network of mirrors around "
-#| "the world so that people in each region can choose a nearby mirror for "
-#| "best download speed. Each of the #{--mirror-*}# options governs which "
-#| "distribution mirror is used at various stages of the build. Recall from "
-#| "{Stages of the build}#stages-of-the-build that the *{bootstrap}* stage is "
-#| "when the chroot is initially populated by /{debootstrap}/ with a minimal "
-#| "system, and the *{chroot}* stage is when the chroot used to construct the "
-#| "live system's filesystem is built. Thus, the corresponding mirror "
-#| "switches are used for those stages, and later, in the *{binary}* stage, "
-#| "the #{--mirror-binary}# and #{--mirror-binary-security}# values are used, "
-#| "superceding any mirrors used in an earlier stage."
 msgid ""
 "The Debian archive is replicated across a large network of mirrors around "
 "the world so that people in each region can choose a nearby mirror for best "
@@ -352,15 +333,15 @@ msgstr ""
 "de obtener la mejor velocidad de descarga. Cada una de las opciones #{--"
 "mirror-*}# gobierna qué réplica de repositorio Debian se utiliza en las "
 "diferentes etapas de creación. Si se recuerda de {Etapas de la creación}"
-"#stages-of-the-build, en la etapa de preinstalación (bootstrap) es cuando se "
-"crea el directorio chroot y se rellena con un sistema mínimo  mediante  la "
-"herramienta /{debootstrap}/, y en la etapa *{chroot}* es cuando el "
-"directorio chroot es completado con los paquetes necesarios para crear el "
-"sistema de ficheros que será utilizado en el sistema en vivo. A cada una de "
-"estas etapas le corresponde su propia opción #{--mirror-*}#. Posteriormente, "
-"en la etapa *{binary}* se utilizarán las réplicas Debian indicadas en los "
-"valores de las opciones #{--mirror-binary}# y #{--mirror-binary-security}# "
-"en lugar de utilizar los indicados para las etapas anteriores."
+"#stages-of-the-build, en la etapa *{bootstrap}* es cuando se crea el "
+"directorio chroot con un sistema mínimo mediante la herramienta /"
+"{debootstrap}/, y en la etapa *{chroot}* es cuando el directorio chroot es "
+"completado con los paquetes necesarios para crear el sistema de ficheros que "
+"será utilizado en el sistema en vivo. A cada una de estas etapas le "
+"corresponde su propia opción #{--mirror-*}#. Posteriormente, en la etapa *"
+"{binary}* se utilizarán las réplicas Debian indicadas en los valores de las "
+"opciones #{--mirror-binary}# y #{--mirror-binary-security}# en lugar de "
+"utilizar los indicados para las etapas anteriores."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:36
@@ -515,20 +496,16 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:80
-#, fuzzy
-#| msgid ""
-#| "If you add the same line to #{config/archives/live.list.binary}#, the "
-#| "repository will be added to your live system's #{/etc/apt/sources.list.d/}"
-#| "# directory."
 msgid ""
 "Should you need custom APT pinning, such APT preferences snippets can be "
 "placed in #{config/archives/your-repository.pref.{binary,chroot}}# files and "
 "will be automatically added to your live system's #{/etc/apt/preferences.d/}"
 "# directory."
 msgstr ""
-"Si se añade la misma línea a #{config/archives/live.list.binary}#, el "
-"repositorio será añadido al directorio #{/etc/apt/sources.list.d/}# del "
-"sistema en vivo."
+"En caso de necesitar un APT pinning personalizado, las preferencias de APT "
+"se pueden colocar mediante ficheros en #{config/archives/your-repository."
+"pref.{binary,chroot}}#, y serán añadidos automáticamente al sistema en vivo "
+"en el directorio #{/etc/apt/preferences.d/}#."
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:82
@@ -574,13 +551,6 @@ msgstr "3~package-lists Listas de paquetes"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:96
-#, fuzzy
-#| msgid ""
-#| "Package lists are a powerful way of expressing which packages should be "
-#| "installed. The list syntax supports included files and conditional "
-#| "sections which makes it easy to build lists from other lists and adapt "
-#| "them for use in multiple configurations. Package names may also be "
-#| "injected into the list using shell helpers at build time."
 msgid ""
 "Package lists are a powerful way of expressing which packages should be "
 "installed. The list syntax supports conditional sections which makes it easy "
@@ -588,11 +558,10 @@ msgid ""
 "names may also be injected into the list using shell helpers at build time."
 msgstr ""
 "Las listas de paquetes proporcionan una potente forma de expresar qué "
-"paquetes deberían ser instalados. La sintaxis de la listas soporta la "
-"inclusión de ficheros y secciones condicionales, que facilitan la creación "
-"de listas a partir de otras listas, adaptando su utilización a diversas "
-"configuraciones. También se pueden añadir nombre de paquetes en la listas "
-"utilizando shell helpers en tiempo de construcción. "
+"paquetes deberían ser instalados. La sintaxis de las listas soporta las "
+"expresiones condicionales, que facilitan la creación de listas, adaptando su "
+"utilización a diversas configuraciones. También se pueden añadir nombre de "
+"paquetes en la listas utilizando shell helpers en tiempo de construcción. "
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:98
@@ -947,13 +916,6 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:196
-#, fuzzy
-#| msgid ""
-#| "Because there is no provision made automatically for language tasks, "
-#| "which include such things as language-specific fonts and input-method "
-#| "packages, if you want them, you need to specify them in your "
-#| "configuration. For example, a GNOME desktop image containing support for "
-#| "Japanese might include these task metapackages:"
 msgid ""
 "Because there is no provision made automatically for language tasks, which "
 "include such things as language-specific fonts and input-method packages, if "
@@ -965,8 +927,8 @@ msgstr ""
 "incluyen cosas tales como tipos de letra específicos de cada lengua o "
 "paquetes de métodos de entrada, si se quiere incluirlos, es necesario "
 "especificarlo en la configuración. Por ejemplo, una imagen de escritorio "
-"GNOME que contenga soporte para el japonés podría incluir los siguientes "
-"metapaquetes:"
+"GNOME que contenga soporte para el alemán podría incluir los siguientes "
+"metapaquetes de tareas:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:202
@@ -1019,14 +981,6 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:212
-#, fuzzy
-#| msgid ""
-#| "When more than one kernel package version is available in your configured "
-#| "archives, you can specify a different kernel package name stub with the #"
-#| "{--linux-packages}# option. For example, supposing you are building an #"
-#| "{amd64}# architecture image and add the experimental archive for testing "
-#| "purposes so you can install the #{linux-image-3.5-trunk-amd64}# kernel. "
-#| "You would configure that image as follows:"
 msgid ""
 "When more than one kernel package version is available in your configured "
 "archives, you can specify a different kernel package name stub with the #{--"
@@ -1040,7 +994,7 @@ msgstr ""
 "kernel diferente con la opción #{--linux-packages}#. Por ejemplo, suponer "
 "que se está construyendo una image de arquitectura #{amd64}# y se quiere "
 "añadir el archivo experimental a fin de realizar pruebas para que se pueda "
-"instalar el kernel #{linux-image-3.5-trunk-amd64}#. Se podría configurar la "
+"instalar el kernel #{linux-image-3.7-trunk-amd64}#. Se podría configurar la "
 "imagen de la siguiente manera:"
 
 #. type: Plain text
@@ -1667,17 +1621,6 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:360
-#, fuzzy
-#| msgid ""
-#| "Negative pin priorities will prevent a package from being installed, as "
-#| "in the case where you do not want a package that is recommended by "
-#| "another package. Suppose you are building an LXDE image using #{task-lxde-"
-#| "desktop}# in #{config/package-lists/lxde-desktop.list.chroot}#, but don't "
-#| "want the user prompted to store wifi passwords in the keyring. This "
-#| "metapackage depends on /{lxde-core}/, which recommends /{gksu}/, which in "
-#| "turn recommends /{gnome-keyring}/. So you want to omit the recommended /"
-#| "{gnome-keyring}/ package. This can be done by adding the following stanza "
-#| "to #{config/apt/preferences}#:"
 msgid ""
 "Negative pin priorities will prevent a package from being installed, as in "
 "the case where you do not want a package that is recommended by another "
@@ -1692,13 +1635,13 @@ msgstr ""
 "Una prioridad pin negativa previene la instalación de un paquete, como puede "
 "ser el caso de que no se desee que un paquete recomendado por otro sea "
 "instalado al instalar el primero. Supongamos que se está creando una imagen "
-"LXDE añadiendo #{task-lxde-desktop}# en #{config/package-lists/lxde-desktop."
-"list.chroot}#, pero no se desea preguntar al usuario si desea almacenar las "
-"claves wifi en el almacen de claves. Este metapaquete depende de /{lxde-"
-"core}/, el cual recomienda /{gksu}/ que a su vez recomienda /{gnome-"
-"keyring}/. Así que el objetivo es omitir la instalación del paquete /{gnome-"
-"keyring}/, que puede conseguirse añadiendo un fichero con el siguiente "
-"contenido a #{config/apt/preferences}#:"
+"LXDE añadiendo #{task-lxde-desktop}# en #{config/package-lists/desktop.list."
+"chroot}#, pero no se desea preguntar al usuario si desea almacenar las "
+"claves wifi en el keyring. Este metapaquete depende de /{lxde-core}/, el "
+"cual recomienda /{gksu}/ que a su vez recomienda /{gnome-keyring}/. Así que "
+"el objetivo es omitir la instalación del paquete /{gnome-keyring}/, que "
+"puede conseguirse añadiendo un fichero con el siguiente contenido a #{config/"
+"apt/preferences}#:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:366

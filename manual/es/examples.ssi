@@ -374,24 +374,25 @@ anterior produjo una imagen de 77MB. Esto se compara favorablemente en
 tamaño con la imagen de 177MB producida por la configuración por defecto en
 el {Tutorial 1}#tutorial-1.
 
-The biggest space-saver here, compared to building a default image on an
-#{i386}# architecture system, is to select only the #{486}# kernel flavour
-instead of the default #{-k "486 686-pae"}#. Leaving off APT's indices with
-#{--apt-indices false}# also saves a fair amount of space, the tradeoff
-being that you need to do an #{apt-get update}# before using /{apt}/ in the
-live system. Dropping recommended packages with #{--apt-recommends false}#
-saves some additional space, at the expense of omitting some packages you
-might otherwise expect to be there. #{--debootstrap-options
-"--variant=minbase"}# bootstraps a minimal system from the start. Not
-automatically including firmware packages with #{--firmware-chroot false}#
-saves some space too. And finally, #{--memtest none}# prevents the
-installation of a memory tester.
+El mayor ahorro de espacio aquí, en comparación con la creación de una
+imagen por defecto en un sistema de arquitectura #{i386}# es seleccionar
+sólo la versión del kernel #{486}# en lugar de la de por defecto #{-k "486
+686-pae"}#. Dejar fuera los índices de APT con #{--apt-indices false}#
+también ahorra una cantidad importante de espacio, la desventaja es que será
+necesario hacer un #{apt-get update}# antes de usar apt en el sistema en
+vivo. Excluyendo los paquetes recomendados con #{--apt-recommends false}# se
+ahorra un poco de espacio adicional a costa de omitir algunos paquetes que
+de otro modo podría esperarse que estuvieran alli. #{--debootstrap-options
+"--variant=minbase"}# preinstala un sistema mínimo desde el principio. El
+hecho de no incluir automáticamente paquetes de firmware con
+#{--firmware-chroot false}# también ahorra un poco de espacio. Y por último,
+#{--memtest none}# evita la instalación de un comprobador de memoria. 
 
-*{Note:}* A minimal system can also be achieved using hooks, like for example the #{stripped.chroot}# hook found in #{/usr/share/doc/live-build/examples/hooks}#. It may shave off additional small amounts of space and produce an image of 62MB. However, it does so by removal of documentation and other files from packages installed on the system. This violates the integrity of those packages and that, as the comment header warns, may have unforeseen consequences. That is why using a minimal /{debootstrap}/ is the recommended way of achieving this goal.
+*{Nota:}* También se puede conseguir un sistema mínimo utilizando scripts gancho como por ejemplo el script #{stripped.chroot}# que se encuentra en #{/usr/share/doc/live-build/examples/hooks}#, que puede reducir aún más el tamaño de la imagen hasta 62MB. Sin embargo, el script elimina documentación y otros ficheros de los paquetes instalados en el sistema. Esto viola la integridad de los paquetes y como se comenta en el encabezado del script, puede tener consecuencias imprevistas. Es por eso por lo que el uso de /{debootstrap}/ es el método recomendado para conseguir este objetivo.
 
 2~ Un escritorio GNOME con variante local e instalador
 
-*{Use case:}* Create a GNOME desktop image, localized for Switzerland and including an installer.
+*{Caso práctico:}* Crear una imagen que contenga el escritorio gráfico GNOME, la variante local Suiza y un instalador.
 
 Se desea crear una imagen iso-hybrid para la arquitectura i386 con un
 escritorio preferido, en este caso el GNOME, que contiene todos los mismos

@@ -10,9 +10,11 @@ siempre una versión actualizada en http://live.debian.net/
 live-manual está principalmente enfocado a ayudar en la creación de un
 sistema en vivo y no está dirigido al usuario final de estos sistemas. Un
 usuario final puede encontrar información útil en las siguentes secciones:
-{Conceptos básicos}#the-basics que cubre la preparación de las imágenes para
-arrancar un sistema desde un medio de almacenamiento o desde una red
-local. {Personalización del comportamiento en tiempo de
+{Conceptos básicos}#the-basics que cubre la descarga de imágenes
+prefabricadas y la preparación de imágenes para arrancar un sistema desde un
+medio de almacenamiento o desde una red local, ya sea utilizando el
+constructor web o ejecutando live-build directamente en el
+sistema. {Personalización del comportamiento en tiempo de
 ejecución}#customizing-run-time-behaviours que describe algunas de las
 opciones que pueden especificarse en el indicador de arranque, como pueden
 ser la selección de la distribución del teclado, las variantes locales o la
@@ -65,7 +67,8 @@ medios extraíbles como CD, DVD o llaves USB. Algunos pueden también arrancar
 desde la red local.
 
 _* *{Debian Live}*: Es un subproyecto de Debian que mantiene, entre otros,
-los paquetes Debian live-boot, live-build, live-config y live-manual.
+los paquetes Debian live-boot, live-build, live-config, live-tools y
+live-manual.
 
 _* *{Sistema Debian Live}*: Es un sistema en vivo que utiliza programas del
 sistema operativo Debian y que puede ser arrancado desde medios extraíbles
@@ -79,16 +82,16 @@ _* *{Sistema objetivo}*: Es el conjunto de herramientas y equipo donde se
 ejecutará el sistema en vivo.
 
 _* *{live-boot}*: Es una colección de scripts que serán responsables de
-arrancar el sistema en vivo. live-boot formó anteriormente parte del paquete
-/{live-initramfs}/.
+arrancar el sistema en vivo.
 
-_* *{live-build}*: Es una colección de scripts utilizados para construir
-sistemas Debian Live personalizados. live-build fue conocido anteriormente
-como /{live-helper}/, y en una versión anterior como /{live-package}/.
+_* *{live-build}*: Una colección de scripts utilizados para construir
+sistemas Debian Live personalizados.
 
 _* *{live-config}*: Es una colección de scripts utilizados para configurar
-un sistema en vivo durante el proceso de arranque. live-config formó
-anteriormente parte del paquete /{live-initramfs}/.
+un sistema en vivo durante el proceso de arranque.
+
+_* *{live-tools}*: Una colección de scripts adicionales que se utilizan para
+realizar tareas útiles en un sistema en vivo en ejecución.
 
 _* *{live-manual}*: Este documento forma parte de un paquete llamado
 live-manual.
@@ -171,7 +174,7 @@ ejecutando la siguiente orden:
 
 code{
 
- # apt-get install make po4a sisu-complete libnokogiri-ruby
+ # apt-get install make po4a ruby ruby-nokogiri sisu-complete texlive-generic-recommended
 
 }code
 
@@ -207,7 +210,7 @@ O combinar ambos, por ejemplo:
 
 code{
 
- $ make build LANGUAGES=it FORMATS=html
+ $ make build LANGUAGES=de FORMATS=html
 
 }code
 
@@ -235,11 +238,10 @@ _* Una vez que el nuevo idioma haya sido añadido, se puede continuar la
 traducción de los ficheros po restantes en #{manual/po/}# de manera
 aleatoria.
 
-_* No se debe olvidar la ejecución del comando #{make commit}# para asegurar
-que los manuales traducidos son actualizados a partir de los ficheros
-.po. Entonces se puede revisar los cambios ejecutando #{make build}# antes
-de realizar la entrega mediante #{git add .}#, #{git commit -m
-"Translating..."}# y #{git push}#.
+_* No se debe olvidar la ejecución del comando #{make commit}# para
+actualizar los manuales traducidos a partir de los ficheros po. Entonces se
+puede revisar los cambios ejecutando #{make build}# antes de #{git add .}#,
+#{git commit -m "Translating..."}# y #{git push}#.
 
 Después de ejecutar #{make commit}# se podrá observar bastante texto en la
 pantalla.  Básicamente son mensajes informativos sobre el estado del proceso
@@ -256,9 +258,9 @@ encontrarlos y corregirlos uno por uno.
 
 Hay que tener en cuenta que aunque estas utilidades pueden ser de gran ayuda
 para traducir en la linea de comandos, se recomienda el uso de una
-herramienta especializada como por ejemplo /{poedit}/. Además es una buena
+herramienta especializada como por ejemplo /{poedit}/. Además, es una buena
 idea leer la documentación de debian sobre localizacion (l10n) y,
-especificamente para live-manual,  las {Directrices para los
+especificamente para live-manual, las {Directrices para los
 traductores}#guidelines-translators.
 
 *{Nota:}* Se puede utilizar #{make clean}# para limpiar el árbol git antes de enviar los cambios. Este paso no es obligatorio, gracias al fichero .gitignore, pero es una buena práctica para evitar enviar ficheros involuntariamente.

@@ -42,19 +42,17 @@ _* Architecture of the host system
 
 _* Version of live-build on the host system
 
-_* Version of live-boot on the live system
-
-_* Version of live-config on the live system
-
-_* Version of live-tools on the live system
-
 _* Version of /{debootstrap}/ and/or /{cdebootstrap}/ on the host system
 
 _* Architecture of the live system
 
 _* Distribution of the live system
 
-_* Version of the kernel on the live system
+_* Version of live-boot on the live system
+
+_* Version of live-config on the live system
+
+_* Version of live-tools on the live system
 
 You can generate a log of the build process by using the #{tee}# command. We recommend doing this automatically with an #{auto/build}# script (see {Managing a configuration}#managing-a-configuration for details).
 
@@ -64,7 +62,7 @@ code{
 
 }code
 
-At boot time, live-boot stores a log in #{/var/log/live-boot.log}#.
+At boot time, live-boot and live-config store their logfiles in #{/var/log/live/}#. Check them for error messages.
 
 Additionally, to rule out other errors, it is always a good idea to tar up your #{config/}# directory and upload it somewhere (do *{not}* send it as an attachment to the mailing list), so that we can try to reproduce the errors you encountered. If this is difficult (e.g. due to size) you can use the output of #{lb config --dump}# which produces a summary of your config tree (i.e. lists files in subdirectories of #{config/}# but does not include them).
 
@@ -96,7 +94,7 @@ Also, if you are using a local mirror and/or any sort of proxy and you are exper
 
 3~ At boot time
 
-If your image does not boot, please report it to the mailing list together with the information requested in {Collect information}#collect-information. Do not forget to mention, how/when the image failed, whether in Qemu, Virtualbox, VMWare or real hardware. If you are using a virtualization technology of any kind, please always run it on real hardware before reporting a bug. Providing a screenshot of the failure is also very helpful.
+If your image does not boot, please report it to the mailing list together with the information requested in {Collect information}#collect-information. Do not forget to mention, how/when the image failed exactly, whether using virtualization or real hardware. If you are using a virtualization technology of any kind, please always run it on real hardware before reporting a bug. Providing a screenshot of the failure is also very helpful.
 
 3~ At run time
 

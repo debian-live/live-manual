@@ -1,7 +1,7 @@
 # Makefile
 
 ## live-manual(7) - Documentation
-## Copyright (C) 2006-2012 Debian Live Project <debian-live@lists.debian.org>
+## Copyright (C) 2006-2013 Debian Live Project <debian-live@lists.debian.org>
 ##
 ## live-manual comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
 ## This is free software, and you are welcome to redistribute it
@@ -10,25 +10,24 @@
 
 SHELL := sh -e
 
-LANGUAGES = en $(shell cd manual/po && ls)
+LANGUAGES := en $(shell cd manual/po && ls)
 
-FORMATS = epub html odf pdf txt
+FORMATS := epub html odf pdf txt
 
-DEBUG = 0
+DEBUG := 0
 
 all: build
 
 test:
 	@echo "Checking for syntax errors... [not implemented yet - FIXME]"
 	@echo "Checking for spelling errors... [not implemented yet - FIXME]"
+
 	@echo "Checking the integrity of po files..."
-	@echo
-	
 	for POFILE in manual/po/*/*; \
 	do \
 		msgfmt --check --output-file=/dev/null $${POFILE}; \
 	done
-	
+
 tidy:
 	# Removing useless whitespaces at EOL
 	for FILE in manual/en/*.ssm manual/en/*.ssi; \
@@ -129,6 +128,6 @@ fixfuzzy:
 
 check:
 	@./manual/bin/po-integrity-check.sh
-	
+
 translate:
 	@./manual/bin/find-untranslated.sh

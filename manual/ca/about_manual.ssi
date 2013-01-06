@@ -10,11 +10,13 @@ versió actualitzada es pot trobar sempre a http://live.debian.net/
 Si bé live-manual es centra principalment en ajudar a construir un sistema
 viu i no en temes dels usuaris finals, un usuari final pot trobar informació
 útil en aquestes seccions: {Conceptes bàsics}#the-basics abasta la
-preparació d'imatges per ser arrencadas des dels dispositius o la xarxa, i
-{Personalització dels comportaments en temps
+descàrrega d'imatges prefabricades i la preparació de les imatges per ser
+arrencades des dels dispositius o la xarxa, ja sigui utilitzant el servei de
+construcció d'imatges web o executant live-build directament en el
+sistema. {Personalització dels comportaments en temps
 d'execució}#customizing-run-time-behaviours descriu algunes de les opcions
 que es poden especificar durant l'arrencada del sistema, com ara la selecció
-de la disposició del teclat, la configuració regional i l'us de la
+de la disposició del teclat, la configuració regional i l'ús de la
 persistència.
 
 Algunes de les ordres esmentades en el text s'han d'executar amb privilegis
@@ -60,7 +62,7 @@ de dispositius, com ara CD, DVD o memòries USB. Alguns també poden arrencar
 des de la xarxa.
 
 _* *{Debian Live}*: Un subprojecte de Debian, que manté, entre altres, els
-paquets live-boot, live-build, live-config i live-manual. 
+paquets live-boot, live-build, live-config, live-tools i live-manual. 
 
 _* *{Sistema Debian Live}*: Un sistema viu que utilitza el programari del
 sistema operatiu Debian que es pot arrencar des d'un CD, DVD, memòries USB,
@@ -72,16 +74,16 @@ _* *{Sistema amfitrió}*: L'entorn utilitzat per crear el sistema en viu.
 _* *{Sistema objectiu}*: L'entorn que s'utilitza per executar el sistema en
 viu.
 
-_* *{live-boot}*: Una coŀlecció de scripts per arrencar els sistemes
-vius. live-boot abans havia estat part de /{live-initramfs}/.
+_* *{live-boot}*: Una coŀlecció de scripts per arrencar els sistemes vius.
 
-_* *{live-build}*: Una coŀlecció de scripts utilitzats per construir
-sistemes personalitzats de Debian Live. live-build era anteriorment conegut
-com /{live-helper}/ i fins i tot abans conegut com /{live-package}/.
+_* *{live-build}*: Una coŀlecció d'scripts utilitzats per construir sistemes
+Debian Live personalitzats.
 
 _* *{live-config}*: Una coŀlecció de scripts utilitzats per configurar un
-sistema en viu durant el procés d'arrencada. live-config abans va ser part
-de /{live-initramfs}/.
+sistema en viu durant el procés d'arrencada.
+
+_* *{live-tools}*: Una coŀlecció d'scripts addicionals que s'utilitzen per
+realitzar tasques útils en un sistema viu en execució.
 
 _* *{live-manual}*: Aquest document és mantingut en un paquet anomenat
 live-manual
@@ -159,7 +161,7 @@ mitjançant l'execució de:
 
 code{
 
-# apt-get install make po4a sisu-complete libnokogiri-ruby
+ # apt-get install make po4a ruby ruby-nokogiri sisu-complete texlive-generic-recommended
 
 }code
 
@@ -194,7 +196,7 @@ O combinar tot dos, per exemple:
 
 code{
 
- $ make build LANGUAGES=it FORMATS=html
+ $ make build LANGUAGES=de FORMATS=html
 
 }code
 
@@ -221,7 +223,7 @@ _* Una vegada que s'ha afegit la nova llengua, es pot continuar traduint la
 resta de fitxers dins de #{manual/po/}# a l'atzar.
 
 _* No oblidar que es necessari fer un #{make commit}# per garantir que els
-manuals traduïts s'actualitzen a partir dels fitxers po i llavors es poden
+manuals traduïts s'actualitzin a partir dels fitxers po i llavors es poden
 revisar els canvis executant #{make build}# abans de #{git add .}#, #{git
 commit -m "Translating..."}# i #{git push}#.
 

@@ -50,6 +50,6 @@ distclean: clean
 	rm -f po4a.cfg
 	rm -rf $(LANGUAGES)
 
-rebuild: distclean update build unfuzzy
+rebuild: distclean update build
 unfuzzy:
 	@./bin/unfuzzy-dates.sh

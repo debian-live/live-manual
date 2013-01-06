@@ -7,16 +7,16 @@ for using the three most commonly used image types. The most versatile image
 type, #{iso-hybrid}#, may be used on a virtual machine, optical media or USB
 portable storage device. In certain special cases, as explained later, the
 #{hdd}# type may be more suitable. The chapter finishes with instructions
-for building and using a #{net}# type image, which is a bit more involved
-due to the setup required on the server. This is an slightly advanced topic
-for anyone who is not familiar already with netbooting, but it is included
-here because once the setup is done, it is a very convenient way to test and
-deploy images for booting on the local network without the hassle of dealing
-with image media.
+for building and using a #{netboot}# type image, which is a bit more
+involved due to the setup required on the server. This is an slightly
+advanced topic for anyone who is not familiar already with netbooting, but
+it is included here because once the setup is done, it is a very convenient
+way to test and deploy images for booting on the local network without the
+hassle of dealing with image media.
 
-In tutto il capitolo faremo spesso riferimento ai nomi dei file predefiniti
-creati da live-build. Se si scarica invece un'immagine precompilata, i nomi
-possono variare.
+Throughout the chapter, we will often refer to the default filenames
+produced by live-build. If you are {downloading a prebuilt
+image}#downloading-prebuilt-images instead, the actual filenames may vary.
 
 2~what-is-live Che cos'è un sistema live?
 
@@ -27,8 +27,8 @@ una configurazione automatica fatta durante l'esecuzione (vedere
 {Glossario}#terms).
 
 Con Debian Live, si tratta di un sistema operativo Debian GNU/Linux,
-generato per una delle architetture previste (attualmente amd64, i386,
-powerpc e sparc). È costituito dalle seguenti parti:
+generato per una delle architetture previste (attualmente amd64 e i386). È
+costituito dalle seguenti parti:
 
 _* *{Immagine del kernel Linux}*, comunemente chiamata #{vmlinuz*}#
 
@@ -59,6 +59,55 @@ il netboot PXE, GRUB per partizioni ext2/3/4, ecc.
 proprie specifiche, scegliere un kernel Linux, il suo initrd ed un
 bootloader per avviarli, tutto in un unico formato che dipende dal mezzo
 (immagini ISO9660, immagine disco, ecc.)
+
+2~downloading-prebuilt-images Downloading prebuilt images
+
+While the focus of this manual is developing and building your own live
+images, you may simply wish to try one of our prebuilt images, either as an
+introduction to their use or instead of building your own. These images are
+built using our {live-images git repository}#clone-configuration-via-git and
+official stable releases are published at http://www.debian.org/CD/live/. In
+addition, older and upcoming releases, and unofficial images containing
+non-free firmware and drivers are available at
+http://live.debian.net/cdimage/release/.
+
+2~using-web-builder Using the web live image builder
+
+As a service to the community, we run a web-based live image builder service
+at http://live-build.debian.net/. This site is maintained on a best effort
+basis. That is, although we strive to keep it up-to-date and operational at
+all times, and do issue notices for significant operational outages, we
+cannot guarantee 100% availability or fast image building, and the service
+may occasionally have issues that take some time to resolve. If you have
+problems or questions about the service, please {contact us}#contact,
+providing us with the link to your build.
+
+3~ Web builder usage and caveats
+
+The web interface currently makes no provision to prevent the use of invalid
+combinations of options, and in particular, where changing an option would
+normally (i.e. using live-build directly) change defaults of other options
+listed in the web form, the web builder does not change these defaults. Most
+notably, if you change #{--architectures}# from the default #{i386}# to
+#{amd64}#, you must change the corresponding option #{--linux-flavours}#
+from the default #{486}# to #{amd64}#. See the #{lb_config}# man page for
+the version of live-build installed on the web builder for more details. The
+version number of live-build is listed at the bottom of the web builder
+page.
+
+The time estimate given by the web builder is a crude estimate only and may
+not reflect how long your build actually takes. Nor is the estimate updated
+once it is displayed. Please be patient. Do not refresh the page you land on
+after submitting the build, as this will resubmit a new build with the same
+parameters. You should {contact us}#contact if you don't receive
+notification of your build only once you are certain you've waited long
+enough and verified the notification e-mail did not get caught by your own
+e-mail spam filter.
+
+The web builder is limited in the kinds of images it can build. This keeps
+it simple and efficient to use and maintain. If you would like to make
+customizations that are not provided for by the web interface, the rest of
+this manual explains how to build your own images using live-build.
 
 2~building-iso-hybrid Primi passi: creare un'immagine ISO ibrida
 
@@ -104,9 +153,9 @@ code{
 
 }code
 
-Questo processo può richiedere tempo, a seconda della velocità della
-connessione di rete. Una volta completato, nell'attuale directory ci sarà un
-file immagine #{binary.hybrid.iso}# pronto da usare.
+This process can take a while, depending on the speed of your computer and
+your network connection. When it is complete, there should be a
+#{binary.hybrid.iso}# image file, ready to use, in the current directory.
 
 2~using-iso-hybrid Utilizzare un'immagine ISO live ibrida
 
@@ -117,14 +166,14 @@ una penna USB.
 
 3~burning-iso-image Masterizzare un'immagine ISO su un supporto fisico
 
-Masterizzare un'immagine ISO è semplice, basta installare wodim e
-utilizzarlo da riga di comando; ad esempio:
+Burning an ISO image is easy. Just install /{xorriso}/ and use it from the
+command-line to burn the image. For instance:
 
 code{
 
- # apt-get install wodim
+ # apt-get install xorriso
 
- $ wodim binary.hybrid.iso
+ $ xorriso -as cdrecord -v dev=/dev/sr0 blank=as_needed binary.hybrid.iso
 
 }code
 
@@ -194,9 +243,9 @@ pagine di manuale di live-boot e live-config all'interno del sistema.
 Assuming you've selected #{Live}# and booted a default desktop live image,
 after the boot messages scroll by, you should be automatically logged into
 the #{user}# account and see a desktop, ready to use. If you have booted a
-console-only image, such as #{standard}# or #{rescue}# flavour prebuilt
-images, you should be automatically logged in on the console to the #{user}#
-account and see a shell prompt, ready to use.
+console-only image, such as #{standard}# or #{rescue}# flavour {prebuilt
+images}#downloading-prebuilt-images, you should be automatically logged in
+on the console to the #{user}# account and see a shell prompt, ready to use.
 
 2~using-virtual-machine Utilizzare una macchina virtuale per le prove
 
@@ -254,7 +303,7 @@ Per provare la ISO con /{virtualbox}/:
 
 code{
 
- # apt-get install virtualbox virtualbox-dkms
+ # apt-get install virtualbox virtualbox-qt virtualbox-dkms
 
  $ virtualbox
 
@@ -264,11 +313,22 @@ Creare una nuova macchina virtuale, modificare le impostazione di
 archiviazione in modo da usare #{binary.hybrid.iso}# come dispositivo
 CD/DVD, e avviare la macchina.
 
-*{Nota:}* per sistemi live contenenti X.org che si vogliono provare con /{virtualbox}/, si può voler includere il pacchetto dei driver per X.org di VirtualBox, /{virtualbox-guest-x11}/, nella configurazione di live-build. In caso contrario la risoluzione è limitata a 800x600.
+*{Nota:}* per sistemi live contenenti X.org che si vogliono provare con /{virtualbox}/, si può voler includere il pacchetto dei driver per X.org di VirtualBox, /{virtualbox-guest-dkms}/ e /{virtualbox-guest-x11}/, nella configurazione di live-build. In caso contrario la risoluzione è limitata a 800x600.
 
 code{
 
- $ echo virtualbox-guest-x11 >> config/package-lists/my.list.chroot
+ $ echo "virtualbox-guest-dkms virtualbox-guest-x11" >> config/package-lists/my.list.chroot
+
+}code
+
+In order to make the dkms package work, also the kernel headers for the
+kernel flavour used in your image need to be installed. Instead of manually
+listing the correct /{linux-headers}/ package in above created package list,
+the selection of the right package can be done automatically by live-build.
+
+code{
+
+  $ lb config --linux-packages "linux-image linux-header"
 
 }code
 
@@ -337,25 +397,34 @@ over the network.
 
 code{
 
- # lb clean --binary
+ # lb clean
 
 }code
+
+In this specific case, a #{lb clean --binary}# would be not enough to clean
+up the necessary stages. The cause for this is that in netboot setups, a
+different initramfs configuration needs to be used which live-build performs
+automatically when building netboot images. Since the initramfs creation
+belongs to the chroot stage, switching to netboot in an existing build
+directory means to rebuild the chroot stage too. Therefore, #{lb clean}#
+(which will remove the chroot stage, too) needs to be used.
 
 Per configurare l'immagine per l'avvio da rete, eseguire il comando #{lb
 config}# come segue:
 
 code{
 
- $ lb config -b net --net-root-path "/srv/debian-live" --net-root-server "192.168.0.1"
+ $ lb config -b netboot --net-root-path "/srv/debian-live" --net-root-server "192.168.0.1"
 
 }code
 
-Diversamente dalle immagini ISO e HDD, il boot via rete non fornisce
-un'immagine del filesytem al client, perciò i file devono essere forniti via
-NFS. Le opzioni net-root-path e net-root-server specificano,
-rispettivamente, il percorso e il server del server NFS dove l'immagine del
-filesystem sarà situata all'avvio. Accertarsi che questi siano impostati su
-valori adeguati alla propria rete.
+In contrast with the ISO and HDD images, netbooting does not, itself, serve
+the filesystem image to the client, so the files must be served via
+NFS. Different network filesystems can be chosen through lb config. The
+#{--net-root-path}# and #{--net-root-server}# options specify the location
+and server, respectively, of the NFS server where the filesytem image will
+be located at boot time. Make sure these are set to suitable values for your
+network and server.
 
 Creare ora l'immagine con il comando #{lb build}#:
 
@@ -373,10 +442,10 @@ di di livello superiore attraverso il protocollo TFTP. Questi potrebbe
 essere pxelinux, GRUB, o anche avviare direttamente un sistema operativo
 come Linux.
 
-Per esempio, estraendo l'archivio generato #{binary.netboot.tar.xz}# nella
-directory #{/srv/debian-live}#, si troverà l'immagine del filesystem in
-#{live/filesystem.squashfs}# mentre il kernel, initrd ed il bootloader
-pxelinux in #{tftpboot/debian-live/i386}#.
+For example, if you unpack the generated #{binary.netboot.tar}# archive in
+the #{/srv/debian-live}# directory, you'll find the filesystem image in
+#{live/filesystem.squashfs}# and the kernel, initrd and pxelinux bootloader
+in #{tftpboot/debian-live/i386}#.
 
 Per abilitare l'avvio tramite rete vanno ora configurati tre servizi:i
 server DHCP, TFTP e NFS.
@@ -456,19 +525,17 @@ code{
 
 Configurare questi tre servizi può essere un po' problematico, serve un
 attimo di pazienza per farli funzionare assieme. Per ulteriori informazioni
-vedere il wiki syslinux http://syslinux.zytor.com/wiki/index.php/PXELINUX o
-il manuale del Debian Installer alla sezione per l'avvio TFTP da rete
+vedere il wiki syslinux http://www.syslinux.org/wiki/index.php/PXELINUX o il
+manuale del Debian Installer alla sezione per l'avvio TFTP da rete
 http://d-i.alioth.debian.org/manual/en.i386/ch04s05.html. Ciò può essere
 d'aiuto, considerato che il procedimento è molto simile.
 
 3~ Come provare una netboot
 
-La creazione di immagini netboot è resa semplice dal potere di live-build,
-ma provare le immagini su una macchina reale può essere davvero dispendioso
-in termini di tempo.
+Netboot image creation is made easy with live-build, but testing the images
+on physical machines can be really time consuming.
 
-Per semplificarsi la vita, si può usare la virtualizzazione. Ci sono due
-soluzioni.
+To make our life easier, we can use virtualization.
 
 3~ Qemu
 
@@ -489,51 +556,6 @@ code{
 
 }code
 
-Procurarsi o compilare #{grub-floppy-netboot}# (su svn).
+Procurarsi o compilare #{grub-floppy-netboot}#.
 
 Lanciare #{qemu}# con "#{-net nic,vlan=0 -net tap,vlan=0,ifname=tun0}#"
-
-3~ VMWare Player
-
-_* Installare VMWare Player (edizione "free as in beer")
-
-_* Creare una directory PXETester, e crearvi all'interno un file di testo
-chiamato #{pxe.vwx}#
-
-_* Copiarvi dentro questo testo:
-
-code{
-
- #!/usr/bin/vmware
- config.version = "8"
- virtualHW.version = "4"
- memsize = "512"
- MemAllowAutoScaleDown = "FALSE"
-
- ide0:0.present = "FALSE"
- ide1:0.present = "FALSE"
- floppy0.present = "FALSE"
- sound.present = "FALSE"
- tools.remindInstall = "FALSE"
-
- ethernet0.present = "TRUE"
- ethernet0.addressType = "generated"
-
- displayName = "Test Boot PXE"
- guestOS = "other"
-
- ethernet0.generatedAddress = "00:0c:29:8d:71:3b"
- uuid.location = "56 4d 83 72 5c c4 de 3f-ae 9e 07 91 1d 8d 71 3b"
- uuid.bios = "56 4d 83 72 5c c4 de 3f-ae 9e 07 91 1d 8d 71 3b"
- ethernet0.generatedAddressOffset = "0"
-
-}code
-
-_* Si può modificare a piacimento questo file di configurazione (ad esempio
-portando a 256 il limite della memoria)
-
-_* Fare doppio click su questo file (o avviare il player VMWare e
-selezionare questo file).
-
-_* Se viene posta qualche strana domanda durante l'esecuzione premere il
-tasto spazio...

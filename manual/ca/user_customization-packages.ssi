@@ -48,15 +48,17 @@ l'arxiu. A Debian, es tracta de #{main}#, #{contrib}# i #{non-free}#.  Només
 
 code{
 
- $ lb config --archive-areas "main contrib"
+ $ lb config --archive-areas "main contrib non-free"
 
 }code
 
 És dona suport experimental a alguns derivats de Debian a través de l'opció
-#{--mode}#. Per defecte, aquesta opció és, per defecte, #{debian}#, tot i
-que se estigui construint en un sistema que no sigui Debian. Si s'especifica
-#{--mode ubuntu}# o #{--mode emdebian}#, s'utilitzen els noms de distribució
-i les àrees dels arxius dels derivats especificats en lloc dels de
+#{--mode}#. Per defecte, aquesta opció és #{debian}# però només si s'està
+construint en un sistema Debian o en un sistema desconegut. Si s'especifica
+amb #{lb config}# que es vol construir un dels derivats suportats alehores
+es modificaran les opcions per crear aquest derivat. Si per exemple
+s'utilitza #{lb config}# amb el mode #{ubuntu}#, s'utilitzarà el nom de la
+distribució i les àrees dels arxius del derivat especificat en lloc dels de
 Debian. El «mode» també modifica el comportament de live-build per
 adaptar-lo als derivats.
 
@@ -65,13 +67,13 @@ adaptar-lo als derivats.
 3~ Miralls de distribució
 
 L'arxiu de Debian es replica a través d'una àmplia xarxa de miralls a tot el
-món perquè la gent en cada regió pugui triar un mirall proper amb la millor
+món perquè la gent de cada regió pugui triar un mirall proper amb la millor
 velocitat de descàrrega. Cadascuna de les opcions #{--mirror-*}# governa
-quin mirall de distribució s'utilitzara en les diverses etapes de la
+quin mirall de distribució s'utilitzarà en les diverses etapes de la
 construcció. Recordar de {Etapes de la construcció}#stages-of-the-build que
 l'etapa *{bootstrap}* es quan el chroot s'omple inicialment per
 /{debootstrap}/  amb un sistema mínim i l'etapa *{chroot}* és quan
-s'utilitza el chroot per a la construcció del sistema d'fitxers del sistema
+s'utilitza el chroot per a la construcció del sistema de fitxers del sistema
 en viu. D'aquesta manera, s'utilitzen els miralls corresponents per a
 aquestes etapes, i més tard, durant l'etapa *{binary}* s'utilitzen els
 valors #{--mirror-binary}# i #{--mirror-binary-security}# substituint
@@ -88,8 +90,8 @@ construcció perquè apuntin a una rèplica local, és suficient establir
 code{
 
  $ lb config --mirror-bootstrap http://localhost/debian/ \
-             --mirror-chroot-security http://localhost/debian-security/ \
-	     --mirror-chroot-backports http://localhost/debian-backports/
+          --mirror-chroot-security http://localhost/debian-security/ \
+          --mirror-chroot-backports http://localhost/debian-backports/
 
 }code
 
@@ -112,7 +114,8 @@ als usuaris en una xarxa on "#{mirror}#" és abastable.
 code{
 
  $ lb config --mirror-binary http://mirror/debian/ \
-             --mirror-binary-security http://mirror/debian-security/
+          --mirror-binary-security http://mirror/debian-security/ \
+          --mirror-binary-backports http://mirror/debian-backports/
 
 }code
 
@@ -129,7 +132,7 @@ configurar repositoris addicionals, crear els fitxers
 dir, per ser utilitzades quan s'executa el sistema en viu.
 
 Per exemple, #{config/archives/live.list.chroot}# permet instaŀlar paquets
-des del repositori d'instantànies de debian live en el moment de construcció
+des del repositori d'instantànies de debian-live en el moment de construcció
 del sistema viu.
 
 code{
@@ -146,6 +149,11 @@ Si aquests fitxers existeixen, són utilitzats de forma automàtica.
 
 També s'ha de posar la clau GPG utilitzada per signar el repositori en
 fitxers #{config/archives/your-repository.key.{binary,chroot}}#.
+
+En cas de necessitar un APT pinning personalitzat, es poden coŀlocar les
+preferències APT en fitxers
+#{config/archives/your-repository.pref.{binary,chroot}}#, que seran afegits
+automàticament al sistema en viu al directori #{/etc/apt/preferences.d/}#.
 
 *{Nota:}* Hi ha alguns repositoris de paquets preconfigurats que estan disponibles per facilitar la seva selecció a través de l'opció #{--archives}#, per exemple, per habilitar instantànies en viu, una simple ordre és suficient:
 
@@ -169,11 +177,10 @@ paquets nous o experimentals abans de afegirlos a un repositori.
 3~package-lists Llistes de paquets
 
 Les llistes de paquets són una forma eficaç d'expressar quins paquets han de
-ser instaŀlats. La sintaxi de la llista suporta els fitxers que s'hi
-incloent i seccions condicionals que fa que sigui fàcil construir llistes a
-partir d'altres llistes i adaptar-les per al propi ús en múltiples
+ser instaŀlats. La sintaxi de la llista suporta seccions condicionals que fa
+que sigui fàcil construir llistes i adaptar-les per al propi ús en múltiples
 configuracions. Els noms dels paquets també poden ser injectats a la llista
-amb els ajudants de l'intèrpret d'ordres en temps de construcció. 
+amb ajudants de l'intèrpret d'ordres en temps de construcció. 
 
 *{Nota:}* El comportament de live-build a l'hora d'especificar un paquet que no existeix està determinat per la elecció que es faci de l'eina APT. Veure {Elegir apt or aptitude}#choosing-apt-or-aptitude per més detalls.
 
@@ -185,7 +192,7 @@ metapaquet mantinguda per una distribució. Per exemple:
 code{
 
  $ lb config
- $ echo task-gnome-desktop > config/package-lists/gnome-desktop.list.chroot
+ $ echo task-gnome-desktop > config/package-lists/desktop.list.chroot
 
 }code
 
@@ -318,16 +325,6 @@ code{
 
 }code
 
-Un condicional pot envoltar una directiva #{#include}#:
-
-code{
-
- #if ARCHITECTURES amd64
- #include <gnome-full>
- #endif
-
-}code
-
 No és possible el anidament dels condicionals.
 
 3~desktop-and-language-tasks Tasques d'escriptori i llenguatge
@@ -355,14 +352,14 @@ comportament de live-build per defecte.
 Com que no hi ha cap ajust automàtic per les tasques de llengua que
 incloguin coses com ara fonts específiques per a una llengua o paquets de
 mètode d'entrada, si es vol, cal especificar-ho en la configuració. Per
-exemple, una imatge d'escriptori GNOME que contingui suport per al japonés
+exemple, una imatge d'escriptori GNOME que contingui suport per al alemany
 podrie incloure les següents tasques metapaquets:
 
 code{
 
  $ lb config
  $ echo "task-gnome-desktop task-laptop" >> config/package-lists/my.list.chroot
- $ echo "task-japanese task-japanese-desktop task-japanese-gnome-desktop" >> config/package-lists/my.list.chroot
+ $ echo "task-german task-german-desktop task-german-gnome-desktop" >> config/package-lists/my.list.chroot
 
 }code
 
@@ -386,12 +383,12 @@ es pot especificar el nom d'un paquet del nucli amb l'opció
 #{--linux-packages}#. Per exemple, suposem que s'està construint una imatge
 d'arquitectura #{amd64}# i es vol afegir l'arxiu experimental amb propòsits
 de fer proves perquè es pugui instaŀlar el nucli
-#{linux-image-3.5-trunk-amd64}#. Es podria configurar la imatge de la
+#{linux-image-3.7-trunk-amd64}#. Es podria configurar la imatge de la
 següent manera:
 
 code{
 
- $ lb config --linux-packages linux-image-3.5-trunk
+ $ lb config --linux-packages linux-image-3.7-trunk
  $ echo "deb http://ftp.debian.org/debian/ experimental main" > config/archives/experimental.list.chroot
 
 }code
@@ -426,8 +423,6 @@ _* Incloure el mòdul d'unió del sistema de fitxers (normalment #{aufs}#).
 
 _* Incloure tots els mòduls del sistema d'arxius requerits per la
 configuració (normalment #{squashfs}#).
-
-_* Afegir el tipus al nom de cada paquet del nucli (e.g. #{-amd64}#).
 
 2~installing-modified-or-third-party-packages Instaŀlació de paquets
 modificats o de tercers
@@ -664,12 +659,12 @@ code{
 Una prioritat pin negativa evitarà que un paquet s'instaŀli, com en el cas
 que no es vulgui un paquet que és recomanat per un altre paquet. Suposem que
 s'està construint una imatge LXDE afegint #{task-lxde-desktop}# a
-#{config/package-lists/lxde-desktop.list.chroot}# però no es desitja que al
-usuari se li demani que guardi les contrasenyes wifi al clauer. Aquesta
+#{config/package-lists/desktop.list.chroot}# però no es desitja que al
+usuari se li demani que guardi les contrasenyes wifi al keyring. Aquesta
 llista depèn de /{lxde-core}/, que recomana /{gksu}/,  que al seu torn
 recomana /{gnome-keyring}/. Si es vol omitir el paquet recomanat
-/{gnome-keyring}/ això es pot fer mitjançant l'addició de les següents
-línies al #{config/apt/preferences}#:
+/{gnome-keyring}/, es pot fer mitjançant l'addició de les següents línies a
+#{config/apt/preferences}#:
 
 code{
 

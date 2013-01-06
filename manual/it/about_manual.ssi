@@ -7,14 +7,14 @@ relativa al progetto Debian Live e si applica in particolare al software
 prodotto per il rilascio di Debian 7.0 "wheezy". Si può trovare una versione
 aggiornata all'indirizzo http://live.debian.net/
 
-Sebbene sia principalmente focalizzato nell'aiutare a costruire un sistema
-live e non su argomenti per l'utente finale, è comunque possibile trovare
-alcune informazioni utili in queste sezioni: le {Nozioni di base}#the-basics
-coprono la preparazione delle immagini da avviare da un supporto o dalla
-rete, mentre {Personalizzare i comportamenti durante
-l'esecuzione}#customizing-run-time-behaviours descrive alcune opzioni
-specificabili al prompt d'avvio, come la scelta di un layout di tastiera e
-una lingua, e l'utilizzo della persistenza.
+While live-manual is primarily focused on helping you build a live system
+and not on end-user topics, an end-user may find some useful information in
+these sections: {The Basics}#the-basics covers downloading prebuilt images
+and preparing images to be booted from media or the network, either using
+the web builder or running live-build directly on your system. {Customizing
+run time behaviours}#customizing-run-time-behaviours describes some options
+that may be specified at the boot prompt, such as selecting a keyboard
+layout and locale, and using persistence.
 
 Alcuni dei comandi menzionati nel testo devono essere eseguiti con i
 privilegi di super-utente che possono essere ottenuti diventando utente root
@@ -57,7 +57,7 @@ solitamente avviati da supporti quali CD, DVD o penne USB; alcuni possono
 anche avviarsi via rete.
 
 _* *{Debian Live}*: Il sotto-progetto Debian che mantiene, tra gli altri, i
-pacchetti live-boot, live-build, live-config e live-manual.
+pacchetti live-boot, live-build, live-config, live-tools e live-manual.
 
 _* *{Debian Live system}*: Un sistema live che usa software proveniente dal
 sistema operativo Debian e che può essere lanciato da CD, DVD, supporti USB,
@@ -68,16 +68,16 @@ _* *{Host system}*: L'ambiente utilizzato per creare il sistema live.
 
 _* *{Target system}*: L'ambiente usato per eseguire il sistema live.
 
-_* *{live-boot}*: Una raccolta di script usati per avviare sistemi
-live. live-boot era una parte di /{live-initramfs}/.
+_* *{live-boot}*: Una raccolta di script usati per avviare sistemi live.
 
-_* *{live-build}*: Una raccolta di script usati per creare sistemi Debian
-Live personalizzati. live-build era conosciuto come /{live-helper}/, ed
-ancora prima come /{live-package}/.
+_* *{live-build}*: A collection of scripts used to build customized Debian
+Live systems.
 
 _* *{live-config}*: Una raccolta di script usati per configurare un sistema
-live durante il processo di inizializzazione. live-config era una parte di
-/{live-initramfs}/.
+live durante il processo di inizializzazione.
+
+_* *{live-tools}*: A collection of additional scripts used to perform useful
+tasks within a running live system.
 
 _* *{live-manual}*: Questo documento è inserito nel pacchetto chiamato
 live-manual.
@@ -154,7 +154,7 @@ needed for building it are installed by executing:
 
 code{
 
- # apt-get install make po4a sisu-complete libnokogiri-ruby
+ # apt-get install make po4a ruby ruby-nokogiri sisu-complete texlive-generic-recommended
 
 }code
 
@@ -189,7 +189,7 @@ O entrambi:
 
 code{
 
- $ make build LANGUAGES=it FORMATS=html
+ $ make build LANGUAGES=de FORMATS=html
 
 }code
 
@@ -216,15 +216,15 @@ _* Una volta che la nuova lingua è stata aggiunta, si può continuare a
 tradurre i restanti file po situati in #{manual/po/}#, nell'ordine che si
 preferisce.
 
-_* Non dimenticare che è necessario usare #{make commit}# per assicurarsi
-che i manuali tradotti siano aggiornati partendo dai file po, quindi si
-possono verificare le modifiche con #{make build}# prima di #{git add .}#,
-#{git commit -m "Translating..."}# e #{git push}#.
+_* Don't forget that you need #{make commit}# to ensure the translated
+manuals are updated from the po files and then you can review your changes
+launching #{make build}# before #{git add .}#, #{git commit -m
+"Translating..."}# and #{git push}#.
 
-After running #{make commit}# you will see some text scroll by. They are
+After running #{make commit}# you will see some text scroll by. These are
 basically informative messages about the processing status and also some
 hints about what can be done in order to improve live-manual. Unless you see
-a fatal error, you can usually proceed and submit your contribution.
+a fatal error, you usually can proceed and submit your contribution.
 
 live-manual comes with two utilities that can greatly help translators to
 find untranslated and changed strings. The first one is "make translate". It
@@ -235,7 +235,7 @@ acts upon changed strings but it helps you to find and fix them one by one.
 Keep in mind that even though these utilities might be really helpful to do
 translation work on the command like, the use of an specialized tool like
 /{poedit}/ is the recommended way to do the task. It is also a good idea to
-read the debian localization (l10n) documentation and, specifically to
+read the Debian localization (l10n) documentation and, specifically to
 live-manual, the {Guidelines for translators}#guidelines-translators.
 
 *{Nota:}* si può usare #{make clean}# per pulire l'albero del repository git locale prima del push. Grazie al file .gitignore questo passo non è obbligatorio ma è una buona abitudine che evita di fare involontariamente il commit di certi file.

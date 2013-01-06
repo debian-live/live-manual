@@ -14,8 +14,8 @@ L'idée derrière live-build est de constituer un cadre qui utilise un
 répertoire de configuration pour automatiser et personnaliser complètement
 tous les aspects de la construction d'une image Live.
 
-Plusieurs concepts sont similaires à ceux dans le paquet Debian
-/{debhelper}/ écrit par Joey Hess:
+Plusieurs concepts sont similaires aux utilisés pour construire des paquets
+Debian avec /{debhelper}/:
 
 _* Les scripts ont un emplacement central pour la configuration de leur
 fonctionnement. Avec /{debhelper}/, c'est le sous-répertoire #{debian/}#
@@ -62,7 +62,7 @@ Exécuter #{lb config}# sans aucun argument crée un sous-répertoire
 code{
 
  $ lb config
- [2012-08-03 22:59:17] lb_config
+ [2013-01-01 09:14:22] lb_config
  P: Considering defaults defined in /etc/live/build.conf
  P: Creating config tree for a debian/i386 system
 
@@ -88,7 +88,7 @@ Il est possible de spécifier plusieurs options, telles que:
 
 code{
 
- $ lb config --binary-images net --bootappend-live "boot=live config hostname=live-machine username=live-user" ...
+ $ lb config --binary-images netboot --bootappend-live "boot=live config hostname=live-host username=live-user" ...
 
 }code
 
@@ -127,7 +127,7 @@ il va créer un environnement accessible en écriture, en utilisant aufs, afin
 que systémes similaires à Debian puissent démarrer à partir de ça.
 
 Plus d'information sur initial ramfs dans Debian peut être trouvé dans le
-Debian Linux Kernel Handbook à  http://kernel-handbook.alioth.debian.org/
+Debian Linux Kernel Handbook sur http://kernel-handbook.alioth.debian.org/
 dans le chapitre sur initramfs.
 
 2~live-config Le paquet live-config

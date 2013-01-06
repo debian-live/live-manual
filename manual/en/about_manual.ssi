@@ -4,7 +4,7 @@
 
 This manual serves as a single access point to all documentation related to the Debian Live project and in particular applies to the software produced by the project for the Debian 7.0 "wheezy" release. An up-to-date version can always be found at http://live.debian.net/
 
-While live-manual is primarily focused on helping you build a live system and not on end-user topics, an end-user may find some useful information in these sections: {The Basics}#the-basics covers preparing images to be booted from media or the network, and {Customizing run time behaviours}#customizing-run-time-behaviours describes some options that may be specified at the boot prompt, such as selecting a keyboard layout and locale, and using persistence.
+While live-manual is primarily focused on helping you build a live system and not on end-user topics, an end-user may find some useful information in these sections: {The Basics}#the-basics covers downloading prebuilt images and preparing images to be booted from media or the network, either using the web builder or running live-build directly on your system. {Customizing run time behaviours}#customizing-run-time-behaviours describes some options that may be specified at the boot prompt, such as selecting a keyboard layout and locale, and using persistence.
 
 Some of the commands mentioned in the text must be executed with superuser privileges which can be obtained by becoming the root user via #{su}# or by using #{sudo}#. To distinguish between commands which may be executed by an unprivileged user and those requiring superuser privileges, commands are prepended by #{$}# or #{#}# respectively. This symbol is not a part of the command.
 
@@ -20,7 +20,7 @@ We encourage you to return to more in-depth study of the manual, perhaps next re
 
 _* *{Live system}*: An operating system that can boot without installation to a hard drive. Live systems do not alter local operating system(s) or file(s) already installed on the computer hard drive unless instructed to do so. Live systems are typically booted from media such as CDs, DVDs or USB sticks. Some may also boot over the network.
 
-_* *{Debian Live}*: The Debian sub-project which maintains, among others, the live-boot, live-build, live-config and live-manual packages.
+_* *{Debian Live}*: The Debian sub-project which maintains, among others, the live-boot, live-build, live-config, live-tools and live-manual packages.
 
 _* *{Debian Live system}*: A live system that uses software from the Debian operating system that may be booted from CDs, DVDs, USB sticks, over the network (via netboot images), and over the Internet (via boot parameter #{fetch=URL}#).
 
@@ -28,11 +28,13 @@ _* *{Host system}*: The environment used to create the live system.
 
 _* *{Target system}*: The environment used to run the live system.
 
-_* *{live-boot}*: A collection of scripts used to boot live systems. live-boot was formerly a part of /{live-initramfs}/.
+_* *{live-boot}*: A collection of scripts used to boot live systems.
 
-_* *{live-build}*: A collection of scripts used to build customized Debian Live systems. live-build was formerly known as /{live-helper}/, and even earlier known as /{live-package}/.
+_* *{live-build}*: A collection of scripts used to build customized Debian Live systems.
 
-_* *{live-config}*: A collection of scripts used to configure a live system during the boot process. live-config was formerly a part of /{live-initramfs}/.
+_* *{live-config}*: A collection of scripts used to configure a live system during the boot process.
+
+_* *{live-tools}*: A collection of additional scripts used to perform useful tasks within a running live system.
 
 _* *{live-manual}*: This document is maintained in a package called live-manual.
 
@@ -88,7 +90,7 @@ In order to make changes to the English manual you have to edit the right files 
 
 code{
 
- # apt-get install make po4a sisu-complete libnokogiri-ruby
+ # apt-get install make po4a ruby ruby-nokogiri sisu-complete texlive-generic-recommended
 
 }code
 
@@ -120,7 +122,7 @@ Or combine both, e.g:
 
 code{
 
- $ make build LANGUAGES=it FORMATS=html
+ $ make build LANGUAGES=de FORMATS=html
 
 }code
 
@@ -136,12 +138,12 @@ _* To enable a new language in the autobuild it is enough to add the initial tra
 
 _* Once the new language is added, you can randomly continue translating the remaining po files in #{manual/po/}#.
 
-_* Don't forget you need #{make commit}# to ensure the translated manuals are updated from the po files and then you can review your changes launching #{make build}# before #{git add .}#, #{git commit -m "Translating..."}# and #{git push}#.
+_* Don't forget that you need #{make commit}# to ensure the translated manuals are updated from the po files and then you can review your changes launching #{make build}# before #{git add .}#, #{git commit -m "Translating..."}# and #{git push}#.
 
-After running #{make commit}# you will see some text scroll by. They are basically informative messages about the processing status and also some hints about what can be done in order to improve live-manual. Unless you see a fatal error, you can usually proceed and submit your contribution.
+After running #{make commit}# you will see some text scroll by. These are basically informative messages about the processing status and also some hints about what can be done in order to improve live-manual. Unless you see a fatal error, you usually can proceed and submit your contribution.
 
 live-manual comes with two utilities that can greatly help translators to find untranslated and changed strings. The first one is "make translate". It launches an script that tells you in detail how many untranslated strings there are in each po file. The second one, the "make fixfuzzy" target, only acts upon changed strings but it helps you to find and fix them one by one.
 
-Keep in mind that even though these utilities might be really helpful to do translation work on the command like, the use of an specialized tool like /{poedit}/ is the recommended way to do the task. It is also a good idea to read the debian localization (l10n) documentation and, specifically to live-manual, the {Guidelines for translators}#guidelines-translators.
+Keep in mind that even though these utilities might be really helpful to do translation work on the command like, the use of an specialized tool like /{poedit}/ is the recommended way to do the task. It is also a good idea to read the Debian localization (l10n) documentation and, specifically to live-manual, the {Guidelines for translators}#guidelines-translators.
 
 *{Note:}* You can use #{make clean}# to clean your git tree before pushing. This step is not compulsory thanks to the .gitignore file but it is a good practice to avoid committing files involuntarily.

@@ -2,10 +2,13 @@
 
 set -e
 
-# Script to automatically fix "predictable" fuzzy strings in live-manual.
+# Script to automatically fix "predictable" fuzzy strings in live-manual. keep
+# in mind that if there is more than one fuzzy string in the po file the script
+# will not do anything since manual intervention is needed anyway.
+#
 # 'XY' is the start line number of the fuzzy strings in the dates.
 
-XY="50"
+XY="47"
 
 # Getting the unfuzzying done.
 

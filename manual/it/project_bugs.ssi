@@ -71,19 +71,17 @@ _* Architettura del sistema ospitante
 
 _* Versione di live-build sul sistema ospitante
 
-_* Versione di live-boot sul sistema ospitante
-
-_* Versione di live-config sul sistema live
-
-_* Versione di live-tools sul sistema ospitante
-
 _* Versione di /{debootstrap}/ o /{cdebootstrap}/ sul sistema ospitante
 
 _* Architettura del sistema live
 
 _* Distribuzione del sistema live
 
-_* Versione del kernel sul sistema live
+_* Versione di live-boot sul sistema ospitante
+
+_* Versione di live-config sul sistema live
+
+_* Versione di live-tools sul sistema ospitante
 
 È possibile generare un registro del processo di costruzione usando il
 comando #{tee}#. Si raccomanda di farlo automaticamente con uno script
@@ -96,7 +94,8 @@ code{
 
 }code
 
-All'avvio, live-boot conserva un registro in #{/var/log/live-boot.log}#).
+At boot time, live-boot and live-config store their logfiles in
+#{/var/log/live/}#. Check them for error messages.
 
 Inoltre, per escludere altri errori è sempre una buona idea creare un tar
 della propria directory #{config/}# e caricarlo da qualche parte (*{non}*
@@ -161,12 +160,13 @@ di proxy è bene riprodurlo avviando da un mirror ufficiale.
 
 3~ In fase di avvio
 
-Se l'immagine non si avvia segnalarlo alla mailing list con le informazioni
-richieste in {Raccogliere informazioni}#collect-information. Non dimenticare
-di menzionare come e quando l'immagine fallisce, in Qemu, VMWare o hardware
-reale. Se si utilizza un qualsiasi sistema di virtualizzazione provare
-sempre su hardware reale prima di segnalare un bug; anche fornire
-un'istantanea dello schermo può essere molto utile.
+If your image does not boot, please report it to the mailing list together
+with the information requested in {Collect
+information}#collect-information. Do not forget to mention, how/when the
+image failed exactly, whether using virtualization or real hardware. If you
+are using a virtualization technology of any kind, please always run it on
+real hardware before reporting a bug. Providing a screenshot of the failure
+is also very helpful.
 
 3~ In fase di esecuzione
 

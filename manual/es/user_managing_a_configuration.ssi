@@ -68,8 +68,8 @@ code{
      --architectures i386 \
      --linux-flavours 686-pae \
      --binary-images hdd \
-     --mirror-bootstrap http://ftp.es.debian.org/debian/ \
-     --mirror-binary http://ftp.es.debian.org/debian/ \
+     --mirror-bootstrap http://ftp.ch.debian.org/debian/ \
+     --mirror-binary http://ftp.ch.debian.org/debian/ \
      "${@}"
 
 }code
@@ -90,8 +90,9 @@ Git
 Utilizar la opción #{lb config --config}# para clonar un repositorio Git que
 contenga una configuración de Debian Live. Si se desea basar la
 configuración en una mantenida por el proyecto Debian Live, visitar el
-repositorio en http://live.debian.net/gitweb con el nombre #{live-images}#
-bajo el título #{Packages}#.
+repositorio en http://live.debian.net/gitweb/ con el nombre #{live-images}#
+bajo el título #{Packages}#. Este repositorio contiene las configuraciones
+de las {imágenes prefabricadas}#downloading-prebuilt-images de Debian Live.
 
 Por ejemplo, para construir una imagen de rescate, utilizar el repositorio
 #{live-images}# de la siguiente manera:
@@ -105,7 +106,9 @@ code{
 }code
 
 Editar #{auto/config}# y cualquier otra cosa que se necesite en el árbol
-#{config}# para adaptarlo a las propias necesidades.
+#{config}# para adaptarlo a las propias necesidades. Por ejemplo, las
+imágenes prefabricadas con paquetes de la sección non-free se crean
+simplemente añadiendo #{--archive-areas "main contrib non-free"}#.
 
 Si se desea, se puede definir un método abreviado en la configuración de
 Git, añadiendo lo siguiente al fichero #{${HOME}/.gitconfig}#:
@@ -113,7 +116,7 @@ Git, añadiendo lo siguiente al fichero #{${HOME}/.gitconfig}#:
 code{
 
  [url "git://live.debian.net/git/"]
-     insteadOf = ldn:
+         insteadOf = ldn:
 
 }code
 

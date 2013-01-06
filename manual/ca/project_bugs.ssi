@@ -72,19 +72,17 @@ _* Arquitectura del sistema amfitrió
 
 _* Versió de live-build al sistema amfitrió
 
-_* Versió de live-boot al sistema amfitrió
-
-_* Versió de live-config al sistema amfitrió
-
-_* Versió de live-tools al sistema amfitrió
-
 _* Versió de /{debootstrap}/ i/o /{cdebootstrap}/ al sistema amfitrió
 
 _* Arquitectura del sistema en viu
 
 _* Distribució del sistema en viu
 
-_* Versió del nucli del sistema en viu
+_* Versió de live-boot al sistema amfitrió
+
+_* Versió de live-config al sistema amfitrió
+
+_* Versió de live-tools al sistema amfitrió
 
 Es pot generar un log del procés de construcció mitjançant l'ordre
 #{tee}#. Recomanem fer-ho automàticament amb un script #{auto/build}# (veure
@@ -96,8 +94,8 @@ code{
 
 }code
 
-Durant l'arrencada, live-boot emmagatzema un log a
-#{/var/log/live-boot.log}#.
+Durant l'arrencada, live-boot i live-config emmagatzemen els seus logs a
+#{/var/log/live/}#. Comprovar aquest fitxers per detectar missatges d'error.
 
 A més, per descartar altres errors, sempre és una bona idea comprimir el
 directori #{config/}# i pujar-lo a algun lloc (*{no}* enviar-lo com arxiu
@@ -164,11 +162,10 @@ bootstrapping a partir d'un mirall oficial.
 
 Si la imatge no arrenca, informar a la llista de correu, juntament amb la
 informació soŀlicitada a {Recopilar informació}#collect-information. No
-oblidar-se d'esmentar, com/quan la imatge falla, ja sigui amb Qemu,
-VirtualBox, VMWare o maquinari real. Si s'utilitza una tecnologia de
-virtualització d'algun tipus, sempre fer la prova en maquinari real abans
-d'informar d'un error. Proporcionar una captura de pantalla de l'error és
-també molt útil.
+oblidar-se d'esmentar, com/quan la imatge falla, ja sigui amb virtualització
+o maquinari real. Si s'utilitza una tecnologia de virtualització d'algun
+tipus, sempre fer la prova amb maquinari real abans d'informar d'un
+error. Proporcionar una captura de pantalla de l'error és també molt útil.
 
 3~ En temps d'execució
 

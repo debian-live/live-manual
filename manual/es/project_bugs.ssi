@@ -72,19 +72,17 @@ _* Arquitectura del sistema anfitrión
 
 _* La versión de live-build del sistema anfitrión.
 
-_* Versión de live-boot en el sistema en vivo.
-
-_* Versión de live-config en el sistema en vivo.
-
-_* Versión de live-tools en el sistema en vivo.
-
 _* Versión de /{debootstrap}/ y/o /{cdebootstrap}/ en el sistema anfitrión.
 
 _* Arquitectura del sistema en vivo.
 
 _* Distribución del sistema en vivo.
 
-_* Versión del kernel en el sistema en vivo.
+_* Versión de live-boot en el sistema en vivo.
+
+_* Versión de live-config en el sistema en vivo.
+
+_* Versión de live-tools en el sistema en vivo.
 
 Se puede generar un log del proceso de creación mediante el comando
 #{tee}#. Se recomienda hacer esto de forma automática con un script
@@ -97,8 +95,9 @@ code{
 
 }code
 
-En el momento del arranque, live-boot guarda un log en
-#{/var/log/live-boot.log}#.
+En el momento del arranque, live-boot y live-config guardan sus logs en
+#{/var/log/live/}#. Comprobar si hay algún mensaje de error en estos
+ficheros. 
 
 Además, para descartar otros errores, siempre es una buena idea comprimir en
 un .tar el directorio #{config/}# y subirlo a algún lugar, para que el
@@ -169,8 +168,8 @@ preinstalando desde una réplica oficial.
 
 Si la imagen no arranca, se debería informar a la lista de correo, junto con
 la información solicitada en {Recopilar información}#collect-information. No
-hay que olvidar mencionar, cómo y cuando la imagen falla, si es en Qemu,
-VirtualBox, VMWare o hardware real. Si se está utilizando una tecnología de
+hay que olvidar mencionar, cómo y cuándo la imagen falla, si es utilizando
+virtualización o hardware real. Si se está utilizando una tecnología de
 virtualización de cualquier tipo, se debe probar la imagen en hardware real
 antes de informar de un error. Proporcionar una captura de pantalla del
 error también es muy útil.

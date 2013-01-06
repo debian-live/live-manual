@@ -15,12 +15,12 @@ más ni a ningún otro instalador. A menudo se abrevia con «d-i».
 
 Principalmente existen tres tipos de imágenes según el instalador:
 
-*{Imágenes con Instalador Debian «official»}*: Esta imagen de Debian Live se puede considerar como la imagen habitual. Dispone de un kernel y un initrd diferenciados que, al ser seleccionados desde el gestor de arranque, ejecuta un Instalador de Debian estándar, de la misma manera que lo haría si se arrancase desde una imagen de CD descargada desde el sitio oficial de Debian. Las imágenes que contienen un sistema en vivo con otro instalador independiente se suelen llamar «imágenes combinadas».
+*{Imágenes con Instalador Debian «normal»}*: Esta imagen de Debian Live se puede considerar como la imagen habitual. Dispone de un kernel y un initrd diferenciados que, al ser seleccionados desde el gestor de arranque, ejecuta un Instalador de Debian estándar, de la misma manera que lo haría si se arrancase desde una imagen de CD descargada desde el sitio oficial de Debian. Las imágenes que contienen un sistema en vivo con otro instalador independiente se suelen llamar «imágenes combinadas».
 
 En estas imágenes, el sistema operativo Debian se instala mediante la
-herramienta /{debootstrap}/ o /{cdebootstrap}/ que descarga paquetes .deb
-desde medios locales o por red. El resultado final es un sistema Debian por
-defecto instalado en el disco duro.
+herramienta /{debootstrap}/ que descarga paquetes .deb desde medios locales
+o por red. El resultado final es un sistema Debian por defecto instalado en
+el disco duro.
 
 El conjunto de este proceso puede ser preconfigurado (preseeded) y
 personalizado de muchas maneras; Para más información, ver las páginas
@@ -53,7 +53,7 @@ kernel que utiliza #{d-i}# en la arquitectura especificada. Por ejemplo:
 code{
 
  $ lb config --architectures i386 --linux-flavours 486 \
-     --debian-installer live
+         --debian-installer live
  $ echo debian-installer-launcher >> config/package-lists/my.list.chroot
 
 }code
@@ -75,7 +75,7 @@ para preconfigurar la variante local a #{en_US}# se puede hacer:
 code{
 
  $ echo "d-i debian-installer/locale string en_US" \
-     >> config/debian-installer/preseed.cfg
+         >> config/debian-installer/preseed.cfg
 
 }code
 

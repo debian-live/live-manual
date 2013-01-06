@@ -16,7 +16,7 @@ paquets directement comme fichiers. Vous pouvez définir des listes de
 paquets, incluant des métapaquets qui installent nombreux paquets liés à la
 fois, telles que les paquets pour un ordinateur de bureau ou une langue
 particulière. Enfin, un certain nombre d'options donnent un certain contrôle
-sur /{apt}/, ou si vous préférez, /{aptitude}/, au moment de la construction
+sur /{apt}/, ou si vous préférez, /{aptitude}/, pendant la construction
 quand les paquets sont installés. Vous pouvez trouver ces très pratique si
 vous utilisez un proxy, vous voulez désactiver l'installation des paquets
 recommandés pour économiser l'espace, ou avez besoin de contrôler quels
@@ -85,7 +85,7 @@ dans une étape antérieure.
 3~distribution-mirrors-build-time Miroirs de distribution utilisés au temps
 de construction
 
-Pour définir les miroirs de distribution utilisés au temps de construction
+Pour définir les miroirs de distribution utilisés pendant la construction
 pour pointer vers un miroir local, il suffit de fixer #{--mirror-bootstrap}#
 , #{--mirror-chroot-security}# et #{--mirror-chroot-backports}# comme suit.
 
@@ -132,11 +132,11 @@ configurer des dépôts supplémentaires, créer les fichiers
 #{config/archives/your-repository.list.binary}#. Comme avec les options
 #{--mirror-*}#, ils gouvernent les dépôts utilisés dans l'étape *{chroot}*
 lors de la construction de l'image, et dans l'étape *{binary}*, c'est à dire
-pour les utiliser au moment de l'exécution du système live.
+pour les utiliser pendant l'exécution du système live.
 
 Par exemple, #{config/archives/live.list.chroot}# vous permet d'installer
-les paquets du dépôt des instantanés debian live au moment de la
-construction du système live.
+les paquets du dépôt des instantanés debian live pendant la construction du
+système live.
 
 code{
 
@@ -184,8 +184,8 @@ Les listes de paquets sont un excellent moyen d'exprimer quels paquets
 doivent être installés. La syntaxe de la liste soutient des sections
 conditionnelles qui les rend faciles à construire et les adapter pour leur
 utilisation dans configurations multiples. Les noms des paquets peuvent
-également être injectés dans la liste en utilisant assistants de shell au
-moment de la construction.
+également être injectés dans la liste en utilisant assistants de shell
+pendant la construction.
 
 *{Remarque:}* Le comportement de live-build pour spécifier un paquet qui n'existe pas est déterminé par votre choix de l'utilitaire APT. Voir {Choisir apt ou aptitude}#choosing-apt-or-aptitude pour plus de détails.
 
@@ -347,12 +347,12 @@ l'installation influence le choix des tâches de la langue correspondante.
 
 Lors du développement d'une image de bureau live, l'image généralement
 amorce directement à un bureau de travail, le choix du environnement de
-bureau et la langue par défaut ayant été fait au moment de la construction,
-non pas au moment de l'exécution comme dans le cas de l'installateur de
-Debian. Cela ne veut pas dire qu'une image live ne pourrait être construite
-pour soutenir plusieurs environnements de bureau ou de plusieurs langues et
-offrir à l'utilisateur un choix, mais ce n'est pas le comportement par
-défaut de live-build.
+bureau et la langue par défaut ayant été fait pendant la construction, non
+pas pendant l'exécution comme dans le cas de l'installateur de Debian. Cela
+ne veut pas dire qu'une image live ne pourrait être construite pour soutenir
+plusieurs environnements de bureau ou de plusieurs langues et offrir à
+l'utilisateur un choix, mais ce n'est pas le comportement par défaut de
+live-build.
 
 Parce qu'il n'y a pas aucune disposition faite automatiquement pour les
 tâches de la langue, qui comprennent des éléments tels que des polices
@@ -380,7 +380,7 @@ tour d'un paquet noyau exacte à inclure dans votre image.
 Ainsi, par défaut, une image pour l'architecture #{amd64}# comprendra le
 métapaquet #{linux-image-amd64}#, et une image pour l'architecture #{i386}#
 comprendra les métapaquets #{linux-image-486}# et
-#{linux-image-686-pae}#. Au moment de la rédaction, ces paquets dépendent de
+#{linux-image-686-pae}#. au moment de la rédaction, ces paquets dépendent de
 #{linux-image-3.2.0-4-amd64}#, #{linux-image-3.2.0-4-486}# et
 #{linux-image-3.2.0-4-686-pae}#, respectivement.
 
@@ -509,14 +509,14 @@ officiels Debian. Cela peut aussi être atteint en modifiant les préférences
 d'APT pinning dans le système live - voir {APT pinning}#apt-pinning pour
 plus d'informations.
 
-2~ Configuration d'APT au moment de la construction
+2~ Configuration d'APT pendant la construction
 
 Vous pouvez configurer APT par un certain nombre d'options appliquées
-uniquement au moment de la construction. (La configuration d'APT utilisé
-dans le système live en fonctionnement peut être configurée de façon normale
-pour un système live, qui est, en incluant les configurations appropriées
-dans #{config/includes.chroot/}#.) Pour une liste complète, regardez les
-options commençant par #{apt}# dans la page de manuel de #{lb_config}#.
+uniquement pendant la construction. (La configuration d'APT utilisé dans le
+système live en fonctionnement peut être configurée de façon normale pour un
+système live, qui est, en incluant les configurations appropriées dans
+#{config/includes.chroot/}#.) Pour une liste complète, regardez les options
+commençant par #{apt}# dans la page de manuel de #{lb_config}#.
 
 3~choosing-apt-or-aptitude Choisir apt ou aptitude
 
@@ -634,20 +634,20 @@ fréquemment utilisées.
 3~apt-pinning APT pinning
 
 Pour le contexte, s'il vous plaît lire d'abord la page de manuel
-#{apt_preferences(5)}#. APT pinning peut être configuré soit au temps de
+#{apt_preferences(5)}#. APT pinning peut être configuré soit pendant la
 construction, ou encore pendant l'exécution. Pour le premier, créez
 #{config/archives/*.pref}#, #{config/archives/*.pref.chroot}#, et
 #{config/apt/preferences}#. Dans le second cas, créez
 #{config/includes.chroot/etc/apt/preferences}#.
 
 Imaginons que vous voulez construire un système live wheezy mais il faut
-installer tous les paquets live qui finissent dans l'image binaire de sid au
-moment de la construction. Vous devez ajouter sid à votre fichier APT
-sources et fixer tous les paquets live avec une priorité supérieure mais
-tous les autres paquets avec une priorité inférieure à la priorité par
-défaut de sorte que seulement les paquets que vous voulez sont installés à
-partir de sid au temps de construction et tous les autres sont de la
-distribution du système cible, wheezy. Ce qui suit devrait accomplir ça:
+installer tous les paquets live qui finissent dans l'image binaire de sid
+pendant la construction. Vous devez ajouter sid à votre fichier APT sources
+et fixer tous les paquets live avec une priorité supérieure mais tous les
+autres paquets avec une priorité inférieure à la priorité par défaut de
+sorte que seulement les paquets que vous voulez sont installés à partir de
+sid pendant la construction et tous les autres sont de la distribution du
+système cible, wheezy. Ce qui suit devrait accomplir ça:
 
 code{
 

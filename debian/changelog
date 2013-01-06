@@ -1,3 +1,214 @@
+live-manual (1:3.0~b2-1) unstable; urgency=low
+
+  [ Daniel Baumann ]
+  * Adding build-conflicts to locales-all, as locales-all provides locales
+    but woudn't work with the current locales generation in rules.
+
+  [ Ben Armstrong ]
+  * Referencing and cross-referencing prebuilt images available for
+    download with configurations used to build them.
+  * Adding new section 'Using web live image builder'.
+  * Including non-free prebuilt image instructions as an example.
+  * Clarifying web builder operational status and invalid options caveat.
+  * Mentioning prebuilt images in front matter as a topic of particular
+    interest to end-users.
+  * Fixing proper English heading.
+  * Listing only architectures that we fully support.
+
+  [ Daniel Baumann ]
+  * Using overwritable variable definitions in toplevel makefile.
+  * Dropping example for #include functionality in package lists, this
+    feature is no longer useful since there are no global package lists
+    anymore.
+
+  [ Ben Armstrong ]
+  * Reordering closing remarks to end, as it segues better with rest of
+    manual (especially for external linkage to this section).
+
+  [ Daniel Baumann ]
+  * Adding build-depends to texlive-generic-recommended for pdf output.
+  * Sorting build-depends.
+  * Correcting seperators in top-level makefile.
+  * Prefixing appendix file with appendix prefix in its filename.
+  * Removing prefix user from examples filename.
+  * Adding references to live-tools in the list of terms.
+  * Dropping pre-squeeze notes about live-initramfs in live-boot and live-
+    config entries in the terms list.
+  * Updating build-depends listed for users contributing to live-manual.
+  * Using German as an example for how to build specific languages of the
+    manual.
+  * Slightly correcting a bit of grammar in the translations section.
+  * Slightly correcting a bit of grammar in the project section.
+  * Using same spelling for 'superuser' consistently.
+  * Tiding system requirements for the kernel version.
+  * Dropping aptitude example on how to install live-build, doesn't serve
+    any purpose.
+  * Dropping -rfakeroot from dpkg-buildpackage call, not needed anymore
+    since long, long time.
+  * Using plural when refering to live-boot and live-config sources in
+    installation section.
+  * Consistently using 'manpage' instead of 'man page' through the whole
+    manual.
+  * Some tiny nitpicking in user_basics.
+  * Use xorriso to burn image in example instructions rather than wodim.
+  * Including virtualbox-qt package in the example instruction to install
+    virtualbox, otherwise users end up with no graphical frontend.
+  * Extending virtualbox section about guest additions to include the dkms
+    package as well, just the x11 driver package without the module will
+    not be enough.
+  * Correcting lb clean command when switching to build a netboot image,
+    in netboot we'll have a different initrd configuration hence the
+    chroot stage needs to be rebuild too.
+  * Correcting outdated netboot binary type specification in example lb
+    config call.
+  * Mentioning that other network filesystems than NFS are available in
+    netboot section.
+  * Dropping xz suffix from default netboot tarball names, by default the
+    tarballs are not compressed anymore as it has no advantage except
+    longer build time anyway.
+  * Don't use the term magic in connection with live-build, it's not magic
+    after all.
+  * Dropping reference to a grub floppy image in the old svn repository we
+    don't use nor have anymore.
+  * Dropping section about manually creating files for pxe-booting VMware
+    Player, not needed anymore as it's supported there out of the box.
+  * Rewording sentence about comparing live-build to debhelper a bit.
+  * Updating example lb config call for netboot.
+  * Using Swiss debian mirror as example mirror.
+  * Using 8 spaces as tab indentiation in git config example.
+  * Dropping reference to no longer existing chroot_patches command.
+  * Also enabling non-free in example about how to use multiple archive
+    areas with lb config.
+  * Reword explenation about default mode.
+  * Correcting 'superseding' spelling typo.
+  * Correcting indenting of custom mirror example code.
+  * Harmonizing custom binary mirror example.
+  * Adding note about APT preferences files in config/archives.
+  * Dropping reference to obsolete include feature within package lists.
+  * Using same package list filename for the gnome-desktop list as in
+    live-images, for consistency.
+  * Using German task packages as example.
+  * Updating kernel pinning example from experimental to 3.7 package
+    names.
+  * Dropping requirement for custom kernels to have a suffix, it's not
+    required by live-build.
+  * Using same package list filename for the lxde-desktop list as in live-
+    images, for consistency.
+  * Dropping templates directory from config tree 'ascii-art picture' when
+    illustrating local includes.
+  * Updating suffix for preseed files in config/preseed.
+  * Correcting syntax error in user-setup configuration example for live-
+    config.
+  * Using 'filename' instead of 'file name'.
+  * Using a more general example for two different persistence labels.
+  * Correcting spelling of progress-linux.
+  * Correcting sed example code to set syslinux timeout.
+  * Updating a bunch of tiny issues in the debian-installer section.
+
+  [ Ben Armstrong ]
+  * Using less tortured sentence structure.
+
+  [ Daniel Baumann ]
+  * Reverting back to 'man page', 'manpage' apparently is no proper
+    english.
+  * Adding explenation why lb clean has to be used rather than lb clean
+    --binary in user_basics when switching to build a netboot image from
+    an existing build directory.
+  * Completing list of repositories with public writable branches.
+  * Dropping kernel version as a requirement for bug reports, this dates
+    back to when we had unionfs and squashfs as out-of-tree modules.
+  * Sorting list of requested information when people report bugs.
+  * Extending note about live-boot logfiles for live-config too.
+  * Correcting codying style guidelines.
+  * Advertise https git repositories before the http ones.
+  * Correcting git instructions to clone over ssh.
+  * Making use of the sample gitignore file shipped as example in live-
+    build in the tutorial where git is used for the config tree.
+  * Avoid using ugly underscores in example project directory for a vnc-
+    kiosk-client.
+  * Switching example for pt_BR kde to de_CH gnome.
+  * Correcting punctuation mark in section where users are requested to
+    read live-boot and live-config logfiles.
+  * Updating minimal image example with current size numbers and for
+    current live-build.
+  * Correcting some typos in the appendix style guide.
+  * Correcting two occurences of 'debian' in their spelling.
+  * Updating link to Gits homepage on toplevel html page.
+  * Consistently using final slash on URLs.
+  * Updating external link to syslinux documentation.
+  * Updating various dates for 2013.
+  * Generalize virtualization methods mentioned in bug reporting
+    guidelines, no point in enumerating them.
+  * Correcting my mispelling of 'exactly'.
+  * Updating sed call for wheezy in release announcement templates.
+  * Harmonizing German po file headers.
+  * Harmonizing Catalan po file headers.
+  * Harmonizing Spanish po file headers.
+  * Harmonizing French po file headers.
+  * Harmonizing Italian po file headers.
+  * Harmonizing Brazilian Portuguese po file headers.
+  * Harmonizing Romanian po file headers.
+  * Readding translator note to ignore appendix_style-guide for
+    translation.
+  * Regenerating po files.
+  * Using more natural name for the live-gnome-ch example directory
+    (rather than live-ch-gnome).
+  * Updating some Catalan fuzzy strings.
+  * Updating some German fuzzy strings.
+  * Updating some Spanish fuzzy strings.
+  * Correcting freudian typo where live-build was ment, not lb build.
+  * Updating some French fuzzy strings.
+  * Marking accidentally unfuzzied incompletely updated string about
+    logfiles in /var/log/live/ as fuzzy again.
+  * Correcting accidentally wrong virtualbox package name in my previous
+    translation updates.
+  * Updating some Italian fuzzy strings.
+  * Adding chals to uploaders.
+  * Dropping reference to live-debconfig for now, it's 4.x/jessie stuff.
+  * Dropping old reference to live-helper and live-package.
+  * Updating German live-manual translation.
+  * Updating a few more German strings in about_manual.
+  * Updating toplevel index page for new log and trace file locations.
+  * Removing spurious Romanian left-overs in toplevel index page.
+  * Using dynamic interval inserted by cronjob into the toplevel index
+    page.
+
+  [ chals ]
+  * Fixing typo, performs.
+  * Adding formatting to xorriso, referred to as a debian package.
+  * Removing 'There are two solutions' since one of them was dropped and
+    therefore there is just one.
+  * Adding formatting to the word 'isolinux' to look exactly like its
+    counterparts, etxlinux, pxelinux and syslinux.
+  * Adding comment to unfuzzy-dates.sh script.
+  * Changing line number in unfuzzy-dates.sh script.
+  * Removing plural forms from Spanish live-manual.ssm.po.
+  * Adding plural forms to French live-manual.ssm.po.
+  * Updating name of temporarily ignored po file output.
+  * Removing 'unfuzzy' from rebuild target so that it is not executed
+    automatically.
+  * Spreading the changes in several English texts to the remaining po
+    files.
+  * Updating dates in live-manual.ssm.* files.
+  * Updating Spanish translation.
+  * Updating Catalan translation.
+  * Improving Spanish translation.
+  * Updating French translation.
+  * Updating the Catalan translation of user_customization-packages and
+    user_managing_a_configuration.
+  * Fixing typo 'prefabricadas' in the Spanish translation.
+  * Updating the Spanish translation of user_customization-packages and
+    user_managing_a_configuration.
+  * Updating the dates in live-manual.* files.
+  * Correcting several errors in the Spanish translation.
+  * Updating the French translation substituting 'au moment' for 'pendant'
+    where necessary.
+  * Fixing some fuzzy strings in the Brazilian Portuguese translation.
+  * Fixing two fuzzy strings in the Romanian translation.
+  * Adding the removal of unused links to pdf files to debian/rules.
+
+ -- Daniel Baumann <daniel@debian.org>  Sun, 06 Jan 2013 20:27:46 +0100
+
 live-manual (1:3.0~b1-1) unstable; urgency=low
 
   [ chals ]

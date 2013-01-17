@@ -54,30 +54,32 @@ code{
 
 }code
 
-Experimental support is available for some Debian derivatives through a
-#{--mode}# option. By default, this option is set to #{debian}# only if you
-are building on a Debian or on an unknown system. If #{lb config}# is
-invoked on any of the supported derivatives, it will default to create an
-image of that derivative. If #{lb config}# is run in e.g. #{ubuntu}# mode,
-the distribution names and archive areas for the specified derivative are
-supported instead of the ones for Debian. The mode also modifies live-build
-behaviour to suit the derivatives.
+Attraverso l'opzione #{--mode}# è disponibile un supporto sperimentale per
+alcune derivate di Debian; per impostazione predefinita, questa opzione è
+impostata su #{debian}# solo se si sta costruendo su un sistema Debian o
+sconosciuto. Invocando #{lb config}# su una delle derivate supportate, verrà
+creata un'immagine di quella derivata in modo predefinito. Se #{lb config}#
+viene ad esempio eseguito in modalità #{ubuntu}#, saranno gestiti i nomi
+della distribuzione e le aree di archivio per la derivata specificata e non
+quelli di Debian. La modalità cambia anche il comportamento di live-build
+per adattarlo alle derivate.
 
 *{Nota:}* i progetti per i quali sono state aggiunte tali modalità sono i principali responsabili nel supportare gli utenti di queste opzioni. Il progetto Debian Live, a sua volta, fornisce sostegno allo sviluppo solamente sulla base dell'impegno migliore, sui feedback dei progetti derivati così come non sviluppiamo o sosteniamo queste derivate.
 
 3~ Mirror delle distribuzioni
 
-The Debian archive is replicated across a large network of mirrors around
-the world so that people in each region can choose a nearby mirror for best
-download speed. Each of the #{--mirror-*}# options governs which
-distribution mirror is used at various stages of the build. Recall from
-{Stages of the build}#stages-of-the-build that the *{bootstrap}* stage is
-when the chroot is initially populated by /{debootstrap}/ with a minimal
-system, and the *{chroot}* stage is when the chroot used to construct the
-live system's filesystem is built. Thus, the corresponding mirror switches
-are used for those stages, and later, in the *{binary}* stage, the
-#{--mirror-binary}# and #{--mirror-binary-security}# values are used,
-superseding any mirrors used in an earlier stage.
+L'archivio Debian è replicato attraverso una vasta rete di mirror in tutto
+il mondo cosicché chiunque in ogni nazione può selezionare il mirror più
+vicino per una migliore velocità di scaricamento. Ciascuna delle opzioni
+#{--mirror-*}# determina quale mirror della distribuzione è usato nei vari
+stadi della compilazione. Ricordando dalle {Fasi della
+creazione}#stages-of-the-build che la fase di *{avvio}* è quando il chroot è
+inizialmente popolato da /{debootstrap}/ con un sistema minimale e quella di
+*{chroot}* è quando viene creato il chroot usato per costruire il file
+system del sistema live. Perciò per queste fasi vengono usati i
+corrispondenti cambi di mirror, e in seguito, nella fase *{binaria}* vengono
+usati i valori di #{--mirror-binary}# e #{--mirror-binary-security}#
+sostituendo qualsiasi altro mirror usato nelle fasi iniziali.
 
 3~distribution-mirrors-build-time Mirror delle distribuzioni usati in fase
 di compilazione
@@ -130,8 +132,9 @@ i file #{config/archives/vostro-repository.list.chroot}#, o
 *{chroot}* quando si compila l'immagine, e nella fase *{binary}*, ad esempio
 per usarli quando il sistema live è avviato.
 
-For example, #{config/archives/live.list.chroot}# allows you to install
-packages from the debian-live snapshot repository at live system build time.
+Per esempio, #{config/archives/live.list.chroot}# permette di installare
+pacchetti dal repository snapshot debian-live al momento della creazione del
+sistema live.
 
 code{
 
@@ -148,10 +151,11 @@ Se questi file esistono saranno prelevati automaticamente.
 Bisogna inoltre inserire la chiave GPG usata per firmare il repository nei
 file #{config/archives/vostro-repository.key.{binary,chroot}}#.
 
-Should you need custom APT pinning, such APT preferences snippets can be
-placed in #{config/archives/your-repository.pref.{binary,chroot}}# files and
-will be automatically added to your live system's
-#{/etc/apt/preferences.d/}# directory.
+Se si necessita di personalizzare il pinning di APT, le sezioni di APT
+preferences possono essere inserite nei file
+#{config/archives/mio-repository.pref.{binary,chroot}}# e verranno
+automaticamente aggiunte nella directory #{/etc/apt/preferences.d/}# del
+sistema live.
 
 *{Nota:}* alcuni repository di pacchetti preconfigurati sono disponibili per una facile selezione attraverso l'opzione #{--archives}#, per abilitare gli snapshot live è sufficiente un semplice comando:
 
@@ -172,10 +176,11 @@ prima che siano disponibili in un repository.
 
 3~package-lists Elenchi di pacchetti
 
-Package lists are a powerful way of expressing which packages should be
-installed. The list syntax supports conditional sections which makes it easy
-to build lists and adapt them for use in multiple configurations. Package
-names may also be injected into the list using shell helpers at build time.
+Gli elenchi di pacchetti sono un potente mezzo per esprimere quali pacchetti
+devono essere installati. La sintassi gestisce sezioni condizionali rendendo
+semplice la creazione di elenchi e adattarli per l'uso in molteplici
+configurazioni. I nomi dei pacchetti possono inoltre essere inseriti
+nell'elenco utilizzando script shell in fase di compilazione.
 
 *{Nota:}* quando si specifica un pacchetto che non esiste, il comportamento di live-build è determinato dalla scelta delle utilità di APT. Per ulteriori dettagli si veda {Scegliere apt o aptitude}#choosing-apt-or-aptitude.
 
@@ -255,12 +260,12 @@ con uno script. Ogni riga che inizia con un punto esclamativo indica un
 comando da eseguire nel chroot quando viene creata l'immagine. Ad esempio si
 potrebbe includere la riga #{! grep-aptavail -n -sPackage -FPriority
 standard | sort}# in una lista di pacchetti per produrne una contenente i
-pacchetti con #{Priority: standard}#. disponibili
+pacchetti con #{Priority: standard}# disponibili.
 
 Infatti selezionare i pacchetti con il comando #{grep-aptavail}# (presente
 nel pacchetto #{dctrl-tools}#) è talmente utile che #{live-build}# fornisce
 uno script #{Packages}# per comodità; accetta due argomenti: #{field}# e
-#{pattern}#.Per cui si può creare un elenco con il seguente contenuto:
+#{pattern}#. Per cui si può creare un elenco con il seguente contenuto:
 
 code{
 
@@ -337,11 +342,11 @@ essere creata con un supporto per desktop o lingue multipli per offrire
 all'utente una scelta, ma che non è il comportamento predefinito nella
 creazione di una live.
 
-Because there is no provision made automatically for language tasks, which
-include such things as language-specific fonts and input-method packages, if
-you want them, you need to specify them in your configuration. For example,
-a GNOME desktop image containing support for German might include these task
-metapackages:
+Poiché automaticamente non viene fatta alcuna preparazione sui task della
+lingua, i quali includono cose come caratteri specifici per la lingua e
+pacchetti per i metodi di input, se li si vogliono, vanno specificati nella
+configurazione. Per esempio, un'immagine del desktop GNOME contenente il
+supporto per il tedesco può includere questi metapacchetti task:
 
 code{
 
@@ -351,27 +356,27 @@ code{
 
 }code
 
-3~kernel-flavour-and-version Kernel flavour and version
+3~kernel-flavour-and-version Tipi e versioni del kernel
 
-One or more kernel flavours will be included in your image by default,
-depending on the architecture. You can choose different flavours via the
-#{--linux-flavours}# option. Each flavour is suffixed to the default stub
-#{linux-image}# to form each metapackage name which in turn depends on an
-exact kernel package to be included in your image.
+A seconda dell'architettura, nell'immagine verranno inclusi uno o più tipi
+di kernel in modo predefinito. È possibile scegliere tipi differenti tramite
+l'opzione #{--linux-flavours}#, ognuno ha come suffisso #{linux-image}# che
+costituisce il nome del metapaccchetto che a sua volta dipende dall'esatto
+pacchetto del kernel da inserire nell'immagine.
 
-Thus by default, an #{amd64}# architecture image will include the
-#{linux-image-amd64}# flavour metapackage, and an #{i386}# architecture
-image will include the #{linux-image-486}# and #{linux-image-686-pae}#
-metapackages. At time of writing, these packages depend on
-#{linux-image-3.2.0-4-amd64}#, #{linux-image-3.2.0-4-486}# and
-#{linux-image-3.2.0-4-686-pae}#, respectively.
+Perciò un'immagine con architettura #{amd64}# includerà il metapacchetto
+#{linux-image-amd64}# in modo predefinito, mentre un'immagine con
+architettura #{i386}# includerà i metapacchetti #{linux-image-486}# e
+#{linux-image-686-pae}#. Al momento della scrittura del manuale questi
+pacchetti dipendono rispettivamente da #{linux-image-3.2.0-4-amd64}#,
+#{linux-image-3.2.0-4-486}# e #{linux-image-3.2.0-4-686-pae}#.
 
-When more than one kernel package version is available in your configured
-archives, you can specify a different kernel package name stub with the
-#{--linux-packages}# option. For example, supposing you are building an
-#{amd64}# architecture image and add the experimental archive for testing
-purposes so you can install the #{linux-image-3.7-trunk-amd64}# kernel. You
-would configure that image as follows:
+Quando nel proprio archivio è disponibile più di una versione del kernel, si
+può specificare un suffisso di pacchetto differente con l'opzione
+#{--linux-packages}#. Ad esempio, supponendo di creare un'immagine per
+architettura #{amd64}# e aggiungere l'archivio experimental per fare dei
+test e poter installare il kernel #{linux-image-3.7-trunk-amd64}#, si
+configurerà tale immagine come segue:
 
 code{
 
@@ -380,16 +385,17 @@ code{
 
 }code
 
-3~custom-kernels Custom kernels
+3~custom-kernels Kernel personalizzati
 
-You can build and include your own custom kernels, so long as they are
-integrated within the Debian package management system. The live-build
-system does not support kernels not built as #{.deb}# packages.
+Si può compilare e includere i propri kernel personalizzati a patto che
+siano integrati nel sistema di gestione dei pacchetti di Debian. Il sistema
+live-build non supporta i kernel né crea pacchetti #{.deb}#.
 
-The proper and recommended way to deploy your own kernel packages is to
-follow the instructions in the #{kernel-handbook}#. Remember to modify the
-ABI and flavour suffixes appropriately, then include a complete build of the
-#{linux}# and matching #{linux-latest}# packages in your reposistory.
+La maniera corretta e raccommandata per collocare i propri pacchetti è di
+seguire le istruzioni nel #{kernel-handbook}#. Ricordarsi di modificare i
+suffissi per ABI e tipologia in modo appropriato quindi includere una
+compilazione completa del pacchetto #{linux}# e del corrispondente
+#{linux-latest}# nel reposistory.
 
 If you opt to build the kernel packages without the matching metapackages,
 you need to specify an appropriate #{--linux-packages}# stub as discussed in
@@ -399,16 +405,16 @@ packages}#installing-modified-or-third-party-packages, it is best if you
 include your custom kernel packages in your own repository, though the
 alternatives discussed in that section work as well.
 
-It is beyond the scope of this document to give advice on how to customize
-your kernel. However, you must at least ensure your configuration satisfies
-these minimum requirements:
+Fornire suggerimenti sul come personalizzare il proprio kernel va oltre lo
+scopo di questa documentazione, tuttavia è necessario assicurarsi che la
+configurazione soddisfi almeno i seguenti requisiti minimi:
 
-_* Use an initial ramdisk.
+_* Utilizzare un ramdisk iniziale;
 
-_* Include the union filesystem module (i.e. usually #{aufs}#).
+_* includere il modulo del filesystem union (solitamente #{aufs}#);
 
-_* Include any other filesystem modules required by your configuration
-(i.e. usually #{squashfs}#).
+_* includere qualsiasi altro modulo del filesystem necessario alla
+configurazione (solitamente #{squashfs}#).
 
 2~installing-modified-or-third-party-packages Installare pacchetti
 modificati o di terze parti
@@ -431,7 +437,7 @@ Ci sono due modi per installare pacchetti personalizzati:
 
 _* #{packages.chroot}#
 
-_* Utilizzare repository APT personalizzati
+_* utilizzare repository APT personalizzati
 
 Usando #{packages.chroot}# è più semplice da ottenere e utile per una
 personalizzazione "una tantum" ma ha una serie di svantaggi, mentre un
@@ -601,19 +607,19 @@ comode scorciatoie di operazioni di uso frequente.
 
 3~apt-pinning APT pinning
 
-For background, please first read the #{apt_preferences(5)}# man page. APT
-pinning can be configured either for build time, or else for run time. For
-the former, create #{config/archives/*.pref}#,
-#{config/archives/*.pref.chroot}#, and #{config/apt/preferences}#. For the
-latter, create #{config/includes.chroot/etc/apt/preferences}#.
+Si prega di leggere prima il manuale di #{apt_preferences(5)}#. Il pinning
+può essere configurato sia in fase di costruzione sia di esecuzione; per la
+prima creare #{config/archives/*.pref}#, #{config/archives/*.pref.chroot}#,
+e #{config/apt/preferences}# mentre per l'ultima creare
+#{config/includes.chroot/etc/apt/preferences}#.
 
-Let's say you are building a wheezy live system but need all the live
-packages that end up in the binary image to be installed from sid at build
-time. You need to add sid to your APT sources and pin the live packages from
-it higher, but all other packages from it lower, than the default
-priority. Thus, only the packages you want are installed from sid at build
-time and all others are taken from the target system distribution,
-wheezy. The following will accomplish this:
+Nell'ipotesi di creare un sistema live wheezy e avendo la necessità di
+installare da sid tutti i pacchetti live destinati all'immagine binaria
+questa fase, bisogna aggiungere sid alle fonti di APT e farne il pinning con
+una priorità più alta, poi tutti gli altri con una priorità più bassa e e
+quindi quella predefinita. Così vengono prelevati da sid solo i pacchetti
+voluti mentre per gli altri si attingerà dalla distribuzione principale,
+wheezy. Quanto segue servirà allo scopo:
 
 code{
 
@@ -630,15 +636,15 @@ code{
 
 }code
 
-Negative pin priorities will prevent a package from being installed, as in
-the case where you do not want a package that is recommended by another
-package. Suppose you are building an LXDE image using #{task-lxde-desktop}#
-in #{config/package-lists/desktop.list.chroot}#, but don't want the user
-prompted to store wifi passwords in the keyring. This metapackage depends on
-/{lxde-core}/, which recommends /{gksu}/, which in turn recommends
-/{gnome-keyring}/. So you want to omit the recommended /{gnome-keyring}/
-package. This can be done by adding the following stanza to
-#{config/apt/preferences}#:
+Un valore negativo della priorità evita che un pacchetto venga installato,
+come nel caso in cui non se ne voglia uno raccomandato da un
+altro. Supponiamo di costruire un'immagine di LXDE utilizzando l'opzione
+#{task-lxde-desktop}# in #{config/package-lists/desktop.list.chroot} ma non
+si desidera che all'utente venga richiesto di salvare la password del wifi
+nel portachiavi. Questo metapacchetto dipende da /{lxde-core}/ che
+raccomanda /{gksu}/ e che a sua volta raccomanda /{gnome-keyring}/, in
+questo caso si vorrà omettere il pacchetto /{gnome-keyring}/ aggiungendo a
+#{config/apt/preferences}# la seguente istruzione:
 
 code{
 

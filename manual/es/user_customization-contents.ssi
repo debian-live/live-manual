@@ -77,17 +77,13 @@ que los paquetes puedan haber instalado.
 
 3~binary-local-includes Includes locales en Binary 
 
-Se puede incluir material como documentación, videos, etc en el sistema de
-ficheros del medio de instalación (USB, CDROM, etc) donde se grabará la
-imagen de manera que sea accesible nada más insertar el medio sin necesidad
-de arrancar el sistema en vivo. Para esto se utilizan los includes locales
-en Binary. Funciona de manera similar a los includes locales en chroot
-comentados anteriormente. Por ejemplo, supongamos que en el medio de
-instalación se desea añadir unos ficheros con videos de demostración
-#{~/video_demo.*}# sobre el funcionamiento del sistema en vivo de manera que
-el usuario pueda acceder a ellos a través de la página de indice
-HTML. Simplemente se debe copiar el material en #{config/includes.binary/}#
-de la siguiente manera:
+To include material such as documentation or videos on the medium filesystem
+so that it is accessible immediately upon insertion of the medium without
+booting the Live system, you can use binary local includes. This works in a
+similar fashion to chroot local includes. For example, suppose the files
+#{~/video_demo.*}# are demo videos of the live system described by and
+linked to by an HTML index page. Simply copy the material to
+#{config/includes.binary/}# as follows:
 
 code{
 
@@ -95,8 +91,7 @@ code{
 
 }code
 
-Los ficheros aparecerán en el directorio raíz del medio desde el que se
-instalará el sistema en vivo.
+These files will now appear in the root directory of the live medium.
 
 2~hooks Scripts gancho (Hooks)
 

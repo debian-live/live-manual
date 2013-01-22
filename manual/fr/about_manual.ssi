@@ -4,24 +4,24 @@
 
 L'objectif principal de ce manuel est de servir de point d'accès unique à
 tous les documents liés au projet Debian Live et particulièrement aux
-logiciels produits par le projet pour Debian 7.0 "wheezy". Une version mise
-à jour peut toujours être trouvée sur http://live.debian.net/
+logiciels produits par le projet pour Debian 7.0 «Wheezy». Une version mise
+à jour peut toujours être trouvée sur http://live.debian.net/ .
 
 Ce manuel a principalement pour but de vous aider à construire un système
-live et non pas d'articuler autour des sujets rélatifs à l'utilisateur
-final; Toute fois, l'utilisateur final peut trouver des informations utiles
+live et non pas de s'articuler autour des sujets relatifs à l'utilisateur
+final. Toutefois, l'utilisateur final peut trouver des informations utiles
 dans ces sections: {Les Bases}#the-basics couvrent le téléchargement des
 images précompilées et la préparation des images pour être démarrées sur les
-supports ou sur le réseau, soit en utilisant le constructeur web ou en
-executant live-build directement sur le système. {Personnalisation des
+supports ou sur le réseau, soit en utilisant le constructeur web, soit en
+exécutant live-build directement sur le système. {Personnalisation des
 comportements pendant l'exécution}#customizing-run-time-behaviours décrit
-certaines options qui peuvent être spécifiées à l'invite de démarrage, tels
+certaines options qui peuvent être indiquées à l'invite de démarrage, telles
 que la sélection d'un clavier, des paramètres régionaux et la persistance.
 
 Certaines commandes mentionnées dans le texte doivent être exécutées avec
 les privilèges de super-utilisateur, qui peuvent être obtenus à l'aide de la
 commande #{su}# ou en utilisant #{sudo}#. Afin de distinguer les commandes
-qui peuvent être exécutées par un utilisateur sans privilèges de celles
+qui peuvent être exécutées par un utilisateur sans privilège de celles
 nécessitant les privilèges de super-utilisateur, les commandes sont
 précédées respectivement par #{$}# ou #{#}#. Notez que ce symbole ne fait
 pas partie de la commande.
@@ -35,41 +35,47 @@ dans les détails. Par conséquent, nous vous suggérons de lire dans l'ordre
 suivant.
 
 Tout d'abord, lisez ce chapitre {À propos de ce manuel}#about-manual dès le
-début et finissant avec la section {Terminologie}#terms. Ensuite, sautez aux
+début et finissant avec la section {Terminologie}#terms. Ensuite, passez aux
 trois tutoriels à l'avant de la section {Exemples}#examples destinée à vous
 apprendre la construction de l'image et les bases de la
-personnalisation. Lire en premier {En utilisant les
-exemples}#using-the-examples, suivie par {Tutoriel 1: Une image par
+personnalisation. Lisez en premier {En utilisant les
+exemples}#using-the-examples, puis {Tutoriel 1: Une image par
 défaut}#tutorial-1, {Tutoriel 2: Un logiciel de navigateur Web}#tutorial-2
 et finalement {Tutoriel 3: Une image personnalisée}#tutorial-3. À la fin de
 ces tutoriels, vous aurez un avant-goût de ce qui peut être fait avec Debian
 Live.
 
-Nous vous encourageons à revenir à l'étude plus approfondie du manuel, la
-prochaine lecture peut-être {Les bases}#the-basics, passer pour {Construire
-une image netboot}#building-netboot-image, et finissant par la lecture de
-la{Vue d'ensemble de la personnalisation}#customization-overview et les
-autres sections suivantes. En ce point, nous espérons que vous soyez
-complètement excités par ce que on peut faire avec Debian Live et motivés
+Nous vous encourageons à revenir à l'étude plus approfondie du manuel, en
+poursuivant par exemple votre lecture par {Les bases}#the-basics,
+{Construire une image netboot}#building-netboot-image et finissant par la
+lecture de la{Vue d'ensemble de la personnalisation}#customization-overview
+et les sections suivantes. Après cela, nous espérons que vous serez
+complètement excités par ce qui peut être fait avec Debian Live et motivés
 pour lire le reste du manuel, du début à la fin.
 
 2~terms Terminologie
 
 _* *{Système Live}*: Un système d'exploitation pouvant être démarré sans
-installation préalable sur un disque dur. Les Systèmes Live ne modifient pas
+installation préalable sur un disque dur. Les systèmes live ne modifient pas
 le système d'exploitation local ou les fichiers installés sur le disque dur
 sans qu'on leur en donne explicitement l'instruction. D'habitude, les
-systèmes Live sont démarrés à partir des supports tels que des CD, DVD, ou
+systèmes live sont démarrés à partir des supports tels que des CD, DVD, ou
 des clés USB. Certains systèmes peuvent également être démarrés sur le
 réseau.
+
+_* *{Live medium}*: As distinct from live system, the live medium refers to
+the CD, DVD or USB stick where the binary produced by live-build and used to
+boot the live system is written. More broadly, the term also refers to any
+place where this binary resides for the purposes of booting the live system,
+such as the location for the network boot files.
 
 _* *{Debian Live}*: Le sous-projet Debian qui maintient, entre autres, les
 paquets live-boot, live-build, live-config live-tools et live-manual.
 
 _* *{Système Debian Live}*: Un système live qui utilise les logiciels du
 système d'exploitation Debian et qui peut être démarré sur CD, DVD, clé USB,
-sur le réseau (à l'aide des images netboot), et à partir d'Internet (à
-l'aide du paramètre de démarrage #{fetch=URL}#).
+sur le réseau (à l'aide des images netboot) et à partir d'Internet (à l'aide
+du paramètre de démarrage #{fetch=URL}#).
 
 _* *{Système hôte}*: L'environnement utilisé pour créer le système live.
 
@@ -105,8 +111,8 @@ _* *{Image binaire}*: Un fichier contenant le système live, tel que
 binary.iso ou binary.img.
 
 _* *{Distribution cible}*: La distribution sur laquelle votre système live
-sera basée. Ceci peut être diffèrent de la distribution de votre système
-hôte.
+sera basée. Celle-ci peut être différente de la distribution de votre
+système hôte.
 
 _* *{stable/testing/unstable}*: La distribution *{stable}* contient la
 dernière version officielle de Debian. La distribution *{testing}* est la
@@ -116,8 +122,8 @@ logiciels de versions plus récentes que la version *{stable}*. La
 distribution *{unstable}* est en constante évolution. En général cette
 distribution est utilisée par les développeurs et ceux qui aiment le
 risque. Tout au long du manuel, nous avons tendance à utiliser les noms de
-code pour les évolutions majeures, tels que wheezy ou sid, car c'est ce qui
-est soutenu par les outils eux-mêmes.
+code pour les évolutions majeures, tels que Wheezy ou Sid, car c'est ce qui
+est géré par les outils eux-mêmes.
 
 2~ Auteurs
 
@@ -152,13 +158,14 @@ _* Trent W. Buck
 2~how-to-contribute Contribuer à ce document
 
 Ce manuel est conçu comme un projet communautaire et toutes les propositions
-d'améliorations et de contributions sont bienvenues. S'il vous plaît voir la
+d'améliorations et de contributions sont bienvenues. Veuillez consulter la
 section {Contribuer au projet}#contributing-to-project pour des informations
-détaillées sur la façon d'obtenir la clé et de faire les livraisons.
+détaillées sur la façon d'obtenir une clé et de faire des livraisons
+(commits).
 
 3~ Appliquer des modifications
 
-Afin d'apporter des modifications au manuel anglais, vous devez éditer les
+Afin d'apporter des modifications au manuel anglais, vous devez modifier les
 fichiers adéquats dans #{manual/en/}# mais avant de soumettre votre
 contribution, veuillez prévisualiser votre travail. Afin de prévisualiser
 live-manual, assurez-vous que les paquets nécessaires sont installés en
@@ -205,27 +212,28 @@ code{
 
 }code
 
-Après la révision de votre travail et de s'assurer que tout va bien, ne pas
-utiliser #{make commit}# à moins que vous mettez à jour les traductions dans
-le commit, et dans ce cas, ne pas mélanger les modifications apportées au
-manuel en anglais et les traductions dans la même livraison, mais utiliser
-commits séparés. Voir la section {Traduction}#translation pour plus de
-détails.
+Après avoir relu votre travail et vous être assuré que tout va bien,
+n'utilisez pas #{make commit}# à moins que vous mettiez à jour les
+traductions dans le commit. Dans ce cas, ne mélangez pas les modifications
+apportées au manuel en anglais et les traductions dans la même livraison,
+mais utilisez des commits séparés. Consultez la section
+{Traduction}#translation pour plus de détails.
 
 3~translation Traduction
 
 Pour commencer la traduction d'une nouvelle langue, suivez ces étapes:
 
-_* Traduire les fichiers *{about_manual.ssi.pot}*, *{about_project.ssi.pot}*
-et *{index.html.in.pot}* à votre langue avec votre éditeur préféré (comme
-/{poedit}/). Envoyer les fichiers #{.po}# traduits à la liste de diffusion
-afin que l'équipe de traduction puisse vérifier leur intégrité.
+_* Traduisez les fichiers *{about_manual.ssi.pot}*,
+*{about_project.ssi.pot}* et *{index.html.in.pot}* dans votre langue avec
+votre éditeur préféré (comme /{poedit}/). Envoyez les fichiers #{.po}#
+traduits à la liste de diffusion afin que l'équipe de traduction puisse
+vérifier leur intégrité.
 
-_* Pour activer une nouvelle langue dans l'autobuild il suffit d'ajouter les
-premiers fichiers traduits à #{manual/po/${LANGUAGE}/}# et lancer #{make
-commit}#.  Et alors modifier #{manual/_sisu/home/index.html}#.
+_* Pour activer une nouvelle langue dans l'autobuild, il suffit d'ajouter
+les premiers fichiers traduits à #{manual/po/${LANGUAGE}/}# et lancer #{make
+commit}#. Modifier ensuite #{manual/_sisu/home/index.html}#.
 
-_* Une fois la nouvelle langue est ajoutée,  vous pouvez continuer avec la
+_* Une fois la nouvelle langue ajoutée, vous pouvez continuer avec la
 traduction des fichiers po dans #{manual/po/}# de façon aléatoire.
 
 _* N'oubliez pas que vous devez faire un #{make commit}# pour assurer que la
@@ -234,14 +242,14 @@ pouvez réviser vos modifications avec #{make build}# avant #{git add .}#,
 #{git commit -m "Translating..."}# et #{git push}#.
 
 Après l'exécution de #{make commit}#, vous verrez beaucoup de texte sur
-l'écran. Ils sont essentiellement des messages informatifs sur l'état du
-processus et aussi quelques indications sur ce qui peut être fait pour
+l'écran. Il s'agit essentiellement de messages informatifs sur l'état du
+processus et de quelques indications sur ce qui peut être fait pour
 améliorer live-manual. Si vous ne voyez aucune erreur fatale, vous pouvez
 généralement continuer et soumettre votre contribution.
 
 live-manual contient deux utilitaires qui peuvent grandement aider les
-traducteurs à trouver textes non traduits et modifiés. Le premier est "make
-translate". Il lance un script  qui vous indique en détail le nombre de
+traducteurs à trouver les textes non traduits et modifiés. Le premier est
+"make translate". Il lance un script qui vous indique en détail le nombre de
 messages non traduits qu'il y a dans chaque fichier po. Le second, "make
 fixfuzzy", n'agit que sur les messages modifiés, mais il vous aide à les
 trouver et à les résoudre un par un.

@@ -242,16 +242,16 @@ Per essere processati, gli elenchi dei pacchetti che si trovano in questa
 directory devono avere un suffisso #{.list}# e un suffisso #{.chroot}# o
 #{.binary}# aggiuntivo per indicare per quale fase sia l'elenco.
 
-*{Nota:}* se non si specifica il suffisso l'elenco sarà usato per entrambe le fasi. Normalmente è preferibile specificare #{.list.chroot}# in modo che i pacchetti vengono installati solo nel filesystem live evitando di avere una copia extra del #{.deb}# sul dispositivo.
+*{Note:}* If you don't specify the stage suffix, the list will be used for both stages. Normally, you want to specify #{.list.chroot}# so that the packages will only be installed in the live filesystem and not have an extra copy of the #{.deb}# placed on the medium.
 
 3~ Elenchi locali di pacchetti binari
 
-Per creare un elenco di binari inserire un file con suffisso
-#{.list.binary}# in #{config/package-lists/}#; questi pacchetti non sono
-installati nel filesystem ma inclusi sul dispositivo live sotto
-#{pool/}#. Solitamente questo elenco si usa con una delle varianti non-live
-dell'installatore; come detto sopra, se si vuole che questo sia identico
-all'elenco della fase chroot, usare semplicemente il suffisso #{.list}#.
+To make a binary stage list, place a file suffixed with #{.list.binary}# in
+#{config/package-lists/}#. These packages are not installed in the live
+filesystem, but are included on the live medium under #{pool/}#. You would
+typically use such a list with one of the non-live installer variants. As
+mentioned above, if you want this list to be the same as your chroot stage
+list, simply use the #{.list}# suffix by itself.
 
 3~generated-package-lists Elenchi di pacchetti generati
 
@@ -526,9 +526,9 @@ code{
 
 3~tweaking-apt-to-save-space Modificare APT per risparmiare spazio
 
-Si può aver bisogno di risparmiare dello spazio sul supporto dell'immagine,
-in tal caso una o entrambe delle seguenti opzioni possono essere
-d'interesse.
+You may find yourself needing to save some space on the image medium, in
+which case one or the other or both of the following options may be of
+interest.
 
 È possibile non includere gli indici di APT con:
 

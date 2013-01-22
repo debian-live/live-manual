@@ -2,19 +2,17 @@
 
 1~the-basics Conceptos básicos
 
-Este capítulo contiene una breve descripción del proceso de creación de las
-imágenes en vivo y las instrucciones para el uso de los tres tipos de
-imágenes más utilizadas. El tipo de imagen más versátil, #{iso-hybrid}#, se
-puede utilizar en una máquina virtual, en medios ópticos u otros
-dispositivos de almacenamiento USB. En ciertos casos especiales, como se
-explica más adelante, las imágenes #{hdd}#, pueden ser las más adecuadas. El
-capítulo termina con instrucciones para crear y utilizar una imagen de tipo
-#{netboot}#, que es un poco más complicado debido a la configuración
-necesaria en el servidor. Es un tema ligeramente avanzado para cualquier
-persona que no esté familiarizada con el arranque en red, pero se incluye
-aquí porque una vez que se realiza toda la configuración, es una forma muy
-conveniente para probar y desplegar imágenes de arranque en red local sin la
-molestia de tratar con los dispositivos de almacenamiento de la imagen.
+This chapter contains a brief overview of the build process and instructions
+for using the three most commonly used image types. The most versatile image
+type, #{iso-hybrid}#, may be used on a virtual machine, optical medium or
+USB portable storage device. In certain special cases, as explained later,
+the #{hdd}# type may be more suitable. The chapter finishes with
+instructions for building and using a #{netboot}# type image, which is a bit
+more involved due to the setup required on the server. This is an slightly
+advanced topic for anyone who is not familiar already with netbooting, but
+it is included here because once the setup is done, it is a very convenient
+way to test and deploy images for booting on the local network without the
+hassle of dealing with image media.
 
 A lo largo de todo el capítulo se hace a menudo referencia al nombre de las
 imágenes producidas por defecto por live-build. Si se {descarga una imagen
@@ -47,23 +45,19 @@ ficheros en el sistema en funcionamiento. Sin embargo, todas las
 modificaciones se perderán al apagar el equipo a menos que se use de modo
 opcional la persistencia (ver {Persistencia}#persistence).
 
-_* *{Gestor de arranque}*: Una pequeña pieza de código diseñada para
-arrancar desde el medio de almacenamiento escogido, posiblemente mostrando
-un menú o un indicador de arranque para permitir la selección de
-opciones/configuración. Carga el kernel de Linux y su initrd para funcionar
-con un sistema de ficheros asociado. Se pueden usar soluciones diferentes,
-dependiendo del medio de almacenamiento de destino y el formato del sistema
-de ficheros que contenga los componentes mencionados anteriormente: isolinux
-para arrancar desde un CD o DVD en formato ISO9660, syslinux para arrancar
-desde el disco duro o unidad USB desde una partición VFAT, extlinux para
-formatos ext2/3/4 y particiones btrfs, pxelinux para arranque de red PXE,
-GRUB para particiones ext2/3/4 , etc.
+_* *{Bootloader}*: A small piece of code crafted to boot from the chosen
+medium, possibly presenting a prompt or menu to allow selection of
+options/configuration. It loads the Linux kernel and its initrd to run with
+an associated system filesystem. Different solutions can be used, depending
+on the target medium and format of the filesystem containing the previously
+mentioned components: isolinux to boot from a CD or DVD in ISO9660 format,
+syslinux for HDD or USB drive booting from a VFAT partition, extlinux for
+ext2/3/4 and btrfs partitions, pxelinux for PXE netboot, GRUB for ext2/3/4
+partitions, etc.
 
-Se puede usar live-build  para crear la imagen del sistema a partir de
-ciertas especificaciones, incluir un kernel de Linux, su initrd y un gestor
-de arranque para ponerlos en funcionamiento, todo ello en un formato que
-depende del medio de almacenamiento elegido (imagen ISO9660, imagen de
-disco, etc.)
+You can use live-build to build the system image from your specifications,
+set up a Linux kernel, its initrd, and a bootloader to run them, all in one
+medium-dependant format (ISO9660 image, disk image, etc.).
 
 2~downloading-prebuilt-images Descarga de imágenes prefabricadas
 
@@ -172,10 +166,10 @@ fichero #{binary.hybrid.iso}# listo para ser usado en el directorio actual.
 
 2~using-iso-hybrid Usar una imagen ISO híbrida
 
-Después de construir o descargar una imagen ISO híbrida, las cuales se
-pueden obtener en http://www.debian.org/CD/live/,  el siguiente paso
-habitual es preparar los medios de almacenamieto, ya sean medios ópticos
-CD-R(W) o DVD-R(W) o llaves USB.
+After either building or downloading an ISO hybrid image, which can be
+obtained at http://www.debian.org/CD/live/, the usual next step is to
+prepare your medium for booting, either CD-R(W) or DVD-R(W) optical media or
+a USB stick.
 
 3~burning-iso-image Grabar una imagen ISO en un medio físico.
 
@@ -240,22 +234,22 @@ code{
 
 *{Recordar: Cada vez que se instale una nueva binary.hybrid.iso en el dispositivo, todos los datos del dispositivo se perderán debido a que la tabla de particiones se sobrescribe con el contenido de la imagen, así pues, realizar primero una copia de seguridad de la partición para poder restaurarla trás actualizar la imagen en vivo.}*
 
-3~booting-live-media Arrancar los medios en vivo
+3~booting-live-medium Booting the live medium
 
-La primera vez que se arranque desde los medios de almacenamiento en vivo,
-ya sea CD, DVD, llave USB, o de arranque en red PXE, primero puede ser
-necesario algún tipo de configuración en la BIOS de la máquina. Dado que las
-BIOS varían mucho en sus características y combinaciones de teclas, no se
-puede entrar en el tema en profundidad aquí. Algunas BIOS proporcionan una
-tecla para abrir un menú de dispositivos de arranque que es la manera más
-fácil de hacerlo si se encuentra disponible en el sistema.
+The first time you boot your live medium, whether CD, DVD, USB key, or PXE
+boot, some setup in your computer's BIOS may be needed first. Since BIOSes
+vary greatly in features and key bindings, we cannot get into the topic in
+depth here. Some BIOSes provide a key to bring up a menu of boot devices at
+boot time, which is the easiest way if it is available on your
+system. Otherwise, you need to enter the BIOS configuration menu and change
+the boot order to place the boot device for the live system before your
+normal boot device.
 
-Una vez que se haya arrancado desde los medios de almacenamiento externos,
-se accede a un menú de arranque. Si se pulsa la tecla «enter»,  el sistema
-arrancará usando el modo por defecto #{Live}# y las opciones
-predeterminadas. Para obtener más información acerca de las opciones de
-arranque, ver la opción  «help» del menú y también las páginas del manual de
-live-boot y live-config que se encuentran en el sistema en vivo.
+Once you've booted the medium, you are presented with a boot menu. If you
+just press enter here, the system will boot using the default entry,
+#{Live}# and default options. For more information about boot options, see
+the "help" entry in the menu and also the live-boot and live-config man
+pages found within the live system.
 
 Suponiendo que se ha seleccionado #{Live}# y arrancado una imagen en vivo
 por defecto con escritorio gráfico, después de que los mensajes de arranque

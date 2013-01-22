@@ -32,20 +32,19 @@ configurato come sistema live.
 
 2~stages-of-the-build Fasi della creazione
 
-Il processo di creazione è diviso in due fasi, con varie personalizzazioni
-applicate in sequenza a ciascuna di esse. La prima consiste nell'*{avvio}*,
-questa è la fase iniziale di popolamento della directory di chroot con i
-pacchetti atti a creare un sistema Debian di base. Viene quindi seguita
-dalla fase *{chroot}* che completa la costruzione della directory chroot e
-la popola con tutti i pacchetti elencati nella configurazione insieme a
-qualsiasi altro materiale; la maggior parte della personalizzazione dei
-contenuti avviene in questa tappa. La parte finale della preparazione
-dell'immagine è la fase *{binaria}* che genera un'immagine avviabile
-utilizzando i contenuti della directory chroot per costruire il file system
-pricipale per il sistema live, includere l'installatore e ogni altro
-materiale aggiuntivo sul supporto di destinazione al di fuori del file
-system del sistema live. Una volta che l'immagine è pronta viene creato, se
-abilitato, l'archivio dei sorgenti nella fase *{sorgenti}*.
+The build process is divided into stages, with various customizations
+applied in sequence in each. The first stage to run is the *{bootstrap}*
+stage. This is the initial phase of populating the chroot directory with
+packages to make a barebones Debian system. This is followed by the
+*{chroot}* stage, which completes the construction of chroot directory,
+populating it with all of the packages listed in the configuration, along
+with any other materials. Most customization of content occurs in this
+stage. The final stage of preparing the live image is the *{binary}* stage,
+which builds a bootable image, using the contents of the chroot directory to
+construct the root filesystem for the Live system, and including the
+installer and any other additional material on the target medium outside of
+the Live system's filesystem. After the live image is built, if enabled, the
+source tarball is built in the *{source}* stage.
 
 Within each of these stages, there is a particular sequence in which
 commands are applied. These are arranged in such a way as to ensure

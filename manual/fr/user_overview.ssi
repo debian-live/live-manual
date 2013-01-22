@@ -2,7 +2,7 @@
 
 1~overview-of-tools Aperçu des outils
 
-Ce chapitre contient un aperçu des trois principaux outils utilisés dans les
+Ce chapitre fournit un aperçu des trois principaux outils utilisés dans les
 systèmes de construction Debian Live: live-build, live-boot et live-config.
 
 2~live-build Le paquet live-build
@@ -14,36 +14,35 @@ L'idée derrière live-build est de constituer un cadre qui utilise un
 répertoire de configuration pour automatiser et personnaliser complètement
 tous les aspects de la construction d'une image Live.
 
-Plusieurs concepts sont similaires aux utilisés pour construire des paquets
-Debian avec /{debhelper}/:
+Plusieurs concepts sont similaires à ceux utilisés pour construire des
+paquets Debian avec /{debhelper}/:
 
 _* Les scripts ont un emplacement central pour la configuration de leur
 fonctionnement. Avec /{debhelper}/, c'est le sous-répertoire #{debian/}#
 d'un arbre de paquets. Par exemple, dh_install cherchera, entre autres, un
 fichier appelé #{debian/install}# pour déterminer quels fichiers doivent
 exister dans un paquet binaire particulier. De la même manière, live-build
-enregistre son configuration entièrement sous un sous-répertoire
-#{config/}#.
+enregistre sa configuration entièrement dans un sous-répertoire #{config/}#.
 
-_* Les scripts sont indépendants - c'est-à-dire, il est toujours sûr
+_* Les scripts sont indépendants, c'est-à-dire qu'il est toujours sûr
 d'exécuter chaque commande.
 
 Contrairement à /{debhelper}/, live-build contient un outil pour générer une
 arborescence de configuration, #{lb config}#. Cela pourrait être considéré
-comme similaire à des outils tels que /{dh-make}/.  Pour plus d'informations
-à propos de #{lb config}#, s'il vous plaît voir {La commande lb
+comme similaire à des outils tels que /{dh-make}/. Pour plus d'informations
+à propos de #{lb config}#, veuillez consulter {La commande lb
 config}#lb-config.
 
-Le reste de cette section examine les trois commandes les plus importantes:
+Le reste de cette section traite des trois commandes les plus importantes:
 
 _* *{lb config}*: Responsable de l'initialisation d'un répertoire de
 configuration du système Live. Voir {La commande lb config }#lb-config pour
 plus d'informations.
 
-_* *{lb build}*: Responsable de démarrer un système de construction
+_* *{lb build}*: Responsable du démarrage d'un système de construction
 Live. Voir {La commande lb build}#lb-build pour plus d'informations.
 
-_* *{lb clean}*: Responsable pour enlever des parties d'un système de
+_* *{lb clean}*: Responsable de la suppression des parties d'un système de
 construction Live. Voir {La commande lb clean}#lb-clean pour plus
 d'informations.
 
@@ -52,11 +51,12 @@ d'informations.
 Comme indiqué dans {live-build}#live-build, les scripts qui composent
 live-build lisent leur configuration avec la commande #{source}# à partir
 d'un seul répertoire nommé #{config/}#. Comme la construction de ce
-répertoire à la main serait fastidieux et source d'erreurs, la commande #{lb
-config}# peut être utilisée pour créer une arborescence de configuration.
+répertoire à la main serait fastidieuse et source d'erreurs, la commande
+#{lb config}# peut être utilisée pour créer une arborescence de
+configuration.
 
 Exécuter #{lb config}# sans aucun argument crée un sous-répertoire
-#{config/}# dont il remplit avec certains paramètres, et un sous-répertoire
+#{config/}# qu'il remplit avec certains paramètres, et un sous-répertoire
 #{auto/}#  avec une arborescence de fichiers.
 
 code{
@@ -68,14 +68,14 @@ code{
 
 }code
 
-L'utilisation de #{lb config}# sans aucun argument serait approprié pour les
-utilisateurs qui ont besoin d'une image de base, ou qui ont l'intention
-d'offrir plus tard, une configuration plus complète via #{auto/config}#
+L'utilisation de #{lb config}# sans aucun argument serait appropriée pour
+les utilisateurs qui ont besoin d'une image de base, ou qui ont l'intention
+de fournir plus tard une configuration plus complète via #{auto/config}#
 (voir {Gestion d'une configuration}#managing-a-configuration pour plus de
 détails).
 
-Normalement, vous voulez spécifier certaines options. Par exemple, pour
-spécifier la distribution que vous voulez construire en utilisant son nom de
+Normalement, vous voulez indiquer certaines options. Par exemple, pour
+indiquer la distribution que vous voulez construire en utilisant son nom de
 code:
 
 code{
@@ -84,7 +84,7 @@ code{
 
 }code
 
-Il est possible de spécifier plusieurs options, telles que:
+Il est possible d'indiquer plusieurs options, telles que:
 
 code{
 
@@ -99,41 +99,42 @@ Une liste complète des options est disponible dans la page de manuel de
 
 La commande #{lb build}# lit dans votre configuration à partir du répertoire
 #{config/}#. Elle exécute alors les commandes de niveau inférieur
-nécessaires pour construire votre système Live.
+nécessaires à la construction de votre système Live.
 
 3~lb-clean La commande #{lb clean}#
 
-Le travail de la commande #{lb clean}# est enlever les différentes parties
+Le rôle de la commande #{lb clean}# est d'enlever les différentes parties
 d'une construction afin que autres compilations ultérieures puissent
 commencer à partir d'un état propre. Par défaut, les étapes #{chroot}#,
 #{binary}# et #{source}# sont nettoyées, mais le cache est laissé intact. En
 outre, les étapes peuvent être nettoyées individuellement. Par exemple, si
 vous avez effectué des changements qui affectent uniquement la phase
 binaire, utilisez #{lb clean --binary}# avant de construire un nouveau
-binary. Voir la page de manuel de #{lb_clean}# pour une liste complète des
+binaire. Voir la page de manuel de #{lb_clean}# pour une liste complète des
 options.
 
 2~live-boot Le paquet live-boot
 
-live-boot est une collection de scripts fournissant hooks pour
-/{initramfs-tools}/, il est utilisé pour générer un initramfs capable de
+live-boot est une collection de scripts fournissant des hooks pour
+/{initramfs-tools}/. Il est utilisé pour générer un initramfs capable de
 démarrer des systèmes live, comme ceux créés par live-build. Cela inclut les
 ISOs de Debian Live, netboot tarballs, et les images pour clés USB.
 
-Au démarrage il va chercher un support en lecture seule qui contient un
+Au démarrage, il va chercher un support en lecture seule qui contient un
 répertoire #{/live/}# où un système de fichiers racine (souvent une image du
-système de fichiers compressée comme squashfs) est stocké. S'il est trouvé,
+système de fichiers compressée comme squashfs) est stocké. S'il le trouve,
 il va créer un environnement accessible en écriture, en utilisant aufs, afin
-que systémes similaires à Debian puissent démarrer à partir de ça.
+que les systèmes similaires à Debian puissent démarrer à partir de cet
+environnement.
 
-Plus d'information sur initial ramfs dans Debian peut être trouvé dans le
+Plus d'information sur initial ramfs dans Debian peut être trouvée dans le
 Debian Linux Kernel Handbook sur http://kernel-handbook.alioth.debian.org/
 dans le chapitre sur initramfs.
 
 2~live-config Le paquet live-config
 
 live-config se compose des scripts qui s'exécutent au démarrage après
-live-boot pour configurer le système live automatiquement. Il gère tâches
-telles que l'établissement du nom d'hôte, les  paramètres régionaux et le
-fuseau horaire, la création de l'utilisateur live, l'inhibition des cron
+live-boot pour configurer le système live automatiquement. Il gère les
+tâches telles que l'établissement du nom d'hôte, des paramètres régionaux et
+du fuseau horaire, la création de l'utilisateur live, l'inhibition des cron
 jobs et l'autologin de l'utilisateur live.

@@ -2,19 +2,17 @@
 
 1~the-basics Conceptes bàsics
 
-Aquest capítol conté una breu descripció del procés de construcció i les
-instruccions per a l'utilització dels tres tipus d'imatge més comunes. El
-tipus d'imatge més versàtil #{iso-hybrid}# es pot utilitzar en una màquina
-virtual, en medis òptics o qualsevol altre dispositiu d'emmagatzematge
-USB. En certs casos especials, com s'explica més endavant, el tipus #{hdd}#
-pot ser el més adequat. El capítol acaba amb instruccions per a la
-construcció d'una imatge tipus #{netboot}#, que és una mica més complicat a
-causa de la configuració necessària en el servidor. Aquest és un tema una
-mica avançat per a algú que no està familiaritzat ja amb l'arrencada en
-xarxa, però s'inclou aquí perquè un cop que la configuració es porta a
-terme, es tracta d'una forma molt convenient per provar i desplegar imatges
-per a l'arrencada en xarxa local sense la molèstia de tractar amb els
-dispositius de les imatges.
+This chapter contains a brief overview of the build process and instructions
+for using the three most commonly used image types. The most versatile image
+type, #{iso-hybrid}#, may be used on a virtual machine, optical medium or
+USB portable storage device. In certain special cases, as explained later,
+the #{hdd}# type may be more suitable. The chapter finishes with
+instructions for building and using a #{netboot}# type image, which is a bit
+more involved due to the setup required on the server. This is an slightly
+advanced topic for anyone who is not familiar already with netbooting, but
+it is included here because once the setup is done, it is a very convenient
+way to test and deploy images for booting on the local network without the
+hassle of dealing with image media.
 
 Al llarg del capítol, sovint es fa referència als noms dels fitxers produïts
 per defecte per live-build. Si es {descarrega una imatge
@@ -48,22 +46,19 @@ el sistema en funcionament. No obstant això, totes les modificacions es
 perdran al apagar l'equip si no és que s'utilitza la persistència opcional
 (vegeu {Persistència}#persistence).
 
-_* *{Carregador d'arrencada }*: Una petita peça de codi dissenyat per
-arrencar des del medi triat, possiblement presentant un indicador
-d'arrencada o un menú per permetre la selecció
-d'opcions/configuració. Carrega el nucli de Linux i el seu initrd per
-funcionar amb un sistema de fitxers del sistema associat. Es poden utilitzar
-diverses solucions, en funció dels medis de destinació i el format del
-sistema de fitxers que conté els components esmentats anteriorment: isolinux
-per arrencar des de CD o DVD en format ISO9660, syslinux per una unitat USB
-o HDD que s'iniciarà des de particions VFAT, extlinux per particions
-ext2/3/4 i btrfs, pxelinux per PXE netboot, GRUB per particions ext2/3/4,
-etc
+_* *{Bootloader}*: A small piece of code crafted to boot from the chosen
+medium, possibly presenting a prompt or menu to allow selection of
+options/configuration. It loads the Linux kernel and its initrd to run with
+an associated system filesystem. Different solutions can be used, depending
+on the target medium and format of the filesystem containing the previously
+mentioned components: isolinux to boot from a CD or DVD in ISO9660 format,
+syslinux for HDD or USB drive booting from a VFAT partition, extlinux for
+ext2/3/4 and btrfs partitions, pxelinux for PXE netboot, GRUB for ext2/3/4
+partitions, etc.
 
-Es pot utilitzar live-build per construir la imatge del sistema amb
-especificacions pròpies, configurar un nucli de Linux, el initrd, i un
-carregador d'arrencada per executar-los, tot això en un format depenent dels
-medis (imatge ISO9660, imatge de disc, etc.)
+You can use live-build to build the system image from your specifications,
+set up a Linux kernel, its initrd, and a bootloader to run them, all in one
+medium-dependant format (ISO9660 image, disk image, etc.).
 
 2~downloading-prebuilt-images Descàrrega d'imatges prefabricades
 
@@ -171,10 +166,10 @@ la connexió de la xarxa. Quan hagi acabat, ha d'haver un fitxer imatge
 
 2~using-iso-hybrid Usar una imatge ISO híbrida en viu
 
-Després de la construcció o la descàrrega d'una imatge ISO híbrida, que pot
-ser obtinguda a http://www.debian.org/CD/live/, el següent pas habitual és
-preparar els dispositius per a l'arrencada, ja sigui medis òptics com un
-CD-R(W) o DVD-R(W) o una memòria USB.
+After either building or downloading an ISO hybrid image, which can be
+obtained at http://www.debian.org/CD/live/, the usual next step is to
+prepare your medium for booting, either CD-R(W) or DVD-R(W) optical media or
+a USB stick.
 
 3~burning-iso-image Gravar una imatge ISO en un medi físic
 
@@ -238,23 +233,22 @@ code{
 
 *{Recordar: Cada vegada que s'instaŀli una nova binary.hybrid.iso al dispositiu, es perdran totes les dades perquè la taula de particions se sobreescriu amb el contingut de la imatge, de manera que es assenyat fer una còpia de seguretat de la partició addicional per restaurar les dades de nou després d'actualitzar la imatge en viu.}*
 
-3~booting-live-media Arrencar els medis en viu
+3~booting-live-medium Booting the live medium
 
-La primera vegada que s'arrenqui els medis en viu, ja sigui des de CD, DVD,
-memòria USB, o PXE, pot ser necessaria alguna petita configuració al BIOS
-del ordinador en primer lloc. Atès que les BIOS varien molt en les seves
-funcions i dreceres de teclat, no podem entrar en el tema en profunditat
-aquí. Algunes BIOS proporcionen una tecla per obrir un menú de dispositius
-d'arrencada, que és la manera més fàcil si es troba disponible al
-sistema. En cas contrari, cal entrar al menú de configuració del BIOS i
-canviar l'ordre d'arrencada per situar el dispositiu del sistema en viu
-abans que el dispositiu d'arrencada normal.
+The first time you boot your live medium, whether CD, DVD, USB key, or PXE
+boot, some setup in your computer's BIOS may be needed first. Since BIOSes
+vary greatly in features and key bindings, we cannot get into the topic in
+depth here. Some BIOSes provide a key to bring up a menu of boot devices at
+boot time, which is the easiest way if it is available on your
+system. Otherwise, you need to enter the BIOS configuration menu and change
+the boot order to place the boot device for the live system before your
+normal boot device.
 
-Després d'arrencar des del dispositiu, es veurà un menu d'inici. Si es prem
-«entrer» el sistema s'iniciarà amb l'entrada #{Live}# i les seves opcions
-per defecte. Per obtenir més informació sobre les opcions d'arrencada,
-llegir la «ajuda» (help) al menú i també les pàgines del manual de live-boot
-i live-config que es troben dins del sistema en viu.
+Once you've booted the medium, you are presented with a boot menu. If you
+just press enter here, the system will boot using the default entry,
+#{Live}# and default options. For more information about boot options, see
+the "help" entry in the menu and also the live-boot and live-config man
+pages found within the live system.
 
 Suposant que s'ha seleccionat #{Live}# i s'ha arrencat una imatge
 d'escriptori per defecte, després que els missatges d'arrencada hagin passat

@@ -17,9 +17,10 @@ Principalmente existen tres tipos de imágenes según el instalador:
 
 *{Imágenes con Instalador Debian «normal»}*: Esta imagen de Debian Live se puede considerar como la imagen habitual. Dispone de un kernel y un initrd diferenciados que, al ser seleccionados desde el gestor de arranque, ejecuta un Instalador de Debian estándar, de la misma manera que lo haría si se arrancase desde una imagen de CD descargada desde el sitio oficial de Debian. Las imágenes que contienen un sistema en vivo con otro instalador independiente se suelen llamar «imágenes combinadas».
 
-On such images, Debian is installed by fetching and installing .deb packages
-using /{debootstrap}/, from local media or some network-based network,
-resulting in a default Debian system being installed to the hard disk.
+En estas imágenes, el sistema operativo Debian se instala mediante la
+herramienta /{debootstrap}/ que descarga paquetes .deb desde medios locales
+o por red. El resultado final es un sistema Debian por defecto instalado en
+el disco duro.
 
 El conjunto de este proceso puede ser preconfigurado (preseeded) y
 personalizado de muchas maneras; Para más información, ver las páginas
@@ -39,7 +40,7 @@ Una vez finalizada esta etapa, el Instalador de Debian continua normalmente,
 instalando y configurando los siguientes elementos como pueden ser gestor de
 arranque, creación de usuarios locales, etc.
 
-*{Note:}* to support both normal and live installer entries in the bootloader of the same live medium, you must disable live-installer by preseeding #{live-installer/enable=false}#.
+*{Nota:}* Para poder incluir los dos tipos de instalador, «normal» y «live», en el mismo medio, se debe deshabilitar el live-installer. Esto se hace utilizando la variable de preconfiguración (preseed) #{live-installer/enable=false}#.
 
 *{Instalador Debian «del escritorio»}*: Una vez el sistema en vivo está ejecutandose, se puede lanzar el Instalador de Debian haciendo clic en el icono correspondiente, sin importar el tipo de Instalador Debian utilizado en el arranque. Esta manera de instalar Debian es más sencilla para el usuario y aconsejable en algunas situaciones. Para poder realizar esta acción se debe instalar el paquete debian-installer-launcher.
 

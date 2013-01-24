@@ -259,16 +259,17 @@ directorio deben tener la extensión #{.list}# además de la extensión de la
 etapa #{.chroot}# o #{.binary}# para indicar a qué etapa corresponde la
 lista.
 
-*{Note:}* If you don't specify the stage suffix, the list will be used for both stages. Normally, you want to specify #{.list.chroot}# so that the packages will only be installed in the live filesystem and not have an extra copy of the #{.deb}# placed on the medium.
+*{Nota:}* Si no se especifica el sufijo, la lista será usada en las dos etapas. En consecuencia, es conveniente especificar #{.list.chroot}# de modo que los paquetes se instalen únicamente en el sistema en vivo y no exista otra copia extra del paquete #{.deb}#.
 
 3~ Listas de paquetes locales para la etapa binary
 
-To make a binary stage list, place a file suffixed with #{.list.binary}# in
-#{config/package-lists/}#. These packages are not installed in the live
-filesystem, but are included on the live medium under #{pool/}#. You would
-typically use such a list with one of the non-live installer variants. As
-mentioned above, if you want this list to be the same as your chroot stage
-list, simply use the #{.list}# suffix by itself.
+Para crear una lista para la etapa «binary» crear un fichero con el sufijo
+#{.list.binary}# en #{config/package-lists/}#. Estos paquetes no son
+instalados en el sistema en vivo, pero son incluidos en #{pool/}#. El uso
+típico de una de estas lista sería para una de las variantes de instalador
+normal («non-live» N.del T.). Tal y como se mencionaba anteriormente, si se
+desea usar la misma lista para la etapa «chroot» basta con solamente añadir
+el sufijo #{.list}#
 
 3~generated-package-lists Generar listas de paquetes
 
@@ -559,9 +560,9 @@ code{
 
 3~tweaking-apt-to-save-space Ajuste de APT para ahorrar espacio
 
-You may find yourself needing to save some space on the image medium, in
-which case one or the other or both of the following options may be of
-interest.
+En ocasiones es necesario ahorrar un poco de espacio en el medio de
+instalación. Las dos opciones descritas a continuación pueden ser de
+interes.
 
 Si no se desea incluir los índices de APT en la imagen creada se puede
 utilizar la siguiente opción:

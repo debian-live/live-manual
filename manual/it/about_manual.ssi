@@ -7,14 +7,15 @@ relativa al progetto Debian Live e si applica in particolare al software
 prodotto per il rilascio di Debian 7.0 "wheezy". Si può trovare una versione
 aggiornata all'indirizzo http://live.debian.net/
 
-While live-manual is primarily focused on helping you build a live system
-and not on end-user topics, an end-user may find some useful information in
-these sections: {The Basics}#the-basics covers downloading prebuilt images
-and preparing images to be booted from media or the network, either using
-the web builder or running live-build directly on your system. {Customizing
-run time behaviours}#customizing-run-time-behaviours describes some options
-that may be specified at the boot prompt, such as selecting a keyboard
-layout and locale, and using persistence.
+Sebbene sia principalmente focalizzato nell'aiutare a costruire un sistema
+live e non su argomenti per l'utente finale, è comunque possibile trovare
+alcune informazioni utili in queste sezioni: le {Nozioni di base}#the-basics
+coprono il download di immagini precompilate e la preparazione delle
+immagini da avviare da un supporto o dalla rete, sia tramite il web builder
+o eseguendo live-build direttamente sul proprio sistema. {Personalizzare i
+comportamenti durante l'esecuzione}#customizing-run-time-behaviours descrive
+alcune opzioni specificabili al prompt d'avvio, come la scelta di un layout
+di tastiera e una lingua, e l'utilizzo della persistenza.
 
 Alcuni dei comandi menzionati nel testo devono essere eseguiti con i
 privilegi di super-utente che possono essere ottenuti diventando utente root
@@ -30,14 +31,16 @@ alcuni dei nostri utenti, ci rendiamo conto che c'è tanto materiale da
 trattare e che si potrebbe voler provare il software prima di entrare nei
 dettagli; pertanto suggeriamo di leggerlo nel seguente ordine.
 
-First, read this chapter, {About this manual}#about-manual, from the
-beginning and ending with the {Terms}#terms section. Next, skip to the three
-tutorials at the front of the {Examples}#examples section designed to teach
-you image building and customization basics. Read {Using the
-examples}#using-the-examples first, followed by {Tutorial 1: A default
-image}#tutorial-1, {Tutorial 2: A web browser utility}#tutorial-2 and
-finally {Tutorial 3: A personalized image}#tutorial-3. By the end of these
-tutorials, you will have a taste of what can be done with Debian Live.
+Per iniziare leggere questo capitolo, {A proposito di questo
+manuale}#about-manual, da cima a fondo insieme alla sezione
+{Glossario}#terms, quindi passare ai tre tutorial all'inizio della sezione
+{Esempi}#examples progettati per insegnare le basi della costruzione e della
+personalizzazione delle immagini. Si legga innanzitutto {Usare gli
+esempi}#using-the-examples, seguito da {Tutorial 1: un'immagine
+predefinita}#tutorial-1, {Tutorial 2: un programma di utilità web
+browser}#tutorial-2 e, infine, {Tutorial 3: un'immagine
+personalizzata}#tutorial-3. Alla fine di queste esercitazioni, si avrà un
+assaggio di ciò che si può fare con Debian Live.
 
 Ti invitiamo ad uno studio più approfondito del manuale, magari leggendo in
 seguito le {Nozioni di base}#the-basics, sfogliando o saltando {Creare
@@ -49,62 +52,64 @@ manuale per intero.
 
 2~terms Glossario
 
-_* *{Live system}*: Un sistema operativo che può partire senza installazione
-su disco rigido. I sistemi live non alterano né il sistema operativo locale
-(o i sistemi operativi locali) né i file già installati sul disco rigido del
-computer a meno che lo si faccia volontariamente. I sistemi live vengono
-solitamente avviati da supporti quali CD, DVD o penne USB; alcuni possono
-anche avviarsi via rete.
+_* *{Sistema Live}*: un sistema operativo che può partire senza
+installazione su disco rigido. I sistemi live non alterano né il sistema
+operativo locale (o i sistemi operativi locali) né i file già installati sul
+disco rigido del computer a meno che lo si faccia volontariamente. I sistemi
+live vengono solitamente avviati da supporti quali CD, DVD o penne USB;
+alcuni possono anche avviarsi via rete.
 
-_* *{Live medium}*: As distinct from live system, the live medium refers to
-the CD, DVD or USB stick where the binary produced by live-build and used to
-boot the live system is written. More broadly, the term also refers to any
-place where this binary resides for the purposes of booting the live system,
-such as the location for the network boot files.
+_* *{Supporto Live}*: diversamente dal sistmea live, si riferisce a CD, DVD
+o penna USB dove viene scritto il binario prodotto da live-build e usato per
+l'avvio del sistema live. Più in generale, il termine si riferisce anche a
+qualsiasi posto in cui risiede il binario allo scopo di avviare il sistema,
+come il percorso per i file di avvio da rete.
 
-_* *{Debian Live}*: Il sotto-progetto Debian che mantiene, tra gli altri, i
+_* *{Debian Live}*: il sotto-progetto Debian che mantiene, tra gli altri, i
 pacchetti live-boot, live-build, live-config, live-tools e live-manual.
 
-_* *{Debian Live system}*: Un sistema live che usa software proveniente dal
+_* *{Sistema Debian Live}*: un sistema live che usa software proveniente dal
 sistema operativo Debian e che può essere lanciato da CD, DVD, supporti USB,
 via rete (tramite immagini netboot) e via internet (tramite il parametro di
 boot #{fetch=URL}#).
 
-_* *{Host system}*: L'ambiente utilizzato per creare il sistema live.
+_* *{Sistema host}*: l'ambiente utilizzato per creare il sistema live.
 
-_* *{Target system}*: L'ambiente usato per eseguire il sistema live.
+_* *{Sistema di destinazione}*: l'ambiente usato per eseguire il sistema
+live.
 
-_* *{live-boot}*: Una raccolta di script usati per avviare sistemi live.
+_* *{live-boot}*: una raccolta di script usati per avviare sistemi live.
 
-_* *{live-build}*: A collection of scripts used to build customized Debian
-Live systems.
+_* *{live-boot}*: una raccolta di script usati per creare sistemi live
+Debian personalizzati.
 
-_* *{live-config}*: Una raccolta di script usati per configurare un sistema
-live durante il processo di inizializzazione.
+_* *{live-config}*: una raccolta di script usati per configurare un sistema
+live durante il processo di avvio.
 
-_* *{live-tools}*: A collection of additional scripts used to perform useful
-tasks within a running live system.
+_* *{live-tools}*: una raccolta di script aggiuntivi usati per eseguire
+utili compiti in un sistema live avviato.
 
-_* *{live-manual}*: Questo documento è inserito nel pacchetto chiamato
+_* *{live-manual}*: questo documento è inserito nel pacchetto chiamato
 live-manual.
 
-_* *{Debian Installer (d-i)}*: Il sistema d'installazione ufficiale per la
+_* *{Debian Installer (d-i)}*: il sistema d'installazione ufficiale per la
 distribuzione Debian.
 
-_* *{Boot parameters}*: Parametri che possono essere immessi nel prompt del
+_* *{Boot parameters}*: parametri che possono essere immessi nel prompt del
 boot loader per modificare il comportamento del kernel o di live-config.
 
-_* *{chroot}*: Il programma /{chroot}/, #{chroot(8)}#, rende possibile
+_* *{chroot}*: il programma /{chroot}/, #{chroot(8)}#, rende possibile
 eseguire diverse istanze dell'ambiente GNU/Linux su un singolo sistema
 simultaneamente senza riavviare.
 
-_* *{Binary image}*: Un file che contiene il sistema live, come binary.iso o
+_* *{Binary image}*: un file che contiene il sistema live, come binary.iso o
 binary.img.
 
-_* *{Target distribution}*: La distribuzione su cui sarà basato il sistema
-live. Può differire dalla distribuzione presente sul proprio computer.
+_* *{Distribuzione di destinazione}*: la distribuzione su cui sarà basato il
+sistema live. Può differire dalla distribuzione presente sul proprio
+computer.
 
-_* *{stable/testing/unstable}*: La distribuzione *{stable}* contiene
+_* *{stable/testing/unstable}*: la distribuzione *{stable}* contiene
 l'ultima distribuzione ufficialmente rilasciata da Debian; la *{testing}* è
 il punto di raccolta per i pacchetti della prossima *{stable}*. Uno dei
 principali vantaggi nell'uso di questa distribuzione sta nell'avere software
@@ -146,17 +151,18 @@ _* Trent W. Buck
 
 2~how-to-contribute Contribuire a questo documento
 
-This manual is intended as a community project and all proposals for
-improvements and contributions are extremely welcome. Please see the section
-{Contributing to the project}#contributing-to-project for detailed
-information on how to fetch the commit key and make good commits.
+Questo manuale è pensato come un progetto comunitario e ogni suggerimento e
+contributo è benvenuto. Si veda {Contribuire al
+progetto}#contributing-to-project per informazioni dettagliate su come
+prelevare la chiave SSH ed eseguire buoni commit.
 
 3~ Applicare le modifiche
 
-In order to make changes to the English manual you have to edit the right
-files in #{manual/en/}# but prior to the submission of your contribution,
-please preview your work. To preview the live-manual, ensure the packages
-needed for building it are installed by executing:
+Per apportare modifiche alla versione inglese del manuale è necessario
+modificare i file giusti in #{manual/en/}#, ma prima di sottoporre il
+proprio contributo si prega di visionare l'anteprima del proprio lavoro. Per
+ottenere l'anteprima di live-manual, assicurarsi di avere installato i
+pacchetti necessari per la sua compilazione eseguendo:
 
 code{
 
@@ -199,11 +205,11 @@ code{
 
 }code
 
-After revising your work and making sure that everything is fine, do not use
-#{make commit}# unless you are updating translations in the commit, and in
-that case, do not mix changes to the English manual and translations in the
-same commit, but use separate commits for each. See the
-{Translation}#translation section for more details.
+Dopo aver revisionato il proprio lavoro e assicurato che tutto funzioni, non
+usare #{make commit}# a meno che nel commit non si stiano aggiornando delle
+traduzioni, in tal caso non mescolare nello stesso le modifiche al manuale
+inglese e le traduzioni ma eseguire un commit per ognuna. Per maggiori
+dettagli vedere la sezione {Traduzione}#translation.
 
 3~translation Traduzione
 
@@ -222,21 +228,22 @@ _* Una volta che la nuova lingua è stata aggiunta, si può continuare a
 tradurre i restanti file po situati in #{manual/po/}#, nell'ordine che si
 preferisce.
 
-_* Don't forget that you need #{make commit}# to ensure the translated
-manuals are updated from the po files and then you can review your changes
-launching #{make build}# before #{git add .}#, #{git commit -m
-"Translating..."}# and #{git push}#.
+_* Non dimenticare che è necessario usare #{make commit}# per assicurarsi
+che i manuali tradotti siano aggiornati partendo dai file po, quindi si
+possono verificare le modifiche con #{make build}# prima di #{git add .}#,
+#{git commit -m "Translating..."}# e #{git push}#.
 
-After running #{make commit}# you will see some text scroll by. These are
-basically informative messages about the processing status and also some
-hints about what can be done in order to improve live-manual. Unless you see
-a fatal error, you usually can proceed and submit your contribution.
+Dopo aver eseguito #{make commit}# si vedrà del testo scorrere. Questi sono
+messaggi informativi sullo stato del processo e alcuni suggerimenti su cosa
+si può fare per migliorare live-manual. A meno che non si ottenga un errore
+fatale si può procedere e inviare il proprio contributo.
 
-live-manual comes with two utilities that can greatly help translators to
-find untranslated and changed strings. The first one is "make translate". It
-launches an script that tells you in detail how many untranslated strings
-there are in each po file. The second one, the "make fixfuzzy" target, only
-acts upon changed strings but it helps you to find and fix them one by one.
+live-manual è fornito di due utilità in grado di fornire un grande aiuto ai
+traduttori al fine di trovare le stringhe da tradurre o modificate. La prima
+è "make translate", avvia uno script che dice dettagliatamente quante
+stringhe non tradotte ci sono in ogni file po. La seconda, "make fixfuzzy",
+funziona solo sulle stringhe modificate ma aiuta a trovarle e aggiornarle
+una per una.
 
 Keep in mind that even though these utilities might be really helpful to do
 translation work on the command like, the use of an specialized tool like

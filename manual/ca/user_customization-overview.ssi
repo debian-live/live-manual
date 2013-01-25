@@ -34,19 +34,21 @@ sistema s'hagi configurat com a sistema viu.
 
 2~stages-of-the-build Etapes de la construcció
 
-The build process is divided into stages, with various customizations
-applied in sequence in each. The first stage to run is the *{bootstrap}*
-stage. This is the initial phase of populating the chroot directory with
-packages to make a barebones Debian system. This is followed by the
-*{chroot}* stage, which completes the construction of chroot directory,
-populating it with all of the packages listed in the configuration, along
-with any other materials. Most customization of content occurs in this
-stage. The final stage of preparing the live image is the *{binary}* stage,
-which builds a bootable image, using the contents of the chroot directory to
-construct the root filesystem for the Live system, and including the
-installer and any other additional material on the target medium outside of
-the Live system's filesystem. After the live image is built, if enabled, the
-source tarball is built in the *{source}* stage.
+El procés de construcció es divideix en etapes, amb personalitzacions
+diferentes aplicades successivament en cada una. La primera etapa que
+s'executa es la fase *{bootstrap}*. Aquesta és la fase inicial de poblar el
+directori chroot amb paquets per fer un sistema Debian bàsic. Això és seguit
+per l'etapa *{chroot}*, que completa la construcció del directori chroot,
+omplint-lo amb tots els paquets que s'indiquen en la configuració, juntament
+amb qualsevol altre material. La majoria de personalitzacions dels
+continguts es produeixen en aquesta etapa. L'etapa final de preparació de la
+imatge en viu és l'etapa *{binary}*, quan es construeix una imatge capaç
+d'arrencar, amb el contingut del directori chroot per construir el sistema
+de fitxers arrel per al sistema en viu, i que inclou el programa de
+instaŀlació i qualsevol altre material addicional en el medi de destinació
+fora del sistema de fitxers del sistema en viu. Després de construir la
+imatge en viu, si està habilitat, s'inclou el codi font original a l'etapa
+*{source}*.
 
 Dins de cadascuna d'aquestes etapes, hi ha una seqüència particular en la
 qual s'apliquen les ordres. Això es fa de manera que es garanteixi que les

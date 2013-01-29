@@ -3,10 +3,10 @@
 1~customizing-run-time-behaviours Personalizzare i comportamenti durante
 l'esecuzione
 
-All configuration that is done during run time is done by live-config. Here
-are some of the most common options of live-config that users are interested
-in. A full list of all possibilities can be found in the man page of
-live-config.
+Tutte le configurazioni durante l'esecuzione sono eseguite da
+live-config. Vengono qui presentate alcune delle opzioni di live-config più
+comuni alle quali gli utenti sono interessati; una lista completa può essere
+trovata nel suo manuale.
 
 2~ Personalizzare l'utente live
 
@@ -17,10 +17,11 @@ creazione, come discusso in {Live/chroot include
 locali}#live-chroot-local-includes, ma anche ogni gruppo e permesso
 associato all'utente live.
 
-You can specify additional groups that the live user will belong to by using
-any of the possibilities to configure live-config. For example, to add the
-live user to the #{fuse}# group, you can either add the following file in
-#{config/includes.chroot/etc/live/config/user-setup.conf}#:
+È possibile specificare gruppi aggiuntivi ai quali l'utente live apparterrà
+utilizzando una delle possibilità di configurazione di live-config. Ad
+esempio, per aggiungere l'utente al gruppo #{fuse}#, è possibile sia
+inserire in #{config/includes.chroot/etc/live/config/user-setup.conf}#
+quanto segue:
 
 code{
 
@@ -28,9 +29,9 @@ code{
 
 }code
 
-or use
+o utilizzare
 #{live-config.user-default-groups=audio,cdrom,dip,floppy,video,plugdev,netdev,powerdev,scanner,bluetooth,fuse}#
-as a boot parameter.
+come parametro di boot.
 
 È inoltre possibile modificare facilmente il nome utente "user" e la
 password "live" predefiniti.
@@ -178,8 +179,9 @@ _* una partizione, identificata dal suo nome GPT (GUID Partition Table).
 
 _* un filesystem, identificato dalla sua label.
 
-_* an image file located on the root of any readable filesystem (even an
-NTFS partition of a foreign OS), identified by its filename.
+_* un file immagine situato nella directory radice di un qualsiasi
+filesystem leggibile (anche una partizione NTFS di un sistema estraneo),
+identificato dal nome del file.
 
 La label del volume per le stratificazioni deve essere #{persistence}# ma
 verrà ignorata a meno che non sia presente nella directory radice un file
@@ -243,7 +245,7 @@ code{
 
 }code
 
-Now, reboot into your live medium with the boot parameter "persistence".
+Ora riavviare il dispositivo live con il parametro d'avvio "persistence".
 
 3~persistence-conf Il file persistence.conf
 
@@ -268,15 +270,16 @@ code{
 
 }code
 
-Then we reboot. During the first boot the contents of #{/home}# and
-#{/var/cache/apt}# will be copied into the persistence volume, and from then
-on all changes to these directories will live in the persistence
-volume. Please note that any paths listed in the #{persistence.conf}# file
-cannot contain white spaces or the special #{.}# and #{..}# path
-components. Also, neither #{/lib}#, #{/lib/live}# (or any of their
-sub-directories) nor #{/}# can be made persistent using custom mounts. As a
-workaround for this limitation you can add #{/ union}# to your
-#{persistence.conf}# file to achieve full persistence.
+Quindi riavviare. Durante il primo avvio il contenuto di #{/home}# e
+#{/var/cache/apt}# saranno copiati nel volume persistente e da allora tutte
+le modifiche a queste directory risiederanno in modo persistente sul
+volume. C'è da considerare che tutti i path elencati nel file
+#{persistence.conf}# non possono contenere spazi o i caratteri speciali
+#{.}# e #{..}#, inoltre né #{/lib}#, #{/lib/live}# (o una delle sue
+sottodirectory) né #{/}# può essere resa persistente tramite i mount
+personalizzati. Come workaround a questa limitazione è possibile aggiungere
+#{/ union}# al file #{persistence.conf}# file per ottenere la persistenza
+completa.
 
 Possono essere utilizzati svariati volumi di stratificazione personalizzati
 (con i rispettivi file #{persistence.conf}#) allo stesso tempo ma se questi
@@ -290,10 +293,10 @@ persistence.conf(5) per sapere come gestire questo caso.
 
 3~ Utilizzare più di un'archiviazione persistente
 
-If a user would need multiple persistence store of the same type for
-different locations or testing, such as #{persistence-private}# and
-#{persistence-work}#, the boot parameter #{persistence-label}# used in
-conjunction with the boot parameter #{persistence}# will allow for multiple
-but unique persistence media. An example would be if a user wanted to use a
-persistence partition labeled #{persistence-subText}# they would use the
-boot parameters of: #{persistence}# #{persistence-label=subText}#.
+Se un utente avesse bisogno di spazi di archiviazione multipli dello stesso
+tipo per posizioni differenti o per test, come #{persistence-privato}# e
+#{persistence-lavoro}#, il parametro d'avvio #{persistence-label}# usato in
+congiunzione con #{persistent}# permetterà supporti persistenti multipli ma
+univoci. Un esempio potrebbe essere un utente che vuole usare una partizione
+etichettata come #{persistence-sottotesto}#, userebbe: #{persistence}#
+#{persistence-label=sottotesto}#.

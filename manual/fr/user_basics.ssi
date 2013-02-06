@@ -2,17 +2,19 @@
 
 1~the-basics Les bases
 
-This chapter contains a brief overview of the build process and instructions
-for using the three most commonly used image types. The most versatile image
-type, #{iso-hybrid}#, may be used on a virtual machine, optical medium or
-USB portable storage device. In certain special cases, as explained later,
-the #{hdd}# type may be more suitable. The chapter finishes with
-instructions for building and using a #{netboot}# type image, which is a bit
-more involved due to the setup required on the server. This is an slightly
-advanced topic for anyone who is not familiar already with netbooting, but
-it is included here because once the setup is done, it is a very convenient
-way to test and deploy images for booting on the local network without the
-hassle of dealing with image media.
+Ce chapitre contient un bref aperçu du processus de construction et des
+instructions pour utiliser les trois types d'images les plus couramment
+utilisées. Le type d'image le plus polyvalent, #{iso-hybrid}#, peut être
+utilisé sur une machine virtuelle, un support optique ou un périphérique USB
+de stockage portable. Dans certains cas particuliers, comme expliqué plus
+loin, le type #{hdd}# peut être plus approprié. Le chapitre se termine avec
+des instructions pour la construction et l'utilisation d'une image
+#{netboot}#, qui est un peu plus compliquée en raison de la configuration
+requise sur le serveur. C'est un sujet un peu avancé pour tous ceux qui ne
+connaissent pas déjà le démarrage sur le réseau, mais est inclus ici car une
+fois la configuration terminée, c'est un moyen très pratique pour tester et
+déployer des images pour le démarrage sur le réseau local sans le tracas des
+supports d'images.
 
 Tout au long du chapitre, nous ferons souvent référence à la valeur par
 défaut des noms des fichiers produits par live-build. Si vous {téléchargez
@@ -47,19 +49,21 @@ permettre l'écriture de fichiers dans le système en marche. Cependant,
 toutes les modifications seront perdues lors de l'arrêt à moins que l'option
 «persistance» soit utilisée (voir {Persistance}#persistence).
 
-_* *{Bootloader}*: A small piece of code crafted to boot from the chosen
-medium, possibly presenting a prompt or menu to allow selection of
-options/configuration. It loads the Linux kernel and its initrd to run with
-an associated system filesystem. Different solutions can be used, depending
-on the target medium and format of the filesystem containing the previously
-mentioned components: isolinux to boot from a CD or DVD in ISO9660 format,
-syslinux for HDD or USB drive booting from a VFAT partition, extlinux for
-ext2/3/4 and btrfs partitions, pxelinux for PXE netboot, GRUB for ext2/3/4
-partitions, etc.
+_* *{Chargeur d'amorçage}*: Un petit morceau de code conçu pour démarrer à
+partir du support choisi, il peut présenter un menu rapide ou permettre la
+sélection des options/configurations. Il charge le noyau Linux et son initrd
+pour fonctionner avec un système de fichiers associé. Différentes solutions
+peuvent être utilisées, selon le support de destination et le format du
+système de fichiers contenant les composants mentionnés précédemment:
+isolinux pour démarrer à partir d'un CD ou DVD au format ISO9660, syslinux
+pour démarrer un disque dur ou une clé USB à partir d'une partition VFAT,
+extlinux pour partitions ext2/3/4 et btrfs, pxelinux pour netboot PXE, GRUB
+pour partitions ext2/3/4, etc.
 
-You can use live-build to build the system image from your specifications,
-set up a Linux kernel, its initrd, and a bootloader to run them, all in one
-medium-dependant format (ISO9660 image, disk image, etc.).
+Vous pouvez utiliser live-build pour construire l'image du système à partir
+de vos spécifications, configurer un noyau Linux, son initrd, et un chargeur
+d'amorçage pour les exécuter, tout dans un format en fonction du support
+(image ISO9660, image disque, etc.).
 
 2~downloading-prebuilt-images Téléchargement des images précompilées
 
@@ -171,10 +175,10 @@ l'emploi, dans le répertoire courant.
 
 2~using-iso-hybrid Utilisation d'une image ISO hybride live
 
-After either building or downloading an ISO hybrid image, which can be
-obtained at http://www.debian.org/CD/live/, the usual next step is to
-prepare your medium for booting, either CD-R(W) or DVD-R(W) optical media or
-a USB stick.
+Après la construction ou le téléchargement d'une image ISO hybride, qui peut
+être obtenue sur http://www.debian.org/CD/live/, l'étape suivante est
+d'habitude de préparer votre support pour le démarrage, soit sur CD-R(W) ou
+DVD-R(W), des supports optiques ou une clé USB.
 
 3~burning-iso-image Graver une image ISO sur un support physique
 
@@ -238,22 +242,24 @@ code{
 
 *{Rappelez-vous: Chaque fois que vous installez une nouvelle binary.hybrid.iso sur la clé, toutes les données sur la clé seront perdues parce que la table de partition est écrasée par le contenu de l'image, vous devez sauvegarder votre partition supplémentaire d'abord pour la restaurer à nouveau après la mise à jour de l'image live.}*
 
-3~booting-live-medium Booting the live medium
+3~booting-live-medium Démarrer le support live
 
-The first time you boot your live medium, whether CD, DVD, USB key, or PXE
-boot, some setup in your computer's BIOS may be needed first. Since BIOSes
-vary greatly in features and key bindings, we cannot get into the topic in
-depth here. Some BIOSes provide a key to bring up a menu of boot devices at
-boot time, which is the easiest way if it is available on your
-system. Otherwise, you need to enter the BIOS configuration menu and change
-the boot order to place the boot device for the live system before your
-normal boot device.
+La première fois que vous démarrez votre support live, qu'il s'agisse de CD,
+DVD, clé USB, ou du démarrage par PXE, une certaine configuration dans le
+BIOS de votre ordinateur peut être d'abord nécessaire. Puisque les BIOS
+varient grandement en fonctionnalités et raccourcis clavier, on ne peut pas
+aborder le sujet en profondeur ici. Certains BIOS fournissent une touche
+pour ouvrir un menu d'amorçage au démarrage, qui est le moyen le plus facile
+si elle est disponible sur votre système. Sinon, vous avez besoin d'entrer
+dans le menu de configuration du BIOS et modifier l'ordre de démarrage pour
+placer le dispositif de démarrage pour le système live devant votre
+périphérique de démarrage normal.
 
-Once you've booted the medium, you are presented with a boot menu. If you
-just press enter here, the system will boot using the default entry,
-#{Live}# and default options. For more information about boot options, see
-the "help" entry in the menu and also the live-boot and live-config man
-pages found within the live system.
+Une fois que vous avez démarré le support, un menu de démarrage vous est
+présenté. Si vous appuyez simplement sur entrée ici, le système va démarrer
+en utilisant l'entrée par défaut, #{Live}#. Pour plus d'informations sur les
+options de démarrage, consultez l'entrée «Help» dans le menu et aussi les
+pages de manuel de live-boot et live-config dans le système live. 
 
 En supposant que vous ayez sélectionné #{Live}# et démarré une image de
 bureau live par défaut, après que les messages de démarrage aient défilé,

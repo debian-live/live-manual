@@ -34,19 +34,20 @@ configuré comme un système live.
 
 2~stages-of-the-build Étapes de la construction
 
-The build process is divided into stages, with various customizations
-applied in sequence in each. The first stage to run is the *{bootstrap}*
-stage. This is the initial phase of populating the chroot directory with
-packages to make a barebones Debian system. This is followed by the
-*{chroot}* stage, which completes the construction of chroot directory,
-populating it with all of the packages listed in the configuration, along
-with any other materials. Most customization of content occurs in this
-stage. The final stage of preparing the live image is the *{binary}* stage,
-which builds a bootable image, using the contents of the chroot directory to
-construct the root filesystem for the Live system, and including the
-installer and any other additional material on the target medium outside of
-the Live system's filesystem. After the live image is built, if enabled, the
-source tarball is built in the *{source}* stage.
+Le processus de construction est divisé en étapes, avec des
+personnalisations différentes appliquées dans l'ordre dans chaque étape. La
+première étape à exécuter est l'étape *{bootstrap}*. C'est la phase initiale
+de peuplement du répertoire chroot avec des paquets pour faire un système
+Debian de base. Elle est suivie par l'étape *{chroot}*, qui complète la
+construction du répertoire chroot, le peuplant de tous les paquets listés
+dans la configuration, ainsi que tout autre matériel. La plupart de la
+personnalisation du contenu se produit à ce stade. La dernière étape de la
+préparation de l'image live est l'étape *{binary}*, qui construit une image
+amorçable, en utilisant le contenu du répertoire chroot pour construire le
+système de fichiers racine pour le système Live. Il comprend l'installateur
+et tout autre matériel supplémentaire sur le support cible en dehors du
+système de fichiers du système live. Quand l'image live est construite, s'il
+est activé, le tarball des sources est construit dans l'étape *{source}*.
 
 À chacune de ces étapes, les commandes sont appliquées dans un ordre
 particulier. Les commandes sont ordonnées de manière à assurer que les

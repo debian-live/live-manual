@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 3.0~b2-1\n"
-"POT-Creation-Date: 2013-01-02 14:31+0100\n"
-"PO-Revision-Date: 2012-08-03 17:13+0200\n"
+"POT-Creation-Date: 2013-01-22 15:55+0100\n"
+"PO-Revision-Date: 2013-01-29 22:43+0100\n"
 "Last-Translator: skizzhg <skizzhg@gmx.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -21,8 +21,8 @@ msgid ":B~ Examples"
 msgstr ":B~ Esempi"
 
 #. type: Plain text
-#: en/about_manual.ssi:92 en/about_manual.ssi:100 en/about_manual.ssi:108
-#: en/about_manual.ssi:116 en/about_manual.ssi:124
+#: en/about_manual.ssi:94 en/about_manual.ssi:102 en/about_manual.ssi:110
+#: en/about_manual.ssi:118 en/about_manual.ssi:126
 #: en/appendix_style-guide.ssi:122 en/appendix_style-guide.ssi:132
 #: en/appendix_style-guide.ssi:142 en/appendix_style-guide.ssi:152
 #: en/appendix_style-guide.ssi:162 en/appendix_style-guide.ssi:175
@@ -97,8 +97,8 @@ msgid "code{"
 msgstr "code{"
 
 #. type: Plain text
-#: en/about_manual.ssi:96 en/about_manual.ssi:104 en/about_manual.ssi:112
-#: en/about_manual.ssi:120 en/about_manual.ssi:128
+#: en/about_manual.ssi:98 en/about_manual.ssi:106 en/about_manual.ssi:114
+#: en/about_manual.ssi:122 en/about_manual.ssi:130
 #: en/appendix_style-guide.ssi:126 en/appendix_style-guide.ssi:136
 #: en/appendix_style-guide.ssi:146 en/appendix_style-guide.ssi:156
 #: en/appendix_style-guide.ssi:171 en/appendix_style-guide.ssi:180
@@ -245,10 +245,8 @@ msgstr ""
 
 #. type: Plain text
 #: en/examples.ssi:22
-#, fuzzy
-#| msgid "2~tutorial-1 Tutorial 1: A standard image"
 msgid "2~tutorial-1 Tutorial 1: A default image"
-msgstr "2~tutorial-1 Tutorial 1: un'immagine standard"
+msgstr "2~tutorial-1 Tutorial 1: un'immagine predefinita"
 
 #. type: Plain text
 #: en/examples.ssi:24
@@ -734,7 +732,7 @@ msgid ""
 "recommended by live-config and live-boot: #{user-setup}# to make autologin "
 "work and #{sudo}# as an essential program to shutdown the system. Besides, "
 "it could be handy to add #{live-tools}# to be able to copy the image to RAM "
-"and #{eject}# to eventually eject the live media. So:"
+"and #{eject}# to eventually eject the live medium. So:"
 msgstr ""
 "In questo esempio abbiamo scoperto che dobbiamo iserire nuovamente svariati "
 "pacchetti raccommandati da live-config e live-boot: #{user-setup}# perché il "
@@ -811,24 +809,12 @@ msgstr "2~ Un'immagine base per una chiavetta USB da 128MB"
 
 #. type: Plain text
 #: en/examples.ssi:244
-#, fuzzy, no-wrap
-#| msgid "*{Use case:}* Create an hdd image with some components removed in order to fit on a 128MB USB key with a little space left over to use as you see fit.\n"
+#, no-wrap
 msgid "*{Use case:}* Create a default image with some components removed in order to fit on a 128MB USB key with a little space left over to use as you see fit.\n"
-msgstr "*{Caso d'uso:}* creazione di un'immagine hdd con alcuni componenti rimossi affinché possa stare su una chiavetta USB da 128MB, con un po' di spazio libero da usarsi come meglio si crede.\n"
+msgstr "*{Caso d'uso:}* creazione di un'immagine predefinita con alcuni componenti rimossi affinché possa stare su una chiavetta USB da 128MB, con un po' di spazio libero da usarsi come meglio si crede.\n"
 
 #. type: Plain text
 #: en/examples.ssi:246
-#, fuzzy
-#| msgid ""
-#| "When optimizing an image to fit a certain media size, you need to "
-#| "understand the tradeoffs you are making between size and functionality. "
-#| "In this example, we trim only so much as to make room for additional "
-#| "material within a 128M media size, but without doing anything to destroy "
-#| "the integrity of the packages contained within, such as the purging of "
-#| "locale data via the /{localepurge}/ package, or other such \"intrusive\" "
-#| "optimizations. Of particular note, in order to understand what the #"
-#| "{minimal.chroot}# hook does you should take a look at #{/usr/share/doc/"
-#| "live-build/examples/hooks}#"
 msgid ""
 "When optimizing an image to fit a certain media size, you need to understand "
 "the tradeoffs you are making between size and functionality. In this "
@@ -845,8 +831,8 @@ msgstr ""
 "basta per far sì che il tutto stia in 128M, senza fare nient'altro che "
 "distrugga l'integrità dei pacchetti contenuti, come eliminare localizzazioni "
 "con il pacchetto /{localepurge}/ o altre ottimizzazioni \"intrusive\". È da "
-"notare che, per capire cosa fa l'hook #{minimal.chroot}#, si consiglia di "
-"consultare #{/usr/share/doc/live-build/examples/hooks}#"
+"notare che per creare un sistema minimale da zero viene utilizzata l'opzione "
+"#{--debootstrap-options}#."
 
 #. type: Plain text
 #: en/examples.ssi:250
@@ -889,18 +875,6 @@ msgstr ""
 
 #. type: Plain text
 #: en/examples.ssi:272
-#, fuzzy
-#| msgid ""
-#| "The biggest space-saver here, compared to building a standard image on an "
-#| "#{i386}# architecture system, is to select only the #{486}# kernel "
-#| "flavour instead of the default #{-k \"486 686-pae\"}#. Leaving off APT's "
-#| "indices with #{--apt-indices false}# also saves a fair amount of space, "
-#| "the tradeoff being that you need to #{apt-get update}# before using apt "
-#| "in the live system. Dropping recommended packages with #{--apt-recommends "
-#| "false}# saves some additional space, at the expense of omitting some "
-#| "packages you might otherwise expect to be there. #{--memtest none}# "
-#| "prevents the installation of a memory tester. And finally, the execution "
-#| "of the #{minimal.chroot}# hook removes some unused packages and files."
 msgid ""
 "The biggest space-saver here, compared to building a default image on an #"
 "{i386}# architecture system, is to select only the #{486}# kernel flavour "
@@ -915,23 +889,24 @@ msgid ""
 "saves some space too. And finally, #{--memtest none}# prevents the "
 "installation of a memory tester."
 msgstr ""
-"Ciò che salva più spazio, comparato alla costruzione di un'immagine standard "
-"su un sistema con architettura #{i386}#, è la selezione del solo kernel #"
-"{486}# invece che quello predefinito #{-k \"486 686-pae\"}#. Lasciando fuori "
-"anche gli indici di APT con #{--apt-indices false}# si può salvare una certa "
-"quantità di spazio, il compromesso è usare #{apt-get update}# prima di usare "
-"apt nel sistema live. Saltare i pacchetti raccomandati con #{--apt-"
-"recommends  false}# salva altro spazio, a scapito di alcuni pacchetti che ci "
-"si aspetta di trovare. #{--memtest none}# evita l'installazione del "
-"programma per testare la memoria, infine l'esecuzione dell'hook #{minimal."
-"chroot}# rimuove alcuni pacchetti e file non utilizzati."
+"Ciò che fa risparmiare più spazio, comparato alla creazione di un'immagine "
+"predefinita su un sistema con architettura #{i386}#, è la selezione del solo "
+"kernel #{486}# invece che quello predefinito #{-k \"486 686-pae\"}#. "
+"Lasciando fuori anche gli indici di APT con #{--apt-indices false}# si può "
+"salvare una certa quantità di spazio, il compromesso è usare #{apt-get "
+"update}# prima di usare /{apt}/ nel sistema live. Saltare i pacchetti "
+"raccomandati con #{--apt-recommends  false}# salva altro spazio, a scapito "
+"di alcuni pacchetti che ci si aspetta di trovare. #{--debootstrap-options "
+"\"--variant=minbase\"}# fa il bootstrap di un sistema minimale partendo da "
+"zero. Evitare di includere automaticamente pacchetti di firmware con #{--"
+"firmware-chroot false}# fa risparmiare altro spazio. E infine, #{--memtest "
+"none}# evita l'installazione del programma per testare la memoria."
 
 #. type: Plain text
 #: en/examples.ssi:274
-#, fuzzy, no-wrap
-#| msgid "Using other hooks, like for example the #{stripped.chroot}# hook found in #{/usr/share/doc/live-build/examples/hooks}#, may shave off additional small amounts of space and produce an image of 76MB. But it is up to you to decide if the functionality that is sacrificed with each size optimization is worth the loss of functionality."
+#, no-wrap
 msgid "*{Note:}* A minimal system can also be achieved using hooks, like for example the #{stripped.chroot}# hook found in #{/usr/share/doc/live-build/examples/hooks}#. It may shave off additional small amounts of space and produce an image of 62MB. However, it does so by removal of documentation and other files from packages installed on the system. This violates the integrity of those packages and that, as the comment header warns, may have unforeseen consequences. That is why using a minimal /{debootstrap}/ is the recommended way of achieving this goal.\n"
-msgstr "Utilizzando altri hook, come #{stripped.chroot}# situato in #{/usr/share/doc/live-build/examples/hooks}#, si può ridurre un'ulteriore quantità di spazio occupato che produce un'immagine di 76MB. Sta a voi decidere se queste ottimizzazioni valgono la perdita di funzionalità."
+msgstr "*{Nota:}* un sistema minimale è inoltre ottenibile utilizzando gli hook, come ad esempio #{stripped.chroot}# situato in #{/usr/share/doc/live-build/examples/hooks}#. Può ridurre una piccola quantità di spazio usato e produrre un'immagine di 62MB; tuttavia raggiunge l'obiettivo rimuovendo documentazione e altri file dai pacchetti installati sul sistema. L'operazione vìola l'integrità di questi pacchetti e ciò, come avverte il commento iniziale dello script, può avere conseguenze inattese. Ecco perché usare un /{debootstrap}/ minimale è il modo raccomandato per raggiungere questo obiettivo.\n"
 
 #. type: Plain text
 #: en/examples.ssi:276
@@ -940,10 +915,9 @@ msgstr "2~ Un desktop GNOME localizzato e l'installatore"
 
 #. type: Plain text
 #: en/examples.ssi:278
-#, fuzzy, no-wrap
-#| msgid "*{Use case:}* Create a KDE desktop image, localized for Brazilian Portuguese and including an installer.\n"
+#, no-wrap
 msgid "*{Use case:}* Create a GNOME desktop image, localized for Switzerland and including an installer.\n"
-msgstr "*{Caso d'uso:}* creazione di un'immagine con il desktop GNOME, localizzato per il portoghese brasiliano e che includa l'installatore.\n"
+msgstr "*{Caso d'uso:}* creazione di un'immagine con il desktop GNOME, localizzato in svizzero e che includa l'installatore.\n"
 
 #. type: Plain text
 #: en/examples.ssi:280

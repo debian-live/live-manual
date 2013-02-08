@@ -33,7 +33,7 @@ code{
 
 }code
 
-2~tutorial-1 Tutorial 1: A default image
+2~tutorial-1 Tutorial 1: un'immagine predefinita
 
 *{Caso d'uso:}* creazione di una prima semplice immagine, imparando i fondamenti di live-build.
 
@@ -329,16 +329,16 @@ Buon divertimento.
 
 2~ Un'immagine base per una chiavetta USB da 128MB
 
-*{Use case:}* Create a default image with some components removed in order to fit on a 128MB USB key with a little space left over to use as you see fit.
+*{Caso d'uso:}* creazione di un'immagine predefinita con alcuni componenti rimossi affinché possa stare su una chiavetta USB da 128MB, con un po' di spazio libero da usarsi come meglio si crede.
 
-When optimizing an image to fit a certain media size, you need to understand
-the tradeoffs you are making between size and functionality. In this
-example, we trim only so much as to make room for additional material within
-a 128MB media size, but without doing anything to destroy the integrity of
-the packages contained within, such as the purging of locale data via the
-/{localepurge}/ package, or other such "intrusive" optimizations. Of
-particular note, we use #{--debootstrap-options}# to create a minimal system
-from scratch.
+Quando si cerca di ottimizzare un'immagine affinché sia contenuta in un
+supporto, è necessario capire il compromesso che si deve fare tra la
+dimensione e la funzionalità. In questo esempio, taglieremo solo quanto
+basta per far sì che il tutto stia in 128M, senza fare nient'altro che
+distrugga l'integrità dei pacchetti contenuti, come eliminare localizzazioni
+con il pacchetto /{localepurge}/ o altre ottimizzazioni "intrusive". È da
+notare che per creare un sistema minimale da zero viene utilizzata l'opzione
+#{--debootstrap-options}#.
 
 code{
 
@@ -369,24 +369,25 @@ All'autore del sistema al momento di scrivere, la seguente configurazione ha
 prodotto un'immagine di 77MB. Comparabile favorevolmente con i 177MB
 prodotta dalla configurazione predefinita nel {Tutorial 1}#tutorial-1.
 
-The biggest space-saver here, compared to building a default image on an
-#{i386}# architecture system, is to select only the #{486}# kernel flavour
-instead of the default #{-k "486 686-pae"}#. Leaving off APT's indices with
-#{--apt-indices false}# also saves a fair amount of space, the tradeoff
-being that you need to do an #{apt-get update}# before using /{apt}/ in the
-live system. Dropping recommended packages with #{--apt-recommends false}#
-saves some additional space, at the expense of omitting some packages you
-might otherwise expect to be there. #{--debootstrap-options
-"--variant=minbase"}# bootstraps a minimal system from the start. Not
-automatically including firmware packages with #{--firmware-chroot false}#
-saves some space too. And finally, #{--memtest none}# prevents the
-installation of a memory tester.
+Ciò che fa risparmiare più spazio, comparato alla creazione di un'immagine
+predefinita su un sistema con architettura #{i386}#, è la selezione del solo
+kernel #{486}# invece che quello predefinito #{-k "486 686-pae"}#. Lasciando
+fuori anche gli indici di APT con #{--apt-indices false}# si può salvare una
+certa quantità di spazio, il compromesso è usare #{apt-get update}# prima di
+usare /{apt}/ nel sistema live. Saltare i pacchetti raccomandati con
+#{--apt-recommends  false}# salva altro spazio, a scapito di alcuni
+pacchetti che ci si aspetta di trovare. #{--debootstrap-options
+"--variant=minbase"}# fa il bootstrap di un sistema minimale partendo da
+zero. Evitare di includere automaticamente pacchetti di firmware con
+#{--firmware-chroot false}# fa risparmiare altro spazio. E infine,
+#{--memtest none}# evita l'installazione del programma per testare la
+memoria.
 
-*{Note:}* A minimal system can also be achieved using hooks, like for example the #{stripped.chroot}# hook found in #{/usr/share/doc/live-build/examples/hooks}#. It may shave off additional small amounts of space and produce an image of 62MB. However, it does so by removal of documentation and other files from packages installed on the system. This violates the integrity of those packages and that, as the comment header warns, may have unforeseen consequences. That is why using a minimal /{debootstrap}/ is the recommended way of achieving this goal.
+*{Nota:}* un sistema minimale è inoltre ottenibile utilizzando gli hook, come ad esempio #{stripped.chroot}# situato in #{/usr/share/doc/live-build/examples/hooks}#. Può ridurre una piccola quantità di spazio usato e produrre un'immagine di 62MB; tuttavia raggiunge l'obiettivo rimuovendo documentazione e altri file dai pacchetti installati sul sistema. L'operazione vìola l'integrità di questi pacchetti e ciò, come avverte il commento iniziale dello script, può avere conseguenze inattese. Ecco perché usare un /{debootstrap}/ minimale è il modo raccomandato per raggiungere questo obiettivo.
 
 2~ Un desktop GNOME localizzato e l'installatore
 
-*{Use case:}* Create a GNOME desktop image, localized for Switzerland and including an installer.
+*{Caso d'uso:}* creazione di un'immagine con il desktop GNOME, localizzato in svizzero e che includa l'installatore.
 
 Si vuole creare un'immagine iso ibrida per architettura i386 usando il
 nostro desktop preferito, in questo caso GNOME, contenente tutti gli stessi

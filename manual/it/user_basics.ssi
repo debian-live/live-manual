@@ -2,23 +2,25 @@
 
 1~the-basics Nozioni di base
 
-This chapter contains a brief overview of the build process and instructions
-for using the three most commonly used image types. The most versatile image
-type, #{iso-hybrid}#, may be used on a virtual machine, optical media or USB
-portable storage device. In certain special cases, as explained later, the
-#{hdd}# type may be more suitable. The chapter finishes with instructions
-for building and using a #{netboot}# type image, which is a bit more
-involved due to the setup required on the server. This is an slightly
-advanced topic for anyone who is not familiar already with netbooting, but
-it is included here because once the setup is done, it is a very convenient
-way to test and deploy images for booting on the local network without the
-hassle of dealing with image media.
+Questo capitolo contiene una breve panoramica del processo di generazione e
+le istruzioni per utilizzare i tre tipi di immagine più comunemente
+utilizzati. La tipologia di immagine più versatile, #{iso-hybrid}#, può
+essere usata su una macchina virtuale, supporto ottico o dispositivo di
+archiviazione portatile USB. In alcuni casi particolari, come spiegato più
+avanti, la #{hdd}# potrebbe essere più adatta. Il capitolo termina con le
+istruzioni per costruire e usare un'immagine di tipo #{netboot}#, che è un
+poco più complessa a causa del setup richiesto sul server. Si tratta di un
+argomento leggermente avanzato per chi non ha familiarità con l'avvio da
+rete, ma è incluso qui perché, una volta che il setup è stato fatto, è un
+modo molto comodo per collaudare e distribuire immagini facendo il boot
+nella rete locale senza la seccatura di doversi occupare dei mezzi di
+divulgazione dell'immagine.
 
-Throughout the chapter, we will often refer to the default filenames
-produced by live-build. If you are {downloading a prebuilt
-image}#downloading-prebuilt-images instead, the actual filenames may vary.
+In tutto il capitolo faremo spesso riferimento ai nomi dei file predefiniti
+creati da live-build. Se invece si {scarica un'immagine
+precompilata}#downloading-prebuilt-images, i nomi possono variare.
 
-2~what-is-live Che cos'è un sistema live?
+2~what-is-live Cos'è un sistema live?
 
 Per sistema live generalmente si intende un sistema operativo che può essere
 avviato da un supporto rimovibile, come un CD-ROM o una chiavetta USB oppure
@@ -60,70 +62,69 @@ proprie specifiche, scegliere un kernel Linux, il suo initrd ed un
 bootloader per avviarli, tutto in un unico formato che dipende dal mezzo
 (immagini ISO9660, immagine disco, ecc.)
 
-2~downloading-prebuilt-images Downloading prebuilt images
+2~downloading-prebuilt-images Scaricare immagini precompilate
 
-While the focus of this manual is developing and building your own live
-images, you may simply wish to try one of our prebuilt images, either as an
-introduction to their use or instead of building your own. These images are
-built using our {live-images git repository}#clone-configuration-via-git and
-official stable releases are published at http://www.debian.org/CD/live/. In
-addition, older and upcoming releases, and unofficial images containing
-non-free firmware and drivers are available at
-http://live.debian.net/cdimage/release/.
+Nonostante l'obiettivo di questo manuale è di sviluppare e creare le proprie
+immagini live si potrebbe semplicemente voler provare una di quelle
+precompilate, sia come introduzione al loro uso o per costruirne una
+propria. Queste immagini sono create utilizzando il nostro {repository git
+live-imagesy}#clone-configuration-via-git e i rilasci ufficiali di stable
+pubblicati all'indirizzo http://www.debian.org/CD/live/. In aggiunta,
+all'indirizzo http://live.debian.net/cdimage/release/ sono disponibili le
+versioni vecchie e future e le immagini non ufficiali contenenti firmware e
+driver non-free.
 
-2~using-web-builder Using the web live image builder
+2~using-web-builder Utilizzare il web builder per le immagini live
 
-As a service to the community, we run a web-based live image builder service
-at http://live-build.debian.net/. This site is maintained on a best effort
-basis. That is, although we strive to keep it up-to-date and operational at
-all times, and do issue notices for significant operational outages, we
-cannot guarantee 100% availability or fast image building, and the service
-may occasionally have issues that take some time to resolve. If you have
-problems or questions about the service, please {contact us}#contact,
-providing us with the link to your build.
+Come servizio alla comunità, all'indirizzo http://live-build.debian.net/
+abbiamo un servizio web per la creazione di immagini live, il sito è
+mantenuto col massimo sforzo possibile. Sebbene ci impegnamo nel tenerlo
+aggiornato e funzionante e notifichiamo eventuali interruzioni, non possiamo
+garantire al 100% la sua disponibilità o una compilazione veloce
+dell'immagine; occasionalmente il servizio potrebbe avere problemi che
+richiedono tempo per essere risolti. Se si hanno problemi o domande in
+proposito {contattarci}#contact fornendo il link della propria compilazione.
 
-3~ Web builder usage and caveats
+3~ Utilizzo del web builder e raccomandazioni
 
-The web interface currently makes no provision to prevent the use of invalid
-combinations of options, and in particular, where changing an option would
-normally (i.e. using live-build directly) change defaults of other options
-listed in the web form, the web builder does not change these defaults. Most
-notably, if you change #{--architectures}# from the default #{i386}# to
-#{amd64}#, you must change the corresponding option #{--linux-flavours}#
-from the default #{486}# to #{amd64}#. See the #{lb_config}# man page for
-the version of live-build installed on the web builder for more details. The
-version number of live-build is listed at the bottom of the web builder
-page.
+Attualmente l'interfaccia web non previene l'uso di combinazioni non valide
+di opzioni, in particolare dove la modifica di un'opzione (ovvero usando
+live-build direttamente) cambia i valori predefiniti di altre opzioni
+elencate nel form web, il web builder non modifica questi default. Se si
+cambia #{--architectures}# da #{i386}# a #{amd64}# è necessario modificare
+l'opzione #{--linux-flavours}# corrispondente da #{486}# a #{amd64}#. Per
+ulteriori dettagli sulla versione installata sul web builder consultare la
+pagina di manuale di #{lb_config}#; il numero della versione è scritto al
+fondo della pagina.
 
-The time estimate given by the web builder is a crude estimate only and may
-not reflect how long your build actually takes. Nor is the estimate updated
-once it is displayed. Please be patient. Do not refresh the page you land on
-after submitting the build, as this will resubmit a new build with the same
-parameters. You should {contact us}#contact if you don't receive
-notification of your build only once you are certain you've waited long
-enough and verified the notification e-mail did not get caught by your own
-e-mail spam filter.
+Le tempistiche fornite dal web builder sono solo una stima approssimata e
+possono non riflettere quanto realmente ci vorrà per compilare, né vengono
+aggiornate una volta apparse. Vi preghiamo di essere pazienti e di non
+aggiornare la pagina dopo aver commissionato la compilazione in quanto
+invierà la richiesta per una nuova operazione con gli stessi parametri. Se,
+dopo aver aspettato a sufficienza e verificato che l'email non sia finita
+nello spam, non ricevete alcuna notifica allora {contattateci}#contact.
 
-The web builder is limited in the kinds of images it can build. This keeps
-it simple and efficient to use and maintain. If you would like to make
-customizations that are not provided for by the web interface, the rest of
-this manual explains how to build your own images using live-build.
+Il web builder ha un limite di tipologie di immagini creabili, mantenendosi
+semplice e efficiente da utilizzare e manutenere. Le personalizzazioni non
+sono fornite dall'interfaccia web, il resto di questo manuale sipega come
+creare le proprie immagini tramite live-build.
 
 2~building-iso-hybrid Primi passi: creare un'immagine ISO ibrida
 
-Regardless of the image type, you will need to perform the same basic steps
-to build an image each time. As a first example, create a build directory,
-change to that directory and then execute the following sequence of
-live-build commands to create a basic ISO hybrid image containing a default
-live system without X.org. It is suitable for burning to CD or DVD media,
-and also to copy onto a USB stick.
+Indipendentemente dal tipo di immagine, per crearne una è necessario
+eseguire ogni volta la stessa procedura. Come primo esempio si creerà una
+directory di lavoro, vi si entrerà e si eseguirà la seguente sequenza di
+comandi di live-build per creare un'immagine ISO ibrida di base contenente
+un sistema live predefinito senza X.org. È adatta per essere masterizzata su
+CD o DVD e anche per essere copiata su una penna USB.
 
-The name of the working directory is absolutely up to you, but if you take a
-look at the examples used throughout live-manual, it is a good idea to use a
-name that helps you identify the image you are working with in each
-directory, especially if you are working or experimenting with different
-image types. In this case you are going to build a default system so let's
-call it, for example, live-default.
+Il nome della directory di lavoro è arbitrario ma guardando gli esempi usati
+da live-manual è una buona idea utilizzare un nome che aiuta a identificare
+in qualsiasi directory l'immagine su cui si sta lavorando, in particolar
+modo se si stanno sperimentando tipi di di immagine differenti. In questo
+caso stiamo creando un sistema predefinito quindi chiamiamolo ad esempio
+live-default.
 
 code{
 
@@ -131,8 +132,8 @@ code{
 
 }code
 
-Then, run the #{lb config}# command. This will create a "config/" hierarchy
-in the current directory for use by other commands:
+Dopodiché eseguire il comando #{lb config}#, il quale creerà una gerarchia
+"config/" nella directory corrente e che verrà utilizzata da altri comandi:
 
 code{
 
@@ -153,9 +154,9 @@ code{
 
 }code
 
-This process can take a while, depending on the speed of your computer and
-your network connection. When it is complete, there should be a
-#{binary.hybrid.iso}# image file, ready to use, in the current directory.
+Questo processo può richiedere tempo, a seconda della velocità del vostro
+computer e della connessione di rete. Una volta completato, nell'attuale
+directory ci sarà un file immagine #{binary.hybrid.iso}# pronto da usare.
 
 2~using-iso-hybrid Utilizzare un'immagine ISO live ibrida
 
@@ -166,8 +167,8 @@ una penna USB.
 
 3~burning-iso-image Masterizzare un'immagine ISO su un supporto fisico
 
-Burning an ISO image is easy. Just install /{xorriso}/ and use it from the
-command-line to burn the image. For instance:
+Masterizzare un'immagine ISO è semplice, basta installare /{xorriso}/ e
+utilizzarlo da riga di comando; ad esempio:
 
 code{
 
@@ -179,13 +180,14 @@ code{
 
 3~copying-iso-hybrid-to-usb Copiare un'immagine ISO ibrida su una penna USB
 
-ISO images prepared with #{xorriso}#, can be simply copied to a USB stick
-with the #{dd}# program or an equivalent. Plug in a USB stick with a size
-large enough for your image file and determine which device it is, which we
-hereafter refer to as #{${USBSTICK}}#. This is the device file of your key,
-such as #{/dev/sdb}#, not a partition, such as #{/dev/sdb1}#! You can find
-the right device name by looking in #{dmesg}#'s output after plugging in the
-stick, or better yet, #{ls -l /dev/disk/by-id}#.
+Le immagini ISO preparate con #{xorriso}# possono essere semplicemente
+copiate su una penna USB con il programma #{dd}# o suo equivalente. Inserire
+una penna USB con una dimensione sufficiente a contenere l'immagine e
+determinare quale device sia, al quale in seguito si farà riferimento come
+#{${USBSTICK}}#.Questo è il device della penna, ad esempio #{/dev/sdb}#, non
+una partizione come #{/dev/sdb1}#! È possibile trovare il nome corretto
+controllando l'output di #{dmesg}# una volta inserita, o meglio ancora con
+il comando #{ls -l /dev/disk/by-id}#.
 
 Una volta che si è certi sul nome del device, usare il comando #{dd}# per
 copiare l'immagine sulla penna. *{Questo sovrascriverà qualsiasi dato
@@ -199,10 +201,10 @@ code{
 
 3~using-usb-extra-space Usare lo spazio rimanente su una penna USB
 
-To use the remaining free space after copying #{binary.hybrid.iso}# to a USB
-stick, use a partitioning tool such as /{gparted}/ or /{parted}/ to create a
-new partition on the stick. The first partition will be used by the Debian
-Live system.
+Per utilizzare lo spazio libero che rimane dopo aver copiato il file
+#{binary.hybrid.iso}# su una penna USB, usare uno strumento di
+partizionamento come /{gparted}/ o /{parted}/ per creare una nuova
+partizione. La prima partizione verrà utilizzata dal sistema Debian Live.
 
 code{
 
@@ -222,7 +224,7 @@ code{
 
 *{Nota:}* se si desidera utilizzare lo spazio extra con Windows pare che questo sistema operativo non possa accedere a nessuna partizione eccetto la prima. Alcune soluzioni a questo problema sono state discusse sulla nostra {mailing list}#contact, ma non sembrano esserci risposte semplici.
 
-*{Remember: Every time you install a new binary.hybrid.iso on the stick, all data on the stick will be lost because the partition table is overwritten by the contents of the image, so back up your extra partition first to restore again after updating the live image.}*
+*{Ricorda: ogni volta che si installa un nuovo file binary.hybrid.iso sulla penna, tutti i dati sulla chiavetta saranno persi perché la tabella delle partizioni viene sovrascritta con i contenuti dell'immagine, per cui salvare prima la propria partizione extra in modo da ripristinarla dopo l'aggiornamento dell'immagine live.}*
 
 3~booting-live-media Avviare il supporto live
 
@@ -240,12 +242,13 @@ partirà utilizzando la voce #{Live}# e le opzioni predefinite. Per ulteriori
 informazioni sulle opzioni di boot, si veda la voce "help" nel menu e le
 pagine di manuale di live-boot e live-config all'interno del sistema.
 
-Assuming you've selected #{Live}# and booted a default desktop live image,
-after the boot messages scroll by, you should be automatically logged into
-the #{user}# account and see a desktop, ready to use. If you have booted a
-console-only image, such as #{standard}# or #{rescue}# flavour {prebuilt
-images}#downloading-prebuilt-images, you should be automatically logged in
-on the console to the #{user}# account and see a shell prompt, ready to use.
+Supponendo di aver selezionato #{Live}# e avviato l'immagine desktop
+predefinita, dopo i messaggi di avvio si dovrebbe automaticamente accedere
+all'account #{user}# e avere il desktop pronto all'uso. Se invece si è
+avviata un'immagine per la sola console, come le {immagini
+precompilate}#downloading-prebuilt-images #{standard}# o #{rescue}#, si
+accederà alla console dell'account #{user}# ed avere un prompt di shell
+pronto da usare.
 
 2~using-virtual-machine Utilizzare una macchina virtuale per le prove
 
@@ -321,10 +324,10 @@ code{
 
 }code
 
-In order to make the dkms package work, also the kernel headers for the
-kernel flavour used in your image need to be installed. Instead of manually
-listing the correct /{linux-headers}/ package in above created package list,
-the selection of the right package can be done automatically by live-build.
+Per far funzionare il pacchetto dkms vanno anche installati gli header per
+il kernel utilizzato nell'immagine. Anziché indicare manualmente il
+pacchetto /{linux-headers}/ adeguato nell'elenco dei pacchetti creato prima,
+la selezione può essere fatta automaticamente da live-build.
 
 code{
 
@@ -332,15 +335,15 @@ code{
 
 }code
 
-2~using-hdd-image Building and using an HDD image
+2~using-hdd-image Creare e utilizzare un'immagine HDD
 
-Building an HDD image is similar to an ISO hybrid one in all respects except
-you specify #{-b hdd}# and the resulting filename is #{binary.img}# which
-cannot be burnt to optical media. It is suitable for booting from USB
-sticks, USB hard drives, and various other portable storage
-devices. Normally, an ISO hybrid image can be used for this purpose instead,
-but if you have a BIOS which does not handle hybrid images properly, you
-need an HDD image.
+La creazione di un'immagine HDD è simile alla ISO ibrida sotto tutti gli
+aspetti ad eccezione della necessità di specificare l'opzione #{-b hdd}# e
+che il nome del file risultante è #{binary.img}# e non può essere
+masterizzato. È adatta per avviarsi da chiavette USB, dischi rigidi USB, e
+da svariati altri dispositivi di archiviazione portatili. In genere per
+questo scopo può essere usata un'immagine ISO ibrida, ma se si ha un BIOS
+che non supporta le immagini ibride allora occorre un'immagine HDD.
 
 *{Nota:}* se si è creata un'immagine ISO ibrida con gli esempi precedenti, occorre pulire la directory di lavoro con il comando #{lb clean}# (vedere {Il comando lb clean}#lb-clean):
 
@@ -370,16 +373,18 @@ code{
 Quando la costruzione è terminata dovrebbe essere presente un file
 #{binary.img}# nella directory corrente.
 
-The generated binary image contains a VFAT partition and the syslinux
-bootloader, ready to be directly written on a USB device. Once again, using
-an HDD image is just like using an ISO hybrid one on USB. Follow the
-instructions in {Using an ISO hybrid live image}#using-iso-hybrid, except
-use the filename #{binary.img}# instead of #{binary.hybrid.iso}#.
+L'immagine binaria generata contiene una partizione VFAT e il bootloader
+syslinux, pronti per essere scritti direttamente su un dispositivo
+USB. Ricordarsi che utilizzare un'immagine HDD è come utilizzare un'immagine
+ISO ibrida via USB, seguire le istruzioni contenute in {Utilizzare
+un'immagine live ISO ibrida}#using-iso-hybrid tenendo però conto che il nome
+del file sarà #{binary.img}# invece di #{binary.hybrid.iso}#.
 
-Likewise, to test an HDD image with Qemu, install /{qemu}/ as described
-above in {Testing an ISO image with QEMU}#testing-iso-with-qemu. Then run
-#{kvm}# or #{qemu}#, depending on which version your host system needs,
-specifying #{binary.img}# as the first hard drive.
+Allo stesso modo, per provare un'immagine HDD con Qemu, installare /{qemu}/
+come descritto in {Provare un'immagine ISO con QEMU}#testing-iso-with-qemu;
+quindi eseguire #{kvm}# o #{qemu}#, a seconda di quale versione è necessaria
+al sistema ospitante, specificando #{binary.img}# come disco rigido
+principale.
 
 code{
 
@@ -389,9 +394,9 @@ code{
 
 2~building-netboot-image Creare un'immagine netboot
 
-The following sequence of commands will create a basic netboot image
-containing a default live system without X.org. It is suitable for booting
-over the network.
+La seguente sequenza di comandi creerà un'immagine netboot di base
+contenente un sistema live predefinito senza X.org. È adatta per il boot
+tramite rete.
 
 *{Nota:}* se qualcuno tra gli esempi precedenti è stato seguito, bisogna pulire la directory di lavoro con il comando #{lb clean}#:
 
@@ -401,13 +406,14 @@ code{
 
 }code
 
-In this specific case, a #{lb clean --binary}# would be not enough to clean
-up the necessary stages. The cause for this is that in netboot setups, a
-different initramfs configuration needs to be used which live-build performs
-automatically when building netboot images. Since the initramfs creation
-belongs to the chroot stage, switching to netboot in an existing build
-directory means to rebuild the chroot stage too. Therefore, #{lb clean}#
-(which will remove the chroot stage, too) needs to be used.
+In questo caso specifico il comando #{lb clean --binary}# non è sufficiente
+per pulire le fasi necessarie. La causa è che nelle configurazioni per
+l'avvio da rete è necessario usare una configurazione dell'initramfs
+differente che viene applicata automaticamente da live-build durante la
+creazione di immagini netboot. Dal momento che la creazione dell'initramfs
+appartiene alla fase del chroot, passare a netboot in una directory di
+lavoro esistente significa ricompilare anche la fase del chroot. Perciò va
+usato #{lb clean}# (che rimuoverà anche la fase del chroot).
 
 Per configurare l'immagine per l'avvio da rete, eseguire il comando #{lb
 config}# come segue:
@@ -418,13 +424,13 @@ code{
 
 }code
 
-In contrast with the ISO and HDD images, netbooting does not, itself, serve
-the filesystem image to the client, so the files must be served via
-NFS. Different network filesystems can be chosen through lb config. The
-#{--net-root-path}# and #{--net-root-server}# options specify the location
-and server, respectively, of the NFS server where the filesytem image will
-be located at boot time. Make sure these are set to suitable values for your
-network and server.
+Diversamente dalle immagini ISO e HDD, il boot via rete non fornisce
+un'immagine del filesytem al client, perciò i file devono essere forniti via
+NFS. Con lb config si possono scegliere filesystem di rete diefferenti. Le
+opzioni #{--net-root-path}# e #{--net-root-server}# specificano,
+rispettivamente, il percorso e il server del server NFS dove l'immagine del
+filesystem sarà situata all'avvio. Accertarsi che questi siano impostati su
+valori adeguati alla propria rete.
 
 Creare ora l'immagine con il comando #{lb build}#:
 
@@ -442,10 +448,10 @@ di di livello superiore attraverso il protocollo TFTP. Questi potrebbe
 essere pxelinux, GRUB, o anche avviare direttamente un sistema operativo
 come Linux.
 
-For example, if you unpack the generated #{binary.netboot.tar}# archive in
-the #{/srv/debian-live}# directory, you'll find the filesystem image in
-#{live/filesystem.squashfs}# and the kernel, initrd and pxelinux bootloader
-in #{tftpboot/debian-live/i386}#.
+Per esempio, estraendo l'archivio generato #{binary.netboot.tar}# nella
+directory #{/srv/debian-live}#, si troverà l'immagine del filesystem in
+#{live/filesystem.squashfs}# mentre il kernel, initrd ed il bootloader
+pxelinux in #{tftpboot/debian-live/i386}#.
 
 Per abilitare l'avvio tramite rete vanno ora configurati tre servizi:i
 server DHCP, TFTP e NFS.
@@ -532,10 +538,11 @@ d'aiuto, considerato che il procedimento è molto simile.
 
 3~ Come provare una netboot
 
-Netboot image creation is made easy with live-build, but testing the images
-on physical machines can be really time consuming.
+La creazione di immagini netboot è resa semplice da live-build, ma provare
+le immagini su una macchina reale può essere davvero dispendioso in termini
+di tempo.
 
-To make our life easier, we can use virtualization.
+Per semplificarsi il vita si può usare la virtualizzazione.
 
 3~ Qemu
 

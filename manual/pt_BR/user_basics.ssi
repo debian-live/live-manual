@@ -4,11 +4,11 @@
 
 This chapter contains a brief overview of the build process and instructions
 for using the three most commonly used image types. The most versatile image
-type, #{iso-hybrid}#, may be used on a virtual machine, optical media or USB
-portable storage device. In certain special cases, as explained later, the
-#{hdd}# type may be more suitable. The chapter finishes with instructions
-for building and using a #{netboot}# type image, which is a bit more
-involved due to the setup required on the server. This is an slightly
+type, #{iso-hybrid}#, may be used on a virtual machine, optical medium or
+USB portable storage device. In certain special cases, as explained later,
+the #{hdd}# type may be more suitable. The chapter finishes with
+instructions for building and using a #{netboot}# type image, which is a bit
+more involved due to the setup required on the server. This is an slightly
 advanced topic for anyone who is not familiar already with netbooting, but
 it is included here because once the setup is done, it is a very convenient
 way to test and deploy images for booting on the local network without the
@@ -46,21 +46,19 @@ dentro do sistema em funcionamento. No entanto, todas as modificações serão
 perdidas no desligamento, a menos que a persistência opcional seja usada
 {Persistência}#persistence).
 
-_* *{Bootloader}*: Um pequeno pedaço de código criado para iniciar a partir
-dos meios escolhidos, possivelmente apresentando uma solicitação ou menu
-para permitir a seleção de opções/configuração. Ele carrega o kernel do
-Linux e seu initrd para funcionar com um sistema de arquivos do sistema
-associado. Diferentes soluções podem ser usadas, dependendo da mídia destino
-e formato do sistema de arquivos que contém os componentes mencionados
-anteriormente: isolinux para arrancar a partir de um CD ou DVD no formato
-ISO9660, syslinux para HDD ou drive USB inicializar a partir de uma partição
-VFAT, extlinux para ext2/3/4 e partiuções btrfs, pxelinux para inicialização
-pela rede PXE, GRUB para partições ext2/3/4, etc.
+_* *{Bootloader}*: A small piece of code crafted to boot from the chosen
+medium, possibly presenting a prompt or menu to allow selection of
+options/configuration. It loads the Linux kernel and its initrd to run with
+an associated system filesystem. Different solutions can be used, depending
+on the target medium and format of the filesystem containing the previously
+mentioned components: isolinux to boot from a CD or DVD in ISO9660 format,
+syslinux for HDD or USB drive booting from a VFAT partition, extlinux for
+ext2/3/4 and btrfs partitions, pxelinux for PXE netboot, GRUB for ext2/3/4
+partitions, etc.
 
-Você pode usar o live-build para construir a imagem do sistema a partir de
-suas especificações, criar um kernel do Linux, o seu initrd, e um bootloader
-para executá-las, tudo em um formato dependendo da  mídia (imagem ISO9660,
-imagem de disco, etc.)
+You can use live-build to build the system image from your specifications,
+set up a Linux kernel, its initrd, and a bootloader to run them, all in one
+medium-dependant format (ISO9660 image, disk image, etc.).
 
 2~downloading-prebuilt-images Downloading prebuilt images
 
@@ -161,10 +159,10 @@ your network connection. When it is complete, there should be a
 
 2~using-iso-hybrid Usando uma imagem live ISO hibrida
 
-Após a construção ou o download de uma imagem ISO híbrido, que pode ser
-obtida em http://www.debian.org/CD/live/, o passo seguinte é habitual é
-preparar sua mídia para a inicialização, ou mídia óptica CD-R (W) ou DVD-R
-(W)  ou um dispositivo USB.
+After either building or downloading an ISO hybrid image, which can be
+obtained at http://www.debian.org/CD/live/, the usual next step is to
+prepare your medium for booting, either CD-R(W) or DVD-R(W) optical media or
+a USB stick.
 
 3~burning-iso-image Queimar uma imagem ISO em um meio físico
 
@@ -227,25 +225,22 @@ code{
 
 *{Remember: Every time you install a new binary.hybrid.iso on the stick, all data on the stick will be lost because the partition table is overwritten by the contents of the image, so back up your extra partition first to restore again after updating the live image.}*
 
-3~booting-live-media Inicializando a media live
+3~booting-live-medium Booting the live medium
 
-A primeira vez que você iniciar sua mídia live, seja CD, DVD, dispositivo
-USB, ou inicializador PXE, alguma configuração na BIOS do seu computador
-pode ser necessária em primeiro lugar. Uma vez que as BIOS variam muito em
-características e combinações de teclas, não podemos entrar no tema em
-profundidade aqui. Algumas BIOS fornecem uma chave para abrir um menu de
-dispositivos de inicialização em tempo de inicialização, que é a maneira
-mais fácil se estiver disponível no seu sistema. Caso contrário, você
-precisa entrar no menu de configuração da BIOS e alterar a ordem de
-inicialização para colocar o dispositivo de inicialização para o sistema
-live antes do dispositivo de inicialização normal.
+The first time you boot your live medium, whether CD, DVD, USB key, or PXE
+boot, some setup in your computer's BIOS may be needed first. Since BIOSes
+vary greatly in features and key bindings, we cannot get into the topic in
+depth here. Some BIOSes provide a key to bring up a menu of boot devices at
+boot time, which is the easiest way if it is available on your
+system. Otherwise, you need to enter the BIOS configuration menu and change
+the boot order to place the boot device for the live system before your
+normal boot device.
 
-Uma vez que você tenha iniciado a mídia, você é apresentado com um menu de
-inicialização. Se você apenas pressionar enter aqui, o sistema irá
-inicializar usando a entrada padrão, #{Live}# e opções padrão. Para mais
-informações sobre as opções de inicialização, consulte a entrada "ajuda" no
-menu e também as páginas do live-boot e live-boot-config encontradas dentro
-do sistema live.
+Once you've booted the medium, you are presented with a boot menu. If you
+just press enter here, the system will boot using the default entry,
+#{Live}# and default options. For more information about boot options, see
+the "help" entry in the menu and also the live-boot and live-config man
+pages found within the live system.
 
 Assuming you've selected #{Live}# and booted a default desktop live image,
 after the boot messages scroll by, you should be automatically logged into

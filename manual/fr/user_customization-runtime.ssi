@@ -4,20 +4,20 @@
 l'exécution
 
 Toute la configuration qui est faite pendant l'exécution est faite par
-live-config. Voici quelques options les plus courantes de live-config
-d'intérêt pour les utilisateurs. Une liste complète de toutes les
+live-config. Voici quelques options parmi les plus courantes de live-config
+qui peuvent intéresser les utilisateurs. Une liste complète de toutes les
 possibilités peut être trouvée dans la page de manuel de live-config.
 
-2~ Personnalisation de l'utilisateur Live
+2~ Personnalisation de l'utilisateur live
 
 Une considération importante est que l'utilisateur live est créé par
-live-boot au démarrage, non pas par live-config pendant la construction. Ça
-influence non seulement là où les documents relatifs à l'utilisateur live
-sont introduits dans la construction, tel que discuté dans {Live/chroot
-local includes}#live-chroot-local-includes, mais aussi tous les groupes et
-les autorisations associées à l'utilisateur live.
+live-boot au démarrage, non pas par live-config pendant la
+construction. Cela influence non seulement l'emplacement où les documents
+relatifs à l'utilisateur live sont introduits dans la construction, tel que
+discuté dans {Live/chroot local includes}#live-chroot-local-includes, mais
+aussi tous les groupes et autorisations associés à l'utilisateur live.
 
-Vous pouvez spécifier d'autres groupes pour l'utilisateur live en utilisant
+Vous pouvez indiquer d'autres groupes pour l'utilisateur live en utilisant
 une des possibilités pour configurer live-config. Par exemple, pour ajouter
 l'utilisateur live au groupe #{fuse}#, vous pouvez ajouter le fichier
 suivant dans #{config/includes.chroot/etc/live/config/user-setup.conf}#:
@@ -33,11 +33,11 @@ ou utiliser
 comme paramètre d'amorçage.
 
 Il est également possible de changer le nom de l'utilisateur par défaut
-«user» et du mot de passe par défaut "live". Si vous voulez pour quelque
-raison, vous pouvez facilement faire ça comme suit:
+«user» et du mot de passe par défaut «live». Si vous voulez faire cela, vous
+pouvez le faire facilement comme suit:
 
-Pour modifier le nom de l'utilisateur par défaut, vous pouvez simplement le
-spécifier dans votre config:
+Pour modifier le nom de l'utilisateur par défaut, vous pouvez simplement
+l'indiquer dans votre configuration:
 
 code{
 
@@ -45,7 +45,7 @@ code{
 
 }code
 
-Une façon possible de changer le mot de passe par défaut est au moyen d'un
+Une façon possible de changer le mot de passe par défaut est d'utiliser un
 hook comme décrit dans {Hooks pendant le démarrage}#boot-time-hooks. Pour ce
 faire vous pouvez utiliser le hook "passwd" de
 #{/usr/share/doc/live-config/examples/hooks}#, ajouter un préfixe correct
@@ -63,7 +63,7 @@ _* le réglage de la disposition du clavier
 
 Les paramètres régionaux par défaut pendant la construction d'un système
 Live sont #{locales=en_US.UTF-8}#. Pour définir les paramètres régionaux qui
-doivent être générés, utiliser le paramètre #{locales}# dans l'option
+doivent être générés, utilisez le paramètre #{locales}# dans l'option
 #{--bootappend-live}# de #{lb config}#, par exemple
 
 code{
@@ -72,23 +72,23 @@ code{
 
 }code
 
-Multiples paramètres régionaux peuvent être spécifiés en une liste séparée
+Plusieurs paramètres régionaux peuvent être indiqués dans une liste séparée
 par des virgules.
 
 Ce paramètre, ainsi que les paramètres de configuration du clavier indiqués
 ci-dessous, peut également être utilisé sur la ligne de commande du
-noyau. On peut spécifier des paramètres régionaux avec #{language_country}#
-(dans ce cas le codage par défaut est utilisé) ou l'expression complete
+noyau. On peut indiquer des paramètres régionaux avec #{language_country}#
+(dans ce cas, le codage par défaut est utilisé) ou l'expression complète
 #{language_country.encoding}#. Une liste des paramètres régionaux et le
 codage pour chacun peuvent être trouvés dans #{/usr/share/i18n/SUPPORTED}#.
 
 La configuration du clavier pour la console et pour X est faite par
 #{live-config}# en utilisant le paquet #{console-setup}#. Pour les
-configurer, utiliser les paramètres de démarrage #{keyboard-layouts}#,
+configurer, utilisez les paramètres de démarrage #{keyboard-layouts}#,
 #{keyboard-variants}#, #{keyboard-options}# et #{keyboard-model}# avec
-l'option #{--bootappend-live}#. On peut trouver options valides dans
-#{/usr/share/X11/xkb/rules/base.lst}#. Pour trouver les dispositions el les
-variantes correspondantes à une langue essayez de rechercher le nom anglais
+l'option #{--bootappend-live}#. On peut trouver les options valides dans
+#{/usr/share/X11/xkb/rules/base.lst}#. Pour trouver les dispositions et les
+variantes correspondantes à une langue, essayez de rechercher le nom anglais
 de la nation où la langue est parlée, par exemple:
 
 code{
@@ -108,9 +108,9 @@ $ egrep -i '(^!|german.*switzerland)' /usr/share/X11/xkb/rules/base.lst
 
 Chaque variante présente une description de la disposition appliquée.
 
-Souvent, seulement la disposition doit être configurée. Par exemple, pour
+Souvent, seule la disposition doit être configurée. Par exemple, pour
 obtenir les fichiers des paramètres régionaux de l'allemand et la
-disposition du clavier suisse allemand dans X utiliser:
+disposition du clavier suisse allemand dans X, utilisez:
 
 code{
 
@@ -120,8 +120,8 @@ code{
 
 Toutefois, pour les cas d'utilisation très spécifiques, on peut inclure
 d'autres paramètres. Par exemple, pour mettre en place un système français
-avec une disposition French-Dvorak (Bepo) avec un clavier USB TypeMatrix
-EZ-Reach 2030, utiliser:
+avec une disposition French-Dvorak (Bépo) avec un clavier USB TypeMatrix
+EZ-Reach 2030, utilisez:
 
 code{
 
@@ -130,15 +130,15 @@ code{
 
 }code
 
-Plusieurs valeurs peuvent être spécifiées séparées par des virgules pour
-chacune des options #{keyboard-*}#, à l'exception de #{keyboard-model}#, qui
-accepte une seule valeur. S'il vous plaît voir la page de manuel
-#{keyboard(5)}#  pour plus de détails et des exemples des variables
+Plusieurs valeurs peuvent être indiquées dans des listes séparées par des
+virgules pour chacune des options #{keyboard-*}#, à l'exception de
+#{keyboard-model}# qui accepte une seule valeur. Veuillez consulter la page
+de manuel #{keyboard(5)}# pour plus de détails et des exemples des variables
 #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# et #{XKBOPTIONS}#. Si plusieurs
-valeurs #{keyboard-variants}# sont données, elles seront jumelées tête à
-tête avec les valeurs #{keyboard-layouts}# voir #{setxkbmap(1)}# option
-#{-variant}#). On peut utiliser des valeurs vides; par exemple pour regler
-deux dispositions, une par défaut US QWERTY et l'autre US Dvorak, utiliser:
+valeurs #{keyboard-variants}# sont données, elles seront jumelées une à une
+avec les valeurs #{keyboard-layouts}# (voir #{setxkbmap(1)}# option
+#{-variant}#). On peut utiliser des valeurs vides; par exemple pour régler
+deux dispositions, une par défaut US QWERTY et l'autre US Dvorak, utilisez:
 
 code{
 
@@ -149,37 +149,37 @@ code{
 
 2~persistence Persistance
 
-Un paradigme d'un Live CD est être un système pré-installé qui amorce sur un
-support en lecture seule, comme un cdrom, où les données et les
+Le paradigme d'un Live CD est d'être un système pré-installé qui amorce sur
+un support en lecture seule, comme un cdrom, où les données et les
 modifications ne survivent pas aux redémarrages du matériel hôte qui
 l'exécute.
 
-Un système Debian Live est une généralisation de ce paradigme et soutient
-ainsi autres supports, en plus de CDs, mais encore, dans son comportement
-par défaut, il doit être considéré en lecture seule et toutes les évolutions
-pendant l'exécution du système sont perdus à l'arrêt.
+Un système Debian Live est une généralisation de ce paradigme et gère ainsi
+d'autres supports en plus de CDs. Malgré tout, dans son comportement par
+défaut, il doit être considéré en lecture seule et toutes les évolutions
+pendant l'exécution du système sont perdues à l'arrêt.
 
 La «persistance» est un nom commun pour les différents types de solutions
 pour sauver, après un redémarrage, certaines ou toutes les données, de cette
 évolution pendant l'exécution du système. Pour comprendre comment cela
-fonctionne il peut être utile de savoir que même si le système est démarré
-et exécuté à partir d'un support en lecture seule, la modification des
-fichiers et répertoires sont écrits sur des supports inscriptibles,
-typiquement un disque ram (tmpfs) et aux disques RAM les données ne
+fonctionne, il peut être utile de savoir que même si le système est démarré
+et exécuté à partir d'un support en lecture seule, les modifications des
+fichiers et répertoires sont écrites sur des supports inscriptibles,
+typiquement un disque ram (tmpfs) et les données des disques RAM ne
 survivent pas à un redémarrage.
 
 Les données stockées sur ce disque virtuel doivent être enregistrées sur un
-support inscriptible persistant comme supports de stockage locaux, un
+support inscriptible persistant comme un support de stockage local, un
 partage réseau ou même une séance d'un CD/DVD multisession
 (ré)inscriptible. Tous ces supports sont pris en charge dans Debian Live de
-différentes manières, et tous, moins le dernier, nécessitent un paramètre
-d'amorçage spéciale à préciser au moment du démarrage: #{persistence}#.
+différentes manières, et tous, à part le dernier, nécessitent un paramètre
+d'amorçage spécial à préciser au moment du démarrage: #{persistence}#.
 
 Si le paramètre de démarrage #{persistence}# est réglé (et #{nopersistence}#
 n'est pas utilisé), les supports de stockage locaux (par exemple les disques
 durs, clés USB) seront examinés pour trouver des volumes persistants pendant
 le démarrage. Il est possible de limiter les types de volumes persistants à
-utiliser en spécifiant certains paramètres de démarrage décrits dans la page
+utiliser en indiquant certains paramètres de démarrage décrits dans la page
 de manuel live-boot(7). Un volume persistant est un des éléments suivants:
 
 _* une partition, identifiée par son nom GPT.
@@ -191,17 +191,16 @@ _* un fichier image situé sur la racine d'un système de fichiers en lecture
 (même une partition NTFS d'un système d'exploitation étranger), identifié
 par son nom de fichier.
 
-L'étiquette du volume pour les overlays doit être #{persistence}# mais il
-sera ignoré à moins qu'il contient dans sa racine un fichier nommé
+L'étiquette du volume pour les overlays doit être #{persistence}# mais elle
+sera ignorée à moins de contenir dans sa racine un fichier nommé
 #{persistence.conf}# qui est utilisé pour personnaliser entièrement la
-persistance du volume, c'est-à-dire, spécifier les répertoires que vous
-voulez sauvegarder dans votre volume de persistance après un
-redémarrage. Voir {Le fichier persistence.conf}#persistence-conf pour plus
-de détails.
+persistance du volume, c'est-à-dire indiquer les répertoires que vous voulez
+sauvegarder dans votre volume de persistance après un redémarrage. Voir {Le
+fichier persistence.conf}#persistence-conf pour plus de détails.
 
-Voici quelques exemples de comment préparer un volume à utiliser pour la
-persistance. Il peut être, par exemple, une partition ext4 sur un disque dur
-ou sur une clé usb créée avec, par exemple:
+Voici quelques exemples montrant comment préparer un volume à utiliser pour
+la persistance. Cela peut être, par exemple, une partition ext4 sur un
+disque dur ou sur une clé usb créée avec:
 
 code{
 
@@ -212,8 +211,8 @@ code{
 Voir aussi {Utilisation de l'espace disponible sur une clé
 USB}#using-usb-extra-space.
 
-Si vous avez déjà une partition sur votre dispositif, vous pouvez simplement
-modifier l'étiquette avec l'un des suivants:
+Si vous avez déjà une partition sur votre périphérique, vous pouvez
+simplement modifier l'étiquette avec l'un des exemples suivants:
 
 code{
 
@@ -221,7 +220,7 @@ code{
 
 }code
 
-Voici un exemple de comment créer un fichier image avec un systéme de
+Voici un exemple montrant comment créer un fichier image avec un système de
 fichiers ext4 pour être utilisé pour la persistance:
 
 code{
@@ -231,12 +230,12 @@ code{
 
 }code
 
-Une fois que le fichier image est créé, à titre d'exemple, pour faire
-#{/usr}# persistante mais seulement enregistrer les modifications que vous
+Une fois que le fichier image est créé, à titre d'exemple, pour rendre
+#{/usr}# persistant mais seulement enregistrer les modifications que vous
 apportez à ce répertoire et non pas tout le contenu de #{/usr}#, vous pouvez
-utiliser l'option "union". Si le fichier image se trouve dans votre
-répertoire home, le copier à la racine du système de fichiers de votre
-disque dur et le monter dans #{/mnt}# comme suit:
+utiliser l'option «union». Si le fichier image se trouve dans votre
+répertoire personnel, copiez-le à la racine du système de fichiers de votre
+disque dur et montez-le dans #{/mnt}# comme suit:
 
 code{
 
@@ -255,19 +254,19 @@ code{
 
 }code
 
-Maintenant, redémarrez dans vos supports live avec le paramètre de démarrage
-"persistence".
+Maintenant, redémarrez dans votre support live avec le paramètre de
+démarrage "persistence".
 
 3~persistence-conf Le fichier persistence.conf
 
-Un volume avec l'étiquette #{persistence}# doit être configuré avec un
+Un volume ayant l'étiquette #{persistence}# doit être configuré avec un
 fichier #{persistence.conf}# pour créer des répertoires persistants
 arbitraires. Ce fichier, situé sur le système de fichiers racine du volume,
-contrôle quels répertoires il fait persistants, et de quelle manière.
+contrôle quels répertoires il rend persistants, et de quelle manière.
 
-Comment on configure monter les overlays est décrit en détail dans la page
-de manuel persistence.conf(5), mais un simple exemple devrait être suffisant
-pour la plupart des utilisations. Imaginons que nous voulons faire notre
+La façon de configurer les montages overlays est décrite en détail dans la
+page de manuel persistence.conf(5), mais un simple exemple devrait suffire
+pour la plupart des utilisations. Imaginons que nous voulions rendre notre
 répertoire personnel et APT cache persistants dans un système de fichiers
 ext4 sur la partition /dev/sdb1:
 
@@ -281,34 +280,34 @@ code{
 
 }code
 
-Alors nous redémarrons. Lors du premier démarrage les contenus du #{/home}#
-et #{/var/cache/apt}# seront copiés dans le volume persistant, et à partir
-de ce moment tous les changements dans ces répertoires seront stockés dans
-le volume persistant. S'il vous plaît, souligner que les chemins d'accès aux
-répertoriés dans le fichier #{persistence.conf}# ne peuvent pas contenir des
-espaces blancs ou les éléments spéciaux #{.}# et #{..}#. En outre, ni
-#{/lib}#, #{/lib/live}# (ou un de leurs sous-répertoires), ni #{/}#  peuvent
-être rendus persistants en utilisant montages personnalisés. Comme une
-solution pour cette limitation, vous pouvez ajouter #{/ union}# à votre
-fichier #{persistence.conf}# pour obtenir une persistance complète.
+Puis nous redémarrons. Lors du premier démarrage, les contenus du #{/home}#
+et #{/var/cache/apt}# seront copiés dans le volume persistant. À partir de
+ce moment, tous les changements dans ces répertoires seront stockés dans le
+volume persistant. Veuiller remarquer que les chemins répertoriés dans le
+fichier #{persistence.conf}# ne peuvent pas contenir d'espaces ou d'éléments
+spéciaux #{.}# et #{..}#. En outre, ni #{/lib}#, #{/lib/live}# (ou un de
+leurs sous-répertoires), ni #{/}# ne peuvent être rendus persistants en
+utilisant des montages personnalisés. Comme solution à cette limitation,
+vous pouvez ajouter #{/ union}# à votre fichier #{persistence.conf}# pour
+obtenir une persistance complète.
 
 Plusieurs volumes overlays différents (avec leurs propres fichiers
 #{persistence.conf}#) peuvent être utilisés au même temps, mais si plusieurs
-volumes font le même répertoire persistant, un seul d'entre eux sera
+volumes rendent le même répertoire persistant, un seul d'entre eux sera
 utilisé. Si les deux sont «imbriqués» (un est un sous-répertoire de l'autre)
-le premier sera monté avant que le secondaire de sorte que aucun sera caché
-par l'autre. Monter des éléments personnalisés imbriqués est problématique
-s'ils sont énumérés dans le même fichier #{persistence.conf}#. Voir la page
-de manuel persistence.conf(5) pour savoir comment gérer ce cas, si vous avez
-vraiment besoin (remarque: vous n'avez généralement pas).
+le premier sera monté avant le second de sorte qu'aucun ne sera caché par
+l'autre. Monter des éléments personnalisés imbriqués est problématique s'ils
+sont énumérés dans le même fichier #{persistence.conf}#. Voir la page de
+manuel persistence.conf(5) pour savoir comment gérer ce cas si vous en avez
+vraiment besoin (remarque: ce n'est généralement pas le cas).
 
 3~ Utilisation de plusieurs dispositifs de persistance
 
 Si un utilisateur a besoin de stockages persistants multiples du même type
-pour différents endroits ou l'essai, tel que #{persistence-private}# et
+pour différents endroits ou essais, tel que #{persistence-private}# et
 #{persistence-work}#, le paramètre de démarrage #{persistence-label}#
 utilisé en conjonction avec le paramètre de démarrage #{persistence}#
-permettra multiples, mais uniques, supports persistants. Un exemple serait
-le cas si un utilisateur voudrait utiliser une partition persistante
-étiquetée #{persistence-subText}# il utiliserait les paramètres de
-démarrage: #{persistence}# #{persistence-label=subText}#.
+permettra de multiples mais uniques supports persistants. Dans le cas où un
+utilisateur voudrait utiliser une partition persistante étiquetée
+#{persistence-subText}#, il utiliserait les paramètres de démarrage:
+#{persistence}# #{persistence-label=subText}#.

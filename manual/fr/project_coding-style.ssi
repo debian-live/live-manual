@@ -6,10 +6,10 @@ Ce chapitre documente le style du code utilisé dans Debian Live.
 
 2~ Compatibilité
 
-_* Ne pas utiliser une syntaxe ou sémantique qui soit unique à le shell
-Bash. Par exemple, l'utilisation d'arrays.
+_* N'utilisez pas une syntaxe ou sémantique qui soit unique au shell
+Bash. Par exemple, l'utilisation de tableaux (arrays).
 
-_* N'utiliser que le sous-ensemble POSIX - par exemple, utiliser $(foo) au
+_* N'utilisez que le sous-ensemble POSIX − par exemple, utilisez $(foo) au
 lieu de `foo`.
 
 _* Vous pouvez vérifier vos scripts avec 'sh -n' et 'checkbashisms'.
@@ -18,7 +18,7 @@ _* Assurez-vous que tout le code fonctionne avec 'set-e '.
 
 2~ Indentation
 
-_* Toujours utiliser des tabulations en lieu des espaces.
+_* Utilisez toujours des tabulations au lieu des espaces.
 
 2~ Adaptateur
 
@@ -88,13 +88,13 @@ commencent par #{LIVE_}#.
 _* Toutes les autres variables dans live-config commencent par le préfixe
 #{_}#.
 
-_* Utilisez des accolades autour des variables; par exemple écrire
+_* Utilisez des accolades autour des variables; écrivez par exemple
 #{${FOO}}# au lieu de #{$FOO}#.
 
-_* Toujours protéger les variables avec guillemets pour respecter les
+_* Protégez toujours les variables avec des guillemets pour respecter les
 espaces potentiels: écrire #{"${FOO}"}# en lieu de #{${FOO}}#.
 
-_* Pour des raisons de cohérence, toujours utiliser les guillemets lors de
+_* Pour des raisons de cohérence, utilisez toujours les guillemets lors de
 l'attribution des valeurs aux variables:
 
 Mal:
@@ -113,7 +113,7 @@ code{
 
 }code
 
-_* Si plusieurs variables sont utilisées, utiliser les guillemets pour
+_* Si plusieurs variables sont utilisées, utilisez les guillemets pour
 l'expression complète:
 
 Mal:
@@ -143,12 +143,12 @@ code{
 _* Utilisez "#{|}#" (sans les guillemets autour) comme séparateur dans les
 appels à sed, par exemple "#{sed -e 's|foo|bar|'}#" (sans" ").
 
-_* Ne pas utiliser la commande #{test}# pour des comparaisons ou des tests,
+_* N'utilisez pas la commande #{test}# pour des comparaisons ou des tests,
 utilisez "#{[}#" "#{]}#" (sans ""); par exemple "#{if [ -x /bin/foo ];
 ...}#" et non pas "#{if test -x /bin/foo; ...}#".
 
-_* Utiliser #{case}# dans la mesure du possible en lieu de #{test}#, parce
-qu'il est plus facile à lire et plus rapide en l'exécution.
+_* Utilisez #{case}# dans la mesure du possible au lieu de #{test}#, parce
+qu'il est plus facile à lire et plus rapide à exécuter.
 
-_* Utilisez noms en majuscule pour les fonctions pour éviter toute
+_* Utilisez des noms en majuscule pour les fonctions pour éviter toute
 interférence avec l'environnement des utilisateurs.

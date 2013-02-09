@@ -4,15 +4,16 @@
 
 2~ Chargeur d'amorçage
 
-live-build uses /{syslinux}/ and some of its derivatives (depending on the
-image type) as bootloaders by default. They can be easily customized in two
-ways.
+live-build utilise /{syslinux}/ et certains de ses dérivés (selon le type
+d'image) comme chargeurs d'amorçage par défaut. Vous pouvez facilement les
+personnaliser de deux manières. 
 
-In order to use a full theme, copy #{/usr/share/live/build/bootloaders}#
-into #{config/bootloaders}# and edit files in there. If you do not want to
-bother modifying all supported bootloader configurations, only providing a
-local customized copy of one of the bootloaders, e.g. *{isolinux}* in
-#{config/bootloaders/isolinux}# is enough too, depending on your use case.
+Pour utiliser un thème complet, copiez #{/usr/share/live/build/bootloaders}#
+dans #{config/bootloaders}# et modifiez les fichiers là. Si vous ne voulez
+pas modifier toutes les configurations du chargeur d'amorçage prises en
+charge, il suffit de fournir une copie locale personnalisée d'un des
+chargeurs, par exemple copiez la configuration d'*{isolinux}* dans
+#{config/bootloaders/isolinux}#, selon votre cas d'utilisation.
 
 Il y a aussi la possibilité de faire de petits changements. Par exemple, les
 dérivés de syslinux sont configurés par défaut avec un timeout de 0 (zéro),
@@ -35,9 +36,9 @@ code{
 
 }code
 
-An alternative way of achieving the same goal could be writing a hook and
-adding it to #{config/hooks/}#. Remember to add the #{.binary}# suffix to
-run in the binary stage. A proposed example:
+Une autre façon d'atteindre le même objectif pourrait être d'écrire un hook
+et l'ajouter à #{config/hooks/}#. N'oubliez pas d'ajouter le suffixe
+#{.binary}# pour l'exécuter dans l’étape binaire. Un exemple proposé:
 
 code{
 

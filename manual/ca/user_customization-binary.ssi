@@ -4,15 +4,16 @@
 
 2~ Carregador d'arrencada
 
-live-build uses /{syslinux}/ and some of its derivatives (depending on the
-image type) as bootloaders by default. They can be easily customized in two
-ways.
+live-build utilitza /{syslinux}/ i alguns dels seus derivats (depenent del
+tipus d'imatge) com carregadors d'arrencada per defecte. Es poden
+personalitzar fàcilment de dues maneres.
 
-In order to use a full theme, copy #{/usr/share/live/build/bootloaders}#
-into #{config/bootloaders}# and edit files in there. If you do not want to
-bother modifying all supported bootloader configurations, only providing a
-local customized copy of one of the bootloaders, e.g. *{isolinux}* in
-#{config/bootloaders/isolinux}# is enough too, depending on your use case.
+Per utilitzar un tema complet, copiar #{/usr/share/live/build/bootloaders}#
+a #{config/bootloaders}# i editar els fitxers allí. Si no es vol modificar
+totes les configuracions del gestor d'arrencada disponibles, només cal
+utilitzar una còpia local personalitzada d'un dels gestors d'arrencada, per
+exemple, copiar la configuració d'*{isolinux}* a
+#{config/bootloaders/isolinux}# ja és suficient, depenent del cas d'ús.
 
 També hi ha la possibilitat de fer petits canvis. Per exemple, els derivats
 de syslinux estan configurats per defecte amb un temps d'espera de 0 (zero)
@@ -35,9 +36,10 @@ code{
 
 }code
 
-An alternative way of achieving the same goal could be writing a hook and
-adding it to #{config/hooks/}#. Remember to add the #{.binary}# suffix to
-run in the binary stage. A proposed example:
+Una forma alternativa d'aconseguir el mateix objectiu podria ser escriure un
+script ganxo i afegir-lo a #{config/hooks/}#. Recordar afegir el sufix
+#{.binary}# per tal que s'executi durant l'etapa binary. Un exemple
+proposat:
 
 code{
 

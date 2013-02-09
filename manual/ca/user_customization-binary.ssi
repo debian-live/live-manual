@@ -4,32 +4,15 @@
 
 2~ Carregador d'arrencada
 
-live-build utilitza /{syslinux}/ i alguns dels seus derivats (depenent del
-tipus d'imatge) com carregadors d'arrencada per defecte. Es poden
-personalitzar fàcilment en un nombre de maneres que van des de proporcionar
-un tema complet a només modificar alguns fitxers que permeten, per exemple,
-canviar el temps d'espera d'arrencada o simplement afegir una imatge de fons
-personalitzada.
+live-build uses /{syslinux}/ and some of its derivatives (depending on the
+image type) as bootloaders by default. They can be easily customized in two
+ways.
 
-Si es vol utilitzar un tema complet es pot especificar l'opció
-#{--syslinux-theme}# (veure man #{lb_config}#). live-build descarregarà el
-tema del mirall i l'instaŀlarà. També es pot empaquetar en un .deb un tema
-propi o modificar-ne un ja existent i pujar-lo a un servidor local.
-
-Imaginar que es vol construir un client Progress Linux però es prefereix
-incloure el tema del servidor, perquè es vol tenir el menú d'ajuda. S'hauria
-d'utilitzar #{lb config}# de la següent manera:
-
-code{
-
- $ lb config --mode progress-linux --syslinux-theme progress-server
-
-}code
-
-Si un no es vol preocupar de crear un .deb, només cal afegir localment els
-fitxers de configuració per a una imatge per defecte a
-#{config/bootloaders/isolinux}#. Canviant *{isolinux}*" per *{extlinux}*,
-*{pxelinux}* o *{syslinux}* depenent del cas d'ús.
+In order to use a full theme, copy #{/usr/share/live/build/bootloaders}#
+into #{config/bootloaders}# and edit files in there. If you do not want to
+bother modifying all supported bootloader configurations, only providing a
+local customized copy of one of the bootloaders, e.g. *{isolinux}* in
+#{config/bootloaders/isolinux}# is enough too, depending on your use case.
 
 També hi ha la possibilitat de fer petits canvis. Per exemple, els derivats
 de syslinux estan configurats per defecte amb un temps d'espera de 0 (zero)
@@ -52,10 +35,9 @@ code{
 
 }code
 
-Una forma alternativa d'aconseguir el mateix objectiu podria ser escriure un
-script ganxo i afegir-lo a #{config/hooks/}#. Recordar afegir el sufix
-#{.binary}# per tal que s'executi durant l'etapa binary. Un exemple
-proposat:
+An alternative way of achieving the same goal could be writing a hook and
+adding it to #{config/hooks/}#. Remember to add the #{.binary}# suffix to
+run in the binary stage. A proposed example:
 
 code{
 

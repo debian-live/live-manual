@@ -4,32 +4,15 @@
 
 2~ Bootloader
 
-live-build usa /{syslinux}/ e alcuni dei suoi derivati (a seconda del tipo
-di immagine) come bootloader predefiniti. Si possono facilmente
-personalizzare in vari modi che vanno dal fornire un tema completo per
-modificare solo alcuni file che vi permettono ad esempio di cambiare il
-timeout d'avvio o semplicemente per aggiungere un'immagine splash
-personalizzata.
+live-build uses /{syslinux}/ and some of its derivatives (depending on the
+image type) as bootloaders by default. They can be easily customized in two
+ways.
 
-Per cambiare un intero tema specificare l'opzione #{--syslinux-theme}#
-(vedere man #{lb_config}#); live-build recupera quindi il tema dal mirror e
-lo installa. Si può inoltre pacchettizzare il proprio o modificarne uno
-esistente e caricarlo sul mirror locale.
-
-Si immagini di voler creare un client Progress Linux ma si preferisce
-includere il tema del server per avere il menù di aiuto. Si lancerà #{lb
-config}# come segue:
-
-code{
-
- $ lb config --mode progress-linux --syslinux-theme progress-server
-
-}code
-
-Se non si desidera creare un .deb, aggiungere semplicemente i propri file di
-configurazione per un'immagine predefinita a
-#{config/bootloaders/isolinux}#. Sostituire *{isolinux}* con *{extlinux}*,
-*{pxelinux}* o *{syslinux}* dipende dalle necessità.
+In order to use a full theme, copy #{/usr/share/live/build/bootloaders}#
+into #{config/bootloaders}# and edit files in there. If you do not want to
+bother modifying all supported bootloader configurations, only providing a
+local customized copy of one of the bootloaders, e.g. *{isolinux}* in
+#{config/bootloaders/isolinux}# is enough too, depending on your use case.
 
 Si può anche fare piccole modifiche. Per esempio i derivati di syslinux sono
 configurati con un timeout impostato a 0 (zero) in modo predefinito,
@@ -52,9 +35,9 @@ code{
 
 }code
 
-Un modo alternativo per raggiungere lo stesso obiettivo potrebbe essere
-scrivere un hook e aggiungerlo a #{config/hooks/}# Ricordarsi di aggiungere
-il suffisso #{.binary}# per eseguirsi nella fase binaria. Ecco un esempio:
+An alternative way of achieving the same goal could be writing a hook and
+adding it to #{config/hooks/}#. Remember to add the #{.binary}# suffix to
+run in the binary stage. A proposed example:
 
 code{
 

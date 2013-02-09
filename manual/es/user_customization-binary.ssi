@@ -4,32 +4,15 @@
 
 2~ Gestor de arranque
 
-live-build utiliza /{syslinux}/ y algunos de sus derivados (en función del
-tipo de imagen) como gestores de arranque por defecto. Se pueden
-personalizar fácilmente de formas diferentes que varían desde emplear un
-tema completo a sólo modificar algunos ficheros que permiten, por ejemplo,
-cambiar el tiempo de arranque por defecto o simplemente añadir una imagen
-splash.
+live-build uses /{syslinux}/ and some of its derivatives (depending on the
+image type) as bootloaders by default. They can be easily customized in two
+ways.
 
-Si se quiere utilizar un tema completo se puede especificar la opción
-#{--syslinux-theme}# (ver man #{lb_config}#). live-build lo descargará de la
-réplica y lo instalará. También se puede empaquetar en un .deb un tema
-propio o modificar uno ya existente y subirlo a un servidor local.
-
-Si se desea crear un cliente Progress Linux pero se quiere utilizar el tema
-del servidor que incluye el menú de ayuda. Se puede configurar como se
-explica a continuación:
-
-code{
-
- $ lb config --mode progress-linux --syslinux-theme progress-server
-
-}code
-
-Si uno no quiere preocuparse de crear un .deb, sólo tiene que añadir los
-ficheros de configuración local para una imagen predeterminada a
-#{config/bootloaders/isolinux}#. Substituyendo *{isolinux}* por
-*{extlinux}*, *{pxelinux}* o *{syslinux}* dependiendo del caso de uso.
+In order to use a full theme, copy #{/usr/share/live/build/bootloaders}#
+into #{config/bootloaders}# and edit files in there. If you do not want to
+bother modifying all supported bootloader configurations, only providing a
+local customized copy of one of the bootloaders, e.g. *{isolinux}* in
+#{config/bootloaders/isolinux}# is enough too, depending on your use case.
 
 Se pueden hacer cambios más pequeños. Por ejemplo, los derivados de syslinux
 están configurados por defecto con un tiempo de espera de 0 (cero) lo que
@@ -53,9 +36,9 @@ code{
 
 }code
 
-Una forma alternativa de lograr el mismo objetivo podría ser escribiendo un
-script gancho y agregarlo a #{config/hooks/}#. Recordar añadir el sufijo
-.binary para que sea ejecutado en la etapa binary. Un ejemplo podría ser:
+An alternative way of achieving the same goal could be writing a hook and
+adding it to #{config/hooks/}#. Remember to add the #{.binary}# suffix to
+run in the binary stage. A proposed example:
 
 code{
 

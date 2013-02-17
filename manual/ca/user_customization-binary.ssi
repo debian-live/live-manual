@@ -6,30 +6,14 @@
 
 live-build utilitza /{syslinux}/ i alguns dels seus derivats (depenent del
 tipus d'imatge) com carregadors d'arrencada per defecte. Es poden
-personalitzar fàcilment en un nombre de maneres que van des de proporcionar
-un tema complet a només modificar alguns fitxers que permeten, per exemple,
-canviar el temps d'espera d'arrencada o simplement afegir una imatge de fons
-personalitzada.
+personalitzar fàcilment de dues maneres.
 
-Si es vol utilitzar un tema complet es pot especificar l'opció
-#{--syslinux-theme}# (veure man #{lb_config}#). live-build descarregarà el
-tema del mirall i l'instaŀlarà. També es pot empaquetar en un .deb un tema
-propi o modificar-ne un ja existent i pujar-lo a un servidor local.
-
-Imaginar que es vol construir un client Progress Linux però es prefereix
-incloure el tema del servidor, perquè es vol tenir el menú d'ajuda. S'hauria
-d'utilitzar #{lb config}# de la següent manera:
-
-code{
-
- $ lb config --mode progress-linux --syslinux-theme progress-server
-
-}code
-
-Si un no es vol preocupar de crear un .deb, només cal afegir localment els
-fitxers de configuració per a una imatge per defecte a
-#{config/bootloaders/isolinux}#. Canviant *{isolinux}*" per *{extlinux}*,
-*{pxelinux}* o *{syslinux}* depenent del cas d'ús.
+Per utilitzar un tema complet, copiar #{/usr/share/live/build/bootloaders}#
+a #{config/bootloaders}# i editar els fitxers allí. Si no es vol modificar
+totes les configuracions del gestor d'arrencada disponibles, només cal
+utilitzar una còpia local personalitzada d'un dels gestors d'arrencada, per
+exemple, copiar la configuració d'*{isolinux}* a
+#{config/bootloaders/isolinux}# ja és suficient, depenent del cas d'ús.
 
 També hi ha la possibilitat de fer petits canvis. Per exemple, els derivats
 de syslinux estan configurats per defecte amb un temps d'espera de 0 (zero)

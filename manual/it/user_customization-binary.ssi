@@ -6,30 +6,14 @@
 
 live-build usa /{syslinux}/ e alcuni dei suoi derivati (a seconda del tipo
 di immagine) come bootloader predefiniti. Si possono facilmente
-personalizzare in vari modi che vanno dal fornire un tema completo per
-modificare solo alcuni file che vi permettono ad esempio di cambiare il
-timeout d'avvio o semplicemente per aggiungere un'immagine splash
-personalizzata.
+personalizzare in due modi.
 
-Per cambiare un intero tema specificare l'opzione #{--syslinux-theme}#
-(vedere man #{lb_config}#); live-build recupera quindi il tema dal mirror e
-lo installa. Si può inoltre pacchettizzare il proprio o modificarne uno
-esistente e caricarlo sul mirror locale.
-
-Si immagini di voler creare un client Progress Linux ma si preferisce
-includere il tema del server per avere il menù di aiuto. Si lancerà #{lb
-config}# come segue:
-
-code{
-
- $ lb config --mode progress-linux --syslinux-theme progress-server
-
-}code
-
-Se non si desidera creare un .deb, aggiungere semplicemente i propri file di
-configurazione per un'immagine predefinita a
-#{config/bootloaders/isolinux}#. Sostituire *{isolinux}* con *{extlinux}*,
-*{pxelinux}* o *{syslinux}* dipende dalle necessità.
+Per utilizzare un tema completo, copiare
+#{/usr/share/live/build/bootloaders}# in #{config/bootloaders}# e modificare
+i file. Se non si vogliono modificare tutte le configurazioni dei bootloader
+supportati è sufficiente fornire la copia locale di uno di essi, ad esempio
+*{isolinux}* in #{config/bootloaders/isolinux}# può bastare, dipende dalle
+esigenze.
 
 Si può anche fare piccole modifiche. Per esempio i derivati di syslinux sono
 configurati con un timeout impostato a 0 (zero) in modo predefinito,
@@ -53,7 +37,7 @@ code{
 }code
 
 Un modo alternativo per raggiungere lo stesso obiettivo potrebbe essere
-scrivere un hook e aggiungerlo a #{config/hooks/}# Ricordarsi di aggiungere
+scrivere un hook e aggiungerlo a #{config/hooks/}#. Ricordarsi di aggiungere
 il suffisso #{.binary}# per eseguirsi nella fase binaria. Ecco un esempio:
 
 code{

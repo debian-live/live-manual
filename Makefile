@@ -10,7 +10,7 @@
 
 SHELL := sh -e
 
-LANGUAGES := en $(shell cd manual/po && ls)
+LANGUAGES := en ca es fr it
 
 FORMATS := epub html odf pdf txt
 

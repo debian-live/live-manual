@@ -2,7 +2,7 @@
 
 SHELL := sh -e
 
-LANGUAGES = $(shell cd po && ls)
+LANGUAGES = ca es fr it
 
 DEBUG=0
 PO4A_FLAGS=

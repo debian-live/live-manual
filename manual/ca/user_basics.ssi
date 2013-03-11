@@ -29,8 +29,8 @@ punt per fer servir sense cap tipus d'instaŀlació en la unitat(s)
 habitual(s), amb una configuració automàtica feta en temps d'execució (veure
 {Termes}#terms).
 
-With live systems, it's a operating system, built for one of the supported
-architectures (currently amd64 and i386). It is made from the following
+Amb live systems, és un sistema operatiu, construït per una de les
+arquitectures suportades (actualment amd64 i i386). Conté les següents
 parts:
 
 _* *{Imatge del nucli Linux}*, generalment s'anomena #{vmlinuz*}#
@@ -39,12 +39,14 @@ _* *{Imatge del disc RAM inicial (initrd)}*: un disc RAM configurat per a
 l'arrencada de Linux, que conté els mòduls que possiblement es necessitaran
 per muntar la imatge del sistema i algunes seqüències d'ordres per fer-ho.
 
-_* *{System image}*: The operating system's filesystem image. Usually, a
-SquashFS compressed filesystem is used to minimize the live system image
-size. Note that it is read-only. So, during boot the live system will use a
-RAM disk and 'union' mechanism to enable writing files within the running
-system. However, all modifications will be lost upon shutdown unless
-optional persistence is used (see {Persistence}#persistence).
+_* *{Imatge del sistema}*: Imatge del sistema de fitxers del sistema
+operatiu. Normalment, s'utilitza un sistema de fitxers comprimit SquashFS
+per minimitzar la mida de la imatge. Tenir en compte que és de només
+lectura. Així, durant l'arrencada, el sistema Debian Live utilitzarà el disc
+RAM i un mecanisme de "unió" per permetre l'escriptura de fitxers en el
+sistema en funcionament. No obstant això, totes les modificacions es perdran
+al apagar l'equip si no és que s'utilitza la persistència opcional (vegeu
+{Persistència}#persistence).
 
 _* *{Carregador d'arrencada }*: Una petita peça de codi dissenyat per
 arrencar des del medi triat, possiblement presentant un indicador
@@ -210,10 +212,10 @@ code{
 
 3~using-usb-extra-space Utilitzar l'espai lliure en una memòria USB
 
-To use the remaining free space after copying #{binary.hybrid.iso}# to a USB
-stick, use a partitioning tool such as /{gparted}/ or /{parted}/ to create a
-new partition on the stick. The first partition will be used by the live
-system.
+Per poder utilitzar l'espai que queda lliure després de copiar
+#{binary.hybrid.iso}# en un dispositiu USB, utilitzar una eina de
+particionament com /{gparted}/ o /{parted}/ per crear una nova partició. La
+primera partició serà utilitzada pel sistema en viu.
 
 code{
 
@@ -420,13 +422,14 @@ code{
 
 }code
 
-In this specific case, a #{lb clean --binary}# would not be enough to clean
-up the necessary stages. The cause for this is that in netboot setups, a
-different initramfs configuration needs to be used which live-build performs
-automatically when building netboot images. Since the initramfs creation
-belongs to the chroot stage, switching to netboot in an existing build
-directory means to rebuild the chroot stage too. Therefore, #{lb clean}#
-(which will remove the chroot stage, too) needs to be used.
+En aquest cas concret, un #{lb clean --binary}# no seria insuficient per
+netejar les etapes necessàries. La causa d'això és que en les configuracions
+d'arrencada en xarxa, es necessita una configuració initramfs diferent que
+live-build realitza automàticament quan es construeixen imatges netboot. Ja
+que la creació del initramfs pertany a l'etapa chroot, fer el canvi a
+netboot en un directori de construcció existent significa reconstruir
+l'etapa chroot també. Per tant, s'ha de fer un #{lb clean}# (que eliminarà
+l'etapa chroot, també)
 
 Executar l'ordre següent per configurar la imatge per arrencar en xarxa:
 
@@ -459,13 +462,13 @@ continuació. Per regla general, el següent pas és aconseguir un carregador
 d'arrencada de més alt nivell a través del protocol TFTP. Podria ser GRUB,
 pxelinux o fins i tot arrencar directament a un sistema operatiu com Linux.
 
-For example, if you unpack the generated #{binary.netboot.tar}# archive in
-the #{/srv/debian-live}# directory, you'll find the filesystem image in
-#{live/filesystem.squashfs}# and the kernel, initrd and pxelinux bootloader
-in #{tftpboot/}#.
+Per exemple, si es descomprimeix el arxiu #{binary.netboot.tar}# generat al
+directori #{/srv/debian-live}#, es trobarà  la imatge del sistema de fitxers
+a #{live/filesystem.squashfs}# i el nucli, initrd i carregador d'arrencada
+pxelinux a #{tftpboot/}#.
 
-We must now configure three services on the server to enable netbooting: the
-DHCP server, the TFTP server and the NFS server.
+Ara hem de configurar els tres serveis al servidor per l'arrencada en xarxa:
+el servidor DHCP, servidor TFTP i el servidor NFS.
 
 3~ Servidor DHCP 
 

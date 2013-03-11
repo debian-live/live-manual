@@ -404,21 +404,20 @@ code{
 
 }code
 
-In questo caso specifico il comando #{lb clean --binary}# non è sufficiente
-per pulire le fasi necessarie. La causa è che nelle configurazioni per
-l'avvio da rete è necessario usare una configurazione dell'initramfs
-differente che viene applicata automaticamente da live-build durante la
-creazione di immagini netboot. Dal momento che la creazione dell'initramfs
-appartiene alla fase del chroot, passare a netboot in una directory di
-lavoro esistente significa ricompilare anche la fase del chroot. Perciò va
-usato #{lb clean}# (che rimuoverà anche la fase del chroot).
+In this specific case, a #{lb clean --binary}# would not be enough to clean
+up the necessary stages. The cause for this is that in netboot setups, a
+different initramfs configuration needs to be used which live-build performs
+automatically when building netboot images. Since the initramfs creation
+belongs to the chroot stage, switching to netboot in an existing build
+directory means to rebuild the chroot stage too. Therefore, #{lb clean}#
+(which will remove the chroot stage, too) needs to be used.
 
 Per configurare l'immagine per l'avvio da rete, eseguire il comando #{lb
 config}# come segue:
 
 code{
 
- $ lb config -b netboot --net-root-path "/srv/debian-live" --net-root-server "192.168.0.1"
+ $ lb config -b netboot --net-root-path "/srv/debian-live" --net-root-server "192.168.0.2"
 
 }code
 
@@ -446,13 +445,13 @@ di di livello superiore attraverso il protocollo TFTP. Questi potrebbe
 essere pxelinux, GRUB, o anche avviare direttamente un sistema operativo
 come Linux.
 
-Per esempio, estraendo l'archivio generato #{binary.netboot.tar}# nella
-directory #{/srv/debian-live}#, si troverà l'immagine del filesystem in
-#{live/filesystem.squashfs}# mentre il kernel, initrd ed il bootloader
-pxelinux in #{tftpboot/debian-live/i386}#.
+For example, if you unpack the generated #{binary.netboot.tar}# archive in
+the #{/srv/debian-live}# directory, you'll find the filesystem image in
+#{live/filesystem.squashfs}# and the kernel, initrd and pxelinux bootloader
+in #{tftpboot/}#.
 
-Per abilitare l'avvio tramite rete vanno ora configurati tre servizi:i
-server DHCP, TFTP e NFS.
+We must now configure three services on the server to enable netbooting: the
+DHCP server, the TFTP server and the NFS server.
 
 3~ Server DHCP
 
@@ -479,8 +478,11 @@ code{
 
  subnet 192.168.0.0 netmask 255.255.255.0 {
    range 192.168.0.1 192.168.0.254;
-   next-server servername;
    filename "pxelinux.0";
+   next-server 192.168.0.2;
+   option subnet-mask 255.255.255.0;
+   option broadcast-address 192.168.0.255;
+   option routers 192.168.0.1;
 }
 
 }code

@@ -420,20 +420,19 @@ code{
 
 }code
 
-En aquest cas concret, un #{lb clean --binary}# no seria insuficient per
-netejar les etapes necessàries. La causa d'això és que en les configuracions
-d'arrencada en xarxa, es necessita una configuració initramfs diferent que
-live-build realitza automàticament quan es construeixen imatges netboot. Ja
-que la creació del initramfs pertany a l'etapa chroot, fer el canvi a
-netboot en un directori de construcció existent significa reconstruir
-l'etapa chroot també. Per tant, s'ha de fer un #{lb clean}# (que eliminarà
-l'etapa chroot, també).
+In this specific case, a #{lb clean --binary}# would not be enough to clean
+up the necessary stages. The cause for this is that in netboot setups, a
+different initramfs configuration needs to be used which live-build performs
+automatically when building netboot images. Since the initramfs creation
+belongs to the chroot stage, switching to netboot in an existing build
+directory means to rebuild the chroot stage too. Therefore, #{lb clean}#
+(which will remove the chroot stage, too) needs to be used.
 
 Executar l'ordre següent per configurar la imatge per arrencar en xarxa:
 
 code{
 
- $ lb config -b netboot --net-root-path "/srv/debian-live" --net-root-server "192.168.0.1"
+ $ lb config -b netboot --net-root-path "/srv/debian-live" --net-root-server "192.168.0.2"
 
 }code
 
@@ -460,13 +459,13 @@ continuació. Per regla general, el següent pas és aconseguir un carregador
 d'arrencada de més alt nivell a través del protocol TFTP. Podria ser GRUB,
 pxelinux o fins i tot arrencar directament a un sistema operatiu com Linux.
 
-Per exemple, si es descomprimeix el arxiu #{binary.netboot.tar}# generat al
-directori #{/srv/debian-live}#, es trobarà  la imatge del sistema de fitxers
-a #{live/filesystem.squashfs}# i el nucli, initrd i carregador d'arrencada
-pxelinux a #{tftpboot/debian-live/i386}#.
+For example, if you unpack the generated #{binary.netboot.tar}# archive in
+the #{/srv/debian-live}# directory, you'll find the filesystem image in
+#{live/filesystem.squashfs}# and the kernel, initrd and pxelinux bootloader
+in #{tftpboot/}#.
 
-Ara hem de configurar els tres serveis al servidor per l'arrencada en xarxa:
-el servidor DHCP, servidor TFTP i el servidor NFS.
+We must now configure three services on the server to enable netbooting: the
+DHCP server, the TFTP server and the NFS server.
 
 3~ Servidor DHCP 
 
@@ -493,8 +492,11 @@ code{
 
  subnet 192.168.0.0 netmask 255.255.255.0 {
    range 192.168.0.1 192.168.0.254;
-   next-server servername;
    filename "pxelinux.0";
+   next-server 192.168.0.2;
+   option subnet-mask 255.255.255.0;
+   option broadcast-address 192.168.0.255;
+   option routers 192.168.0.1;
 }
 
 }code

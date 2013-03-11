@@ -394,7 +394,7 @@ code{
 
 }code
 
-In this specific case, a #{lb clean --binary}# would be not enough to clean
+In this specific case, a #{lb clean --binary}# would not be enough to clean
 up the necessary stages. The cause for this is that in netboot setups, a
 different initramfs configuration needs to be used which live-build performs
 automatically when building netboot images. Since the initramfs creation
@@ -407,7 +407,7 @@ netbooting:
 
 code{
 
- $ lb config -b netboot --net-root-path "/srv/debian-live" --net-root-server "192.168.0.1"
+ $ lb config -b netboot --net-root-path "/srv/debian-live" --net-root-server "192.168.0.2"
 
 }code
 
@@ -437,9 +437,9 @@ Linux.
 For example, if you unpack the generated #{binary.netboot.tar}# archive in
 the #{/srv/debian-live}# directory, you'll find the filesystem image in
 #{live/filesystem.squashfs}# and the kernel, initrd and pxelinux bootloader
-in #{tftpboot/debian-live/i386}#.
+in #{tftpboot/}#.
 
-We must now configure three services on the server to enable netboot: the
+We must now configure three services on the server to enable netbooting: the
 DHCP server, the TFTP server and the NFS server.
 
 3~ DHCP server
@@ -467,8 +467,11 @@ code{
 
  subnet 192.168.0.0 netmask 255.255.255.0 {
    range 192.168.0.1 192.168.0.254;
-   next-server servername;
    filename "pxelinux.0";
+   next-server 192.168.0.2;
+   option subnet-mask 255.255.255.0;
+   option broadcast-address 192.168.0.255;
+   option routers 192.168.0.1;
 }
 
 }code

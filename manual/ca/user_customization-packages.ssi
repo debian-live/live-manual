@@ -3,37 +3,35 @@
 1~customizing-package-installation Personalització de la instaŀlació de
 paquets
 
-La personalització més bàsica d'un sistema Debian live pot ser la selecció
-dels paquets que seran inclosos en la imatge. Aquest capítol explica les
-diverses opcions de live-build per personalitzar la instaŀlació de paquets
-durant la construcció. Les opcions més importants que influeixen en els
-paquets que estan disponibles per ser instaŀlats en la imatge són les àrees
-de distribució i el arxiu. Per garantir velocitats de descàrrega decents,
-s'ha de triar un mirall de distribució proper. També es pot incloure
-repositoris de backports, paquets experimentals o personalitzats, o incloure
-paquets directament com si fossin fitxers. Es poden definir llistes de
-paquets, incloent-hi els metapaquets que instaŀlaran diversos paquets
-relacionats alhora, com ara paquets per a un ordinador d'escriptori o un
-llenguatge en particular. Finalment, una sèrie d'opcions donen un cert
-control sobre /{apt}/ o si es prefereix /{aptitude}/, quan s'instaŀlen els
-paquets durant la construcció. Això pot ser útil si s'utilitza un proxy, es
-vol desactivar la instaŀlació de paquets recomanats per estalviar espai, o
-hi ha la necessitat de controlar quines versions dels paquets s'instaŀlen
-mitjançant la tècnica pinning d'APT, per nomenar algunes possibilitats.
+Perhaps the most basic customization of a live system is the selection of
+packages to be included in the image. This chapter guides you through the
+various build-time options to customize live-build's installation of
+packages. The broadest choices influencing which packages are available to
+install in the image are the distribution and archive areas. To ensure
+decent download speeds, you should choose a nearby distribution mirror. You
+can also add your own repositories for backports, experimental or custom
+packages, or include packages directly as files. You can define lists of
+packages, including metapackages which will install many related packages at
+once, such as packages for a particular desktop or language. Finally, a
+number of options give some control over /{apt}/, or if you prefer,
+/{aptitude}/, at build time when packages are installed. You may find these
+handy if you use a proxy, want to disable installation of recommended
+packages to save space, or need to control which versions of packages are
+installed via APT pinning, to name a few possibilities.
 
 2~ Fonts dels paquets
 
 3~ Distribució, àrees d'arxiu i mode 
 
-La distribució que es tria té una gran importància en els paquets que estan
-disponibles per incloure en una imatge en viu. Només cal especificar el nom
-en clau, que per defecte és wheezy per a la versió wheezy de
-live-build. Qualsevol distribució disponible a l'arxiu de Debian pot ser
-especificada pel seu nom en clau aquí. (Veure {Termes}#terms per més
-detalls.) L'opció #{--distribution}# no només influeix en l'origen dels
-paquets dins l'arxiu, sinó que també instrueix a live-build per comportar-se
-segons sigui necessari per a construir cada distribució suportada. Per
-exemple, per construir la distribució *{unstable}*, sid, s'ha d'especificar:
+The distribution you choose has the broadest impact on which packages are
+available to include in your live image. Specify the codename, which
+defaults to wheezy for the wheezy version of live-build. Any current
+distribution carried in the archive may be specified by its codename
+here. (See {Terms}#terms for more details.) The #{--distribution}# option
+not only influences the source of packages within the archive, but also
+instructs live-build to behave as needed to build each supported
+distribution. For example, to build against the *{unstable}* release, sid,
+specify:
 
 code{
 
@@ -62,7 +60,7 @@ distribució i les àrees dels arxius del derivat especificat en lloc dels de
 Debian. El «mode» també modifica el comportament de live-build per
 adaptar-lo als derivats.
 
-*{Nota:}* Els projectes per als quals s'han afegit aquests modes són els principals responsables de donar suport als usuaris d'aquestes opcions. El projecte Debian Live, al seu torn, dona suport de desenvolupament només sobre una base de millor esforç, basada en les informacions proporcionades pels projectes derivats ja que nosaltres no desenvolupem ni donem suport a aquests derivats.
+*{Note:}* The projects for whom these modes were added are primarily responsible for supporting users of these options. The Live Systems project, in turn, provides development support on a best-effort basis only, based on feedback from the derivative projects as we do not develop or support these derivatives ourselves.
 
 3~ Miralls de distribució
 
@@ -137,7 +135,7 @@ del sistema viu.
 
 code{
 
- deb http://live.debian.net/ sid-snapshots main contrib non-free
+ deb http://live-systems.org/ sid-snapshots main contrib non-free
 
 }code
 
@@ -159,7 +157,7 @@ automàticament al sistema en viu al directori #{/etc/apt/preferences.d/}#.
 
 code{
 
- $ lb config --archives live.debian.net
+ $ lb config --archives live-systems.org
 
 }code
 
@@ -196,13 +194,13 @@ code{
 
 }code
 
-Això reemplaça l'antic mètode de llistes predefinides de #{live-build}#
-2.x. A diferència de les llistes predefinides, els metapaquets no són
-específics del projecte Debian Live. Per contra, són mantinguts per grups
-d'especialistes que treballen dins la distribució i per tant, reflecteixen
-el consens de cada grup sobre els paquets que serviran millor a les
-necessitats dels usuaris. A més, abasten una gamma molt més àmplia de casos
-d'ús que les llistes predefinides que substitueixen.
+This supercedes the older predefined list method supported in #{live-build}#
+2.x. Unlike predefined lists, task metapackages are not specific to the Live
+System project. Instead, they are maintained by specialist working groups
+within the distribution and therefore reflect the consensus of each group
+about which packages best serve the needs of the intended users. They also
+cover a much broader range of use cases than the predefined lists they
+replace.
 
 Tots els metapaquets tenen el prefix #{task-}#, de manera que una forma
 ràpida de determinar quins estan disponibles (encara que pot contenir un
@@ -427,13 +425,12 @@ configuració (normalment #{squashfs}#).
 2~installing-modified-or-third-party-packages Instaŀlació de paquets
 modificats o de tercers
 
-Si bé està en contra de la filosofia de Debian Live, de vegades pot ser
-necessària la construcció d'un sistema en viu amb versions modificades dels
-paquets que es troben al arxiu de Debian. Pot ser per modificar o donar
-suport a funcions addicionals, les llengües o les marques, o fins i tot per
-eliminar elements dels paquets existents que són indesitjables. De la
-mateixa manera, es poden utilitzar paquets de tercers per afegir alguna
-funcionalitat personalitzada i/o propietària.
+While it is against the philosophy of a live system, it may sometimes be
+necessary to build a live system with modified versions of packages that are
+in the Debian repository. This may be to modify or support additional
+features, languages and branding, or even to remove elements of existing
+packages that are undesirable. Similarly, "third-party" packages may be used
+to add bespoke and/or proprietary functionality.
 
 Aquesta secció no cobreix l'assessorament en matèria de construcció o
 manteniment de paquets modificats. Però el métode de Joachim Breitner's 'How
@@ -472,8 +469,8 @@ _* No és possible utilitzar APT segur.
 _* Cal posar tots els paquets apropiats al directori
 #{config/packages.chroot/}#.
 
-_* No es presta per a l'emmagatzematge de configuracions de Debian Live en
-el control de revisió.
+_* It does not lend itself to storing live system configurations in revision
+control.
 
 3~ Fer servir un repositori APT per instaŀlar paquets personalitzats
 

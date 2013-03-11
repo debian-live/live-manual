@@ -2,13 +2,13 @@
 
 1~customizing-package-installation Customizing package installation
 
-Perhaps the most basic customization of a Debian live system is the selection of packages to be included in the image. This chapter guides you through the various build-time options to customize live-build's installation of packages. The broadest choices influencing which packages are available to install in the image are the distribution and archive areas. To ensure decent download speeds, you should choose a nearby distribution mirror. You can also add your own repositories for backports, experimental or custom packages, or include packages directly as files. You can define lists of packages, including metapackages which will install many related packages at once, such as packages for a particular desktop or language. Finally, a number of options give some control over /{apt}/, or if you prefer, /{aptitude}/, at build time when packages are installed. You may find these handy if you use a proxy, want to disable installation of recommended packages to save space, or need to control which versions of packages are installed via APT pinning, to name a few possibilities.
+Perhaps the most basic customization of a live system is the selection of packages to be included in the image. This chapter guides you through the various build-time options to customize live-build's installation of packages. The broadest choices influencing which packages are available to install in the image are the distribution and archive areas. To ensure decent download speeds, you should choose a nearby distribution mirror. You can also add your own repositories for backports, experimental or custom packages, or include packages directly as files. You can define lists of packages, including metapackages which will install many related packages at once, such as packages for a particular desktop or language. Finally, a number of options give some control over /{apt}/, or if you prefer, /{aptitude}/, at build time when packages are installed. You may find these handy if you use a proxy, want to disable installation of recommended packages to save space, or need to control which versions of packages are installed via APT pinning, to name a few possibilities.
 
 2~ Package sources
 
 3~ Distribution, archive areas and mode
 
-The distribution you choose has the broadest impact on which packages are available to include in your live image. Specify the codename, which defaults to wheezy for the wheezy version of live-build. Any current distribution carried in the Debian archive may be specified by its codename here. (See {Terms}#terms for more details.) The #{--distribution}# option not only influences the source of packages within the archive, but also instructs live-build to behave as needed to build each supported distribution. For example, to build against the *{unstable}* release, sid, specify:
+The distribution you choose has the broadest impact on which packages are available to include in your live image. Specify the codename, which defaults to wheezy for the wheezy version of live-build. Any current distribution carried in the archive may be specified by its codename here. (See {Terms}#terms for more details.) The #{--distribution}# option not only influences the source of packages within the archive, but also instructs live-build to behave as needed to build each supported distribution. For example, to build against the *{unstable}* release, sid, specify:
 
 code{
 
@@ -26,7 +26,7 @@ code{
 
 Experimental support is available for some Debian derivatives through a #{--mode}# option. By default, this option is set to #{debian}# only if you are building on a Debian or on an unknown system. If #{lb config}# is invoked on any of the supported derivatives, it will default to create an image of that derivative. If #{lb config}# is run in e.g. #{ubuntu}# mode, the distribution names and archive areas for the specified derivative are supported instead of the ones for Debian. The mode also modifies live-build behaviour to suit the derivatives.
 
-*{Note:}* The projects for whom these modes were added are primarily responsible for supporting users of these options. The Debian live project, in turn, provides development support on a best-effort basis only, based on feedback from the derivative projects as we do not develop or support these derivatives ourselves.
+*{Note:}* The projects for whom these modes were added are primarily responsible for supporting users of these options. The Live Systems project, in turn, provides development support on a best-effort basis only, based on feedback from the derivative projects as we do not develop or support these derivatives ourselves.
 
 3~ Distribution mirrors
 
@@ -66,7 +66,7 @@ For example, #{config/archives/live.list.chroot}# allows you to install packages
 
 code{
 
- deb http://live.debian.net/ sid-snapshots main contrib non-free
+ deb http://live-systems.org/ sid-snapshots main contrib non-free
 
 }code
 
@@ -82,7 +82,7 @@ Should you need custom APT pinning, such APT preferences snippets can be placed 
 
 code{
 
- $ lb config --archives live.debian.net
+ $ lb config --archives live-systems.org
 
 }code
 
@@ -107,7 +107,7 @@ code{
 
 }code
 
-This supercedes the older predefined list method supported in #{live-build}# 2.x. Unlike predefined lists, task metapackages are not specific to the Debian Live project. Instead, they are maintained by specialist working groups within the distribution and therefore reflect the consensus of each group about which packages best serve the needs of the intended users. They also cover a much broader range of use cases than the predefined lists they replace.
+This supercedes the older predefined list method supported in #{live-build}# 2.x. Unlike predefined lists, task metapackages are not specific to the Live System project. Instead, they are maintained by specialist working groups within the distribution and therefore reflect the consensus of each group about which packages best serve the needs of the intended users. They also cover a much broader range of use cases than the predefined lists they replace.
 
 All task metapackages are prefixed #{task-}#, so a quick way to determine which are available (though it may contain a handful of false hits that match the name but aren't metapackages) is to match on the package name with:
 
@@ -235,7 +235,7 @@ _* Include any other filesystem modules required by your configuration (i.e. usu
 
 2~installing-modified-or-third-party-packages Installing modified or third-party packages
 
-While it is against the philosophy of Debian Live, it may sometimes be necessary to build a Live system with modified versions of packages that are in the Debian repository. This may be to modify or support additional features, languages and branding, or even to remove elements of existing packages that are undesirable. Similarly, "third-party" packages may be used to add bespoke and/or proprietary functionality.
+While it is against the philosophy of a live system, it may sometimes be necessary to build a live system with modified versions of packages that are in the Debian repository. This may be to modify or support additional features, languages and branding, or even to remove elements of existing packages that are undesirable. Similarly, "third-party" packages may be used to add bespoke and/or proprietary functionality.
 
 This section does not cover advice regarding building or maintaining modified packages. Joachim Breitner's 'How to fork privately' method from http://www.joachim-breitner.de/blog/archives/282-How-to-fork-privately.html may be of interest, however. The creation of bespoke packages is covered in the Debian New Maintainers' Guide at http://www.debian.org/doc/maint-guide/ and elsewhere.
 
@@ -259,7 +259,7 @@ _* It is not possible to use secure APT.
 
 _* You must install all appropriate packages in the #{config/packages.chroot/}# directory.
 
-_* It does not lend itself to storing Debian Live configurations in revision control.
+_* It does not lend itself to storing live system configurations in revision control.
 
 3~ Using an APT repository to install custom packages
 

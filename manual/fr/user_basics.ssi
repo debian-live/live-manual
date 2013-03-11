@@ -29,9 +29,9 @@ ou sur un réseau, prêt à l'emploi sans aucune installation sur le disque
 habituel, avec auto-configuration fait lors de l'exécution (voir
 {Termes}#terms).
 
-Avec Debian Live, c'est un système Debian GNU/Linux, construit pour une des
-architectures prises en charge (actuellement amd64 et i386). Il est fait à
-partir des éléments suivants:
+With live systems, it's a operating system, built for one of the supported
+architectures (currently amd64 and i386). It is made from the following
+parts:
 
 _* *{Image du noyau Linux}*, d'habitude appelé #{vmlinuz*}#
 
@@ -40,14 +40,12 @@ configuré pour le démarrage de Linux, contenant possiblement des modules
 nécessaires pour monter l'image du système et certains scripts pour le
 faire.
 
-_* *{Image du système}*: L'image du système de fichiers du système
-d'exploitation. Habituellement, un système de fichiers SquashFS comprimé est
-utilisé pour réduire au minimum la taille de l'image Debian Live. Notez
-qu'il est en lecture seulement. Ainsi, lors du démarrage du système Debian
-Live nous allons utiliser un disque RAM et un mécanisme "union" pour
-permettre l'écriture de fichiers dans le système en marche. Cependant,
-toutes les modifications seront perdues lors de l'arrêt à moins que l'option
-«persistance» soit utilisée (voir {Persistance}#persistence).
+_* *{System image}*: The operating system's filesystem image. Usually, a
+SquashFS compressed filesystem is used to minimize the live system image
+size. Note that it is read-only. So, during boot the live system will use a
+RAM disk and 'union' mechanism to enable writing files within the running
+system. However, all modifications will be lost upon shutdown unless
+optional persistence is used (see {Persistence}#persistence).
 
 _* *{Chargeur d'amorçage}*: Un petit morceau de code conçu pour démarrer à
 partir du support choisi, il peut présenter un menu rapide ou permettre la
@@ -75,7 +73,7 @@ git live-images}#clone-configuration-via-git et les versions officielles
 stables sont publiées sur http://www.debian.org/CD/live/. En outre, les
 versions plus anciennes et les futures, et des images non officielles
 contenant micrologiciels et pilotes non libres sont disponibles sur
-http://live.debian.net/cdimage/release/.
+http://live-systems.org/cdimage/release/.
 
 2~using-web-builder Utiliser le constructeur web d'images live
 
@@ -217,10 +215,10 @@ code{
 
 3~using-usb-extra-space Utilisation de l'espace disponible sur une clé USB
 
-Pour utiliser l'espace libre restant après avoir copié #{binary.hybrid.iso}#
-sur une clé USB, utilisez un outil de partitionnement tel que /{gparted}/ ou
-/{parted}/ afin de créer une nouvelle partition sur la clé. La première
-partition sera utilisée par le système Debian Live.
+To use the remaining free space after copying #{binary.hybrid.iso}# to a USB
+stick, use a partitioning tool such as /{gparted}/ or /{parted}/ to create a
+new partition on the stick. The first partition will be used by the live
+system.
 
 code{
 

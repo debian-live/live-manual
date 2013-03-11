@@ -88,12 +88,12 @@ la construction est écrit par #{auto/build}# dans #{build.log}#.
 
 2~clone-configuration-via-git Cloner une configuration publiée via Git
 
-Utilisez l'option #{lb config --config}# pour cloner un dépôt Git qui
-contient une configuration de Debian Live. Si vous souhaitez baser votre
-configuration sur une autre maintenue par le projet Debian Live, allez voir
-le dépôt sur http://live.debian.net/gitweb avec le nom #{live-images}# sous
-le titre #{Packages}#. Ce dépôt contient les configurations pour les {images
-précompilées}#downloading-prebuilt-images de Debian Live.
+Use the #{lb config --config}# option to clone a Git repository that
+contains a live system configuration. If you would like to base your
+configuration on one maintained by the Live Systems project, look at
+http://live-systems.org/gitweb/ for the repository named #{live-images}# in
+the category #{Packages}#. This repository contains the configurations for
+the live systems {prebuilt images}#downloading-prebuilt-images.
 
 Par exemple, pour construire une image de récupération, utilisez le dépôt
 #{live-images}# comme suit:
@@ -101,7 +101,7 @@ Par exemple, pour construire une image de récupération, utilisez le dépôt
 code{
 
  $ mkdir live-images && cd live-images
- $ lb config --config git://live.debian.net/git/live-images.git
+ $ lb config --config git://live-systems.org/git/live-images.git
  $ cd images/rescue
 
 }code
@@ -116,13 +116,13 @@ en ajoutant la ligne suivante à votre #{${HOME}/.gitconfig}#:
 
 code{
 
- [url "git://live.debian.net/git/"]
+ [url "git://live-systems.org/git/"]
          insteadOf = ldn:
 
 }code
 
 Cela vous permet d'utiliser #{ldn:}# quand vous voulez indiquer l'adresse
-d'un dépôt #{live.debian.net}#. Si vous supprimez le suffixe optionnel
+d'un dépôt #{live-systems.org}#. Si vous supprimez le suffixe optionnel
 #{.git}#, commencer une nouvelle image en utilisant cette configuration est
 aussi simple que:
 

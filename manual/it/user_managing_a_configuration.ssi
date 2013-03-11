@@ -85,11 +85,12 @@ della compilazione in #{build.log}#.
 2~clone-configuration-via-git Clonare una configurazione pubblicata tramite
 Git.
 
-Per clonare un repository Git che contiene una configurazione Debian Live
-usare l'opzione #{lb config --config}#. Se si desidera basarsi su una
-mantenuta dal progetto Debian Live vedere il repository chiamato
-#{live-images}# nella categoria #{Pacchetti}#. Contiene le configurazioni
-per le {immagini precompilate}#downloading-prebuilt-images di Debian Live.
+Use the #{lb config --config}# option to clone a Git repository that
+contains a live system configuration. If you would like to base your
+configuration on one maintained by the Live Systems project, look at
+http://live-systems.org/gitweb/ for the repository named #{live-images}# in
+the category #{Packages}#. This repository contains the configurations for
+the live systems {prebuilt images}#downloading-prebuilt-images.
 
 Ad esempio, per creare un'immagine d'emergenza usare il repository
 #{live-images}# come segue:
@@ -97,7 +98,7 @@ Ad esempio, per creare un'immagine d'emergenza usare il repository
 code{
 
  $ mkdir live-images && cd live-images
- $ lb config --config git://live.debian.net/git/live-images.git
+ $ lb config --config git://live-systems.org/git/live-images.git
  $ cd images/rescue
 
 }code
@@ -112,13 +113,13 @@ quanto segue al file #{${HOME}/.gitconfig}#:
 
 code{
 
- [url "git://live.debian.net/git/"]
+ [url "git://live-systems.org/git/"]
          insteadOf = ldn:
 
 }code
 
 Questo permette di usare #{ldn:}# ovunque serva specificare l'indirizzo di
-un repository git #{live.debian.net}#. Omettendo l'estensione facoltativa
+un repository git #{live-systems.org}#. Omettendo l'estensione facoltativa
 #{.git}#, inizializzare una nuova immagine usando questa configurazione è
 facile:
 

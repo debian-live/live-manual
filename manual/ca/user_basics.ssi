@@ -29,9 +29,9 @@ punt per fer servir sense cap tipus d'instaŀlació en la unitat(s)
 habitual(s), amb una configuració automàtica feta en temps d'execució (veure
 {Termes}#terms).
 
-Amb Debian Live, és un sistema operatiu Debian GNU/Linux, construït per una
-de les arquitectures suportades (actualment amd64 i i386). Conté les
-següents parts:
+With live systems, it's a operating system, built for one of the supported
+architectures (currently amd64 and i386). It is made from the following
+parts:
 
 _* *{Imatge del nucli Linux}*, generalment s'anomena #{vmlinuz*}#
 
@@ -39,14 +39,12 @@ _* *{Imatge del disc RAM inicial (initrd)}*: un disc RAM configurat per a
 l'arrencada de Linux, que conté els mòduls que possiblement es necessitaran
 per muntar la imatge del sistema i algunes seqüències d'ordres per fer-ho.
 
-_* *{Imatge del sistema}*: Imatge del sistema de fitxers del sistema
-operatiu. Normalment, s'utilitza un sistema de fitxers comprimit SquashFS
-per minimitzar la mida de la imatge Debian Live. Tenir en compte que és de
-només lectura. Així, durant l'arrencada, el sistema Debian Live utilitzarà
-el disc RAM i un mecanisme de "unió" per permetre l'escriptura de fitxers en
-el sistema en funcionament. No obstant això, totes les modificacions es
-perdran al apagar l'equip si no és que s'utilitza la persistència opcional
-(vegeu {Persistència}#persistence).
+_* *{System image}*: The operating system's filesystem image. Usually, a
+SquashFS compressed filesystem is used to minimize the live system image
+size. Note that it is read-only. So, during boot the live system will use a
+RAM disk and 'union' mechanism to enable writing files within the running
+system. However, all modifications will be lost upon shutdown unless
+optional persistence is used (see {Persistence}#persistence).
 
 _* *{Carregador d'arrencada }*: Una petita peça de codi dissenyat per
 arrencar des del medi triat, possiblement presentant un indicador
@@ -75,7 +73,7 @@ live-images}#clone-configuration-via-git i les versions oficials estables es
 publiquen a http://www.debian.org/CD/live/. A més, les versions antigues i
 les futures, i les imatges no oficials que contenen microprogramari i
 controladors no lliures estan disponibles a
-http://live.debian.net/cdimage/release/.
+http://live-systems.org/cdimage/release/.
 
 2~using-web-builder Ús del servei de construcció d'imatges en viu web
 
@@ -212,10 +210,10 @@ code{
 
 3~using-usb-extra-space Utilitzar l'espai lliure en una memòria USB
 
-Per poder utilitzar l'espai que queda lliure després de copiar
-#{binary.hybrid.iso}# en un dispositiu USB, utilitzar una eina de
-particionament com /{gparted}/ o /{parted}/ per crear una nova partició. La
-primera partició serà utilitzada pel sistema Debian Live.
+To use the remaining free space after copying #{binary.hybrid.iso}# to a USB
+stick, use a partitioning tool such as /{gparted}/ or /{parted}/ to create a
+new partition on the stick. The first partition will be used by the live
+system.
 
 code{
 

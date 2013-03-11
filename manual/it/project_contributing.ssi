@@ -13,12 +13,11 @@ tuttavia chiediamo di inviare le modifiche più corpose in mailing list, per
 poterne prima discutere. Per maggiori informazioni vedere la sezione
 {Contatti}#contact.
 
-Il progetto Debian Live usa Git come sistema di controllo versione e
-gestione del codice sorgente. Come spiegato in {Repository
-git}#git-repositories ci sono due rami di sviluppo principali: *{debian}* e
-*{debian-next}*. Tutti possono eseguire commit al ramo debian-next del
-repository di live-boot, live-build, live-config, live-images, live-manual e
-live-tools.
+The Live Systems Project uses Git as version control system and source code
+management. As explained in {Git repositories}#git-repositories there are
+two main development branches: *{debian}* and *{debian-next}*. Everybody can
+commit to the debian-next branches of the live-boot, live-build,
+live-config, live-images, live-manual and live-tools repositories.
 
 Tuttavia ci sono alcune restrizioni. Il server rifiuta:
 
@@ -58,9 +57,9 @@ _* Prelevare la chiave pubblica:
 code{
 
  $ mkdir -p ~/.ssh/keys
- $ wget http://live.debian.net/other/keys/git@live.debian.net -O ~/.ssh/keys/git@live.debian.net
- $ wget http://live.debian.net/other/keys/git@live.debian.net.pub -O ~/.ssh/keys/git@live.debian.net.pub
- $ chmod 0600 ~/.ssh/keys/git@live.debian.net*
+ $ wget http://live-systems.org/other/keys/git@live-systems.org -O ~/.ssh/keys/git@live-systems.org
+ $ wget http://live-systems.org/other/keys/git@live-systems.org.pub -O ~/.ssh/keys/git@live-systems.org.pub
+ $ chmod 0600 ~/.ssh/keys/git@live-systems.org*
 
 }code
 
@@ -70,10 +69,10 @@ openssh-client:
 code{
 
  $ cat >> ~/.ssh/config << EOF
- Host live.debian.net
-     Hostname live.debian.net
+ Host live-systems.org
+     Hostname live-systems.org
      User git
-     IdentityFile ~/.ssh/keys/git@live.debian.net
+     IdentityFile ~/.ssh/keys/git@live-systems.org
  EOF
 
 }code
@@ -82,7 +81,7 @@ _* Scaricare tramite ssh un clone del manuale:
 
 code{
 
- $ git clone git@live.debian.net:/live-manual.git
+ $ git clone git@live-systems.org:/live-manual.git
  $ cd live-manual && git checkout debian-next
 
 }code

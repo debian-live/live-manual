@@ -2,11 +2,11 @@
 
 1~bugs Reporting bugs
 
-Debian Live is far from being perfect, but we want to make it as close as possible to perfect - with your help. Do not hesitate to report a bug. It is better to fill a report twice than never. However, this chapter includes recommendations on how to file good bug reports.
+Live systems are far from being perfect, but we want to make it as close as possible to perfect - with your help. Do not hesitate to report a bug. It is better to fill a report twice than never. However, this chapter includes recommendations on how to file good bug reports.
 
 For the impatient:
 
-_* Always check first the image status updates on our homepage at http://live.debian.net/ for known issues.
+_* Always check first the image status updates on our homepage at http://live-systems.org/ for known issues.
 
 _* Always try to reproduce the bug with the *{most recent versions}* of live-build, live-boot, live-config and live-tools before submitting a bug report.
 
@@ -20,7 +20,7 @@ Since Debian *{testing}* and Debian *{unstable}* distributions are moving target
 
 If this causes too much difficulty for you, do not build a system based on *{testing}* or *{unstable}*, but rather, use *{stable}*. live-build always defaults to the *{stable}* release.
 
-Currently known issues are listed under the section 'status' on our homepage at http://live.debian.net/.
+Currently known issues are listed under the section 'status' on our homepage at http://live-systems.org/.
 
 It is out of the scope of this manual to train you to correctly identify and fix problems in packages of the development distributions, however, there are two things you can always try: If a build fails when the target distribution is *{testing}*, try *{unstable}*. If *{unstable}* does not work either, revert to *{testing}* and pin the newer version of the failing package from *{unstable}* (see {APT pinning}#apt-pinning for details).
 
@@ -82,13 +82,13 @@ However, we would appreciate it if you try to narrow it down according to where 
 
 live-build first bootstraps a basic Debian system with /{debootstrap}/ or /{cdebootstrap}/. Depending on the bootstrapping tool used and the Debian distribution it is bootstrapping, it may fail. If a bug appears here, check if the error is related to a specific Debian package (most likely), or if it is related to the bootstrapping tool itself.
 
-In both cases, this is not a bug in Debian Live, but rather in Debian itself and probably we cannot fix it directly. Please report such a bug against the bootstrapping tool or the failing package.
+In both cases, this is not a bug in the live system, but rather in Debian itself and probably we cannot fix it directly. Please report such a bug against the bootstrapping tool or the failing package.
 
 3~ At build time while installing packages
 
 live-build installs additional packages from the Debian archive and depending on the Debian distribution used and the daily archive state, it can fail. If a bug appears here, check if the error is also reproducible on a normal system.
 
-If this is the case, this is not a bug in Debian Live, but rather in Debian - please report it against the failing package. Running /{debootstrap}/ separately from the Live system build or running #{lb bootstrap --debug}# will give you more information.
+If this is the case, this is not a bug in the live system, but rather in Debian - please report it against the failing package. Running /{debootstrap}/ separately from the Live system build or running #{lb bootstrap --debug}# will give you more information.
 
 Also, if you are using a local mirror and/or any sort of proxy and you are experiencing a problem, please always reproduce it first by bootstrapping from an official mirror.
 
@@ -98,19 +98,19 @@ If your image does not boot, please report it to the mailing list together with 
 
 3~ At run time
 
-If a package was successfully installed, but fails while actually running the Live system, this is probably a bug in Debian Live. However:
+If a package was successfully installed, but fails while actually running the Live system, this is probably a bug in the live system. However:
 
 2~ Do the research
 
 Before filing the bug, please search the web for the particular error message or symptom you are getting. As it is highly unlikely that you are the only person experiencing a particular problem. There is always a chance that it has been discussed elsewhere and a possible solution, patch, or workaround has been proposed.
 
-You should pay particular attention to the Debian Live mailing list, as well as the homepage, as these are likely to contain the most up-to-date information. If such information exists, always include the references to it in your bug report.
+You should pay particular attention to the live systems mailing list, as well as the homepage, as these are likely to contain the most up-to-date information. If such information exists, always include the references to it in your bug report.
 
 In addition, you should check the current bug lists for live-build, live-boot, live-config and live-tools to see whether something similar has already been reported.
 
 2~ Where to report bugs
 
-The Debian Live project keeps track of all bugs in the Debian Bug Tracking System (BTS). For information on how to use the system, please see http://bugs.debian.org/. You can also submit the bugs by using the #{reportbug}# command from the package with the same name.
+The Live Systems project keeps track of all bugs in the Bug Tracking System (BTS). For information on how to use the system, please see http://bugs.debian.org/. You can also submit the bugs by using the #{reportbug}# command from the package with the same name.
 
 In general, you should report build time errors against the live-build package, boot time errors against live-boot, and run time errors against live-config. If you are unsure of which package is appropriate or need more help before submitting a bug report, please report it against the debian-live pseudo-package. We will then take care about it and reassign it where appropriate.
 

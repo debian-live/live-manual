@@ -87,12 +87,12 @@ proceso de construcción llamado #{build.log}#.
 2~clone-configuration-via-git Clonar una configuración publicada a través de
 Git
 
-Utilizar la opción #{lb config --config}# para clonar un repositorio Git que
-contenga una configuración de Debian Live. Si se desea basar la
-configuración en una mantenida por el proyecto Debian Live, visitar el
-repositorio en http://live.debian.net/gitweb/ con el nombre #{live-images}#
-bajo el título #{Packages}#. Este repositorio contiene las configuraciones
-de las {imágenes prefabricadas}#downloading-prebuilt-images de Debian Live.
+Use the #{lb config --config}# option to clone a Git repository that
+contains a live system configuration. If you would like to base your
+configuration on one maintained by the Live Systems project, look at
+http://live-systems.org/gitweb/ for the repository named #{live-images}# in
+the category #{Packages}#. This repository contains the configurations for
+the live systems {prebuilt images}#downloading-prebuilt-images.
 
 Por ejemplo, para construir una imagen de rescate, utilizar el repositorio
 #{live-images}# de la siguiente manera:
@@ -100,7 +100,7 @@ Por ejemplo, para construir una imagen de rescate, utilizar el repositorio
 code{
 
  $ mkdir live-images && cd live-images
- $ lb config --config git://live.debian.net/git/live-images.git
+ $ lb config --config git://live-systems.org/git/live-images.git
  $ cd images/rescue
 
 }code
@@ -115,15 +115,15 @@ Git, añadiendo lo siguiente al fichero #{${HOME}/.gitconfig}#:
 
 code{
 
- [url "git://live.debian.net/git/"]
+ [url "git://live-systems.org/git/"]
          insteadOf = ldn:
 
 }code
 
 Esto permite utilizar #{ldn:}# en cualquier lugar en que se tenga que
-especificar la dirección de un repositorio git de #{live.debian.net}#. Si se
-omite el sufijo #{.git}#, comenzar una nueva imagen con esta configuración
-es tan fácil como:
+especificar la dirección de un repositorio git de #{live-systems.org}#. Si
+se omite el sufijo #{.git}#, comenzar una nueva imagen con esta
+configuración es tan fácil como:
 
 code{
 

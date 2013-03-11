@@ -3,39 +3,35 @@
 1~customizing-package-installation Personnalisation de l'installation de
 paquets
 
-La personnalisation la plus fondamentale d'un système Debian Live est sans
-doute la sélection des paquets à inclure dans l'image. Ce chapitre vous
-guide tout au long des différentes options de construction pour
-personnaliser l'installation des paquets avec live-build. Le plus large
-choix influençant les paquets disponibles pour l'installation dans l'image
-sont la distribution et les zones d'archive. Afin de vous assurer des
-vitesses de téléchargement décentes, vous devez choisir un miroir de
-distribution proche. Vous pouvez également ajouter vos propres dépôts pour
-les rétroportages, paquets expérimentaux ou personnalisés, ou inclure des
-paquets directement comme fichiers. Vous pouvez définir des listes de
-paquets, incluant des métapaquets qui installent en même temps de nombreux
-paquets liés, tels que les paquets pour ordinateurs de bureau ou une langue
-particulière. Enfin, un certain nombre d'options donne un certain contrôle
-sur /{apt}/, ou si vous préférez, /{aptitude}/, pendant la construction
-quand les paquets sont installés. Vous pouvez trouver cela très pratique si
-vous utilisez un proxy, si vous voulez désactiver l'installation des paquets
-recommandés pour économiser l'espace, ou avez besoin de contrôler quelles
-versions des paquets sont installées via APT pinning, pour ne nommer que
-quelques possibilités.
+Perhaps the most basic customization of a live system is the selection of
+packages to be included in the image. This chapter guides you through the
+various build-time options to customize live-build's installation of
+packages. The broadest choices influencing which packages are available to
+install in the image are the distribution and archive areas. To ensure
+decent download speeds, you should choose a nearby distribution mirror. You
+can also add your own repositories for backports, experimental or custom
+packages, or include packages directly as files. You can define lists of
+packages, including metapackages which will install many related packages at
+once, such as packages for a particular desktop or language. Finally, a
+number of options give some control over /{apt}/, or if you prefer,
+/{aptitude}/, at build time when packages are installed. You may find these
+handy if you use a proxy, want to disable installation of recommended
+packages to save space, or need to control which versions of packages are
+installed via APT pinning, to name a few possibilities.
 
 2~ Sources des paquets
 
 3~ Distribution, zones d'archive et mode
 
-La distribution que vous choisissez a le plus large impact sur les paquets
-qui sont disponibles pour l'inclusion dans votre image live. Indiquez le nom
-de code, qui est par défaut wheezy pour la version de live-build dans
-wheezy. Toute distribution actuelle dans l'archive Debian peut être indiquée
-par son nom de code ici. (Voir {Termes}#terms pour plus de détails.)
-L'option #{--distribution}# influence non seulement la source des paquets
-dans l'archive, mais indique également à live-build comment construire
-chaque distribution prise en charge. Par exemple, pour construire sur
-*{unstable}*, sid, précisez: 
+The distribution you choose has the broadest impact on which packages are
+available to include in your live image. Specify the codename, which
+defaults to wheezy for the wheezy version of live-build. Any current
+distribution carried in the archive may be specified by its codename
+here. (See {Terms}#terms for more details.) The #{--distribution}# option
+not only influences the source of packages within the archive, but also
+instructs live-build to behave as needed to build each supported
+distribution. For example, to build against the *{unstable}* release, sid,
+specify:
 
 code{
 
@@ -64,7 +60,7 @@ lancé en mode #{ubuntu}#, les noms de distribution et des zones d'archives
 pour ce dérivé spécifique seront gérés à la place de ceux de Debian. Le mode
 modifie également le comportement de live-build en fonction des dérivés.
 
-*{Remarque:}* Les projets pour lesquels ces modes ont été ajoutés sont chargés d'aider les utilisateurs de ces options. Le projet Debian Live, en retour, fournit un soutien de développement sur une base du meilleur effort seulement, en fonction des commentaires sur les projets dérivés que nous n'avons pas développés ou pris en charge nous-mêmes.
+*{Note:}* The projects for whom these modes were added are primarily responsible for supporting users of these options. The Live Systems project, in turn, provides development support on a best-effort basis only, based on feedback from the derivative projects as we do not develop or support these derivatives ourselves.
 
 3~ Miroirs de distribution
 
@@ -140,7 +136,7 @@ système live.
 
 code{
 
- deb http://live.debian.net/ sid-snapshots main contrib non-free
+ deb http://live-systems.org/ sid-snapshots main contrib non-free
 
 }code
 
@@ -163,7 +159,7 @@ automatiquement ajoutées à votre système live dans le répertoire
 
 code{
 
- $ lb config --archives live.debian.net
+ $ lb config --archives live-systems.org
 
 }code
 
@@ -202,14 +198,13 @@ code{
 
 }code
 
-Cela remplace l'ancienne méthode des listes prédéfinies gérée dans
-#{live-build}# 2.x. Contrairement aux listes prédéfinies, les métapaquets ne
-sont pas spécifiques au projet Debian Live. Au lieu de cela, ils sont
-maintenus par des groupes de travail spécialisés dans la distribution et
-reflètent donc le consensus de chaque groupe sur les paquets pour mieux
-servir les besoins des utilisateurs. Ils couvrent également une gamme
-beaucoup plus large des cas d'utilisation que les listes prédéfinies qu'ils
-remplacent.
+This supercedes the older predefined list method supported in #{live-build}#
+2.x. Unlike predefined lists, task metapackages are not specific to the Live
+System project. Instead, they are maintained by specialist working groups
+within the distribution and therefore reflect the consensus of each group
+about which packages best serve the needs of the intended users. They also
+cover a much broader range of use cases than the predefined lists they
+replace.
 
 Tous les métapaquets de tâches sont préfixés avec #{task-}#, donc un moyen
 rapide pour déterminer lesquels sont disponibles (même s'il peut y avoir une
@@ -438,13 +433,12 @@ configuration (habituellement #{squashfs}#).
 2~installing-modified-or-third-party-packages Installation de paquets
 modifiés ou tiers
 
-Bien que ce soit contre la philosophie de Debian Live, il peut parfois être
-nécessaire de construire un système live avec des versions modifiées des
-paquets du dépôt Debian. Cela peut être pour modifier ou prendre en charge
-des fonctionnalités supplémentaires, des langues et la marque, ou même pour
-supprimer des éléments indésirable dans les paquets existants.De même, les
-paquets «tiers» peuvent être utilisés pour ajouter des fonctionnalités sur
-mesure et/ou propriétaires.
+While it is against the philosophy of a live system, it may sometimes be
+necessary to build a live system with modified versions of packages that are
+in the Debian repository. This may be to modify or support additional
+features, languages and branding, or even to remove elements of existing
+packages that are undesirable. Similarly, "third-party" packages may be used
+to add bespoke and/or proprietary functionality.
 
 Cette section ne couvre pas les conseils concernant la construction ou la
 maintenance des paquets modifiés. La méthode de Joachim Breitner 'How to
@@ -483,8 +477,8 @@ _* Il n'est pas possible d'utiliser APT de façon sécurisée.
 _* Vous devez installer tous les paquets appropriés dans le répertoire
 #{config/packages.chroot/}#.
 
-_* Il ne se prête pas au stockage de configurations Debian Live dans le
-contrôle de révision.
+_* It does not lend itself to storing live system configurations in revision
+control.
 
 3~ Utiliser un dépôt APT pour installer des paquets personnalisés.
 

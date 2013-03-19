@@ -4,13 +4,13 @@
 
 Aquest manual serveix com a punt d'accés únic a tota la documentació
 relacionada amb el projecte Live Systems i en particular s'aplica al
-programari produït pel projecte per la versió Debian 7.0 "wheezy". Una
+programari produït pel projecte per a la versió Debian 7.0 "wheezy". Una
 versió actualitzada es pot trobar sempre a http://live-systems.org/
 
 Si bé live-manual es centra principalment en ajudar a construir un sistema
 viu i no en temes dels usuaris finals, un usuari final pot trobar informació
 útil en aquestes seccions: {Conceptes bàsics}#the-basics abasta la
-descàrrega d'imatges prefabricades i la preparació de les imatges per ser
+descàrrega d'imatges prefabricades i la preparació de les imatges per a ser
 arrencades des dels dispositius o la xarxa, ja sigui utilitzant el servei de
 construcció d'imatges web o executant live-build directament en el
 sistema. {Personalització dels comportaments en temps
@@ -21,7 +21,7 @@ persistència.
 
 Algunes de les ordres esmentades en el text s'han d'executar amb privilegis
 de superusuari que es poden obtenir esdevenint l'usuari root amb #{su}# o
-mitjançant l'ús de #{sudo}#. Per distingir entre les ordres que poden ser
+mitjançant l'ús de #{sudo}#. Per a distingir entre les ordres que poden ser
 executades per un usuari sense privilegis i aquelles que requereixen
 privilegis de superusuari, s'anteposa #{$}# o #{#}# respectivament. Aquest
 símbol no és part de l'ordre. 
@@ -29,24 +29,24 @@ símbol no és part de l'ordre.
 2~ Per als impacients
 
 Si bé creiem que tot el que hi ha en aquest manual és important, si més no,
-per alguns dels nostres usuaris, ens adonem que hi ha una gran quantitat de
-material per cobrir i que és possible que es vulgui experimentar l'èxit amb
-el programari aviat, abans d'aprofundir en els detalls. Per tant, us
+per a alguns dels nostres usuaris, ens adonem que hi ha una gran quantitat
+de material per a cobrir i que és possible que es vulgui experimentar l'èxit
+amb el programari aviat, abans d'aprofundir en els detalls. Per tant, us
 recomanem llegir en el següent ordre.
 
 En primer lloc, llegir aquest capítol, {Sobre aquest manual}#about-manual,
 des del principi i acabant amb els {Termes}#terms. A continuació, saltar als
-tres tutorials abans dels {Exemples}#examples, secció pensada per ensenyar
+tres tutorials abans dels {Exemples}#examples, secció pensada per a ensenyar
 com fer la construcció d'una imatge i alguns aspectes bàsics de la
 personalització. Llegir en primer lloc {Ús dels exemples}#using-the-examples
-seguit per {Tutorial 1: Una imatge per defecte}#tutorial-1, {Tutorial 2: Una
+seguit pel {Tutorial 1: Una imatge per defecte}#tutorial-1, {Tutorial 2: Una
 utilitat de navegador web}#tutorial-2 i finalment, {Tutorial 3: Una image
 personalitzada}#tutorial-3. Al final d'aquests tutorials, es tindrà una idea
 del que es pot fer amb els sistemes en viu.
 
 Us animem a tornar i a fer un estudi del manual en profunditat, la propera
 lectura pot ser {Conceptes bàsics}#the-basics, fregant o saltant {Construir
-una imatge netboot}#building-netboot-image, i acabant per la lectura de la
+una imatge netboot}#building-netboot-image, i acabant amb la lectura de la
 {Visió general de la personalització}#customization-overview i els capítols
 que segueixen. En aquest punt, esperem que estigueu ben emocionats pel que
 es pot fer amb els sistemes en viu i motivats per llegir la resta del
@@ -63,9 +63,9 @@ des de la xarxa.
 
 _* *{Medi en viu}*: A diferència de sistema en viu, el medi en viu es
 refereix al CD, DVD o memòria USB on es copia el fitxer binari produït per
-live-build i utilitzat per arrencar el sistema en viu. Més àmpliament, el
+live-build i utilitzat per a arrencar el sistema en viu. Més àmpliament, el
 terme també es refereix a qualsevol lloc on resideix el fitxer binari als
-efectes d'iniciar el sistema en viu, com ara la ubicació dels fitxers per
+efectes d'iniciar el sistema en viu, com ara la ubicació dels fitxers per a
 arrencar en xarxa.
 
 _* *{Projecte Live Systems}*: Un subprojecte que manté, entre altres, els
@@ -75,20 +75,20 @@ _* *{Sistema viu}*: Un sistema viu que es pot arrencar des d'un CD, DVD,
 memòries USB, o la xarxa (utilitzant imatges netboot) i a través d'Internet
 (mitjançant el paràmetre d'arrencada #{fetch=URL}#).
 
-_* *{Sistema amfitrió}*: L'entorn utilitzat per crear el sistema en viu.
+_* *{Sistema amfitrió}*: L'entorn utilitzat per a crear el sistema en viu.
 
-_* *{Sistema objectiu}*: L'entorn que s'utilitza per executar el sistema en
-viu.
+_* *{Sistema objectiu}*: L'entorn que s'utilitza per a executar el sistema
+en viu.
 
-_* *{live-boot}*: Una coŀlecció de scripts per arrencar els sistemes vius.
+_* *{live-boot}*: Una coŀlecció de scripts per a arrencar els sistemes vius.
 
-_* *{live-build}*: Una coŀlecció d'scripts utilitzats per construir sistemes
-en viu personalitzats.
+_* *{live-build}*: Una coŀlecció d'scripts utilitzats per a construir
+sistemes en viu personalitzats.
 
-_* *{live-config}*: Una coŀlecció de scripts utilitzats per configurar un
+_* *{live-config}*: Una coŀlecció de scripts utilitzats per a configurar un
 sistema en viu durant el procés d'arrencada.
 
-_* *{live-tools}*: Una coŀlecció d'scripts addicionals que s'utilitzen per
+_* *{live-tools}*: Una coŀlecció d'scripts addicionals que s'utilitzen per a
 realitzar tasques útils en un sistema viu en execució.
 
 _* *{live-manual}*: Aquest document és mantingut en un paquet anomenat
@@ -98,7 +98,8 @@ _* *{Instaŀlador de Debian (d-i)}*: El sistema oficial d'instaŀlació de la
 distribució Debian.
 
 _* *{Paràmeters d'arrencada}*: Els paràmetres que es poden introduir a
-l'indicador del carregador d'arrencada per influir en el nucli o live-config
+l'indicador del carregador d'arrencada per a influir en el nucli o
+live-config
 
 _* *{chroot}*: El programa /{chroot}/, #{chroot(8)}#, ens permet executar
 diferentes instàncies d'un entorn GNU/Linux a la vegada en un sol sistema
@@ -153,15 +154,15 @@ _* Trent W. Buck
 2~how-to-contribute Contribuir a aquest document
 
 Aquest manual està pensat com un projecte comunitari i totes les propostes
-per millorar-lo i les contribucions són molt benvingudes. Veure la secció
-{Contribuir al projecte}#contributing-to-project per obtenir informació
+per a millorar-lo i les contribucions són molt benvingudes. Veure la secció
+{Contribuir al projecte}#contributing-to-project per a obtenir informació
 detallada sobre com obtenir la clau i fer bons commits.
 
 3~ Aplicar canvis
 
 Per tal de realitzar canvis en el manual anglès s'ha d'editar els fitxers
 adequats a #{manual/en/}# però abans de presentar una contribució, s'ha de
-previsualitzar el treball. Per previsualitzar el live-manual, assegurar-se
+previsualitzar el treball. Per a previsualitzar el live-manual, assegurar-se
 que s'han instaŀlat els paquets necessaris per a la seva construcció
 mitjançant l'execució de:
 
@@ -180,7 +181,7 @@ code{
 
 }code
 
-Com es necessita un cert temps per construir el manual en tots els idiomes
+Com es necessita un cert temps per a construir el manual en tots els idiomes
 suportats, potser resulti convenient quan es fa una prova construir un sol
 idioma, per exemple, mitjançant l'execució de:
 
@@ -209,34 +210,35 @@ code{
 Després de revisar el treball i assegurar-se que tot està bé, no fer un
 #{make commit}# a menys que s'actualitzin les traduccions al mateix temps, i
 en aquest cas, no barrejar els canvis al manual anglès i les traduccions en
-el mateix commit, fer-ne un altre separat per cada canvi. Veure la secció
+el mateix commit, fer-ne un altre separat per a cada canvi. Veure la secció
 {Traducció}#translation per a més detalls.
 
 3~translation Traducció
 
-Per començar la traducció d'un idioma nou, seguir aquests passos:
+Per a començar la traducció d'un idioma nou, seguir aquests passos:
 
 _* Traduir els fitxers *{about_manual.ssi.pot}*, *{about_project.ssi.pot}* i
 *{index.html.in.pot}* a la vostra llengua amb el vostre editor favorit (per
 exemple /{poedit}/). Enviar els fitxers #{.po}# traduïts a la llista de
 correu perquè l'equip de traducció pugui comprovar la seva integritat.
 
-_* Per activar una nova llengua al autobuild, només cal afegir els fitxers
+_* Per a activar una nova llengua al autobuild, només cal afegir els fitxers
 inicials traduïts a #{manual/po/${LANGUAGE}/}# i executar #{make commit}#. I
 llavors editar #{manual/_sisu/home/index.html}#.
 
 _* Una vegada que s'ha afegit la nova llengua, es pot continuar traduint la
 resta de fitxers dins de #{manual/po/}# a l'atzar.
 
-_* No oblidar que es necessari fer un #{make commit}# per garantir que els
+_* No oblidar que es necessari fer un #{make commit}# per a garantir que els
 manuals traduïts s'actualitzin a partir dels fitxers po i llavors es poden
 revisar els canvis executant #{make build}# abans de #{git add .}#, #{git
 commit -m "Translating..."}# i #{git push}#.
 
 Després d'executar #{make commit}# es podrà veure bastant text a la
 pantalla. Bàsicament són missatges informatius sobre l'estat del procés i
-també algunes pistes sobre el que es pot fer per millorar live-manual. Si no
-es veu cap error fatal, generalment es pot procedir i enviar la contribució.
+també algunes pistes sobre el que es pot fer per a millorar live-manual. Si
+no es veu cap error fatal, generalment es pot procedir i enviar la
+contribució.
 
 live-manual ve amb dues utilitats que poden ser de gran ajuda pels
 traductors a l'hora de trobar missatges sense traduir i difusos. La primera
@@ -245,10 +247,10 @@ missatges sense traduir hi ha a cada fitxer po. La segona, "make fixfuzzy",
 només actua sobre els missatges difusos però ajuda a trobar-los i
 corregir-los un per un.
 
-Tenir en compte que tot i que aquestes utilitats poden ser molt útils per
+Tenir en compte que tot i que aquestes utilitats poden ser molt útils per a
 fer traduccions en la línia d'ordres, l'ús d'una eina especialitzada com
 /{poedit}/ és la manera recomanada de fer la tasca. També és una bona idea
 llegir la documentació de localització de debian (l10n) i, específicament
 dins live-manual, les {Directrius per a traductors}#guidelines-translators.
 
-*{Nota:}* Es pot utilitzar #{make clean}# per netejar l'arbre git abans de fer un push. Aquest  pas no és obligatori, gràcies al fitxer .gitignore, però és una bona pràctica per evitar enviar fitxers de forma involuntària.
+*{Nota:}* Es pot utilitzar #{make clean}# per a netejar l'arbre git abans de fer un push. Aquest  pas no és obligatori, gràcies al fitxer .gitignore, però és una bona pràctica per a evitar enviar fitxers de forma involuntària.

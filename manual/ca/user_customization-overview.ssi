@@ -27,23 +27,23 @@ Les opcions de configuració durant la construcció es descriuen a la pàgina
 del manual de #{lb config}#. Les opcions durant l'arrencada es descriuen a
 les pàgines del manual de live-boot i live-config. Malgrat que els paquets
 live-boot i live-config s'instaŀlen en el sistema en viu que s'està
-construint, és recomana instaŀlar-los en el sistema de construcció per tenir
-una referència fàcil quan s'està treballant en la configuració. És segur
-fer-ho, ja que cap dels scripts continguts en ells s'executen a menys que el
-sistema s'hagi configurat com a sistema viu.
+construint, és recomana instaŀlar-los en el sistema de construcció per a
+tenir una referència fàcil quan s'està treballant en la configuració. És
+segur fer-ho, ja que cap dels scripts continguts en ells s'executen a menys
+que el sistema s'hagi configurat com a sistema viu.
 
 2~stages-of-the-build Etapes de la construcció
 
 El procés de construcció es divideix en etapes, amb personalitzacions
 diferentes aplicades successivament en cada una. La primera etapa que
 s'executa es la fase *{bootstrap}*. Aquesta és la fase inicial de poblar el
-directori chroot amb paquets per fer un sistema Debian bàsic. Això és seguit
-per l'etapa *{chroot}*, que completa la construcció del directori chroot,
-omplint-lo amb tots els paquets que s'indiquen en la configuració, juntament
-amb qualsevol altre material. La majoria de personalitzacions dels
+directori chroot amb paquets per a fer un sistema Debian bàsic. Això és
+seguit per l'etapa *{chroot}*, que completa la construcció del directori
+chroot, omplint-lo amb tots els paquets que s'indiquen en la configuració,
+juntament amb qualsevol altre material. La majoria de personalitzacions dels
 continguts es produeixen en aquesta etapa. L'etapa final de preparació de la
 imatge en viu és l'etapa *{binary}*, quan es construeix una imatge capaç
-d'arrencar, amb el contingut del directori chroot per construir el sistema
+d'arrencar, amb el contingut del directori chroot per a construir el sistema
 de fitxers arrel per al sistema en viu, i que inclou el programa de
 instaŀlació i qualsevol altre material addicional en el medi de destinació
 fora del sistema de fitxers del sistema en viu. Després de construir la
@@ -61,14 +61,14 @@ materials estiguin al seu lloc.
 2~ Suplementar lb config amb fitxers 
 
 Encara que #{lb config}# crea una configuració en esquelet al directori
-config/, per aconseguir els objectius, pot ser necessari proporcionar
+config/, per a aconseguir els objectius, pot ser necessari proporcionar
 fitxers addicionals en els subdirectoris de config/. Depenent d'on
 s'emmagatzemen els fitxers en la configuració, poden ser copiats en el
 sistema de fitxers del sistema en viu o en el sistema de fitxers de la
 imatge binària, o es pot proporcionar configuracions en temps de construcció
 del sistema que serien engorroses de passar com opcions de línia
 d'ordres. Es pot incloure coses com ara llistes personalitzades de paquets,
-art personalitzat o scripts ganxo per ser executats ja sigui en temps de
+art personalitzat o scripts ganxo per a ser executats ja sigui en temps de
 construcció o en temps d'arrencada, augmentant la flexibilitat ja
 considerable de debian-live amb codi propi.
 

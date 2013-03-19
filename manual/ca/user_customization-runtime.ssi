@@ -19,7 +19,7 @@ permisos associats amb l'usuari.
 
 Es poden especificar grups addicionals als que pertanyerà l'usuari en viu
 mitjançant l'ús de qualsevol de les possibilitats de configuraciò de
-live-config. Per exemple, per afegir l'usuari en viu al grup #{fuse}#, es
+live-config. Per exemple, per a afegir l'usuari en viu al grup #{fuse}#, es
 pot afegir el següent fitxer a
 #{config/includes.chroot/etc/live/config/user-setup.conf}#:
 
@@ -37,7 +37,7 @@ També és possible canviar el nom de l'usuari per defecte "user" i la
 contrasenya per defecte "live". Si es vol fer això per alguna raó, es pot
 aconseguir fàcilment de la següent manera:
 
-Per canviar el nom de l'usuari per defecte només s'ha d'especificar en la
+Per a canviar el nom de l'usuari per defecte només s'ha d'especificar en la
 configuració:
 
 code{
@@ -48,8 +48,8 @@ code{
 
 Una forma possible de canviar la contrasenya per defecte és per mitjà d'un
 ganxo com s'explica a {Scripts ganxo durant
-l'arrencada}#boot-time-hooks. Per fer això, es pot utilitzar el script ganxo
-"passwd" de #{/usr/share/doc/live-config/examples/hooks}#, posar-li un
+l'arrencada}#boot-time-hooks. Per a fer això, es pot utilitzar el script
+ganxo "passwd" de #{/usr/share/doc/live-config/examples/hooks}#, posar-li un
 prefix adequat (per exemple 2000-passwd) i afegir-lo a
 #{config/includes.chroot/lib/live/config/}#
 
@@ -63,7 +63,7 @@ _* la generació de locales
 _* establir la configuració del teclat
 
 La configuració local per defecte en la construcció d'un sistema viu és
-#{locales=en_US.UTF-8}#. Per definir la locale que s'ha de generar,
+#{locales=en_US.UTF-8}#. Per a definir la locale que s'ha de generar,
 utilitzar el paràmetre #{locales}# de la opció #{--bootappend-live}# de #{lb
 config}#, per exemple. 
 
@@ -83,14 +83,14 @@ la forma completa #{language_country.encoding}#. Una llista de locales
 suportades i la codificació per a cadascuna es poden trobar a
 #{/usr/share/i18n/SUPPORTED}#.
 
-#{live-config}# s'encarrega de la configuració del teclat per X i per la
-consola utilitzant el paquet #{console-setup}#. Per la seva configuració es
-por fer servir els paràmetres d'arrencada #{keyboard-layouts}#,
+#{live-config}# s'encarrega de la configuració del teclat per a X i per a la
+consola utilitzant el paquet #{console-setup}#. Per a la seva configuració
+es pot fer servir els paràmetres d'arrencada #{keyboard-layouts}#,
 #{keyboard-variants}#, #{keyboard-options}# i #{keyboard-model}# mitjançant
 l'opció #{--bootappend-live}#. Es poden trobar opcions vàlides per a aquests
-a #{/usr/share/X11/xkb/rules/base.lst}#. Per trobar distribucions de teclat
-i variants per a un idioma determinat, s'ha d'intentar cercar el nom en
-anglès de la llengua i/o el país on es parla l'idioma, per exemple:
+a #{/usr/share/X11/xkb/rules/base.lst}#. Per a trobar distribucions de
+teclat  i variants per a un idioma determinat, s'ha d'intentar cercar el nom
+en anglès de la llengua i/o el país on es parla l'idioma, per exemple:
 
 code{
 
@@ -110,9 +110,9 @@ $ egrep -i '(^!|german.*switzerland)' /usr/share/X11/xkb/rules/base.lst
 Tinir en compte que cada variant mostra la distribució que s'aplica en la
 descripció.
 
-Sovint, només la distribució necessita ser configurada. Per exemple, per
+Sovint, només la distribució necessita ser configurada. Per exemple, per a
 obtenir els fitxers de configuració regional per a la distribució del teclat
-alemany i suís-alemany per l'entorn gràfic X:
+alemany i suís-alemany per a l'entorn gràfic X:
 
 code{
 
@@ -121,7 +121,7 @@ code{
 }code
 
 No obstant això, per als casos d'ús molt específics, potser es vol incloure
-altres paràmetres. Per exemple, per establir un sistema francès, amb una
+altres paràmetres. Per exemple, per a establir un sistema francès, amb una
 distribució de teclat French-Dvorak (anomenat Bepo) en un teclat USB
 TypeMatrix EZ-Reach 2030, utilitzar:
 
@@ -139,7 +139,7 @@ Es poden especificar diversos valors per a cada una de les opcions
 #{XKBLAYOUT}#, #{XKBVARIANT}# i #{XKBOPTIONS}#. Si s'especifiquen diversos
 valors de #{keyboard-variants}# es correspondran un a un amb els valors
 #{keyboard-layouts}# (veure #{setxkbmap(1)}# opció #{-variant}#). Es poden
-utilitzar valors buits, per exemple, per definir dos dissenys, el valor
+utilitzar valors buits, per exemple, per a definir dos dissenys, el valor
 predeterminat US QWERTY i l'altre US Dvorak:
 
 code{
@@ -160,9 +160,9 @@ compatible amb altres medis, a més dels CDs, però tot i així, en el seu
 comportament per defecte, s'ha de considerar de només lectura i totes les
 evolucions en temps d'execució del sistema es perden al apagar l'equip.
 
-La "Persistència" és un nom comú per nomenar els diferents tipus de
-solucions per guardar després de reiniciar algunes, o totes, les dades
-d'aquesta evolució en temps d'execució del sistema. Per entendre com
+La "Persistència" és un nom comú per a nomenar els diferents tipus de
+solucions per a guardar després de reiniciar algunes, o totes, les dades
+d'aquesta evolució en temps d'execució del sistema. Per a entendre com
 funciona, seria útil saber que, encara que el sistema s'inicia i s'executa
 des de medis de només lectura, les modificacions als fitxers i directoris
 s'escriuen ens medis d'escriptura, en general un ramdisk (tmpfs) i les dades
@@ -194,10 +194,10 @@ nom de fitxer.
 
 L'etiqueta de volum per als overlays ha de ser #{persistence}# però serà
 passat per alt a menys que contingui un fitxer anomenat #{persistence.conf}#
-que s'utilitza per personalitzar completament la persistència del volum, és
-a dir, especificar els directoris que es volen conservar en el volum de
+que s'utilitza per a personalitzar completament la persistència del volum,
+és a dir, especificar els directoris que es volen conservar en el volum de
 persistència després de reiniciar. Veure {El fitxer
-persistence.conf}#persistence-conf per més detalls.
+persistence.conf}#persistence-conf per a més detalls.
 
 Aquests són alguns exemples de com preparar un volum que s'utilitzarà per a
 la persistència. Pot ser, per exemple, una partició ext4 en un disc dur o en
@@ -221,7 +221,7 @@ code{
 
 }code
 
-Heus aquí un exemple de com crear un fitxer imatge basat en ext4 per ser
+Heus aquí un exemple de com crear un fitxer imatge basat en ext4 per a ser
 utilitzat per a la persistència:
 
 code{
@@ -231,11 +231,11 @@ code{
 
 }code
 
-Un cop s'ha creat el fitxer imatge, per exemple, per fer #{/usr}# persistent
-però només guardant els canvis que es fan en aquest directori i no tots els
-continguts de #{/usr}#, es pot utilitzar l'opció "union". Si el fitxer
-imatge es troba en el directori home, copiar-lo a l'arrel del sistema de
-fitxers del disc dur i muntar-lo a #{/mnt}# de la següent manera:
+Un cop s'ha creat el fitxer imatge, per exemple, per a fer #{/usr}#
+persistent però només guardant els canvis que es fan en aquest directori i
+no tots els continguts de #{/usr}#, es pot utilitzar l'opció "union". Si el
+fitxer imatge es troba en el directori home, copiar-lo a l'arrel del sistema
+de fitxers del disc dur i muntar-lo a #{/mnt}# de la següent manera:
 
 code{
 
@@ -260,13 +260,13 @@ d'arrencada "persistence".
 3~persistence-conf El fitxer persistence.conf
 
 Un volum amb l'etiqueta #{persistence}# ha de ser configurat mitjançant un
-fitxer #{persistence.conf}# per fer directoris arbitraris
+fitxer #{persistence.conf}# per a fer directoris arbitraris
 persistents. Aquest fitxer, ubicat a l'arrel del sistema de fitxers del
 volum, controla els directoris que fa persistents, i de quina manera.
 
 A la pàgina del manual de persistence.conf(5) s'explica en detall com es
 configuran els muntatges de les overlays, però un simple exemple hauria de
-ser suficient per la majoria d'usos. Si es vol fer el directori home i el
+ser suficient per a la majoria d'usos. Si es vol fer el directori home i el
 directori del cache d'APT persistents en un sistema de fitxers ext4 a la
 partició /dev/sdb1:
 
@@ -287,20 +287,20 @@ guardaran en aquest volum. Tenir en compte que les rutes que apareixen en el
 fitxer #{persistence.conf}# no poden contenir espais en blanc o els
 components especials #{.}# i #{..}#. A més, ni #{/lib}#, #{/lib/live}# (o
 qualsevol dels seus subdirectoris) ni #{/}# es poden fer persistents
-utilitzant muntatges personalitzats. Com a solució per aquesta limitació es
-pot afegir #{/ union}# al fitxer #{persistence.conf}# per aconseguir una
-persistència completa.
+utilitzant muntatges personalitzats. Com a solució per a aquesta limitació
+es pot afegir #{/ union}# al fitxer #{persistence.conf}# per a aconseguir
+una persistència completa.
 
 Es poden utilitzar diversos volums diferents de muntatges personalitzats
 (amb els seus propis fitxers #{persistence.conf}# però si diversos volums
 fan que el mateix directori sigui persistent, només s'utilitzarà un
 d'ells. Si qualsevol dels dos muntatges són "imbricats" (és a dir, un és un
 sub-directori de l'altre) el directori pare es muntarà abans que el
-directori fill per evitar que amb el muntatge un directori no sigui ocultat
-per l'altre. Els muntatges personalitzats imbricats són problemàtics si
-estan enumerats en el mateix fitxer #{persistence.conf}#. Veure la pàgina
-del manual persistence.conf(5) per saber com manejar aquest cas, si realment
-es necessita (una pista: en general no cal fer-ho).
+directori fill per a evitar que amb el muntatge un directori no sigui
+ocultat per l'altre. Els muntatges personalitzats imbricats són problemàtics
+si estan enumerats en el mateix fitxer #{persistence.conf}#. Veure la pàgina
+del manual persistence.conf(5) per a saber com manejar aquest cas, si
+realment es necessita (una pista: en general no cal fer-ho).
 
 3~ Utilitzar diversos medis persistents
 

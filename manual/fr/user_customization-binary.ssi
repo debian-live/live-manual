@@ -2,30 +2,27 @@
 
 1~customizing-binary Personnalisation de l'image binaire
 
-2~ Chargeur d'amorçage
+2~ Bootloaders
 
-live-build utilise /{syslinux}/ et certains de ses dérivés (selon le type
-d'image) comme chargeurs d'amorçage par défaut. Vous pouvez facilement les
-personnaliser de deux manières. 
+live-build uses /{syslinux}/ and some of its derivatives (depending on the
+image type) as bootloaders by default. They can be easily customized to suit
+your needs.
 
-Pour utiliser un thème complet, copiez #{/usr/share/live/build/bootloaders}#
-dans #{config/bootloaders}# et modifiez les fichiers là. Si vous ne voulez
-pas modifier toutes les configurations du chargeur d'amorçage prises en
-charge, il suffit de fournir une copie locale personnalisée d'un des
-chargeurs, par exemple copiez la configuration d'*{isolinux}* dans
-#{config/bootloaders/isolinux}#, selon votre cas d'utilisation.
+In order to use a full theme, copy #{/usr/share/live/build/bootloaders}#
+into #{config/bootloaders}# and edit the files in there. If you do not want
+to bother modifying all supported bootloader configurations, only providing
+a local customized copy of one of the bootloaders, e.g. *{isolinux}* in
+#{config/bootloaders/isolinux}# is enough too, depending on your use case.
 
-Il y a aussi la possibilité de faire de petits changements. Par exemple, les
-dérivés de syslinux sont configurés par défaut avec un timeout de 0 (zéro),
-ce qui signifie qu'ils se mettront en pause indéfiniment à leur écran de
-démarrage jusqu'à ce que vous pressiez une touche.
+There are many possibilities when it comes to making changes. For instance,
+syslinux derivatives are configured by default with a timeout of 0 (zero)
+which means that they will pause indefinitely at their splash screen until
+you press a key.
 
-Pour modifier le délai de démarrage d'une image iso-hybrid, vous pouvez
-modifier un fichier *{isolinux.cfg}* en précisant le timeout dans les unités
-de secondes et l'ajouter à #{config/includes.binary/isolinux/}#
-
-Un *{isolinux.cfg}* modifié pour démarrer après cinq secondes ressemblerait
-à ceci:
+To modify the boot timeout of a default #{iso-hybrid}# image just edit a
+default *{isolinux.cfg}* file specifying the timeout in units of 1/10
+seconds. A modified *{isolinux.cfg}* to boot after five seconds would be
+similar to this:
 
 code{
 
@@ -36,21 +33,8 @@ code{
 
 }code
 
-Une autre façon d'atteindre le même objectif pourrait être d'écrire un hook
-et l'ajouter à #{config/hooks/}#. N'oubliez pas d'ajouter le suffixe
-#{.binary}# pour l'exécuter dans l’étape binaire. Un exemple proposé:
-
-code{
-
- #!/bin/sh
-
- sed -i -e 's|timeout 0|timeout 50|' binary/isolinux/isolinux.cfg
-
-}code
-
-De même, si vous souhaitez utiliser une image splash.png personnalisée, vous
-pouvez ajouter une image de 640x480 pixels à
-#{config/includes.binary/isolinux/}#
+If you want to use a personalized background image that will be displayed
+together with the boot menu, add a splash.png picture of 640x480 pixels.
 
 2~ Métadonnées ISO
 

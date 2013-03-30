@@ -2,31 +2,27 @@
 
 1~customizing-binary Personalització de la imatge binària
 
-2~ Carregador d'arrencada
+2~ Bootloaders
 
-live-build utilitza /{syslinux}/ i alguns dels seus derivats (depenent del
-tipus d'imatge) com carregadors d'arrencada per defecte. Es poden
-personalitzar fàcilment de dues maneres.
+live-build uses /{syslinux}/ and some of its derivatives (depending on the
+image type) as bootloaders by default. They can be easily customized to suit
+your needs.
 
-Per a utilitzar un tema complet, copiar
-#{/usr/share/live/build/bootloaders}# a #{config/bootloaders}# i editar els
-fitxers allí. Si no es vol modificar totes les configuracions del gestor
-d'arrencada disponibles, només cal utilitzar una còpia local personalitzada
-d'un dels gestors d'arrencada, per exemple, copiar la configuració
-d'*{isolinux}* a #{config/bootloaders/isolinux}# ja és suficient, depenent
-del cas d'ús.
+In order to use a full theme, copy #{/usr/share/live/build/bootloaders}#
+into #{config/bootloaders}# and edit the files in there. If you do not want
+to bother modifying all supported bootloader configurations, only providing
+a local customized copy of one of the bootloaders, e.g. *{isolinux}* in
+#{config/bootloaders/isolinux}# is enough too, depending on your use case.
 
-També hi ha la possibilitat de fer petits canvis. Per exemple, els derivats
-de syslinux estan configurats per defecte amb un temps d'espera de 0 (zero)
-el que significa que faran una pausa indefinida en la seva pantalla inicial
-fins que es premi una tecla.
+There are many possibilities when it comes to making changes. For instance,
+syslinux derivatives are configured by default with a timeout of 0 (zero)
+which means that they will pause indefinitely at their splash screen until
+you press a key.
 
-Per a modificar el temps d'espera d'arrencada d'una imatge #{iso-hybrid}# es
-pot editar el fitxer *{isolinux.cfg}* per defecte especificant el temps
-d'espera en segons i afegir-lo a #{config/includes.binary/isolinux/}#
-
-Un *{isolinux.cfg}* modificat per a arrencar després de cinc segons seria
-semblant a aquest:
+To modify the boot timeout of a default #{iso-hybrid}# image just edit a
+default *{isolinux.cfg}* file specifying the timeout in units of 1/10
+seconds. A modified *{isolinux.cfg}* to boot after five seconds would be
+similar to this:
 
 code{
 
@@ -37,22 +33,8 @@ code{
 
 }code
 
-Una forma alternativa d'aconseguir el mateix objectiu podria ser escriure un
-script ganxo i afegir-lo a #{config/hooks/}#. Recordar afegir el sufix
-#{.binary}# per tal que s'executi durant l'etapa binary. Un exemple
-proposat:
-
-code{
-
- #!/bin/sh
-
- sed -i -e 's|timeout 0|timeout 50|' binary/isolinux/isolinux.cfg
-
-}code
-
-De la mateixa manera, si es vol utilitzar una imatge personalitzada
-splash.png es pot afegir una imatge de 640x480 píxels a
-#{config/includes.binary/isolinux/}#
+If you want to use a personalized background image that will be displayed
+together with the boot menu, add a splash.png picture of 640x480 pixels.
 
 2~ metadades ISO 
 

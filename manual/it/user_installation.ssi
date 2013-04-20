@@ -127,16 +127,16 @@ sorgenti.
 
 _* Costruire un .deb di live-boot e live-config
 
-È necessario compilare sulla distribuzione di destinazione, oppure in un
-chroot contenente la piattaforma di destinazione: significa che se
-l'obiettivo è wheezy allora bisogna compilare su wheezy.
+You must build either on your target distribution or in a chroot containing
+your target platform: this means if your target is ${testing} then you
+should build against ${testing}.
 
-Se si deve compilare live-boot per una distribuzione di destinazione diversa
-dal proprio sistema, utilizzare un compilatore tipo /{pbuilder}/ o
-/{sbuild}/. Ad esempio, per immagini live wheezy, si generi live-boot in un
-chroot wheezy. Se la distribuzione di destinazione corrisponde con la
-distribuzione del proprio sistema, si può costruire direttamente sul sistema
-usando #{dpkg-buildpackage}# (fornito dal pacchetto /{dpkg-dev}/):
+Use a personal builder such as /{pbuilder}/ or /{sbuild}/ if you need to
+build live-boot for a target distribution that differs from your build
+system. For example, for ${testing} live images, build live-boot in a
+${testing} chroot. If your target distribution happens to match your build
+system distribution, you may build directly on the build system using
+#{dpkg-buildpackage}# (provided by the /{dpkg-dev}/ package):
 
 code{
 

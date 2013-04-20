@@ -25,7 +25,7 @@ installed via APT pinning, to name a few possibilities.
 
 The distribution you choose has the broadest impact on which packages are
 available to include in your live image. Specify the codename, which
-defaults to wheezy for the wheezy version of live-build. Any current
+defaults to ${testing} for the ${testing} version of live-build. Any current
 distribution carried in the archive may be specified by its codename
 here. (See {Terms}#terms for more details.) The #{--distribution}# option
 not only influences the source of packages within the archive, but also
@@ -641,14 +641,13 @@ construction, soit pendant l'exécution. Dans le premier cas, créez
 #{config/apt/preferences}#. Dans le second cas, créez
 #{config/includes.chroot/etc/apt/preferences}#.
 
-Imaginons que vous vouliez construire un système live wheezy mais qu'il
-faille installer tous les paquets live qui finissent dans l'image binaire de
-sid pendant la construction. Vous devez ajouter sid à votre fichier APT
-sources et fixer tous les paquets live avec une priorité supérieure mais
-tous les autres paquets avec une priorité inférieure à la priorité par
-défaut de sorte que seuls les paquets que vous voulez soient installés à
-partir de sid pendant la construction et que tous les autres viennent de la
-distribution du système cible, wheezy. Ce qui suit devrait accomplir cela:
+Let's say you are building a ${testing} live system but need all the live
+packages that end up in the binary image to be installed from sid at build
+time. You need to add sid to your APT sources and pin the live packages from
+it higher, but all other packages from it lower, than the default
+priority. Thus, only the packages you want are installed from sid at build
+time and all others are taken from the target system distribution,
+${testing}. The following will accomplish this:
 
 code{
 

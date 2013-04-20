@@ -25,15 +25,15 @@ mitjançant la tècnica pinning d'APT, per nomenar algunes possibilitats.
 
 3~ Distribució, àrees d'arxiu i mode 
 
-La distribució que es tria té una gran importància en els paquets que estan
-disponibles per a incloure en una imatge en viu. Només cal especificar el
-nom en clau, que per defecte és wheezy per a la versió wheezy de
-live-build. Qualsevol distribució disponible a l'arxiu pot ser especificada
-pel seu nom en clau aquí. (Veure {Termes}#terms per a més detalls.) L'opció
-#{--distribution}# no només influeix en l'origen dels paquets dins l'arxiu,
-sinó que també instrueix a live-build per a comportar-se segons sigui
-necessari per a construir cada distribució suportada. Per exemple, per a
-construir la distribució *{unstable}*, sid, s'ha d'especificar:
+The distribution you choose has the broadest impact on which packages are
+available to include in your live image. Specify the codename, which
+defaults to ${testing} for the ${testing} version of live-build. Any current
+distribution carried in the archive may be specified by its codename
+here. (See {Terms}#terms for more details.) The #{--distribution}# option
+not only influences the source of packages within the archive, but also
+instructs live-build to behave as needed to build each supported
+distribution. For example, to build against the *{unstable}* release, sid,
+specify:
 
 code{
 
@@ -631,14 +631,13 @@ o bé durant l'execució. En el primer cas, crear #{config/archives/*.pref}#,
 #{config/archives/*.pref.chroot}#, i #{config/apt/preferences}#. Per al
 segon cas, crear #{config/includes.chroot/etc/apt/preferences}#.
 
-Suposem que s'està construint un sistema en viu wheezy però es necessita que
-tots els paquets «live-» que acaben dins de la imatge binària s'instaŀlin
-desde sid en temps de construcció. Cal afegir sid a les fonts d'APT i fer un
-pin dels paquets live amb una prioritat més alta, però tots els altres
-paquets amb una prioritat més baixa que la prioritat per defecte de manera
-que només els paquets que es vol s'instaŀlin desde sid en el moment de la
-construcció i tots els altres es prenguin de la distribució de destinació,
-wheezy. Això es pot aconseguir de la manera següent:
+Let's say you are building a ${testing} live system but need all the live
+packages that end up in the binary image to be installed from sid at build
+time. You need to add sid to your APT sources and pin the live packages from
+it higher, but all other packages from it lower, than the default
+priority. Thus, only the packages you want are installed from sid at build
+time and all others are taken from the target system distribution,
+${testing}. The following will accomplish this:
 
 code{
 

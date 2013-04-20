@@ -128,17 +128,16 @@ paquets à partir des sources.
 
 _* Créer les fichiers .deb de live-boot et live-config
 
-Vous devez créer sur votre distribution cible ou dans un chroot contenant
-votre plateforme cible: cela signifie que si votre cible est wheezy alors
-vous devez créer sur wheezy.
+You must build either on your target distribution or in a chroot containing
+your target platform: this means if your target is ${testing} then you
+should build against ${testing}.
 
-Utilisez un système de construction automatique personnel tel que
-/{pbuilder}/ ou /{sbuild}/ si vous avez besoin de créer live-boot pour une
-distribution cible qui diffère de votre système de construction. Par
-exemple, pour les images live de wheezy, créez live-boot dans un chroot
-wheezy. Si votre distribution cible correspond à votre distribution vous
-pouvez créer directement sur le système de construction en utilisant
-#{dpkg-buildpackage}# (fourni par le paquet /{dpkg-dev}/):
+Use a personal builder such as /{pbuilder}/ or /{sbuild}/ if you need to
+build live-boot for a target distribution that differs from your build
+system. For example, for ${testing} live images, build live-boot in a
+${testing} chroot. If your target distribution happens to match your build
+system distribution, you may build directly on the build system using
+#{dpkg-buildpackage}# (provided by the /{dpkg-dev}/ package):
 
 code{
 

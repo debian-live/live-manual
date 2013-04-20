@@ -128,17 +128,16 @@ aquests paquets a partir de les fonts.
 
 _* Crear els fitxers .deb de live-boot i live-config 
 
-S'ha de crear ja sigui en la distribució de destinació o en un chroot que
-contingui la plataforma de destinació: és a dir, si el objectiu és wheezy
-llavors s'ha de construir contra wheezy.
+You must build either on your target distribution or in a chroot containing
+your target platform: this means if your target is ${testing} then you
+should build against ${testing}.
 
-Es pot utilitzar un constructor personal, com ara /{pbuilder}/ o /{sbuild}/
-si es necessita crear live-boot per a una distribució de destinació
-diferenta del sistema de construcció. Per exemple, per a les imatges en viu
-de wheezy, crear live-boot en un chroot wheezy. Si la distribució de
-destinació per casualitat coincideix amb la distribució del sistema de
-construcció, es pot construir directament en el sistema de construcció amb
-#{dpkg-buildpackage}# (proporcionat pel paquet /{dpkg-dev}/):
+Use a personal builder such as /{pbuilder}/ or /{sbuild}/ if you need to
+build live-boot for a target distribution that differs from your build
+system. For example, for ${testing} live images, build live-boot in a
+${testing} chroot. If your target distribution happens to match your build
+system distribution, you may build directly on the build system using
+#{dpkg-buildpackage}# (provided by the /{dpkg-dev}/ package):
 
 code{
 

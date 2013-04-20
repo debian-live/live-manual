@@ -27,15 +27,16 @@ pinning, por nombrar algunas posibilidades.
 
 3~ Distribución, áreas de archivo y modo
 
-The distribution you choose has the broadest impact on which packages are
-available to include in your live image. Specify the codename, which
-defaults to ${testing} for the ${testing} version of live-build. Any current
-distribution carried in the archive may be specified by its codename
-here. (See {Terms}#terms for more details.) The #{--distribution}# option
-not only influences the source of packages within the archive, but also
-instructs live-build to behave as needed to build each supported
-distribution. For example, to build against the *{unstable}* release, sid,
-specify:
+La distribución seleccionada tiene gran impacto en qué paquetes están
+disponibles para incluir en la imagen. Se debe indicar el nombre en clave de
+la distribución, que por defecto es ${testing} para la versión ${testing} de
+live-build. Se puede especificar cualquier nombre de distribución disponible
+en los repositorios indicando su nombre en clave. (Para más detalles ver
+{Términos}#terms). La opción #{--distribution}# no solamente influencia la
+fuente de los paquetes dentro del archivo, sino que instruye a live-build a
+comportarse tal y como se necesita para construir cada una de las
+distribuciones. Por ejemplo, para construir la versión *{inestable}*, sid,
+se debe indicar: 
 
 code{
 
@@ -656,13 +657,15 @@ creación de la imagen, creando los ficheros #{config/archives/*.pref}#,
 de ejecución del sistema en vivo creando el fichero
 #{config/includes.chroot/etc/apt/preferences}#.
 
-Let's say you are building a ${testing} live system but need all the live
-packages that end up in the binary image to be installed from sid at build
-time. You need to add sid to your APT sources and pin the live packages from
-it higher, but all other packages from it lower, than the default
-priority. Thus, only the packages you want are installed from sid at build
-time and all others are taken from the target system distribution,
-${testing}. The following will accomplish this:
+Supongamos que se está creando un sistema en vivo basado en ${testing} pero
+se necesita instalar todos los paquetes "live" que terminan instalados en la
+imagen binaria final desde la versión inestable «sid» en el momento de crear
+la imagen. Se deberá añadir sid a los orígenes (sources) de APT y fijar
+(pin) los paquetes live con una prioridad más alta pero todos los otros
+paquetes con una prioridad más baja que la prioridad por defecto de manera
+que solamente los paquetes fijados sean instalados desde sid mientras que el
+resto será obtenido desde la distribución base, ${testing}. Esto se puede
+realizar de la siguiente forma:
 
 code{
 

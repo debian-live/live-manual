@@ -29,9 +29,9 @@ ou sur un réseau, prêt à l'emploi sans aucune installation sur le disque
 habituel, avec auto-configuration fait lors de l'exécution (voir
 {Termes}#terms).
 
-With live systems, it's an operating system, built for one of the supported
-architectures (currently amd64 and i386). It is made from the following
-parts:
+Avec les systèmes live, c'est un système d'exploitation, construit pour une
+des architectures prises en charge (actuellement amd64 et i386). Il est fait
+à partir des éléments suivants:
 
 _* *{Image du noyau Linux}*, d'habitude appelé #{vmlinuz*}#
 
@@ -40,12 +40,14 @@ configuré pour le démarrage de Linux, contenant possiblement des modules
 nécessaires pour monter l'image du système et certains scripts pour le
 faire.
 
-_* *{System image}*: The operating system's filesystem image. Usually, a
-SquashFS compressed filesystem is used to minimize the live system image
-size. Note that it is read-only. So, during boot the live system will use a
-RAM disk and 'union' mechanism to enable writing files within the running
-system. However, all modifications will be lost upon shutdown unless
-optional persistence is used (see {Persistence}#persistence).
+_* *{Image du système}*: L'image du système de fichiers du système
+d'exploitation. Habituellement, un système de fichiers SquashFS comprimé est
+utilisé pour réduire au minimum la taille de l'image live. Notez qu'il est
+en lecture seulement. Ainsi, lors du démarrage le système live va utiliser
+un disque RAM et un mécanisme "union" pour permettre l'écriture de fichiers
+dans le système en marche. Cependant, toutes les modifications seront
+perdues lors de l'arrêt à moins que l'option «persistance» soit utilisée
+(voir {Persistance}#persistence).
 
 _* *{Chargeur d'amorçage}*: Un petit morceau de code conçu pour démarrer à
 partir du support choisi, il peut présenter un menu rapide ou permettre la
@@ -215,10 +217,10 @@ code{
 
 3~using-usb-extra-space Utilisation de l'espace disponible sur une clé USB
 
-To use the remaining free space after copying #{binary.hybrid.iso}# to a USB
-stick, use a partitioning tool such as /{gparted}/ or /{parted}/ to create a
-new partition on the stick. The first partition will be used by the live
-system.
+Pour utiliser l'espace libre restant après avoir copié #{binary.hybrid.iso}#
+sur une clé USB, utilisez un outil de partitionnement tel que /{gparted}/ ou
+/{parted}/ afin de créer une nouvelle partition sur la clé. La première
+partition sera utilisée par le système live.
 
 code{
 
@@ -424,13 +426,14 @@ code{
 
 }code
 
-In this specific case, a #{lb clean --binary}# would not be enough to clean
-up the necessary stages. The cause for this is that in netboot setups, a
-different initramfs configuration needs to be used which live-build performs
-automatically when building netboot images. Since the initramfs creation
-belongs to the chroot stage, switching to netboot in an existing build
-directory means to rebuild the chroot stage too. Therefore, #{lb clean}#
-(which will remove the chroot stage, too) needs to be used.
+Dans ce cas spécifique, un #{lb clean --binary}# ne serait pas suffisant
+pour nettoyer les étapes nécessaires. La raison est que dans les
+configurations de netboot, une configuration initramfs différente doit être
+utilisée, laquelle live-build exécute automatiquement lors de la
+construction des images netboot. Puisque la création d'initramfs appartient
+à l'étape chroot, si on change à netboot dans un répertoire existant, il
+faut reconstruire le chroot. Par conséquent, il faut faire un #{lb clean}#,
+(qui permettra d'éliminer l'étape chroot, aussi).
 
 Exécutez la commande suivante pour configurer votre image pour démarrer sur
 le réseau:
@@ -466,13 +469,14 @@ chargeur d'amorçage de niveau supérieur via le protocole TFTP. Cela pourrait
 être pxelinux, GRUB, ou démarrer directement à un système d'exploitation
 comme Linux.
 
-For example, if you unpack the generated #{binary.netboot.tar}# archive in
-the #{/srv/debian-live}# directory, you'll find the filesystem image in
-#{live/filesystem.squashfs}# and the kernel, initrd and pxelinux bootloader
-in #{tftpboot/}#.
+Par exemple, si vous décompressez l'archive généré #{binary.netboot.tar}#
+dans le répertoire #{/srv/debian-live}#, vous trouverez l'image du système
+de fichiers dans #{live/filesystem.squashfs}# et le noyau, initrd et le
+chargeur d'amorçage pxelinux dans #{tftpboot/}#.
 
-We must now configure three services on the server to enable netbooting: the
-DHCP server, the TFTP server and the NFS server.
+Nous devons maintenant configurer trois services sur le serveur pour activer
+le démarrage sur le réseau: le serveur DHCP, le serveur TFTP et le serveur
+NFS.
 
 3~ Serveur DHCP
 

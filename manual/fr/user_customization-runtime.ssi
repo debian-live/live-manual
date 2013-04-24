@@ -292,6 +292,12 @@ utilisant des montages personnalisés. Comme solution à cette limitation,
 vous pouvez ajouter #{/ union}# à votre fichier #{persistence.conf}# pour
 obtenir une persistance complète.
 
+3~ Utilisation de plusieurs dispositifs de persistance
+
+There are different methods of using multiple persistence store for
+different use cases. For instance, using several volumes at the same time or
+selecting only one, among various, for very specific purposes.
+
 Plusieurs volumes overlays différents (avec leurs propres fichiers
 #{persistence.conf}#) peuvent être utilisés au même temps, mais si plusieurs
 volumes rendent le même répertoire persistant, un seul d'entre eux sera
@@ -302,13 +308,25 @@ sont énumérés dans le même fichier #{persistence.conf}#. Voir la page de
 manuel persistence.conf(5) pour savoir comment gérer ce cas si vous en avez
 vraiment besoin (remarque: ce n'est généralement pas le cas).
 
-3~ Utilisation de plusieurs dispositifs de persistance
+One possible use case: If you wish to store the user data i.e #{/home}# and
+the superuser data i.e #{/root}# in different partitions. Create two
+partitions with the #{persistence}# label and add a #{persistence.conf}#
+file in each one like this, #{# echo "/home" > persistence.conf}# for the
+first partition that will save the user's files and #{# echo "/root" >
+persistence.conf}# for the second partition which will store the superuser's
+files. Finally use the #{persistence}# boot parameter.
 
-Si un utilisateur a besoin de stockages persistants multiples du même type
-pour différents endroits ou essais, tel que #{persistence-private}# et
-#{persistence-work}#, le paramètre de démarrage #{persistence-label}#
-utilisé en conjonction avec le paramètre de démarrage #{persistence}#
-permettra de multiples mais uniques supports persistants. Dans le cas où un
-utilisateur voudrait utiliser une partition persistante étiquetée
-#{persistence-subText}#, il utiliserait les paramètres de démarrage:
-#{persistence}# #{persistence-label=subText}#.
+If a user would need multiple persistence store of the same type for
+different locations or testing, such as #{private}# and #{work}#, the boot
+parameter #{persistence-label}# used in conjunction with the boot parameter
+#{persistence}# will allow for multiple but unique persistence media. An
+example would be if a user wanted to use a persistence partition labeled
+#{private}# for personal data like browser bookmarks or other types, they
+would use the boot parameters: #{persistence}#
+#{persistence-label=private}#. And to store work related data, like
+documents, research projects or other types, they would use the boot
+parameters: #{persistence}# #{persistence-label=work}#.
+
+It is important to remember that these volumes, #{private}# and #{work}#,
+also need a #{persistence.conf}# file in its root. The live-boot man page
+contains more information about how to use these labels with legacy names.

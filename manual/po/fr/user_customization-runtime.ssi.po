@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 3.0.1-1\n"
-"POT-Creation-Date: 2013-01-22 15:55+0100\n"
+"POT-Creation-Date: 2013-04-28 11:46+0300\n"
 "PO-Revision-Date: 2013-02-06 22:23+0100\n"
 "Last-Translator: Carlos Zuferri <chals@altorricon.com>\n"
 "Language-Team: none\n"
@@ -47,9 +47,9 @@ msgstr ""
 #: en/user_basics.ssi:233 en/user_basics.ssi:245 en/user_basics.ssi:255
 #: en/user_basics.ssi:265 en/user_basics.ssi:283 en/user_basics.ssi:311
 #: en/user_basics.ssi:327 en/user_basics.ssi:335 en/user_basics.ssi:355
-#: en/user_customization-binary.ssi:14 en/user_customization-binary.ssi:28
-#: en/user_customization-binary.ssi:39 en/user_customization-contents.ssi:24
-#: en/user_customization-contents.ssi:33 en/user_customization-contents.ssi:51
+#: en/user_customization-binary.ssi:18 en/user_customization-binary.ssi:29
+#: en/user_customization-contents.ssi:24 en/user_customization-contents.ssi:33
+#: en/user_customization-contents.ssi:51
 #: en/user_customization-installer.ssi:32
 #: en/user_customization-installer.ssi:44
 #: en/user_customization-packages.ssi:14 en/user_customization-packages.ssi:22
@@ -123,9 +123,9 @@ msgstr "code{"
 #: en/user_basics.ssi:237 en/user_basics.ssi:249 en/user_basics.ssi:259
 #: en/user_basics.ssi:269 en/user_basics.ssi:303 en/user_basics.ssi:315
 #: en/user_basics.ssi:331 en/user_basics.ssi:339 en/user_basics.ssi:366
-#: en/user_customization-binary.ssi:18 en/user_customization-binary.ssi:35
-#: en/user_customization-binary.ssi:45 en/user_customization-contents.ssi:29
-#: en/user_customization-contents.ssi:43 en/user_customization-contents.ssi:55
+#: en/user_customization-binary.ssi:25 en/user_customization-binary.ssi:35
+#: en/user_customization-contents.ssi:29 en/user_customization-contents.ssi:43
+#: en/user_customization-contents.ssi:55
 #: en/user_customization-installer.ssi:38
 #: en/user_customization-installer.ssi:49
 #: en/user_customization-packages.ssi:18 en/user_customization-packages.ssi:26
@@ -777,6 +777,19 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:184
+msgid "3~ Using more than one persistence store"
+msgstr "3~ Utilisation de plusieurs dispositifs de persistance"
+
+#. type: Plain text
+#: en/user_customization-runtime.ssi:186
+msgid ""
+"There are different methods of using multiple persistence store for "
+"different use cases. For instance, using several volumes at the same time or "
+"selecting only one, among various, for very specific purposes."
+msgstr ""
+
+#. type: Plain text
+#: en/user_customization-runtime.ssi:188
 msgid ""
 "Several different custom overlay volumes (with their own #{persistence.conf}"
 "# files) can be used at the same time, but if several volumes make the same "
@@ -798,20 +811,40 @@ msgstr ""
 "vraiment besoin (remarque: ce n'est généralement pas le cas)."
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:186
-msgid "3~ Using more than one persistence store"
-msgstr "3~ Utilisation de plusieurs dispositifs de persistance"
+#: en/user_customization-runtime.ssi:190
+msgid ""
+"One possible use case: If you wish to store the user data i.e. #{/home}# and "
+"the superuser data i.e. #{/root}# in different partitions, create two "
+"partitions with the #{persistence}# label and add a #{persistence.conf}# "
+"file in each one like this, #{# echo \"/home\" > persistence.conf}# for the "
+"first partition that will save the user's files and #{# echo \"/root\" > "
+"persistence.conf}# for the second partition which will store the superuser's "
+"files. Finally use the #{persistence}# boot parameter."
+msgstr ""
 
 #. type: Plain text
-#: en/user_customization-runtime.ssi:187
+#: en/user_customization-runtime.ssi:192
+#, fuzzy
+#| msgid ""
+#| "If a user would need multiple persistence store of the same type for "
+#| "different locations or testing, such as #{persistence-private}# and #"
+#| "{persistence-work}#, the boot parameter #{persistence-label}# used in "
+#| "conjunction with the boot parameter #{persistence}# will allow for "
+#| "multiple but unique persistence media. An example would be if a user "
+#| "wanted to use a persistence partition labeled #{persistence-subText}# "
+#| "they would use the boot parameters of: #{persistence}# #{persistence-"
+#| "label=subText}#."
 msgid ""
 "If a user would need multiple persistence store of the same type for "
-"different locations or testing, such as #{persistence-private}# and #"
-"{persistence-work}#, the boot parameter #{persistence-label}# used in "
-"conjunction with the boot parameter #{persistence}# will allow for multiple "
-"but unique persistence media. An example would be if a user wanted to use a "
-"persistence partition labeled #{persistence-subText}# they would use the "
-"boot parameters of: #{persistence}# #{persistence-label=subText}#."
+"different locations or testing, such as #{private}# and #{work}#, the boot "
+"parameter #{persistence-label}# used in conjunction with the boot parameter #"
+"{persistence}# will allow for multiple but unique persistence media. An "
+"example would be if a user wanted to use a persistence partition labeled #"
+"{private}# for personal data like browser bookmarks or other types, they "
+"would use the boot parameters: #{persistence}# #{persistence-label=private}"
+"#. And to store work related data, like documents, research projects or "
+"other types, they would use the boot parameters: #{persistence}# #"
+"{persistence-label=work}#."
 msgstr ""
 "Si un utilisateur a besoin de stockages persistants multiples du même type "
 "pour différents endroits ou essais, tel que #{persistence-private}# et #"
@@ -821,3 +854,12 @@ msgstr ""
 "voudrait utiliser une partition persistante étiquetée #{persistence-subText}"
 "#, il utiliserait les paramètres de démarrage: #{persistence}# #{persistence-"
 "label=subText}#."
+
+#. type: Plain text
+#: en/user_customization-runtime.ssi:193
+msgid ""
+"It is important to remember that each of these volumes, #{private}# and #"
+"{work}#, also needs a #{persistence.conf}# file in its root. The live-boot "
+"man page contains more information about how to use these labels with legacy "
+"names."
+msgstr ""

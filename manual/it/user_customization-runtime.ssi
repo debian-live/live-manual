@@ -281,6 +281,12 @@ personalizzati. Come workaround a questa limitazione è possibile aggiungere
 #{/ union}# al file #{persistence.conf}# file per ottenere la persistenza
 completa.
 
+3~ Utilizzare più di un'archiviazione persistente
+
+Ci sono tre metodi differenti di utilizzare persistenze multiple per
+differenti casi d'uso. Ad esempio l'utilizzo di svariati volumi
+contemporaneamente o selezionandone uno solo per scopi molto specifici.
+
 Possono essere utilizzati svariati volumi di stratificazione personalizzati
 (con i rispettivi file #{persistence.conf}#) allo stesso tempo ma se questi
 creano la stessa directory persistente, ne verrà usata solo una. Se due
@@ -291,12 +297,26 @@ se sono elencati nello stesso file #{persistence.conf}. Se si ha davvero la
 necessità (in genere non si dovrebbe averla), consultare la manpage di
 persistence.conf(5) per sapere come gestire questo caso.
 
-3~ Utilizzare più di un'archiviazione persistente
+Un possibile caso d'uso: se si desidera archiviare i dati dell'utente
+(#{/home}#) e quelli dell'amministratore (#{/root}#) in partizioni diverse,
+creare due partizioni con l'etichetta #{persistence}# e aggiungervi un file
+#{persistence.conf}# in ognuna di esse, #{# echo "/home" >
+persistence.conf}# per la partizione che salverà i file dell'utente e #{#
+echo "/root" > persistence.conf}# per quella dell'amministratore. Infine
+usare il parametro d'avvio #{persistence}#.
 
 Se un utente avesse bisogno di spazi di archiviazione multipli dello stesso
-tipo per posizioni differenti o per test, come #{persistence-privato}# e
-#{persistence-lavoro}#, il parametro d'avvio #{persistence-label}# usato in
-congiunzione con #{persistent}# permetterà supporti persistenti multipli ma
-univoci. Un esempio potrebbe essere un utente che vuole usare una partizione
-etichettata come #{persistence-sottotesto}#, userebbe: #{persistence}#
-#{persistence-label=sottotesto}#.
+tipo per posizioni differenti o per test, come #{privato}# e #{lavoro}#, il
+parametro d'avvio #{persistence-label}# usato in congiunzione con
+#{persistent}# permetterà supporti persistenti multipli ma univoci. Un
+esempio potrebbe essere un utente che vuole usare una partizione etichettata
+come #{privato}# per dati personali come i preferiti del browser o di altro
+tipo, questi userà i parametri d'avvio #{persistence}#
+#{persistence-label=privato}#. E per archiviare dati inerenti il lavoro,
+come documenti, ricerche e altro, verranno usati i parametri d'avvio
+#{persistence}# #{persistence-label=lavoro}#.
+
+È importante ricordare che ognuno di questi volumi, #{privato}# e
+#{lavoro}#, necessitano anche di un file #{persistence.conf}# nella propria
+radice. Il manuale di live-boot contiene altre informazioni su come
+utilizzare queste etichette con nomi usati in versioni precedenti.

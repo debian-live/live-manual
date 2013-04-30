@@ -291,6 +291,13 @@ utilisant des montages personnalisés. Comme solution à cette limitation,
 vous pouvez ajouter #{/ union}# à votre fichier #{persistence.conf}# pour
 obtenir une persistance complète.
 
+3~ Utilisation de plusieurs dispositifs de persistance
+
+Il existe différentes méthodes d'utilisation de multiples dispositifs de
+persistance pour les différents cas d'utilisation. Par exemple, utiliser
+plusieurs dispositifs à la fois ou en sélectionner un seul, entre plusieurs,
+à des fins très spécifiques.
+
 Plusieurs volumes overlays différents (avec leurs propres fichiers
 #{persistence.conf}#) peuvent être utilisés au même temps, mais si plusieurs
 volumes rendent le même répertoire persistant, un seul d'entre eux sera
@@ -301,13 +308,29 @@ sont énumérés dans le même fichier #{persistence.conf}#. Voir la page de
 manuel persistence.conf(5) pour savoir comment gérer ce cas si vous en avez
 vraiment besoin (remarque: ce n'est généralement pas le cas).
 
-3~ Utilisation de plusieurs dispositifs de persistance
+Un cas d'utilisation possible: Si vous souhaitez stocker les données de
+l'utilisateur, c'est-à-dire #{/home}# et les données du superutilisateur,
+c'est-à-dire #{/root}# dans des partitions différentes, créer deux
+partitions avec l'étiquette #{persistence}# et ajouter un fichier
+#{persistence.conf}# dans chacun comme ça #{# echo "/home" >
+persistence.conf}# pour la première partition qui permettra de sauver les
+fichiers de l'utilisateur et #{# echo "/root" > persistence.conf}# pour la
+seconde partition qui permettra de stocker les fichiers du
+superutilisateur. Enfin, utiliser le paramètre d'amorçage #{persistence}#.
 
 Si un utilisateur a besoin de stockages persistants multiples du même type
-pour différents endroits ou essais, tel que #{persistence-private}# et
-#{persistence-work}#, le paramètre de démarrage #{persistence-label}#
-utilisé en conjonction avec le paramètre de démarrage #{persistence}#
-permettra de multiples mais uniques supports persistants. Dans le cas où un
-utilisateur voudrait utiliser une partition persistante étiquetée
-#{persistence-subText}#, il utiliserait les paramètres de démarrage:
-#{persistence}# #{persistence-label=subText}#.
+pour différents endroits ou essais, tel que #{private}# et #{work}#, le
+paramètre de démarrage #{persistence-label}# utilisé en conjonction avec le
+paramètre de démarrage #{persistence}# permettra de multiples mais uniques
+supports persistants. Dans le cas où un utilisateur voudrait utiliser une
+partition persistante étiquetée #{private}#, pour des données personelles
+comme les marque-pages du navigateur ou d'autres types, il utiliserait les
+paramètres de démarrage: #{persistence}# #{persistence-label=private}#. Et
+pour stocker des données liées au travail, comme des documents, des projets
+de recherche ou d'autres types, il utiliserait les paramètres de démarrage:
+#{persistence}# #{persistence-label=work}#.
+
+Il est important de se rappeler que chacun de ces volumes, #{private}# et
+#{work}#, a également besoin d'un fichier #{persistence.conf}# dans sa
+racine. La page de manuel live-boot contient plus d'informations sur la
+façon d'utiliser ces étiquettes avec des noms ancients.

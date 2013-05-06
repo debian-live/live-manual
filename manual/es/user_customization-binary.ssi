@@ -2,32 +2,28 @@
 
 1~customizing-binary Personalización de la imagen binaria
 
-2~ Gestor de arranque
+2~ Gestores de arranque
 
 live-build utiliza /{syslinux}/ y algunos de sus derivados (en función del
 tipo de imagen) como gestores de arranque por defecto. Se pueden
-personalizar fácilmente de dos maneras.
+personalizar fácilmente para satisfacer todas las necesidades.
 
 Para utilizar un tema completo, copiar #{/usr/share/live/build/bootloaders}#
 en #{config/bootloaders}# y editar los ficheros allí. Si no se desea
-modificar todas las configuraciones del gestor de arranque disponibles, es
-suficiente con sólo proporcionar una copia local personalizada de uno de los
-gestores de arranque, por ejemplo, copiar la configuración de *{isolinux}*
-en #{config/bootloaders/isolinux}# es suficiente, dependiendo del caso de
-uso.
+modificar todas las configuraciones de los gestores de arranque disponibles,
+es suficiente con sólo proporcionar una copia local personalizada de uno,
+por ejemplo, copiar la configuración de *{isolinux}* en
+#{config/bootloaders/isolinux}# es suficiente, dependiendo del caso de uso.
 
-Se pueden hacer cambios más pequeños. Por ejemplo, los derivados de syslinux
-están configurados por defecto con un tiempo de espera de 0 (cero) lo que
-significa que harán una pausa indefinida en su pantalla de inicio hasta que
-se pulse una tecla.
+Hay muchas posibilidades a la hora de hacer cambios. Por ejemplo, los
+derivados de syslinux están configurados por defecto con un tiempo de espera
+de 0 (cero) lo que significa que harán una pausa indefinida en su pantalla
+de inicio hasta que se pulse una tecla.
 
 Para modificar el tiempo de espera de arranque de una imagen #{iso-hybrid}#
-se puede editar un fichero *{isolinux.cfg}* especificando el tiempo de
-espera en unidades de segundo y agregarlo a
-#{config/includes.binary/isolinux/}#
-
-Un fichero *{isolinux.cfg}* modificado para arrancar después de cinco
-segundos sería así:
+se puede editar el fichero *{isolinux.cfg}* especificando el tiempo en
+unidades de segundo 1/10. Un fichero *{isolinux.cfg}* modificado para
+arrancar después de cinco segundos sería así:
 
 code{
 
@@ -38,20 +34,9 @@ code{
 
 }code
 
-Una forma alternativa de lograr el mismo objetivo podría ser escribiendo un
-script gancho y agregarlo a #{config/hooks/}#. Recordar añadir el sufijo
-.binary para que sea ejecutado en la etapa binary. Un ejemplo podría ser:
-
-code{
-
- #!/bin/sh
-
- sed -i -e 's|timeout 0|timeout 50|' binary/isolinux/isolinux.cfg
-
-}code
-
-Del mismo modo, si se quiere usar una splash.png personalizada basta con
-añadir una imagen de 640x480 píxeles en #{config/includes.binary/isolinux/}#
+Si se quiere utilizar una imagen de fondo personalizada que se mostrará
+junto con el menú de arranque, añadir una imagen splash.png de 640x480
+píxeles.
 
 2~ Metadatos ISO
 

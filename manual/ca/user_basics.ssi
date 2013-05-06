@@ -12,9 +12,9 @@ construcció d'una imatge tipus #{netboot}#, que és una mica més complicat a
 causa de la configuració necessària en el servidor. Aquest és un tema una
 mica avançat per a algú que no està familiaritzat ja amb l'arrencada en
 xarxa, però s'inclou aquí perquè un cop que la configuració es porta a
-terme, es tracta d'una forma molt convenient per provar i desplegar imatges
-per a l'arrencada en xarxa local sense la molèstia de tractar amb els
-dispositius de les imatges.
+terme, es tracta d'una forma molt convenient per a provar i desplegar
+imatges per a l'arrencada en xarxa local sense la molèstia de tractar amb
+els dispositius de les imatges.
 
 Al llarg del capítol, sovint es fa referència als noms dels fitxers produïts
 per defecte per live-build. Si es {descarrega una imatge
@@ -25,44 +25,46 @@ direrents.
 
 Un sistema viu és un sistema operatiu que arrenca en un equip des d'un
 dispositiu extraïble, com un CD-ROM o una memòria USB o des d'una xarxa, a
-punt per fer servir sense cap tipus d'instaŀlació en la unitat(s)
+punt per a fer servir sense cap tipus d'instaŀlació en la unitat(s)
 habitual(s), amb una configuració automàtica feta en temps d'execució (veure
 {Termes}#terms).
 
-Amb Debian Live, és un sistema operatiu Debian GNU/Linux, construït per una
-de les arquitectures suportades (actualment amd64 i i386). Conté les
-següents parts:
+Amb live systems, és un sistema operatiu, construït per a una de les
+arquitectures suportades (actualment amd64 i i386). Conté les següents
+parts:
 
 _* *{Imatge del nucli Linux}*, generalment s'anomena #{vmlinuz*}#
 
 _* *{Imatge del disc RAM inicial (initrd)}*: un disc RAM configurat per a
 l'arrencada de Linux, que conté els mòduls que possiblement es necessitaran
-per muntar la imatge del sistema i algunes seqüències d'ordres per fer-ho.
+per a muntar la imatge del sistema i algunes seqüències d'ordres per a
+fer-ho.
 
 _* *{Imatge del sistema}*: Imatge del sistema de fitxers del sistema
 operatiu. Normalment, s'utilitza un sistema de fitxers comprimit SquashFS
-per minimitzar la mida de la imatge Debian Live. Tenir en compte que és de
-només lectura. Així, durant l'arrencada, el sistema Debian Live utilitzarà
-el disc RAM i un mecanisme de "unió" per permetre l'escriptura de fitxers en
-el sistema en funcionament. No obstant això, totes les modificacions es
-perdran al apagar l'equip si no és que s'utilitza la persistència opcional
-(vegeu {Persistència}#persistence).
+per a minimitzar la mida de la imatge. Tenir en compte que és de només
+lectura. Així, durant l'arrencada, el sistema Debian Live utilitzarà el disc
+RAM i un mecanisme de "unió" per a permetre l'escriptura de fitxers en el
+sistema en funcionament. No obstant això, totes les modificacions es perdran
+al apagar l'equip si no és que s'utilitza la persistència opcional (vegeu
+{Persistència}#persistence).
 
-_* *{Carregador d'arrencada }*: Una petita peça de codi dissenyat per
+_* *{Carregador d'arrencada }*: Una petita peça de codi dissenyat per a
 arrencar des del medi triat, possiblement presentant un indicador
-d'arrencada o un menú per permetre la selecció
-d'opcions/configuració. Carrega el nucli de Linux i el seu initrd per
+d'arrencada o un menú per a permetre la selecció
+d'opcions/configuració. Carrega el nucli de Linux i el seu initrd per a
 funcionar amb un sistema de fitxers del sistema associat. Es poden utilitzar
 diverses solucions, en funció del medi de destinació i el format del sistema
-de fitxers que conté els components esmentats anteriorment: isolinux per
-arrencar des de CD o DVD en format ISO9660, syslinux per una unitat USB o
-HDD que s'iniciarà des de particions VFAT, extlinux per particions ext2/3/4
-i btrfs, pxelinux per PXE netboot, GRUB per particions ext2/3/4, etc.
+de fitxers que conté els components esmentats anteriorment: isolinux per a
+arrencar des de CD o DVD en format ISO9660, syslinux per a una unitat USB o
+HDD que s'iniciarà des de particions VFAT, extlinux per a particions
+ext2/3/4 i btrfs, pxelinux per a PXE netboot, GRUB per a particions
+ext2/3/4, etc.
 
-Es pot utilitzar live-build per construir la imatge del sistema amb
+Es pot utilitzar live-build per a construir la imatge del sistema amb
 especificacions pròpies, configurar un nucli de Linux, el initrd, i un
-carregador d'arrencada per executar-los, tot això en un format depenent del
-medi (imatge ISO9660, imatge de disc, etc.).
+carregador d'arrencada per a executar-los, tot això en un format depenent
+del medi (imatge ISO9660, imatge de disc, etc.).
 
 2~downloading-prebuilt-images Descàrrega d'imatges prefabricades
 
@@ -75,13 +77,13 @@ live-images}#clone-configuration-via-git i les versions oficials estables es
 publiquen a http://www.debian.org/CD/live/. A més, les versions antigues i
 les futures, i les imatges no oficials que contenen microprogramari i
 controladors no lliures estan disponibles a
-http://live.debian.net/cdimage/release/.
+http://live-systems.org/cdimage/release/.
 
 2~using-web-builder Ús del servei de construcció d'imatges en viu web
 
 Com un servei a la comunitat, oferim un servei web capaç de construïr
 imatges en viu a http://live-build.debian.net/. Aquest lloc es mantingut
-sobre una base del millor esforç. És a dir, encara que ens esforcem per
+sobre una base del millor esforç. És a dir, encara que ens esforcem per a
 mantenir-lo al dia i que estigui operatiu en tot moment, i de fer anuncis
 d'interrupcions importants del servei, no podem garantir una disponibilitat
 del 100% o una creació d'imatges ràpida. Tanmateix, el servei pot tenir, de
@@ -100,13 +102,13 @@ no canvia aquests valors predeterminats. En particular, si es canvia
 #{--architectures}# del valor per defecte #{i386}# a #{amd64}#, s'ha de
 canviar l'opció corresponent #{--linux-flavours}# del valor per defecte
 #{486}# a #{amd64}#. Veure la pàgina del manual #{lb_config}# per a la
-versió de live-build instaŀlada al constructor web per més detalls. El
+versió de live-build instaŀlada al constructor web per a més detalls. El
 nombre de la versió de live-build apareix a la part inferior de la pàgina
 web.
 
 El càlcul de temps donat pel constructor web és només una estimació
 aproximada i pot no reflectir acuradament el temps que realment es necessita
-per finalitzar la construcció d'una imatge. Tenir en compte que aquesta
+per a finalitzar la construcció d'una imatge. Tenir en compte que aquesta
 estimació tampoc s'actualitza tal i com va passant el temps. Cal tenir una
 mica de paciència. No tornar a carregar la pàgina després de enviar la
 proposta de construcció, ja que això pot tornar a reenviar una nova petició
@@ -124,11 +126,11 @@ live-build.
 2~building-iso-hybrid Primers passos: construcció d'una imatge ISO híbrida
 
 Independentment del tipus d'imatge, s'haurà de fer els mateixos passos
-bàsics per construir una imatge cada vegada. Com a primer exemple, crear un
-directori de treball, canviar a aquest directori i executar la següent
-seqüència d'ordres live-build per crear una imatge ISO híbrida de base que
-conté només el sistema per defecte de Debian sense X.org. És adequat per
-gravar en un CD o DVD, i també per copiar en una memòria USB.
+bàsics per a construir una imatge cada vegada. Com a primer exemple, crear
+un directori de treball, canviar a aquest directori i executar la següent
+seqüència d'ordres live-build per a crear una imatge ISO híbrida de base que
+conté només el sistema per defecte de Debian sense X.org. És adequat per a
+gravar en un CD o DVD, i també per a copiar en una memòria USB.
 
 El nom del directori de treball és absolutament indiferent, però si es fa un
 cop d'ull als exemples utilitzats a live-manual, és una bona idea utilitzar
@@ -144,7 +146,7 @@ code{
 }code
 
 Aleshores, executar l'ordre #{lb config}#. Això crearà una jerarquia
-«config/» en el directori actual per ser utilitzada per altres ordres:
+«config/» en el directori actual per a ser utilitzada per a altres ordres:
 
 code{
 
@@ -153,7 +155,7 @@ code{
 }code
 
 Aquí no es passa cap paràmetre a #{lb config}#, per tant s'utilitzaran les
-opcions per defecte. Veure {L'ordre lb config}#lb-config per més detalls.
+opcions per defecte. Veure {L'ordre lb config}#lb-config per a més detalls.
 
 Ara que la jerarquia «config/» ja existeix, crear la imatge amb l'ordre #{lb
 build}#:
@@ -166,7 +168,7 @@ code{
 
 Aquest procés tardarà una mica, depenent de la velocitat del ordinador i de
 la connexió de la xarxa. Quan hagi acabat, ha d'haver un fitxer imatge
-#{binary.hybrid.iso}#, a punt per ser utilitzar, en el directori actual.
+#{binary.hybrid.iso}#, a punt per a ser utilitzat, en el directori actual.
 
 2~using-iso-hybrid Usar una imatge ISO híbrida en viu
 
@@ -178,7 +180,7 @@ CD-R(W) o DVD-R(W) o una memòria USB.
 3~burning-iso-image Gravar una imatge ISO en un medi físic
 
 Gravar una imatge ISO és fàcil. Simplement cal instaŀlar /{xorriso}/ i
-utilitzar-lo des de la línia d'ordres per gravar la imatge. Per exemple:
+utilitzar-lo des de la línia d'ordres per a gravar la imatge. Per exemple:
 
 code{
 
@@ -212,10 +214,10 @@ code{
 
 3~using-usb-extra-space Utilitzar l'espai lliure en una memòria USB
 
-Per poder utilitzar l'espai que queda lliure després de copiar
+Per a poder utilitzar l'espai que queda lliure després de copiar
 #{binary.hybrid.iso}# en un dispositiu USB, utilitzar una eina de
-particionament com /{gparted}/ o /{parted}/ per crear una nova partició. La
-primera partició serà utilitzada pel sistema Debian Live.
+particionament com /{gparted}/ o /{parted}/ per a crear una nova
+partició. La primera partició serà utilitzada pel sistema en viu.
 
 code{
 
@@ -235,7 +237,7 @@ code{
 
 *{Nota:}* Si es vol utilitzar l'espai addicional amb Windows, pel que sembla, aquest sistema operatiu normalment no pot accedir a altres particions més que a la primera. Algunes solucions a aquest problema han estat discutides a la nostra {llista de correu}#contact, però sembla que no hi ha respostes fàcils.
 
-*{Recordar: Cada vegada que s'instaŀli una nova binary.hybrid.iso al dispositiu, es perdran totes les dades perquè la taula de particions se sobreescriu amb el contingut de la imatge, de manera que es assenyat fer una còpia de seguretat de la partició addicional per restaurar les dades de nou després d'actualitzar la imatge en viu.}*
+*{Recordar: Cada vegada que s'instaŀli una nova binary.hybrid.iso al dispositiu, es perdran totes les dades perquè la taula de particions se sobreescriu amb el contingut de la imatge, de manera que es assenyat fer una còpia de seguretat de la partició addicional per a restaurar les dades de nou després d'actualitzar la imatge en viu.}*
 
 3~booting-live-medium Arrencar el medi en viu
 
@@ -243,27 +245,27 @@ La primera vegada que s'arrenqui el medi en viu, ja sigui des de CD, DVD,
 memòria USB, o PXE, pot ser necessaria alguna petita configuració al BIOS
 del ordinador en primer lloc. Atès que les BIOS varien molt en les seves
 funcions i dreceres de teclat, no podem entrar en el tema en profunditat
-aquí. Algunes BIOS proporcionen una tecla per obrir un menú de dispositius
+aquí. Algunes BIOS proporcionen una tecla per a obrir un menú de dispositius
 d'arrencada, que és la manera més fàcil si es troba disponible al
 sistema. En cas contrari, cal entrar al menú de configuració del BIOS i
-canviar l'ordre d'arrencada per situar el dispositiu del sistema en viu
+canviar l'ordre d'arrencada per a situar el dispositiu del sistema en viu
 abans que el dispositiu d'arrencada normal.
 
 Després d'arrencar des del dispositiu, es veurà un menu d'inici. Si es prem
 «entrer» el sistema s'iniciarà amb l'entrada #{Live}# i les seves opcions
-per defecte. Per obtenir més informació sobre les opcions d'arrencada,
+per defecte. Per a obtenir més informació sobre les opcions d'arrencada,
 llegir «l'ajuda» (help) al menú i també les pàgines del manual de live-boot
 i live-config que es troben dins del sistema en viu.
 
 Suposant que s'ha seleccionat #{Live}# i s'ha arrencat una imatge
 d'escriptori per defecte, després que els missatges d'arrencada hagin passat
 s'haurà iniciat una sessió com a usuari #{user}# i es veurà un escriptori, a
-punt per ser utilitzat. Si s'ha arrencat una imatge de només consola, com
+punt per a ser utilitzat. Si s'ha arrencat una imatge de només consola, com
 les {imatges prefabricades}#downloading-prebuilt-images, #{standard}# o
 #{rescue}# s'iniciarà una sessió com a usuari #{user}# i es veurà el
-indicador de la shell, a punt per ser utilitzat.
+indicador de la shell, a punt per a ser utilitzat.
 
-2~using-virtual-machine Utilitzar una màquina virtual per fer proves
+2~using-virtual-machine Utilitzar una màquina virtual per a fer proves
 
 Pot ser un gran estalvi de temps per al desenvolupament d'imatges en viu
 executar-les en una màquina virtual (VM). Això no està exempt
@@ -318,7 +320,7 @@ Veure les pàgines del manual per a més detalls
 
 3~testing-iso-with-virtualbox Provar una imatge ISO amb virtualbox
 
-Per provar la ISO amb /{virtualbox}/:
+Per a provar la ISO amb /{virtualbox}/:
 
 code{
 
@@ -329,9 +331,10 @@ code{
 }code
 
 Crear una nova màquina virtual, canviar els paràmetres d'emmagatzematge per
-utilitzar #{binary.hybrid.iso}# com  unitat de CD/DVD i arrencar la màquina.
+a utilitzar #{binary.hybrid.iso}# com  unitat de CD/DVD i arrencar la
+màquina.
 
-*{Nota:}* Per provar sistemes vius que contenen X.org amb /{virtualbox}/, segurament es assenyat incloure el paquet del driver VirtualBox X.org, /{virtualbox-guest-dkms}/ i /{virtualbox-guest-x11}/, en la configuració de live-build. En cas contrari, la resolució es limita a 800x600.
+*{Nota:}* Per a provar sistemes vius que contenen X.org amb /{virtualbox}/, segurament es assenyat incloure el paquet del driver VirtualBox X.org, /{virtualbox-guest-dkms}/ i /{virtualbox-guest-x11}/, en la configuració de live-build. En cas contrari, la resolució es limita a 800x600.
 
 code{
 
@@ -340,7 +343,7 @@ code{
 }code
 
 Per tal de fer que el paquet dkms funcioni, s'han d'instaŀlar també les
-capçaleres del nucli per la variant del nucli de la imatge. En lloc
+capçaleres del nucli per a la variant del nucli de la imatge. En lloc
 d'enumerar manualment el paquet /{linux-headers}/ correcte en la llista de
 paquets creat anteriorment, la selecció del paquet adequat es pot fer
 automàticament amb live-build.
@@ -355,10 +358,10 @@ code{
 
 Construir una imatge HDD és similar a una ISO híbrida en tots els aspectes,
 excepte que s'especifica #{-b hdd}#, que el nom del fitxer resultant és
-#{binary.img}# i que no es pot gravar en medis òptics. És adequada per
+#{binary.img}# i que no es pot gravar en medis òptics. És adequada per a
 arrencar des de dispositius USB, discs durs USB, i altres dispositius
 d'emmagatzematge portàtils. Normalment, una imatge ISO híbrida es pot
-utilitzar per aquest propòsit en el seu lloc, però si el BIOS no maneja
+utilitzar per a aquest propòsit en el seu lloc, però si el BIOS no maneja
 adequadament les imatges híbrides, cal utilitzar una imatge HDD.
 
 *{Nota:}* si s'ha creat una imatge ISO híbrida amb l'exemple anterior, s'haurà de netejar el directori de treball amb l'ordre #{lb clean}# (veure {L'ordre lb clean}#lb-clean):
@@ -390,13 +393,13 @@ Quan la construcció acabi, hauria d'haver un fitxer #{binary.img}# al
 directori actual.
 
 La imatge binària generada conté una partició VFAT i el carregador
-d'arrencada syslinux, llestos per ser escrits directament a una memòria
+d'arrencada syslinux, llestos per a ser escrits directament a una memòria
 USB. Un cop més, donat que l'ús d'una imatge HDD és com utilitzar una imatge
 ISO híbrida en un USB, seguir les instruccions de {Usar una imatge ISO
 híbrida en viu}#using-iso-hybrid, però amb el nom de fitxer #{binary.img}#
 en lloc de #{binary.hybrid.iso}#.
 
-Igualment, per provar una imatge HDD amb Qemu, instaŀlar /{qemu}/ com s'ha
+Igualment, per a provar una imatge HDD amb Qemu, instaŀlar /{qemu}/ com s'ha
 descrit anteriorment a {Provar una imatge ISO amb
 QEMU}#testing-iso-with-qemu. A continuació, executar #{kvm}# o #{qemu}#,
 segons la versió instaŀlada al sistema amfitrió, especificant #{binary.img}#
@@ -422,20 +425,20 @@ code{
 
 }code
 
-En aquest cas concret, un #{lb clean --binary}# no seria insuficient per
+En aquest cas concret, un #{lb clean --binary}# no seria suficient per a
 netejar les etapes necessàries. La causa d'això és que en les configuracions
 d'arrencada en xarxa, es necessita una configuració initramfs diferent que
 live-build realitza automàticament quan es construeixen imatges netboot. Ja
 que la creació del initramfs pertany a l'etapa chroot, fer el canvi a
 netboot en un directori de construcció existent significa reconstruir
 l'etapa chroot també. Per tant, s'ha de fer un #{lb clean}# (que eliminarà
-l'etapa chroot, també).
+l'etapa chroot, també)
 
-Executar l'ordre següent per configurar la imatge per arrencar en xarxa:
+Executar l'ordre següent per a configurar la imatge per a arrencar en xarxa:
 
 code{
 
- $ lb config -b netboot --net-root-path "/srv/debian-live" --net-root-server "192.168.0.1"
+ $ lb config -b netboot --net-root-path "/srv/debian-live" --net-root-server "192.168.0.2"
 
 }code
 
@@ -445,7 +448,7 @@ través de NFS. Amb lb config es poden elegir diferents sistemes de fitxers
 de xarxa. Les opcions #{--net-root-path}# i #{--net-root-server}#
 especifiquen la ubicació i el servidor, respectivament,  del servidor NFS on
 es troba la imatge del sistema de fitxers a l'hora d'arrencar. Assegurar-se
-que aquests s'ajusten als valors adequats per la xarxa i el servidor.
+que aquests s'ajusten als valors adequats per a la xarxa i el servidor.
 
 Ara construir la imatge amb l'ordre #{lb build}#:
 
@@ -457,7 +460,7 @@ code{
 
 En l'arrencada en xarxa, el client executa una petita peça de programari que
 normalment es troba a la EPROM de la targeta Ethernet. Aquest programa envia
-una petició DHCP per obtenir una adreça IP i la informació sobre què fer a
+una petició DHCP per a obtenir una adreça IP i la informació sobre què fer a
 continuació. Per regla general, el següent pas és aconseguir un carregador
 d'arrencada de més alt nivell a través del protocol TFTP. Podria ser GRUB,
 pxelinux o fins i tot arrencar directament a un sistema operatiu com Linux.
@@ -465,18 +468,18 @@ pxelinux o fins i tot arrencar directament a un sistema operatiu com Linux.
 Per exemple, si es descomprimeix el arxiu #{binary.netboot.tar}# generat al
 directori #{/srv/debian-live}#, es trobarà  la imatge del sistema de fitxers
 a #{live/filesystem.squashfs}# i el nucli, initrd i carregador d'arrencada
-pxelinux a #{tftpboot/debian-live/i386}#.
+pxelinux a #{tftpboot/}#.
 
-Ara hem de configurar els tres serveis al servidor per l'arrencada en xarxa:
-el servidor DHCP, servidor TFTP i el servidor NFS.
+Ara hem de configurar els tres serveis al servidor per a l'arrencada en
+xarxa: el servidor DHCP, servidor TFTP i el servidor NFS.
 
 3~ Servidor DHCP 
 
-S'ha de configurar el servidor DHCP de la xarxa per assegurar-se que dona
-una adreça IP per al client del sistema d'arrencada en xarxa, i per anunciar
-la ubicació del carregador d'arrencada PXE.
+S'ha de configurar el servidor DHCP de la xarxa per a assegurar-se que dona
+una adreça IP per al client del sistema d'arrencada en xarxa, i per a
+anunciar la ubicació del carregador d'arrencada PXE.
 
-Heus aquí un exemple per servir d'inspiració, escrit per al servidor ISC
+Heus aquí un exemple per a servir d'inspiració, escrit per al servidor ISC
 DHCP #{isc-dhcp-server}# al fitxer de configuració #{/etc/dhcp/dhcpd.conf}#:
 
 code{
@@ -495,8 +498,11 @@ code{
 
  subnet 192.168.0.0 netmask 255.255.255.0 {
    range 192.168.0.1 192.168.0.254;
-   next-server servername;
    filename "pxelinux.0";
+   next-server 192.168.0.2;
+   option subnet-mask 255.255.255.0;
+   option broadcast-address 192.168.0.255;
+   option routers 192.168.0.1;
 }
 
 }code
@@ -546,8 +552,8 @@ code{
 }code
 
 La configuració d'aquests tres serveis pot ser una mica difícil. És possible
-que es necessiti una mica de paciència per aconseguir que tots tres
-funcionin plegats. Per obtenir més informació, veure el wiki de syslinux a
+que es necessiti una mica de paciència per a aconseguir que tots tres
+funcionin plegats. Per a obtenir més informació, veure el wiki de syslinux a
 http://www.syslinux.org/wiki/index.php/PXELINUX o la secció TFTP Net Booting
 al Manual del Instaŀlador de Debian a
 http://d-i.alioth.debian.org/manual/en.i386/ch04s05.html. Això pot ajudar,
@@ -558,7 +564,7 @@ ja que els seus processos són molt similars.
 La creació d'imatges d'arrencada en xarxa es senzilla amb live-build, però
 provar les imatges en màquines físiques pot costar molt de temps.
 
-Per fer la nostra vida més fàcil, podem utilitzar la virtualització.
+Per a fer la nostra vida més fàcil, podem utilitzar la virtualització.
 
 3~ Qemu
 

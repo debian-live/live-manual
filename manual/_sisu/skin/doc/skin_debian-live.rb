@@ -10,13 +10,13 @@ module SiSU_Viz
     end
   #% url
     def url_root_http
-      'http://live.debian.net/manual/'
+      'http://live-systems.org/manual/'
     end
     def url_home
-      'http://live.debian.net/'
+      'http://live-systems.org/'
     end
     def url_site # used in pdf header
-      'http://live.debian.net'
+      'http://live-systems.org'
     end
     def url_txt # text to go with url usually stripped url
       ''
@@ -64,13 +64,13 @@ module SiSU_Viz
   end
   class TeX
     def header_center
-      "\\chead{\\href{#{@vz.url_site}/}{live.debian.net}}"
+      "\\chead{\\href{#{@vz.url_site}/}{live-systems.org}}"
     end
     def home_url
-      "\\href{#{@vz.url_site}/}{live.debian.net}"
+      "\\href{#{@vz.url_site}/}{live-systems.org}"
     end
     def home
-      "\\href{#{@vz.url_site}/}{Debian Live}"
+      "\\href{#{@vz.url_site}/}{Live Systems}"
     end
     def owner_chapter
       "Document owner details"

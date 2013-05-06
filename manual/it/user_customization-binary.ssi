@@ -6,7 +6,7 @@
 
 live-build usa /{syslinux}/ e alcuni dei suoi derivati (a seconda del tipo
 di immagine) come bootloader predefiniti. Si possono facilmente
-personalizzare in due modi.
+personalizzare per soddisfare le proprie esigenze.
 
 Per utilizzare un tema completo, copiare
 #{/usr/share/live/build/bootloaders}# in #{config/bootloaders}# e modificare
@@ -15,17 +15,15 @@ supportati è sufficiente fornire la copia locale di uno di essi, ad esempio
 *{isolinux}* in #{config/bootloaders/isolinux}# può bastare, dipende dalle
 esigenze.
 
-Si può anche fare piccole modifiche. Per esempio i derivati di syslinux sono
-configurati con un timeout impostato a 0 (zero) in modo predefinito,
-significa che resteranno in pausa al loro splash screen fino a quando non si
-preme un tasto.
+Quando si tratta di fare modifiche ci sono varie possibilità. Per esempio i
+derivati di syslinux sono configurati con un timeout impostato a 0 (zero) in
+modo predefinito, significa che resteranno in pausa al loro splash screen
+fino a quando non si preme un tasto.
 
 Per modificare il timeout di avvio di un'immagine #{iso-hybrid}# modificare
 un file *{isolinux.cfg}* predefinito specificando il timeout in unità di
-secondi e aggiungerlo a #{config/includes.binary/isolinux/}#
-
-Un file *{isolinux.cfg}* modificato per fare il boot dopo cinque secondi
-sarà simile a questo:
+1/10 di secondo. Un file *{isolinux.cfg}* modificato per effettuare il boot
+dopo cinque secondi sarebbe simile a questo:
 
 code{
 
@@ -36,21 +34,8 @@ code{
 
 }code
 
-Un modo alternativo per raggiungere lo stesso obiettivo potrebbe essere
-scrivere un hook e aggiungerlo a #{config/hooks/}#. Ricordarsi di aggiungere
-il suffisso #{.binary}# per eseguirsi nella fase binaria. Ecco un esempio:
-
-code{
-
- #!/bin/sh
-
- sed -i -e 's|timeout 0|timeout 50|' binary/isolinux/isolinux.cfg
-
-}code
-
-Allo stesso modo, se si vuole utilizzare un'immagine splash.png
-personalizzata basta aggiungerne una di 640x480 pixel a
-#{config/includes.binary/isolinux/}#
+Se si vuole utilizzare un'immagine di sfondo che verrà visualizzata con il
+menù, aggiungere un file splash.png di 640x480 pixel.
 
 2~ Metadati ISO
 

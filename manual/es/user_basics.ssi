@@ -28,7 +28,7 @@ USB, o desde una red, listo para usar sin ningún tipo de instalación en la
 unidad de costumbre, con configuración automática en tiempo de ejecución
 (Ver {Términos}#terms).
 
-Debian Live, es un sistema Debian GNU/Linux, creado para una de las
+Con los sistemas en vivo, es un sistema operativo, creado para una de las
 arquitecturas soportadas (actualmente amd64 y i386). Se compone de las
 siguientes partes:
 
@@ -40,12 +40,12 @@ montar la imagen del sistema y algunos scripts para ponerlo en marcha.
 
 _* *{Imagen del sistema}*: La imagen del sistema de ficheros raíz. Por lo
 general, se utiliza un sistema de ficheros comprimido SquashFS para reducir
-al mínimo el tamaño de la imagen de Debian Live. Hay que tener en cuenta que
-es de sólo lectura. Por lo tanto, durante el arranque del sistema Debian
-Live se utiliza un disco RAM y un mecanismo de «unión» que permite escribir
-ficheros en el sistema en funcionamiento. Sin embargo, todas las
-modificaciones se perderán al apagar el equipo a menos que se use de modo
-opcional la persistencia (ver {Persistencia}#persistence).
+al mínimo el tamaño de la imagen en vivo. Hay que tener en cuenta que es de
+sólo lectura. Por lo tanto, durante el arranque del sistema en vivo se
+utiliza un disco RAM y un mecanismo de «unión» que permite escribir ficheros
+en el sistema en funcionamiento. Sin embargo, todas las modificaciones se
+perderán al apagar el equipo a menos que se use de modo opcional la
+persistencia (ver {Persistencia}#persistence).
 
 _* *{Gestor de arranque}*: Una pequeña pieza de código diseñada para
 arrancar desde el medio de almacenamiento escogido, posiblemente mostrando
@@ -76,7 +76,7 @@ live-images}#clone-configuration-via-git y las versiones estables oficiales
 se publican en http://www.debian.org/CD/live/. Además, las versiones
 antiguas y las futuras, así como las imágenes no oficiales que contienen
 firmware y drivers no libres están disponibles en
-http://live.debian.net/cdimage/release/.
+http://live-systems.org/cdimage/release/.
 
 2~using-iso-hybrid Uso del servicio de creación de imágenes web
 
@@ -100,7 +100,7 @@ valores predeterminados de otras opciones que figuran en el formulario web,
 el constructor web no cambia estos valores predeterminados. En particular,
 si se cambia #{--architectures}# del valor por defecto #{i386}# a #{amd64}#,
 se debe cambiar la opción correspondiente #{--linux-flavours}# del valor por
-defecto #{486}# to #{amd64}#. Ver la página de manual de #{lb_config}# para
+defecto #{486}# a #{amd64}#. Ver la página de manual de #{lb_config}# para
 para más detalles sobre la versión de live-build instalada en el constructor
 web. El número de versión de live-build aparece en la parte inferior de la
 página web del servicio de creación de imágenes.
@@ -217,8 +217,7 @@ code{
 Si se desea usar el espacio libre después de haber instalado la imagen
 #{binary.hybrid.iso}# en una llave USB, se puede usar un programa de
 particionado como /{gparted}/ o /{parted}/ para crear una partición nueva en
-el dispositivo. La primera partición será usada por el sistema Debian en
-vivo.
+el dispositivo. La primera partición será usada por el sistema en vivo.
 
 code{
 
@@ -442,7 +441,7 @@ imagen de arranque en red:
 
 code{
 
- $ lb config -b netboot --net-root-path "/srv/debian-live" --net-root-server "192.168.0.1"
+ $ lb config -b netboot --net-root-path "/srv/debian-live" --net-root-server "192.168.0.2"
 
 }code
 
@@ -474,9 +473,9 @@ un sistema operativo como Linux.
 Por ejemplo, si se descomprime el archivo generado #{binary.netboot.tar}# en
 el directorio #{/srv/debian-live}#, se verá la imagen del sistema de
 ficheros en #{live/filesystem.squashfs}# y el kernel, initrd y el gestor de
-arranque pxelinux en #{tftpboot/debian-live/i386}#.
+arranque pxelinux en #{tftpboot/}#.
 
-Ahora se debe configurar tres servicios en el servidor para que arranque en
+Ahora se debe configurar tres servicios en el servidor para el arranque en
 red: el servidor DHCP, el servidor TFTP y el servidor NFS.
 
 3~ Servidor DHCP
@@ -505,8 +504,11 @@ code{
 
  subnet 192.168.0.0 netmask 255.255.255.0 {
    range 192.168.0.1 192.168.0.254;
-   next-server servername;
    filename "pxelinux.0";
+   next-server 192.168.0.2;
+   option subnet-mask 255.255.255.0;
+   option broadcast-address 192.168.0.255;
+   option routers 192.168.0.1;
 }
 
 }code

@@ -29,9 +29,9 @@ ou sur un réseau, prêt à l'emploi sans aucune installation sur le disque
 habituel, avec auto-configuration fait lors de l'exécution (voir
 {Termes}#terms).
 
-Avec Debian Live, c'est un système Debian GNU/Linux, construit pour une des
-architectures prises en charge (actuellement amd64 et i386). Il est fait à
-partir des éléments suivants:
+Avec les systèmes live, c'est un système d'exploitation, construit pour une
+des architectures prises en charge (actuellement amd64 et i386). Il est fait
+à partir des éléments suivants:
 
 _* *{Image du noyau Linux}*, d'habitude appelé #{vmlinuz*}#
 
@@ -42,12 +42,12 @@ faire.
 
 _* *{Image du système}*: L'image du système de fichiers du système
 d'exploitation. Habituellement, un système de fichiers SquashFS comprimé est
-utilisé pour réduire au minimum la taille de l'image Debian Live. Notez
-qu'il est en lecture seulement. Ainsi, lors du démarrage du système Debian
-Live nous allons utiliser un disque RAM et un mécanisme "union" pour
-permettre l'écriture de fichiers dans le système en marche. Cependant,
-toutes les modifications seront perdues lors de l'arrêt à moins que l'option
-«persistance» soit utilisée (voir {Persistance}#persistence).
+utilisé pour réduire au minimum la taille de l'image live. Notez qu'il est
+en lecture seulement. Ainsi, lors du démarrage le système live va utiliser
+un disque RAM et un mécanisme "union" pour permettre l'écriture de fichiers
+dans le système en marche. Cependant, toutes les modifications seront
+perdues lors de l'arrêt à moins que l'option «persistance» soit utilisée
+(voir {Persistance}#persistence).
 
 _* *{Chargeur d'amorçage}*: Un petit morceau de code conçu pour démarrer à
 partir du support choisi, il peut présenter un menu rapide ou permettre la
@@ -75,7 +75,7 @@ git live-images}#clone-configuration-via-git et les versions officielles
 stables sont publiées sur http://www.debian.org/CD/live/. En outre, les
 versions plus anciennes et les futures, et des images non officielles
 contenant micrologiciels et pilotes non libres sont disponibles sur
-http://live.debian.net/cdimage/release/.
+http://live-systems.org/cdimage/release/.
 
 2~using-web-builder Utiliser le constructeur web d'images live
 
@@ -220,7 +220,7 @@ code{
 Pour utiliser l'espace libre restant après avoir copié #{binary.hybrid.iso}#
 sur une clé USB, utilisez un outil de partitionnement tel que /{gparted}/ ou
 /{parted}/ afin de créer une nouvelle partition sur la clé. La première
-partition sera utilisée par le système Debian Live.
+partition sera utilisée par le système live.
 
 code{
 
@@ -440,7 +440,7 @@ le réseau:
 
 code{
 
- $ lb config -b netboot --net-root-path "/srv/debian-live" --net-root-server "192.168.0.1"
+ $ lb config -b netboot --net-root-path "/srv/debian-live" --net-root-server "192.168.0.2"
 
 }code
 
@@ -469,13 +469,14 @@ chargeur d'amorçage de niveau supérieur via le protocole TFTP. Cela pourrait
 être pxelinux, GRUB, ou démarrer directement à un système d'exploitation
 comme Linux.
 
-Par exemple, si vous décompressez le fichier généré #{binary.netboot.tar}#
+Par exemple, si vous décompressez l'archive généré #{binary.netboot.tar}#
 dans le répertoire #{/srv/debian-live}#, vous trouverez l'image du système
 de fichiers dans #{live/filesystem.squashfs}# et le noyau, initrd et le
-chargeur d'amorçage pxelinux dans #{tftpboot/debian-live/i386}#.
+chargeur d'amorçage pxelinux dans #{tftpboot/}#.
 
 Nous devons maintenant configurer trois services sur le serveur pour activer
-le démarrage sur le réseau: le serveur DHCP, serveur TFTP et le serveur NFS.
+le démarrage sur le réseau: le serveur DHCP, le serveur TFTP et le serveur
+NFS.
 
 3~ Serveur DHCP
 
@@ -503,8 +504,11 @@ code{
 
  subnet 192.168.0.0 netmask 255.255.255.0 {
    range 192.168.0.1 192.168.0.254;
-   next-server servername;
    filename "pxelinux.0";
+   next-server 192.168.0.2;
+   option subnet-mask 255.255.255.0;
+   option broadcast-address 192.168.0.255;
+   option routers 192.168.0.1;
 }
 
 }code

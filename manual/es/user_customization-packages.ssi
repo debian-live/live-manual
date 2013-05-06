@@ -3,15 +3,15 @@
 1~customizing-package-installation Personalización de la instalación de
 paquetes
 
-Quizás la tarea más básica de personalización en Debian Live es la selección
-de paquetes que serán incluidos en la imagen. Este capítulo orienta a través
-de las diferentes opciones de live-build que, en el momento de la creación
-de la imagen, personalizan la instalación de paquetes. Las opciones que
-seleccionan la distribucion base y las áreas del archivo Debian a utilizar
-son las que más influyen a la hora de conocer qué paquetes estarán
+Quizás la tarea más básica de personalización de un sistema en vivo es la
+selección de paquetes que serán incluidos en la imagen. Este capítulo
+orienta a través de las diferentes opciones de live-build que, en el momento
+de la creación de la imagen, personalizan la instalación de paquetes. Las
+opciones que seleccionan la distribucion base y las áreas del archivo a
+utilizar son las que más influyen a la hora de conocer qué paquetes estarán
 disponibles para su instalación en la imagen. Para asegurar una buena
-velocidad de descarga de paquetes, se debería elegir el repositorio Debian
-más cercano. Se pueden añadir repositorios para backports, experimentales,
+velocidad de descarga de paquetes, se debería elegir el repositorio más
+cercano. Se pueden añadir repositorios para backports, experimentales,
 paquetes personalizados o incluir ficheros de paquetes directamente. Se
 pueden definir listas de paquetes personalizadas, incluyendo metapaquetes
 que instalarán muchos paquetes relacionados, como por ejemplo paquetes de un
@@ -29,14 +29,14 @@ pinning, por nombrar algunas posibilidades.
 
 La distribución seleccionada tiene gran impacto en qué paquetes están
 disponibles para incluir en la imagen. Se debe indicar el nombre en clave de
-la distribución, que por defecto es wheezy para la versión wheezy de
+la distribución, que por defecto es ${testing} para la versión ${testing} de
 live-build. Se puede especificar cualquier nombre de distribución disponible
-en los repositorios Debian indicando su nombre en clave. (Para más detalles
-ver {Términos}#terms). La opción #{--distribution}# no solamente influencia
-la fuente de los paquetes dentro del archivo Debian, sino que instruye a
-live-build a comportarse tal y como se necesita para construir cada una de
-las distribuciones. Por ejemplo, para construir la versión *{inestable}*,
-sid, se debe indicar: 
+en los repositorios indicando su nombre en clave. (Para más detalles ver
+{Términos}#terms). La opción #{--distribution}# no solamente influencia la
+fuente de los paquetes dentro del archivo, sino que instruye a live-build a
+comportarse tal y como se necesita para construir cada una de las
+distribuciones. Por ejemplo, para construir la versión *{inestable}*, sid,
+se debe indicar: 
 
 code{
 
@@ -68,7 +68,7 @@ archivos específicas de esa distribución derivada en lugar de los propios de
 Debian y live-build modificará su comportamiento para adecuarlo al modo
 seleccionado.
 
-*{Nota:}* La ayuda a los usuarios de las distribuciones para las cuales se añadieron estos modos son responsabilidad de los desarrolladores de dichas distribuciones. El proyecto Debian Live proporciona ayuda al desarrollo de la mejor manera posible, basándose en la información recogida de dichas distribuciones derivadas a pesar de que no desarrolla ni da soporte a las mismas.
+*{Nota:}* La ayuda a los usuarios de las distribuciones para las cuales se añadieron estos modos son responsabilidad de los desarrolladores de dichas distribuciones. El proyecto Live Systems proporciona ayuda al desarrollo de la mejor manera posible, basándose en la información recogida de dichas distribuciones derivadas a pesar de que no desarrolla ni da soporte a las mismas.
 
 3~ Réplicas de Distribución Debian
 
@@ -146,7 +146,7 @@ imagen.
 
 code{
 
- deb http://live.debian.net/ sid-snapshots main contrib non-free
+ deb http://live-systems.org/ sid-snapshots main contrib non-free
 
 }code
 
@@ -170,7 +170,7 @@ automáticamente al sistema en vivo en el directorio
 
 code{
 
- $ lb config --archives live.debian.net
+ $ lb config --archives live-systems.org
 
 }code
 
@@ -210,7 +210,7 @@ code{
 
 Esto reemplaza el antiguo método de listas predefinidas compatible con
 #{live-build}# 2.x. A diferencia de las listas predefinidas, los
-metapaquetes de tareas no son específicos del proyecto Debian Live. Por el
+metapaquetes de tareas no son específicos del proyecto Live Systems. Por el
 contrario, son mantenidas por grupos de especialistas que trabajan en la
 distribución y por lo tanto, reflejan el consenso de cada grupo acerca de
 qué paquetes sirven mejor a las necesidades de los usuarios. Además, abarcan
@@ -447,12 +447,12 @@ configuración (normalmente #{squashfs}#).
 2~installing-modified-or-third-party-packages Instalar paquetes modificados
 o de terceros
 
-Si bien está en contra de la filosofía de Debian Live, en ocasiones es
-necesario crear un sistema en vivo con versiones de paquetes modificados a
-partir de los disponibles en el repositorio de Debian. Estos paquetes pueden
+Si bien está en contra de la filosofía de un sistema en vivo, en ocasiones
+es necesario crear un sistema con versiones de paquetes modificados a partir
+de los disponibles en el repositorio de Debian. Estos paquetes pueden
 modificar características existentes o dar soporte a características
-adicionales, idiomas y derivados (branding), o eliminar elementos existentes
-en los paquetes que no son de interes. De manera similar, se pueden incluir
+adicionales, idiomas y marcas, o eliminar elementos existentes en los
+paquetes que no son de interes. De manera similar, se pueden incluir
 paquetes «de terceros» para añadir funcionalidades a medida o propietarias.
 
 En esta sección no se describe la creación o mantenimiento de paquetes
@@ -492,8 +492,8 @@ _* No es posible utilizar secure APT.
 _* Se deben depositar todos los paquetes apropiados en el directorio
 #{config/packages.chroot/}#.
 
-_* No es adecuado para almacenar configuraciones de Debian Live en un
-control de versiones.
+_* No es adecuado para almacenar configuraciones en vivo en un control de
+versiones.
 
 3~ Método de repositorio APT para instalar paquetes personalizados
 
@@ -657,14 +657,14 @@ creación de la imagen, creando los ficheros #{config/archives/*.pref}#,
 de ejecución del sistema en vivo creando el fichero
 #{config/includes.chroot/etc/apt/preferences}#.
 
-Supongamos que se está creando un sistema en vivo basado en wheezy pero se
-necesita instalar todos los paquetes "live" que terminan instalados en la
+Supongamos que se está creando un sistema en vivo basado en ${testing} pero
+se necesita instalar todos los paquetes "live" que terminan instalados en la
 imagen binaria final desde la versión inestable «sid» en el momento de crear
 la imagen. Se deberá añadir sid a los orígenes (sources) de APT y fijar
 (pin) los paquetes live con una prioridad más alta pero todos los otros
 paquetes con una prioridad más baja que la prioridad por defecto de manera
 que solamente los paquetes fijados sean instalados desde sid mientras que el
-resto será obtenido desde la distribución base, wheezy. Esto se puede
+resto será obtenido desde la distribución base, ${testing}. Esto se puede
 realizar de la siguiente forma:
 
 code{

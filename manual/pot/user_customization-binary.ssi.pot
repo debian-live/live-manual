@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
-"POT-Creation-Date: 2013-02-09 06:59+0100\n"
+"POT-Creation-Date: 2013-03-30 19:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,11 +47,10 @@ msgstr ""
 #: en/user_basics.ssi:173 en/user_basics.ssi:185 en/user_basics.ssi:193
 #: en/user_basics.ssi:205 en/user_basics.ssi:213 en/user_basics.ssi:221
 #: en/user_basics.ssi:233 en/user_basics.ssi:245 en/user_basics.ssi:255
-#: en/user_basics.ssi:265 en/user_basics.ssi:283 en/user_basics.ssi:311
-#: en/user_basics.ssi:327 en/user_basics.ssi:335 en/user_basics.ssi:355
-#: en/user_customization-binary.ssi:18 en/user_customization-binary.ssi:29
-#: en/user_customization-contents.ssi:24 en/user_customization-contents.ssi:33
-#: en/user_customization-contents.ssi:51
+#: en/user_basics.ssi:265 en/user_basics.ssi:283 en/user_basics.ssi:314
+#: en/user_basics.ssi:330 en/user_basics.ssi:338 en/user_basics.ssi:358
+#: en/user_customization-binary.ssi:16 en/user_customization-contents.ssi:24
+#: en/user_customization-contents.ssi:33 en/user_customization-contents.ssi:51
 #: en/user_customization-installer.ssi:32
 #: en/user_customization-installer.ssi:44
 #: en/user_customization-packages.ssi:14 en/user_customization-packages.ssi:22
@@ -123,11 +122,10 @@ msgstr ""
 #: en/user_basics.ssi:179 en/user_basics.ssi:189 en/user_basics.ssi:197
 #: en/user_basics.ssi:209 en/user_basics.ssi:217 en/user_basics.ssi:225
 #: en/user_basics.ssi:237 en/user_basics.ssi:249 en/user_basics.ssi:259
-#: en/user_basics.ssi:269 en/user_basics.ssi:303 en/user_basics.ssi:315
-#: en/user_basics.ssi:331 en/user_basics.ssi:339 en/user_basics.ssi:366
-#: en/user_customization-binary.ssi:25 en/user_customization-binary.ssi:35
-#: en/user_customization-contents.ssi:29 en/user_customization-contents.ssi:43
-#: en/user_customization-contents.ssi:55
+#: en/user_basics.ssi:269 en/user_basics.ssi:306 en/user_basics.ssi:318
+#: en/user_basics.ssi:334 en/user_basics.ssi:342 en/user_basics.ssi:369
+#: en/user_customization-binary.ssi:23 en/user_customization-contents.ssi:29
+#: en/user_customization-contents.ssi:43 en/user_customization-contents.ssi:55
 #: en/user_customization-installer.ssi:38
 #: en/user_customization-installer.ssi:49
 #: en/user_customization-packages.ssi:18 en/user_customization-packages.ssi:26
@@ -169,12 +167,6 @@ msgid "}code"
 msgstr ""
 
 #. type: Plain text
-#: en/examples.ssi:94 en/user_customization-binary.ssi:31
-#, no-wrap
-msgid " #!/bin/sh\n"
-msgstr ""
-
-#. type: Plain text
 #: en/user_customization-binary.ssi:2
 msgid ":B~ Customizing the binary image"
 msgstr ""
@@ -186,31 +178,31 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:6
-msgid "2~ Bootloader"
+msgid "2~ Bootloaders"
 msgstr ""
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:8
 msgid ""
 "live-build uses /{syslinux}/ and some of its derivatives (depending on the "
-"image type) as bootloaders by default. They can be easily customized in two "
-"ways."
+"image type) as bootloaders by default. They can be easily customized to suit "
+"your needs."
 msgstr ""
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:10
 msgid ""
 "In order to use a full theme, copy #{/usr/share/live/build/bootloaders}# "
-"into #{config/bootloaders}# and edit files in there. If you do not want to "
-"bother modifying all supported bootloader configurations, only providing a "
-"local customized copy of one of the bootloaders, e.g. *{isolinux}* in #"
+"into #{config/bootloaders}# and edit the files in there. If you do not want "
+"to bother modifying all supported bootloader configurations, only providing "
+"a local customized copy of one of the bootloaders, e.g. *{isolinux}* in #"
 "{config/bootloaders/isolinux}# is enough too, depending on your use case."
 msgstr ""
 
 #. type: Plain text
 #: en/user_customization-binary.ssi:12
 msgid ""
-"There is also the possibility of making smaller changes. For instance, "
+"There are many possibilities when it comes to making changes. For instance, "
 "syslinux derivatives are configured by default with a timeout of 0 (zero) "
 "which means that they will pause indefinitely at their splash screen until "
 "you press a key."
@@ -220,19 +212,13 @@ msgstr ""
 #: en/user_customization-binary.ssi:14
 msgid ""
 "To modify the boot timeout of a default #{iso-hybrid}# image just edit a "
-"default *{isolinux.cfg}* file specifying the timeout in units of seconds and "
-"add it to #{config/includes.binary/isolinux/}#"
+"default *{isolinux.cfg}* file specifying the timeout in units of 1/10 "
+"seconds. A modified *{isolinux.cfg}* to boot after five seconds would be "
+"similar to this:"
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-binary.ssi:16
-msgid ""
-"A modified *{isolinux.cfg}* to boot after five seconds would be similar to "
-"this:"
-msgstr ""
-
-#. type: Plain text
-#: en/user_customization-binary.ssi:23
+#: en/user_customization-binary.ssi:21
 #, no-wrap
 msgid ""
 " include menu.cfg\n"
@@ -242,33 +228,19 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
+#: en/user_customization-binary.ssi:25
+msgid ""
+"If you want to use a personalized background image that will be displayed "
+"together with the boot menu, add a splash.png picture of 640x480 pixels."
+msgstr ""
+
+#. type: Plain text
 #: en/user_customization-binary.ssi:27
-msgid ""
-"An alternative way of achieving the same goal could be writing a hook and "
-"adding it to #{config/hooks/}#. Remember to add the #{.binary}# suffix to "
-"run in the binary stage. A proposed example:"
-msgstr ""
-
-#. type: Plain text
-#: en/user_customization-binary.ssi:33
-#, no-wrap
-msgid " sed -i -e 's|timeout 0|timeout 50|' binary/isolinux/isolinux.cfg\n"
-msgstr ""
-
-#. type: Plain text
-#: en/user_customization-binary.ssi:37
-msgid ""
-"Likewise, if you want to use a personalized splash.png image, add a picture "
-"of 640x480 pixels to #{config/includes.binary/isolinux/}#"
-msgstr ""
-
-#. type: Plain text
-#: en/user_customization-binary.ssi:39
 msgid "2~ ISO metadata"
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-binary.ssi:41
+#: en/user_customization-binary.ssi:29
 msgid ""
 "When creating an ISO9660 binary image, you can use the following options to "
 "add various textual metadata for your image. This can help you easily "
@@ -276,7 +248,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-binary.ssi:43
+#: en/user_customization-binary.ssi:31
 msgid ""
 "_* #{LB_ISO_APPLICATION/--iso-application NAME}#: This should describe the "
 "application that will be on the image. The maximum length for this field is "
@@ -284,7 +256,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-binary.ssi:45
+#: en/user_customization-binary.ssi:33
 msgid ""
 "_* #{LB_ISO_PREPARER/--iso-preparer NAME}#: This should describe the "
 "preparer of the image, usually with some contact details. The default for "
@@ -293,7 +265,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-binary.ssi:47
+#: en/user_customization-binary.ssi:35
 msgid ""
 "_* #{LB_ISO_PUBLISHER/--iso-publisher NAME}#: This should describe the "
 "publisher of the image, usually with some contact details. The maximum "
@@ -301,7 +273,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/user_customization-binary.ssi:48
+#: en/user_customization-binary.ssi:36
 msgid ""
 "_* #{LB_ISO_VOLUME/--iso-volume NAME}#: This should specify the volume ID of "
 "the image. This is used as a user-visible label on some platforms such as "

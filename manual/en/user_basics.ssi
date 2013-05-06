@@ -10,13 +10,13 @@ Throughout the chapter, we will often refer to the default filenames produced by
 
 A live system usually means an operating system booted on a computer from a removable medium, such as a CD-ROM or USB stick, or from a network, ready to use without any installation on the usual drive(s), with auto-configuration done at run time (see {Terms}#terms).
 
-With Debian Live, it's a Debian GNU/Linux operating system, built for one of the supported architectures (currently amd64 and i386). It is made from the following parts:
+With live systems, it's an operating system, built for one of the supported architectures (currently amd64 and i386). It is made from the following parts:
 
 _* *{Linux kernel image}*, usually named #{vmlinuz*}#
 
 _* *{Initial RAM disk image (initrd)}*: a RAM disk set up for the Linux boot, containing modules possibly needed to mount the System image and some scripts to do it.
 
-_* *{System image}*: The operating system's filesystem image. Usually, a SquashFS compressed filesystem is used to minimize the Debian Live image size. Note that it is read-only. So, during boot the Debian Live system will use a RAM disk and 'union' mechanism to enable writing files within the running system. However, all modifications will be lost upon shutdown unless optional persistence is used (see {Persistence}#persistence).
+_* *{System image}*: The operating system's filesystem image. Usually, a SquashFS compressed filesystem is used to minimize the live system image size. Note that it is read-only. So, during boot the live system will use a RAM disk and 'union' mechanism to enable writing files within the running system. However, all modifications will be lost upon shutdown unless optional persistence is used (see {Persistence}#persistence).
 
 _* *{Bootloader}*: A small piece of code crafted to boot from the chosen medium, possibly presenting a prompt or menu to allow selection of options/configuration. It loads the Linux kernel and its initrd to run with an associated system filesystem. Different solutions can be used, depending on the target medium and format of the filesystem containing the previously mentioned components: isolinux to boot from a CD or DVD in ISO9660 format, syslinux for HDD or USB drive booting from a VFAT partition, extlinux for ext2/3/4 and btrfs partitions, pxelinux for PXE netboot, GRUB for ext2/3/4 partitions, etc.
 
@@ -24,7 +24,7 @@ You can use live-build to build the system image from your specifications, set u
 
 2~downloading-prebuilt-images Downloading prebuilt images
 
-While the focus of this manual is developing and building your own live images, you may simply wish to try one of our prebuilt images, either as an introduction to their use or instead of building your own. These images are built using our {live-images git repository}#clone-configuration-via-git and official stable releases are published at http://www.debian.org/CD/live/. In addition, older and upcoming releases, and unofficial images containing non-free firmware and drivers are available at http://live.debian.net/cdimage/release/.
+While the focus of this manual is developing and building your own live images, you may simply wish to try one of our prebuilt images, either as an introduction to their use or instead of building your own. These images are built using our {live-images git repository}#clone-configuration-via-git and official stable releases are published at http://www.debian.org/CD/live/. In addition, older and upcoming releases, and unofficial images containing non-free firmware and drivers are available at http://live-systems.org/cdimage/release/.
 
 2~using-web-builder Using the web live image builder
 
@@ -101,7 +101,7 @@ code{
 
 3~using-usb-extra-space Using the space left on a USB stick
 
-To use the remaining free space after copying #{binary.hybrid.iso}# to a USB stick, use a partitioning tool such as /{gparted}/ or /{parted}/ to create a new partition on the stick. The first partition will be used by the Debian Live system.
+To use the remaining free space after copying #{binary.hybrid.iso}# to a USB stick, use a partitioning tool such as /{gparted}/ or /{parted}/ to create a new partition on the stick. The first partition will be used by the live system.
 
 code{
 
@@ -247,13 +247,13 @@ code{
 
 }code
 
-In this specific case, a #{lb clean --binary}# would be not enough to clean up the necessary stages. The cause for this is that in netboot setups, a different initramfs configuration needs to be used which live-build performs automatically when building netboot images. Since the initramfs creation belongs to the chroot stage, switching to netboot in an existing build directory means to rebuild the chroot stage too. Therefore, #{lb clean}# (which will remove the chroot stage, too) needs to be used.
+In this specific case, a #{lb clean --binary}# would not be enough to clean up the necessary stages. The cause for this is that in netboot setups, a different initramfs configuration needs to be used which live-build performs automatically when building netboot images. Since the initramfs creation belongs to the chroot stage, switching to netboot in an existing build directory means to rebuild the chroot stage too. Therefore, #{lb clean}# (which will remove the chroot stage, too) needs to be used.
 
 Run the #{lb config}# command as follows to configure your image for netbooting:
 
 code{
 
- $ lb config -b netboot --net-root-path "/srv/debian-live" --net-root-server "192.168.0.1"
+ $ lb config -b netboot --net-root-path "/srv/debian-live" --net-root-server "192.168.0.2"
 
 }code
 
@@ -269,9 +269,9 @@ code{
 
 In a network boot, the client runs a small piece of software which usually resides on the EPROM of the Ethernet card. This program sends a DHCP request to get an IP address and information about what to do next. Typically, the next step is getting a higher level bootloader via the TFTP protocol. That could be pxelinux, GRUB, or even boot directly to an operating system like Linux.
 
-For example, if you unpack the generated #{binary.netboot.tar}# archive in the #{/srv/debian-live}# directory, you'll find the filesystem image in #{live/filesystem.squashfs}# and the kernel, initrd and pxelinux bootloader in #{tftpboot/debian-live/i386}#.
+For example, if you unpack the generated #{binary.netboot.tar}# archive in the #{/srv/debian-live}# directory, you'll find the filesystem image in #{live/filesystem.squashfs}# and the kernel, initrd and pxelinux bootloader in #{tftpboot/}#.
 
-We must now configure three services on the server to enable netboot: the DHCP server, the TFTP server and the NFS server.
+We must now configure three services on the server to enable netbooting: the DHCP server, the TFTP server and the NFS server.
 
 3~ DHCP server
 
@@ -295,8 +295,11 @@ code{
 
  subnet 192.168.0.0 netmask 255.255.255.0 {
    range 192.168.0.1 192.168.0.254;
-   next-server servername;
    filename "pxelinux.0";
+   next-server 192.168.0.2;
+   option subnet-mask 255.255.255.0;
+   option broadcast-address 192.168.0.255;
+   option routers 192.168.0.1;
 }
 
 }code

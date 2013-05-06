@@ -4,7 +4,7 @@
 
 2~requirements Requisits
 
-La construcció d'imatges Debian Live té molts pocs requisits.
+La construcció d'imatges en viu té molts pocs requisits.
 
 _* Accés de superusuari (root)
 
@@ -46,12 +46,12 @@ code{
 3~ A partir del codi font
 
 live-build es desenvolupa utilitzant el sistema de control de versions Git.
-En els sistemes basats en Debian, això és proporcionat pel paquet git. Per
+En els sistemes basats en Debian, això és proporcionat pel paquet git. Per a
 comprovar l'últim codi, executar:
 
 code{
 
- $ git clone git://live.debian.net/git/live-build.git
+ $ git clone git://live-systems.org/git/live-build.git
 
 }code
 
@@ -96,11 +96,11 @@ code{
 Si no es desitja construir o instaŀlar live-build a partir de les fonts, es
 pot utilitzar les instantànies. Aquestes es construeixen automàticament a
 partir de l'última versió del Git, i estan disponibles a
-http://live.debian.net/debian/.
+http://live-systems.org/debian/.
 
 2~ Instal.lació de live-boot i live-config
 
-*{Nota:}* No cal instaŀlar live-boot o live-config en el sistema per crear sistemes personalitzats de Debian Live. No obstant, això no farà cap mal i és útil per a fins de referència. Si només es vol la documentació, ara es poden instaŀlar els paquets /{live-boot-doc}/ i /{live-config-doc}/ per separat.
+*{Nota:}* No cal instaŀlar live-boot o live-config en el sistema per a crear sistemes personalitzats en viu. No obstant, això no farà cap mal i és útil per a fins de referència. Si només es vol la documentació, ara es poden instaŀlar els paquets /{live-boot-doc}/ i /{live-config-doc}/ per separat.
 
 3~ Des del repositori de Debian
 
@@ -109,7 +109,7 @@ d'una manera similar a {Instaŀlació de live-build}#installing-live-build.
 
 3~ A partir del codi font
 
-Per utilitzar les darreres fonts del git, es pot seguir el procés
+Per a utilitzar les darreres fonts del git, es pot seguir el procés
 seguent. Assegurar-se d'estar familiaritzat amb els termes esmentats a
 {Termes}#terms.
 
@@ -117,25 +117,25 @@ _* Clonar les fonts de live-boot i live-config
 
 code{
 
- $ git clone git://live.debian.net/git/live-boot.git
- $ git clone git://live.debian.net/git/live-config.git
+ $ git clone git://live-systems.org/git/live-boot.git
+ $ git clone git://live-systems.org/git/live-config.git
 
 }code
 
-Consultar les pàgines del manual de live-boot i live-config per més detalls
-sobre la seva personalització si aquesta és la raó per construir aquests
-paquets a partir de les fonts.
+Consultar les pàgines del manual de live-boot i live-config per a més
+detalls sobre la seva personalització si aquesta és la raó per a construir
+aquests paquets a partir de les fonts.
 
 _* Crear els fitxers .deb de live-boot i live-config 
 
 S'ha de crear ja sigui en la distribució de destinació o en un chroot que
-contingui la plataforma de destinació: és a dir, si el objectiu és wheezy
-llavors s'ha de construir contra wheezy.
+contingui la plataforma de destinació: és a dir, si el objectiu és
+${testing} llavors s'ha de construir contra ${testing}.
 
 Es pot utilitzar un constructor personal, com ara /{pbuilder}/ o /{sbuild}/
 si es necessita crear live-boot per a una distribució de destinació
 diferenta del sistema de construcció. Per exemple, per a les imatges en viu
-de wheezy, crear live-boot en un chroot wheezy. Si la distribució de
+de ${testing}, crear live-boot en un chroot ${testing}. Si la distribució de
 destinació per casualitat coincideix amb la distribució del sistema de
 construcció, es pot construir directament en el sistema de construcció amb
 #{dpkg-buildpackage}# (proporcionat pel paquet /{dpkg-dev}/):
@@ -154,17 +154,17 @@ _* Utilitzar tots el fitxers .deb generats que calguin
 Com live-boot y live-config són instaŀlats per el sistema de construcció
 live-build, la instaŀlació dels paquets en el sistema amfitrió no és
 suficient: s'ha de tractar els .deb generats com si fossin uns paquets
-personalitzats. Ja que el propòsit per construir aquests paquets a partir
-del codi font és per provar coses noves a curt termini abans del llançament
-oficial, seguir els pasos de {Instaŀlació de paquets modificats o de
-tercers}#installing-modified-or-third-party-packages per incloure
+personalitzats. Ja que el propòsit per a construir aquests paquets a partir
+del codi font és per a provar coses noves a curt termini abans del
+llançament oficial, seguir els pasos de {Instaŀlació de paquets modificats o
+de tercers}#installing-modified-or-third-party-packages per a incloure
 temporalment els paquets rellevants en la configuració. En particular, cal
 observar que ambdós paquets es divideixen en una part genèrica, una part de
 documentació i un o més back-ends. Incloure la part genèrica, només un dels
 back-ends que coincideixi amb la configuració, i, opcionalment, la
 documentació. Suposant que s'està construint una imatge en viu en el
 directori actual i que s'han generat tots els .deb per a una única versió
-dels dos paquets al directori superior, aquestes ordres de bash són per
+dels dos paquets al directori superior, aquestes ordres de bash són per a
 copiar tots els paquets importants, incloent-hi els back-ends per defecte:
 
 code{
@@ -183,6 +183,6 @@ configuració del directori actual amb #{lb config}#:
 
 code{
 
- $ lb config --archives live.debian.net
+ $ lb config --archives live-systems.org
 
 }code

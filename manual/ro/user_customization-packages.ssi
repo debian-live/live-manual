@@ -2,21 +2,21 @@
 
 1~customizing-package-installation Customizing package installation
 
-Perhaps the most basic customization of a Debian live system is the
-selection of packages to be included in the image. This chapter guides you
-through the various build-time options to customize live-build's
-installation of packages. The broadest choices influencing which packages
-are available to install in the image are the distribution and archive
-areas. To ensure decent download speeds, you should choose a nearby
-distribution mirror. You can also add your own repositories for backports,
-experimental or custom packages, or include packages directly as files. You
-can define lists of packages, including metapackages which will install many
-related packages at once, such as packages for a particular desktop or
-language. Finally, a number of options give some control over /{apt}/, or if
-you prefer, /{aptitude}/, at build time when packages are installed. You may
-find these handy if you use a proxy, want to disable installation of
-recommended packages to save space, or need to control which versions of
-packages are installed via APT pinning, to name a few possibilities.
+Perhaps the most basic customization of a live system is the selection of
+packages to be included in the image. This chapter guides you through the
+various build-time options to customize live-build's installation of
+packages. The broadest choices influencing which packages are available to
+install in the image are the distribution and archive areas. To ensure
+decent download speeds, you should choose a nearby distribution mirror. You
+can also add your own repositories for backports, experimental or custom
+packages, or include packages directly as files. You can define lists of
+packages, including metapackages which will install many related packages at
+once, such as packages for a particular desktop or language. Finally, a
+number of options give some control over /{apt}/, or if you prefer,
+/{aptitude}/, at build time when packages are installed. You may find these
+handy if you use a proxy, want to disable installation of recommended
+packages to save space, or need to control which versions of packages are
+installed via APT pinning, to name a few possibilities.
 
 2~ Package sources
 
@@ -24,8 +24,8 @@ packages are installed via APT pinning, to name a few possibilities.
 
 The distribution you choose has the broadest impact on which packages are
 available to include in your live image. Specify the codename, which
-defaults to wheezy for the wheezy version of live-build. Any current
-distribution carried in the Debian archive may be specified by its codename
+defaults to ${testing} for the ${testing} version of live-build. Any current
+distribution carried in the archive may be specified by its codename
 here. (See {Terms}#terms for more details.) The #{--distribution}# option
 not only influences the source of packages within the archive, but also
 instructs live-build to behave as needed to build each supported
@@ -58,7 +58,7 @@ the distribution names and archive areas for the specified derivative are
 supported instead of the ones for Debian. The mode also modifies live-build
 behaviour to suit the derivatives.
 
-*{Note:}* The projects for whom these modes were added are primarily responsible for supporting users of these options. The Debian live project, in turn, provides development support on a best-effort basis only, based on feedback from the derivative projects as we do not develop or support these derivatives ourselves.
+*{Note:}* The projects for whom these modes were added are primarily responsible for supporting users of these options. The Live Systems project, in turn, provides development support on a best-effort basis only, based on feedback from the derivative projects as we do not develop or support these derivatives ourselves.
 
 3~ Distribution mirrors
 
@@ -127,7 +127,7 @@ packages from the debian-live snapshot repository at live system build time.
 
 code{
 
- deb http://live.debian.net/ sid-snapshots main contrib non-free
+ deb http://live-systems.org/ sid-snapshots main contrib non-free
 
 }code
 
@@ -149,7 +149,7 @@ will be automatically added to your live system's
 
 code{
 
- $ lb config --archives live.debian.net
+ $ lb config --archives live-systems.org
 
 }code
 
@@ -185,11 +185,11 @@ code{
 }code
 
 This supercedes the older predefined list method supported in #{live-build}#
-2.x. Unlike predefined lists, task metapackages are not specific to the
-Debian Live project. Instead, they are maintained by specialist working
-groups within the distribution and therefore reflect the consensus of each
-group about which packages best serve the needs of the intended users. They
-also cover a much broader range of use cases than the predefined lists they
+2.x. Unlike predefined lists, task metapackages are not specific to the Live
+System project. Instead, they are maintained by specialist working groups
+within the distribution and therefore reflect the consensus of each group
+about which packages best serve the needs of the intended users. They also
+cover a much broader range of use cases than the predefined lists they
 replace.
 
 All task metapackages are prefixed #{task-}#, so a quick way to determine
@@ -405,8 +405,8 @@ _* Include any other filesystem modules required by your configuration
 2~installing-modified-or-third-party-packages Installing modified or
 third-party packages
 
-While it is against the philosophy of Debian Live, it may sometimes be
-necessary to build a Live system with modified versions of packages that are
+While it is against the philosophy of a live system, it may sometimes be
+necessary to build a live system with modified versions of packages that are
 in the Debian repository. This may be to modify or support additional
 features, languages and branding, or even to remove elements of existing
 packages that are undesirable. Similarly, "third-party" packages may be used
@@ -447,7 +447,7 @@ _* It is not possible to use secure APT.
 _* You must install all appropriate packages in the
 #{config/packages.chroot/}# directory.
 
-_* It does not lend itself to storing Debian Live configurations in revision
+_* It does not lend itself to storing live system configurations in revision
 control.
 
 3~ Using an APT repository to install custom packages
@@ -599,13 +599,13 @@ the former, create #{config/archives/*.pref}#,
 #{config/archives/*.pref.chroot}#, and #{config/apt/preferences}#. For the
 latter, create #{config/includes.chroot/etc/apt/preferences}#.
 
-Let's say you are building a wheezy live system but need all the live
+Let's say you are building a ${testing} live system but need all the live
 packages that end up in the binary image to be installed from sid at build
 time. You need to add sid to your APT sources and pin the live packages from
 it higher, but all other packages from it lower, than the default
 priority. Thus, only the packages you want are installed from sid at build
 time and all others are taken from the target system distribution,
-wheezy. The following will accomplish this:
+${testing}. The following will accomplish this:
 
 code{
 

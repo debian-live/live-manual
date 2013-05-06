@@ -99,11 +99,11 @@ code{
 
 A live cd paradigm is a pre-installed system which runs from read-only media, like a cdrom, where writes and modifications do not survive reboots of the host hardware which runs it.
 
-A Debian Live system is a generalization of this paradigm and thus supports other media in addition to CDs; but still, in its default behaviour, it should be considered read-only and all the run-time evolutions of the system are lost at shutdown.
+A live system is a generalization of this paradigm and thus supports other media in addition to CDs; but still, in its default behaviour, it should be considered read-only and all the run-time evolutions of the system are lost at shutdown.
 
 'Persistence' is a common name for different kinds of solutions for saving across reboots some, or all, of this run-time evolution of the system. To understand how it works it would be handy to know that even if the system is booted and run from read-only media, modifications to the files and directories are written on writable media, typically a ram disk (tmpfs) and ram disks' data do not survive reboots.
 
-The data stored on this ramdisk should be saved on a writable persistent medium like local storage media, a network share or even a session of a multisession (re)writable CD/DVD. All these media are supported in Debian Live in different ways, and all but the last one require a special boot parameter to be specified at boot time: #{persistence}#.
+The data stored on this ramdisk should be saved on a writable persistent medium like local storage media, a network share or even a session of a multisession (re)writable CD/DVD. All these media are supported in live systems in different ways, and all but the last one require a special boot parameter to be specified at boot time: #{persistence}#.
 
 If the boot parameter #{persistence}# is set (and #{nopersistence}# is not set), local storage media (e.g. hard disks, USB drives) will be probed for persistence volumes during boot. It is possible to restrict which types of persistence volumes to use by specifying certain boot parameters described in the live-boot(7) man page. A persistence volume is any of the following:
 
@@ -180,8 +180,14 @@ code{
 
 Then we reboot. During the first boot the contents of #{/home}# and #{/var/cache/apt}# will be copied into the persistence volume, and from then on all changes to these directories will live in the persistence volume. Please note that any paths listed in the #{persistence.conf}# file cannot contain white spaces or the special #{.}# and #{..}# path components. Also, neither #{/lib}#, #{/lib/live}# (or any of their sub-directories) nor #{/}# can be made persistent using custom mounts. As a workaround for this limitation you can add #{/ union}# to your #{persistence.conf}# file to achieve full persistence.
 
-Several different custom overlay volumes (with their own #{persistence.conf}# files) can be used at the same time, but if several volumes make the same directory persistent, only one of them will be used. If any two mounts are "nested" (i.e. one is a sub-directory of the other) the parent will be mounted before the child so no mount will be hidden by the other. Nested custom mounts are problematic if they are listed in the same #{persistence.conf}# file. See the persistence.conf(5) man page for how to handle that case if you really need it (hint: you usually don't).
-
 3~ Using more than one persistence store
 
-If a user would need multiple persistence store of the same type for different locations or testing, such as #{persistence-private}# and #{persistence-work}#, the boot parameter #{persistence-label}# used in conjunction with the boot parameter #{persistence}# will allow for multiple but unique persistence media. An example would be if a user wanted to use a persistence partition labeled #{persistence-subText}# they would use the boot parameters of: #{persistence}# #{persistence-label=subText}#.
+There are different methods of using multiple persistence store for different use cases. For instance, using several volumes at the same time or selecting only one, among various, for very specific purposes.
+
+Several different custom overlay volumes (with their own #{persistence.conf}# files) can be used at the same time, but if several volumes make the same directory persistent, only one of them will be used. If any two mounts are "nested" (i.e. one is a sub-directory of the other) the parent will be mounted before the child so no mount will be hidden by the other. Nested custom mounts are problematic if they are listed in the same #{persistence.conf}# file. See the persistence.conf(5) man page for how to handle that case if you really need it (hint: you usually don't).
+
+One possible use case: If you wish to store the user data i.e. #{/home}# and the superuser data i.e. #{/root}# in different partitions, create two partitions with the #{persistence}# label and add a #{persistence.conf}# file in each one like this, #{# echo "/home" > persistence.conf}# for the first partition that will save the user's files and #{# echo "/root" > persistence.conf}# for the second partition which will store the superuser's files. Finally use the #{persistence}# boot parameter.
+
+If a user would need multiple persistence store of the same type for different locations or testing, such as #{private}# and #{work}#, the boot parameter #{persistence-label}# used in conjunction with the boot parameter #{persistence}# will allow for multiple but unique persistence media. An example would be if a user wanted to use a persistence partition labeled #{private}# for personal data like browser bookmarks or other types, they would use the boot parameters: #{persistence}# #{persistence-label=private}#. And to store work related data, like documents, research projects or other types, they would use the boot parameters: #{persistence}# #{persistence-label=work}#.
+
+It is important to remember that each of these volumes, #{private}# and #{work}#, also needs a #{persistence.conf}# file in its root. The live-boot man page contains more information about how to use these labels with legacy names.

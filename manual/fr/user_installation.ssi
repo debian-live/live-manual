@@ -4,7 +4,8 @@
 
 2~requirements Exigences
 
-Les exigences pour la création des images Debian Live sont très faibles:
+Les exigences pour la création des images des systèmes live sont très
+faibles:
 
 _* Accès super-utilisateur (root)
 
@@ -51,7 +52,7 @@ Git. Dans les systèmes basés sur Debian, il est fourni par le paquet
 
 code{
 
- $ git clone git://live.debian.net/git/live-build.git
+ $ git clone git://live-systems.org/git/live-build.git
 
 }code
 
@@ -96,11 +97,11 @@ code{
 Si vous ne souhaitez pas créer ou installer live-build à partir des sources,
 vous pouvez utiliser des instantanés. Ils sont construits automatiquement à
 partir de la dernière version du dépôt Git et sont disponibles sur
-http://live.debian.net/debian/.
+http://live-systems.org/debian/.
 
 2~ Installation de live-boot et live-config
 
-*{Remarque:}* Vous n'avez pas besoin d'installer live-boot ou live-config sur votre système afin de créer des systèmes Debian Live. Cependant, cela ne fera aucun mal et est utile à des fins de référence. Si vous voulez seulement la documentation, vous pouvez maintenant installer les paquets /{live-boot-doc}/ et /{live-config-doc}/ séparément.
+*{Remarque:}* Vous n'avez pas besoin d'installer live-boot ou live-config sur votre système afin de créer des systèmes live. Cependant, cela ne fera aucun mal et est utile à des fins de référence. Si vous voulez seulement la documentation, vous pouvez maintenant installer les paquets /{live-boot-doc}/ et /{live-config-doc}/ séparément.
 
 3~ À partir du dépôt Debian
 
@@ -117,8 +118,8 @@ _* Examiner les sources de live-boot et live-config
 
 code{
 
- $ git clone git://live.debian.net/git/live-boot.git
- $ git clone git://live.debian.net/git/live-config.git
+ $ git clone git://live-systems.org/git/live-boot.git
+ $ git clone git://live-systems.org/git/live-config.git
 
 }code
 
@@ -129,14 +130,14 @@ paquets à partir des sources.
 _* Créer les fichiers .deb de live-boot et live-config
 
 Vous devez créer sur votre distribution cible ou dans un chroot contenant
-votre plateforme cible: cela signifie que si votre cible est wheezy alors
-vous devez créer sur wheezy.
+votre plateforme cible: cela signifie que si votre cible est ${testing}
+alors vous devez créer sur ${testing}.
 
 Utilisez un système de construction automatique personnel tel que
 /{pbuilder}/ ou /{sbuild}/ si vous avez besoin de créer live-boot pour une
 distribution cible qui diffère de votre système de construction. Par
-exemple, pour les images live de wheezy, créez live-boot dans un chroot
-wheezy. Si votre distribution cible correspond à votre distribution vous
+exemple, pour les images live de ${testing}, créez live-boot dans un chroot
+${testing}. Si votre distribution cible correspond à votre distribution vous
 pouvez créer directement sur le système de construction en utilisant
 #{dpkg-buildpackage}# (fourni par le paquet /{dpkg-dev}/):
 
@@ -184,6 +185,6 @@ config}#:
 
 code{
 
- $ lb config --archives live.debian.net
+ $ lb config --archives live-systems.org
 
 }code

@@ -26,9 +26,9 @@ USB, ou de uma rede, pronto a usar, sem qualquer tipo de instalação na
 unidade de costume (s), com a auto-configuração feita em tempo de execução
 (veja {Termos}#terms).
 
-With Debian Live, it's a Debian GNU/Linux operating system, built for one of
-the supported architectures (currently amd64 and i386). It is made from the
-following parts:
+With live systems, it's an operating system, built for one of the supported
+architectures (currently amd64 and i386). It is made from the following
+parts:
 
 _* *{Imagem do kernel do Linux }*, normalmente chamada  #{vmlinuz*}#
 
@@ -37,14 +37,12 @@ disco de RAM configurado para a inicialização do Linux, que contém módulos
 que podem ser necessários para montar a imagem do sistema e alguns scripts
 para fazê-lo.
 
-_* *{Imagem do sistema}*: A imagem do sistema de arquivos do sistema
-operacional . Normalmente, um sistema de arquivos SquashFS comprimido é
-usado para minimizar o tamanho da imagem Debian Live. Observe que é só de
-leitura. Então, durante a inicialização do sistema Debian Live vai usar um
-disco de RAM e um mecanismo de "união" para permitir a gravação de arquivos
-dentro do sistema em funcionamento. No entanto, todas as modificações serão
-perdidas no desligamento, a menos que a persistência opcional seja usada
-{Persistência}#persistence).
+_* *{System image}*: The operating system's filesystem image. Usually, a
+SquashFS compressed filesystem is used to minimize the live system image
+size. Note that it is read-only. So, during boot the live system will use a
+RAM disk and 'union' mechanism to enable writing files within the running
+system. However, all modifications will be lost upon shutdown unless
+optional persistence is used (see {Persistence}#persistence).
 
 _* *{Bootloader}*: A small piece of code crafted to boot from the chosen
 medium, possibly presenting a prompt or menu to allow selection of
@@ -69,7 +67,7 @@ built using our {live-images git repository}#clone-configuration-via-git and
 official stable releases are published at http://www.debian.org/CD/live/. In
 addition, older and upcoming releases, and unofficial images containing
 non-free firmware and drivers are available at
-http://live.debian.net/cdimage/release/.
+http://live-systems.org/cdimage/release/.
 
 2~using-web-builder Using the web live image builder
 
@@ -202,8 +200,8 @@ code{
 
 To use the remaining free space after copying #{binary.hybrid.iso}# to a USB
 stick, use a partitioning tool such as /{gparted}/ or /{parted}/ to create a
-new partition on the stick. The first partition will be used by the Debian
-Live system.
+new partition on the stick. The first partition will be used by the live
+system.
 
 code{
 
@@ -399,7 +397,7 @@ code{
 
 }code
 
-In this specific case, a #{lb clean --binary}# would be not enough to clean
+In this specific case, a #{lb clean --binary}# would not be enough to clean
 up the necessary stages. The cause for this is that in netboot setups, a
 different initramfs configuration needs to be used which live-build performs
 automatically when building netboot images. Since the initramfs creation
@@ -412,7 +410,7 @@ netbooting:
 
 code{
 
- $ lb config -b netboot --net-root-path "/srv/debian-live" --net-root-server "192.168.0.1"
+ $ lb config -b netboot --net-root-path "/srv/debian-live" --net-root-server "192.168.0.2"
 
 }code
 
@@ -442,9 +440,9 @@ Linux.
 For example, if you unpack the generated #{binary.netboot.tar}# archive in
 the #{/srv/debian-live}# directory, you'll find the filesystem image in
 #{live/filesystem.squashfs}# and the kernel, initrd and pxelinux bootloader
-in #{tftpboot/debian-live/i386}#.
+in #{tftpboot/}#.
 
-We must now configure three services on the server to enable netboot: the
+We must now configure three services on the server to enable netbooting: the
 DHCP server, the TFTP server and the NFS server.
 
 3~ Servidor DHCP
@@ -472,8 +470,11 @@ code{
 
  subnet 192.168.0.0 netmask 255.255.255.0 {
    range 192.168.0.1 192.168.0.254;
-   next-server servername;
    filename "pxelinux.0";
+   next-server 192.168.0.2;
+   option subnet-mask 255.255.255.0;
+   option broadcast-address 192.168.0.255;
+   option routers 192.168.0.1;
 }
 
 }code

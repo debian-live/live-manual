@@ -3,39 +3,40 @@
 1~overview-of-tools Descripció general de les eines
 
 Aquest capítol conté un resum de les tres eines principals utilitzades en la
-construcció dels sistemes Debian Live: live-build, live-boot i live-config.
+construcció dels sistemes en viu: live-build, live-boot i live-config.
 
 2~live-build El paquet live-build
 
-live-build és un conjunt de scripts per crear sistemes Debian Live. Aquests
+live-build és un conjunt de scripts per a crear sistemes en viu. Aquests
 scripts també s'anomenen «ordres».
 
 La idea darrere de live-build és ser un marc que utilitza un directori de
 configuració per automatitzar completament i personalitzar tots els aspectes
 de la construcció d'una imatge en viu.
 
-Molts conceptes són similars als utilitzats per crear paquets Debian amb
+Molts conceptes són similars als utilitzats per a crear paquets Debian amb
 /{debhelper}/:
 
 _* Els scripts tenen una ubicació central per a la configuració del seu
 funcionament. Amb /{debhelper}/ aquest és el subdirectori #{debian/}# d'un
 arbre de paquets. Per exemple, dh_install buscarà, entre altres, un fitxer
-anomenat #{debian/install}# per determinar quins fitxers han d'existir en un
-paquet binari en particular. De la mateixa manera, live-build emmagatzema la
-seva configuració per complet sota un subdirectori #{config/}#.
+anomenat #{debian/install}# per a determinar quins fitxers han d'existir en
+un paquet binari en particular. De la mateixa manera, live-build emmagatzema
+la seva configuració per complet sota un subdirectori #{config/}#.
 
 _* Els scripts són independents - és a dir, sempre és segur executar cada
 ordre.
 
-A diferència de /{debhelper}/, live-build conté una eina per generar un
+A diferència de /{debhelper}/, live-build conté una eina per a generar un
 directori de configuració en esquelet, #{lb config}#. Això podria ser
-considerat similar a eines com ara /{dh-make}/. Per obtenir més informació
+considerat similar a eines com ara /{dh-make}/. Per a obtenir més informació
 sobre #{lb config}#, veure {L'ordre lb config}#lb-config.
 
 La resta d'aquesta secció descriu les tres ordres més importants:
 
 _* *{lb config}*: Responsable de crear un directori de configuració per al
-sistema en viu. Consultar {L'ordre lb config}#lb-config per més informació.
+sistema en viu. Consultar {L'ordre lb config}#lb-config per a més
+informació.
 
 _* *{lb build}*: Responsable d'iniciar la creació d'un sistema en
 viu. Consultar {L'ordre lb build}#lb-build per a més informació.
@@ -49,7 +50,7 @@ Com s'ha dit a {live-build}#live-build, les seqüències d'ordres que formen
 part de live-build llegeixen la seva configuració amb l'ordre #{source}#
 d'un únic directori anomenat #{config/}#. Com la construcció d'aquest
 directori a mà, seria molt costós i propens a errors, es pot utilitzar
-l'ordre #{lb config}# per crear carpetes de configuració en esquelet.
+l'ordre #{lb config}# per a crear carpetes de configuració en esquelet.
 
 Executar #{lb config}# sense arguments crea un subdirectori #{config/}# que
 s'omple amb alguns paràmetres per defecte, i un arbre en esquelet de
@@ -70,7 +71,7 @@ proporcionar una configuració més completa més tard mitjançant
 #{auto/config}# (Veure {Gestió d'una configuració}#managing-a-configuration
 per més detalls).
 
-Normalment, s'haurà d'especificar algunes opcions. Per exemple, per
+Normalment, s'haurà d'especificar algunes opcions. Per exemple, per a
 especificar quina distribució es vol construir mitjançant el seu nom en
 clau:
 
@@ -94,13 +95,13 @@ Una llista completa d'opcions està disponible a la pàgina del manual
 3~lb-build L'ordre #{lb build}#
 
 L'ordre #{lb build}# llegeix la configuració del directori #{config/}#. A
-continuació, executa les ordres de nivell inferior necessàries per construir
-el sistema en viu.
+continuació, executa les ordres de nivell inferior necessàries per a
+construir el sistema en viu.
 
 3~lb-clean L'ordre #{lb clean}#
 
 L'ordre #{lb clean}# s'encarrega d'eliminar diverses parts d'una construcció
-per que altres construccions posteriors puguin començar des d'un estat
+per a que altres construccions posteriors puguin començar des d'un estat
 net. Per defecte, es netegen les etapes #{chroot}#, #{binary}# i #{source}#,
 però la caché es manté intacta. A més, es poden netejar etapes
 individuals. Per exemple, si s'han fet canvis que només afecten a la fase
@@ -110,15 +111,15 @@ d'opcions.
 
 2~live-boot El paquet live-boot
 
-live-boot és un conjunt de scripts per proporcionar hooks a
-/{initramfs-tools}/, que s'utilitzen per generar un initramfs capaç
+live-boot és un conjunt de scripts per a proporcionar hooks a
+/{initramfs-tools}/, que s'utilitzen per a generar un initramfs capaç
 d'arrencar sistemes vius, com ara els creats per live-build. Això inclou les
-ISOs de Debian Live, netboot tarballs i imatges per a memòries USB.
+ISOs dels sistemes en viu, netboot tarballs i imatges per a memòries USB.
 
 En el moment d'arrencar, buscarà medis de només lectura que continguin un
 directori #{/live/}# on s'emmagatzema un sistema de fitxers arrel (sovint
 una imatge de un sistema de fitxers comprimit squashfs). Si el troba, crearà
-un entorn d'escriptura, utilitzant aufs, per que puguin arrencar sistemes
+un entorn d'escriptura, utilitzant aufs, per a que puguin arrencar sistemes
 com Debian o similars.
 
 Més informació sobre ramfs inicial a Debian es pot trobar al Debian Linux
@@ -131,4 +132,4 @@ live-config consta dels scripts que s'executen durant l'arrencada després de
 live-boot per a configurar el sistema en viu de forma automàtica. S'ocupa de
 tasques com ara l'establiment de les locales, el nom d'amfitrió, la zona
 horària, crear l'usuari en viu, l'inhibició de tasques de cron i l'inici
-automàtic de sessió per l'usuari en viu.
+automàtic de sessió per a l'usuari en viu.

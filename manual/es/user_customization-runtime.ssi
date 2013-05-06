@@ -294,13 +294,6 @@ personalizada. Una posible alternativa a esta limitación es añadir #{/
 union}# al fichero #{persistence.conf}# para conseguir una persistencia
 completa.
 
-3~ Utilizar varios medios persistentes
-
-Existen diferentes métodos para utilizar múltiples volúmenes de persistencia
-para diferentes casos de uso. Por ejemplo, utilizar varios volúmenes al
-mismo tiempo o seleccionar sólo uno, entre varios, para fines muy
-específicos.
-
 Se puede usar diferentes volúmenes de overlays al mismo tiempo (con sus
 propios ficheros #{persistence.conf}#) pero si varios volúmenes hacen que un
 mismo directorio sea persistente, sólo uno de ellos será usado. Si dos
@@ -312,29 +305,13 @@ anidadados es problemática si están listados en el mismo fichero
 para ver como manejar ese caso si realmente es necesario. (aclaración:
 normalmente no lo es).
 
-Un posible caso de uso: Si se desea guardar los datos del usuario, es decir
-#{/home}# y los datos del superusuario, es decir #{/root}# en particiones
-diferentes, crear dos particiones con la etiqueta #{persistence}# y añadir
-un fichero #{persistence.conf}# en cada una de este modo, #{# echo "/home" >
-persistence.conf}# para la primera partición que guardará los ficheros del
-usuario y #{# echo "/root" > persistence.conf}# para la segunda partición
-que almacenará los ficheros del superusuario. Finalmente utilizar el
-parámetro de arranque #{persistence}#.
+3~ Utilizar varios medios persistentes
 
 Si un usuario necesita un almacenamiento persistente múltiple del mismo tipo
-para diferentes lugares o pruebas, tales como #{private}# y #{work}#, el
-parámetro de arranque #{persistence-label}# usado junto con el parámetro de
-arranque #{persistence}# permitirá medios de almacenamiento persistentes
-múltiples pero únicos. Un ejemplo sería, si un usuario desea utilizar una
-partición persistente etiquetada #{private}# para datos de uso personal como
-los marcadores de un navegador o similares utilizaría los parámetros de
-arranque: #{persistence}# #{persistence-label=private}#. Y para almacenar
-datos relacionados con el trabajo, como documentos, proyectos de
-investigación o de otro tipo, utilizaría los parámetros de arranque:
-#{persistence}# #{persistence-label=work}#.
-
-Es importante recordar que cada uno de estos volúmenes, #{private}# y
-#{work}#, necesita también un fichero #{persistence.conf}# en su raíz. La
-página de manual de live-boot contiene más información acerca de cómo
-utilizar estas etiquetas con los antiguos nombres que se utilizaban en
-anteriores versiones.
+para diferentes lugares o pruebas, tales como #{persistence-private}# y
+#{persistence-work}#, el parámetro de arranque #{persistence-label}# usado
+junto con el parámetro de arranque #{persistence}# permitirá medios de
+almacenamiento persistentes múltiples pero únicos. Un ejemplo sería, si un
+usuario desea utilizar una partición persistente etiquetada
+#{persistence-subText}# usaría los parámetros de arranque: #{persistence}#
+#{persistence-label=subText}#.

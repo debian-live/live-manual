@@ -60,10 +60,10 @@ _* Obtenir la clau pública:
 
 code{
 
- $ mkdir -p ~/.ssh/keys
- $ wget http://live.debian.net/other/keys/git@live.debian.net -O ~/.ssh/keys/git@live.debian.net
- $ wget http://live.debian.net/other/keys/git@live.debian.net.pub -O ~/.ssh/keys/git@live.debian.net.pub
- $ chmod 0600 ~/.ssh/keys/git@live.debian.net*
+ $ mkdir -p ~/.ssh/identity.d
+ $ wget http://live.debian.net/other/keys/git@live.debian.net -O ~/.ssh/identity.d/git@live.debian.net
+ $ wget http://live.debian.net/other/keys/git@live.debian.net.pub -O ~/.ssh/identity.d/git@live.debian.net.pub
+ $ chmod 0600 ~/.ssh/identity.d/git@live.debian.net*
 
 }code
 
@@ -75,7 +75,7 @@ code{
  Host live.debian.net
      Hostname live.debian.net
      User git
-     IdentityFile ~/.ssh/keys/git@live.debian.net
+     IdentityFile ~/.ssh/identity.d/git@live.debian.net
  EOF
 
 }code

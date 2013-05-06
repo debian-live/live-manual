@@ -291,12 +291,6 @@ utilitzant muntatges personalitzats. Com a solució per aquesta limitació es
 pot afegir #{/ union}# al fitxer #{persistence.conf}# per aconseguir una
 persistència completa.
 
-3~ Utilitzar diversos medis persistents
-
-Hi ha diferents mètodes per utilitzar múltiples volums de persistència per a
-diferents casos d'ús. Per exemple, utilitzar diversos volums al mateix temps
-o seleccionar-ne només un, entre varis, per a fins molt específics.
-
 Es poden utilitzar diversos volums diferents de muntatges personalitzats
 (amb els seus propis fitxers #{persistence.conf}# però si diversos volums
 fan que el mateix directori sigui persistent, només s'utilitzarà un
@@ -308,28 +302,13 @@ estan enumerats en el mateix fitxer #{persistence.conf}#. Veure la pàgina
 del manual persistence.conf(5) per saber com manejar aquest cas, si realment
 es necessita (una pista: en general no cal fer-ho).
 
-Un possible cas d'ús: Per a guardar les dades de l'usuari, és a dir
-#{/home}# i les dades del superusuari, és a dir #{/root}# en diferents
-particions, crear dues particions amb l'etiqueta #{persistence}# i afegir un
-fitxer #{persistence.conf}# en cadascuna d'aquesta manera #{# echo "/home" >
-persistence.conf}# per a la primera partició que guardarà els fitxers de
-l'usuari i #{# echo "/root" > persistence.conf}# per a la segona partició
-que emmagatzemarà els fitxers del superusuari. Finalment utilitzar el
-paràmetre d'arrencada #{persistence}#.
+3~ Utilitzar diversos medis persistents
 
-Si un usuari necessita múltiples volums de persistència del mateix tipus per
-a diferents ubicacions o proves, com #{private}# i #{work}#, el paràmetre
-d'arrencada #{persistence-label}# utilitzat juntament amb el paràmetre
-d'arrencada #{persistence}# permetrà tenir diversos dispositius amb la
-mateixa, però única, persistència. Un exemple seria si un usuari vol
-utilitzar una partició amb persistència amb l'etiqueta #{private}# per a
-dades personals com els marcadors d'un navegador, utilitzaria els paràmetres
-d'arrencada: #{persistence}# #{persistence-label=private}#. I per
-emmagatzemar dades relacionades amb el treball, com a documents, projectes
-de recerca o d'un altre tipus, utilitzaria els paràmetres d'arrencada:
-#{persistence}# #{persistence-label=work}#.
-
-És important recordar que aquests volums, #{private}# i #{work}#, també
-necessiten tenir un fitxer #{persistence.conf}# en la seva arrel. La pàgina
-de manual de live-boot conté més informació sobre com utilitzar aquestes
-etiquetes amb els noms més antics.
+Si un usuari necessita múltiples magatzems de persistència del mateix tipus
+per a diferents ubicacions o proves, com #{persistence-private}# i
+#{persistence-work}#, el paràmetre d'arrencada #{persistence-label}#
+utilitzat juntament amb el paràmetre d'arrencada #{persistence}# permetrà
+tenir diversos dispositius amb la mateixa persistència. Un exemple seria si
+un usuari vol utilitzar una partició amb persistència amb l'etiqueta
+#{persistence-subText}# utilitzaria els paràmetres d'arrencada:
+#{persistence}# #{persistence-label=subText}#.

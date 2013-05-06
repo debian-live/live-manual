@@ -1,0 +1,187 @@
+:B~ Instalação
+
+1~installation Instalação
+
+2~requirements Requisitos
+
+Construindo imagens do Debian Live tem muito poucos requisitos de sistema :
+
+_* Acesso superusuário (root) 
+
+_* Uma versão atualizada do live-build
+
+_* Um shell compatível com POSIX, como /{bash}/ or /{dash}/
+
+_* /{debootstrap}/ ou /{cdebootstrap}/
+
+_* Linux 2.6.x ou mais recente
+
+Observe que usar o Debian ou uma distribuição Debian derivada não é
+necessária - live-build será executado em quase qualquer distribuição com os
+requisitos acima.
+
+2~installing-live-build Instalando live-build
+
+Você pode instalar live-build em um número de caminhos diferentes:
+
+_* Do repositório Debian
+
+_* Da fonte
+
+_* Apartir de imagens
+
+Se você está usando o Debian, O caminho recomendado é instalar via
+repositório Debian.
+
+3~ Do repositório Debian
+
+Basta instalar live-build como qualquer outro pacote:
+
+code{
+
+ # apt-get install live-build
+
+}code
+
+3~ Da fonte
+
+live-build foi desenvolvido usando o sistema de controle de versão Git. Em
+sistemas baseados em Debian, esta é fornecida pelo pacote /{git}/. Para
+verificar o código mais recente, execute:
+
+code{
+
+ $ git clone git://live.debian.net/git/live-build.git
+
+}code
+
+Você pode construir e instalar seu próprio pacote Debian executando:
+
+code{
+
+ $ cd live-build
+ $ dpkg-buildpackage -b -uc -us
+ $ cd ..
+
+}code
+
+Agora instale qualquer dos recém construídos arquivos #{.deb}# que você
+estava interessado, por exemplo,
+
+code{
+
+ # dpkg -i live-build_3.0-1_all.deb
+
+}code
+
+Você também pode instalar live-build diretamente ao seu sistema executando:
+
+code{
+
+ # make install
+
+}code
+
+e o desinstalar com:
+
+code{
+
+ # make uninstall
+
+}code
+
+3~ Dos 'instantaneos'
+
+Se você não deseja construir ou instalar live-build a partir da fonte, você
+pode usar instantaneos. Estes são construídos automaticamente a partir da
+versão mais recente no Git e estão disponíveis no
+http://live.debian.net/debian/.
+
+2~ Instalando live-boot e live-config
+
+*{Observação:}* Você não precisa instalar o live-boot ou live-config em seu sistema para criar sistemas customizados Debian Live. No entanto, isso não fará mal e é útil para fins de referência. Se você só quer a documentação, agora você pode instalar os pacotes  /{live-boot-doc}/ e /{live-config-doc}/ separadamente.
+
+3~ Do repositório Debian
+
+Ambos live-boot e live-config estão disponíveis a partir do repositório
+Debian como {Instalação do live-build}#installing-live-build.
+
+3~ Da fonte
+
+Para usar a última fonte de git, você pode seguir o processo
+abaixo. Certifique-se de que você está familiarizado com os termos
+mencionados em {Termos}#terms.
+
+_ * Consultar as fontes de live-boot e live-config
+
+code{
+
+ $ git clone git://live.debian.net/git/live-boot.git
+ $ git clone git://live.debian.net/git/live-config.git
+
+}code
+
+Consulte as páginas do man live-boot e live-config para obter detalhes sobre
+a personalização, se essa é a sua razão para a construção desses pacotes a
+partir da fonte.
+
+_* Construir os arquivos live-boot e live-config .deb
+
+Você deve construir ou na sua distribuição destino ou em um chroot contendo
+sua plataforma de destino: isto significa que se o seu alvo é wheezy, então
+você deve construir em wheezy.
+
+Use um construtor pessoal, tais como  /{pbuilder}/ ou /{sbuild}/ se você
+precisar construir live-boot para uma distribuição destino que difere do seu
+sistema de construção. Por exemplo, para imagens live Wheezy, construir
+live-boot em um chroot Wheezy. Se a sua distribuição destino passar a
+corresponder ao seu sistema de distribuição de construção, você pode
+construir diretamente sobre o sistema de construção usando pacote
+#{dpkg-buildpackage}# (oferecido pelo /{dpkg-dev}/):
+
+code{
+
+ $ cd live-boot
+ $ dpkg-buildpackage -b -uc -us
+ $ cd ../live-config
+ $ dpkg-buildpackage -b -uc -us
+
+}code
+
+_* Utilização de aplicativos .deb gerados
+
+Como live-boot e live-config são instalados pelo sistema live-build, a
+instalação dos pacotes no sistema hospedeiro não é suficiente: você deve
+tratar os arquivos gerados .deb como quaisquer outros pacotes
+personalizados. Uma vez que o seu propósito para a construção da fonte seja
+como testar coisas novas num curto prazo antes do lançamento oficial, siga
+{Instalando pacotes modificados ou de
+terceiros}#installing-modified-or-third-party-packages para incluir
+temporariamente os arquivos relevantes em sua configuração. Em particular,
+observe que ambos os pacotes estão divididos em uma parte genérica, uma
+parte de documentação e um ou mais back-ends. Incluem a parte genérica,
+correspondente a apenas um back-end da sua configuração, e, opcionalmente, a
+documentação. . Supondo que você está construindo uma imagem live no
+diretório atual e geraram todos deb para uma única versão dos dois pacotes
+no diretório acima, estes comandos bash copiariam todos os pacotes
+relevantes, incluindo back-ends padrões:
+
+code{
+
+ $ cp ../live-boot{_,-initramfs-tools,-doc}*.deb  config/packages.chroot/
+ $ cp ../live-config{_,-sysvinit,-doc}*.deb  config/packages.chroot/
+
+}code
+
+3~ Dos 'instantaneos'
+
+Você pode deixar live-build usar automaticamente as últimas imagens de
+live-boot e live-config, configurando um repositório de terceiros no seu
+diretório de configuração live-build. Supondo que você já criou uma árvore
+de configuração no diretório atual com #{lb config}#:
+
+code{
+
+ $ lb config --archives live.debian.net
+
+}code

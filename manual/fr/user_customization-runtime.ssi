@@ -309,15 +309,13 @@ sont énumérés dans le même fichier #{persistence.conf}#. Voir la page de
 manuel persistence.conf(5) pour savoir comment gérer ce cas si vous en avez
 vraiment besoin (remarque: ce n'est généralement pas le cas).
 
-Un cas d'utilisation possible: Si vous souhaitez stocker les données de
-l'utilisateur, c'est-à-dire #{/home}# et les données du superutilisateur,
-c'est-à-dire #{/root}# dans des partitions différentes, créer deux
-partitions avec l'étiquette #{persistence}# et ajouter un fichier
-#{persistence.conf}# dans chacun comme ça #{# echo "/home" >
-persistence.conf}# pour la première partition qui permettra de sauver les
-fichiers de l'utilisateur et #{# echo "/root" > persistence.conf}# pour la
-seconde partition qui permettra de stocker les fichiers du
-superutilisateur. Enfin, utiliser le paramètre d'amorçage #{persistence}#.
+One possible use case: If you wish to store the user data i.e. #{/home}# and
+the superuser data i.e. #{/root}# in different partitions, create two
+partitions with the #{persistence}# label and add a #{persistence.conf}#
+file in each one like this, #{# echo "/home" > persistence.conf}# for the
+first partition that will save the user's files and #{# echo "/root" >
+persistence.conf}# for the second partition which will store the superuser's
+files. Finally, use the #{persistence}# boot parameter.
 
 Si un utilisateur a besoin de stockages persistants multiples du même type
 pour différents endroits ou essais, tel que #{private}# et #{work}#, le

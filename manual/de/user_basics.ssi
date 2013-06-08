@@ -176,20 +176,22 @@ code{
 3~copying-iso-hybrid-to-usb Copying an ISO hybrid image to a USB stick
 
 ISO images prepared with #{xorriso}#, can be simply copied to a USB stick
-with the #{dd}# program or an equivalent. Plug in a USB stick with a size
+with the #{cp}# program or an equivalent. Plug in a USB stick with a size
 large enough for your image file and determine which device it is, which we
 hereafter refer to as #{${USBSTICK}}#. This is the device file of your key,
 such as #{/dev/sdb}#, not a partition, such as #{/dev/sdb1}#! You can find
 the right device name by looking in #{dmesg}#'s output after plugging in the
 stick, or better yet, #{ls -l /dev/disk/by-id}#.
 
-Once you are certain you have the correct device name, use the #{dd}#
+Once you are certain you have the correct device name, use the #{cp}#
 command to copy the image to the stick.  *{This will definitely overwrite
 any previous contents on your stick!}*
 
 code{
 
- $ dd if=binary.hybrid.iso of=${USBSTICK}
+ $ cp binary.hybrid.iso ${USBSTICK}
+
+ $ sync
 
 }code
 

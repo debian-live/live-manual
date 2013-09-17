@@ -178,22 +178,23 @@ code{
 
 3~copying-iso-hybrid-to-usb Copiare un'immagine ISO ibrida su una penna USB
 
-Le immagini ISO preparate con #{xorriso}# possono essere semplicemente
-copiate su una penna USB con il programma #{dd}# o suo equivalente. Inserire
-una penna USB con una dimensione sufficiente a contenere l'immagine e
-determinare quale device sia, al quale in seguito si farà riferimento come
-#{${USBSTICK}}#.Questo è il device della penna, ad esempio #{/dev/sdb}#, non
-una partizione come #{/dev/sdb1}#! È possibile trovare il nome corretto
-controllando l'output di #{dmesg}# una volta inserita, o meglio ancora con
-il comando #{ls -l /dev/disk/by-id}#.
+ISO images prepared with #{xorriso}#, can be simply copied to a USB stick
+with the #{cp}# program or an equivalent. Plug in a USB stick with a size
+large enough for your image file and determine which device it is, which we
+hereafter refer to as #{${USBSTICK}}#. This is the device file of your key,
+such as #{/dev/sdb}#, not a partition, such as #{/dev/sdb1}#! You can find
+the right device name by looking in #{dmesg}#'s output after plugging in the
+stick, or better yet, #{ls -l /dev/disk/by-id}#.
 
-Una volta che si è certi sul nome del device, usare il comando #{dd}# per
-copiare l'immagine sulla penna. *{Questo sovrascriverà qualsiasi dato
-presente su di essa!}*
+Once you are certain you have the correct device name, use the #{cp}#
+command to copy the image to the stick.  *{This will definitely overwrite
+any previous contents on your stick!}*
 
 code{
 
- $ dd if=binary.hybrid.iso of=${USBSTICK}
+ $ cp binary.hybrid.iso ${USBSTICK}
+
+ $ sync
 
 }code
 

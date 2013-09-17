@@ -194,21 +194,24 @@ code{
 USB
 
 Las imágenes ISO preparadas con #{xorriso}#, pueden sencillamente copiarse a
-una llave USB con #{dd}# o con un programa  equivalente. Insertar una llave
-USB con un tamaño suficiente para la imagen y determinar qué dispositivo es,
-al cual nos referiremos de ahora en adelante como #{${USBSTICK}}#. Este
-nombre de «dispositivo» se refiere a la llave entera como por ejemplo
-#{/dev/sdb}# y ¡No a una partición como #{/dev/sdb1}#! Se puede encontrar el
-nombre del dispositivo correcto mirando la salida de #{dmesg}# después de
-conectar la llave, o mejor aún ejecutando #{ls -l /dev/disk/by-id}#.
+una llave USB con la orden #{cp}# o con un programa  equivalente. Insertar
+una llave USB con un tamaño suficiente para la imagen y determinar qué
+dispositivo es, al cual nos referiremos de ahora en adelante como
+#{${USBSTICK}}#. Este nombre de «dispositivo» se refiere a la llave entera
+como por ejemplo #{/dev/sdb}# y ¡No a una partición como #{/dev/sdb1}#! Se
+puede encontrar el nombre del dispositivo correcto mirando la salida de
+#{dmesg}# después de conectar la llave, o mejor aún, ejecutando #{ls -l
+/dev/disk/by-id}#.
 
-Cuando se esté seguro de tener el nombre del dispositivo correcto, usar el
-comando #{dd}# para copiar la imagen a la llave. *{¡Esto borrará de forma
+Cuando se esté seguro de tener el nombre del dispositivo correcto, usar la
+orden #{cp}# para copiar la imagen a la llave. *{¡Esto borrará de forma
 definitiva cualquier contenido previo en la llave!}*
 
 code{
 
- $ dd if=binary.hybrid.iso of=${USBSTICK}
+ $ cp binary.hybrid.iso ${USBSTICK}
+
+ $ sync
 
 }code
 

@@ -40,7 +40,7 @@ Per cambiare il nome utente specificare quanto segue nella configurazione:
 
 code{
 
- $ lb config --bootappend-live "boot=live config username=live-user"
+ $ lb config --bootappend-live "boot=live components username=live-user"
 
 }code
 
@@ -65,7 +65,7 @@ Quando si crea un sistema live la localizzazione predefinita è
 
 code{
 
- $ lb config --bootappend-live "boot=live config locales=de_CH.UTF-8"
+ $ lb config --bootappend-live "boot=live components locales=de_CH.UTF-8"
 
 }code
 
@@ -110,7 +110,7 @@ in X:
 
 code{
 
- $ lb config --bootappend-live "boot=live config locales=de_CH.UTF-8 keyboard-layouts=ch"
+ $ lb config --bootappend-live "boot=live components locales=de_CH.UTF-8 keyboard-layouts=ch"
 
 }code
 
@@ -121,7 +121,7 @@ esempio per configurare un sistema in francese con un layout Dvorak
 code{
 
  $ lb config --bootappend-live \
-     "boot=live config locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variants=bepo keyboard-model=tm2030usb"
+     "boot=live components locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variants=bepo keyboard-model=tm2030usb"
 
 }code
 
@@ -138,7 +138,7 @@ Dvorak, usare:
 code{
 
  $ lb config --bootappend-live \
-     "boot=live config keyboard-layouts=us,us keyboard-variants=,dvorak"
+     "boot=live components keyboard-layouts=us,us keyboard-variants=,dvorak"
 
 }code
 
@@ -292,17 +292,17 @@ creano la stessa directory persistente, ne verrà usata solo una. Se due
 directory montate sono "nidificate" (una è la sottodirectory dell'altra), la
 superiore sarà montata per prima, per cui nessuna operazione di mount verrà
 sovrastata dall'altra. I mount nidificati personalizzati sono problematici
-se sono elencati nello stesso file #{persistence.conf}. Se si ha davvero la
+se sono elencati nello stesso file #{persistence.conf}#. Se si ha davvero la
 necessità (in genere non si dovrebbe averla), consultare la manpage di
 persistence.conf(5) per sapere come gestire questo caso.
 
-Un possibile caso d'uso: se si desidera archiviare i dati dell'utente
-(#{/home}#) e quelli dell'amministratore (#{/root}#) in partizioni diverse,
-creare due partizioni con l'etichetta #{persistence}# e aggiungervi un file
-#{persistence.conf}# in ognuna di esse, #{# echo "/home" >
-persistence.conf}# per la partizione che salverà i file dell'utente e #{#
-echo "/root" > persistence.conf}# per quella dell'amministratore. Infine
-usare il parametro d'avvio #{persistence}#.
+One possible use case: If you wish to store the user data i.e. #{/home}# and
+the superuser data i.e. #{/root}# in different partitions, create two
+partitions with the #{persistence}# label and add a #{persistence.conf}#
+file in each one like this, #{# echo "/home" > persistence.conf}# for the
+first partition that will save the user's files and #{# echo "/root" >
+persistence.conf}# for the second partition which will store the superuser's
+files. Finally, use the #{persistence}# boot parameter.
 
 Se un utente avesse bisogno di spazi di archiviazione multipli dello stesso
 tipo per posizioni differenti o per test, come #{privato}# e #{lavoro}#, il

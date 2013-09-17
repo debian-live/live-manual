@@ -194,21 +194,23 @@ code{
 USB
 
 Les imatges ISO preparades amb #{xorriso}#, és poden copiar directament a
-una memòria USB utilitzant el programa #{dd}# o un altre
+una memòria USB utilitzant el programa #{cp}# o un altre
 d'equivalent. Connectar una memòria USB amb una mida prou gran per al fitxer
 de la imatge i determinar quin dispositiu és, que d'ara endavant anomenarem
-#{${USBSTICK}}#. Aquest és el dispositiu de la memòria com per exemple
-#{/dev/sdb}#, no una partició, com ara #{/dev/sdb1}#! Es pot trobar el nom
+#{${USBSTICK}}#. Aquest és el dispositiu de la memòria, com per exemple
+#{/dev/sdb}#, i no una partició, com ara #{/dev/sdb1}#! Es pot trobar el nom
 del dispositiu correcte mirant la sortida de #{dmesg}# després de connectar
-la memòria usb o encara millor, #{ls -l /dev/disk/by-id}#.
+la memòria usb, o encara millor, #{ls -l /dev/disk/by-id}#.
 
 Quan s'estigui segur de tenir el nom del dispositiu correcte, utilitzar
-l'ordre #{dd}# per a copiar la imatge a la memòria. *{Fent això es perdran
+l'ordre #{cp}# per a copiar la imatge a la memòria. *{Fent això es perdran
 definitivament tots els continguts anteriors de la memòria usb!}*
 
 code{
 
- $ dd if=binary.hybrid.iso of=${USBSTICK}
+ $ cp binary.hybrid.iso ${USBSTICK}
+
+ $ sync
 
 }code
 

@@ -197,7 +197,7 @@ code{
 3~copying-iso-hybrid-to-usb Copie d'une image ISO hybride sur une clé USB
 
 Les images ISO préparées avec #{xorriso}# peuvent être simplement copiées
-sur une clé USB avec #{dd}# ou un logiciel équivalent. Branchez une clé USB
+sur une clé USB avec #{cp}# ou un logiciel équivalent. Branchez une clé USB
 avec une capacité suffisamment grande pour votre fichier image et déterminez
 quel périphérique elle est, que nous appelons ci-dessous
 #{${USBSTICK}}#. C'est le fichier de périphérique de votre clé, tel que
@@ -206,12 +206,14 @@ trouver le nom du périphérique en regardant la sortie de #{dmesg}# après
 avoir branché le périphérique, ou mieux encore, #{ls -l /dev/disk/by-id}#.
 
 Une fois que vous êtes sûr d'avoir le nom correct de l'appareil, utilisez la
-commande #{dd}# pour copier l'image sur la clé. *{Ceci écrasera tout fichier
+commande #{cp}# pour copier l'image sur la clé. *{Ceci écrasera tout fichier
 déjà existant sur votre clé!}*
 
 code{
 
- $ dd if=binary.hybrid.iso of=${USBSTICK}
+ $ cp binary.hybrid.iso ${USBSTICK}
+
+ $ sync
 
 }code
 

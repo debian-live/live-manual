@@ -40,8 +40,8 @@ Check_untranslated_strings
 # If the last string in a po file is not translated, there is no blank line at 
 # the end so we need to add one with "sed '$G''".
 #
-# The output of the style_guide.ssi.po is suppressed for the time being since it
-# is not translated into any of the languages.
+# The output of the appendix_style_guide.ssi.po is suppressed for the time being
+# since it is not translated into all the languages.
 
 IGNORED="appendix_style-guide.ssi.po"
 

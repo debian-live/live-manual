@@ -173,7 +173,7 @@ echo "Type: $(ls -C manual/po) ['a' to see all]['q' to quit]"
 read LANGUAGE 
 case "$LANGUAGE" in
 
-	ca|de|es|fr|it|pt_BR|ro)
+	ca|de|es|fr|it|ja|pt_BR|ro)
 		Find_untranslated
 		Show_strings
 		;;

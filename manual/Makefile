@@ -51,5 +51,3 @@ distclean: clean
 	rm -rf $(LANGUAGES)
 
 rebuild: distclean update build
-unfuzzy:
-	@./bin/unfuzzy-dates.sh

@@ -1,31 +1,30 @@
-:B~ Coding Style
+:B~ コーディングスタイル
 
-1~coding-style Coding Style
+1~coding-style コーディングスタイル
 
-This chapter documents the coding style used in live systems.
+この章では live システムで利用されているコーディングスタイルについて述べます。
 
-2~ Compatibility
+2~ 互換性
 
-_* Don't use syntax or semantics that are unique to the Bash shell. For
-example, the use of array constructs.
+_* Bash シェル固有の書式や記号を使わないでください。例えば配列構造の利用など
 
-_* Only use the POSIX subset - for example, use $(foo) over `foo`.
+_* POSIX のサブセットだけを使ってください - 例えば `foo` よりも $(foo) を使ってください。
 
-_* You can check your scripts with 'sh -n' and 'checkbashisms'.
+_*  'sh -n' と 'checkbashisms' によりスクリプトをチェックできます。
 
-_* Make sure all shell code runs with 'set -e'.
+_* シェルコードが全て確実に 'set -e' で動作するようにしてください。
 
-2~ Indenting
+2~ インデント
 
-_* Always use tabs over spaces.
+_* 常にスペースよりもタブを使います。
 
-2~ Wrapping
+2~ 改行
 
-_* Generally, lines are 80 chars at maximum.
+_* 通常、行は最大で80文字までです。
 
-_* Use the "Linux style" of line breaks:
+_* 「Linux 式」で改行します:
 
-Bad:
+悪い例:
 
 code{
 
@@ -35,7 +34,7 @@ code{
 
 }code
 
-Good:
+良い例:
 
 code{
 
@@ -46,9 +45,9 @@ code{
 
 }code
 
-_* The same holds for functions:
+_* 関数についても同様です:
 
-Bad:
+悪い例:
 
 code{
 
@@ -58,7 +57,7 @@ code{
 
 }code
 
-Good:
+良い例:
 
 code{
 
@@ -69,31 +68,27 @@ code{
 
 }code
 
-2~ Variables
+2~ 変数
 
-_* Variables are always in capital letters.
+_* 変数は常に大文字です。
 
-_* Variables used in live-build always start with #{LB_}# prefix.
+_* live-build で利用する変数は先頭を常に #{LB_}# で始めます。
 
-_* Internal temporary variables in live-build should start with the
-#{\_LB_}# prefix.
+_* live-build 内部の一時変数は #{\_LB_}# で始めます。
 
-_* Local variables start with live-build #{\_\_LB_}# prefix.
+_* live-build のローカル変数は #{\_\_LB_}# で始めます。
 
-_* Variables in connection to a boot parameter in live-config start with
-#{LIVE_}#.
+_* live-config 中のブートパラメータにつながる変数は #{LIVE_}# で始めます。
 
-_* All other variables in live-config start with #{_}# prefix.
+_* live-config 中の他の変数は全て #{_}# で始めます。
 
-_* Use braces around variables; e.g. write #{${FOO}}# instead of #{$FOO}#.
+_* 変数は大括弧「{}」で囲みます。例えば #{$FOO}# ではなく #{${FOO}}# とします。
 
-_* Always protect variables with quotes to respect potential whitespaces:
-write #{"${FOO}"}# not #{${FOO}}#.
+_* 空白文字の可能性を考慮し、常に引用符を使って変数を保護します: #{${FOO}}# ではなく #{"${FOO}"}# とします。
 
-_* For consistency reasons, always use quotes when assigning values to
-variables:
+_* 一貫性を保つため、変数に値を割り当てるときは常に引用符を使います:
 
-Bad:
+悪い例:
 
 code{
 
@@ -101,7 +96,7 @@ code{
 
 }code
 
-Good:
+良い例:
 
 code{
 
@@ -109,9 +104,9 @@ code{
 
 }code
 
-_* If multiple variables are used, quote the full expression:
+_* 複数の変数を使うときは表現全体を引用符で囲みます:
 
-Bad:
+悪い例:
 
 code{
 
@@ -122,7 +117,7 @@ code{
 
 }code
 
-Good:
+良い例:
 
 code{
 
@@ -133,17 +128,13 @@ code{
 
 }code
 
-2~ Miscellaneous
+2~ その他
 
-_* Use "#{|}#" (without the surround quotes) as a separator in calls to sed,
-e.g. "#{sed -e 's|foo|bar|'}#" (without "").
+_* sed を呼び出すときは区切り文字に「#{|}#」を使います。例えば「#{sed -e 's|foo|bar|'}#」
 
-_* Don't use the #{test}# command for comparisons or tests, use "#{[}#"
-"#{]}#" (without ""); e.g. "#{if [ -x /bin/foo ]; ...}#" and not "#{if test
--x /bin/foo; ...}#".
+_* 比較やテストには #{test}# コマンドを使わず、「#{[}#」や「#{]}#」を使います。例えば「#{if [ -x /bin/foo ];
+...}#」を使い、「#{if test -x /bin/foo; ...}#」は使いません。
 
-_* Use #{case}# wherever possible over #{test}#, as it's easier to read and
-faster in execution.
+_* #{test}# よりも #{case}# の方が読みやすく実行速度も早いため、可能な部分ではこちらを使います。
 
-_* Use capitalized names for functions to limit messing with the users
-environment.
+_* ユーザの環境と混ざる可能性を限定するため、関数の名前には大文字を使います。

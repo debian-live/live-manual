@@ -1,45 +1,40 @@
-:B~ Procedures
+:B~ 手順
 
-1~procedures Procedures
+1~procedures 手順
 
-This chapter documents the procedures within the Live Systems project for
-various tasks that need cooperation with other teams in Debian.
+この章では、Debian の他のチームと協調する必要のある、Live システムプロジェクトの様々な作業の手順について触れます。
 
-2~ Major Releases
+2~ 主要リリース
 
-Releasing a new stable major version of Debian includes a lot of different
-teams working together to make it happen. At some point, the Live team comes
-in and builds live system images. The requirements to do this are:
+Debian の安定版の新しい主要バージョンのリリースでは、その完成のために多くの異なるチームが協調して作業しています。どこかの時点で、Live
+チームが参加して live システムのイメージをビルドします。そのための要件は
 
-_* A mirror containing the released versions for the debian and
-debian-security archives which the debian-live buildd can access.
+_* リリースしたバージョンに該当する debian 及び debian-security アーカイブを収録している、debian-live の
+buildd からアクセスできるミラー
 
-_* The names of the image need to be known
-(e.g. debian-live-VERSION-ARCH-FLAVOUR.iso).
+_* イメージの名前は既知の形式である必要があります (例えば debian-live-バージョン-アーキテクチャ-収録デスクトップ環境等.iso)。
 
-_* The data from debian-cd needs to be synced (udeb exclude lists).
+_* debian-cd から来るデータを同期する必要があります (udeb 除外一覧)。
 
-_* Images are built and mirrored on cdimage.debian.org.
+_* ビルドされたイメージのミラーが cdimage.debian.org に置かれます。
 
-2~ Point Releases
+2~ ポイントリリース
 
-_* Again, we need updated mirrors of debian and debian-security.
+_* ここでも、debian と debian-security の更新されたミラーが必要です。
 
-_* Images are built and mirrored on cdimage.debian.org.
+_* ビルドされたイメージのミラーが cdimage.debian.org に置かれます。
 
-_* Send announcement mail.
+_* 告知メールを送ります
 
-3~ Last Point Release of a Debian Release
+3~ ある Debian リリースの最後のポイントリリース
 
-Remember to adjust both chroot and binary mirrors when building the last set
-of images for a Debian release after it has been moved away from
-ftp.debian.org to archive.debian.org. That way, old prebuilt live images are
-still useful without user modifications.
+ある Debian リリース向けの最後のイメージを ftp.debian.org から archive.debian.org
+に移動した後にビルドするときには、chroot とバイナリミラーの両方を調整することを忘れないでください。そうすることで、古いビルド済み live
+イメージをユーザが変更しなくてもそのまま続けて使えるようになります。
 
-3~ Point release announcement template
+3~ ポイントリリース告知用テンプレート
 
-An annoucement mail for point releases can be generated using the template
-below and the following command:
+ポイントリリース用の告知メールはテンプレートと以下のコマンドを使って生成できます。
 
 code{
 
@@ -51,12 +46,11 @@ code{
 
 }code
 
-Please check the mail carefully before sending and pass it to others for
-proof-reading.
+メールを送る前に注意深く確認し、他の人による校正を受けてください。
 
 code{
 
- Updated Live @MAJOR@: @MINOR@ released
+Updated Live @MAJOR@: @MINOR@ released
 
  The Live Systems project is pleased to announce the @MINOR@ update of the
  Live images for the stable distribution Debian @MAJOR@ (codename "@CODENAME@").
@@ -75,9 +69,9 @@ code{
 
  Additionally it includes the following Live-specific changes:
 
-  * [INSERT LIVE-SPECIFIC CHANGE HERE]
-  * [INSERT LIVE-SPECIFIC CHANGE HERE]
-  * [LARGER ISSUES MAY DESERVE THEIR OWN SECTION]
+  * [LIVE 固有の変更をここに]
+  * [LIVE 固有の変更をここに]
+  * [大きな問題については専用の節を作ることもあります]
 
  About Live Systems
  ------------------

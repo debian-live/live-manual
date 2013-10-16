@@ -1,11 +1,10 @@
-:B~ Git repositories
+:B~ Git リポジトリ
 
-1~git-repositories Git repositories
+1~git-repositories Git リポジトリ
 
-The list of all the available repositories of the Live Systems Project can
-be found at http://live-systems.org/gitweb/. The project's git URLs have the
-form: #{protocol://live-systems.org/git/repository}#. Thus, in order to
-clone live-manual read-only, launch:
+Live システムプロジェクトの利用可能な全リポジトリ一覧は http://live-systems.org/gitweb/ にあります。プロジェクトの
+git URL は: #{プロトコル://live-systems.org/git/リポジトリ}#
+という形式になっています。したがって、live-manual を読み込み専用で複製するには
 
 code{
 
@@ -13,7 +12,7 @@ code{
 
 }code
 
-Or,
+ 
 
 code{
 
@@ -21,7 +20,7 @@ code{
 
 }code
 
-Or,
+ 
 
 code{
 
@@ -29,10 +28,9 @@ code{
 
 }code
 
-The cloning addresses with write permission have the form:
-#{git@live-systems.org:/repository}#.
+のどれかを実行します。書き込み権限のある複製には #{git@live-systems.org:/リポジトリ}#という形式のアドレスを使います。
 
-So, again, to clone live-manual over ssh you must type:
+なので、繰り返しますが live-manual を ssh 経由で複製するには
 
 code{
 
@@ -40,15 +38,12 @@ code{
 
 }code
 
-The git tree is made up of several different branches. The *{debian}* and
-the *{debian-next}* branches are particularly noteworthy because they
-contain the actual work that will eventually be included in each new
-release.
+と入力する必要があります。git ツリーは複数の異なるブランチでできています。*{debian}* 及び *{debian-next}*
+ブランチは最終的には新しいリリースそれぞれに収録される実際の作業を収録しているため特に注目すべきです。
 
-After cloning any of the existing repositories, you will be on the
-*{debian}* branch. This is appropriate to take a look at the state of the
-project's latest release but before starting work it is crucial to switch to
-the *{debian-next}* branch. To do so:
+既存のリポジトリのどれかを複製した後は *{debian}*
+ブランチにいるでしょう。これはプロジェクトの最新リリースの状態を確認するには適切ですが、作業開始前に必ず *{debian-next}*
+ブランチに切り替える必要があります。切り替えには
 
 code{
 
@@ -56,21 +51,16 @@ code{
 
 }code
 
-The *{debian-next}* branch, which is not always fast-forward, is where all
-the changes are committed first before being merged into the *{debian}*
-branch. To make an analogy, it is like a testing ground. If you are working
-on this branch and need to pull, you will have to do a #{git pull --rebase}#
-so that your local modifications are staged while pulling from the server
-and then your changes will be put on top of it all.
+を実行します。*{debian-next}* ブランチは常に fast-forward とは限らず、あらゆる変更が *{debian}*
+ブランチにマージされる前にまずはこにコミットされます。例えて言えばテストの場のようなものです。このブランチで作業していてサーバにある変更を取得する必要がある場合は
+#{git pull --rebase}#
+を実行する必要があります。それにより、サーバから取得するときにローカルでの変更が反映され、その変更が最上位に配置されます。
 
-2~ Handling multiple repositories
+2~ リポジトリを複数処理
 
-If you intend to clone several of the live systems repositories and want to
-switch to the *{debian-next}* branch right away to check the latest code,
-write a patch or contribute with a translation you ought to know that the
-git server provides a #{mrconfig}# file to ease the handling of multiple
-repositories. In order to use it you need to install the /{mr}/ package and
-after that, launch:
+live システムのリポジトリを複数複製してすぐに、最新コードの確認、パッチ作成、あるいは翻訳での貢献等のために *{debian-next}*
+ブランチに切り替えたい場合、複数のリポジトリを扱いやすくするための #{mrconfig}# ファイルを git
+サーバで提供していることを紫知っておくべきでしょう。これを使うには /{mr}/ パッケージをインストールする必要があります。その後、
 
 code{
 
@@ -78,10 +68,7 @@ code{
 
 }code
 
-This command will automatically clone and checkout to the *{debian-next}*
-branch the development repositories of the Debian packages produced by the
-project. These include, among others, the live-images repository, which
-contains the configurations used for the prebuilt images that the project
-publishes for general use. For more information on how to use this
-repository, see {Clone a configuration published via
-Git}#clone-configuration-via-git
+を実行します。このコマンドは自動的に複製し、プロジェクトにより作成される Debian パッケージの開発用リポジトリである
+*{debian-next}* ブランチを取得します。これには、中でも live-images
+リポジトリがあり、プロジェクトが一般用途向けに公開しているビルド済みイメージで利用される設定を収録しています。このリポジトリの使い方に関するさらなる情報については、{Git
+経由で公開されている設定の複製}#clone-configuration-via-git を見てください。

@@ -1,89 +1,76 @@
-:B~ Reporting bugs
+:B~ バグの報告
 
-1~bugs Reporting bugs
+1~bugs バグの報告
 
-Live systems are far from being perfect, but we want to make it as close as
-possible to perfect - with your help. Do not hesitate to report a bug. It is
-better to fill a report twice than never. However, this chapter includes
-recommendations on how to file good bug reports.
+live システムは完璧にはほど遠いですが、可能な限り完璧に近づけたいと思っています -
+あなたの支援とともに。バグの報告を躊躇わないでください。バグがあるのに報告されないよりも二重に報告される方がいいからです。この章ではバグ報告を提出するにあたっての推奨事項について説明します。
 
-For the impatient:
+せっかちな人向け:
 
-_* Always check first the image status updates on our homepage at
-http://live-systems.org/ for known issues.
+_* 常にまず http://live-systems.org/ にある私達のホームページにあるイメージの更新状況により既知の問題を確認してください。
 
-_* Before submitting a bug report always try to reproduce the bug with the
-*{most recent versions}* of the branch of live-build, live-boot, live-config
-and live-tools that you're using (like the newest 4.x version of live-build
-if you're using live-build 4).
+_* バグ報告を提出する前に使用している live-build、live-boot、live-config、live-tools
+のブランチの*{最新版}* (live-build 4 を使っているなら最新のバージョン 4.x の live-build)
+でそのバグを再現できるか常に確認します。
 
-_* Try to give *{as specific information as possible}* about the bug. This
-includes (at least) the version of live-build, live-boot, live-config, and
-live-tools used and the distribution of the live system you are building.
+_* バグについて*{できるだけ具体的な情報}*を提示するようにしてください。これには (最低限) 利用した
+live-build、live-boot、live-config、live-tools のバージョンや live
+システムをどのディストリビューションでビルドしたのか、等があります。
 
-2~ Known issues
+2~ 既知の問題
 
-Since Debian *{testing}* and Debian *{unstable}* distributions are moving
-targets, when you specify either of them as the target system distribution,
-a successful build may not always be possible.
+Debian *{テスト版 (testing)}* と Debian *{不安定版 (unstable)}*
+ディストリビューションは変化しているのでこのどちらかを対象システムディストリビューションに指定している場合、ビルドが常に成功するとは限りません。
 
 % FIXME:
 
-If this causes too much difficulty for you, do not build a system based on
-*{testing}* or *{unstable}*, but rather, use *{stable}*. live-build always
-defaults to the *{stable}* release.
+そのためにあまり困難になる場合はビルドに*{テスト版 (testing)}* や*{不安定版 (unstable)}*
+をベースにしたシステムではなく*{安定版 (stable)} を使ってください。live-build は常に*{安定版 (stable)}*
+リリースをデフォルトとしています。
 
-Currently known issues are listed under the section 'status' on our homepage
-at http://live-systems.org/.
+現在わかっている問題は http://live-systems.org/ にある私達のホームページの「status」に一覧があります。
 
-It is out of the scope of this manual to train you to correctly identify and
-fix problems in packages of the development distributions, however, there
-are two things you can always try: If a build fails when the target
-distribution is *{testing}*, try *{unstable}*. If *{unstable}* does not work
-either, revert to *{testing}* and pin the newer version of the failing
-package from *{unstable}* (see {APT pinning}#apt-pinning for details).
+開発用ディストリビューションのパッケージにある問題を正しく識別、修正するための訓練はこのマニュアルの目的ではありませんが、常に確認できることが2つあります:
+*{テスト版 (testing)}* を対象ディストリビューションとしてビルドに失敗した場合に*{不安定版 (unstable)}*
+で試してみるということです。*{不安定版 (unstable)}* でもダメな場合は*{テスト版 (testing)}*
+に差し戻し、失敗しているパッケージのもっと新しいバージョンを*{不安定版 (unstable)}* から利用するようにしてみます (詳細については
+{APT の PIN 設定}#apt-pinning 参照)。
 
-2~ Rebuild from scratch
+2~ 最初から再ビルド
 
-To ensure that a particular bug is not caused by an uncleanly built system,
-please always rebuild the whole live system from scratch to see if the bug
-is reproducible.
+きれいではない環境でシステムがビルドされたことにより特定のバグが発生しているのではないことを保証するため、live
+システム全体を最初から再ビルドして、そのバグが再現するか常に確認してください。
 
-2~ Use up-to-date packages
+2~ 最新のパッケージを使う
 
-Using outdated packages can cause significant problems when trying to
-reproduce (and ultimately fix) your problem. Make sure your build system is
-up-to-date and any packages included in your image are up-to-date as well.
+問題を再現 (最終的には修正)
+しようとするときに古くなったパッケージを使用すると重大な問題を引き起こす可能性があります。ビルドシステムが最新であること、同様にそのイメージに収録されているパッケージがどれも最新であることを確認してください。
 
-2~collect-information Collect information
+2~collect-information 情報収集
 
-Please provide enough information with your report. Include, at least, the
-exact version of live-build where the bug is encountered and the steps to
-reproduce it. Please use your common sense and provide any other relevant
-information if you think that it might help in solving the problem.
+報告では十分な情報を提供してください。最低でもそのバグが発生した live-build
+の正確なバージョンとそれを再現する手順を含めてください。常識的に考えて問題解決の支援になりそうだと思う関連情報が何か他にあればそれも提供してください。
 
-To make the most out of your bug report, we require at least the following
-information:
+バグ報告を最大限に活用するため、最低限次の情報が必要です:
 
-_* Architecture of the host system
+_* ホストシステムのアーキテクチャ
 
-_* Version of live-build on the host system
+_* ホストシステムの live-build のバージョン
 
-_* Version of /{debootstrap}/ and/or /{cdebootstrap}/ on the host system
+_* ホストシステムの /{debootstrap}/ や /{cdebootstrap}/ のバージョン
 
-_* Architecture of the live system
+_* live システムのアーキテクチャ
 
-_* Distribution of the live system
+_* live システムのディストリビューション
 
-_* Version of live-boot on the live system
+_* live システムの live-boot のバージョン
 
-_* Version of live-config on the live system
+_* live システムの live-config のバージョン
 
-_* Version of live-tools on the live system
+_* live システムの live-tools のバージョン
 
-You can generate a log of the build process by using the #{tee}# command. We
-recommend doing this automatically with an #{auto/build}# script (see
-{Managing a configuration}#managing-a-configuration for details).
+#{tee}# コマンドを使ってビルドプロセスのログを生成することができます。#{auto/build}#
+スクリプトによりこれを自動的に行うことを推奨します (詳細は{設定管理}#managing-a-configuration 参照)。
 
 code{
 
@@ -91,116 +78,78 @@ code{
 
 }code
 
-At boot time, live-boot and live-config store their logfiles in
-#{/var/log/live/}#. Check them for error messages.
+ブート時に、live-boot と live-config はログファイルを #{/var/log/live/}#
+に保存します。エラーメッセージはここを確認してください。
 
-Additionally, to rule out other errors, it is always a good idea to tar up
-your #{config/}# directory and upload it somewhere (do *{not}* send it as an
-attachment to the mailing list), so that we can try to reproduce the errors
-you encountered. If this is difficult (e.g. due to size) you can use the
-output of #{lb config --dump}# which produces a summary of your config tree
-(i.e. lists files in subdirectories of #{config/}# but does not include
-them).
+さらに、他のエラーを除外するため、#{config/}# ディレクトリを tar でまとめてどこかにアップロードするのは常に良い方法です
+(メーリングリストに添付として送ら*{ないでください}*)。それにより、そのエラーの再現を試みることが可能になります。それが
+(例えばサイズの問題により) 困難な場合は #{lb config --dump}# の出力を使ってください。これは設定ツリーのまとめです (つまり
+#{config/}# のサブディレクトリにあるファイル一覧を列挙しますがファイル自体は収録しません)。
 
-Remember to send in any logs that were produced with English locale
-settings, e.g. run your live-build commands with a leading #{LC_ALL=C}# or
-#{LC_ALL=en_US}#.
+ログは全て英語のロケール設定で生成されたものを提示することを忘れないでください。例えば先頭に #{LC_ALL=C}# や
+#{LC_ALL=en_US}# を付けて live-build コマンドを実行してください。
 
-2~ Isolate the failing case if possible
+2~ 可能であれば失敗している状況を分離する
 
-If possible, isolate the failing case to the smallest possible change that
-breaks. It is not always easy to do this so if you cannot manage it for your
-report, do not worry. However, if you plan your development cycle well,
-using small enough change sets per iteration, you may be able to isolate the
-problem by constructing a simpler 'base' configuration that closely matches
-your actual configuration plus just the broken change set added to it. If
-you have a hard time sorting out which of your changes broke, it may be that
-you are including too much in each change set and should develop in smaller
-increments.
+可能であれば失敗している状況を可能な限りうまくいかなくなる最小の変更に分離してください。これは常に簡単だとは限らないので、報告の際にできないようであれば気にする必要はありません。しかし、開発サイクルを向上させたい場合、繰り返しのたびに変更する量を十分に小さくすると、実際の設定により近く、より単純な「ベース」設定を構成することによりうまくいかなくなる追加の変更点だけに問題を分離することができるかもしれません。どの変更によりうまくいかなくなっているのか区別するのに苦労している場合、それぞれの変更点が多すぎることが考えられ、その場合開発の進行は緩くなるはずです。
 
-2~ Use the correct package to report the bug against
+2~ 正しいパッケージに対してバグを報告する
 
-If you do not know what component is responsible for the bug or if the bug
-is a general bug concerning live systems, you can fill a bug against the
-debian-live pseudo-package.
+どの構成要素がそのバグの原因なのかわからない、あるいはそのバグが live システム全般に関係するバグである場合は debian-live
+疑似パッケージに対するバグとして報告してください。
 
-However, we would appreciate it if you try to narrow it down according to
-where the bug appears.
+とはいうものの、バグの現れ方を元にその範囲を限定してくれると助かります。
 
-3~ At build time while bootstrapping
+3~ ビルド時のパッケージ収集中
 
-live-build first bootstraps a basic Debian system with /{debootstrap}/ or
-/{cdebootstrap}/. Depending on the bootstrapping tool used and the Debian
-distribution it is bootstrapping, it may fail. If a bug appears here, check
-if the error is related to a specific Debian package (most likely), or if it
-is related to the bootstrapping tool itself.
+live-build は最初に /{debootstrap}/ または /{cdebootstrap}/ で Debian
+システムの基本的なパッケージを収集します。利用したパッケージ収集ツールやパッケージを収集した Debian
+ディストリビューションによっては失敗するかもしれません。バグがここで起きていると思われる場合は、そのエラーが特定の Debian パッケージに
+(ほとんどの場合こちらです) 関連するのか、パッケージ収集ツール自体に関連するものなのか確認してください。
 
-In both cases, this is not a bug in the live system, but rather in Debian
-itself and probably we cannot fix it directly. Please report such a bug
-against the bootstrapping tool or the failing package.
+どちらの場合でも、これは live システムではなく Debian
+自体のバグで、恐らく私達が直接修正することはできません。こういったバグはパッケージ収集ツールまたは失敗しているパッケージに対して報告してください。
 
-3~ At build time while installing packages
+3~ ビルド時のパッケージインストール中
 
-live-build installs additional packages from the Debian archive and
-depending on the Debian distribution used and the daily archive state, it
-can fail. If a bug appears here, check if the error is also reproducible on
-a normal system.
+live-build は追加のパッケージを Debian アーカイブからインストールしているため、利用する Debian
+ディストリビューションとその日のアーカイブの状態によっては失敗するかもしれません。バグがここで起きていると思われる場合は、そのエラーが通常のシステムで再現できるか確認してください。
 
-If this is the case, this is not a bug in the live system, but rather in
-Debian - please report it against the failing package. Running
-/{debootstrap}/ separately from the Live system build or running #{lb
-bootstrap --debug}# will give you more information.
+通常のシステムで再現できる場合これは live システムではなく Debian のバグです - 失敗しているパッケージに対して報告してください。Live
+システムのビルドとは別に /{debootstrap}/ を実行、あるいは #{lbbootstrap --debug}#
+を実行するとさらなる情報を得られるでしょう。
 
-Also, if you are using a local mirror and/or any sort of proxy and you are
-experiencing a problem, please always reproduce it first by bootstrapping
-from an official mirror.
+また、ローカルミラーやプロキシの類を使っていて問題が起きている場合はまず、公式ミラーからパッケージを収集した場合に再現するか常に確認してください。
 
-3~ At boot time
+3~ ブート時
 
-If your image does not boot, please report it to the mailing list together
-with the information requested in {Collect
-information}#collect-information. Do not forget to mention, how/when the
-image failed exactly, whether using virtualization or real hardware. If you
-are using a virtualization technology of any kind, please always run it on
-real hardware before reporting a bug. Providing a screenshot of the failure
-is also very helpful.
+イメージがブートしない場合は{情報収集}#collect-information
+で指定している情報を添えてメーリングリストに報告してください。そのイメージが正確にどのように/どの段階で失敗しているのか、仮想化を使っているのか実際のハードウェアなのか、ということについて忘れずに言及してください。何らかの仮想化技術を使っている場合はバグを報告する前に常に実際のハードウェアで実行してください。失敗しているときのスクリーンショットを提供することも、とても参考になります。
 
-3~ At run time
+3~ 実行時
 
-If a package was successfully installed, but fails while actually running
-the Live system, this is probably a bug in the live system. However:
+パッケージのインストールには成功したけれども Live システムを実際に実行している間に何か失敗している場合、これは恐らく live
+システムのバグです。その場合:
 
-2~ Do the research
+2~ 調査してください
 
-Before filing the bug, please search the web for the particular error
-message or symptom you are getting. As it is highly unlikely that you are
-the only person experiencing a particular problem. There is always a chance
-that it has been discussed elsewhere and a possible solution, patch, or
-workaround has been proposed.
+バグを報告する前に、問題の症状やそのエラーメッセージについてウェブを検索してください。その問題に遭っているのがあなた一人だけだという可能性は非常に低いからです。他のどこかで議題に上り、解決できそうな方法やパッチ、回避策が提案されている可能性は常にあります。
 
-You should pay particular attention to the live systems mailing list, as
-well as the homepage, as these are likely to contain the most up-to-date
-information. If such information exists, always include the references to it
-in your bug report.
+live
+システムのメーリングリストや同様にホームページには。最新の情報がある可能性があるので、特に注意を払ってください。そういった情報が存在する場合は、バグ報告で常に参照するようにしてください。
 
-In addition, you should check the current bug lists for live-build,
-live-boot, live-config and live-tools to see whether something similar has
-already been reported.
+さらに、似たことが既に報告されていないか live-build、live-boot、live-config、live-tools
+の現在のバグ一覧を確認してください。
 
-2~ Where to report bugs
+2~ バグの報告先
 
-The Live Systems project keeps track of all bugs in the Bug Tracking System
-(BTS). For information on how to use the system, please see
-http://bugs.debian.org/. You can also submit the bugs by using the
-#{reportbug}# command from the package with the same name.
+Live システムプロジェクトではバグ追跡システム (BTS) に報告されたバグを全て追跡しています。このシステムの使い方についての情報は
+http://bugs.debian.org/ を見てください。#{reportbug}#
+パッケージの同名コマンドを使ってバグを報告することもできます。
 
-In general, you should report build time errors against the live-build
-package, boot time errors against live-boot, and run time errors against
-live-config. If you are unsure of which package is appropriate or need more
-help before submitting a bug report, please report it against the
-debian-live pseudo-package. We will then take care about it and reassign it
-where appropriate.
+一般的に、ビルド時のエラーは live-build に、ブート時のエラーは live-boot に、実行時のエラーは live-config
+パッケージに対して報告してください。どのパッケージが適切なのかよくわからない、あるいはバグの報告前にもっと支援が必要だという場合は
+debian-live 疑似パッケージに対して報告してください。その場合は私達が調べて適切なものに割り当てし直します。
 
-Please note that bugs found in distributions derived from Debian (such as
-Ubuntu and others) should *{not}* be reported to the Debian BTS unless they
-can be also reproduced on a Debian system using official Debian packages.
+(Ubuntu その他の) Debian 派生ディストリビューションで見つかったバグは、それが公式の Debian パッケージを使っている Debian
+システムでも再現するものでない限り、Debian BTS に報告すべきでは*{ない}*ことに注意してください。

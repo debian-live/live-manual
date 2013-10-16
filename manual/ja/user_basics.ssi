@@ -1,125 +1,91 @@
-:B~ The basics
+:B~ 基本
 
-1~the-basics The basics
+1~the-basics 基本
 
-This chapter contains a brief overview of the build process and instructions
-for using the three most commonly used image types. The most versatile image
-type, #{iso-hybrid}#, may be used on a virtual machine, optical medium or
-USB portable storage device. In certain special cases, as explained later,
-the #{hdd}# type may be more suitable. The chapter finishes with
-instructions for building and using a #{netboot}# type image, which is a bit
-more involved due to the setup required on the server. This is an slightly
-advanced topic for anyone who is not familiar already with netbooting, but
-it is included here because once the setup is done, it is a very convenient
-way to test and deploy images for booting on the local network without the
-hassle of dealing with image media.
+この章ではビルドプロセスの概要と最も広く利用されている3種類のイメージの使用手順について簡単に述べます。最も汎用性の高い形式のイメージである
+#{iso-hybrid}# は、仮想マシンや光学メディア、USB
+ポータブルストレージ機器上で利用できます。特に変わった状況では後述のように、#{hdd}# 形式の方が適するかもしれません。この章は
+#{netboot}# 形式のイメージをビルド、利用する手順で終わります。この形式はサーバ上で必要とする準備のためにやや複雑になります。これは
+netboot
+についてまだ不慣れな人にとってはわずかに高度な話題となりますが、その準備さえできればローカルネットワーク上でブートするためのイメージをテスト、展開するのに非常に便利な方法で、難なくイメージのメディアを扱うことができるため、ここに収録しています。
 
-Throughout the chapter, we will often refer to the default filenames
-produced by live-build. If you are {downloading a prebuilt
-image}#downloading-prebuilt-images instead, the actual filenames may vary.
+この章全体を通して、live-build
+により作成されるデフォルトのファイル名を頻繁に参照しています。{ビルド済みイメージをダウンロード}#downloading-prebuilt-images
+した場合、実際のファイル名は異なる場合があります。
 
-2~what-is-live What is a live system?
+2~what-is-live live システムとは何?
 
-A live system usually means an operating system booted on a computer from a
-removable medium, such as a CD-ROM or USB stick, or from a network, ready to
-use without any installation on the usual drive(s), with auto-configuration
-done at run time (see {Terms}#terms).
+live システムとは、 通常 CD-ROM や USB
+メモリ等の取り外し可能メディア、あるいはネットワークからコンピュータ上でブートされるオペレーティングシステムを意味し、普通のドライブに何もインストールせずに利用でき、実行時に自動設定が行われます
+({用語}#terms 参照)。
 
-With live systems, it's an operating system, built for one of the supported
-architectures (currently amd64 and i386). It is made from the following
-parts:
+live システムはオペレーティングシステムで、サポートしているうちの単一のアーキテクチャ (現在 amd64 と i386)
+向けにビルドされています。以下から構成されています。
 
-_* *{Linux kernel image}*, usually named #{vmlinuz*}#
+_* *{Linux カーネルイメージ}*、通常 #{vmlinuz*}# という名前です
 
-_* *{Initial RAM disk image (initrd)}*: a RAM disk set up for the Linux
-boot, containing modules possibly needed to mount the System image and some
-scripts to do it.
+_* *{初期 RAM ディスクイメージ (initrd)}*: Linux ブート用に用意された RAM
+ディスクで、システムのイメージをマウントするのに必要となる可能性があるモジュールとマウントするためのスクリプトをいくつか収録しています。
 
-_* *{System image}*: The operating system's filesystem image. Usually, a
-SquashFS compressed filesystem is used to minimize the live system image
-size. Note that it is read-only. So, during boot the live system will use a
-RAM disk and 'union' mechanism to enable writing files within the running
-system. However, all modifications will be lost upon shutdown unless
-optional persistence is used (see {Persistence}#persistence).
+_* *{システムイメージ}*: オペレーティングシステムのファイルシステムのイメージです。通常、live
+システムのイメージサイズを最小限にするため、SquashFS
+圧縮ファイルシステムが利用されています。このファイルシステムは読み込み専用であることに注意してください。そのため、ブート処理中は live システムは
+RAM
+ディスクと「ユニオン」機構を利用して実行中のシステム中でファイルを書き込むことができるようにしています。ただし、オプションの保持機能を使っていない限り、変更は全てシャットダウンにより失われます
+({保持機能}#persistence 参照)。
 
-_* *{Bootloader}*: A small piece of code crafted to boot from the chosen
-medium, possibly presenting a prompt or menu to allow selection of
-options/configuration. It loads the Linux kernel and its initrd to run with
-an associated system filesystem. Different solutions can be used, depending
-on the target medium and format of the filesystem containing the previously
-mentioned components: isolinux to boot from a CD or DVD in ISO9660 format,
-syslinux for HDD or USB drive booting from a VFAT partition, extlinux for
-ext2/3/4 and btrfs partitions, pxelinux for PXE netboot, GRUB for ext2/3/4
-partitions, etc.
+_* *{ブートローダ}*:
+選択したメディアからブートするように作られた短いコードの集合で、オプション/設定を選択できるプロンプトやメニューを恐らく提示します。Linux
+カーネルとその initrd
+を読み込んでそのシステムのファイルシステム上で実行します。前に言及した構成要素を収録する対象メディアやファイルシステムの形式によっては別の方法があります。isolinux
+では ISO9660 形式の CD や DVD からのブート、syslinux では HDD や USB ドライブの VFAT
+パーティションからのブート、extlinux では ext2/3/4 や btrfs パーティション、pxelinux では PXE
+netboot、GRUB では ext2/3/4 パーティション、等。
 
-You can use live-build to build the system image from your specifications,
-set up a Linux kernel, its initrd, and a bootloader to run them, all in one
-medium-dependant format (ISO9660 image, disk image, etc.).
+live-build を使って Linux カーネル、initrd、それを実行するためのブートローダを独自仕様で用意して全て1つのメディア特有の形式
+(ISO9660 イメージやディスクイメージ等) でシステムのイメージをビルドできます。
 
-2~downloading-prebuilt-images Downloading prebuilt images
+2~downloading-prebuilt-images ビルド済みイメージのダウンロード
 
-While the focus of this manual is developing and building your own live
-images, you may simply wish to try one of our prebuilt images, either as an
-introduction to their use or instead of building your own. These images are
-built using our {live-images git repository}#clone-configuration-via-git and
-official stable releases are published at http://www.debian.org/CD/live/. In
-addition, older and upcoming releases, and unofficial images containing
-non-free firmware and drivers are available at
-http://live-systems.org/cdimage/release/.
+このマニュアルの対象は自分の live
+イメージの開発やビルドですが、使い方の手引き、あるいは自分でビルドする代わりにビルド済みイメージを簡単に試してみたいこともあるでしょう。{live-images
+の git リポジトリ}#clone-configuration-via-git と公式の安定版 (stable)
+リリースを使ってビルドされたイメージが http://www.debian.org/CD/live/
+で公開されています。さらに、古いものや今後のリリース、non-free ファームウェアを収録する非公式のイメージ、あるいはドライバが
+http://live-systems.org/cdimage/release/ から利用できるようになっています。
 
-2~using-web-builder Using the web live image builder
+2~using-web-builder ウェブ live イメージビルダーの利用
 
-As a service to the community, we run a web-based live image builder service
-at http://live-build.debian.net/. This site is maintained on a best effort
-basis. That is, although we strive to keep it up-to-date and operational at
-all times, and do issue notices for significant operational outages, we
-cannot guarantee 100% availability or fast image building, and the service
-may occasionally have issues that take some time to resolve. If you have
-problems or questions about the service, please {contact us}#contact,
-providing us with the link to your build.
+コミュニティへのサービスとして、ウェブベースの live イメージビルダーサービスを http://live-build.debian.net/
+で運営しています。このサイトはベストエフォートの方針で保守されています。つまり、最新でいつでも使える状態の維持に努め、大規模な運用停止については問題を告知しますが、100%
+いつでも使えることやイメージの高速なビルドを保証することはできず、サービスについて解決に時間を要する問題が時々あるかもしれないということです。サービスについて問題や疑問があれば、問題のあるビルドへのリンクを添えて{連絡}#contact
+してください。
 
-3~ Web builder usage and caveats
+3~ ウェブビルダーの使い方と注意
 
-The web interface currently makes no provision to prevent the use of invalid
-combinations of options, and in particular, where changing an option would
-normally (i.e. using live-build directly) change defaults of other options
-listed in the web form, the web builder does not change these defaults. Most
-notably, if you change #{--architectures}# from the default #{i386}# to
-#{amd64}#, you must change the corresponding option #{--linux-flavours}#
-from the default #{486}# to #{amd64}#. See the #{lb_config}# man page for
-the version of live-build installed on the web builder for more details. The
-version number of live-build is listed at the bottom of the web builder
-page.
+ウェブインターフェイスでは現在、オプションの不正な組み合わせを避ける対策を何も取っていません。また、特に、変更すると通常ウェブフォームにある他のオプションのデフォルト値
+(つまり live-build を直接使った場合の値)
+が変わるオプションを変更した場合にウェブビルダーはそのデフォルト値を変更しません。最も顕著な例として、#{--architectures}#
+をデフォルトの #{i386}# から #{amd64}# に変更すると対応するオプション #{--linux-flavours}# をデフォルトの
+#{486}# から #{amd64}# に変更する必要があります。ウェブビルダーにインストールされている live-build
+のバージョンやさらなる詳細については #{lb_config}# man ページを見てください。live-build
+のバージョン番号はウェブビルダーのページ下部に記載されています。
 
-The time estimate given by the web builder is a crude estimate only and may
-not reflect how long your build actually takes. Nor is the estimate updated
-once it is displayed. Please be patient. Do not refresh the page you land on
-after submitting the build, as this will resubmit a new build with the same
-parameters. You should {contact us}#contact if you don't receive
-notification of your build only once you are certain you've waited long
-enough and verified the notification e-mail did not get caught by your own
-e-mail spam filter.
+ウェブビルダーにより提示される時間の推定は条件を考慮しない推定であり、実際にビルドにかかる時間を反映していないかもしれません。表示された後に更新もされません。それについては我慢してください。ビルド条件を送信した後にこのページを更新しないでください。更新すると同一のパラメータで再び新たにビルドを送信することになります。ビルドの通知をただの一度も受け取っておらず、十分な時間が確実に過ぎて、通知メールが自分の
+spam メールフィルタに引っかかっていないことを確認した場合、{連絡}#contact してください。
 
-The web builder is limited in the kinds of images it can build. This keeps
-it simple and efficient to use and maintain. If you would like to make
-customizations that are not provided for by the web interface, the rest of
-this manual explains how to build your own images using live-build.
+ウェブビルダーがビルドできるイメージの種類は限定されています。これにより、利用や保守を簡単、能率的に維持できます。ウェブインターフェイスで提供されていない独自化を行いたい場合は、live-build
+を使って自分のイメージをビルドする方法をこのマニュアルの残りで説明しています。
 
-2~building-iso-hybrid First steps: building an ISO hybrid image
+2~building-iso-hybrid 最初の段階: ISO hybrid イメージのビルド
 
-Regardless of the image type, you will need to perform the same basic steps
-to build an image each time. As a first example, create a build directory,
-change to that directory and then execute the following sequence of
-live-build commands to create a basic ISO hybrid image containing a default
-live system without X.org. It is suitable for burning to CD or DVD media,
-and also to copy onto a USB stick.
+イメージの種類を問わず、イメージをビルドするのに同一の基礎手順を毎回実行する必要があります。最初の例ではビルド用のディレクトリを作成して、このディレクトリに移動してから
+live-build コマンドを以下の順で実行し、X.org のないデフォルトの live システムを収録する基本的な ISO hybrid
+イメージを作成します。このイメージは CD や DVD メディアへの書き込み、さらに USB メモリへの複製にも適しています。
 
-The name of the working directory is absolutely up to you, but if you take a
-look at the examples used throughout live-manual, it is a good idea to use a
-name that helps you identify the image you are working with in each
-directory, especially if you are working or experimenting with different
-image types. In this case you are going to build a default system so let's
-call it, for example, live-default.
+作業ディレクトリの名前は完全に自由ですが、live-manual
+全体で利用されている例を参考にする場合、特に異なる種類のイメージについて作業、実験している場合、各ディレクトリで作業しているイメージの識別を支援する名前を使うのは良い方法です。ここではデフォルトのシステムをビルドするとして、例えば
+live-default と呼びましょう。
 
 code{
 
@@ -127,8 +93,7 @@ code{
 
 }code
 
-Then, run the #{lb config}# command. This will create a "config/" hierarchy
-in the current directory for use by other commands:
+それから #{lb config}# コマンドを実行します。これにより他のコマンドが利用する「config/」階層を現在のディレクトリに作成します。
 
 code{
 
@@ -136,12 +101,10 @@ code{
 
 }code
 
-No parameters are passed to #{lb config}#, so defaults for all of its
-various options will be used. See {The lb config command}#lb-config for more
-details.
+#{lb config}# にはパラメータが渡されないので、様々な選択肢についてそれぞれのデフォルト値が使われます。さらなる詳細については {lb
+config コマンド}#lb-config を見てください。
 
-Now that the "config/" hierarchy exists, build the image with the #{lb
-build}# command:
+これで「config/」階層ができました。#{lb build}# コマンドでイメージをビルドします。
 
 code{
 
@@ -149,21 +112,17 @@ code{
 
 }code
 
-This process can take a while, depending on the speed of your computer and
-your network connection. When it is complete, there should be a
-#{binary.hybrid.iso}# image file, ready to use, in the current directory.
+コンピュータやネットワーク接続の速度により、このプロセスには少々時間がかかるかもしれません。完了すると、#{binary.hybrid.iso}#
+イメージファイルが使える状態で現在のディレクトリにできているはずです。
 
-2~using-iso-hybrid Using an ISO hybrid live image
+2~using-iso-hybrid ISO hybrid live イメージの利用
 
-After either building or downloading an ISO hybrid image, which can be
-obtained at http://www.debian.org/CD/live/, the usual next step is to
-prepare your medium for booting, either CD-R(W) or DVD-R(W) optical media or
-a USB stick.
+ISO hybrid イメージをビルド、または http://www.debian.org/CD/live/
+にあるものをダウンロードした後、通常は次にブート用メディアとして CD-R(W) や DVD-R(W) の光学メディアか USB メモリを用意します。
 
-3~burning-iso-image Burning an ISO image to a physical medium
+3~burning-iso-image ISO イメージの実際のメディアへの書き込み
 
-Burning an ISO image is easy. Just install /{xorriso}/ and use it from the
-command-line to burn the image. For instance:
+ISO イメージの書き込みは簡単です。/{xorriso}/ をインストールしてそれをコマンドラインから使ってイメージを書き込むだけです。例えば:
 
 code{
 
@@ -173,109 +132,88 @@ code{
 
 }code
 
-3~copying-iso-hybrid-to-usb Copying an ISO hybrid image to a USB stick
+3~copying-iso-hybrid-to-usb ISO hybrid イメージの USB メモリへのコピー
 
-ISO images prepared with #{xorriso}#, can be simply copied to a USB stick
-with the #{cp}# program or an equivalent. Plug in a USB stick with a size
-large enough for your image file and determine which device it is, which we
-hereafter refer to as #{${USBSTICK}}#. This is the device file of your key,
-such as #{/dev/sdb}#, not a partition, such as #{/dev/sdb1}#! You can find
-the right device name by looking in #{dmesg}#'s output after plugging in the
-stick, or better yet, #{ls -l /dev/disk/by-id}#.
+#{xorriso}# で作られた ISO イメージは #{cp}# プログラムや同等プログラムを使って単純に USB
+メモリにコピーすることができます。イメージファイルを置けるだけの十分に大きなサイズの USB メモリを差し込んでそれがどのデバイスなのか決定します。以後
+#{${USB メモリ}}# として参照します。これは例えば #{/dev/sdb}# といった USB メモリのデバイスファイルで、例えば
+#{/dev/sdb1}# といったパーティションではありません! USB メモリを差し込んでから #{dmesg}# か、もっと良いのは #{ls
+-l /dev/disk/by-id}# の出力を見ると正しいデバイス名を調べることができます。
 
-Once you are certain you have the correct device name, use the #{cp}#
-command to copy the image to the stick.  *{This will definitely overwrite
-any previous contents on your stick!}*
+正しいデバイス名を得られたことを確信できたら #{cp}# コマンドを使ってイメージを USB メモリにコピーします。 *{これを実行すると以前その
+USB メモリにあった内容は全て確実に上書きされます!}*
 
 code{
 
- $ cp binary.hybrid.iso ${USBSTICK}
+ $ cp binary.hybrid.iso ${USB メモリ}
 
  $ sync
 
 }code
 
-3~using-usb-extra-space Using the space left on a USB stick
+3~using-usb-extra-space USB メモリの空きスペースの利用
 
-To use the remaining free space after copying #{binary.hybrid.iso}# to a USB
-stick, use a partitioning tool such as /{gparted}/ or /{parted}/ to create a
-new partition on the stick. The first partition will be used by the live
-system.
-
-code{
-
- # gparted ${USBSTICK}
-
-}code
-
-After the partition is created, where #{${PARTITION}}# is the name of the
-partition, such as #{/dev/sdb2}#, you have to create a filesystem on it. One
-possible choice would be ext4.
+USB メモリに #{binary.hybrid.iso}# をコピーした後に残った空きスペースを利用するには、/{gparted}/ や
+/{parted}/ といったパーティション作業ツールを使ってその USB メモリに新しいパーティションを作成します。最初のパーティションが live
+システムにより利用されます。
 
 code{
 
- # mkfs.ext4 ${PARTITION}
+ # gparted ${USB メモリ}
 
 }code
 
-*{Note:}* If you want to use the extra space with Windows, apparently that OS cannot normally access any partitions but the first. Some solutions to this problem have been discussed on our {mailing list}#contact, but it seems there are no easy answers.
+パーティションの作成後にはファイルシステムを作成する必要があります。選択肢には ext4 等があります。#{${パーティション}}#には例えば
+#{/dev/sdb2}# 等パーティションの名前が入ります。
 
-*{Remember: Every time you install a new binary.hybrid.iso on the stick, all data on the stick will be lost because the partition table is overwritten by the contents of the image, so back up your extra partition first to restore again after updating the live image.}*
+code{
 
-3~booting-live-medium Booting the live medium
+ # mkfs.ext4 ${パーティション}
 
-The first time you boot your live medium, whether CD, DVD, USB key, or PXE
-boot, some setup in your computer's BIOS may be needed first. Since BIOSes
-vary greatly in features and key bindings, we cannot get into the topic in
-depth here. Some BIOSes provide a key to bring up a menu of boot devices at
-boot time, which is the easiest way if it is available on your
-system. Otherwise, you need to enter the BIOS configuration menu and change
-the boot order to place the boot device for the live system before your
-normal boot device.
+}code
 
-Once you've booted the medium, you are presented with a boot menu. If you
-just press enter here, the system will boot using the default entry,
-#{Live}# and default options. For more information about boot options, see
-the "help" entry in the menu and also the live-boot and live-config man
-pages found within the live system.
+*{注意:}* 余った容量を Windows で使いたい場合ですが、この OS では最初のパーティション以外にアクセスすることは通常できません。この問題に対する解決策が{メーリングリスト}#contact でいくらか議論されていますが、簡単な解はないようです。
 
-Assuming you've selected #{Live}# and booted a default desktop live image,
-after the boot messages scroll by, you should be automatically logged into
-the #{user}# account and see a desktop, ready to use. If you have booted a
-console-only image, such as #{standard}# or #{rescue}# flavour {prebuilt
-images}#downloading-prebuilt-images, you should be automatically logged in
-on the console to the #{user}# account and see a shell prompt, ready to use.
+*{Remember: 新しい binary.hybrid.iso を USB メモリにインストールする度に、パーティションテーブルがイメージの内容で上書きされるために USB メモリにあるデータは全て失われるので、追加パーティションをまずバックアップしてから、live イメージの更新後に復帰させるようにしてください。}*
 
-2~using-virtual-machine Using a virtual machine for testing
+3~booting-live-medium live メディアのブート
 
-It can be a great time-saver for the development of live images to run them
-in a virtual machine (VM). This is not without its caveats:
+live メディア CD、DVD、USB メモリ、あるいは PXE ブートでの初回ブート時に、そのコンピュータの BIOS
+をまず設定する必要があるかもしれません。BIOS により機能やキーの割り当てが大きく異なるため、ここではそれについて深くは触れません。BIOS
+によってはブートするデバイスのメニューをブート時に提示させるキー割り当てを提供しているものがあり、そのシステムでこれが利用できる場合は最も簡単な方法でしょう。それがない場合は
+BIOS 設定メニューに入って live システムのブートデバイスを通常のブートデバイスよりも前に配置するようにブート順を変更する必要があります。
 
-_* Running a VM requires enough RAM for both the guest OS and the host and a
-CPU with hardware support for virtualization is recommended.
+メディアをブートするとブートメニューが表示されているでしょう。ここで単に enter を押すと、システムはデフォルトの項目 #{Live}#
+とデフォルトのオプションを使ってブートします。ブートオプションのさらなる情報については、メニューの「ヘルプ」の項目や live システム内にある
+live-boot 及び live-config の man ページを見てください。
 
-_* There are some inherent limitations to running on a VM, e.g. poor video
-performance, limited choice of emulated hardware.
+#{Live}# を選択してデフォルトのデスクトップlive イメージをブートしたとして、ブートメッセージが流れた後、自動的に #{user}#
+アカウントにログインし、デスクトップがすぐに使える状態で見えているはずです。{ビルド済みイメージ}#downloading-prebuilt-images
+の #{standard}# や #{rescue}# 等コンソールだけのイメージをブートした場合はコンソールで自動的に #{user}#
+アカウントにログインし、シェルプロンプトがすぐに使える状態で見えているはずです。
 
-_* When developing for specific hardware, there is no substitute for running
-on the hardware itself.
+2~using-virtual-machine 仮想マシンを利用したテスト
 
-_* Occasionally there are bugs that relate only to running in a VM. When in
-doubt, test your image directly on the hardware.
+live イメージを仮想マシン (VM) 内で実行すると開発の面で大きな時間の節約になるかもしれません。これには注意事項がないというわけではありません:
 
-Provided you can work within these constraints, survey the available VM
-software and choose one that is suitable for your needs.
+_* VM の実行にはゲストOSとホストOSの両方に十分なRAMが必要で、CPU には仮想化をハードウェアでサポートしているものを推奨します。
 
-3~testing-iso-with-qemu Testing an ISO image with QEMU
+_* VM 上での実行には、例えばビデオ性能が低いこと、エミュレーするハードウェアの選択肢が限られていること等内在する制限がいくらかあります。
 
-The most versatile VM in Debian is QEMU. If your processor has hardware
-support for virtualization, use the /{qemu-kvm}/ package; the /{qemu-kvm}/
-package description briefly lists the requirements.
+_* 特定のハードウェア向けの開発ではそのハードウェア自体での実行に代わるものはありません。
 
-First, install /{qemu-kvm}/ if your processor supports it. If not, install
-/{qemu}/, in which case the program name is #{qemu}# instead of #{kvm}# in
-the following examples. The /{qemu-utils}/ package is also valuable for
-creating virtual disk images with #{qemu-img}#.
+_* VM での実行にのみ関連するバグが時々あります。その疑いがあるときはイメージをハードウェアで直接テストしてください。
+
+こういった制約があることを理解した上で利用可能な VM ソフトウェアを調べて要件に合うものを選択してください。
+
+3~testing-iso-with-qemu QEMU での ISO イメージのテスト
+
+Debian で最も汎用性の高い VM は QEMU です。プロセッサが仮想化をハードウェアでサポートしている場合は /{qemu-kvm}/
+パッケージを使ってください。/{qemu-kvm}/ パッケージの説明に要件の簡単な一覧があります。
+
+プロセッサがサポートしている場合はまず /{qemu-kvm}/ をインストールしてください。サポートしている場合は /{qemu}/
+をインストールしてください。以下の例ではどちらの場合もプログラム名は #{kvm}# ではなく #{qemu}# とします。/{qemu-utils}/
+パッケージもあると #{qemu-img}# で仮想ディスクのイメージを作成するのによいでしょう。
 
 code{
 
@@ -283,7 +221,7 @@ code{
 
 }code
 
-Booting an ISO image is simple:
+ISO イメージのブートは簡単です:
 
 code{
 
@@ -291,11 +229,11 @@ code{
 
 }code
 
-See the man pages for more details.
+詳細については man ページを見てください。
 
-3~testing-iso-with-virtualbox Testing an ISO image with virtualbox
+3~testing-iso-with-virtualbox virtualbox での ISO イメージのテスト
 
-In order to test the ISO with /{virtualbox}/:
+/{virtualbox}/ で ISO をテストするには:
 
 code{
 
@@ -305,10 +243,10 @@ code{
 
 }code
 
-Create a new virtual machine, change the storage settings to use
-#{binary.hybrid.iso}# as the CD/DVD device, and start the machine.
+新しい仮想マシンを作成し、#{binary.hybrid.iso}# を CD/DVD
+デバイスとして利用するようにストレージ設定を変更して仮想マシンを起動します。
 
-*{Note:}* For live systems containing X.org that you want to test with /{virtualbox}/, you may wish to include the VirtualBox X.org driver package, /{virtualbox-guest-dkms}/ and /{virtualbox-guest-x11}/, in your live-build configuration. Otherwise, the resolution is limited to 800x600.
+*{注意:}* X.org を収録している live システムを /{virtualbox}/ でテストしたい場合は live-build 設定に VirtualBox X.org ドライバパッケージ /{virtualboxbox-guest-dkms}/ 及び /{virtualboxbox-guest-x11}/ を収録するとよいでしょう。収録しない場合、解像度は 800x600 に限定されます。
 
 code{
 
@@ -316,10 +254,9 @@ code{
 
 }code
 
-In order to make the dkms package work, also the kernel headers for the
-kernel flavour used in your image need to be installed. Instead of manually
-listing the correct /{linux-headers}/ package in above created package list,
-the selection of the right package can be done automatically by live-build.
+dkms
+パッケージを機能させるためには、そのイメージで利用しているカーネルの種類のカーネルヘッダもインストールする必要があります。正しいパッケージの選択は上記で作成したパッケージ一覧に正しい
+/{linux-headers}/ パッケージを手作業により列挙する代わりに live-build により自動的に行うことができます。
 
 code{
 
@@ -327,17 +264,14 @@ code{
 
 }code
 
-2~using-hdd-image Building and using an HDD image
+2~using-hdd-image HDD イメージのビルド及び利用
 
-Building an HDD image is similar to an ISO hybrid one in all respects except
-you specify #{-b hdd}# and the resulting filename is #{binary.img}# which
-cannot be burnt to optical media. It is suitable for booting from USB
-sticks, USB hard drives, and various other portable storage
-devices. Normally, an ISO hybrid image can be used for this purpose instead,
-but if you have a BIOS which does not handle hybrid images properly, you
-need an HDD image.
+HDD イメージのビルドは全面的に ISO hybrid イメージのビルドと似ていて、#{-b hdd}# を指定することと出来上がりのファイル名が
+#{binary.img}# で光学メディアに書き込んで使うことができないという点が異なります。このイメージは USB メモリや USB
+ハードドライブ、その他様々な他のポータブルストレージデバイスからのブートに適しています。通常、この目的には ISO hybrid
+イメージを代わりに使えますが、BIOS が hybrid イメージを適切に処理できない場合は HDD イメージが必要となります。
 
-*{Note:}* if you created an ISO hybrid image with the previous example, you will need to clean up your working directory with the #{lb clean}# command (see {The lb clean command}#lb-clean):
+*{注意:}* 前の例で ISO hybrid イメージを作成している場合  #{lb clean}# コマンド ({lb clean コマンド}#lb-clean 参照) で作業ディレクトリをきれいにする必要があります:
 
 code{
 
@@ -345,8 +279,7 @@ code{
 
 }code
 
-Run the #{lb config}# command as before, except this time specifying the HDD
-image type:
+前と同様に #{lb config}# コマンドを実行します。今回はイメージの種類に HDD を指定する点が異なります:
 
 code{
 
@@ -354,7 +287,7 @@ code{
 
 }code
 
-Now build the image with the #{lb build}# command:
+それから #{lb build}# コマンドでイメージをビルドします:
 
 code{
 
@@ -362,19 +295,16 @@ code{
 
 }code
 
-When the build finishes, a #{binary.img}# file should be present in the
-current directory.
+ビルドが完了すると現在のディレクトリに #{binary.img}# ファイルができているはずです。
 
-The generated binary image contains a VFAT partition and the syslinux
-bootloader, ready to be directly written on a USB device. Once again, using
-an HDD image is just like using an ISO hybrid one on USB. Follow the
-instructions in {Using an ISO hybrid live image}#using-iso-hybrid, except
-use the filename #{binary.img}# instead of #{binary.hybrid.iso}#.
+生成されたバイナリイメージには  VFAT パーティションと syslinux ブートローダが収録され、そのまま USB
+機器に書きこめます。繰り返しますが HDD イメージの使い方は USB で ISO hybrid イメージを使うのと同様です。{ISO hybrid
+live イメージの利用}#using-iso-hybrid の指示に従ってください。#{binary.hybrid.iso}# に代えて
+#{binary.img}# をファイル名に使う点が異なります。
 
-Likewise, to test an HDD image with Qemu, install /{qemu}/ as described
-above in {Testing an ISO image with QEMU}#testing-iso-with-qemu. Then run
-#{kvm}# or #{qemu}#, depending on which version your host system needs,
-specifying #{binary.img}# as the first hard drive.
+同様に、Qemu で HDD イメージをテストするには上記の {Qemu での ISO イメージのテスト}#testing-iso-with-qemu
+で説明しているように /{qemu}/ をインストールしてください。それから #{kvm}# か #{qemu}#
+のホストシステムで必要バージョンを実行し、最初のハードドライブとして #{binary.img}# を指定します。
 
 code{
 
@@ -382,13 +312,12 @@ code{
 
 }code
 
-2~building-netboot-image Building a netboot image
+2~building-netboot-image netboot イメージのビルド
 
-The following sequence of commands will create a basic netboot image
-containing a default live system without X.org. It is suitable for booting
-over the network.
+以下の順でコマンドを実行すると X.org のないデフォルトの live システムを収録する基本的な netboot
+イメージを作成します。ネットワーク越しのブートに適しています。
 
-*{Note:}* if you performed any previous examples, you will need to clean up your working directory with the #{lb clean}# command:
+*{注意:}* 前に示した例からどれかを実行した場合、作業ディレクトリを #{lb clean}# コマンドできれいにする必要があります:
 
 code{
 
@@ -396,16 +325,12 @@ code{
 
 }code
 
-In this specific case, a #{lb clean --binary}# would not be enough to clean
-up the necessary stages. The cause for this is that in netboot setups, a
-different initramfs configuration needs to be used which live-build performs
-automatically when building netboot images. Since the initramfs creation
-belongs to the chroot stage, switching to netboot in an existing build
-directory means to rebuild the chroot stage too. Therefore, #{lb clean}#
-(which will remove the chroot stage, too) needs to be used.
+この特定の場合必要な段階の掃除が #{lb clean --binary}# では不十分です。netboot イメージのビルドで live-build
+が netboot の準備を自動的に実行するにあたって異なる initramfs 設定が必要なことがその原因です。initramfs の作成は
+chroot の段階で行われるため、既存のビルドディレクトリで netboot に切り替えるということは chroot
+の段階も再ビルドするということになります。したがって、#{lb clean}# (これは chroot の段階も削除します) を使う必要があります。
 
-Run the #{lb config}# command as follows to configure your image for
-netbooting:
+#{lb config}# コマンドを以下のように実行してイメージを netboot 用に設定します:
 
 code{
 
@@ -413,15 +338,12 @@ code{
 
 }code
 
-In contrast with the ISO and HDD images, netbooting does not, itself, serve
-the filesystem image to the client, so the files must be served via
-NFS. Different network filesystems can be chosen through lb config. The
-#{--net-root-path}# and #{--net-root-server}# options specify the location
-and server, respectively, of the NFS server where the filesytem image will
-be located at boot time. Make sure these are set to suitable values for your
-network and server.
+ISO 及び HDD イメージとは対照的に netboot 自体ではクライアントに対してファイルシステムのイメージを提供しないため、ファイルを NFS
+経由で提供する必要があります。lb config で異なるネットワークファイルシステムを選択することもできます。#{--net-root-path}#
+及び #{--net-root-server}# オプションはそれぞれ、ブート時にファイルシステムのイメージが置かれる NFS
+サーバの位置とサーバを指定します。ネットワークやサーバに合う適切な値がセットされていることを確認してください。
 
-Now build the image with the #{lb build}# command:
+それから #{lb build}# コマンドでイメージをビルドします:
 
 code{
 
@@ -429,29 +351,24 @@ code{
 
 }code
 
-In a network boot, the client runs a small piece of software which usually
-resides on the EPROM of the Ethernet card. This program sends a DHCP request
-to get an IP address and information about what to do next. Typically, the
-next step is getting a higher level bootloader via the TFTP protocol. That
-could be pxelinux, GRUB, or even boot directly to an operating system like
-Linux.
+ネットワーク経由のブートでは、クライアントは通常 Ethernet カードの EPROM にある小さなソフトウェアを実行します。このプログラムは
+DHCP リクエストを送り、IP アドレスと次に行うことについての情報を取得します。次の段階は通常、TFTP
+プロトコルを経由した高レベルブートローダの取得です。これには pxelinux や GRUB、さらには直接 Linux
+のようなオペレーティングシステムをブートすることもできます。
 
-For example, if you unpack the generated #{binary.netboot.tar}# archive in
-the #{/srv/debian-live}# directory, you'll find the filesystem image in
-#{live/filesystem.squashfs}# and the kernel, initrd and pxelinux bootloader
-in #{tftpboot/}#.
+例えば生成された #{binary.netboot.tar}# アーカイブを #{/srv/debian-live}#
+ディレクトリに展開すると、#{live/filesystem.squashfs}# にファイルシステムのイメージ、カーネルや
+initrd、pxelinux ブートローダが #{tftpboot/}# にあることがわかるでしょう。
 
-We must now configure three services on the server to enable netbooting: the
-DHCP server, the TFTP server and the NFS server.
+ネットワーク経由でのブートをできるようにするにはサーバ上でサービスを3つ、DHCP サーバ、TFTP サーバ、NFS サーバを設定する必要があります。
 
-3~ DHCP server
+3~ DHCP サーバ
 
-We must configure our network's DHCP server to be sure to give an IP address
-to the netbooting client system, and to advertise the location of the PXE
-bootloader.
+ネットワーク経由でブートするクライアントシステムに対して確実にIPアドレスを1つ与え、PXE ブートローダの位置を通知するようにネットワークの DHCP
+サーバを設定する必要があります。
 
-Here is an example for inspiration, written for the ISC DHCP server
-#{isc-dhcp-server}# in the #{/etc/dhcp/dhcpd.conf}# configuration file:
+イメージしやすいように #{/etc/dhcp/dhcpd.conf}# 設定ファイルで設定する ISC DHCP サーバ
+#{isc-dhcp-server}# 向けに書かれた例を示します:
 
 code{
 
@@ -478,14 +395,12 @@ code{
 
 }code
 
-3~ TFTP server
+3~ TFTP サーバ
 
-This serves the kernel and initial ramdisk to the system at run time.
+これはカーネルと初期RAMディスクをシステム実行時に提供します。
 
-You should install the /{tftpd-hpa}/ package. It can serve all files
-contained inside a root directory, usually #{/srv/tftp}#. To let it serve
-files inside #{/srv/debian-live/tftpboot}#, run as root the following
-command:
+/{tftpd-hpa}/ パッケージをインストールすべきです。これはルートディレクトリ、通常 #{/srv/tftp}#
+内にある全ファイルを提供できます。#{/srv/debian-live/tftpboot}# 内にあるファイルを提供させるには root で
 
 code{
 
@@ -493,18 +408,16 @@ code{
 
 }code
 
-and fill in the new tftp server directory when being asked about it.
+を実行し、tftp サーバの新しいディレクトリについて聞かれたら回答します。
 
-3~ NFS server
+3~ NFS サーバ
 
-Once the guest computer has downloaded and booted a Linux kernel and loaded
-its initrd, it will try to mount the Live filesystem image through a NFS
-server.
+ゲストコンピュータが Linux カーネルをダウンロード、ブートして initrd を読み込むと、NFS サーバ経由で Live
+ファイルシステムのイメージをマウントしようとします。
 
-You need to install the /{nfs-kernel-server}/ package.
+/{nfs-kernel-server}/ パッケージをインストールする必要があります。
 
-Then, make the filesystem image available through NFS by adding a line like
-the following to #{/etc/exports}#:
+それから #{/etc/exports}# に
 
 code{
 
@@ -512,7 +425,7 @@ code{
 
 }code
 
-and tell the NFS server about this new export with the following command:
+のような行を追記してファイルシステムのイメージを NFS 経由で利用できるようにし、この新しいエクスポートについて NFS サーバに知らせます:
 
 code{
 
@@ -520,25 +433,23 @@ code{
 
 }code
 
-Setting up these three services can be a little tricky. You might need some
-patience to get all of them working together. For more information, see the
-syslinux wiki at http://www.syslinux.org/wiki/index.php/PXELINUX or the
-Debian Installer Manual's TFTP Net Booting section at
-http://d-i.alioth.debian.org/manual/en.i386/ch04s05.html. They might help,
-as their processes are very similar.
+この3つのサービスの設定にはやや注意が必要かもしれません。全て協調して機能させるまでには忍耐がいくらか必要かもしれません。さらなる情報については
+http://www.syslinux.org/wiki/index.php/PXELINUX にある syslinux wiki や
+http://d-i.alioth.debian.org/manual/ja.i386/ch04s05.html にある Debian
+インストーラマニュアルの TFTP ネットブート節を見てください。方法はとても似ているので手助けになるかもしれません。
 
-3~ Netboot testing HowTo
+3~ ネットワーク経由のブートをテストする方法
 
-Netboot image creation is made easy with live-build, but testing the images
-on physical machines can be really time consuming.
+Netboot イメージの作成は live-build
+により簡単になりましたが、イメージを実際のマシンでテストするのは本当に時間がかかるものとなるかもしれません。
 
-To make our life easier, we can use virtualization.
+日常を楽にするために仮想化を利用できます。
 
 3~ Qemu
 
-_* Install /{qemu}/, /{bridge-utils}/, /{sudo}/.
+_* /{qemu}/、/{bridge-utils}/、/{sudo}/ をインストールします。
 
-Edit #{/etc/qemu-ifup}#:
+#{/etc/qemu-ifup}# を編集します:
 
 code{
 
@@ -553,6 +464,6 @@ code{
 
 }code
 
-Get, or build a #{grub-floppy-netboot}#.
+#{grub-floppy-netboot}# を取得またはビルドします。
 
-Launch #{qemu}# with "#{-net nic,vlan=0 -net tap,vlan=0,ifname=tun0}#"
+「#{-net nic,vlan=0 -net tap,vlan=0,ifname=tun0}#」を引数にして #{qemu}# を実行します

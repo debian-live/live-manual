@@ -1,47 +1,40 @@
-:B~ Customizing contents
+:B~ 収録内容の独自化
 
-1~customizing-contents Customizing contents
+1~customizing-contents 収録内容の独自化
 
-This chapter discusses fine-tuning customization of the live system contents
-beyond merely choosing which packages to include. Includes allow you to add
-or replace arbitrary files in your live system image, hooks allow you to
-execute arbitrary commands at different stages of the build and at boot
-time, and preseeding allows you to configure packages when they are
-installed by supplying answers to debconf questions.
+この章では収録するパッケージを単に選択だけにとどまらない、微調整まで含めた Live システムの収録内容の独自化について説明します。インクルードにより
+live
+システムイメージの任意のファイルを追加、置換できるようになり、フックによりビルド時及びブート時の異なる段階で任意のコマンドを実行できるようになり、preseed
+が debconf の質問に対する回答を提供することでパッケージのインストール時に設定できるようになります。
 
 2~includes Includes
 
-While ideally a live system would include files entirely provided by
-unmodified packages, it is sometimes convenient to provide or modify some
-content by means of files. Using includes, it is possible to add (or
-replace) arbitrary files in your live system image. live-build provides two
-mechanisms for using them:
+理想的なのは変更されていないパッケージにより提供されるファイルを Live
+システムで完全に収録することではありますが、ファイルを使って内容をいくらか提供あるいは変更することが便利なこともあります。インクルードを使うと Live
+システムイメージ中の任意のファイルを追加 (または置換) することができるようになります。live-build
+ではこれを使う仕組みを2つ提供しています:
 
-_* Chroot local includes: These allow you to add or replace files to the
-chroot/Live filesystem. Please see {Live/chroot local
-includes}#live-chroot-local-includes for more information.
+_* Chroot ローカルインクルード: chroot/Live
+ファイルシステムに対してファイルの追加や置換ができるようになります。さらなる情報については、{Live/chroot
+ローカルインクルード}#live-chroot-local-includes を見てください。
 
-_* Binary local includes: These allow you to add or replace files in the
-binary image. Please see {Binary local includes}#binary-local-includes for
-more information.
+_* バイナリローカルインクルード:
+バイナリイメージ中のファイルの追加や置換ができるようになります。さらなる情報については、{バイナリローカルインクルード}#binary-local-includes
+を見てください。
 
-Please see {Terms}#terms for more information about the distinction between
-the "Live" and "binary" images.
+「Live」及び「バイナリ」イメージの違いについてのさらなる情報は、{用語}#terms を見てください。
 
-3~live-chroot-local-includes Live/chroot local includes
+3~live-chroot-local-includes Live/chroot ローカルインクルード
 
-Chroot local includes can be used to add or replace files in the chroot/Live
-filesystem so that they may be used in the Live system. A typical use is to
-populate the skeleton user directory (#{/etc/skel}#) used by the Live system
-to create the live user's home directory. Another is to supply configuration
-files that can be simply added or replaced in the image without processing;
-see {Live/chroot local hooks}#live-chroot-local-hooks if processing is
-needed.
+Chroot ローカルインクルードを使って chroot/Live ファイルシステム中のファイルの追加や置換を行い、それを Live
+システムで利用することができます。代表的な使い方として Live システムで利用するユーザディレクトリ (#{/etc/skel}#)
+の骨格を構成させ、live
+ユーザのホームディレクトリを作成するということがあります。別の使い方としては設定ファイルを提供し、そのまま加工せずイメージ中に追加または置換するということがあります。加工が必要な場合は
+{Live/chroot ローカルフック}#live-chroot-local-hooks を見てください。
 
-To include files, simply add them to your #{config/includes.chroot}#
-directory. This directory corresponds to the root directory #{/}# of the
-live system. For example, to add a file #{/var/www/index.html}# in the live
-system, use:
+ファイルを収録するには #{config/includes.chroot}# ディレクトリに単純に追加します。このディレクトリが Live
+システムのルートディレクトリ #{/}# に対応します。例えば Live システムにファイル #{/var/www/index.html}#
+を追加する場合:
 
 code{
 
@@ -50,7 +43,7 @@ code{
 
 }code
 
-Your configuration will then have the following layout:
+それから設定は以下の配置になっているでしょう:
 
 code{
 
@@ -64,18 +57,15 @@ code{
 
 }code
 
-Chroot local includes are installed after package installation so that files
-installed by packages are overwritten.
+Chroot
+ローカルインクルードはパッケージがインストールされた後にインストールされるので、パッケージによりインストールされたファイルは上書きされます。
 
-3~binary-local-includes Binary local includes
+3~binary-local-includes バイナリローカルインクルード
 
-To include material such as documentation or videos on the medium filesystem
-so that it is accessible immediately upon insertion of the medium without
-booting the Live system, you can use binary local includes. This works in a
-similar fashion to chroot local includes. For example, suppose the files
-#{~/video_demo.*}# are demo videos of the live system described by and
-linked to by an HTML index page. Simply copy the material to
-#{config/includes.binary/}# as follows:
+文書やビデオ等の内容をメディアのファイルシステムに収録して、メディアを差し込んで Live
+システムをブートしなくてもすぐにアクセスできるようにするのにバイナリローカルインクルードを使えます。これは chroot
+ローカルインクルードと同様の方法で動作します。例えばファイル #{~/video_demo.*}# が live システムの実演ビデオで、リンク先の
+HTML 索引ページでそれを説明しているものと仮定しましょう。単純に内容を #{config/includes.binary/}# にコピーします:
 
 code{
 
@@ -83,53 +73,42 @@ code{
 
 }code
 
-These files will now appear in the root directory of the live medium.
+これでファイルは live メディアのルートディレクトリに現れます。
 
-2~hooks Hooks
+2~hooks フック
 
-Hooks allow commands to be performed in the chroot and binary stages of the
-build in order to customize the image.
+フックではビルドの chroot 及び バイナリの段階でコマンドを実行し、イメージを独自化できます。
 
-3~live-chroot-local-hooks Live/chroot local hooks
+3~live-chroot-local-hooks Live/chroot ローカルフック
 
-To run commands in the chroot stage, create a hook script with a #{.chroot}#
-suffix containing the commands in the #{config/hooks/}# directory. The hook
-will run in the chroot after the rest of your chroot configuration has been
-applied, so remember to ensure your configuration includes all packages and
-files your hook needs in order to run. See the example chroot hook scripts
-for various common chroot customization tasks provided in
-#{/usr/share/doc/live-build/examples/hooks}# which you can copy or symlink
-to use them in your own configuration.
+chroot の段階でコマンドを実行するにはファイル名末尾が #{.chroot}# でコマンドを収録するフックスクリプトを
+#{config/hooks/}# ディレクトリに作成します。フックは残りの chroot 設定の適用後に chroot
+内で実行されるため、フックの実行に必要なパッケージやファイルを全て確実に設定に収録することを忘れないようにしてください。代表的な chroot
+の様々な独自化タスクについて #{/usr/share/doc/live-build/examples/hooks}#  で提供されている chroot
+フックスクリプトの例を確認してください。この例からコピーやシンボリックリンクを作成して自分の設定で使えます。
 
-3~boot-time-hooks Boot-time hooks
+3~boot-time-hooks ブート時フック
 
-To execute commands at boot time, you can supply live-config hooks as
-explained in the "Customization" section of its man page. Examine
-live-config's own hooks provided in #{/lib/live/config/}#, noting the
-sequence numbers. Then provide your own hook prefixed with an appropriate
-sequence number, either as a chroot local include in
-#{config/includes.chroot/lib/live/config/}#, or as a custom package as
-discussed in {Installing modified or third-party
-packages}#installing-modified-or-third-party-packages.
+ブート時にコマンドを実行するために man ページの「独自化」節で説明されている live-config
+フックを提供することができます。#{/lib/live/config/}# で提供している live-config
+独自のフックを、実行順を示す頭の番号に注意して調べてください。それから自分のフックに実行順を示す適切な番号を頭に付けて、#{config/includes.chroot/lib/live/config/}#
+内の chroot
+ローカルインクルードか、{変更した、またはサードパーティのパッケージのインストール}#installing-modified-or-third-party-packages
+で説明している独自パッケージとして提供してください。
 
-3~ Binary local hooks
+3~ バイナリローカルフック
 
-To run commands in the binary stage, create a hook script with a #{.binary}#
-suffix containing the commands in the #{config/hooks/}# directory. The hook
-will run after all other binary commands are run, but before
-binary_checksums, the very last binary command. The commands in your hook do
-not run in the chroot, so take care to not modify any files outside of the
-build tree, or you may damage your build system! See the example binary hook
-scripts for various common binary customization tasks provided in
-#{/usr/share/doc/live-build/examples/hooks}# which you can copy or symlink
-to use them in your own configuration.
+バイナリ段階でコマンドを実行するには、コマンドを収録するフックスクリプトを、末尾に #{.binary}# を付けて #{config/hooks/}#
+ディレクトリに作成します。このフックは他の binary_checksums
+を除いたバイナリコマンドを全て実行した後の、バイナリコマンドのほぼ最後に実行されます。フック内のコマンドは chroot
+内で実行されるのではないため、ビルドツリー外のファイルを変更することのないように注意してください。変更するとビルドシステムが機能しなくなるかもしれません!
+代表的なバイナリ独自化タスクについて #{/usr/share/doc/live-build/examples/hooks}#
+で提供されているバイナリフックスクリプトの例を確認してください。この例からコピーやシンボリックリンクを作成して自分の設定で使えます。
 
-2~ Preseeding Debconf questions
+2~ Debconf 質問の preseed
 
-Files in the #{config/preseed/}# directory suffixed with #{.cfg}# followed
-by the stage (#{.chroot}# or #{.binary}#) are considered to be debconf
-preseed files and are installed by live-build using
-#{debconf-set-selections}# during the corresponding stage.
+#{config/preseed/}# ディレクトリにある、末尾が段階 (#{.chroot}# か #{.binary}#) に続いて
+#{.cfg}# で終わるファイルは debconf の preseed ファイルと見なされ、対応する段階で live-build により
+#{debconf-set-selections}# を使ってインストールされます。
 
-For more information about debconf, please see #{debconf(7)}# in the
-/{debconf}/ package.
+debconf のさらなる情報については、/{debconf}/ パッケージの #{debconf(7)}# を見てください。

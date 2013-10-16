@@ -1,56 +1,45 @@
-:B~ Contributing to the project
+:B~ プロジェクトへの貢献
 
-1~contributing-to-project Contributing to the project
+1~contributing-to-project プロジェクトへの貢献
 
-When submitting a contribution, please clearly identify its copyright holder
-and include any applicable licensing statement. Note that to be accepted,
-the contribution must be licensed under the same license as the rest of the
-documents, namely, GPL version 3 or later.
+貢献物の提出にあたっては著作権者を明確に識別し、適用するライセンス文を収録してください。受け入れられるためには、その貢献物はその文書の他の部分と同一の、GPL
+バージョン 3 以降というライセンスを採用する必要があることに注意してください。
 
-Contributions to the project, such as translations and patches, are greatly
-welcome. Anyone can directly commit to the repositories, however, we ask you
-to send bigger changes to the mailing list to discuss them first. See the
-section {Contact}#contact for more information.
+翻訳やパッチといったプロジェクトへの貢献は大いに歓迎します。誰もがリポジトリに直接コミットできますが、大きな変更についてはまずメーリングリストに送って議論するようお願いします。さらなる情報については{連絡先}#contact
+節を見てください。
 
-The Live Systems Project uses Git as version control system and source code
-management. As explained in {Git repositories}#git-repositories there are
-two main development branches: *{debian}* and *{debian-next}*. Everybody can
-commit to the debian-next branches of the live-boot, live-build,
-live-config, live-images, live-manual and live-tools repositories.
+Live システムプロジェクトでは Git をソースコード管理用のバージョン管理システムとして利用しています。{Git
+リポジトリ}#git-repositories で説明しているように、開発用ブランチは *{debian}* と *{debian-next}*
+の2つあります。debian-next ブランチの
+live-boot、live-build、live-config、live-images、live-manual、live-tools
+リポジトリには誰でもコミットできます。
 
-However, there are certain restrictions. The server will reject:
+ただし、特定の制限があります。サーバは
 
-_* Non fast-forward pushes.
+_* fast-forward ではないプッシュ
 
-_* Merge commits.
+_* マージコミット
 
-_* Adding or removing tags or branches.
+_* タグやブランチの追加や削除
 
-Even though all commits might be revised, we ask you to use your common
-sense and make good commits with good commit messages.
+を拒否します。あらゆるコミットを訂正できるとはいえ、自分の常識に従って、良いコミットメッセージを使って良いコミットを行うようお願いします。
 
-_* Write commit messages that consist of complete, meaningful sentences in
-English, starting with a capital letter and ending with a full
-stop. Usually, these will start with the form
-"Fixing/Adding/Removing/Correcting/Translating/...".
+_*
+完結した、有意な文で構成されるコミットメッセージを英語で書き、大文字から始めて句点で終えるようにしてください。通常、「Fixing/Adding/Removing/Correcting/Translating/...」のようなものから開始します。
 
-_* Write good commit messages. The first line must be an accurate summary of
-the contents of the commit which will be included in the changelog. If you
-need to make some further explanations, write them below leaving a blank
-line after the first one and then another blank line after each
-paragraph. Lines of paragraphs should not exceed 80 characters in length.
+_* 良いコミットメッセージを書いてください。先頭行はそのコミットの内容を正確にまとめるようにしてください。これは changelog
+に収録されることになります。何か説明がさらに必要であれば、先頭行の後に1行空けてから書き、各段落の後には新たな空行を空けてください。段落の行の長さは80文字を超えないようにしてください。
 
-_* Commit atomically, this is to say, do not mix unrelated things in the
-same commit. Make one different commit for each change you make.
+_*
+コミットは小分けにしてください。これは関係のないものをまとめてコミットしないようにということです。各変更ごとに別個にコミットするようにしてください。
 
-2~ Making changes
+2~ 変更を加える
 
-In order to push to the repositories, you must follow the following
-procedure. Here we use live-manual as an example so replace it with the name
-of the repository you want to work with. For detailed information on how to
-edit live-manual see {Contributing to this document}#how-to-contribute.
+リポジトリに送るには、以下の手順に従う必要があります。ここでは live-manual
+を例として使うのでそれは作業したいリポジトリに置き換えてください。live-manual
+を変更する方法に関する詳細な情報については{この文書への貢献}#how-to-contribute を見てください。
 
-_* Fetch the public commit key:
+_* 公開コミットキーを取得します:
 
 code{
 
@@ -61,7 +50,7 @@ code{
 
 }code
 
-_* Add the following section to your openssh-client config:
+_* openssh-client の設定に以下を追記します:
 
 code{
 
@@ -75,7 +64,7 @@ code{
 
 }code
 
-_* Check out a clone of live-manual through ssh:
+_* ssh 経由で live-manual の複製を取得します:
 
 code{
 
@@ -84,7 +73,7 @@ code{
 
 }code
 
-_* Make sure you have Git author and email set:
+_* Git で作者とメールをセットしたことを確認してください:
 
 code{
 
@@ -93,11 +82,9 @@ code{
 
 }code
 
-*{Important:}* Remember that you should commit any changes on the *{debian-next}* branch.
+*{重要:}* 変更はどれも *{debian-next}* ブランチにコミットする必要があるということを忘れないでください
 
-_* Make your changes. In this example you would first write a new section
-dealing with applying patches and then prepare to commit adding the files
-and writing your commit message like this:
+_* 変更を加えます。この例ではまずパッチの適用を扱う新しい節を書き、ファイルの追加をコミットする下準備をしてコミットメッセージを
 
 code{
 
@@ -105,7 +92,7 @@ code{
 
 }code
 
-_* Push the commit to the server:
+_* のように書いてサーバにコミットを送ります:
 
 code{
 

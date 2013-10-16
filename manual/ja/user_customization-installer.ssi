@@ -1,51 +1,41 @@
-:B~ Customizing Debian Installer
+:B~ Debian インストーラの独自化
 
-1~customizing-installer Customizing Debian Installer
+1~customizing-installer Debian インストーラの独自化
 
-Live system images can be integrated with Debian Installer. There are a
-number of different types of installation, varying in what is included and
-how the installer operates.
+Live システムのイメージは Debian
+インストーラと統合できます。インストールには収録内容やインストーラの動作方法によりいくつもの異なる種類があります。
 
-Please note the careful use of capital letters when referring to the "Debian
-Installer" in this section - when used like this we refer explicitly to the
-official installer for the Debian system, not anything else. It is often
-seen abbreviated to "d-i".
+この節で「Debian インストーラ」と大文字を使った表記で参照しているところに注意してください - この表記の場合には公式の Debian
+システム用インストーラを明示的に指していて、他の何かではありません。「d-i」と短縮することもよくあります。
 
-2~ Types of Debian Installer
+2~ Debian インストーラの種類
 
-The three main types of installer are:
+インストーラの主な3つの種類:
 
-*{"Normal" Debian Installer}*: This is a normal live system image with a separate kernel and initrd which (when selected from the appropriate bootloader) launches into a standard Debian Installer instance, just as if you had downloaded a CD image of Debian and booted it. Images containing a live system and such an otherwise independent installer are often referred to as "combined images".
+*{「通常の」Debian インストーラ}*: これは通常の live システムのイメージで、(適切なブートローダからそれを選択した場合に) Debian の CD イメージをダウンロードしてそれをブートしたのと同様に標準の Debian インストーラを起動するための別個のカーネルと initrd を収録しています。live システムとこういった別個の独立したインストーラを収録するイメージはよく「複合イメージ」と呼ばれます。
 
-On such images, Debian is installed by fetching and installing .deb packages
-using /{debootstrap}/, from local media or some network-based network,
-resulting in a default Debian system being installed to the hard disk.
+こういったイメージでは、/{debootstrap}/ を使ってローカルメディアやネットワークから .deb パッケージを取得、インストールすることで
+Debian がインストールされます。結果としてはデフォルトの Debian システムがハードディスクにインストールされます。
 
-This whole process can be preseeded and customized in a number of ways; see
-the relevant pages in the Debian Installer manual for more information. Once
-you have a working preseeding file, live-build can automatically put it in
-the image and enable it for you.
+このプロセス全体で、いくつもの方法で preseed を使って独自化できます。さらなる情報については Debian
+インストーラマニュアルの関連するページを見てください。機能する preseed ファイルが得られたら live-build
+が自動的にイメージに取り込んで使えるようになります。
 
-*{"Live" Debian Installer}*: This is a live system image with a separate kernel and initrd which (when selected from the appropriate bootloader) launches into an instance of the Debian Installer.
+*{「Live」Debian インストーラ}*: これは live システムイメージで、(適切なブートローダからそれを選択した場合に) Debian インストーラを起動するための別個のカーネルと initrd を収録しています。
 
-Installation will proceed in an identical fashion to the "normal"
-installation described above, but at the actual package installation stage,
-instead of using /{debootstrap}/ to fetch and install packages, the live
-filesystem image is copied to the target. This is achieved with a special
-udeb called live-installer.
+インストールは上記で説明した「通常の」インストールと全く同じように進みますが、実際にパッケージをインストールする段階で、/{debootstrap}/
+を使ってパッケージを取得、インストールする代わりに、live ファイルシステムのイメージを対象にコピーします。これは live-installer
+という特別な udeb により行っています。
 
-After this stage, the Debian Installer continues as normal, installing and
-configuring items such as bootloaders and local users, etc.
+この段階の後は、Debian インストーラはインストールや、ブートローダやローカルユーザ等の設定を通常どおり続けます。
 
-*{Note:}* to support both normal and live installer entries in the bootloader of the same live medium, you must disable live-installer by preseeding #{live-installer/enable=false}#.
+*{注意:}* 一つの live メディアのブートローダの項目で通常のインストーラと live インストーラの両方に対応するには、#{live-installer/enable=false}# という preseed により live-installer を無効化する必要があります。
 
-*{"Desktop" Debian Installer}*: Regardless of the type of Debian Installer included, #{d-i}# can be launched from the Desktop by clicking on an icon. This is user friendlier in some situations. In order to make use of this, the debian-installer-launcher package needs to be included.
+*{「デスクトップ」Debian インストーラ}*: 収録する Debian インストーラの種類を問わず、デスクトップからアイコンをクリックすることで #{d-i}# を起動できます。状況によってはこちらの方がユーザからわかりやすいこともあります。これを使えるようにするには debian-installer-launcher パッケージを収録する必要があります。
 
-Note that by default, live-build does not include Debian Installer images in
-the images, it needs to be specifically enabled with #{lb config}#. Also,
-please note that for the "Desktop" installer to work, the kernel of the live
-system must match the kernel #{d-i}# uses for the specified
-architecture. For example:
+live-build は Debian インストーラのイメージをデフォルトではイメージに収録しないことに注意してください。#{lb config}#
+により具体的に有効化する必要があります。さらに、「デスクトップ」インストーラが機能するようにするには live
+システムのカーネルが指定されたアーキテクチャで #{d-i}# が利用するカーネルと一致する必要があることに注意してください。例えば:
 
 code{
 
@@ -55,18 +45,13 @@ code{
 
 }code
 
-2~ Customizing Debian Installer by preseeding
+2~ preseed による Debian インストーラの独自化
 
-As described in the Debian Installer Manual, Appendix B at
-http://www.debian.org/releases/stable/i386/apb.html, "Preseeding provides a
-way to set answers to questions asked during the installation process,
-without having to manually enter the answers while the installation is
-running. This makes it possible to fully automate most types of installation
-and even offers some features not available during normal installations."
-This kind of customization is best accomplished with live-build by placing
-the configuration in a #{preseed.cfg}# file included in
-#{config/debian-installer/}#. For example, to preseed setting the locale to
-#{en_US}#:
+http://www.debian.org/releases/stable/i386/apb.html にある Debian
+インストーラマニュアルの付録Bで説明されていますが「preseed
+は、インストールの実行中に手作業により回答を入力せずに、インストールプロセス中の質問の回答を設定する方法を提供します。これにより、ほとんどの方法のインストールを完全に自動化し、さらに通常のインストールでは利用できない特徴もあります」。この種の独自化は
+live-build を使って設定を #{preseed.cfg}# ファイルに書き、#{config/debian-installer/}#
+に置くことで最も完成させることができます。例えばロケールを #{en_US}# に設定する preseed は:
 
 code{
 
@@ -75,12 +60,10 @@ code{
 
 }code
 
-2~ Customizing Debian Installer content
+2~ Debian インストーラの収録内容の独自化
 
-For experimental or debugging purposes, you might want to include locally
-built #{d-i}# component udeb packages. Place these in
-#{config/packages.binary/}# to include them in the image. Additional or
-replacement files and directories may be included in the installer initrd as
-well, in a similar fashion to {Live/chroot local
-includes}#live-chroot-local-includes, by placing the material in
-#{config/includes.installer/}#.
+実験やデバッグの目的で、ローカルでビルドした #{d-i}# の一部である udeb
+パッケージを収録したいことがあるかもしれません。#{config/packages.binary/}#
+にそれを配置してイメージに収録します。{Live/chroot ローカルインクルード}#live-chroot-local-includes
+と同じ方法で内容を #{config/includes.installer/}#
+に置くことで、追加または置換するファイルやディレクトリを同様にインストーラの initrd に収録することもできます。

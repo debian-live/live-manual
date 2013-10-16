@@ -1,20 +1,18 @@
 # Japanese translations for live-manual package
-# Copyright (C) 2013 Free Software Foundation, Inc.
+# Copyright (C) 2013 victory <victory.deb@gmail.com>
 # This file is distributed under the same license as the live-manual package.
-# Automatically generated, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
 "POT-Creation-Date: 2013-03-11 05:53+0100\n"
-"PO-Revision-Date: 2013-03-11 05:53+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2013-03-11 13:53+0900\n"
+"Last-Translator: victory <victory.deb@gmail.com>\n"
+"Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. type: Plain text
 #: en/about_manual.ssi:94 en/about_manual.ssi:102 en/about_manual.ssi:110
@@ -171,12 +169,12 @@ msgstr "}code"
 #. type: Plain text
 #: en/user_customization-contents.ssi:2 en/user_customization-overview.ssi:2
 msgid ":B~ Customizing contents"
-msgstr ""
+msgstr ":B~ 収録内容の独自化"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:4
 msgid "1~customizing-contents Customizing contents"
-msgstr ""
+msgstr "1~customizing-contents 収録内容の独自化"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:6
@@ -188,11 +186,17 @@ msgid ""
 "time, and preseeding allows you to configure packages when they are "
 "installed by supplying answers to debconf questions."
 msgstr ""
+"この章では収録するパッケージを単に選択だけにとどまらない、微調整まで含めた "
+"Live システムの収録内容の独自化について説明します。インクルードにより live シ"
+"ステムイメージの任意のファイルを追加、置換できるようになり、フックによりビルド"
+"時及びブート時の異なる段階で任意のコマンドを実行できるようになり、preseed が "
+"debconf の質問に対する回答を提供することでパッケージのインストール時に設定でき"
+"るようになります。"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:8
 msgid "2~includes Includes"
-msgstr ""
+msgstr "2~includes Includes"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:10
@@ -203,6 +207,11 @@ msgid ""
 "replace) arbitrary files in your live system image. live-build provides two "
 "mechanisms for using them:"
 msgstr ""
+"理想的なのは変更されていないパッケージにより提供されるファイルを Live システム"
+"で完全に収録することではありますが、ファイルを使って内容をいくらか提供あるいは"
+"変更することが便利なこともあります。インクルードを使うと Live システムイメージ"
+"中の任意のファイルを追加 (または置換) することができるようになります。live-"
+"build ではこれを使う仕組みを2つ提供しています:"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:12
@@ -211,6 +220,9 @@ msgid ""
 "chroot/Live filesystem. Please see {Live/chroot local includes}#live-chroot-"
 "local-includes for more information."
 msgstr ""
+"_* Chroot ローカルインクルード: chroot/Live ファイルシステムに対してファイルの"
+"追加や置換ができるようになります。さらなる情報については、{Live/chroot ローカ"
+"ルインクルード}#live-chroot-local-includes を見てください。"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:14
@@ -219,6 +231,9 @@ msgid ""
 "binary image. Please see {Binary local includes}#binary-local-includes for "
 "more information."
 msgstr ""
+"_* バイナリローカルインクルード: バイナリイメージ中のファイルの追加や置換がで"
+"きるようになります。さらなる情報については、{バイナリローカルインクルード}#"
+"binary-local-includes を見てください。"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:16
@@ -226,11 +241,13 @@ msgid ""
 "Please see {Terms}#terms for more information about the distinction between "
 "the \"Live\" and \"binary\" images."
 msgstr ""
+"「Live」及び「バイナリ」イメージの違いについてのさらなる情報は、{用語}#terms "
+"を見てください。"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:18
 msgid "3~live-chroot-local-includes Live/chroot local includes"
-msgstr ""
+msgstr "3~live-chroot-local-includes Live/chroot ローカルインクルード"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:20
@@ -243,6 +260,13 @@ msgid ""
 "see {Live/chroot local hooks}#live-chroot-local-hooks if processing is "
 "needed."
 msgstr ""
+"Chroot ローカルインクルードを使って chroot/Live ファイルシステム中のファイルの"
+"追加や置換を行い、それを Live システムで利用することができます。代表的な使い方"
+"として Live システムで利用するユーザディレクトリ (#{/etc/skel}#) の骨格を構成"
+"させ、live ユーザのホームディレクトリを作成するということがあります。別の使い"
+"方としては設定ファイルを提供し、そのまま加工せずイメージ中に追加または置換する"
+"ということがあります。加工が必要な場合は {Live/chroot ローカルフック}#live-"
+"chroot-local-hooks を見てください。"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:22
@@ -252,6 +276,9 @@ msgid ""
 "live system. For example, to add a file #{/var/www/index.html}# in the live "
 "system, use:"
 msgstr ""
+"ファイルを収録するには #{config/includes.chroot}# ディレクトリに単純に追加しま"
+"す。このディレクトリが Live システムのルートディレクトリ #{/}# に対応します。"
+"例えば Live システムにファイル #{/var/www/index.html}# を追加する場合:"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:27
@@ -260,11 +287,13 @@ msgid ""
 " $ mkdir -p config/includes.chroot/var/www\n"
 " $ cp /path/to/my/index.html config/includes.chroot/var/www\n"
 msgstr ""
+" $ mkdir -p config/includes.chroot/var/www\n"
+" $ cp /path/to/my/index.html config/includes.chroot/var/www\n"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:31
 msgid "Your configuration will then have the following layout:"
-msgstr ""
+msgstr "それから設定は以下の配置になっているでしょう:"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:41
@@ -278,6 +307,13 @@ msgid ""
 "     |           `-- index.html\n"
 "    [...]\n"
 msgstr ""
+" -- config\n"
+"    [...]\n"
+"     |-- includes.chroot\n"
+"     |   `-- var\n"
+"     |       `-- www\n"
+"     |           `-- index.html\n"
+"    [...]\n"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:45
@@ -285,11 +321,13 @@ msgid ""
 "Chroot local includes are installed after package installation so that files "
 "installed by packages are overwritten."
 msgstr ""
+"Chroot ローカルインクルードはパッケージがインストールされた後にインストールさ"
+"れるので、パッケージによりインストールされたファイルは上書きされます。"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:47
 msgid "3~binary-local-includes Binary local includes"
-msgstr ""
+msgstr "3~binary-local-includes バイナリローカルインクルード"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:49
@@ -302,22 +340,28 @@ msgid ""
 "by an HTML index page. Simply copy the material to #{config/includes.binary/}"
 "# as follows:"
 msgstr ""
+"文書やビデオ等の内容をメディアのファイルシステムに収録して、メディアを差し込ん"
+"で Live システムをブートしなくてもすぐにアクセスできるようにするのにバイナリ"
+"ローカルインクルードを使えます。これは chroot ローカルインクルードと同様の方法"
+"で動作します。例えばファイル #{~/video_demo.*}# が live システムの実演ビデオ"
+"で、リンク先の HTML 索引ページでそれを説明しているものと仮定しましょう。単純に"
+"内容を #{config/includes.binary/}# にコピーします:"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:53
 #, no-wrap
 msgid " $ cp ~/video_demo.* config/includes.binary/\n"
-msgstr ""
+msgstr " $ cp ~/video_demo.* config/includes.binary/\n"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:57
 msgid "These files will now appear in the root directory of the live medium."
-msgstr ""
+msgstr "これでファイルは live メディアのルートディレクトリに現れます。"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:59
 msgid "2~hooks Hooks"
-msgstr ""
+msgstr "2~hooks フック"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:61
@@ -325,11 +369,13 @@ msgid ""
 "Hooks allow commands to be performed in the chroot and binary stages of the "
 "build in order to customize the image."
 msgstr ""
+"フックではビルドの chroot 及び バイナリの段階でコマンドを実行し、イメージを独"
+"自化できます。"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:63
 msgid "3~live-chroot-local-hooks Live/chroot local hooks"
-msgstr ""
+msgstr "3~live-chroot-local-hooks Live/chroot ローカルフック"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:65
@@ -343,11 +389,18 @@ msgid ""
 "live-build/examples/hooks}# which you can copy or symlink to use them in "
 "your own configuration."
 msgstr ""
+"chroot の段階でコマンドを実行するにはファイル名末尾が #{.chroot}# でコマンドを"
+"収録するフックスクリプトを #{config/hooks/}# ディレクトリに作成します。フック"
+"は残りの chroot 設定の適用後に chroot 内で実行されるため、フックの実行に必要な"
+"パッケージやファイルを全て確実に設定に収録することを忘れないようにしてくださ"
+"い。代表的な chroot の様々な独自化タスクについて #{/usr/share/doc/live-build/"
+"examples/hooks}#  で提供されている chroot フックスクリプトの例を確認してくださ"
+"い。この例からコピーやシンボリックリンクを作成して自分の設定で使えます。"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:67
 msgid "3~boot-time-hooks Boot-time hooks"
-msgstr ""
+msgstr "3~boot-time-hooks ブート時フック"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:69
@@ -360,11 +413,18 @@ msgid ""
 "live/config/}#, or as a custom package as discussed in {Installing modified "
 "or third-party packages}#installing-modified-or-third-party-packages."
 msgstr ""
+"ブート時にコマンドを実行するために man ページの「独自化」節で説明されている "
+"live-config フックを提供することができます。#{/lib/live/config/}# で提供してい"
+"る live-config 独自のフックを、実行順を示す頭の番号に注意して調べてください。"
+"それから自分のフックに実行順を示す適切な番号を頭に付けて、#{config/includes."
+"chroot/lib/live/config/}# 内の chroot ローカルインクルードか、{変更した、また"
+"はサードパーティのパッケージのインストール}#installing-modified-or-third-"
+"party-packages で説明している独自パッケージとして提供してください。"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:71
 msgid "3~ Binary local hooks"
-msgstr ""
+msgstr "3~ バイナリローカルフック"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:73
@@ -379,11 +439,20 @@ msgid ""
 "share/doc/live-build/examples/hooks}# which you can copy or symlink to use "
 "them in your own configuration."
 msgstr ""
+"バイナリ段階でコマンドを実行するには、コマンドを収録するフックスクリプトを、末"
+"尾に #{.binary}# を付けて #{config/hooks/}# ディレクトリに作成します。このフッ"
+"クは他の binary_checksums を除いたバイナリコマンドを全て実行した後の、バイナリ"
+"コマンドのほぼ最後に実行されます。フック内のコマンドは chroot 内で実行されるの"
+"ではないため、ビルドツリー外のファイルを変更することのないように注意してくださ"
+"い。変更するとビルドシステムが機能しなくなるかもしれません! 代表的なバイナリ独"
+"自化タスクについて #{/usr/share/doc/live-build/examples/hooks}# で提供されてい"
+"るバイナリフックスクリプトの例を確認してください。この例からコピーやシンボリッ"
+"クリンクを作成して自分の設定で使えます。"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:75
 msgid "2~ Preseeding Debconf questions"
-msgstr ""
+msgstr "2~ Debconf 質問の preseed"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:77
@@ -393,6 +462,10 @@ msgid ""
 "preseed files and are installed by live-build using #{debconf-set-selections}"
 "# during the corresponding stage."
 msgstr ""
+"#{config/preseed/}# ディレクトリにある、末尾が段階 (#{.chroot}# か #{.binary}"
+"#) に続いて #{.cfg}# で終わるファイルは debconf の preseed ファイルと見なさ"
+"れ、対応する段階で live-build により #{debconf-set-selections}# を使ってインス"
+"トールされます。"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:78
@@ -400,3 +473,5 @@ msgid ""
 "For more information about debconf, please see #{debconf(7)}# in the /"
 "{debconf}/ package."
 msgstr ""
+"debconf のさらなる情報については、/{debconf}/ パッケージの #{debconf(7)}# を見"
+"てください。"

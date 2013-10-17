@@ -40,7 +40,7 @@ build: po4a.cfg
 		exit 1; \
 	fi
 
-	po4a --keep 0 --no-backups --package-name live-manual $(PO4A_FLAGS) po4a.cfg
+	po4a --keep 0 --package-name live-manual $(PO4A_FLAGS) po4a.cfg
 
 clean:
 	rm -f po/*/*.po~

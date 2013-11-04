@@ -98,16 +98,14 @@ construction chroot et binary afin de personnaliser l'image.
 
 3~live-chroot-local-hooks Live/chroot local hooks
 
-Pour exécuter des commandes à l'étape chroot, créer un script hook avec le
-suffixe #{.chroot}# contenant les commandes dans le répertoire
-#{config/hooks/}#. Le hook s'exécutera dans le chroot après que le reste de
-votre configuration chroot ait été appliqué, donc n'oubliez pas de vous
-assurer que votre configuration inclut tous les paquets et les fichiers dont
-votre hook a besoin pour fonctionner. Consultez les exemples de scripts
-chroot hook pour diverses tâches courantes de personnalisation chroot
-fournis dans #{/usr/share/doc/live-build/examples/hooks}# que vous pouvez
-copier ou faire un lien symbolique pour les utiliser dans votre propre
-configuration.
+To run commands in the chroot stage, create a hook script with a
+#{.hook.chroot}# suffix containing the commands in the #{config/hooks/}#
+directory. The hook will run in the chroot after the rest of your chroot
+configuration has been applied, so remember to ensure your configuration
+includes all packages and files your hook needs in order to run. See the
+example chroot hook scripts for various common chroot customization tasks
+provided in #{/usr/share/doc/live-build/examples/hooks}# which you can copy
+or symlink to use them in your own configuration.
 
 3~boot-time-hooks Hooks pendant le démarrage
 
@@ -122,17 +120,15 @@ modifiés ou de tiers}#installing-modified-or-third-party-packages.
 
 3~ Binary local hooks
 
-Pour exécuter des commandes à l'étape binaire, créez un script hook avec le
-suffixe #{.binary}# contenant les commandes dans le répertoire
-#{config/hooks/}#. Le hook sera exécuté après toutes les autres commandes
-binaires, mais avant binary_checksums, la dernière commande binaire.  Les
-commandes de votre hook ne s'exécutent pas dans le chroot, afin de prendre
-soin de ne pas modifier les fichiers en dehors de l'arbre de construction,
-ou vous pourriez endommager votre système de construction! Consultez les
-exemples de scripts de binary hook pour diverses tâches courantes de
-personnalisation binaires fournis dans
-#{/usr/share/doc/live-build/examples/hooks}# que vous pouvez copier ou lier
-symboliquement pour les utiliser dans votre propre configuration.
+To run commands in the binary stage, create a hook script with a
+#{.hook.binary}# suffix containing the commands in the #{config/hooks/}#
+directory. The hook will run after all other binary commands are run, but
+before binary_checksums, the very last binary command. The commands in your
+hook do not run in the chroot, so take care to not modify any files outside
+of the build tree, or you may damage your build system! See the example
+binary hook scripts for various common binary customization tasks provided
+in #{/usr/share/doc/live-build/examples/hooks}# which you can copy or
+symlink to use them in your own configuration.
 
 2~ Préconfigurer questions de debconf
 

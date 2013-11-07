@@ -52,7 +52,7 @@ build: clean
 		for FORMAT in $(FORMATS); \
 		do \
 			cd $(CURDIR)/manual; \
-			sisu-$${FORMAT} --verbose $${LANGUAGE}/live-manual.ssm; \
+			sisu-$${FORMAT} --verbose --no-manifest $${LANGUAGE}/live-manual.ssm; \
 			if [ "$${FORMAT}" = "html" ] ; \
 			then \
 			    for FILE in ../build/manual/html/*.$${LANGUAGE}.html ../build/manual/html/live-manual/*.$${LANGUAGE}.html; \

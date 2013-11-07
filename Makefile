@@ -66,7 +66,7 @@ build: clean
 
 
 autobuild: build
-	cd build/manual && rm -rf manifest toc.html; \
+	cd build/manual; \
 	set +e; for LANGUAGE in $(LANGUAGES); \
 	do \
 		FROMDIR=$(CURDIR)/manual/$${LANGUAGE}; \

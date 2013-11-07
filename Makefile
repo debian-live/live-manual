@@ -98,7 +98,6 @@ commit: tidy test
 
 install:
 	rm -f $(CURDIR)/build/manual/index.html
-	
 	mkdir -p $(DESTDIR)/usr/share/doc/live-manual
 	cp -a COPYING $(CURDIR)/build/manual/* $(DESTDIR)/usr/share/doc/live-manual
 

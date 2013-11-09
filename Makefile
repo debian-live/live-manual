@@ -16,6 +16,11 @@ FORMATS := epub html odf pdf txt
 
 DEBUG := 0
 
+ifeq ($(PROOF),1)
+	LANGUAGES=en
+	FORMATS=html-scroll
+endif
+
 all: build
 
 test:

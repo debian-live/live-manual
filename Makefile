@@ -64,7 +64,6 @@ build: clean
 		done; \
 	done; \
 
-
 autobuild: build
 	cd build/manual; \
 	set +e; for LANGUAGE in $(LANGUAGES); \

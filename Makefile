@@ -21,6 +21,11 @@ ifeq ($(PROOF),1)
 	FORMATS=html-scroll
 endif
 
+ifeq ($(PROOF),2)
+	LANGUAGES=en
+	FORMATS=pdf-portrait
+endif
+
 all: build
 
 test:

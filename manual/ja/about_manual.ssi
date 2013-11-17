@@ -119,10 +119,10 @@ _* Trent W. Buck
 このマニュアルの作成はコミュニティ中心のプロジェクトで、改善提案や貢献は全て、非常に歓迎されます。コミットキーの取得方法や良いコミットを行うための詳細な情報については、{プロジェクトへの貢献}#contributing-to-project
 節を見てください。
 
-3~applying-changes Applying changes
+3~applying-changes 変更の適用
 
 マニュアルの英語版に変更を加える場合、#{manual/en/}#
-にある正しいファイルを編集しないといけませんが、その貢献を提出する前に出来上がりを確認してください。live マニュアルの出来上がりを確認する際は、
+にある正しいファイルを編集しないといけませんが、その貢献を提出する前に出来上がりを確認してください。Live マニュアルの出来上がりを確認する際は、
 
 code{
 
@@ -169,46 +169,39 @@ code{
 
 3~translation 翻訳
 
-In order to translate live-manual, follow these steps depending on whether
-you are starting a translation from scratch or continue working on an
-already existing one:
+live-manual
+を翻訳するには、新しく最初から翻訳を開始するのか、それとも既に存在する翻訳について作業を続けるのか、によって以下の手順を追ってください:
 
-_* Start a new translation from scratch
+_* 新しく最初から翻訳を開始する
 
-_2* Translate the *{about_manual.ssi.pot}*, *{about_project.ssi.pot}* and
-*{index.html.in.pot}* files in #{manual/pot/}# to your language with your
-favourite editor (such as /{poedit}/) and send the translated #{.po}# files
-to the mailing list to check their integrity. live-manual's integrity check
-not only ensures that the #{.po}# files are 100% translated but it also
-detects possible errors.
+_2* #{manual/pot/}# にある
+*{about_manual.ssi.pot}*、*{about_project.ssi.pot}*、*{index.html.in.pot}*ファイルを
+(/{poedit}/ 等) 好みのエディタで自分の言語に翻訳し、整合性確認のため翻訳した #{.po}#
+ファイルをメーリングリストに送ってください。live-manual の整合性確認では #{.po}# ファイルが 100%
+翻訳されていることだけではなく誤りの可能性を検出します。
 
-_2* Once checked, to enable a new language in the autobuild it is enough to
-add the initial translated files to #{manual/po/${LANGUAGE}/}# and run
-#{make commit}#. And then, edit #{manual/_sisu/home/index.html}# adding the
-name of the language and its name in English between brackets.
+_2* 確認が済んだ後は、自動ビルドでの新しい言語の有効化は最初の翻訳済みファイルを #{manual/po/${言語}/}# に追加して #{make
+commit}# を実行すれば十分です。それから #{manual/_sisu/home/index.html}# を編集して言語の名前と ()
+内にその英語名を追加してください。
 
-_* Continue with an already started translation
+_* 既に存在する翻訳について作業を続ける
 
-_2* If your target language has already been added, you can randomly
-continue translating the remaining .po files in #{manual/po/${LANGUAGE}/}#
-using your favourite editor (such as /{poedit}/).
+_2* 対象の言語が既に追加されている場合は、(/{poedit}/ 等) 好みのエディタで #{manual/po/}# にある残りの po
+ファイルを手当たり次第に翻訳を続けてください。
 
-_2* Do not forget that you need to run #{make commit}# to ensure that the
-translated manuals are updated from the .po files and then you can review
-your changes launching #{make build}# before #{git add .}#, #{git commit -m
-"Translating..."}# and #{git push}#. Remember that since #{make build}# can
-take a considerable amount of time, you can proofread languages individually
-as explained in {Applying changes}#applying-changes
+_2* 翻訳済みマニュアルが .po ファイルから更新されていることを確実にするためには #{make commit}#
+を行う必要があることと、#{git add .}#、#{git commit -m "Translating..."}#、#{git push}#
+を実行する前に #{make build}# を実行すると変更を確認できるということを忘れないでください。#{make build}#
+には相当の時間がかかる可能性があるため、{変更の適用}#applying-changes
+で説明しているように、見直しの際は1つの言語だけをビルドして確認できることを覚えておくといいでしょう。
 
 #{make commit}#
-を実行するとテキストがいくらか流れていくのを目にするでしょう。これは基本的に処理状態についての情報を示すメッセージで、live
+を実行するとテキストがいくらか流れていくのを目にするでしょう。これは基本的に処理状態についての情報を示すメッセージで、Live
 マニュアルの改善のために何ができるのかということを知る手がかりにもなります。致命的エラーが起きていない限り、通常はそのまま進めて貢献を提出できます。
 
-live-manual comes with two utilities that can greatly help translators to
-find untranslated and changed strings. The first one is "make translate". It
-launches an script that tells you in detail how many untranslated strings
-there are in each .po file. The second one, the "make fixfuzzy" target, only
-acts upon changed strings but it helps you to find and fix them one by one.
+live マニュアルには、翻訳者が未翻訳や変更された文字列を検索するのを大きく支援する2つのユーティリティが付属しています。1つ目は「make
+translate」です。これは各 .po ファイル中にどれだけ未翻訳文字列があるのか、詳細を報告するスクリプトを実行します。2つ目は「make
+fixfuzzy」で、こちらは変更された文字列だけを対象としますが、1つ1つ見つけて修正する作業を支援します。
 
 こういったユーティリティはコマンドラインで翻訳作業を行うのには実際に役立つかもしれませんが、推奨する作業方法は /{poedit}/
 のような専用ツールの利用だということに留意してください。Debian 地域化 (l10n) 文書や、特に live

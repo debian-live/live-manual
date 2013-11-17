@@ -169,7 +169,7 @@ sección {Contribuir al proyecto}#contributing-to-project para obtener
 información detallada sobre cómo obtener la clave pública y hacer buenos
 commits.
 
-3~ Aplicar cambios
+3~applying-changes Applying changes
 
 Para realizar cambios en el manual en Inglés se debe editar los ficheros
 adecuados en #{manual/en/}# pero antes de enviar una contribución se debería
@@ -227,26 +227,36 @@ sección {Traducción}#translation para más detalles.
 
 3~translation Traducción
 
-Para comenzar la traducción de un idioma nuevo, se deben seguir los
-siguientes pasos:
+In order to translate live-manual, follow these steps depending on whether
+you are starting a translation from scratch or continue working on an
+already existing one:
 
-_* Traducir los ficheros *{about_manual.ssi.pot}*, *{about_project.ssi.pot}*
-y *{index.html.in.pot}* al idioma deseado con cualquier editor (como puede
-ser /{poedit}/). Enviar los ficheros #{.po}# traducidos a la lista de correo
-para que el equipo de traducción pueda revisar su integridad.
+_* Start a new translation from scratch
 
-_* Para activar una nueva lengua en el autobuild basta con añadir los
-ficheros traducidos inicialmente a #{manual/po/${LANGUAGE}/}# y ejecutar
-#{make commit}#. Y entonces editar #{manual/_sisu/home/index.html}#.
+_2* Translate the *{about_manual.ssi.pot}*, *{about_project.ssi.pot}* and
+*{index.html.in.pot}* files in #{manual/pot/}# to your language with your
+favourite editor (such as /{poedit}/) and send the translated #{.po}# files
+to the mailing list to check their integrity. live-manual's integrity check
+not only ensures that the #{.po}# files are 100% translated but it also
+detects possible errors.
 
-_* Una vez que el nuevo idioma haya sido añadido, se puede continuar la
-traducción de los ficheros po restantes en #{manual/po/}# de manera
-aleatoria.
+_2* Once checked, to enable a new language in the autobuild it is enough to
+add the initial translated files to #{manual/po/${LANGUAGE}/}# and run
+#{make commit}#. And then, edit #{manual/_sisu/home/index.html}# adding the
+name of the language and its name in English between brackets.
 
-_* No se debe olvidar la ejecución del comando #{make commit}# para
-actualizar los manuales traducidos a partir de los ficheros po. Entonces se
-puede revisar los cambios ejecutando #{make build}# antes de #{git add .}#,
-#{git commit -m "Translating..."}# y #{git push}#.
+_* Continue with an already started translation
+
+_2* If your target language has already been added, you can randomly
+continue translating the remaining .po files in #{manual/po/${LANGUAGE}/}#
+using your favourite editor (such as /{poedit}/).
+
+_2* Do not forget that you need to run #{make commit}# to ensure that the
+translated manuals are updated from the .po files and then you can review
+your changes launching #{make build}# before #{git add .}#, #{git commit -m
+"Translating..."}# and #{git push}#. Remember that since #{make build}# can
+take a considerable amount of time, you can proofread languages individually
+as explained in {Applying changes}#applying-changes
 
 Después de ejecutar #{make commit}# se podrá observar bastante texto en la
 pantalla.  Básicamente son mensajes informativos sobre el estado del proceso
@@ -254,12 +264,11 @@ y también algunas pistas sobre lo que se puede hacer para mejorar
 live-manual. A menos que se vea un error fatal, generalmente se puede
 proceder y enviar la contribución.
 
-live-manual incluye dos utilidades que pueden ser de gran ayuda para los
-traductores a la hora de encontrar mensajes sin traducir y mensajes
-difusos. La primera es "make translate". Esta activa un script que muestra
-en detalle cuántos mensajes sin traducir hay en cada fichero po. La segunda,
-"make fixfuzzy", sólo actúa sobre los mensajes difusos pero ayuda a
-encontrarlos y corregirlos uno por uno.
+live-manual comes with two utilities that can greatly help translators to
+find untranslated and changed strings. The first one is "make translate". It
+launches an script that tells you in detail how many untranslated strings
+there are in each .po file. The second one, the "make fixfuzzy" target, only
+acts upon changed strings but it helps you to find and fix them one by one.
 
 Hay que tener en cuenta que aunque estas utilidades pueden ser de gran ayuda
 para traducir en la linea de comandos, se recomienda el uso de una

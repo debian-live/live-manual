@@ -96,8 +96,8 @@ commit: tidy test
 		echo "There are $(shell grep -w 'fuzzy' manual/po/*/* | wc -l) fuzzy strings. You can run 'make fixfuzzy' to fix them." ; \
 	fi
 	@echo
-	@echo "In order to find untranslated strings type 'make translate'."
-
+	@echo "There are $(shell manual/bin/count-untranslated-strings.sh) untranslated strings. You can run 'make translate' to find them." ; \
+	
 	@echo
 	@echo "You may now proceed...please do:"
 	@echo

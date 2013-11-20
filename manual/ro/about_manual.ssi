@@ -150,7 +150,7 @@ improvements and contributions are extremely welcome. Please see the section
 {Contributing to the project}#contributing-to-project for detailed
 information on how to fetch the commit key and make good commits.
 
-3~ Applying changes
+3~applying-changes Applying changes
 
 In order to make changes to the English manual you have to edit the right
 files in #{manual/en/}# but prior to the submission of your contribution,
@@ -206,24 +206,36 @@ same commit, but use separate commits for each. See the
 
 3~translation Translation
 
-To start a translation for a new language, follow these steps:
+In order to translate live-manual, follow these steps depending on whether
+you are starting a translation from scratch or continue working on an
+already existing one:
 
-_* Translate the *{about_manual.ssi.pot}*, *{about_project.ssi.pot}* and
-*{index.html.in.pot}* files to your language with your favourite editor
-(such as /{poedit}/). Send the translated #{.po}# files to the mailing list
-so that the translation team can check their integrity.
+_* Start a new translation from scratch
 
-_* To enable a new language in the autobuild it is enough to add the initial
-translated files to #{manual/po/${LANGUAGE}/}# and run #{make commit}#. And
-then edit #{manual/_sisu/home/index.html}#.
+_2* Translate the *{about_manual.ssi.pot}*, *{about_project.ssi.pot}* and
+*{index.html.in.pot}* files in #{manual/pot/}# to your language with your
+favourite editor (such as /{poedit}/) and send the translated #{.po}# files
+to the mailing list to check their integrity. live-manual's integrity check
+not only ensures that the #{.po}# files are 100% translated but it also
+detects possible errors.
 
-_* Once the new language is added, you can randomly continue translating the
-remaining po files in #{manual/po/}#.
+_2* Once checked, to enable a new language in the autobuild it is enough to
+add the initial translated files to #{manual/po/${LANGUAGE}/}# and run
+#{make commit}#. And then, edit #{manual/_sisu/home/index.html}# adding the
+name of the language and its name in English between brackets.
 
-_* Don't forget that you need #{make commit}# to ensure the translated
-manuals are updated from the po files and then you can review your changes
-launching #{make build}# before #{git add .}#, #{git commit -m
-"Translating..."}# and #{git push}#.
+_* Continue with an already started translation
+
+_2* If your target language has already been added, you can randomly
+continue translating the remaining .po files in #{manual/po/${LANGUAGE}/}#
+using your favourite editor (such as /{poedit}/).
+
+_2* Do not forget that you need to run #{make commit}# to ensure that the
+translated manuals are updated from the .po files and then you can review
+your changes launching #{make build}# before #{git add .}#, #{git commit -m
+"Translating..."}# and #{git push}#. Remember that since #{make build}# can
+take a considerable amount of time, you can proofread languages individually
+as explained in {Applying changes}#applying-changes
 
 After running #{make commit}# you will see some text scroll by. These are
 basically informative messages about the processing status and also some
@@ -233,7 +245,7 @@ a fatal error, you usually can proceed and submit your contribution.
 live-manual comes with two utilities that can greatly help translators to
 find untranslated and changed strings. The first one is "make translate". It
 launches an script that tells you in detail how many untranslated strings
-there are in each po file. The second one, the "make fixfuzzy" target, only
+there are in each .po file. The second one, the "make fixfuzzy" target, only
 acts upon changed strings but it helps you to find and fix them one by one.
 
 Keep in mind that even though these utilities might be really helpful to do

@@ -160,7 +160,7 @@ per a millorar-lo i les contribucions són molt benvingudes. Veure la secció
 {Contribuir al projecte}#contributing-to-project per a obtenir informació
 detallada sobre com obtenir la clau i fer bons commits.
 
-3~ Aplicar canvis
+3~applying-changes Aplicar canvis
 
 Per tal de realitzar canvis en el manual anglès s'ha d'editar els fitxers
 adequats a #{manual/en/}# però abans de presentar una contribució, s'ha de
@@ -217,24 +217,37 @@ el mateix commit, fer-ne un altre separat per a cada canvi. Veure la secció
 
 3~translation Traducció
 
-Per a començar la traducció d'un idioma nou, seguir aquests passos:
+Per a traduir live-manual, seguir aquests passos, depenent de si s'està
+començant una traducció des de zero o si es segueix treballant en una ja
+existent:
 
-_* Traduir els fitxers *{about_manual.ssi.pot}*, *{about_project.ssi.pot}* i
-*{index.html.in.pot}* a la vostra llengua amb el vostre editor favorit (per
-exemple /{poedit}/). Enviar els fitxers #{.po}# traduïts a la llista de
-correu perquè l'equip de traducció pugui comprovar la seva integritat.
+_* Començar una nova traducció des de zero
 
-_* Per a activar una nova llengua al autobuild, només cal afegir els fitxers
-inicials traduïts a #{manual/po/${LANGUAGE}/}# i executar #{make commit}#. I
-llavors editar #{manual/_sisu/home/index.html}#.
+_2* Traduir els fitxers *{about_manual.ssi.pot}*, *{about_project.ssi.pot}*
+i *{index.html.in.pot}* de #{manual/pot/}# a la vostra llengua amb el vostre
+editor favorit (per exemple /{poedit}/). Enviar els fitxers #{.po}# traduïts
+a la llista de correu per comprovar la seva integritat. La comprovació
+d'integritat de live-manual garanteix que els fitxers #{.po}# són traduïts
+al 100% però també detecta possibles errors.
 
-_* Una vegada que s'ha afegit la nova llengua, es pot continuar traduint la
-resta de fitxers dins de #{manual/po/}# a l'atzar.
+_2* Un cop comprovats, per a activar una nova llengua al autobuild, només
+cal afegir els fitxers inicials traduïts a #{manual/po/${LANGUAGE}/}# i
+executar #{make commit}#. I llavors editar #{manual/_sisu/home/index.html}#
+afegint el nom de la llengua i el seu nom en anglès entre parèntesis.
 
-_* No oblidar que es necessari fer un #{make commit}# per a garantir que els
-manuals traduïts s'actualitzin a partir dels fitxers po i llavors es poden
-revisar els canvis executant #{make build}# abans de #{git add .}#, #{git
-commit -m "Translating..."}# i #{git push}#.
+_* Continuar amb una traducció ja començada
+
+_2* Una vegada que s'ha afegit la nova llengua, es pot continuar traduint la
+resta de fitxers .po dins de #{manual/po/${LANGUAGE}/}# a l'atzar amb
+l'editor favorit (com per exemple /{poedit}/).
+
+_2* No oblidar que es necessari fer un #{make commit}# per a garantir que
+els manuals traduïts s'actualitzin a partir dels fitxers .po i llavors es
+poden revisar els canvis executant #{make build}# abans de #{git add .}#,
+#{git commit -m "Translating..."}# i #{git push}#. Recordar que #{make
+build}# pot trigar una quantitat considerable de temps, però es poden
+revisar els idiomes de forma individual com s'explica a la secció {Aplicar
+canvis}#applying-changes
 
 Després d'executar #{make commit}# es podrà veure bastant text a la
 pantalla. Bàsicament són missatges informatius sobre l'estat del procés i
@@ -245,7 +258,7 @@ contribució.
 live-manual ve amb dues utilitats que poden ser de gran ajuda pels
 traductors a l'hora de trobar missatges sense traduir i difusos. La primera
 és "make translate". Aquesta activa un script que diu en detall quants
-missatges sense traduir hi ha a cada fitxer po. La segona, "make fixfuzzy",
+missatges sense traduir hi ha a cada fitxer .po. La segona, "make fixfuzzy",
 només actua sobre els missatges difusos però ajuda a trobar-los i
 corregir-los un per un.
 

@@ -302,6 +302,20 @@ code{
 
 The nesting of conditionals is not supported.
 
+% FIXME:
+
+3~ Removing packages at install time
+
+You can list packages in files with #{.list.chroot_live}# and
+#{.list.chroot_install}# suffixes inside the #{config/package-lists}#
+directory. If both a live and an install list exist, the packages in the
+#{.list.chroot_live}# list are removed with a hook after the installation
+(if the user uses the installer). The packages in the
+#{.list.chroot_install}# list are present both in the live system and in the
+installed system. This is a special tweak for the installer and may be
+useful if you have #{--debian-installer live}# set in your config, and wish
+to remove live system-specific packages at install time.
+
 3~desktop-and-language-tasks Desktop and language tasks
 
 Desktop and language tasks are special cases that need some extra planning

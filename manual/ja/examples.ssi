@@ -1,0 +1,387 @@
+:B~ 例
+
+1~examples 例
+
+この章では特定の live システム活用事例向けの見本ビルドについて触れます。自分用の live
+システムイメージのビルドが初めてであれば、まず3つのチュートリアルを順に調べてみることを勧めます。それぞれで他の例の利用、理解を支援する新しい技術を学ぶようになっているためです。
+
+2~using-the-examples 例の使用
+
+提示している例を利用するためには、ビルドするために{要件}#requirements
+に記載されている要件一覧に合致するシステムと、{live-build のインストール}#installing-live-build で説明しているように
+live-build がインストールされていることが必要となります。
+
+簡潔にするため、ここに挙げる例ではビルドで利用するローカルミラーを指定していないことに注意してください。ローカルミラーを利用するとダウンロード速度をかなり高速化できます。{ビルド時に利用するディストリビューションのミラー}#distribution-mirrors-build-time
+で説明しているように、#{lb config}# を使った場合はオプションを指定することができます。ビルドシステムのデフォルト値を
+#{/etc/live/build.conf}# でセットするともっと便利になります。このファイルを単純に作成し、対応する
+#{LB_MIRROR_*}#
+変数に望ましいミラーをセットしてください。ビルドで利用する他のミラーは全て、これにより設定した値をデフォルト値として使います。例えば:
+
+code{
+
+ LB_MIRROR_BOOTSTRAP="http://mirror/debian/"
+ LB_MIRROR_CHROOT_SECURITY="http://mirror/debian-security/"
+ LB_MIRROR_CHROOT_BACKPORTS="http://mirror/debian-backports/"
+
+}code
+
+2~tutorial-1 チュートリアル 1: デフォルトイメージ
+
+*{事例:}* 簡単な最初のイメージを作成して live-build の基礎を学びます。
+
+このチュートリアルでは、live-build を利用した最初の演習としてbase パッケージ (Xorg は含まない) と live
+システムを支援するパッケージだけを収録する、デフォルトの ISO hybrid 形式の live システムイメージをビルドします。
+
+これ以上簡単にすることはなかなかできないでしょう:
+
+code{
+
+ $ mkdir tutorial1 ; cd tutorial1 ; lb config
+
+}code
+
+何か望むことがあれば #{config/}#
+ディレクトリの内容を調べてください。ここには概略の設定があり、すぐ独自化もできますが、ここではそのままでデフォルトのイメージをビルドします。
+
+スーパーユーザでイメージをビルドし、そのログを #{tee}# により保存します。
+
+code{
+
+ # lb build 2>&1 | tee build.log
+
+}code
+
+すべてがうまくいくとして、しばらくすると現在のディレクトリに #{binary.hybrid.iso}# が出来上がります。この ISO hybrid
+イメージは {Qemu での ISO イメージのテスト}#testing-iso-with-qemu や {VirtualBox での ISO
+イメージのテスト}#testing-iso-with-virtualbox で説明しているように仮想マシンで直接、あるいは{物理メディアへの ISO
+イメージ書き込み}#burning-iso-image や {USB メモリへの ISO hybrid
+イメージのコピー}#copying-iso-hybrid-to-usb で説明しているように光学メディアや USB
+フラッシュ機器に書き込んだイメージ、それぞれからブートできます。
+
+2~tutorial-2 チュートリアル 2: ウェブブラウザユーティリティ
+
+*{事例:}* ウェブブラウザユーティリティイメージを作成し、独自化の適用方法を学びます。
+
+このチュートリアルでは live システムイメージを独自化する方法の紹介として、ウェブブラウザユーティリティとしての利用に適するイメージを作成します。
+
+code{
+
+ $ mkdir tutorial2
+ $ cd tutorial2
+ $ echo "task-lxde-desktop iceweasel" >> config/package-lists/my.list.chroot
+
+}code
+
+この例で LXDE
+を選択しているのは最小限のデスクトップ環境を提供するという私達の目的を反映しています。念頭に置いているこのイメージの目的はただ一つ、ウェブブラウザだけだからです。もっと細かく、#{config/includes.chroot/etc/iceweasel/profile/}#
+でのウェブブラウザ向けデフォルト設定やウェブ上の様々な種類の内容を表示するための追加のサポートパッケージを提供することはできますが、それは読み手の演習として残しておきます。
+
+{チュートリアル 1}#tutorial-1 と同様、ここでもスーパーユーザでイメージをビルドし、ログを残します:
+
+code{
+
+ # lb build 2>&1 | tee build.log
+
+}code
+
+ここでも{チュートリアル 1}#tutorial-1 と同様、イメージがうまくできているか検証し、テストします。
+
+2~tutorial-3 チュートリアル 3: 私的イメージ
+
+*{事例:}* プロジェクトを作成して個人用イメージをビルドします。USB メモリを使って好みのソフトウェアを自由に収録し、要求や設定を変更しながらこのイメージを続けて改訂します。
+
+この個人用イメージを何度も改訂し、変更を追跡しておいて実験的に試してみてうまくいかなかったときには差し戻せるようにしたいため、人気のある #{git}#
+バージョン管理システムに設定を残します。{設定管理}#managing-a-configuration で説明している #{auto}#
+スクリプトによる自動設定を経由した最善の実践も利用します。
+
+3~ 最初の改訂
+
+code{
+
+ $ mkdir -p tutorial3/auto
+ $ cp /usr/share/doc/live-build/examples/auto/* tutorial3/auto/
+ $ cd tutorial3
+
+}code
+
+#{auto/config}# を以下のように変更します:
+
+code{
+
+ #!/bin/sh
+
+ lb config noauto \
+     --architectures i386 \
+     --linux-flavours 686-pae \
+     "${@}"
+
+}code
+
+#{lb config}# を実行して設定ツリーを生成し、生成された #{auto/config}# スクリプトを使います:
+
+code{
+
+ $ lb config
+
+}code
+
+ここでローカルパッケージ一覧を設定します:
+
+code{
+
+ $ echo "task-lxde-desktop iceweasel xchat" >> config/package-lists/my.list.chroot
+
+}code
+
+まず、#{--architectures i386}# により必ず #{amd64}# ビルドシステムでほとんどのマシンでの利用に適応する 32
+ビット版をビルドするようにします。次に、相当に古いシステムでのこのイメージの利用を想定しないため #{--linux-flavours
+686-pae}# を使います。/{lxde}/ task
+メタパッケージを選択して最小限のデスクトップを揃えます。最後に、好みのパッケージの初期値として /{iceweasel}/ と /{xchat}/
+を追加しています。
+
+そして、イメージをビルドします:
+
+code{
+
+ # lb build
+
+}code
+
+最初の2つのチュートリアルとは異なり、#{2>&1 | tee build.log}# は #{auto/build}#
+に書かれているため打ち込む必要がなくなっていることに注意してください。
+
+({チュートリアル 1}#tutorial-1 にあるように) イメージをテストしてうまく機能する確信を得たら #{git}#
+リポジトリを初期化し、作成したばかりの auto スクリプトだけを追加し、最初のコミットを行います:
+
+code{
+
+ $ git init
+ $ cp /usr/share/doc/live-build/examples/gitignore .gitignore
+ $ git add .
+ $ git commit -m "Initial import."
+
+}code
+
+3~ 2回目の改訂
+
+この改訂では、最初のビルドをきれいにし、/{vlc}/ パッケージを設定に追加して再ビルド、テストコミットを行います。
+
+#{lb clean}#
+コマンドは前のビルドで生成したファイルを、パッケージを再びダウンロードせずに済むようにキャッシュを除いて全てきれいにします。これにより以降の #{lb
+build}# が全段階で再び実行され、必ず新しい設定でファイルを再生成するようになります。
+
+code{
+
+ # lb clean
+
+}code
+
+/{vlc}/ パッケージを #{config/package-lists/my.list.chroot}# のローカルパッケージ一覧に追記します:
+
+code{
+
+ $ echo vlc >> config/package-lists/my.list.chroot
+
+}code
+
+再びビルドします:
+
+code{
+
+# lb build
+
+}code
+
+テストして満足したら次の改訂としてコミットします:
+
+code{
+
+ $ git commit -a -m "Adding vlc media player."
+
+}code
+
+もちろん、#{config/}#
+以下のサブディレクトリにファイルを追加する等により設定をもっと複雑に変更することも可能です。新しい改訂版をコミットする際、#{config}#
+の最上位にある、#{LB_*}# 変数を設定しているファイルもビルドされてできたもので、#{lb clean}# と、対応する #{auto}#
+スクリプトを経由して再作成した #{lb config}# により常に整理されるものなので、手で編集したりコミットすることのないように注意してください。
+
+一連のチュートリアルもこれで終わりです。もっと多様な独自化はできますが、ここまでの簡単な例で見てきた少しの機能を使うだけでも、イメージはほぼ無限の異なる組み合わせを作成することができます。この節の残りの例では、収集してきた
+live システムのユーザの経験を元にした他の事例についていくつか触れます。
+
+2~ VNC 公衆クライアント
+
+*{事例:}* live-build を使って、ブートすると直接 VNC サーバに接続するイメージを作成します。
+
+ビルド用ディレクトリを作ってそこに概略設定を作成し、推奨パッケージを無効にして最小限のシステムを作成します。それから初期パッケージ一覧を2つ作成します:
+1つ目は live-build により提供される #{Packages}# というスクリプト
+({生成されるパッケージ一覧}#generated-package-lists 参照) により生成し、2つ目では
+/{xorg}/、/{gdm3}/、/{metacity}/、/{xvnc4viewer}/ を収録します。
+
+code{
+
+ $ mkdir vnc-kiosk-client
+ $ cd vnc-kiosk-client
+ $ lb config -a i386 -k 686-pae --apt-recommends false
+ $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
+ $ echo "xorg gdm3 metacity xvnc4viewer" > config/package-lists/my.list.chroot
+
+}code
+
+{APT の調整による容量の節約}#tweaking-apt-to-save-space
+で説明しているように、イメージが適切に機能するためには推奨パッケージを再びいくらか追加する必要があるかもしれません。
+
+推奨パッケージ一覧を調べるための簡単な方法として /{apt-cache}/ の利用があります。例えば:
+
+code{
+
+ $ apt-cache depends live-config live-boot
+
+}code
+
+この例では live-config 及び live-boot により推奨されるパッケージを複数、再び収録する必要があることがわかっています:
+自動ログインが機能するためには #{user-setup}#、システムをシャットダウンするための不可欠なプログラムとして
+#{sudo}#。他に、イメージを RAM にコピーできるようになる #{live-tools}# や live メディアを最終的に取り出す
+#{eject}# を追加しておくと便利でしょう。それを反映すると:
+
+code{
+
+ $ echo "live-tools user-setup sudo eject" > config/package-lists/recommends.list.chroot
+
+}code
+
+その後ディレクトリ #{/etc/skel}# を #{config/includes.chroot}# に作成し、その中にデフォルトユーザ向けの独自の
+#{.xsession}# を置きます。このファイルは /{metacity}/ を立ち上げて /{xvncviewer}/
+を起動し、#{192.168.1.2}# にあるサーバのポート #{5901}# に接続します:
+
+code{
+
+ $ mkdir -p config/includes.chroot/etc/skel
+ $ cat > config/includes.chroot/etc/skel/.xsession << EOF
+ #!/bin/sh
+
+ /usr/bin/metacity &
+ /usr/bin/xvncviewer 192.168.1.2:1
+
+ exit
+ EOF
+
+}code
+
+イメージをビルドします:
+
+code{
+
+ # lb build
+
+}code
+
+楽しみましょう。
+
+2~ 128MB USB メモリ向けの基本イメージ
+
+*{事例:}* 128MB USB メモリに収まるように構成要素をいくらか削除して、収まることがわかるように容量を少し空けたデフォルトのイメージの作成。
+
+特定のメディア容量に収まるようにイメージを最適化する場合、イメージのサイズと機能はトレードオフになることを理解する必要があります。この例では削るだけにしているので
+128MB のメディアサイズ内に何か追加する余地をできるだけ残していますが、/{localepurge}/
+パッケージによるロケールの完全削除や収録しているパッケージ内の一貫性は何も壊していません。また、その他の「押し付ける」ような最適化もしていません。特に注目すべきなのは、最小限のシステムを最初から作成するために
+#{--debootstrap-options}# を利用している点です。
+
+code{
+
+ $ lb config -k 486 --apt-indices false --apt-recommends false --debootstrap-options "--variant=minbase" --firmware-chroot false --memtest none
+
+}code
+
+イメージを適切に機能させるためには、最低でも #{--apt-recommends false}#
+オプションにより外されていた推奨パッケージを2つ追加しなおす必要があります。{APT
+の調整による容量の節約}#tweaking-apt-to-save-space を見てください。
+
+code{
+
+ $ echo "user-setup sudo" > config/package-lists/recommends.list.chroot
+
+}code
+
+ここで、普通の方法でイメージをビルドしてみます:
+
+code{
+
+ # lb build 2>&1 | tee build.log
+
+}code
+
+これを書いている時点の著者のシステムでは、上記の設定により 77MB のイメージができました。これを{チュートリアル 1}#tutorial-1
+のデフォルト設定で作成された 177MB のイメージと都合良く比較してみましょう。
+
+#{i386}#
+アーキテクチャシステム上でデフォルトのイメージをビルドするのと比較して、ここで最もスペースの節約になったのはカーネルのアーキテクチャの種類をデフォルトの
+#{-k "486 686-pae"}# に代えて #{486}# だけを選択することでした。#{--apt-indices false}# により
+APT の索引を省くことでもかなりの容量を節約していますが、その代わりに live システムで /{apt}/ を使う前に #{apt-get
+update}# を実行する必要があります。#{--apt-recommends false}#
+により推奨パッケージを除外することで、本来あるはずのパッケージをいくらか除外する代わりにいくらか追加で容量を節約します。#{--debootstrap-options
+"--variant=minbase"}# で最初から最小限のシステムを構成します。#{--firmware-chroot false}#
+でファームウェアパッケージを自動的に収録しないようにすることでもさらに容量をいくらか節約します。そして最後に、#{--memtest none}#
+によりメモリテスターのインストールを抑制します。
+
+*{注意:}* 最小限のシステムの構成はフックを使って、例えば #{/usr/share/doc/live-build/examples/hooks}# にある #{stripped.hook.chroot}# でも実現できます。これは容量をさらに少し減らし、62MB のイメージを生成します。しかしこれはその実現のために、システムにインストールしたパッケージから文書その他のファイルを削除しています。これはそうしたパッケージの完全性を破壊し、ヘッダで警告しているように思わぬ結果をもたらすかもしれません。それが、この目標のために推奨する方法が最小限の /{debootstrap}/ を利用方法になっている理由です。
+
+2~ 地域化した GNOME デスクトップとインストーラ
+
+*{事例:}* GNOME デスクトップのイメージを作成し、スイス用の地域化とインストーラを収録する
+
+好みのデスクトップを使った i386 アーキテクチャ向けの iso-hybrid イメージを作りたい。ここでは GNOME を使用して、GNOME
+用の標準の Debian インストーラによりインストールされるのと同一のパッケージを全て収録します。
+
+最初の問題は適切な言語用タスクの名前を判断する方法です。現在 live-build
+はこれを支援できません。運良くこれを試行錯誤で見つけられるかもしれませんが、そのためのツールがあります。#{grep-dctrl}# を利用して
+tasksel-data にあるタスクの説明を見つけることができます。そのため、準備としてこの両方が揃っていることを確認してください:
+
+code{
+
+ # apt-get install dctrl-tools tasksel-data
+
+}code
+
+これで適切なタスクを検索できるようになりました。まず、
+
+code{
+
+ $ grep-dctrl -FTest-lang de /usr/share/tasksel/descs/debian-tasks.desc -sTask
+ Task: german
+
+}code
+
+というコマンドにより、呼ばれたタスクが、簡単に言うとここではドイツだということがわかります。次は関連タスクを見つけます:
+
+code{
+
+ $ grep-dctrl -FEnhances german /usr/share/tasksel/descs/debian-tasks.desc -sTask
+ Task: german-desktop
+ Task: german-kde-desktop
+
+}code
+
+ブート時に *{de_CH.UTF-8}* ロケールを生成して *{ch}*
+のキーボードレイアウトを選択します。一緒に見ていきましょう。{メタパッケージの利用}#using-metapackages
+から、タスクのメタパッケージには先頭に #{task-}#
+が付くことを思いだしてください。こういった言語のブートパラメータを指定し、それから優先度が標準のパッケージと発見したタスクの全メタパッケージをパッケージ一覧に追加するだけです:
+
+code{
+
+ $ mkdir live-gnome-ch
+ $ cd live-gnome-ch
+ $ lb config \
+     -a i386 \
+     -k 486 \
+     --bootappend-live "boot=live components locales=de_CH.UTF-8 keyboard-layouts=ch" \
+     --debian-installer live
+ $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
+ $ echo task-gnome-desktop task-german task-german-desktop >> config/package-lists/desktop.list.chroot
+ $ echo debian-installer-launcher >> config/package-lists/installer.list.chroot
+
+}code
+
+のようになります。インストーラを live デスクトップから立ち上げるために debian-installer-launcher
+パッケージを収録し、さらに 486
+用のカーネルを指定していることに注意してください。これは現在、インストーラを立ち上げる機能が適切に動作するためにはインストーラと live
+システムのカーネルを一致させる必要があるためです。

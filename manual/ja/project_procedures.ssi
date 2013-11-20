@@ -1,0 +1,93 @@
+:B~ 手順
+
+1~procedures 手順
+
+この章では、Debian の他のチームと協調する必要のある、Live システムプロジェクトの様々な作業の手順について触れます。
+
+2~ 主要リリース
+
+Debian の安定版の新しい主要バージョンのリリースでは、その完成のために多くの異なるチームが協調して作業しています。どこかの時点で、Live
+チームが参加して live システムのイメージをビルドします。そのための要件は
+
+_* リリースしたバージョンに該当する debian 及び debian-security アーカイブを収録している、debian-live の
+buildd からアクセスできるミラー
+
+_* イメージの名前は既知の形式である必要があります (例えば debian-live-バージョン-アーキテクチャ-収録デスクトップ環境等.iso)。
+
+_* debian-cd から来るデータを同期する必要があります (udeb 除外一覧)。
+
+_* ビルドされたイメージのミラーが cdimage.debian.org に置かれます。
+
+2~ ポイントリリース
+
+_* ここでも、debian と debian-security の更新されたミラーが必要です。
+
+_* ビルドされたイメージのミラーが cdimage.debian.org に置かれます。
+
+_* 告知メールを送ります
+
+3~ ある Debian リリースの最後のポイントリリース
+
+ある Debian リリース向けの最後のイメージを ftp.debian.org から archive.debian.org
+に移動した後にビルドするときには、chroot とバイナリミラーの両方を調整することを忘れないでください。そうすることで、古いビルド済み live
+イメージをユーザが変更しなくてもそのまま続けて使えるようになります。
+
+3~ ポイントリリース告知用テンプレート
+
+ポイントリリース用の告知メールはテンプレートと以下のコマンドを使って生成できます。
+
+code{
+
+ $ sed \
+     -e 's|@MAJOR@|7.0|g' \
+     -e 's|@MINOR@|7.0.1|g' \
+     -e 's|@CODENAME@|wheezy|g' \
+     -e 's|@ANNOUNCE@|2013/msgXXXXX.html|g'
+
+}code
+
+メールを送る前に注意深く確認し、他の人による校正を受けてください。
+
+code{
+
+Updated Live @MAJOR@: @MINOR@ released
+
+ The Live Systems project is pleased to announce the @MINOR@ update of the
+ Live images for the stable distribution Debian @MAJOR@ (codename "@CODENAME@").
+
+ The images are available for download at:
+
+   <http://live-systems.org/cdimage/release/current/>
+
+ and later at:
+
+   <http://cdimage.debian.org/cdimage/release/current-live/>
+
+ This update includes the changes of the Debian @MINOR@ release:
+
+   <http://lists.debian.org/debian-announce/@ANNOUNCE@>
+
+ Additionally it includes the following Live-specific changes:
+
+  * [LIVE 固有の変更をここに]
+  * [LIVE 固有の変更をここに]
+  * [大きな問題については専用の節を作ることもあります]
+
+ About Live Systems
+ ------------------
+ The Live Systems project produces the tools used to build official
+ live systems and the official live images themselves for Debian.
+
+ About Debian
+ ------------
+ The Debian Project is an association of Free Software developers who
+ volunteer their time and effort in order to produce the completely free
+ operating system Debian.
+
+ Contact Information
+ -------------------
+ For further information, please visit the Live Systems web pages at
+ <http://live-systems.org/>, or contact the Live Systems team at
+ <debian-live@lists.debian.org>.
+
+}code

@@ -105,16 +105,16 @@ las etapas chroot y binary.
 3~live-chroot-local-hooks Scripts gancho locales en Live/chroot
 
 Para ejecutar órdenes en la etapa chroot se deben crear scripts gancho
-(hooks) con el sufijo #{.chroot}# que contengan dichas ordenes a ejecutar y
-depositarlos en el directorio #{config/hooks/}#. Estos scripts serán
-ejecutados en el entorno del chroot después de que el resto de las tareas de
-preparación del chroot han sido realizadas. Se debe asegurar que previamente
-se han instalado en el entorno chroot cualquier paquete, fichero u órden que
-necesiten los scripts gancho. El paquete live-build instala en el directorio
-#{/usr/share/doc/live-build/examples/hooks}#  del sistema huésped unos
-cuantos scripts gancho para realizar tareas habituales de personalización
-del entorno chroot que pueden ser copiados o referenciados mediante enlace
-simbólico en la propia configuración.
+(hooks) con el sufijo #{.hook.chroot}# que contengan dichas ordenes a
+ejecutar y depositarlos en el directorio #{config/hooks/}#. Estos scripts
+serán ejecutados en el entorno del chroot después de que el resto de las
+tareas de preparación del chroot han sido realizadas. Se debe asegurar que
+previamente se han instalado en el entorno chroot cualquier paquete, fichero
+u órden que necesiten los scripts gancho. El paquete live-build instala en
+el directorio #{/usr/share/doc/live-build/examples/hooks}#  del sistema
+huésped unos cuantos scripts gancho para realizar tareas habituales de
+personalización del entorno chroot que pueden ser copiados o referenciados
+mediante enlace simbólico en la propia configuración.
 
 3~boot-time-hooks Scripts gancho en tiempo de arranque
 
@@ -132,7 +132,7 @@ modificados o de terceros}#installing-modified-or-third-party-packages.
 3~ Scripts gancho locales en Binary
 
 Para ejecutar comandos en la etapa Binary se deben crear scripts gancho con
-el sufijo #{.binary}# que contengan las ordenes y depositarlos en el
+el sufijo #{.hook.binary}# que contengan las ordenes y depositarlos en el
 directorio #{config/hooks/}#. Los scripts gancho se ejecutarán después de
 finalizar el resto de procesos de la etapa pero antes de crear los checksum
 con binary_checksum que es el último proceso que se ejecuta en esta

@@ -1,0 +1,101 @@
+:B~ プロジェクトへの貢献
+
+1~contributing-to-project プロジェクトへの貢献
+
+貢献物の提出にあたっては著作権者を明確に識別し、適用するライセンス文を収録してください。受け入れられるためには、その貢献物はその文書の他の部分と同一の、GPL
+バージョン 3 以降というライセンスを採用する必要があることに注意してください。
+
+翻訳やパッチといったプロジェクトへの貢献は大いに歓迎します。誰もがリポジトリに直接コミットできますが、大きな変更についてはまずメーリングリストに送って議論するようお願いします。さらなる情報については{連絡先}#contact
+節を見てください。
+
+Live システムプロジェクトでは Git をソースコード管理用のバージョン管理システムとして利用しています。{Git
+リポジトリ}#git-repositories で説明しているように、開発用ブランチは *{debian}* と *{debian-next}*
+の2つあります。debian-next ブランチの
+live-boot、live-build、live-config、live-images、live-manual、live-tools
+リポジトリには誰でもコミットできます。
+
+ただし、特定の制限があります。サーバは
+
+_* fast-forward ではないプッシュ
+
+_* マージコミット
+
+_* タグやブランチの追加や削除
+
+を拒否します。あらゆるコミットを訂正できるとはいえ、自分の常識に従って、良いコミットメッセージを使って良いコミットを行うようお願いします。
+
+_*
+完結した、有意な文で構成されるコミットメッセージを英語で書き、大文字から始めて句点で終えるようにしてください。通常、「Fixing/Adding/Removing/Correcting/Translating/...」のようなものから開始します。
+
+_* 良いコミットメッセージを書いてください。先頭行はそのコミットの内容を正確にまとめるようにしてください。これは changelog
+に収録されることになります。何か説明がさらに必要であれば、先頭行の後に1行空けてから書き、各段落の後には新たな空行を空けてください。段落の行の長さは80文字を超えないようにしてください。
+
+_*
+コミットは小分けにしてください。これは関係のないものをまとめてコミットしないようにということです。各変更ごとに別個にコミットするようにしてください。
+
+2~ 変更を加える
+
+リポジトリに送るには、以下の手順に従う必要があります。ここでは live-manual
+を例として使うのでそれは作業したいリポジトリに置き換えてください。live-manual
+を変更する方法に関する詳細な情報については{この文書への貢献}#how-to-contribute を見てください。
+
+_* 公開コミットキーを取得します:
+
+code{
+
+ $ mkdir -p ~/.ssh/keys
+ $ wget http://live-systems.org/other/keys/git@live-systems.org -O ~/.ssh/keys/git@live-systems.org
+ $ wget http://live-systems.org/other/keys/git@live-systems.org.pub -O ~/.ssh/keys/git@live-systems.org.pub
+ $ chmod 0600 ~/.ssh/keys/git@live-systems.org*
+
+}code
+
+_* openssh-client の設定に以下を追記します:
+
+code{
+
+ $ cat >> ~/.ssh/config << EOF
+ Host live-systems.org
+     Hostname live-systems.org
+     User git
+     IdentitiesOnly yes
+     IdentityFile ~/.ssh/keys/git@live-systems.org
+ EOF
+
+}code
+
+_* ssh 経由で live-manual の複製を取得します:
+
+code{
+
+ $ git clone git@live-systems.org:/live-manual.git
+ $ cd live-manual && git checkout debian-next
+
+}code
+
+_* Git で作者とメールをセットしたことを確認してください:
+
+code{
+
+  $ git config user.name "John Doe"
+  $ git config user.email john@example.org
+
+}code
+
+*{重要:}* 変更はどれも *{debian-next}* ブランチにコミットする必要があるということを忘れないでください
+
+_* 変更を加えます。この例ではまずパッチの適用を扱う新しい節を書き、ファイルの追加をコミットする下準備をしてコミットメッセージを
+
+code{
+
+ $ git commit -a -m "Adding a section on applying patches."
+
+}code
+
+_* のように書いてサーバにコミットを送ります:
+
+code{
+
+ $ git push
+
+}code

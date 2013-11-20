@@ -1,0 +1,74 @@
+:B~ Git リポジトリ
+
+1~git-repositories Git リポジトリ
+
+Live システムプロジェクトの利用可能な全リポジトリ一覧は http://live-systems.org/gitweb/ にあります。プロジェクトの
+git URL は: #{プロトコル://live-systems.org/git/リポジトリ}#
+という形式になっています。したがって、live-manual を読み込み専用で複製するには
+
+code{
+
+ $ git clone git://live-systems.org/git/live-manual.git
+
+}code
+
+ 
+
+code{
+
+ $ git clone https://live-systems.org/git/live-manual.git
+
+}code
+
+ 
+
+code{
+
+ $ git clone http://live-systems.org/git/live-manual.git
+
+}code
+
+のどれかを実行します。書き込み権限のある複製には #{git@live-systems.org:/リポジトリ}#という形式のアドレスを使います。
+
+なので、繰り返しますが live-manual を ssh 経由で複製するには
+
+code{
+
+ $ git clone git@live-systems.org:live-manual.git
+
+}code
+
+と入力する必要があります。git ツリーは複数の異なるブランチでできています。*{debian}* 及び *{debian-next}*
+ブランチは最終的には新しいリリースそれぞれに収録される実際の作業を収録しているため特に注目すべきです。
+
+既存のリポジトリのどれかを複製した後は *{debian}*
+ブランチにいるでしょう。これはプロジェクトの最新リリースの状態を確認するには適切ですが、作業開始前に必ず *{debian-next}*
+ブランチに切り替える必要があります。切り替えには
+
+code{
+
+ $ git checkout debian-next
+
+}code
+
+を実行します。*{debian-next}* ブランチは常に fast-forward とは限らず、あらゆる変更が *{debian}*
+ブランチにマージされる前にまずはこにコミットされます。例えて言えばテストの場のようなものです。このブランチで作業していてサーバにある変更を取得する必要がある場合は
+#{git pull --rebase}#
+を実行する必要があります。それにより、サーバから取得するときにローカルでの変更が反映され、その変更が最上位に配置されます。
+
+2~ リポジトリを複数処理
+
+live システムのリポジトリを複数複製してすぐに、最新コードの確認、パッチ作成、あるいは翻訳での貢献等のために *{debian-next}*
+ブランチに切り替えたい場合、複数のリポジトリを扱いやすくするための #{mrconfig}# ファイルを git
+サーバで提供していることを紫知っておくべきでしょう。これを使うには /{mr}/ パッケージをインストールする必要があります。その後、
+
+code{
+
+ $  mr bootstrap http://live-systems.org/other/mr/mrconfig
+
+}code
+
+を実行します。このコマンドは自動的に複製し、プロジェクトにより作成される Debian パッケージの開発用リポジトリである
+*{debian-next}* ブランチを取得します。これには、中でも live-images
+リポジトリがあり、プロジェクトが一般用途向けに公開しているビルド済みイメージで利用される設定を収録しています。このリポジトリの使い方に関するさらなる情報については、{Git
+経由で公開されている設定の複製}#clone-configuration-via-git を見てください。

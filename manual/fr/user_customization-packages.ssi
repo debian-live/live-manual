@@ -327,6 +327,22 @@ code{
 
 L'imbrication des conditions n'est pas prise en charge.
 
+% FIXME:
+
+3~ Suppression de paquets lors de l'installation
+
+Il est possible de lister des paquets dans des fichiers utilisant les
+extensions #{.list.chroot_live}# et #{.list.chroot_install}# à l'intérieur
+du répertoire #{config/package-lists}#. Si une liste «install» et une liste
+«live» existent conjointement, les paquets dans la liste
+#{.list.chroot_live}# seront supprimés par un hook après l'installation (si
+l'utilisateur utilise l'installeur). Les paquets dans la liste
+#{.list.chroot_install}# sont présents à la fois dans le système live et
+dans le système installé. Il s'agit d'un paramétrage spécial pour
+l'installeur et peut se révéler utile si vous avez choisi
+#{--debian-installer live}# dans votre configuration, et souhaitez supprimer
+des paquets spécifiques aux systèmes live lors de l'installation.
+
 3~desktop-and-language-tasks Tâches de bureau et de langue
 
 Les tâches de bureau et de langue sont des cas particuliers qui ont besoin

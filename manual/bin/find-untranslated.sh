@@ -40,10 +40,6 @@ Check_untranslated_strings
 # If the last string in a po file is not translated, there is no blank line at 
 # the end so we need to add one with "sed '$G''".
 #
-# The output of the appendix_style_guide.ssi.po is suppressed for the time being
-# since it is not translated into all the languages.
-
-IGNORED="appendix_style-guide.ssi.po"
 
 Find_untranslated ()
 {
@@ -61,10 +57,6 @@ for POFILE in manual/po/"${LANGUAGE}"/*
 			grep --extended-regexp --before-context=1 '^$' ${POFILE} | grep --count '^msgstr ""$' || continue
 		fi	
 	done
-	
-echo ""
-echo "NOTE: The output of ${IGNORED} will be ignored for the time being."
-echo ""
 }
 
 # Showing *only* untranslated strings:
@@ -88,7 +80,7 @@ fi
 echo ""
 echo "Do you want to see the $(Find_untranslated | awk '{ sum += $1 } END { print sum }') strings before starting work? [yes/no] ['q' to quit]"
 
-POFILES="$(Find_untranslated | grep --invert-match ${IGNORED} | grep --extended-regexp --before-context=1 '[1-9]'| sed -e 's|Untranslated strings in ||' -e 's|--||' -e 's|[0-9]*||g')"
+POFILES="$(Find_untranslated | grep --extended-regexp --before-context=1 '[1-9]'| sed -e 's|Untranslated strings in ||' -e 's|--||' -e 's|[0-9]*||g')"
 
 read ANSWER 
 case "${ANSWER}" in
@@ -131,7 +123,7 @@ Open_editor ()
 echo ""
 echo "Do you want to launch your text editor to start fixing them? [yes/no] ['q' to quit]"
 
-POFILESTOEDIT="$(Find_untranslated | grep --invert-match ${IGNORED} | grep --extended-regexp --before-context=1 '[1-9]'| sed -e 's|Untranslated strings in ||' -e 's|--||' -e 's|[0-9]*||g')"
+POFILESTOEDIT="$(Find_untranslated | grep --extended-regexp --before-context=1 '[1-9]'| sed -e 's|Untranslated strings in ||' -e 's|--||' -e 's|[0-9]*||g')"
 
 read OPENEDITOR
 

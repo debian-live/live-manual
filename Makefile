@@ -16,6 +16,16 @@ FORMATS := epub html odf pdf txt
 
 DEBUG := 0
 
+ifeq ($(PROOF),1)
+	LANGUAGES=en
+	FORMATS=html-scroll
+endif
+
+ifeq ($(PROOF),2)
+	LANGUAGES=en
+	FORMATS=pdf-portrait
+endif
+
 all: build
 
 test:
@@ -52,7 +62,7 @@ build: clean
 		for FORMAT in $(FORMATS); \
 		do \
 			cd $(CURDIR)/manual; \
-			sisu-$${FORMAT} -v $${LANGUAGE}/live-manual.ssm; \
+			sisu-$${FORMAT} --no-manifest --verbose $${LANGUAGE}/live-manual.ssm; \
 			if [ "$${FORMAT}" = "html" ] ; \
 			then \
 			    for FILE in ../build/manual/html/*.$${LANGUAGE}.html ../build/manual/html/live-manual/*.$${LANGUAGE}.html; \
@@ -64,9 +74,8 @@ build: clean
 		done; \
 	done; \
 
-
 autobuild: build
-	cd build/manual && rm -rf manifest toc.html; \
+	cd build/manual; \
 	set +e; for LANGUAGE in $(LANGUAGES); \
 	do \
 		FROMDIR=$(CURDIR)/manual/$${LANGUAGE}; \
@@ -87,8 +96,8 @@ commit: tidy test
 		echo "There are $(shell grep -w 'fuzzy' manual/po/*/* | wc -l) fuzzy strings. You can run 'make fixfuzzy' to fix them." ; \
 	fi
 	@echo
-	@echo "In order to find untranslated strings type 'make translate'."
-
+	@echo "There are $(shell manual/bin/count-untranslated-strings.sh) untranslated strings. You can run 'make translate' to find them." ; \
+	
 	@echo
 	@echo "You may now proceed...please do:"
 	@echo
@@ -97,10 +106,7 @@ commit: tidy test
 	@echo "  * git push "
 
 install:
-	rm -rf $(CURDIR)/build/manual/manifest
 	rm -f $(CURDIR)/build/manual/index.html
-	rm -f $(CURDIR)/build/manual/toc.html
-
 	mkdir -p $(DESTDIR)/usr/share/doc/live-manual
 	cp -a COPYING $(CURDIR)/build/manual/* $(DESTDIR)/usr/share/doc/live-manual
 

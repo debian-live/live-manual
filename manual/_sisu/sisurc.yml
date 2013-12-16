@@ -1,6 +1,6 @@
 # Name: SiSU - Simple information Structuring Universe
-# Author: Ralph@Amissah.com
-# Description: Site wide envionment defaults set here
+# Author: ralph@amissah.com
+# Description: Site wide environment defaults set here
 # system environment info / resource configuration file, for sisu
 # License: GPL v3 or later
 #   site environment configuration file
@@ -15,8 +15,8 @@
 #  #all:           'image'
 #% presentation/web directory, main path and subdirectories (most subdirectories are created automatically based on markup directory name)
 webserv:
-  path:          '../build'
   url_root:     'http://live-systems.org' #without dir stub
+  path:          '../build'
 #  images:       '_sisu/image'
 #  man:          'man'
 #  cgi:          '/usr/lib/cgi-bin'
@@ -30,10 +30,12 @@ webserv:
 #  base_path:    ~
 #  port:         '8081'
 #  user:         ~
+
 show_output_on: 'filesystem_url'
 #texinfo display output
 #texinfo:
 #  stub:         'texinfo'
+
 ##% processing directories, main path and subdirectories (appended to $HOME), using defaults set in sysenv
 #processing:
 #  path:         '~'
@@ -43,26 +45,30 @@ show_output_on: 'filesystem_url'
 #  latex:        'tex'
 #  texinfo:      'texinfo'
 #  concord_max:  400000
+
 #% flag - set (non-default) processing flag shortcuts -1, -2 etc. (here adding colour and verbosity as default)
 flag:
   color:        true                        # making colour default -c is toggle, and will now toggle colour off
-  default:      '-NhwepoabxXyYv'            # -m run by default; includes verbose
-  i:            '-hwpoay'                   # -m run by default
-  ii:           '-NhwepoabxXy'              # -m run by default
-  iii:          '-NhwepoabxXyY'             # -m run by default
-  iv:           '-NhwepoabxXYDy --update'   # -m run by default
-  v:            '-NhwepoabxXYDyv --update'  # -m run by default; includes verbose
+# default:      '-NQdhewpotbxXyYv'            # includes verbose; -m would in any event be run by default
+# i:            '-NQdhewpoty'                 # -m run by default
+# ii:           '-NQdhewpotbxXy'              # -m run by default
+# iii:          '-NQdhewpotbxXyY'             # -m run by default
+# iv:           '-NQhewpotbxXYDy  --update'  # -m run by default
+# v:            '-NQhewpotbxXYDyv --update'  # includes verbose; -m run by default
+
 #% papersize, (LaTeX/pdf) available values: A4, US_letter, book_b5, book_a5, US_legal
 default:
-  papersize:    'A4,letter'
-  #texpdf_font:  'Liberation Serif' # 'Liberation Sans' 'Liberation Serif'
+  papersize:    'a4,letter'
+  #language:      'en'
+  #texpdf_font:       'Liberation Sans' # 'Liberation Sans' 'Liberation Serif'
+  #texpdf_font_mono:  'Liberation Mono' #'Inconsolata'
   #text_wrap:    78
   #emphasis:     'bold' #make *{emphasis}* 'bold', 'italics' or 'underscore', default if not configured is 'bold'
   #digest:       'sha' #sha is sha256, default is md5
   #multilingual:  false
   #language_file: 2
-  #language:     'English'
 #% markup, make *{emphasis}* 'bold' or 'italics', default if not configured is 'bold'
+
 #% settings used by ssh scp
 #remote:
 #  -
@@ -73,9 +79,11 @@ default:
 #    user:         '[usrname]'
 #    host:         '[remote.hostname]'
 #    path:         '.' #no trailing slash eg 'sisu/www'
+
 #% webrick information
 #webrick:
 #  port:         '8081'
+
 #% sql database info, postgresql and sqlite
 #db:
 #  share_source: false # boolean, default is false
@@ -87,14 +95,25 @@ default:
 #  sqlite:
 #    path:       ~ # './sisu_sqlite.db'
 #    port:       "**"
-#% possible values ~, true, false, or command instruction e.g. editor: 'gvim -c :R -c :S'.
-#will only ignore if value set to false, absence or nil will not remove program as should operate without rc file
-#ie in case of ~ will ignore and use hard coded defaults within program), true, false, or command instruction e.g. editor: 'gvim -c :R -c :S'
-#on value true system defaults used, to change, e.g. editor specify
+
+#html:
+#  quick_ref:         true #default false
+#  seg_title_banner:  true #default false
+#odt:
+#  ocn:               true
+#plaintext:
+#  ocn:               true
+
+#% output_dir_structure_by: language (language_and_filetype); filetype; or filename (original v1 & v2)
+output_dir_structure_by: filetype
+#% lingual: 'multi' | 'mono' (multi default)
+#lingual: mono
+
 permission_set:
-  zap:          false
-  css_modify:   false
+  zap:               true
+  css_modify:        true
 #  remote_base_site:  true
+
 program_set:
   rmagick:       false
 #  wc:           true
@@ -104,27 +123,24 @@ program_set:
 #  tidy:         true
 #  rexml:        true
 #  pdflatex:     true
+
 #program_select:
-#  editor:       'gvim -c :R -c :S'
-#  pdf_viewer:   'evince'
-#  web_browser:  'firefox' #'iceweasel' #'epiphany' #'galeon' #'konqueror' #'kazehakase'
-#  console_www_browser: 'links2' #'elinks' #'w3m' #'lynx' #'links'
-#  epub_viewer:  'ebook-viewer' #'calibre' #'okular' #'fbreader'
-#  odf_viewer:   'oowriter' #'abiword'
-#  xml_viewer:   'xml-viewer'
-#  man:          'nroff -man' #'groff -man -Tascii' # 'nroff -man'
-#promo:              sisu_icon, sisu, sisu_search_libre, open_society, fsf, ruby
+#  editor:              'vim'
+#  pdf_viewer:          'evince'
+#  web_browser:         'iceweasel'
+#  console_web_browser: 'links2' #'elinks' #'w3m' #'lynx' #'links'
+#  odf_viewer:          'lowriter' #'oowriter' #'abiword'
+#  xml_viewer:          'xml-viewer'
+#  epub_viewer:         'ebook-viewer' #'calibre' #'fbreader' #'okular'
+#  info_viewer:         'pinfo -f'
+#  man:                 'man' #'groff -man -Tascii' # 'nroff -man'
+
 #search:
 #  sisu:
-#    flag:              true
-##    action:            http://localhost:8081/cgi-bin/sisu_pgsql.cgi
-#    action:            http://search.sisudoc.org
-#    db:                sisu
-#    title:             sample search form
-#  hyperestraier:
-#    flag:              true
-#    action:            http://search.sisudoc.org/cgi-bin/estseek.cgi?
-#% output_dir_structure_by: language (language_and_filetype); filetype; or filename (original v1 & v2)
-#output_dir_structure_by: filename
-output_dir_structure_by: filetype
-#output_dir_structure_by: language
+#    flag:            true
+##    action:          http://localhost:8081/cgi-bin/sisu_pgsql.cgi
+#    action:          http://search.sisudoc.org
+#    db:              sisu
+#    title:           sample search form
+#promo:               sisu_search_libre, sisu_icon, sisu, open_society, fsf, ruby
+#omit: minitoc

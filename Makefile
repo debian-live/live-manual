@@ -97,7 +97,7 @@ commit: tidy test
 	fi
 	@echo
 	@echo "There are $(shell manual/bin/count-untranslated-strings.sh) untranslated strings. You can run 'make translate' to find them." ; \
-	
+
 	@echo
 	@echo "You may now proceed...please do:"
 	@echo

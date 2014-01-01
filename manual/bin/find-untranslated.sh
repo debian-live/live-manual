@@ -8,26 +8,26 @@ set -e
 
 Count_untranslated_strings ()
 {
-for POFILE in manual/po/*/*
-	do
-		if [ "$(sed '$!d' ${POFILE})" = 'msgstr ""' ]
+	for POFILE in manual/po/*/*
+		do
+			if [ "$(sed '$!d' ${POFILE})" = 'msgstr ""' ]
 			then
-				sed '$G' ${POFILE} | grep --extended-regexp --before-context=1 '^$' | grep --count '^msgstr ""$' || continue		
-		else
+				sed '$G' ${POFILE} | grep --extended-regexp --before-context=1 '^$' | grep --count '^msgstr ""$' || continue
+			else
 				grep --extended-regexp --before-context=1 '^$' ${POFILE} | grep --count '^msgstr ""$' || continue
-		fi
+			fi
 	done
 }
 
 # Then, if there is not any untranslated string the script exits.
 
 Check_untranslated_strings ()
-{	
-if [ "$(Count_untranslated_strings | awk '{ sum += $1 } END { print sum }')" -eq "0" ]
-	then
-		echo "There are 0 untranslated strings."
-		exit 0
-fi
+{
+	if [ "$(Count_untranslated_strings | awk '{ sum += $1 } END { print sum }')" -eq "0" ]
+		then
+			echo "There are 0 untranslated strings."
+			exit 0
+	fi
 }
 
 Check_untranslated_strings
@@ -37,7 +37,7 @@ Check_untranslated_strings
 # An untranslated string is an empty 'msgstr ""' followed by a blank line. We
 # grep blank lines and ensure that the previous line only contains 'msgstr ""'.
 #
-# If the last string in a po file is not translated, there is no blank line at 
+# If the last string in a po file is not translated, there is no blank line at
 # the end so we need to add one with "sed '$G''".
 #
 

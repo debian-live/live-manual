@@ -1,7 +1,7 @@
 # Makefile
 
 ## live-manual(7) - Documentation
-## Copyright (C) 2006-2013 Live Systems Project <debian-live@lists.debian.org>
+## Copyright (C) 2006-2014 Live Systems Project <debian-live@lists.debian.org>
 ##
 ## live-manual comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
 ## This is free software, and you are welcome to redistribute it

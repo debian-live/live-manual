@@ -1,7 +1,7 @@
 # Makefile
 
 ## live-manual(7) - Documentation
-## Copyright (C) 2006-2013 Live Systems Project <debian-live@lists.debian.org>
+## Copyright (C) 2006-2014 Live Systems Project <debian-live@lists.debian.org>
 ##
 ## live-manual comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
 ## This is free software, and you are welcome to redistribute it
@@ -97,7 +97,7 @@ commit: tidy test
 	fi
 	@echo
 	@echo "There are $(shell manual/bin/count-untranslated-strings.sh) untranslated strings. You can run 'make translate' to find them." ; \
-	
+
 	@echo
 	@echo "You may now proceed...please do:"
 	@echo

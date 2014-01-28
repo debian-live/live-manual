@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 4.0~a4-1\n"
-"POT-Creation-Date: 2013-12-04 19:51+0100\n"
+"POT-Creation-Date: 2014-01-28 20:51+0100\n"
 "PO-Revision-Date: 2013-12-04 19:57+0100\n"
 "Last-Translator: Carlos Zuferri <chals@altorricon.com>\n"
 "Language-Team: none\n"
@@ -459,7 +459,7 @@ msgstr ""
 
 #. type: Plain text
 #: en/about_manual.ssi:94 en/about_manual.ssi:102 en/about_manual.ssi:110
-#: en/about_manual.ssi:118 en/about_manual.ssi:126
+#: en/about_manual.ssi:118 en/about_manual.ssi:126 en/about_manual.ssi:134
 #: en/appendix_style-guide.ssi:124 en/appendix_style-guide.ssi:134
 #: en/appendix_style-guide.ssi:144 en/appendix_style-guide.ssi:154
 #: en/appendix_style-guide.ssi:164 en/appendix_style-guide.ssi:177
@@ -532,13 +532,14 @@ msgstr "code{"
 
 #. type: Plain text
 #: en/about_manual.ssi:96
-#, no-wrap
-msgid " # apt-get install make po4a ruby ruby-nokogiri sisu-complete texlive-generic-recommended\n"
+#, fuzzy, no-wrap
+#| msgid " # apt-get install make po4a ruby ruby-nokogiri sisu-complete texlive-generic-recommended\n"
+msgid " # apt-get install make po4a ruby ruby-nokogiri sisu-complete\n"
 msgstr " # apt-get install make po4a ruby ruby-nokogiri sisu-complete texlive-generic-recommended\n"
 
 #. type: Plain text
 #: en/about_manual.ssi:98 en/about_manual.ssi:106 en/about_manual.ssi:114
-#: en/about_manual.ssi:122 en/about_manual.ssi:130
+#: en/about_manual.ssi:122 en/about_manual.ssi:130 en/about_manual.ssi:138
 #: en/appendix_style-guide.ssi:128 en/appendix_style-guide.ssi:138
 #: en/appendix_style-guide.ssi:148 en/appendix_style-guide.ssi:158
 #: en/appendix_style-guide.ssi:173 en/appendix_style-guide.ssi:182
@@ -629,44 +630,60 @@ msgstr " $ make build\n"
 #. type: Plain text
 #: en/about_manual.ssi:108
 msgid ""
-"Since it takes a while to build the manual in all supported languages, you "
-"may find it convenient when proofing to build for only one language, e.g. by "
-"executing:"
+"Since it takes a while to build the manual in all supported languages, "
+"authors may find it convenient to use one of the fast proofing shortcuts "
+"when reviewing the new documentation they have added to the English manual. "
+"Using #{PROOF=1}# builds live-manual in html format, but without the "
+"segmented html files, and using #{PROOF=2}# builds live-manual in pdf "
+"format, but only the A4 and letter portraits. That is why using either of "
+"the #{PROOF=}# possibilities can save up a considerable amount of time, e.g:"
 msgstr ""
-"Ya que la construcción del manual para todos los idiomas soportados tarda un "
-"buen rato, puede ser mejor crear un solo idioma. Esto puede realizarse "
-"ejecutando la siguiente orden:"
 
 #. type: Plain text
 #: en/about_manual.ssi:112
-#, no-wrap
-msgid " $ make build LANGUAGES=en\n"
-msgstr " $ make build LANGUAGES=en\n"
+#, fuzzy, no-wrap
+#| msgid " $ make build\n"
+msgid "  $ make build PROOF=1\n"
+msgstr " $ make build\n"
 
 #. type: Plain text
 #: en/about_manual.ssi:116
+msgid ""
+"When proofing one of the translations it is possible to build only one "
+"language by executing, e.g:"
+msgstr ""
+
+#. type: Plain text
+#: en/about_manual.ssi:120
+#, fuzzy, no-wrap
+#| msgid " $ make build LANGUAGES=en\n"
+msgid " $ make build LANGUAGES=de\n"
+msgstr " $ make build LANGUAGES=en\n"
+
+#. type: Plain text
+#: en/about_manual.ssi:124
 msgid "It is also possible to build by document type, e.g:"
 msgstr "Es posible generar el documento por formato:"
 
 #. type: Plain text
-#: en/about_manual.ssi:120
+#: en/about_manual.ssi:128
 #, no-wrap
 msgid " $ make build FORMATS=pdf\n"
 msgstr " $ make build FORMATS=pdf\n"
 
 #. type: Plain text
-#: en/about_manual.ssi:124
+#: en/about_manual.ssi:132
 msgid "Or combine both, e.g:"
 msgstr "O combinar ambos, por ejemplo:"
 
 #. type: Plain text
-#: en/about_manual.ssi:128
+#: en/about_manual.ssi:136
 #, no-wrap
 msgid " $ make build LANGUAGES=de FORMATS=html\n"
 msgstr " $ make build LANGUAGES=de FORMATS=html\n"
 
 #. type: Plain text
-#: en/about_manual.ssi:132
+#: en/about_manual.ssi:140
 msgid ""
 "After revising your work and making sure that everything is fine, do not use "
 "#{make commit}# unless you are updating translations in the commit, and in "
@@ -681,12 +698,12 @@ msgstr ""
 "sección {Traducción}#translation para más detalles."
 
 #. type: Plain text
-#: en/about_manual.ssi:134
+#: en/about_manual.ssi:142
 msgid "3~translation Translation"
 msgstr "3~translation Traducción"
 
 #. type: Plain text
-#: en/about_manual.ssi:136
+#: en/about_manual.ssi:144
 msgid ""
 "In order to translate live-manual, follow these steps depending on whether "
 "you are starting a translation from scratch or continue working on an "
@@ -697,12 +714,12 @@ msgstr ""
 "traducción ya comenzada:"
 
 #. type: Plain text
-#: en/about_manual.ssi:138
+#: en/about_manual.ssi:146
 msgid "_* Start a new translation from scratch"
 msgstr "_* Empezar una nueva traducción desde cero"
 
 #. type: Plain text
-#: en/about_manual.ssi:140
+#: en/about_manual.ssi:148
 msgid ""
 "_2* Translate the *{about_manual.ssi.pot}*, *{about_project.ssi.pot}* and *"
 "{index.html.in.pot}* files in #{manual/pot/}# to your language with your "
@@ -719,7 +736,7 @@ msgstr ""
 "traducidos sino que también detecta posibles errores."
 
 #. type: Plain text
-#: en/about_manual.ssi:142
+#: en/about_manual.ssi:150
 msgid ""
 "_2* Once checked, to enable a new language in the autobuild it is enough to "
 "add the initial translated files to #{manual/po/${LANGUAGE}/}# and run #"
@@ -733,12 +750,12 @@ msgstr ""
 "paréntesis."
 
 #. type: Plain text
-#: en/about_manual.ssi:144
+#: en/about_manual.ssi:152
 msgid "_* Continue with an already started translation"
 msgstr "_* Continuar con una traducción ya comenzada"
 
 #. type: Plain text
-#: en/about_manual.ssi:146
+#: en/about_manual.ssi:154
 msgid ""
 "_2* If your target language has already been added, you can randomly "
 "continue translating the remaining .po files in #{manual/po/${LANGUAGE}/}# "
@@ -749,7 +766,7 @@ msgstr ""
 "aleatoria utilizando el editor preferido (como por ejemplo /{poedit}/)."
 
 #. type: Plain text
-#: en/about_manual.ssi:148
+#: en/about_manual.ssi:156
 msgid ""
 "_2* Do not forget that you need to run #{make commit}# to ensure that the "
 "translated manuals are updated from the .po files and then you can review "
@@ -767,7 +784,7 @@ msgstr ""
 "cambios}#applying-changes "
 
 #. type: Plain text
-#: en/about_manual.ssi:150
+#: en/about_manual.ssi:158
 msgid ""
 "After running #{make commit}# you will see some text scroll by. These are "
 "basically informative messages about the processing status and also some "
@@ -781,7 +798,7 @@ msgstr ""
 "enviar la contribución."
 
 #. type: Plain text
-#: en/about_manual.ssi:152
+#: en/about_manual.ssi:160
 msgid ""
 "live-manual comes with two utilities that can greatly help translators to "
 "find untranslated and changed strings. The first one is \"make translate\". "
@@ -798,7 +815,7 @@ msgstr ""
 "encontrarlos y corregirlos uno por uno."
 
 #. type: Plain text
-#: en/about_manual.ssi:154
+#: en/about_manual.ssi:162
 msgid ""
 "Keep in mind that even though these utilities might be really helpful to do "
 "translation work on the command line, the use of an specialized tool like /"
@@ -814,7 +831,7 @@ msgstr ""
 "#guidelines-translators."
 
 #. type: Plain text
-#: en/about_manual.ssi:155
+#: en/about_manual.ssi:163
 #, no-wrap
 msgid "*{Note:}* You can use #{make clean}# to clean your git tree before pushing. This step is not compulsory thanks to the .gitignore file but it is a good practice to avoid committing files involuntarily.\n"
 msgstr "*{Nota:}* Se puede utilizar #{make clean}# para limpiar el árbol git antes de enviar los cambios. Este paso no es obligatorio, gracias al fichero .gitignore, pero es una buena práctica para evitar enviar ficheros involuntariamente.\n"

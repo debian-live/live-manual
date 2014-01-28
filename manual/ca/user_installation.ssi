@@ -151,21 +151,19 @@ code{
 
 _* Utilitzar tots el fitxers .deb generats que calguin
 
-Com live-boot y live-config són instaŀlats per el sistema de construcció
-live-build, la instaŀlació dels paquets en el sistema amfitrió no és
-suficient: s'ha de tractar els .deb generats com si fossin uns paquets
-personalitzats. Ja que el propòsit per a construir aquests paquets a partir
-del codi font és per a provar coses noves a curt termini abans del
-llançament oficial, seguir els pasos de {Instaŀlació de paquets modificats o
-de tercers}#installing-modified-or-third-party-packages per a incloure
-temporalment els paquets rellevants en la configuració. En particular, cal
-observar que ambdós paquets es divideixen en una part genèrica, una part de
-documentació i un o més back-ends. Incloure la part genèrica, només un dels
-back-ends que coincideixi amb la configuració, i, opcionalment, la
-documentació. Suposant que s'està construint una imatge en viu en el
-directori actual i que s'han generat tots els .deb per a una única versió
-dels dos paquets al directori superior, aquestes ordres de bash són per a
-copiar tots els paquets importants, incloent-hi els back-ends per defecte:
+As live-boot and live-config are installed by live-build system, installing
+the packages in the host system is not sufficient: you should treat the
+generated .deb files like any other custom packages. Since your purpose for
+building from source is likely to test new things over the short term before
+the official release, follow {Installing modified or third-party
+packages}#installing-modified-or-third-party-packages to temporarily include
+the relevant files in your configuration. In particular, notice that both
+packages are divided into a generic part, a documentation part and one or
+more back-ends. Include the generic part, only one back-end matching your
+configuration, and optionally the documentation. Assuming you are building a
+live image in the current directory and have generated all .deb files for a
+single version of both packages in the directory above, these bash commands
+would copy all of the relevant packages including default back-ends:
 
 code{
 

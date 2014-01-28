@@ -174,7 +174,7 @@ exécutant:
 
 code{
 
- # apt-get install make po4a ruby ruby-nokogiri sisu-complete texlive-generic-recommended
+ # apt-get install make po4a ruby ruby-nokogiri sisu-complete
 
 }code
 
@@ -187,13 +187,26 @@ code{
 
 }code
 
-Comme il faut un certain temps pour construire le manuel dans toutes les
-langues disponibles, il peut être pratique construire une seule langue, par
-exemple en exécutant:
+Since it takes a while to build the manual in all supported languages,
+authors may find it convenient to use one of the fast proofing shortcuts
+when reviewing the new documentation they have added to the English
+manual. Using #{PROOF=1}# builds live-manual in html format, but without the
+segmented html files, and using #{PROOF=2}# builds live-manual in pdf
+format, but only the A4 and letter portraits. That is why using either of
+the #{PROOF=}# possibilities can save up a considerable amount of time, e.g:
 
 code{
 
- $ make build LANGUAGES=en
+  $ make build PROOF=1
+
+}code
+
+When proofing one of the translations it is possible to build only one
+language by executing, e.g:
+
+code{
+
+ $ make build LANGUAGES=de
 
 }code
 

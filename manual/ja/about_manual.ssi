@@ -125,7 +125,7 @@ _* Trent W. Buck
 
 code{
 
- # apt-get install make po4a ruby ruby-nokogiri sisu-complete texlive-generic-recommended
+ # apt-get install make po4a ruby ruby-nokogiri sisu-complete
 
 }code
 
@@ -137,12 +137,22 @@ code{
 
 }code
 
-を実行して live-manual
-をビルドすることができます。翻訳された全言語のマニュアルをビルドするのは時間がかかるため、見直しの際は1つの言語だけをビルドするといいでしょう。例えば
+サポートされている全言語のマニュアルをビルドするのにはある程度時間がかかるため、著者が英語版のマニュアルに追加した新しい文書について見直す場合は見直し用に処理を省略させると好都合かもしれません。#{PROOF=1}#
+を使うと html 形式の live-manual をビルドしますが分割版の html ファイルを作成しません。#{PROOF=2}# を使うと pdf
+形式の live-manual をビルドしますが A4 とレター縦だけです。これが #{PROOF=}#
+を指定すると時間の節約が見込める理由です。例えば:
 
 code{
 
- $ make build LANGUAGES=en
+  $ make build PROOF=1
+
+}code
+
+翻訳の一つを見直す場合に一つの言語だけをビルドすることもできます。例えば:
+
+code{
+
+ $ make build LANGUAGES=ja
 
 }code
 

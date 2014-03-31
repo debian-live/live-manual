@@ -179,7 +179,7 @@ ejecutando la siguiente orden:
 
 code{
 
- # apt-get install make po4a ruby ruby-nokogiri sisu-complete texlive-generic-recommended
+ # apt-get install make po4a ruby ruby-nokogiri sisu-complete
 
 }code
 
@@ -193,13 +193,28 @@ code{
 
 }code
 
-Ya que la construcción del manual para todos los idiomas soportados tarda un
-buen rato, puede ser mejor crear un solo idioma. Esto puede realizarse
-ejecutando la siguiente orden:
+Ya que construir el manual completo en todos los idiomas disponibles cuesta
+bastante rato, los autores seguramente estaran interesados en utilizar
+alguno de los siguientes atajos a la hora de revisar la documentación que
+hayan añadido al manual en inglés. Utilizando #{PROOF=1}# se crea
+live-manual en formato html, pero sin los documentos html segmentados, y
+utilizando #{PROOF=2}# se crea live-manual en formato pdf pero sólo en
+retrato A4 y carta. Por este motivo, utilizar cualquiera de las opciones
+#{PROOF=}# puede llegar a ahorrar una cantidad de tiempo considerable, por
+ejemplo.
 
 code{
 
- $ make build LANGUAGES=en
+  $ make build PROOF=1
+
+}code
+
+Cuando se revisa alguna de las traducciones, es posible construir sólo un
+idioma ejecutando, por ejemplo:
+
+code{
+
+ $ make build LANGUAGES=de
 
 }code
 

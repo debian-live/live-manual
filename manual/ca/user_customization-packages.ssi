@@ -1,24 +1,24 @@
-:B~ Personalització de la instaŀlació de paquets
+:B~ Personalització de la instal·lació de paquets
 
-1~customizing-package-installation Personalització de la instaŀlació de
+1~customizing-package-installation Personalització de la instal·lació de
 paquets
 
 La personalització més bàsica d'un sistema en viu pot ser la selecció dels
 paquets que seran inclosos en la imatge. Aquest capítol explica les diverses
-opcions de live-build per a personalitzar la instaŀlació de paquets durant
+opcions de live-build per a personalitzar la instal·lació de paquets durant
 la construcció. Les opcions més importants que influeixen en els paquets que
-estan disponibles per a ser instaŀlats en la imatge són les àrees de
+estan disponibles per a ser instal·lats en la imatge són les àrees de
 distribució i el arxiu. Per a garantir velocitats de descàrrega decents,
 s'ha de triar un mirall de distribució proper. També es pot incloure
 repositoris de backports, paquets experimentals o personalitzats, o incloure
 paquets directament com si fossin fitxers. Es poden definir llistes de
-paquets, incloent-hi els metapaquets que instaŀlaran diversos paquets
+paquets, incloent-hi els metapaquets que instal·laran diversos paquets
 relacionats alhora, com ara paquets per a un ordinador d'escriptori o un
 llenguatge en particular. Finalment, una sèrie d'opcions donen un cert
-control sobre /{apt}/ o si es prefereix /{aptitude}/, quan s'instaŀlen els
+control sobre /{apt}/ o si es prefereix /{aptitude}/, quan s'instal·len els
 paquets durant la construcció. Això pot ser útil si s'utilitza un proxy, es
-vol desactivar la instaŀlació de paquets recomanats per a estalviar espai, o
-hi ha la necessitat de controlar quines versions dels paquets s'instaŀlen
+vol desactivar la instal·lació de paquets recomanats per a estalviar espai,
+o hi ha la necessitat de controlar quines versions dels paquets s'instal·len
 mitjançant la tècnica pinning d'APT, per nomenar algunes possibilitats.
 
 2~ Fonts dels paquets
@@ -101,7 +101,7 @@ defecte pren el mateix valor que #{--mirror-bootstrap}#
 3~ Miralls de distribució utilitzats en temps d'execució
 
 Les opcions #{--mirror-binary*}# governen els miralls de distribució que
-acaben a la imatge binària. Aquestes poden ser utilitzades per a instaŀlar
+acaben a la imatge binària. Aquestes poden ser utilitzades per a instal·lar
 paquets addicionals mentre s'executa el sistema en viu. Els valors per
 defecte fan servir #{http.debian.net}#, un servei que tria un mirall
 geogràficament a prop en funció, entre altres coses, de la familia de la IP
@@ -131,7 +131,7 @@ personalitzats. Per a configurar repositoris addicionals, crear els fitxers
 *{chroot}*  durant la construcció de la imatge, i a l'étapa *{binary}*, és a
 dir, per a ser utilitzades quan s'executa el sistema en viu.
 
-Per exemple, #{config/archives/live.list.chroot}# permet instaŀlar paquets
+Per exemple, #{config/archives/live.list.chroot}# permet instal·lar paquets
 des del repositori d'instantànies de debian-live en el moment de construcció
 del sistema viu.
 
@@ -150,16 +150,16 @@ Si aquests fitxers existeixen, són utilitzats de forma automàtica.
 També s'ha de posar la clau GPG utilitzada per a signar el repositori en
 fitxers #{config/archives/your-repository.key.{binary,chroot}}#.
 
-En cas de necessitar un APT pinning personalitzat, es poden coŀlocar les
+En cas de necessitar un APT pinning personalitzat, es poden col·locar les
 preferències APT en fitxers
 #{config/archives/your-repository.pref.{binary,chroot}}#, que seran afegits
 automàticament al sistema en viu al directori #{/etc/apt/preferences.d/}#.
 
-2~choosing-packages-to-install Selecció dels paquets a instaŀlar
+2~choosing-packages-to-install Selecció dels paquets a instal·lar
 
-Hi ha una sèrie de formes de triar els paquets que live-build instaŀlarà en
+Hi ha una sèrie de formes de triar els paquets que live-build instal·larà en
 la imatge, que abasta una varietat de necessitats diferents. Es pot
-simplement anomenar paquets individualment per a instaŀlar en una llista de
+simplement anomenar paquets individualment per a instal·lar en una llista de
 paquets. També es pot optar per utilitzar metapaquets a les llistes, o
 seleccionar-los utilitzant camps de control de fitxers de paquets. I,
 finalment, es poden copiar paquets com si fossin fitxers dins del arbre
@@ -169,10 +169,10 @@ paquets nous o experimentals abans de afegirlos a un repositori.
 3~package-lists Llistes de paquets
 
 Les llistes de paquets són una forma eficaç d'expressar quins paquets han de
-ser instaŀlats. La sintaxi de la llista suporta seccions condicionals que fa
-que sigui fàcil construir llistes i adaptar-les per al propi ús en múltiples
-configuracions. Els noms dels paquets també poden ser injectats a la llista
-amb ajudants de l'intèrpret d'ordres en temps de construcció. 
+ser instal·lats. La sintaxi de la llista suporta seccions condicionals que
+fa que sigui fàcil construir llistes i adaptar-les per al propi ús en
+múltiples configuracions. Els noms dels paquets també poden ser injectats a
+la llista amb ajudants de l'intèrpret d'ordres en temps de construcció. 
 
 *{Nota:}* El comportament de live-build a l'hora d'especificar un paquet que no existeix està determinat per la elecció que es faci de l'eina APT. Veure {Elegir apt or aptitude}#choosing-apt-or-aptitude per a més detalls.
 
@@ -211,7 +211,7 @@ A més d'aquests, es troben altres metapaquets amb diverses
 finalitats. Alguns són subconjunts de paquets de tasques més àmplies, com
 #{gnome-core}#, mentre que altres són parts individuals especialitzades de
 un Debian Pure Blend, com els metapaquets #{education-*}#. Per a obtenir una
-llista de tots els metapaquets que hi ha a l'arxiu, instaŀlar el paquet
+llista de tots els metapaquets que hi ha a l'arxiu, instal·lar el paquet
 #{debtags}# i llistar tots els paquets amb l'etiqueta #{role::metapackage}#
 de la següent manera:
 
@@ -227,8 +227,8 @@ Ja sigui afegint metapaquets a una llista, paquets individuals, o una
 combinació d'ambdós, totes les llistes de paquets locals s'emmagatzemen a
 #{config/package-lists/}#. Es pot utilitzar més d'una llista i això es
 presta molt bé als dissenys modulars. Per exemple, es pot decidir dedicar
-una llista a una elecció particular d'escriptori, l'altra a una coŀlecció de
-paquets relacionats que puguin ser fàcilment utilitzats al damunt d'un
+una llista a una elecció particular d'escriptori, l'altra a una col·lecció
+de paquets relacionats que puguin ser fàcilment utilitzats al damunt d'un
 escriptori diferent. Això  permet experimentar amb diferents combinacions de
 conjunts de paquets amb un mínim d'esforç, intercanviant llistes comunes
 entre els diferents projectes d'imatges en viu.
@@ -238,17 +238,17 @@ sufix #{.list}# per a ser processades, i a més a més un sufix d'etapa
 adicional #{.chroot}# o #{.binary}# per a indicar per a quina etapa és la
 llista.
 
-*{Nota:}* Si no s'especifica el sufix d'etapa, la llista s'utilitzarà per a ambdues etapes. Normalment, s'especifica #{.list.chroot}# de manera que els paquets només s'instaŀlaran al sistema de fitxers en viu i no hi haura una còpia extra del #{.deb}# en el medi.
+*{Nota:}* Si no s'especifica el sufix d'etapa, la llista s'utilitzarà per a ambdues etapes. Normalment, s'especifica #{.list.chroot}# de manera que els paquets només s'instal·laran al sistema de fitxers en viu i no hi haura una còpia extra del #{.deb}# en el medi.
 
 3~ Llistes locals de paquets per a l'etapa binary
 
 Per a crear una llista per a l'etapa binary, crear un fitxer amb el sufix
-#{.list.binary}# a #{config/package-lists/}#. Aquests paquets no s'instaŀlen
-al sistema de fitxers en viu però s'inclouen en el medi en viu al directori
-#{pool/}#. Un ús típic d'aquesta llista seria amb una de les variants del
-instaŀlador non-live. Com s'ha esmentat anteriorment, si es vol que aquesta
-llista sigui la mateixa que la llista de l'etapa chroot, simplement
-utilitzar el sufix #{.list}#.
+#{.list.binary}# a #{config/package-lists/}#. Aquests paquets no
+s'instal·len al sistema de fitxers en viu però s'inclouen en el medi en viu
+al directori #{pool/}#. Un ús típic d'aquesta llista seria amb una de les
+variants del instal·lador non-live. Com s'ha esmentat anteriorment, si es
+vol que aquesta llista sigui la mateixa que la llista de l'etapa chroot,
+simplement utilitzar el sufix #{.list}#.
 
 3~generated-package-lists Generar llistes de paquets
 
@@ -282,8 +282,8 @@ baixos. Però a la pràctica, només tenen sentit les que influeixen en la
 selecció de paquets, com ara #{DISTRIBUTION}#, #{ARCHITECTURES}# o
 #{ARCHIVE_AREAS}#.
 
-Per exemple, per a instaŀlar #{ia32-libs}# si s'especifica #{--architectures
-amd64}#:
+Per exemple, per a instal·lar #{ia32-libs}# si s'especifica
+#{--architectures amd64}#:
 
 code{
 
@@ -293,7 +293,7 @@ code{
 
 }code
 
-És possible fer un test d'un nombre de valors, per exemple per a instaŀlar
+És possible fer un test d'un nombre de valors, per exemple per a instal·lar
 /{memtest86+}/ si s'especifica #{--architectures i386}# o #{--architectures
 amd64}#:
 
@@ -306,7 +306,7 @@ code{
 }code
 
 També es pot provar amb variables que poden contenir més d'un valor, per
-exemple, per a instaŀlar /{vrms}/ si s'especifica o #{contrib}# o
+exemple, per a instal·lar /{vrms}/ si s'especifica o #{contrib}# o
 #{non-free}# a través de l'opció #{--archive-areas}#:
 
 code{
@@ -321,37 +321,37 @@ No és possible el anidament dels condicionals.
 
 % FIXME:
 
-3~ Eliminar paquets durant la instaŀlació
+3~ Eliminar paquets durant la instal·lació
 
 Es pot crear llistes de paquets en fitxers amb els sufixos
 #{.list.chroot_live}# i #{.list.chroot_install}# dins del directori
 #{config/package-lists}#. Si hi ha una llista «live» i una llista «install»
 els paquets de la llista #{.list.chroot_live}# s'eliminaran amb un script
-ganxo després de la instaŀlació (si l'usuari utilitza l'instaŀlador). Els
+ganxo després de la instal·lació (si l'usuari utilitza l'instal·lador). Els
 paquets de la llista #{.list.chroot_install}# seran presents tant en el
-sistema en viu com en el sistema instaŀlat. Aquest és un cas especial per al
-programa d'instaŀlació i pot ser útil si es té #{--debian-installer live}#
-establert en la configuració i es desitja eliminar paquets específics del
-sistema en viu durant la instaŀlació.
+sistema en viu com en el sistema instal·lat. Aquest és un cas especial per
+al programa d'instal·lació i pot ser útil si es té #{--debian-installer
+live}# establert en la configuració i es desitja eliminar paquets específics
+del sistema en viu durant la instal·lació.
 
 3~desktop-and-language-tasks Tasques d'escriptori i llenguatge
 
 Les tasques d'escriptori i el llenguatge són casos especials que necessiten
 una mica de planificació i configuració extra. Les imatges en viu són
-diferentes de les imatges de l'instaŀlador de Debian en aquest sentit. A
-l'instaŀlador de Debian, si el medi es va preparar per a obtenir un tipus
-d'entorn d'escriptori en particular, la tasca corresponent s'instaŀlarà
+diferentes de les imatges de l'instal·lador de Debian en aquest sentit. A
+l'instal·lador de Debian, si el medi es va preparar per a obtenir un tipus
+d'entorn d'escriptori en particular, la tasca corresponent s'instal·larà
 automàticament. Per tant hi ha tasques internes #{gnome-desktop}#,
 #{kde-desktop}#, #{lxde-desktop}# i #{xfce-desktop}#, cap de les quals
 s'ofereixen al menú de #{tasksel}#. De la mateixa manera, no hi ha cap
 entrada de menú per a tasques de llengües, però l'elecció del idioma de
-l'usuari durant la instaŀlació influeix en la selecció de les tasques de les
-llengües corresponents.
+l'usuari durant la instal·lació influeix en la selecció de les tasques de
+les llengües corresponents.
 
 En el desenvolupament d'una imatge en viu d'escriptori, la imatge sol
 arrencar directament a un escriptori de treball, les opcions d'escriptori i
 de llengua han estat fetes en temps de construcció, no en temps d'execució
-com en el cas del instaŀlador de Debian. Això no vol dir que una imatge en
+com en el cas del instal·lador de Debian. Això no vol dir que una imatge en
 viu no es pugui construir per a donar suport a diversos equips d'escriptori
 o diversos idiomes i oferir a l'usuari una opció, però això no és el
 comportament de live-build per defecte.
@@ -389,7 +389,7 @@ Quan hi ha més d'una versió del nucli disponible en els arxius configurats,
 es pot especificar el nom d'un paquet del nucli amb l'opció
 #{--linux-packages}#. Per exemple, suposem que s'està construint una imatge
 d'arquitectura #{amd64}# i es vol afegir l'arxiu experimental amb propòsits
-de fer proves perquè es pugui instaŀlar el nucli
+de fer proves perquè es pugui instal·lar el nucli
 #{linux-image-3.7-trunk-amd64}#. Es podria configurar la imatge de la
 següent manera:
 
@@ -415,7 +415,7 @@ incloure un conjunt complet dels packets que corresponen amb #{linux}# i
 Si s'opta per construir els paquets del nucli sense els metapaquets a joc,
 cal especificar una arrel #{--linux-packages}# apropiada com s'indica a
 {Tipus i versió del nucli}#kernel-flavour-and-version. Com expliquem a
-{Instaŀlació de paquets modificats o de
+{Instal·lació de paquets modificats o de
 tercers}#installing-modified-or-third-party-packages, és millor si
 s'inclouen els paquets del nucli personalitzat en un repositori propi, tot i
 que les alternatives discutides en aquella secció també funcionen.
@@ -431,7 +431,7 @@ _* Incloure el mòdul d'unió del sistema de fitxers (normalment #{aufs}#).
 _* Incloure tots els mòduls del sistema d'arxius requerits per la
 configuració (normalment #{squashfs}#).
 
-2~installing-modified-or-third-party-packages Instaŀlació de paquets
+2~installing-modified-or-third-party-packages Instal·lació de paquets
 modificats o de tercers
 
 Si bé està en contra de la filosofia d'un sistema en viu, de vegades pot ser
@@ -450,7 +450,7 @@ pot ser d'interès. La creació de paquets personalitzats es tracta a Debian
 New Maintainers' Guide at http://www.debian.org/doc/maint-guide/ i en altres
 llocs.
 
-Hi ha dues formes d'instaŀlar paquets personalitzats modificats:
+Hi ha dues formes d'instal·lar paquets personalitzats modificats:
 
 _* #{packages.chroot}#
 
@@ -465,14 +465,14 @@ temps necessari per a posar-lo en marxa.
 
 Per a instaŀar un paquet personalitzat, només s'ha de copiar al directori
 #{config/packages.chroot/}#. Els paquets que es troben dins d'aquest
-directori s'instaŀlaran automàticament en el sistema en viu durant la
+directori s'instal·laran automàticament en el sistema en viu durant la
 construcció - no cal especificar res més en cap altre lloc.
 
 Els paquets *{han de}* ser nomenats en la forma prescrita. Una manera simple
 de fer això és utilitzar #{dpkg-name}#.
 
-Utilitzar #{packages.chroot}# per a la instaŀlació de paquets personalitzats
-té els seus desavantatges:
+Utilitzar #{packages.chroot}# per a la instal·lació de paquets
+personalitzats té els seus desavantatges:
 
 _* No és possible utilitzar APT segur.
 
@@ -482,29 +482,29 @@ _* Cal posar tots els paquets apropiats al directori
 _* No es adient per a l'emmagatzematge de configuracions de sistemes en viu
 en el control de revisió.
 
-3~ Fer servir un repositori APT per a instaŀlar paquets personalitzats
+3~ Fer servir un repositori APT per a instal·lar paquets personalitzats
 
 A diferència de #{packages.chroot}#, quan s'utilitza un repositori APT
 personalitzat s'ha d'assegurar que s'especifiquen els paquets en un altre
-lloc. Veure {Selecció dels paquets a instaŀlar}#choosing-packages-to-install
-per a més detalls.
+lloc. Veure {Selecció dels paquets a
+instal·lar}#choosing-packages-to-install per a més detalls.
 
-Si bé crear un repositori APT per a instaŀlar paquets personalitzats pot
+Si bé crear un repositori APT per a instal·lar paquets personalitzats pot
 semblar un esforç innecessari, la infraestructura pot ser fàcilment
 reutilitzada en una data posterior per a oferir actualitzacions dels paquets
 modificats.
 
 3~ Paquets personalitzats i APT
 
-live-build utilitza APT per a instaŀlar tots els paquets al sistema en viu,
+live-build utilitza APT per a instal·lar tots els paquets al sistema en viu,
 per tant, heretarà els comportaments d'aquest programa. Un exemple rellevant
 és que (assumint una configuració per defecte) si es dóna el cas que un
 paquet està disponible en dos repositoris diferents, amb diferents números
-de versió, APT triarà per a instaŀlar el paquet amb la versió més alta.
+de versió, APT triarà per a instal·lar el paquet amb la versió més alta.
 
 A causa d'això, s'aconsella augmentar el nombre de la versió dels paquets
 personalitzats als fixers #{debian/changelog}# per a assegurar-se que la
-versió modificada és la que s'instaŀla en lloc d'una dels repositoris
+versió modificada és la que s'instal·la en lloc d'una dels repositoris
 oficials de Debian. Això també es pot aconseguir mitjançant l'alteració de
 les preferències d'APT del sistema en viu - veure {APT pinning}#apt-pinning
 per a més informació.
@@ -520,17 +520,17 @@ opcions que comencen amb #{apt}# a la pàgina del manual de #{lb_config}#.
 
 3~choosing-apt-or-aptitude Elegir apt o aptitude
 
-Es pot optar per utilitzar /{apt}/ o /{aptitude}/ a l'hora d'instaŀlar
+Es pot optar per utilitzar /{apt}/ o /{aptitude}/ a l'hora d'instal·lar
 paquets en temps de construcció. Quina utilitat s'usa es configura gràcies
 al argument #{--apt}# de #{lb config}#. Escollir el mètode d'implementació
-per al comportament preferit durant la instaŀlació de paquets, la diferència
-notable és la forma en que es manegen els paquets que falten.
+per al comportament preferit durant la instal·lació de paquets, la
+diferència notable és la forma en que es manegen els paquets que falten.
 
 _* #{apt}#: Amb aquest mètode, si un paquet que s'especifica falta,
-l'instaŀlació de paquets fallarà. Aquesta és la configuració per defecte.
+l'instal·lació de paquets fallarà. Aquesta és la configuració per defecte.
 
 _* #{aptitude}#: Amb aquest mètode, si s'especifica un paquet que falta,
-l'instaŀlació de paquets tindrà èxit.
+l'instal·lació de paquets tindrà èxit.
 
 3~ L'ús d'un proxy amb APT
 
@@ -565,7 +565,7 @@ sistema en viu, així que abans d'executar per exemple #{apt-cache search}# o
 #{apt-get install}#, l'usuari primer ha fer un #{apt-get update}# per a
 crear aquests índexs.
 
-Si es considera que la instaŀlació de tots els paquets recomanats infla
+Si es considera que la instal·lació de tots els paquets recomanats infla
 massa la imatge, sempre que s'estigui preparat per a fer front a les
 conseqüències que s'analitzen a continuació, es pot desactivar aquesta opció
 per defecte d'APT amb:
@@ -587,18 +587,18 @@ s'espera, si és que funciona. Mirar els paquets recomanats per a cada un
 dels paquets inclosos en la construcció i si no s'està segur que es poden
 ometre, tornar a afegir-los a les llistes de paquets.
 
-La conseqüència més general aquí és que si no s'instaŀlen els paquets
+La conseqüència més general aquí és que si no s'instal·len els paquets
 recomanats per un paquet determinat, és a dir, "els paquets que es troben
-junts amb aquest en totes les instaŀlacions a menys que siguin inusuals"
+junts amb aquest en totes les instal·lacions a menys que siguin inusuals"
 (Debian Policy Manual, secció 7.2), alguns paquets que en realitat són
 necessaris per als usuaris del sistema Live poden ser omesos. Per tant,
 suggerim revisar la diferència que desactivar els paquets recomanats té en
 la llista de paquets (veure el fitxer #{binary.packages}# generat per #{lb
 build}#) i tornar a incloure a la llista els paquets que falten que haurien
-de ser instaŀlats. Si només es vol deixar de banda un petit nombre de
+de ser instal·lats. Si només es vol deixar de banda un petit nombre de
 paquets recomanats, es pot deixar els «recommends» activats i establir una
 prioritat pin d'APT negativa en els paquets seleccionats per a impedir la
-seva instaŀlació, com s'explica a {APT pinning}#apt-pinning.
+seva instal·lació, com s'explica a {APT pinning}#apt-pinning.
 
 3~ Passar opcions per a apt o aptitude
 
@@ -640,10 +640,10 @@ segon cas, crear #{config/includes.chroot/etc/apt/preferences}#.
 
 Suposem que s'està construint un sistema en viu ${testing} però es necessita
 que tots els paquets «live-» que acaben dins de la imatge binària
-s'instaŀlin desde sid en temps de construcció. Cal afegir sid a les fonts
+s'instal·lin desde sid en temps de construcció. Cal afegir sid a les fonts
 d'APT i fer un pin dels paquets live amb una prioritat més alta, però tots
 els altres paquets amb una prioritat més baixa que la prioritat per defecte
-de manera que només els paquets que es vol s'instaŀlin desde sid en el
+de manera que només els paquets que es vol s'instal·lin desde sid en el
 moment de la construcció i tots els altres es prenguin de la distribució de
 destinació, ${testing}. Això es pot aconseguir de la manera següent:
 
@@ -662,7 +662,7 @@ code{
 
 }code
 
-Una prioritat pin negativa evitarà que un paquet s'instaŀli, com en el cas
+Una prioritat pin negativa evitarà que un paquet s'instal·li, com en el cas
 que no es vulgui un paquet que és recomanat per un altre paquet. Suposem que
 s'està construint una imatge LXDE afegint #{task-lxde-desktop}# a
 #{config/package-lists/desktop.list.chroot}# però no es desitja que al

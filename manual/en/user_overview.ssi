@@ -16,32 +16,35 @@ _* The scripts have a central location for configuring their operation. In /{deb
 
 _* The scripts are independent - that is to say, it is always safe to run each command.
 
-Unlike /{debhelper}/, live-build contains a tool to generate a skeleton configuration directory, #{lb config}#. This could be considered to be similar to tools such as /{dh-make}/. For more information about #{lb config}#, please see {The lb config command}#lb-config.
+Unlike /{debhelper}/, live-build provides the tools to generate a skeleton configuration directory. This could be considered to be similar to tools such as /{dh-make}/. For more information about these tools, read on, since the remainder of this section discuses the four most important commands. Note that the preceding #{lb}# is a generic wrapper for live-build commands.
 
-The remainder of this section discusses the three most important commands:
+_* *{lb init}*: Responsible for initializing a Live system configuration directory. See {The lb init command}#lb-init for more information.
 
-_* *{lb config}*: Responsible for initializing a Live system configuration directory. See {The lb config command}#lb-config for more information.
+_* *{lb config}*: Responsible for applying a configuration on top of an already initialized configuration directory. See {The lb config command}#lb-config for more information.
 
 _* *{lb build}*: Responsible for starting a Live system build. See {The lb build command}#lb-build for more information.
 
 _* *{lb clean}*: Responsible for removing parts of a Live system build. See {The lb clean command}#lb-clean for more information.
 
+3~lb-init The #{lb init}# command
+
+As discussed in {live-build}#live-build, the scripts that make up live-build read their configuration with the #{source}# command from a single directory named #{config/}#. As constructing this directory by hand would be time-consuming and error-prone, the #{lb init}# command can be used to create the initial skeleton configuration tree.
+
+The #{lb init}# command creates the following directories inside #{config/}#: #{hooks/}#, #{includes/}#, several other includes subdirectories for each stage of the build process and #{package-lists/}#. The latter includes a list of several important live packages like live-boot, live-config and live-config-sysvinit.
+
 3~lb-config The #{lb config}# command
 
-As discussed in {live-build}#live-build, the scripts that make up live-build read their configuration with the #{source}# command from a single directory named #{config/}#. As constructing this directory by hand would be time-consuming and error-prone, the #{lb config}# command can be used to create skeleton configuration folders.
-
-Issuing #{lb config}# without any arguments creates a #{config/}# subdirectory which it populates with some default settings, and a skeleton #{auto/}# subdirectory tree.
+Issuing #{lb config}# without any arguments completes the #{config/}# subdirectory which it populates with some default settings in configuration files, and two skeleton trees named #{auto/}# and #{local/}#.
 
 code{
 
  $ lb config
- [2013-01-01 09:14:22] lb_config
- P: Considering defaults defined in /etc/live/build.conf
- P: Creating config tree for a debian/i386 system
+ [2014-04-25 17:14:34] lb config 
+ P: Updating config tree for a debian/wheezy/i386 system
 
 }code
 
-Using #{lb config}# without any arguments would be suitable for users who need a very basic image, or who intend to later provide a more complete configuration via #{auto/config}# (see {Managing a configuration}#managing-a-configuration for details).
+Using #{lb config}# without any arguments would be suitable for users who need a very basic image, or who intend to provide a more complete configuration via #{auto/config}# later (see {Managing a configuration}#managing-a-configuration for details).
 
 Normally, you will want to specify some options. For example, to specify which distribution you want to build using its codename:
 

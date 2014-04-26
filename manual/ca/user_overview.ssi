@@ -27,16 +27,19 @@ la seva configuració per complet sota un subdirectori #{config/}#.
 _* Els scripts són independents - és a dir, sempre és segur executar cada
 ordre.
 
-A diferència de /{debhelper}/, live-build conté una eina per a generar un
-directori de configuració en esquelet, #{lb config}#. Això podria ser
-considerat similar a eines com ara /{dh-make}/. Per a obtenir més informació
-sobre #{lb config}#, veure {L'ordre lb config}#lb-config.
+Unlike /{debhelper}/, live-build provides the tools to generate a skeleton
+configuration directory. This could be considered to be similar to tools
+such as /{dh-make}/. For more information about these tools, read on, since
+the remainder of this section discuses the four most important
+commands. Note that the preceding #{lb}# is a generic wrapper for live-build
+commands.
 
-La resta d'aquesta secció descriu les tres ordres més importants:
+_* *{lb init}*: Responsible for initializing a Live system configuration
+directory. See {The lb init command}#lb-init for more information.
 
-_* *{lb config}*: Responsable de crear un directori de configuració per al
-sistema en viu. Consultar {L'ordre lb config}#lb-config per a més
-informació.
+_* *{lb config}*: Responsible for applying a configuration on top of an
+already initialized configuration directory. See {The lb config
+command}#lb-config for more information.
 
 _* *{lb build}*: Responsable d'iniciar la creació d'un sistema en
 viu. Consultar {L'ordre lb build}#lb-build per a més informació.
@@ -44,32 +47,38 @@ viu. Consultar {L'ordre lb build}#lb-build per a més informació.
 _* *{lb clean}*: Responsable d'eliminar parts de la construcció d'un sistema
 viu. Consultar {L'ordre lb clean}#lb-clean per a més informació.
 
+3~lb-init The #{lb init}# command
+
+As discussed in {live-build}#live-build, the scripts that make up live-build
+read their configuration with the #{source}# command from a single directory
+named #{config/}#. As constructing this directory by hand would be
+time-consuming and error-prone, the #{lb init}# command can be used to
+create the initial skeleton configuration tree.
+
+The #{lb init}# command creates the following directories inside
+#{config/}#: #{hooks/}#, #{includes/}#, several other includes
+subdirectories for each stage of the build process and
+#{package-lists/}#. The latter includes a list of several important live
+packages like live-boot, live-config and live-config-sysvinit.
+
 3~lb-config L'ordre #{lb config}#
 
-Com s'ha dit a {live-build}#live-build, les seqüències d'ordres que formen
-part de live-build llegeixen la seva configuració amb l'ordre #{source}#
-d'un únic directori anomenat #{config/}#. Com la construcció d'aquest
-directori a mà, seria molt costós i propens a errors, es pot utilitzar
-l'ordre #{lb config}# per a crear carpetes de configuració en esquelet.
-
-Executar #{lb config}# sense arguments crea un subdirectori #{config/}# que
-s'omple amb alguns paràmetres per defecte, i un arbre en esquelet de
-subdirectoris #{auto/}#.
+Issuing #{lb config}# without any arguments completes the #{config/}#
+subdirectory which it populates with some default settings in configuration
+files, and two skeleton trees named #{auto/}# and #{local/}#.
 
 code{
 
  $ lb config
- [2013-01-01 09:14:22] lb_config
- P: Considering defaults defined in /etc/live/build.conf
- P: Creating config tree for a debian/i386 system
+ [2014-04-25 17:14:34] lb config 
+ P: Updating config tree for a debian/wheezy/i386 system
 
 }code
 
-Utilitzar #{lb config}# sense cap tipus d'arguments seria convenient per als
-usuaris que necessiten una imatge molt bàsica, o que tinguin la intenció de
-proporcionar una configuració més completa més tard mitjançant
-#{auto/config}# (Veure {Gestió d'una configuració}#managing-a-configuration
-per més detalls).
+Using #{lb config}# without any arguments would be suitable for users who
+need a very basic image, or who intend to provide a more complete
+configuration via #{auto/config}# later (see {Managing a
+configuration}#managing-a-configuration for details).
 
 Normalment, s'haurà d'especificar algunes opcions. Per exemple, per a
 especificar quina distribució es vol construir mitjançant el seu nom en

@@ -28,17 +28,19 @@ su configuración bajo un subdirectorio #{config/}#.
 _* Los scripts son independientes - es decir, siempre es seguro ejecutar
 cada comando.
 
-A diferencia de /{debhelper}/, live-build contiene una herramienta para
-crear un directorio de configuración en esqueleto, #{lb config}#. Ésto
-podría ser considerado como similar a herramientas tales como
-/{dh-make}/. Para obtener más información sobre #{lb config}#, consultar {El
-comando lb config }#lb-config
+Unlike /{debhelper}/, live-build provides the tools to generate a skeleton
+configuration directory. This could be considered to be similar to tools
+such as /{dh-make}/. For more information about these tools, read on, since
+the remainder of this section discuses the four most important
+commands. Note that the preceding #{lb}# is a generic wrapper for live-build
+commands.
 
-El resto de esta sección describe los tres comandos más importantes:
+_* *{lb init}*: Responsible for initializing a Live system configuration
+directory. See {The lb init command}#lb-init for more information.
 
-_* *{lb config}*: Responsable de la creación de un directorio de
-configuración del sistema en vivo. Ver {El comando lb config}#lb-config para
-más información.
+_* *{lb config}*: Responsible for applying a configuration on top of an
+already initialized configuration directory. See {The lb config
+command}#lb-config for more information.
 
 _* *{lb build}*: Responsable de iniciar la creación de un sistema en
 vivo. Ver {El comando lb build}#lb-build para más información.
@@ -47,31 +49,38 @@ _* *{lb clean}*: Responsable de la eliminación de partes de la creación de
 un sistema en vivo. Ver {El comando lb clean}#lb-clean para  más
 información.
 
+3~lb-init The #{lb init}# command
+
+As discussed in {live-build}#live-build, the scripts that make up live-build
+read their configuration with the #{source}# command from a single directory
+named #{config/}#. As constructing this directory by hand would be
+time-consuming and error-prone, the #{lb init}# command can be used to
+create the initial skeleton configuration tree.
+
+The #{lb init}# command creates the following directories inside
+#{config/}#: #{hooks/}#, #{includes/}#, several other includes
+subdirectories for each stage of the build process and
+#{package-lists/}#. The latter includes a list of several important live
+packages like live-boot, live-config and live-config-sysvinit.
+
 3~lb-config El comando #{lb config}#
 
-Como se comentó en {live-build}#live-build, los scripts que componen
-live-build obtienen su configuración desde un único directorio llamado
-#{config/}#. Como la creación de este directorio a mano sería largo y
-propenso a errores, se puede utilizar el comando #{lb config}# para crear el
-esqueleto de directorios de configuración.
-
-Ejecutar #{lb config}# sin argumentos crea un subdirectorio #{config/}# que
-se completa con algunas opciones por defecto y un árbol de subdirectorios en
-forma de esqueleto #{auto/}#:
+Issuing #{lb config}# without any arguments completes the #{config/}#
+subdirectory which it populates with some default settings in configuration
+files, and two skeleton trees named #{auto/}# and #{local/}#.
 
 code{
 
  $ lb config
- [2013-01-01 09:14:22] lb_config
- P: Considering defaults defined in /etc/live/build.conf
- P: Creating config tree for a debian/i386 system
+ [2014-04-25 17:14:34] lb config 
+ P: Updating config tree for a debian/wheezy/i386 system
 
 }code
 
-Usar #{lb config}# sin ningún argumento sería conveniente para los usuarios
-que necesitan una imagen muy básica, o que tienen intención de proporcionar
-más tarde una configuración más completa a través de #{auto/config}# (ver
-{Gestionar una configuración}#managing-a-configuration para más detalles).
+Using #{lb config}# without any arguments would be suitable for users who
+need a very basic image, or who intend to provide a more complete
+configuration via #{auto/config}# later (see {Managing a
+configuration}#managing-a-configuration for details).
 
 Normalmente, se tendrá que especificar algunas opciones. Por ejemplo, para
 especificar la distribución que se desea construir utilizando su nombre en

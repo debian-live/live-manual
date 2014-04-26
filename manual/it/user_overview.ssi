@@ -27,16 +27,19 @@ la sua configurazione interamente in una sottodirectory #{config/}#.
 _* Gli script sono indipendenti, vale a dire che è sempre sicuro eseguire
 ogni comando.
 
-Al contrario di /{debhelper}/, live-build contiene uno strumento per
-generare una directory scheletro di configurazione, #{lb config}#, che può
-essere considerato simile a utilità come /{dh-make}/. Per maggiori
-informazioni su #{lb config}# si veda {Il comando lb config}#lb-config.
+Unlike /{debhelper}/, live-build provides the tools to generate a skeleton
+configuration directory. This could be considered to be similar to tools
+such as /{dh-make}/. For more information about these tools, read on, since
+the remainder of this section discuses the four most important
+commands. Note that the preceding #{lb}# is a generic wrapper for live-build
+commands.
 
-Il resto di questa sezione tratta i tre comandi più importanti:
+_* *{lb init}*: Responsible for initializing a Live system configuration
+directory. See {The lb init command}#lb-init for more information.
 
-_* *{lb config}*: responsabile dell'inizializzazione di una directory di
-configurazione del sistema live. Si veda {Il comando lb config}#lb-config
-per maggiori informazioni.
+_* *{lb config}*: Responsible for applying a configuration on top of an
+already initialized configuration directory. See {The lb config
+command}#lb-config for more information.
 
 _* *{lb build}*: responsabile di iniziare la creazione di un sistema
 live. Si veda {Il comando lb}#lb-build per maggiori informazioni.
@@ -45,31 +48,38 @@ _* *{lb clean}*: responsabile della rimozione di parti della creazione di un
 sistema live. Si veda {Il comando lb clean}#lb-clean per maggiori
 informazioni.
 
+3~lb-init The #{lb init}# command
+
+As discussed in {live-build}#live-build, the scripts that make up live-build
+read their configuration with the #{source}# command from a single directory
+named #{config/}#. As constructing this directory by hand would be
+time-consuming and error-prone, the #{lb init}# command can be used to
+create the initial skeleton configuration tree.
+
+The #{lb init}# command creates the following directories inside
+#{config/}#: #{hooks/}#, #{includes/}#, several other includes
+subdirectories for each stage of the build process and
+#{package-lists/}#. The latter includes a list of several important live
+packages like live-boot, live-config and live-config-sysvinit.
+
 3~lb-config Il comando #{lb config}#
 
-Come discusso in {live-build}#live-build, gli script che compongono
-live-build attingono la loro configurazione con il comando #{source}# da una
-singola directory chiamata #{config/}#. Dal momento che crearla a mano
-sarebbe dispendioso in termini di tempo e soggetto a errori, si può usare il
-comando #{lb config}# per creare la directory scheletro di configurazione.
-
-L'esecuzione di #{lb config}# senza argomenti crea una sottodirectory
-#{config/}# popolata con alcune impostazioni predefinite e uno scheletro di
-sottodirectory in #{auto/}#.
+Issuing #{lb config}# without any arguments completes the #{config/}#
+subdirectory which it populates with some default settings in configuration
+files, and two skeleton trees named #{auto/}# and #{local/}#.
 
 code{
 
  $ lb config
- [2013-01-01 09:14:22] lb_config
- P: Considering defaults defined in /etc/live/build.conf
- P: Creating config tree for a debian/i386 system
+ [2014-04-25 17:14:34] lb config 
+ P: Updating config tree for a debian/wheezy/i386 system
 
 }code
 
-L'uso di #{lb config}# senza argomenti è adatto ad utenti che necessitano di
-un'immagine di base o che intendono fornire in seguito una configurazione
-più completa tramite #{auto/config}# (per i dettagli vedere {Gestire una
-configurazione}#managing-a-configuration).
+Using #{lb config}# without any arguments would be suitable for users who
+need a very basic image, or who intend to provide a more complete
+configuration via #{auto/config}# later (see {Managing a
+configuration}#managing-a-configuration for details).
 
 Solitamente si vorranno specificare delle opzioni. Ad esempio per indicare
 quale distribuzione si vuole creare tramite il codename:

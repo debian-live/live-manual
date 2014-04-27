@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 4.0~a4-1\n"
-"POT-Creation-Date: 2014-04-26 08:21+0200\n"
-"PO-Revision-Date: 2013-11-19 05:40+0100\n"
+"POT-Creation-Date: 2014-04-27 12:27+0300\n"
+"PO-Revision-Date: 2014-04-27 12:19+0100\n"
 "Last-Translator: Carlos Zuferri <chals@altorricon.com>\n"
 "Language-Team: none\n"
 "Language: ca\n"
@@ -249,12 +249,6 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_overview.ssi:20
-#, fuzzy
-#| msgid ""
-#| "Unlike /{debhelper}/, live-build contains a tool to generate a skeleton "
-#| "configuration directory, #{lb config}#. This could be considered to be "
-#| "similar to tools such as /{dh-make}/. For more information about #{lb "
-#| "config}#, please see {The lb config command}#lb-config."
 msgid ""
 "Unlike /{debhelper}/, live-build provides the tools to generate a skeleton "
 "configuration directory. This could be considered to be similar to tools "
@@ -262,39 +256,32 @@ msgid ""
 "the remainder of this section discuses the four most important commands. "
 "Note that the preceding #{lb}# is a generic wrapper for live-build commands."
 msgstr ""
-"A diferència de /{debhelper}/, live-build conté una eina per a generar un "
-"directori de configuració en esquelet, #{lb config}#. Això podria ser "
-"considerat similar a eines com ara /{dh-make}/. Per a obtenir més informació "
-"sobre #{lb config}#, veure {L'ordre lb config}#lb-config."
+"A diferència de /{debhelper}/, live-build proporciona les eines per a "
+"generar un directori de configuració en esquelet. Això podria ser considerat "
+"similar a eines com ara /{dh-make}/. Per a més informació sobre aquestes "
+"eines, seguiu llegint, ja que la resta d'aquesta secció discuteix les quatre "
+"ordres més importants. Tenir en compte que van precedices de #{lb}# que és "
+"una funció genèrica per a les ordres de live-build."
 
 #. type: Plain text
 #: en/user_overview.ssi:22
-#, fuzzy
-#| msgid ""
-#| "_* *{lb config}*: Responsible for initializing a Live system "
-#| "configuration directory. See {The lb config command}#lb-config for more "
-#| "information."
 msgid ""
 "_* *{lb init}*: Responsible for initializing a Live system configuration "
 "directory. See {The lb init command}#lb-init for more information."
 msgstr ""
-"_* *{lb config}*: Responsable de crear un directori de configuració per al "
-"sistema en viu. Consultar {L'ordre lb config}#lb-config per a més informació."
+"_* *{lb init}*: Responsable d'inicialitzar un directori de configuració per "
+"al sistema en viu. Consultar {L'ordre lb init}#lb-init per a més informació."
 
 #. type: Plain text
 #: en/user_overview.ssi:24
-#, fuzzy
-#| msgid ""
-#| "_* *{lb config}*: Responsible for initializing a Live system "
-#| "configuration directory. See {The lb config command}#lb-config for more "
-#| "information."
 msgid ""
 "_* *{lb config}*: Responsible for applying a configuration on top of an "
 "already initialized configuration directory. See {The lb config command}#lb-"
 "config for more information."
 msgstr ""
-"_* *{lb config}*: Responsable de crear un directori de configuració per al "
-"sistema en viu. Consultar {L'ordre lb config}#lb-config per a més informació."
+"_* *{lb config}*: Responsable d'aplicar una configuració damunt d'un "
+"directori de configuració ja inicialitzat per al sistema en viu. Consultar "
+"{L'ordre lb config}#lb-config per a més informació."
 
 #. type: Plain text
 #: en/user_overview.ssi:26
@@ -316,20 +303,11 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_overview.ssi:30
-#, fuzzy
-#| msgid "3~lb-config The #{lb config}# command"
 msgid "3~lb-init The #{lb init}# command"
-msgstr "3~lb-config L'ordre #{lb config}#"
+msgstr "3~lb-init L'ordre #{lb init}#"
 
 #. type: Plain text
 #: en/user_overview.ssi:32
-#, fuzzy
-#| msgid ""
-#| "As discussed in {live-build}#live-build, the scripts that make up live-"
-#| "build read their configuration with the #{source}# command from a single "
-#| "directory named #{config/}#. As constructing this directory by hand would "
-#| "be time-consuming and error-prone, the #{lb config}# command can be used "
-#| "to create skeleton configuration folders."
 msgid ""
 "As discussed in {live-build}#live-build, the scripts that make up live-build "
 "read their configuration with the #{source}# command from a single directory "
@@ -341,7 +319,7 @@ msgstr ""
 "part de live-build llegeixen la seva configuració amb l'ordre #{source}# "
 "d'un únic directori anomenat #{config/}#. Com la construcció d'aquest "
 "directori a mà, seria molt costós i propens a errors, es pot utilitzar "
-"l'ordre #{lb config}# per a crear carpetes de configuració en esquelet."
+"l'ordre #{lb init}# per a crear l'arbre inicial de configuració en esquelet."
 
 #. type: Plain text
 #: en/user_overview.ssi:34
@@ -352,6 +330,11 @@ msgid ""
 "list of several important live packages like live-boot, live-config and live-"
 "config-sysvinit."
 msgstr ""
+"L'ordre #{lb init}# crea els següents directoris dins #{config/}#: #{hooks/}"
+"#, #{includes/}#, altres subdirectoris de includes per a cada etapa del "
+"process de construcció i #{package-lists/}#. Aquest últim inclou una llista "
+"de diversos paquets importants per a un sistema en viu com live-boot, live-"
+"config and live-config-sysvinit."
 
 #. type: Plain text
 #: en/user_overview.ssi:36
@@ -360,46 +343,34 @@ msgstr "3~lb-config L'ordre #{lb config}#"
 
 #. type: Plain text
 #: en/user_overview.ssi:38
-#, fuzzy
-#| msgid ""
-#| "Issuing #{lb config}# without any arguments creates a #{config/}# "
-#| "subdirectory which it populates with some default settings, and a "
-#| "skeleton #{auto/}# subdirectory tree."
 msgid ""
 "Issuing #{lb config}# without any arguments completes the #{config/}# "
 "subdirectory which it populates with some default settings in configuration "
 "files, and two skeleton trees named #{auto/}# and #{local/}#."
 msgstr ""
-"Executar #{lb config}# sense arguments crea un subdirectori #{config/}# que "
-"s'omple amb alguns paràmetres per defecte, i un arbre en esquelet de "
-"subdirectoris #{auto/}#."
+"Executar #{lb config}# sense arguments completa el subdirectori #{config/}# "
+"que s'omple amb alguns paràmetres per defecte en fitxers de configuració, i "
+"dos arbres de subdirectoris en esquelet que s'anomenen #{auto/}# i #{local/}"
+"#."
 
 #. type: Plain text
 #: en/user_overview.ssi:44
 #, fuzzy, no-wrap
 #| msgid ""
 #| " $ lb config\n"
-#| " [2013-01-01 09:14:22] lb_config\n"
-#| " P: Considering defaults defined in /etc/live/build.conf\n"
-#| " P: Creating config tree for a debian/i386 system\n"
+#| " [2014-04-25 17:14:34] lb config \n"
+#| " P: Updating config tree for a debian/wheezy/i386 system\n"
 msgid ""
 " $ lb config\n"
-" [2014-04-25 17:14:34] lb config \n"
+" [2014-04-25 17:14:34] lb config\n"
 " P: Updating config tree for a debian/wheezy/i386 system\n"
 msgstr ""
 " $ lb config\n"
-" [2013-01-01 09:14:22] lb_config\n"
-" P: Considering defaults defined in /etc/live/build.conf\n"
-" P: Creating config tree for a debian/i386 system\n"
+" [2014-04-25 17:14:34] lb config \n"
+" P: Updating config tree for a debian/wheezy/i386 system\n"
 
 #. type: Plain text
 #: en/user_overview.ssi:48
-#, fuzzy
-#| msgid ""
-#| "Using #{lb config}# without any arguments would be suitable for users who "
-#| "need a very basic image, or who intend to later provide a more complete "
-#| "configuration via #{auto/config}# (see {Managing a configuration}"
-#| "#managing-a-configuration for details)."
 msgid ""
 "Using #{lb config}# without any arguments would be suitable for users who "
 "need a very basic image, or who intend to provide a more complete "
@@ -409,7 +380,7 @@ msgstr ""
 "Utilitzar #{lb config}# sense cap tipus d'arguments seria convenient per als "
 "usuaris que necessiten una imatge molt bàsica, o que tinguin la intenció de "
 "proporcionar una configuració més completa més tard mitjançant #{auto/config}"
-"# (Veure {Gestió d'una configuració}#managing-a-configuration per més "
+"# (Veure {Gestió d'una configuració}#managing-a-configuration per a més "
 "detalls)."
 
 #. type: Plain text
@@ -436,8 +407,8 @@ msgstr " $ lb config --binary-images netboot --bootappend-live \"boot=live compo
 #: en/user_overview.ssi:66
 msgid "A full list of options is available in the #{lb_config}# man page."
 msgstr ""
-"Una llista completa d'opcions està disponible a la pàgina del manual "
-"#{lb_config}#."
+"Una llista completa d'opcions està disponible a la pàgina del manual #"
+"{lb_config}#."
 
 #. type: Plain text
 #: en/user_overview.ssi:68
@@ -464,8 +435,8 @@ msgstr "3~lb-clean L'ordre #{lb clean}#"
 #: en/user_overview.ssi:74
 msgid ""
 "It is the job of the #{lb clean}# command to remove various parts of a build "
-"so subsequent builds can start from a clean state. By default, #{chroot}#, "
-"#{binary}# and #{source}# stages are cleaned, but the cache is left intact. "
+"so subsequent builds can start from a clean state. By default, #{chroot}#, #"
+"{binary}# and #{source}# stages are cleaned, but the cache is left intact. "
 "Also, individual stages can be cleaned. For example, if you have made "
 "changes that only affect the binary stage, use #{lb clean --binary}# prior "
 "to building a new binary. If your changes invalidate the bootstrap and/or "

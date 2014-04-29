@@ -2,19 +2,22 @@
 
 1~the-basics Les bases
 
-Ce chapitre contient un bref aperçu du processus de construction et des
-instructions pour utiliser les trois types d'images les plus couramment
-utilisées. Le type d'image le plus polyvalent, #{iso-hybrid}#, peut être
-utilisé sur une machine virtuelle, un support optique ou un périphérique USB
-de stockage portable. Dans certains cas particuliers, comme expliqué plus
-loin, le type #{hdd}# peut être plus approprié. Le chapitre se termine avec
-des instructions pour la construction et l'utilisation d'une image
-#{netboot}#, qui est un peu plus compliquée en raison de la configuration
-requise sur le serveur. C'est un sujet un peu avancé pour tous ceux qui ne
-connaissent pas déjà le démarrage sur le réseau, mais est inclus ici car une
-fois la configuration terminée, c'est un moyen très pratique pour tester et
-déployer des images pour le démarrage sur le réseau local sans le tracas des
-supports d'images.
+This chapter contains a brief overview of the build process and instructions
+for using the three most commonly used image types. The most versatile image
+type, #{iso-hybrid}#, may be used on a virtual machine, optical medium or
+USB portable storage device. In certain special cases, as explained later,
+the #{hdd}# type may be more suitable. The chapter includes detailed
+instructions for building and using a #{netboot}# type image, which is a bit
+more involved due to the setup required on the server. This is an slightly
+advanced topic for anyone who is not already familiar with netbooting, but
+it is included here because once the setup is done, it is a very convenient
+way to test and deploy images for booting on the local network without the
+hassle of dealing with image media.
+
+The section finishes with a quick introduction to {webbooting}#webbooting
+which is, perhaps, the easiest way of using different images for different
+purposes, switching from one to the other as needed using the internet as a
+means.
 
 Tout au long du chapitre, nous ferons souvent référence à la valeur par
 défaut des noms des fichiers produits par live-build. Si vous {téléchargez
@@ -597,3 +600,42 @@ code{
 Obtenir, ou construire un #{grub-floppy-netboot}#.
 
 Lancer #{qemu}# avec "#{-net nic,vlan=0 -net tap,vlan=0,ifname=tun0}#"
+
+2~webbooting Webbooting
+
+Webbooting is a convenient way of retrieving and booting live systems using
+the internet as a means. The requirements for webbooting are very few. On
+the one hand, you need a medium with a bootloader, an initial ramdisk and a
+kernel. On the other hand, a web server to store the squashfs files which
+contain the filesystem.
+
+3~ Getting the webboot files
+
+As usual, you can build the images yourself or use the pre-built files,
+which are available on the project's homepage at
+http://live-systems.org/. Using pre-built images would be handy for doing
+initial testing until one can fine tune their own needs. If you have built a
+live image you will find the files needed for webbooting in the build
+directory under #{binary/live/}#. The files are called #{vmlinuz}#,
+#{initrd.img}# and #{filesystem.squashfs}#.
+
+3~ Booting webboot images
+
+While some users will use virtualization to test webbooting, we use real
+hardware here to match the following possible use case which should only be
+considered as an example.
+
+In order to boot a webboot image it is enough to have the components
+mentioned above in a usb stick and install syslinux as bootloader. Then boot
+from the usb stick and type #{fetch=URL/PATH/TO/FILE}# at the boot
+options. live-boot will retrieve the squashfs file and store it into
+ram. This way, it is possible to use the downloaded compressed filesystem
+like a regular live system. For example:
+
+code{
+
+ append boot=live components fetch=http://192.168.2.50/images/webboot/filesystem.squashfs
+
+}code
+
+*{Use case:}* You have a web server in which you have stored two squashfs images, one which contains a desktop, like for example gnome, and a rescue one. If you need a graphical environment for one machine, you can plug your usb stick in and webboot the gnome image. If you need rescue tools included in the second type of image, for another machine, you can webboot the rescue one.

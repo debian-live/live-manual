@@ -2,22 +2,24 @@
 
 1~the-basics Conceptos básicos
 
-This chapter contains a brief overview of the build process and instructions
-for using the three most commonly used image types. The most versatile image
-type, #{iso-hybrid}#, may be used on a virtual machine, optical medium or
-USB portable storage device. In certain special cases, as explained later,
-the #{hdd}# type may be more suitable. The chapter includes detailed
-instructions for building and using a #{netboot}# type image, which is a bit
-more involved due to the setup required on the server. This is an slightly
-advanced topic for anyone who is not already familiar with netbooting, but
-it is included here because once the setup is done, it is a very convenient
-way to test and deploy images for booting on the local network without the
-hassle of dealing with image media.
+Este capítulo contiene una breve descripción del proceso de creación de las
+imágenes en vivo y las instrucciones para el uso de los tres tipos de
+imágenes más utilizadas. El tipo de imagen más versátil, #{iso-hybrid}#, se
+puede utilizar en una máquina virtual, en medios ópticos u otros
+dispositivos de almacenamiento USB. En ciertos casos especiales, como se
+explica más adelante, las imágenes #{hdd}#, pueden ser las más adecuadas. El
+capítulo incluye instrucciones detalladas para crear y utilizar una imagen
+de tipo #{netboot}#, que es un poco más complicado debido a la configuración
+necesaria en el servidor. Es un tema ligeramente avanzado para cualquier
+persona que no esté familiarizada con el arranque en red, pero se incluye
+aquí porque una vez que se realiza toda la configuración, es una forma muy
+conveniente para probar y desplegar imágenes de arranque en red local sin la
+molestia de tratar con los dispositivos de almacenamiento de la imagen.
 
-The section finishes with a quick introduction to {webbooting}#webbooting
-which is, perhaps, the easiest way of using different images for different
-purposes, switching from one to the other as needed using the internet as a
-means.
+La sección termina con una rápida introducción al {arranque desde
+internet}#webbooting, que es, quizás, la manera más rápida de utilizar
+diferentes imágenes para diferentes propósitos, cambiando de una a otra
+según las necesidades, utilizando internet como medio.
 
 A lo largo de todo el capítulo se hace a menudo referencia al nombre de las
 imágenes producidas por defecto por live-build. Si se {descarga una imagen
@@ -603,36 +605,40 @@ Obtener o crear un #{grub-floppy-netboot}#.
 
 Lanzar #{qemu}# con "#{-net nic,vlan=0 -net tap,vlan=0,ifname=tun0}#"
 
-2~webbooting Webbooting
+2~webbooting Arrancar desde internet
 
-Webbooting is a convenient way of retrieving and booting live systems using
-the internet as a means. The requirements for webbooting are very few. On
-the one hand, you need a medium with a bootloader, an initial ramdisk and a
-kernel. On the other hand, a web server to store the squashfs files which
-contain the filesystem.
+Arrancar desde internet, o Webbooting, es una manera muy adecuada de
+descargar y arrancar sistemas en vivo utilizando internet como medio, ya que
+hay muy pocos requisitos para arrancar desde internet utilizando
+webbooting. Por un lado, se necesita un medio en vivo con un gestor de
+arranque, un disco ram inicial y un kernel. Por otro lado, un servidor web
+para almacenar los ficheros squashfs que contienen el sistema de ficheros.
 
-3~ Getting the webboot files
+3~ Conseguir los ficheros para arrancar desde internet
 
-As usual, you can build the images yourself or use the pre-built files,
-which are available on the project's homepage at
-http://live-systems.org/. Using pre-built images would be handy for doing
-initial testing until one can fine tune their own needs. If you have built a
-live image you will find the files needed for webbooting in the build
-directory under #{binary/live/}#. The files are called #{vmlinuz}#,
-#{initrd.img}# and #{filesystem.squashfs}#.
+Como de costumbre, se puede construir las imágenes uno mismo o utilizar
+alguna de las imágenes prefabricadas, disponibles en la página web del
+proyecto http://live-systems.org/. Utilizar las imágenes prefabricadas es
+muy práctico para hacer pruebas hasta que se está seguro de cuales son las
+necesidades reales. Si ya se ha construido una imagen, los ficheros
+necesarios para el arranque desde internet se encuentran en el directorio
+#{binary/live/}#. Los ficheros se llaman #{vmlinuz}#, #{initrd.img}# y
+#{filesystem.squashfs}#.
 
-3~ Booting webboot images
+3~ Arrancar imágenes webboot
 
-While some users will use virtualization to test webbooting, we use real
-hardware here to match the following possible use case which should only be
-considered as an example.
+Aunque algunos usuarios pueden preferir la virtualización para probar el
+arranque desde internet, en este caso se utiliza hardware real para ilustrar
+el caso de uso que se explica a continuación y que debe considerarse sólo
+como un ejemplo.
 
-In order to boot a webboot image it is enough to have the components
-mentioned above in a usb stick and install syslinux as bootloader. Then boot
-from the usb stick and type #{fetch=URL/PATH/TO/FILE}# at the boot
-options. live-boot will retrieve the squashfs file and store it into
-ram. This way, it is possible to use the downloaded compressed filesystem
-like a regular live system. For example:
+Para arrancar una imagen webboot es suficiente copiar los elementos
+mencionados anteriormente en una llave usb e instalar syslinux como gestor
+de arranque. Entonces, arrancar desde la llave usb y teclear
+#{fetch=URL/RUTA/AL/FICHERO}# en las opciones de arranque. live-boot se
+encargará de descargar el fichero squashfs y almacenarlo en la memoria
+ram. De este modo, es posible utilizar el sistema de ficheros comprimido
+descargado como si fuera un sistema en vivo normal. Por ejemplo:
 
 code{
 
@@ -640,4 +646,4 @@ code{
 
 }code
 
-*{Use case:}* You have a web server in which you have stored two squashfs images, one which contains a desktop, like for example gnome, and a rescue one. If you need a graphical environment for one machine, you can plug your usb stick in and webboot the gnome image. If you need rescue tools included in the second type of image, for another machine, you can webboot the rescue one.
+*{Caso de uso:}* Se tiene dos imágenes almacenadas en un servidor web, una que contiene un escritorio, como gnome, y una de rescate. Si se necesita un entorno gráfico para una máquina, se puede insertar la llave usb y arrancar desde internet la imagen gnome. Si se necesitan las herramientas de rescate del segundo tipo de imagen para otra máquina, se puede arrancar desde internet la de rescate.

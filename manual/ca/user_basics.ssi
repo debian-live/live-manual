@@ -2,22 +2,24 @@
 
 1~the-basics Conceptes bàsics
 
-This chapter contains a brief overview of the build process and instructions
-for using the three most commonly used image types. The most versatile image
-type, #{iso-hybrid}#, may be used on a virtual machine, optical medium or
-USB portable storage device. In certain special cases, as explained later,
-the #{hdd}# type may be more suitable. The chapter includes detailed
-instructions for building and using a #{netboot}# type image, which is a bit
-more involved due to the setup required on the server. This is an slightly
-advanced topic for anyone who is not already familiar with netbooting, but
-it is included here because once the setup is done, it is a very convenient
-way to test and deploy images for booting on the local network without the
-hassle of dealing with image media.
+Aquest capítol conté una breu descripció del procés de construcció i les
+instruccions per a l'utilització dels tres tipus d'imatge més comunes. El
+tipus d'imatge més versàtil #{iso-hybrid}# es pot utilitzar en una màquina
+virtual, en un medi òptic o qualsevol altre dispositiu d'emmagatzematge
+USB. En certs casos especials, com s'explica més endavant, el tipus #{hdd}#
+pot ser el més adequat. El capítol conté instruccions detallades per a la
+construcció d'una imatge tipus #{netboot}#, que és una mica més complicat a
+causa de la configuració necessària en el servidor. Aquest és un tema una
+mica avançat per a algú que no està familiaritzat ja amb l'arrencada en
+xarxa, però s'inclou aquí perquè un cop que la configuració es porta a
+terme, es tracta d'una manera molt convenient per a provar i desplegar
+imatges per a l'arrencada en xarxa local sense la molèstia de tractar amb
+els dispositius de les imatges.
 
-The section finishes with a quick introduction to {webbooting}#webbooting
-which is, perhaps, the easiest way of using different images for different
-purposes, switching from one to the other as needed using the internet as a
-means.
+La secció acaba amb una breu introducció al {webbooting}#webbooting que és,
+potser, la forma més fàcil d'utilitzar imatges diferents per a diferents
+propòsits, canviant d'una a l'altra segons sigui necessari, utilitzant
+internet com un mitjà.
 
 Al llarg del capítol, sovint es fa referència als noms dels fitxers produïts
 per defecte per live-build. Si es {descarrega una imatge
@@ -597,34 +599,36 @@ Llançar #{qemu}# amb "#{-net nic,vlan=0 -net tap,vlan=0,ifname=tun0}#"
 
 2~webbooting Webbooting
 
-Webbooting is a convenient way of retrieving and booting live systems using
-the internet as a means. The requirements for webbooting are very few. On
-the one hand, you need a medium with a bootloader, an initial ramdisk and a
-kernel. On the other hand, a web server to store the squashfs files which
-contain the filesystem.
+Webbooting és una manera convenient d'aconseguir i arrencar sistemes vius
+utilitzant internet com un mitjà. Els requisits per fer webbooting són molt
+pocs. D'una banda, es necessita un dispositiu amb un carregador d'arrencada,
+un disc ram inicial i un nucli. D'altra banda, un servidor web per
+emmagatzemar els fitxers squashfs que contenen el sistema de fitxers.
 
-3~ Getting the webboot files
+3~ Obtenir els fitxers webboot
 
-As usual, you can build the images yourself or use the pre-built files,
-which are available on the project's homepage at
-http://live-systems.org/. Using pre-built images would be handy for doing
-initial testing until one can fine tune their own needs. If you have built a
-live image you will find the files needed for webbooting in the build
-directory under #{binary/live/}#. The files are called #{vmlinuz}#,
-#{initrd.img}# and #{filesystem.squashfs}#.
+Com de costum, es pot construir les imatges un mateix o utilitzar els
+fitxers prefabricats, que estan disponibles a la pàgina principal del
+projecte a http://live-systems.org/. Les imatges preconstruides són adients
+per fer proves inicials fins que un pugui afinar les seves pròpies
+necessitats. Si ja s'ha construït una imatge en viu, els fitxers necessaris
+pel webbooting es troben al directori de construcció sota
+#{binary/live/}#. Els fitxers s'anomenen #{vmlinuz}#, #{initrd.img}# i
+#{filesystem.squashfs}#.
 
-3~ Booting webboot images
+3~ Arrencar imatges webboot
 
-While some users will use virtualization to test webbooting, we use real
-hardware here to match the following possible use case which should only be
-considered as an example.
+Mentre que alguns usuaris prefereixen utilitzar la virtualització per prova
+el webbooting, en aquest cas utilitzem maquinari real perquè coincideixi amb
+el següent cas d'ús, que només ha de ser considerat com un exemple.
 
-In order to boot a webboot image it is enough to have the components
-mentioned above in a usb stick and install syslinux as bootloader. Then boot
-from the usb stick and type #{fetch=URL/PATH/TO/FILE}# at the boot
-options. live-boot will retrieve the squashfs file and store it into
-ram. This way, it is possible to use the downloaded compressed filesystem
-like a regular live system. For example:
+Per a arrencar una imatge webboot és suficient tenir els components
+esmentats anteriorment en una memòria usb i instal·lar syslinux com a gestor
+d'arrencada. Després, arrencar des de la memòria usb i escriure
+#{fetch=URL/RUTA/AL/FITXER}# a les opcions d'arrencada. live-boot
+descarregarà l'arxiu squashfs i l'emmagatzemarà en la memòria ram. D'aquesta
+manera, és possible utilitzar el sistema de fitxers comprimit descarregat
+com a un sistema viu normal. Per exemple:
 
 code{
 
@@ -632,4 +636,4 @@ code{
 
 }code
 
-*{Use case:}* You have a web server in which you have stored two squashfs images, one which contains a desktop, like for example gnome, and a rescue one. If you need a graphical environment for one machine, you can plug your usb stick in and webboot the gnome image. If you need rescue tools included in the second type of image, for another machine, you can webboot the rescue one.
+*{Cas d'ús:}* Tenir un servidor web en el qual s'ha emmagatzemat dues imatges squashfs, una que conté un escriptori, com ara gnome, i una de rescat. Si es necessita un entorn gràfic per a una màquina, es pot connectar la memòria usb i arrencar la imatge gnome. Si es necessita les eines de rescat que s'inclouen en el segon tipus d'imatge, per a una altra màquina, arrencar des de internet la de rescat.

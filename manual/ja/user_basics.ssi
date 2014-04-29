@@ -2,34 +2,27 @@
 
 1~the-basics 基本
 
-This chapter contains a brief overview of the build process and instructions
-for using the three most commonly used image types. The most versatile image
-type, #{iso-hybrid}#, may be used on a virtual machine, optical medium or
-USB portable storage device. In certain special cases, as explained later,
-the #{hdd}# type may be more suitable. The chapter includes detailed
-instructions for building and using a #{netboot}# type image, which is a bit
-more involved due to the setup required on the server. This is an slightly
-advanced topic for anyone who is not already familiar with netbooting, but
-it is included here because once the setup is done, it is a very convenient
-way to test and deploy images for booting on the local network without the
-hassle of dealing with image media.
+この章ではビルドプロセスの概要と最も広く利用されている3種類のイメージの使用手順について簡単に述べます。最も汎用性の高い形式のイメージである
+#{iso-hybrid}# は、仮想マシンや光学メディア、USB
+ポータブルストレージ機器上で利用できます。特に変わった状況では後述のように、#{hdd}# 形式の方が適するかもしれません。この章では
+#{netboot}# 形式のイメージをビルド、利用する手順を記載しています。この形式はサーバ上で必要とする準備のためにやや複雑になります。これは
+netboot
+についてまだ不慣れな人にとってはわずかに高度な話題となりますが、その準備さえできればローカルネットワーク上でブートするためのイメージをテスト、展開するのに非常に便利な方法で、難なくイメージのメディアを扱うことができるため、ここに収録しています。
 
-The section finishes with a quick introduction to {webbooting}#webbooting
-which is, perhaps, the easiest way of using different images for different
-purposes, switching from one to the other as needed using the internet as a
-means.
+この節は {ウェブブート}#webbooting
+の簡単な手引きで終えています。これは恐らく異なる目的の異なるイメージを必要に応じて切り替えて使う最も簡単な方法で、手段としてインターネットを使います。
 
 この章全体を通して、live-build
 により作成されるデフォルトのファイル名を頻繁に参照しています。{ビルド済みイメージをダウンロード}#downloading-prebuilt-images
 した場合、実際のファイル名は異なる場合があります。
 
-2~what-is-live live システムとは何?
+2~what-is-live Live システムとは何?
 
-live システムとは、 通常 CD-ROM や USB
+Live システムとは、 通常 CD-ROM や USB
 メモリ等の取り外し可能メディア、あるいはネットワークからコンピュータ上でブートされるオペレーティングシステムを意味し、普通のドライブに何もインストールせずに利用でき、実行時に自動設定が行われます
 ({用語}#terms 参照)。
 
-live システムはオペレーティングシステムで、サポートしているうちの単一のアーキテクチャ (現在 amd64 と i386)
+Live システムはオペレーティングシステムで、サポートしているうちの単一のアーキテクチャ (現在 amd64 と i386)
 向けにビルドされています。以下から構成されています。
 
 _* *{Linux カーネルイメージ}*、通常 #{vmlinuz*}# という名前です
@@ -37,9 +30,9 @@ _* *{Linux カーネルイメージ}*、通常 #{vmlinuz*}# という名前で�
 _* *{初期 RAM ディスクイメージ (initrd)}*: Linux ブート用に用意された RAM
 ディスクで、システムのイメージをマウントするのに必要となる可能性があるモジュールとマウントするためのスクリプトをいくつか収録しています。
 
-_* *{システムイメージ}*: オペレーティングシステムのファイルシステムのイメージです。通常、live
+_* *{システムイメージ}*: オペレーティングシステムのファイルシステムのイメージです。通常、Live
 システムのイメージサイズを最小限にするため、SquashFS
-圧縮ファイルシステムが利用されています。このファイルシステムは読み込み専用であることに注意してください。そのため、ブート処理中は live システムは
+圧縮ファイルシステムが利用されています。このファイルシステムは読み込み専用であることに注意してください。そのため、ブート処理中は Live システムは
 RAM
 ディスクと「ユニオン」機構を利用して実行中のシステム中でファイルを書き込むことができるようにしています。ただし、オプションの保持機能を使っていない限り、変更は全てシャットダウンにより失われます
 ({保持機能}#persistence 参照)。
@@ -64,7 +57,7 @@ live-build を使って Linux カーネル、initrd、それを実行するた�
 で公開されています。さらに、古いものや今後のリリース、non-free ファームウェアを収録する非公式のイメージ、あるいはドライバが
 http://live-systems.org/cdimage/release/ から利用できるようになっています。
 
-2~using-web-builder ウェブ live イメージビルダーの利用
+2~using-web-builder ウェブ Live イメージビルダーの利用
 
 コミュニティへのサービスとして、ウェブベースの live イメージビルダーサービスを http://live-build.debian.net/
 で運営しています。このサイトはベストエフォートの方針で保守されています。つまり、最新でいつでも使える状態の維持に努め、大規模な運用停止については問題を告知しますが、100%
@@ -478,36 +471,27 @@ code{
 
 「#{-net nic,vlan=0 -net tap,vlan=0,ifname=tun0}#」を引数にして #{qemu}# を実行します
 
-2~webbooting Webbooting
+2~webbooting ウェブブート
 
-Webbooting is a convenient way of retrieving and booting live systems using
-the internet as a means. The requirements for webbooting are very few. On
-the one hand, you need a medium with a bootloader, an initial ramdisk and a
-kernel. On the other hand, a web server to store the squashfs files which
-contain the filesystem.
+ウェブブートは手段としてインターネットを使い Live
+システムをブートするための便利な方法です。ウェブブートの要件はとても少なくなっています。ある言い方をすれば必要なのはブートローダと初期RAMディスク、カーネルを収録したメディアです。別の言い方をすれば必要なのはファイルシステムを収録する
+squashfs ファイルを置くウェブサーバです。
 
-3~ Getting the webboot files
+3~ ウェブブートファイルの取得
 
-As usual, you can build the images yourself or use the pre-built files,
-which are available on the project's homepage at
-http://live-systems.org/. Using pre-built images would be handy for doing
-initial testing until one can fine tune their own needs. If you have built a
-live image you will find the files needed for webbooting in the build
-directory under #{binary/live/}#. The files are called #{vmlinuz}#,
-#{initrd.img}# and #{filesystem.squashfs}#.
+いつものように、イメージを自分でビルドすることも、プロジェクトのホームページ http://live-systems.org/
+から取得できるビルド済みファイルを利用することも可能です。自身の必要に応じて微調整ができるまでの初期テストにはビルド済みイメージの利用が手軽でしょう。Live
+イメージのビルド後ならウェブブートに必要なファイルは #{binary/live/}# 下のビルドディレクトリで見つけられるでしょう。ファイルは
+#{vmlinuz}#、#{initrd.img}#、#{filesystem.squashfs}# と呼ばれます。
 
-3~ Booting webboot images
+3~ ウェブブートイメージの起動
 
-While some users will use virtualization to test webbooting, we use real
-hardware here to match the following possible use case which should only be
-considered as an example.
+ユーザによってはウェブブートのテストに仮想化を使いますがここでは以下の活用事例に合わせて実際のハードウェアを使います。あくまで例だと思ってください。
 
-In order to boot a webboot image it is enough to have the components
-mentioned above in a usb stick and install syslinux as bootloader. Then boot
-from the usb stick and type #{fetch=URL/PATH/TO/FILE}# at the boot
-options. live-boot will retrieve the squashfs file and store it into
-ram. This way, it is possible to use the downloaded compressed filesystem
-like a regular live system. For example:
+ウェブブートイメージの起動は上記で示した構成要素をUSBメモリに書き込み、ブートローダとして syslinux
+をインストールすれば十分です。そしてUSBメモリからブートしてブートオプションに #{fetch=URL/ファイル/への/パス}#
+を入力します。live-boot は squashfs ファイルを取得してRAMに格納します。こうして、ダウンロードした圧縮ファイルシステムを普通の
+Live システムのように使えるようになります。例えば:
 
 code{
 
@@ -515,4 +499,4 @@ code{
 
 }code
 
-*{Use case:}* You have a web server in which you have stored two squashfs images, one which contains a desktop, like for example gnome, and a rescue one. If you need a graphical environment for one machine, you can plug your usb stick in and webboot the gnome image. If you need rescue tools included in the second type of image, for another machine, you can webboot the rescue one.
+*{活用事例:}* ウェブサーバがあり、squashfs イメージが2つ、1つは例えば gnome のようなデスクトップ環境を収録したものともう1つは復旧用が置かれているとします。あるマシンでグラフィカル環境が必要であればUSBメモリを差し込んで gnome 用イメージをウェブブートできます。後者のイメージに収録されている復旧用ツールが別のマシンで必要になった場合は復旧用のイメージをウェブブートできます。

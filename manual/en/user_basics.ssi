@@ -383,6 +383,16 @@ Webbooting is a convenient way of retrieving and booting live systems using the 
 
 As usual, you can build the images yourself or use the pre-built files, which are available on the project's homepage at http://live-systems.org/. Using pre-built images would be handy for doing initial testing until one can fine tune their own needs. If you have built a live image you will find the files needed for webbooting in the build directory under #{binary/live/}#. The files are called #{vmlinuz}#, #{initrd.img}# and #{filesystem.squashfs}#.
 
+It is also possible to extract those files from an already existing iso image. In order to achieve that, loopback mount the image as follows:
+
+code{
+
+ # mount -o loop image.iso /mnt
+
+}code
+
+The files are to be found under the #{live/}# directory. In this specific case, it would be #{/mnt/live/}#. This method has the disadvantage that you need to be root to be able to mount the image. However, it has the advantage that it is easily sriptable, and thus automatized.
+
 3~ Booting webboot images
 
 While some users will use virtualization to test webbooting, we use real hardware here to match the following possible use case which should only be considered as an example.

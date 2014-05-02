@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 4.0~a4-1\n"
 "POT-Creation-Date: 2014-04-30 21:11+0300\n"
-"PO-Revision-Date: 2013-10-17 20:58+0100\n"
+"PO-Revision-Date: 2014-05-02 17:00+0100\n"
 "Last-Translator: Carlos Zuferri <chals@altorricon.com>\n"
 "Language-Team: none\n"
 "Language: fr\n"
@@ -194,20 +194,6 @@ msgstr "1~the-basics Les bases"
 
 #. type: Plain text
 #: en/user_basics.ssi:6
-#, fuzzy
-#| msgid ""
-#| "This chapter contains a brief overview of the build process and "
-#| "instructions for using the three most commonly used image types. The most "
-#| "versatile image type, #{iso-hybrid}#, may be used on a virtual machine, "
-#| "optical medium or USB portable storage device. In certain special cases, "
-#| "as explained later, the #{hdd}# type may be more suitable. The chapter "
-#| "finishes with instructions for building and using a #{netboot}# type "
-#| "image, which is a bit more involved due to the setup required on the "
-#| "server. This is an slightly advanced topic for anyone who is not familiar "
-#| "already with netbooting, but it is included here because once the setup "
-#| "is done, it is a very convenient way to test and deploy images for "
-#| "booting on the local network without the hassle of dealing with image "
-#| "media."
 msgid ""
 "This chapter contains a brief overview of the build process and instructions "
 "for using the three most commonly used image types. The most versatile image "
@@ -226,14 +212,14 @@ msgstr ""
 "utilisées. Le type d'image le plus polyvalent, #{iso-hybrid}#, peut être "
 "utilisé sur une machine virtuelle, un support optique ou un périphérique USB "
 "de stockage portable. Dans certains cas particuliers, comme expliqué plus "
-"loin, le type #{hdd}# peut être plus approprié. Le chapitre se termine avec "
-"des instructions pour la construction et l'utilisation d'une image #{netboot}"
-"#, qui est un peu plus compliquée en raison de la configuration requise sur "
-"le serveur. C'est un sujet un peu avancé pour tous ceux qui ne connaissent "
-"pas déjà le démarrage sur le réseau, mais est inclus ici car une fois la "
-"configuration terminée, c'est un moyen très pratique pour tester et déployer "
-"des images pour le démarrage sur le réseau local sans le tracas des supports "
-"d'images."
+"loin, le type #{hdd}# peut être plus approprié. Le chapitre contient des "
+"instructions détaillées pour la construction et l'utilisation d'une image #"
+"{netboot}#, qui est un peu plus compliquée en raison de la configuration "
+"requise sur le serveur. C'est un sujet un peu avancé pour tous ceux qui ne "
+"connaissent pas déjà le démarrage sur le réseau, mais est inclus ici car une "
+"fois la configuration terminée, c'est un moyen très pratique pour tester et "
+"déployer des images pour le démarrage sur le réseau local sans le tracas des "
+"supports d'images."
 
 #. type: Plain text
 #: en/user_basics.ssi:8
@@ -243,6 +229,10 @@ msgid ""
 "purposes, switching from one to the other as needed using the internet as a "
 "means."
 msgstr ""
+"La section se termine par une brève introduction à webbooting qui est, peut-"
+"être, la meilleure façon d'utiliser des images différentes à des fins "
+"différentes, changeant de l'un à l'autre en fonction des besoins en "
+"utilisant l'Internet comme un moyen."
 
 #. type: Plain text
 #: en/user_basics.ssi:10
@@ -1433,7 +1423,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_basics.ssi:379
 msgid "2~webbooting Webbooting"
-msgstr ""
+msgstr "2~webbooting Webbooting"
 
 #. type: Plain text
 #: en/user_basics.ssi:381
@@ -1444,11 +1434,17 @@ msgid ""
 "kernel. On the other hand, a web server to store the squashfs files which "
 "contain the filesystem."
 msgstr ""
+"Webbooting est une manière très pratique de télécharger et d'amorcer les "
+"systèmes live en utilisant l'Internet comme un moyen. Il ya très peu "
+"d'exigences pour webbooting. D'une part, vous avez besoin d'un support avec "
+"un chargeur d'amorçage, un disque ram initial et un noyau. D'autre part, un "
+"serveur web pour stocker les fichiers squashfs qui contiennent le système de "
+"fichiers."
 
 #. type: Plain text
 #: en/user_basics.ssi:383
 msgid "3~ Getting the webboot files"
-msgstr ""
+msgstr "3~ Obtenir les fichiers webboot"
 
 #. type: Plain text
 #: en/user_basics.ssi:385
@@ -1461,6 +1457,14 @@ msgid ""
 "#. The files are called #{vmlinuz}#, #{initrd.img}# and #{filesystem."
 "squashfs}#."
 msgstr ""
+"Comme d'habitude, vous pouvez construire les images vous-même ou utiliser "
+"les fichiers précompilés, qui sont disponibles sur le site du projet sur "
+"http://live-systems.org/. L'utilisation des images précompilées serait "
+"pratique pour faire l'essai initial jusqu'à ce que l'on peut affiner leurs "
+"propres besoins. Si vous avez construit une image live, vous trouverez les "
+"fichiers nécessaires pour webbooting dans le répertoire de construction sous "
+"#{binary/live/}#. Les fichiers sont appelés #{vmlinuz}#, #{initrd.img}# et #"
+"{filesystem.squashfs}#."
 
 #. type: Plain text
 #: en/user_basics.ssi:387
@@ -1468,12 +1472,14 @@ msgid ""
 "It is also possible to extract those files from an already existing iso "
 "image. In order to achieve that, loopback mount the image as follows:"
 msgstr ""
+"Il est également possible d'extraire les fichiers d'une image iso déjà "
+"existant. Pour ce faire, on doit monter l'image comme suit:"
 
 #. type: Plain text
 #: en/user_basics.ssi:391
 #, no-wrap
 msgid " # mount -o loop image.iso /mnt\n"
-msgstr ""
+msgstr " # mount -o loop image.iso /mnt\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:395
@@ -1483,6 +1489,11 @@ msgid ""
 "need to be root to be able to mount the image. However, it has the advantage "
 "that it is easily scriptable and thus, easily automatized."
 msgstr ""
+"Les fichiers se trouvent sous le répertoire #{live/}#. Dans ce cas précis, "
+"il serait #{/mnt/live/}#. Cette méthode présente l'inconvénient que vous "
+"avez besoin d'être root pour pouvoir monter l'image. Cependant, il présente "
+"l'avantage qu'elle est facilement scriptable et ainsi, facilement "
+"automatisée."
 
 #. type: Plain text
 #: en/user_basics.ssi:397
@@ -1494,13 +1505,18 @@ msgid ""
 "one pane and upload the files via ftp in the other pane. Even though this "
 "method requires manual work, it does not require root privileges."
 msgstr ""
+"Mais sans aucun doute, la meilleure façon d'extraire les fichiers d'une "
+"image iso et les télécharger sur le serveur web au même temps, est "
+"d'utiliser le midnight commander ou /{mc}/. Si vous avez le paquet /"
+"{genisoimage}/ installé, le gestionnaire de fichiers à deux panneaux vous "
+"permet de voir le contenu d'un fichier iso dans un panneau et de télécharger "
+"les fichiers via FTP dans l'autre panneau. Même si cette méthode nécessite "
+"un travail manuel, elle ne nécessite pas les privilèges root."
 
 #. type: Plain text
 #: en/user_basics.ssi:399
-#, fuzzy
-#| msgid "3~ At boot time"
 msgid "3~ Booting webboot images"
-msgstr "3~ Pendant le démarrage"
+msgstr "3~ Démarrer images webboot"
 
 #. type: Plain text
 #: en/user_basics.ssi:401
@@ -1509,6 +1525,10 @@ msgid ""
 "hardware here to match the following possible use case which should only be "
 "considered as an example."
 msgstr ""
+"Tandis que certains utilisateurs vont utiliser la virtualisation pour tester "
+"le webbooting, nous utilisons du matériel réel ici pour correspondre au "
+"possible cas d'utilisation suivant qui seulement devrait être considéré "
+"comme un exemple."
 
 #. type: Plain text
 #: en/user_basics.ssi:403
@@ -1520,15 +1540,22 @@ msgid ""
 "it is possible to use the downloaded compressed filesystem like a regular "
 "live system. For example:"
 msgstr ""
+"Afin de démarrer une image webboot il suffit d'avoir les éléments mentionnés "
+"ci-dessus dans une clé usb et installer syslinux comme chargeur de "
+"démarrage. Ensuite, démarrer à partir de la clé usb et taper #{fetch=URL/"
+"CHEMIN/DU/FICHIER}# aux options de démarrage. live-boot va télécharger le "
+"fichier squashfs et le stocker dans la ram. De cette façon, il est possible "
+"d'utiliser le système de fichiers compressé téléchargé comme un système live "
+"ordinaire. Par exemple:"
 
 #. type: Plain text
 #: en/user_basics.ssi:407
 #, no-wrap
 msgid " append boot=live components fetch=http://192.168.2.50/images/webboot/filesystem.squashfs\n"
-msgstr ""
+msgstr " append boot=live components fetch=http://192.168.2.50/images/webboot/filesystem.squashfs\n"
 
 #. type: Plain text
 #: en/user_basics.ssi:410
 #, no-wrap
 msgid "*{Use case:}* You have a web server in which you have stored two squashfs images, one which contains a desktop, like for example gnome, and a rescue one. If you need a graphical environment for one machine, you can plug your usb stick in and webboot the gnome image. If you need rescue tools included in the second type of image, for another machine, you can webboot the rescue one.\n"
-msgstr ""
+msgstr "*{Cas d'utilisation:}* Vous avez un serveur web dans lequel vous avez stocké deux images squashfs, celle qui contient un bureau, comme par exemple gnome, et une d'un système de sauvetage. Si vous avez besoin d'un environnement graphique pour une machine, vous pouvez brancher votre clé usb et télécharger l'image qui contient gnome. Si vous avez besoin des outils de sauvetage inclus dans le deuxième type d'image, pour une autre machine, vous pouvez télécharger celle du système de sauvetage.\n"

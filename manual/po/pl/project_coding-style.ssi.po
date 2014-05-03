@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 4.0~alpha12-1\n"
 "POT-Creation-Date: 2014-04-29 17:04+0300\n"
-"PO-Revision-Date: 2014-04-29 17:04+0300\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2014-05-03 02:50+0100\n"
+"Last-Translator: AreYouLoco? <areyouloco@paranoici.org>\n"
 "Language-Team: none\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -16,6 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #. type: Plain text
 #: en/about_manual.ssi:92 en/about_manual.ssi:100 en/about_manual.ssi:108
@@ -169,22 +170,22 @@ msgstr "}code"
 #. type: Plain text
 #: en/project_coding-style.ssi:2
 msgid ":B~ Coding Style"
-msgstr ""
+msgstr ":B~ Styl Kodowania"
 
 #. type: Plain text
 #: en/project_coding-style.ssi:4
 msgid "1~coding-style Coding Style"
-msgstr ""
+msgstr "1~coding-style Styl Kodowania"
 
 #. type: Plain text
 #: en/project_coding-style.ssi:6
 msgid "This chapter documents the coding style used in live systems."
-msgstr ""
+msgstr "Rozdział ten dokumentuje styl kodowania używany w systemach live."
 
 #. type: Plain text
 #: en/project_coding-style.ssi:8
 msgid "2~ Compatibility"
-msgstr ""
+msgstr "2~ Kompatybilność"
 
 #. type: Plain text
 #: en/project_coding-style.ssi:10
@@ -237,7 +238,7 @@ msgstr ""
 #: en/project_coding-style.ssi:28 en/project_coding-style.ssi:51
 #: en/project_coding-style.ssi:92 en/project_coding-style.ssi:110
 msgid "Bad:"
-msgstr ""
+msgstr "Źle:"
 
 #. type: Plain text
 #: en/project_coding-style.ssi:34
@@ -247,12 +248,15 @@ msgid ""
 "         bar\n"
 " fi\n"
 msgstr ""
+" if foo; then\n"
+"         bar\n"
+" fi\n"
 
 #. type: Plain text
 #: en/project_coding-style.ssi:38 en/project_coding-style.ssi:61
 #: en/project_coding-style.ssi:100 en/project_coding-style.ssi:121
 msgid "Good:"
-msgstr ""
+msgstr "Dobrze:"
 
 #. type: Plain text
 #: en/project_coding-style.ssi:45
@@ -263,6 +267,10 @@ msgid ""
 "         bar\n"
 " fi\n"
 msgstr ""
+" if foo\n"
+" then\n"
+"         bar\n"
+" fi\n"
 
 #. type: Plain text
 #: en/project_coding-style.ssi:49
@@ -277,6 +285,9 @@ msgid ""
 "         bar\n"
 " }\n"
 msgstr ""
+" Foo () {\n"
+"         bar\n"
+" }\n"
 
 #. type: Plain text
 #: en/project_coding-style.ssi:68
@@ -287,16 +298,20 @@ msgid ""
 "         bar\n"
 " }\n"
 msgstr ""
+"Foo ()\n"
+" {\n"
+"         bar\n"
+" }\n"
 
 #. type: Plain text
 #: en/project_coding-style.ssi:72
 msgid "2~ Variables"
-msgstr ""
+msgstr "2~ Zmienne"
 
 #. type: Plain text
 #: en/project_coding-style.ssi:74
 msgid "_* Variables are always in capital letters."
-msgstr ""
+msgstr "_* Zmienne występują zawsze zapisane drukowanymi literami."
 
 #. type: Plain text
 #: en/project_coding-style.ssi:76
@@ -318,8 +333,8 @@ msgstr ""
 #. type: Plain text
 #: en/project_coding-style.ssi:82
 msgid ""
-"_* Variables in connection to a boot parameter in live-config start with #"
-"{LIVE_}#."
+"_* Variables in connection to a boot parameter in live-config start with "
+"#{LIVE_}#."
 msgstr ""
 
 #. type: Plain text
@@ -351,13 +366,13 @@ msgstr ""
 #: en/project_coding-style.ssi:96
 #, no-wrap
 msgid " FOO=bar\n"
-msgstr ""
+msgstr " FOO=bar\n"
 
 #. type: Plain text
 #: en/project_coding-style.ssi:104
 #, no-wrap
 msgid " FOO=\"bar\"\n"
-msgstr ""
+msgstr " FOO=\"bar\"\n"
 
 #. type: Plain text
 #: en/project_coding-style.ssi:108
@@ -373,6 +388,10 @@ msgid ""
 "         foobar\n"
 " fi\n"
 msgstr ""
+" if [ -f \"${FOO}\"/foo/\"${BAR}\"/bar ]\n"
+" then\n"
+"         foobar\n"
+" fi\n"
 
 #. type: Plain text
 #: en/project_coding-style.ssi:128
@@ -383,11 +402,15 @@ msgid ""
 "         foobar\n"
 " fi\n"
 msgstr ""
+" if [ -f \"${FOO}/foo/${BAR}/bar\" ]\n"
+" then\n"
+"         foobar\n"
+" fi\n"
 
 #. type: Plain text
 #: en/project_coding-style.ssi:132
 msgid "2~ Miscellaneous"
-msgstr ""
+msgstr "2~ Różne"
 
 #. type: Plain text
 #: en/project_coding-style.ssi:134
@@ -399,9 +422,9 @@ msgstr ""
 #. type: Plain text
 #: en/project_coding-style.ssi:136
 msgid ""
-"_* Don't use the #{test}# command for comparisons or tests, use \"#{[}#\" \"#"
-"{]}#\" (without \"\"); e.g. \"#{if [ -x /bin/foo ]; ...}#\" and not \"#{if "
-"test -x /bin/foo; ...}#\"."
+"_* Don't use the #{test}# command for comparisons or tests, use \"#{[}#\" "
+"\"#{]}#\" (without \"\"); e.g. \"#{if [ -x /bin/foo ]; ...}#\" and not "
+"\"#{if test -x /bin/foo; ...}#\"."
 msgstr ""
 
 #. type: Plain text

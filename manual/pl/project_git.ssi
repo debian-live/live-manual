@@ -1,11 +1,11 @@
-:B~ Git repositories
+:B~ Repozytorium Git
 
-1~git-repositories Git repositories
+1~git-repositories Repozytorium Git
 
-The list of all the available repositories of the ${project} can be found at
-http://live-systems.org/gitweb/. The project's git URLs have the form:
-#{protocol://live-systems.org/git/repository}#. Thus, in order to clone
-live-manual read-only, launch:
+Lista wszystkich dostępnych repozytoriów dla ${project} można znaleźć na
+stronie http://live-systems.org/gitweb/. Adres URL projektu git ma postać:
+#{protocol://live-systems.org/git/repository}#. Tak więc, w celu sklonowania
+live-manual, uruchom:
 
 code{
 
@@ -13,7 +13,7 @@ code{
 
 }code
 
-Or,
+Lub
 
 code{
 
@@ -21,7 +21,7 @@ code{
 
 }code
 
-Or,
+Lub
 
 code{
 
@@ -29,10 +29,10 @@ code{
 
 }code
 
-The cloning addresses with write permission have the form:
+Adres do sklonowania z uprawnieniami zapisu ma postać:
 #{git@live-systems.org:/repository}#.
 
-So, again, to clone live-manual over ssh you must type:
+A zatem jeszcze raz, aby sklonować live-manual po ssh wpisz:
 
 code{
 
@@ -40,15 +40,15 @@ code{
 
 }code
 
-The git tree is made up of several different branches. The *{debian}* and
-the *{debian-next}* branches are particularly noteworthy because they
-contain the actual work that will eventually be included in each new
-release.
+Drzewo git składa się z wielu różnych gałęzi. Gałęzie, które szczególnie
+wymagają poświęcenia uwagi to *{debian}* i *{debian-next}*, ponieważ
+zawierają one rzeczywistą pracy, które ostatecznie będzie znajdować się w
+każdej nowej wersji.
 
-After cloning any of the existing repositories, you will be on the
-*{debian}* branch. This is appropriate to take a look at the state of the
-project's latest release but before starting work it is crucial to switch to
-the *{debian-next}* branch. To do so:
+Po sklonowaniu każdego z istniejących repozytoriów, będziesz w gałęzi
+*{debian}*. To jest właściwe, aby móc przyjrzeć się stanowi najnowszej
+wersji projektu, ale przed rozpoczęciem pracy ważne jest, aby przejść do
+gałęzi *{debian-next}*. Aby to zrobić:
 
 code{
 
@@ -56,21 +56,22 @@ code{
 
 }code
 
-The *{debian-next}* branch, which is not always fast-forward, is where all
-the changes are committed first before being merged into the *{debian}*
-branch. To make an analogy, it is like a testing ground. If you are working
-on this branch and need to pull, you will have to do a #{git pull --rebase}#
-so that your local modifications are staged while pulling from the server
-and then your changes will be put on top of it all.
+Gałąź *{debian-next}*, która nie zawsze porusza się do przodu, gdzie
+wszystkie zmiany są najpierw wprowadzane przed połączeniem w gałęzi
+*{debian}*. Aby dokonać analogii, to jest jak poligon doświadczalny. Jeśli
+pracujesz w tej branży i potrzebujesz wykonać polecenie pull (wyciągnąć),
+będzie trzeba użyć #{git pull --rebase}#, tak aby lokalne modyfikacje
+zostały zachowane przy wyciąganiu z serwera, a następnie Twoje zmiany
+zostaną wprowadzone na szczycie wszystkich innych.
 
-2~ Handling multiple repositories
+2~ Obsługa wielu repozytoriów
 
-If you intend to clone several of the live systems repositories and want to
-switch to the *{debian-next}* branch right away to check the latest code,
-write a patch or contribute with a translation you ought to know that the
-git server provides a #{mrconfig}# file to ease the handling of multiple
-repositories. In order to use it you need to install the /{mr}/ package and
-after that, launch:
+Jeśli masz zamiar sklonować kilka repozytoriów systemów live i chcesz
+przejść do gałęzi *{debian-next}* od razu aby sprawdzić najnowszy kod,
+napisać poprawkę lub przyczynić się z tłumaczeniem powinieneś wiedzieć, że
+serwer git zapewnia #{mrconfig}#. Plik,który ułatwia obsługę wielu
+repozytoriów. Aby z niego korzystać musisz zainstalować pakiet /{mr}/ a po
+tym, uruchomić:
 
 code{
 
@@ -78,10 +79,10 @@ code{
 
 }code
 
-This command will automatically clone and checkout to the *{debian-next}*
-branch the development repositories of the Debian packages produced by the
-project. These include, among others, the live-images repository, which
-contains the configurations used for the prebuilt images that the project
-publishes for general use. For more information on how to use this
-repository, see {Clone a configuration published via
+Ta komenda automatycznie sklonuje i sprawdzi do gałęzi *{debian-next}*
+repozytorium rozwojowego pakietów Debiana wytworzonych w ramach
+projektu. Należą do nich, między innymi, repozytorium live-images, który
+zawiera konfiguracje, używane do gotowych obrazów, które projekt publikuje
+do ogólnego użytku. Aby uzyskać więcej informacji na temat korzystania z
+tego repozytorium, zobacz {Klonowanie konfiguracji opublikowanej przez
 Git}#clone-configuration-via-git

@@ -26,9 +26,9 @@ code{
 
 }code
 
-or use
+lub użyj
 #{live-config.user-default-groups=audio,cdrom,dip,floppy,video,plugdev,netdev,powerdev,scanner,bluetooth,fuse}#
-as a boot parameter.
+jako parametru startowego.
 
 It is also possible to change the default username "user" and the default
 password "live". If you want to do that for any reason, you can easily
@@ -52,9 +52,9 @@ prefix it accordingly (e.g. 2000-passwd) and add it to
 
 When the live system boots, language is involved in two steps:
 
-_* the locale generation
+_* generowanie plików lokalizacji
 
-_* setting the keyboard configuration
+_* ustawienie konfiguracji klawiatury
 
 The default locale when building a Live system is
 #{locales=en_US.UTF-8}#. To define the locale that should be generated, use
@@ -169,12 +169,12 @@ persistence volumes during boot. It is possible to restrict which types of
 persistence volumes to use by specifying certain boot parameters described
 in the live-boot(7) man page. A persistence volume is any of the following:
 
-_* a partition, identified by its GPT name.
+_* partycja, identyfikowana po nazwie GPT.
 
-_* a filesystem, identified by its filesystem label.
+_* system plików, identyfikowany po etykiecie.
 
-_* an image file located on the root of any readable filesystem (even an
-NTFS partition of a foreign OS), identified by its filename.
+_* plik obrazu zlokalizowany na każdym obsługiwanym systemie plików (nawet
+na partycji NTFS innego systemu), identyfikowany po nazwie pliku.
 
 The volume label for overlays must be #{persistence}# but it will be ignored
 unless it contains in its root a file named #{persistence.conf}# which is
@@ -192,7 +192,8 @@ code{
 
 }code
 
-See also {Using the space left on a USB stick}#using-usb-extra-space.
+Zobacz również {Wykorzystanie przestrzeni pozostałej na nośniku
+USB}#using-usb-extra-space.
 
 If you already have a partition on your device, you could just change the
 label with one of the following:
@@ -238,7 +239,7 @@ code{
 
 Now, reboot into your live medium with the boot parameter "persistence".
 
-3~persistence-conf The persistence.conf file
+3~persistence-conf Plik persistence.conf
 
 A volume with the label #{persistence}# must be configured by means of the
 #{persistence.conf}# file to make arbitrary directories persistent. That
@@ -252,7 +253,7 @@ persistent in an ext4 filesystem on the /dev/sdb1 partition:
 
 code{
 
- # mkfs.ext4 -L persistence /dev/sdb1
+# mkfs.ext4 -L persistence /dev/sdb1
  # mount -t ext4 /dev/sdb1 /mnt
  # echo "/home" >> /mnt/persistence.conf
  # echo "/var/cache/apt" >> /mnt/persistence.conf
@@ -270,7 +271,7 @@ sub-directories) nor #{/}# can be made persistent using custom mounts. As a
 workaround for this limitation you can add #{/ union}# to your
 #{persistence.conf}# file to achieve full persistence.
 
-3~ Using more than one persistence store
+3~ Używanie więcej niż jednego magazynu persistence
 
 There are different methods of using multiple persistence store for
 different use cases. For instance, using several volumes at the same time or

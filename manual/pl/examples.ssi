@@ -1,6 +1,6 @@
-:B~ Examples
+:B~ Przykłady
 
-1~examples Examples
+1~examples Przykłady
 
 This chapter covers example builds for specific use cases with live
 systems. If you are new to building your own live system images, we
@@ -8,7 +8,7 @@ recommend you first look at the three tutorials in sequence, as each one
 teaches new techniques that will help you use and understand the remaining
 examples.
 
-2~using-the-examples Using the examples
+2~using-the-examples Używanie przykładów
 
 To use these examples you need a system to build them on that meets the
 requirements listed in {Requirements}#requirements and has live-build
@@ -32,7 +32,7 @@ code{
 
 }code
 
-2~tutorial-1 Tutorial 1: A default image
+2~tutorial-1 Samouczek 1: Domyślny obraz
 
 *{Use case:}* Create a simple first image, learning the basics of live-build.
 
@@ -40,11 +40,11 @@ In this tutorial, we will build a default ISO hybrid live system image
 containing only base packages (no Xorg) and some live system support
 packages, as a first exercise in using live-build.
 
-You can't get much simpler than this:
+Nie można tego zrobić łatwiej niż tak:
 
 code{
 
- $ mkdir tutorial1 ; cd tutorial1 ; lb init ; lb config
+ $ mkdir samouczek1 ; cd samouczek1 ; lb init ; lb config
 
 }code
 
@@ -69,7 +69,7 @@ or a USB flash device as described in {Burning an ISO image to a physical
 medium}#burning-iso-image and {Copying an ISO hybrid image to a USB
 stick}#copying-iso-hybrid-to-usb, respectively.
 
-2~tutorial-2 Tutorial 2: A web browser utility
+2~tutorial-2 Samouczek 2: Narzędzie przeglądarka
 
 *{Use case:}* Create a web browser utility image, learning how to apply customizations.
 
@@ -78,8 +78,8 @@ utility, serving as an introduction to customizing live system images.
 
 code{
 
- $ mkdir tutorial2
- $ cd tutorial2
+ $ mkdir samouczek2
+ $ cd samouczek2
  $ echo "task-lxde-desktop iceweasel" >> config/package-lists/my.list.chroot
 
 }code
@@ -92,8 +92,8 @@ configuration for the web browser in
 packages for viewing various kinds of web content, but we leave this as an
 exercise for the reader.
 
-Build the image, again as superuser, keeping a log as in {Tutorial
-1}#tutorial-1:
+Zbuduj ponownie obraz jako super-użytkownik, zachowując log jak to opisano w
+{Samouczku 1}#tutorial-1:
 
 code{
 
@@ -101,9 +101,10 @@ code{
 
 }code
 
-Again, verify the image is OK and test, as in {Tutorial 1}#tutorial-1.
+Jeszcze raz, zweryfikuj czy obraz jest OK i przetestuj go jak to opisano w
+{Samouczku 1}#tutorial-1.
 
-2~tutorial-3 Tutorial 3: A personalized image
+2~tutorial-3 Samouczek 3: Spersonalizowany obraz
 
 *{Use case:}* Create a project to build a personalized image, containing your favourite software to take with you on a USB stick wherever you go, and evolving in successive revisions as your needs and preferences change.
 
@@ -114,17 +115,17 @@ configuration in the popular #{git}# version control system. We will also
 use the best practice of autoconfiguration via #{auto}# scripts as described
 in {Managing a configuration}#managing-a-configuration.
 
-3~ First revision
+3~ Pierwsza zmiana
 
 code{
 
- $ mkdir -p tutorial3/auto
- $ cp /usr/share/doc/live-build/examples/auto/* tutorial3/auto/
- $ cd tutorial3
+ $ mkdir -p samouczek3/auto
+ $ cp /usr/share/doc/live-build/examples/auto/* samouczek3/auto/
+ $ cd samouczek3
 
 }code
 
-Edit #{auto/config}# to read as follows:
+Edtuj #{auto/config}# tak, aby zawierał:
 
 code{
 
@@ -146,7 +147,7 @@ code{
 
 }code
 
-Now populate your local package list:
+Teraz uzupełnij swoją lokalną listę pakietów:
 
 code{
 
@@ -161,7 +162,7 @@ much older systems. Third, we have chosen the /{lxde}/ task metapackage to
 give us a minimal desktop. And finally, we have added two initial favourite
 packages: /{iceweasel}/ and /{xchat}/.
 
-Now, build the image:
+A teraz, zbuduj obraz:
 
 code{
 
@@ -185,7 +186,7 @@ code{
 
 }code
 
-3~ Second revision
+3~ Druga zmiana
 
 In this revision, we're going to clean up from the first build, add the
 /{vlc}/ package to our configuration, rebuild, test and commit.
@@ -210,7 +211,7 @@ code{
 
 }code
 
-Build again:
+Zbuduj ponownie:
 
 code{
 
@@ -218,7 +219,7 @@ code{
 
 }code
 
-Test, and when you're satisfied, commit the next revision:
+Przetestuj i jeżeli jesteś usatysfakcjonowany wprowadź następną zmianę:
 
 code{
 
@@ -239,7 +240,7 @@ these simple examples, an almost infinite variety of different images can be
 created. The remaining examples in this section cover several other use
 cases drawn from the collected experiences of users of live systems.
 
-2~ A VNC Kiosk Client
+2~ Kiosk-klient serwera VNC
 
 *{Use case:}* Create an image with live-build to boot directly to a VNC server.
 
@@ -252,7 +253,7 @@ and the second one including /{xorg}/, /{gdm3}/, /{metacity}/ and
 
 code{
 
- $ mkdir vnc-kiosk-client
+$ mkdir vnc-kiosk-client
  $ cd vnc-kiosk-client
  $ lb init
  $ lb config -a i386 -k 686-pae --apt-recommends false
@@ -304,7 +305,7 @@ code{
 
 }code
 
-Build the image:
+Zbuduj obraz:
 
 code{
 
@@ -312,9 +313,9 @@ code{
 
 }code
 
-Enjoy.
+Korzystaj.
 
-2~ A base image for a 128MB USB key
+2~Bazowy obraz dla nośnika USB z 128MB pamięci.
 
 *{Use case:}* Create a default image with some components removed in order to fit on a 128MB USB key with a little space left over to use as you see fit.
 
@@ -344,7 +345,7 @@ code{
 
 }code
 
-Now, build the image in the usual way:
+Teraz, zbuduj obraz w typowy sposób:
 
 code{
 
@@ -371,7 +372,7 @@ installation of a memory tester.
 
 *{Note:}* A minimal system can also be achieved using hooks, like for example the #{stripped.hook.chroot}# hook found in #{/usr/share/doc/live-build/examples/hooks}#. It may shave off additional small amounts of space and produce an image of 62MB. However, it does so by removal of documentation and other files from packages installed on the system. This violates the integrity of those packages and that, as the comment header warns, may have unforeseen consequences. That is why using a minimal /{debootstrap}/ is the recommended way of achieving this goal.
 
-2~ A localized GNOME desktop and installer
+2~ Pulpit GNOME w lokalnym języku oraz instalator
 
 *{Use case:}* Create a GNOME desktop image, localized for Switzerland and including an installer.
 
@@ -391,7 +392,7 @@ code{
 
 }code
 
-Now we can search for the appropriate tasks, first with:
+Teraz możemy rozpocząć wyszukiwanie odpowiedniego zadania. najpierw:
 
 code{
 
@@ -400,8 +401,8 @@ code{
 
 }code
 
-By this command, we discover the task is called, plainly enough, german. Now
-to find the related tasks:
+Dzięki temu poleceniu dowiadujemy się, że zadanie nazywa się po prostu
+german (niemiecki). Teraz aby znaleźć podobne zadania:
 
 code{
 
@@ -420,7 +421,7 @@ list as follows:
 
 code{
 
- $ mkdir live-gnome-ch
+$ mkdir live-gnome-ch
  $ cd live-gnome-ch
  $ lb init
  $ lb config \

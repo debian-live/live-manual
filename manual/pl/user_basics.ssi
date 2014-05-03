@@ -1,6 +1,6 @@
-:B~ The basics
+:B~ Podstawy
 
-1~the-basics The basics
+1~the-basics Podstawy
 
 This chapter contains a brief overview of the build process and instructions
 for using the three most commonly used image types. The most versatile image
@@ -23,7 +23,7 @@ Throughout the chapter, we will often refer to the default filenames
 produced by live-build. If you are {downloading a prebuilt
 image}#downloading-prebuilt-images instead, the actual filenames may vary.
 
-2~what-is-live What is a live system?
+2~what-is-live Co to jest system live?
 
 A live system usually means an operating system booted on a computer from a
 removable medium, such as a CD-ROM or USB stick, or from a network, ready to
@@ -34,7 +34,7 @@ With live systems, it's an operating system, built for one of the supported
 architectures (currently amd64 and i386). It is made from the following
 parts:
 
-_* *{Linux kernel image}*, usually named #{vmlinuz*}#
+_* *{Obraz jądra Linuxa}*, zazwyczaj nazwany #{vmlinuz*}#
 
 _* *{Initial RAM disk image (initrd)}*: a RAM disk set up for the Linux
 boot, containing modules possibly needed to mount the System image and some
@@ -158,7 +158,7 @@ This process can take a while, depending on the speed of your computer and
 your network connection. When it is complete, there should be a
 #{binary.hybrid.iso}# image file, ready to use, in the current directory.
 
-2~using-iso-hybrid Using an ISO hybrid live image
+2~using-iso-hybrid Korzystanie z hybrydowego obrazu ISO live
 
 After either building or downloading an ISO hybrid image, which can be
 obtained at http://www.debian.org/CD/live/, the usual next step is to
@@ -271,7 +271,7 @@ doubt, test your image directly on the hardware.
 Provided you can work within these constraints, survey the available VM
 software and choose one that is suitable for your needs.
 
-3~testing-iso-with-qemu Testing an ISO image with QEMU
+3~testing-iso-with-qemu Testowanie obrazu ISO z użyciem QEMU
 
 The most versatile VM in Debian is QEMU. If your processor has hardware
 support for virtualization, use the /{qemu-kvm}/ package; the /{qemu-kvm}/
@@ -288,7 +288,7 @@ code{
 
 }code
 
-Booting an ISO image is simple:
+Uruchamianie obrazu ISO jest proste:
 
 code{
 
@@ -296,9 +296,9 @@ code{
 
 }code
 
-See the man pages for more details.
+ Zobacz podręczniki man, aby uzyskać więcej szczegółów. 
 
-3~testing-iso-with-virtualbox Testing an ISO image with VirtualBox
+3~testing-iso-with-virtualbox Testowanie obrazu ISO z użyciem VirtualBox'a
 
 In order to test the ISO with /{virtualbox}/:
 
@@ -332,7 +332,7 @@ code{
 
 }code
 
-2~using-hdd-image Building and using an HDD image
+2~using-hdd-image Budowanie i używanie obrazu HDD
 
 Building an HDD image is similar to an ISO hybrid one in all respects except
 you specify #{-b hdd}# and the resulting filename is #{binary.img}# which
@@ -359,7 +359,7 @@ code{
 
 }code
 
-Now build the image with the #{lb build}# command:
+A teraz zbuduj obraz używając polecenia #{lb build}#:
 
 code{
 
@@ -387,7 +387,7 @@ code{
 
 }code
 
-2~building-netboot-image Building a netboot image
+2~building-netboot-image Budowanie obrazu netboot
 
 The following sequence of commands will create a basic netboot image
 containing a default live system without X.org. It is suitable for booting
@@ -426,7 +426,7 @@ and server, respectively, of the NFS server where the filesytem image will
 be located at boot time. Make sure these are set to suitable values for your
 network and server.
 
-Now build the image with the #{lb build}# command:
+A teraz zbuduj obraz używając polecenia #{lb build}#:
 
 code{
 
@@ -449,7 +449,7 @@ in #{tftpboot/}#.
 We must now configure three services on the server to enable netbooting: the
 DHCP server, the TFTP server and the NFS server.
 
-3~ DHCP server
+3~ Serwer DHCP
 
 We must configure our network's DHCP server to be sure to give an IP address
 to the netbooting client system, and to advertise the location of the PXE
@@ -472,7 +472,7 @@ code{
 
  log-facility local7;
 
- subnet 192.168.0.0 netmask 255.255.255.0 {
+subnet 192.168.0.0 netmask 255.255.255.0 {
    range 192.168.0.1 192.168.0.254;
    filename "pxelinux.0";
    next-server 192.168.0.2;
@@ -483,7 +483,7 @@ code{
 
 }code
 
-3~ TFTP server
+3~ Serwer TFTP
 
 This serves the kernel and initial ramdisk to the system at run time.
 
@@ -500,13 +500,13 @@ code{
 
 and fill in the new tftp server directory when being asked about it.
 
-3~ NFS server
+3~ Serwer NFS
 
 Once the guest computer has downloaded and booted a Linux kernel and loaded
 its initrd, it will try to mount the Live filesystem image through a NFS
 server.
 
-You need to install the /{nfs-kernel-server}/ package.
+Musisz zainstalować pakiet /{nfs-kernel-server}/.
 
 Then, make the filesystem image available through NFS by adding a line like
 the following to #{/etc/exports}#:
@@ -541,13 +541,13 @@ To make our life easier, we can use virtualization.
 
 3~ Qemu
 
-_* Install /{qemu}/, /{bridge-utils}/, /{sudo}/.
+_* Zainstaluj /{qemu}/, /{bridge-utils}/, /{sudo}/.
 
-Edit #{/etc/qemu-ifup}#:
+Edytuj #{/etc/qemu-ifup}#:
 
 code{
 
- #!/bin/sh
+#!/bin/sh
  sudo -p "Password for $0:" /sbin/ifconfig $1 172.20.0.1
  echo "Executing /etc/qemu-ifup"
  echo "Bringing up $1 for bridged mode..."
@@ -601,7 +601,7 @@ two-pane file manager allows you to browse the contents of an iso file in
 one pane and upload the files via ftp in the other pane. Even though this
 method requires manual work, it does not require root privileges.
 
-3~ Booting webboot images
+3~ Uruchamianie obrazów webboot
 
 While some users will use virtualization to test webbooting, we use real
 hardware here to match the following possible use case which should only be

@@ -1,13 +1,13 @@
-:B~ Reporting bugs
+:B~ Zgłaszanie błędów
 
-1~bugs Reporting bugs
+1~bugs Zgłaszanie błędów
 
 Live systems are far from being perfect, but we want to make it as close as
 possible to perfect - with your help. Do not hesitate to report a bug. It is
 better to fill a report twice than never. However, this chapter includes
 recommendations on how to file good bug reports.
 
-For the impatient:
+Dla niecierpliwych:
 
 _* Always check first the image status updates on our homepage at
 http://live-systems.org/ for known issues.
@@ -21,7 +21,7 @@ _* Try to give *{as specific information as possible}* about the bug. This
 includes (at least) the version of live-build, live-boot, live-config, and
 live-tools used and the distribution of the live system you are building.
 
-2~ Known issues
+2~ Znane problemy
 
 Since Debian *{testing}* and Debian *{unstable}* distributions are moving
 targets, when you specify either of them as the target system distribution,
@@ -43,47 +43,47 @@ distribution is *{testing}*, try *{unstable}*. If *{unstable}* does not work
 either, revert to *{testing}* and pin the newer version of the failing
 package from *{unstable}* (see {APT pinning}#apt-pinning for details).
 
-2~ Rebuild from scratch
+2~ Przebuduj od zera
 
 To ensure that a particular bug is not caused by an uncleanly built system,
 please always rebuild the whole live system from scratch to see if the bug
 is reproducible.
 
-2~ Use up-to-date packages
+2~ Używaj aktualnych pakietów
 
 Using outdated packages can cause significant problems when trying to
 reproduce (and ultimately fix) your problem. Make sure your build system is
 up-to-date and any packages included in your image are up-to-date as well.
 
-2~collect-information Collect information
+2~collect-information Zbierz potrzebne informacje
 
 Please provide enough information with your report. Include, at least, the
 exact version of live-build where the bug is encountered and the steps to
 reproduce it. Please use your common sense and provide any other relevant
 information if you think that it might help in solving the problem.
 
-To make the most out of your bug report, we require at least the following
-information:
+Aby w pełni wykorzystać Twój raport o błędzie, będziemy potrzebować
+przynajmniej następujących informacji:
 
-_* Architecture of the host system
+_* Architektura systemu hosta
 
-_* Distribution of the host system
+_* Dystrybucja systemu hosta
 
-_* Version of live-build on the host system
+_* Wersja live-build na systemie hosta
 
-_* Version of Python on the host system
+_* Wersja Pythona na systemie hosta
 
-_* Version of /{debootstrap}/ and/or /{cdebootstrap}/ on the host system
+_* Wersja /{debootstrap}/ i/lub /{cdebootstrap}/ na systemie hosta
 
-_* Architecture of the live system
+_* Architektura systemu live
 
-_* Distribution of the live system
+_* Dystrybucja systemu live
 
-_* Version of live-boot on the live system
+_* Wersja live-boot na systemie live
 
-_* Version of live-config on the live system
+_* Wersja live-config na systemie live
 
-_* Version of live-tools on the live system
+_* Wersja live-tools na systemie live
 
 You can generate a log of the build process by using the #{tee}# command. We
 recommend doing this automatically with an #{auto/build}# script (see
@@ -110,7 +110,7 @@ Remember to send in any logs that were produced with English locale
 settings, e.g. run your live-build commands with a leading #{LC_ALL=C}# or
 #{LC_ALL=en_US}#.
 
-2~ Isolate the failing case if possible
+2~ Wyizoluj prawdopodobną wadę, jeśli to możliwe
 
 If possible, isolate the failing case to the smallest possible change that
 breaks. It is not always easy to do this so if you cannot manage it for your
@@ -122,7 +122,7 @@ you have a hard time sorting out which of your changes broke, it may be that
 you are including too much in each change set and should develop in smaller
 increments.
 
-2~ Use the correct package to report the bug against
+2~ Wybierz odpowiedni pakiet dla którego zgłaszasz błąd
 
 If you do not know what component is responsible for the bug or if the bug
 is a general bug concerning live systems, you can fill a bug against the
@@ -131,7 +131,7 @@ debian-live pseudo-package.
 However, we would appreciate it if you try to narrow it down according to
 where the bug appears.
 
-3~ At build time while bootstrapping
+3~ W czasie budowania podczas ładowania początkowego (bootstrapping)
 
 live-build first bootstraps a basic Debian system with /{debootstrap}/ or
 /{cdebootstrap}/. Depending on the bootstrapping tool used and the Debian
@@ -143,7 +143,7 @@ In both cases, this is not a bug in the live system, but rather in Debian
 itself and probably we cannot fix it directly. Please report such a bug
 against the bootstrapping tool or the failing package.
 
-3~ At build time while installing packages
+3~ W czasie budowania podczas instalacji pakietów
 
 live-build installs additional packages from the Debian archive and
 depending on the Debian distribution used and the daily archive state, it
@@ -159,7 +159,7 @@ Also, if you are using a local mirror and/or any sort of proxy and you are
 experiencing a problem, please always reproduce it first by bootstrapping
 from an official mirror.
 
-3~ At boot time
+3~ W czasie uruchamiania
 
 If your image does not boot, please report it to the mailing list together
 with the information requested in {Collect
@@ -169,18 +169,18 @@ are using a virtualization technology of any kind, please always run it on
 real hardware before reporting a bug. Providing a screenshot of the failure
 is also very helpful.
 
-3~ At run time
+3~ W czasie gdy system jest już uruchomiony
 
 If a package was successfully installed, but fails while actually running
 the Live system, this is probably a bug in the live system. However:
 
-2~ Do the research
+2~ Spróbuj wykonać parę kroków
 
-Before filing the bug, please search the web for the particular error
-message or symptom you are getting. As it is highly unlikely that you are
-the only person experiencing a particular problem. There is always a chance
-that it has been discussed elsewhere and a possible solution, patch, or
-workaround has been proposed.
+Przed zgłoszeniem błędu, proszę poszukaj w internecie danego komunikatu o
+błędzie lub objawu jaki otrzymujesz. Ponieważ jest mało prawdopodobne, że
+jesteś jedyną osobą, która zmaga się ze szczególnym problem. Zawsze jest
+szansa, że został on już omówiony w innym miejscu i zaproponowano już
+możliwe rozwiązanie, obejście lub patch.
 
 You should pay particular attention to the live systems mailing list, as
 well as the homepage, as these are likely to contain the most up-to-date
@@ -191,7 +191,7 @@ In addition, you should check the current bug lists for live-build,
 live-boot, live-config and live-tools to see whether something similar has
 already been reported.
 
-2~ Where to report bugs
+2~ Gdzie zgłaszać błędy
 
 The ${project} keeps track of all bugs in the Bug Tracking System (BTS). For
 information on how to use the system, please see

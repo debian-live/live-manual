@@ -1,4 +1,4 @@
-:B~ Managing a configuration
+:B~ Zarządzanie konfiguracją
 
 1~managing-a-configuration Managing a configuration
 
@@ -6,7 +6,7 @@ This chapter explains how to manage a live configuration from initial
 creation, through successive revisions and successive releases of both the
 live-build software and the live image itself.
 
-2~ Dealing with configuration changes
+2~ Radzenie sobie ze zmianami konfiguracji
 
 Live configurations rarely are perfect on the first try. It may be fine to
 pass #{lb config}# options from the command-line to perform a single build,
@@ -14,7 +14,7 @@ but it is more typical to revise those options and build again until you are
 satisfied. To support these changes, you will need auto scripts which ensure
 your configuration is kept in a consistent state.
 
-3~ Why use auto scripts? What do they do?
+3~ Czemu używać automatycznych skryptów? Co one robią?
 
 The #{lb config}# command stores the options you pass to it in #{config/*}#
 files along with many other options set to default values. If you run #{lb
@@ -41,7 +41,7 @@ one revision to the next. Also, it will be much easier for you identify and
 fix options which need to change when you upgrade live-build after reading
 the updated documentation.
 
-3~ Use example auto scripts
+3~ Użyj przykładowych automatycznych skryptów
 
 For your convenience, live-build comes with example auto shell scripts to
 copy and edit. Start a new, default configuration, then copy the examples
@@ -58,7 +58,7 @@ Edit #{auto/config}#, adding any options as you see fit. For instance:
 
 code{
 
- #!/bin/sh
+#!/bin/sh
  lb config noauto \
      --architectures i386 \
      --linux-flavours 686-pae \
@@ -78,7 +78,8 @@ a log of the build will be written by #{auto/build}# in #{build.log}#.
 
 *{Note:}* A special #{noauto}# parameter is used here to suppress another call to #{auto/config}#, thereby preventing infinite recursion. Make sure you don't accidentally remove it when making edits. Also, take care to ensure when you split the #{lb config}# command across multiple lines for readability, as shown in the example above, that you don't forget the backslash (\) at the end of each line that continues to the next.
 
-2~clone-configuration-via-git Clone a configuration published via Git
+2~clone-configuration-via-git Klonowanie konfiguracji opublikowanej przez
+Git
 
 Use the #{lb config --config}# option to clone a Git repository that
 contains a live system configuration. If you would like to base your
@@ -87,8 +88,8 @@ http://live-systems.org/gitweb/ for the repository named #{live-images}# in
 the category #{Packages}#. This repository contains the configurations for
 the live systems {prebuilt images}#downloading-prebuilt-images.
 
-For example, to build a rescue image, use the #{live-images}# repository as
-follows:
+Na przykład, aby zbudować obraz ratunkowy, użyj repozytorium #{live-images}#
+w następujący sposób:
 
 code{
 
@@ -128,5 +129,5 @@ for several images. If you feel like building a different image after you
 have finished with the first one, change to another directory and again and
 optionally, make any changes to suit your needs.
 
-In any case, remember that every time you will have to build the image as
-superuser: #{lb build}#
+W każdym przypadku należy pamiętać, że za każdym razem trzeba będzie budować
+obraz jako super-użytkownik: #{lb build}#

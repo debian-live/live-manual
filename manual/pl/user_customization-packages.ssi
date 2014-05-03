@@ -18,9 +18,9 @@ handy if you use a proxy, want to disable installation of recommended
 packages to save space, or need to control which versions of packages are
 installed via APT pinning, to name a few possibilities.
 
-2~ Package sources
+2~ Źródła pakietu
 
-3~ Distribution, archive areas and mode
+3~ Dystrybucja, działy archiwum i tryb
 
 The distribution you choose has the broadest impact on which packages are
 available to include in your live image. Specify the codename, which
@@ -60,7 +60,7 @@ behaviour to suit the derivatives.
 
 *{Note:}* The projects for whom these modes were added are primarily responsible for supporting users of these options. The ${project}, in turn, provides development support on a best-effort basis only, based on feedback from the derivative projects as we do not develop or support these derivatives ourselves.
 
-3~ Distribution mirrors
+3~ Serwery lustrzane dystrybucji
 
 The Debian archive is replicated across a large network of mirrors around
 the world so that people in each region can choose a nearby mirror for best
@@ -91,7 +91,7 @@ code{
 The chroot mirror, specified by #{--mirror-chroot}#, defaults to the
 #{--mirror-bootstrap}# value.
 
-3~ Distribution mirrors used at run time
+3~ Serwery lustrzane dystrybucji użyte podczas uruchomienia
 
 The #{--mirror-binary*}# options govern the distribution mirrors placed in
 the binary image. These may be used to install additional packages while
@@ -111,7 +111,7 @@ code{
 
 }code
 
-3~additional-repositories Additional repositories
+3~additional-repositories Dodatkowe repozytoria
 
 You may add more repositories, broadening your package choices beyond what
 is available in your target distribution. These may be, for example, for
@@ -135,7 +135,7 @@ If you add the same line to #{config/archives/live.list.binary}#, the
 repository will be added to your live system's #{/etc/apt/sources.list.d/}#
 directory.
 
-If such files exist, they will be picked up automatically.
+Jeżeli takie pliki istnieją to zostaną wybrane automatycznie.
 
 You should also put the GPG key used to sign the repository into
 #{config/archives/your-repository.key.{binary,chroot}}# files.
@@ -145,7 +145,7 @@ placed in #{config/archives/your-repository.pref.{binary,chroot}}# files and
 will be automatically added to your live system's
 #{/etc/apt/preferences.d/}# directory.
 
-2~choosing-packages-to-install Choosing packages to install
+2~choosing-packages-to-install Wybieranie pakietów do instalacji
 
 There are a number of ways to choose which packages live-build will install
 in your image, covering a variety of different needs. You can simply name
@@ -155,7 +155,7 @@ fields. And finally, you may place package files in your #{config/}# tree,
 which is well suited to testing of new or experimental packages before they
 are available from a repository.
 
-3~package-lists Package lists
+3~package-lists Lista pakietów
 
 Package lists are a powerful way of expressing which packages should be
 installed. The list syntax supports conditional sections which makes it easy
@@ -164,7 +164,7 @@ names may also be injected into the list using shell helpers at build time.
 
 *{Note:}* The behaviour of live-build when specifying a package that does not exist is determined by your choice of APT utility. See {Choosing apt or aptitude}#choosing-apt-or-aptitude for more details.
 
-3~using-metapackages Using metapackages
+3~using-metapackages Używanie metapakietów
 
 The simplest way to populate your package list is to use a task metapackage
 maintained by your distribution. For example:
@@ -208,7 +208,7 @@ code{
 
 }code
 
-3~ Local package lists
+3~ Lokalna lista pakietów
 
 Whether you list metapackages, individual packages, or a combination of
 both, all local package lists are stored in #{config/package-lists/}#. Since
@@ -225,7 +225,7 @@ or #{.binary}# to indicate which stage the list is for.
 
 *{Note:}* If you don't specify the stage suffix, the list will be used for both stages. Normally, you want to specify #{.list.chroot}# so that the packages will only be installed in the live filesystem and not have an extra copy of the #{.deb}# placed on the medium.
 
-3~ Local binary package lists
+3~ Lokalna lista pakietów binarnych
 
 To make a binary stage list, place a file suffixed with #{.list.binary}# in
 #{config/package-lists/}#. These packages are not installed in the live
@@ -234,7 +234,7 @@ typically use such a list with one of the non-live installer variants. As
 mentioned above, if you want this list to be the same as your chroot stage
 list, simply use the #{.list}# suffix by itself.
 
-3~generated-package-lists Generated package lists
+3~generated-package-lists Wygenerowana lista pakietów
 
 It sometimes happens that the best way to compose a list is to generate it
 with a script. Any line starting with an exclamation point indicates a
@@ -304,7 +304,7 @@ The nesting of conditionals is not supported.
 
 % FIXME:
 
-3~ Removing packages at install time
+3~ usuwanie pakietu podczas instalacji
 
 You can list packages in files with #{.list.chroot_live}# and
 #{.list.chroot_install}# suffixes inside the #{config/package-lists}#
@@ -597,7 +597,7 @@ might want to create a #{config/apt/apt.conf}# file instead. See also the
 other #{apt-*}# options for a few convenient shortcuts for frequently needed
 options.
 
-3~apt-pinning APT pinning
+3~apt-pinning Pinning APT
 
 For background, please first read the #{apt_preferences(5)}# man page. APT
 pinning can be configured either for build time, or else for run time. For

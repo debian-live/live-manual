@@ -14,7 +14,7 @@ sed -i  -e "s|^ :published:.*$| :published: ${YEAR}-${MONTH}-${DAY}|" \
 en/live-manual.ssm
 
 # European date format
-for _LANGUAGE in ca de es fr it ro
+for _LANGUAGE in ca de es fr it pl ro
 do
 	if [ -e po/${_LANGUAGE}/live-manual.ssm.po ]
 	then

@@ -191,3 +191,99 @@ One possible use case: If you wish to store the user data i.e. #{/home}# and the
 If a user would need multiple persistence store of the same type for different locations or testing, such as #{private}# and #{work}#, the boot parameter #{persistence-label}# used in conjunction with the boot parameter #{persistence}# will allow for multiple but unique persistence media. An example would be if a user wanted to use a persistence partition labeled #{private}# for personal data like browser bookmarks or other types, they would use the boot parameters: #{persistence}# #{persistence-label=private}#. And to store work related data, like documents, research projects or other types, they would use the boot parameters: #{persistence}# #{persistence-label=work}#.
 
 It is important to remember that each of these volumes, #{private}# and #{work}#, also needs a #{persistence.conf}# file in its root. The live-boot man page contains more information about how to use these labels with legacy names.
+
+2~ Using persistence with encryption
+
+Using the persistence feature means that some sensible data might get exposed to risk. Especially if the persistent data is stored on a portable device such as a usb stick or an external hard drive. That is when encryption comes in handy. Even if the entire procedure might seem complicated because of the number of steps to be taken, it is really easy to handle encrypted partitions with live-boot. In order to use *{luks}*, which is the supported encryption type, you need to install /{cryptsetup}/ both on the machine you are creating the encrypted partition with and also in the live system you are going to use the encrypted persistent partition with.
+
+To install /{cryptsetup}/ on your machine:
+
+code{
+
+ # apt-get install cryptsetup
+
+}code
+
+To install /{cryptsetup}/ in your live system, add it to your package-lists:
+
+code{
+
+ $ echo "cryptsetup" > config/package-lists/encryption.list.chroot
+
+}code
+
+Once you have your live system with /{cryptsetup}/, you basically only need to create a new partition, encrypt it and boot with the #{persistence}# and #{persistence-encryption=luks}# parameters. We could have already anticipated this step and added the boot parameters at build time following the usual procedure:
+
+code{
+
+ $ lb config --bootappend-live "boot=live components persistence persistence-encryption=luks"
+
+}code
+
+Let's go into the details for all of those who are not familiar with encryption. In the following example we are going to use a partition on a usb stick which corresponds to #{/dev/sdc2}#. Please be warned that you need to determine which partition is the one you are going to use in your specific case.
+
+The first step is plugging in your usb stick and determine which device it is. The recommended method of listing devices in live-manual is using #{ls -l /dev/disk/by-id}#. After that, create a new partition and then, encrypt it with a passphrase as follows:
+
+code{
+
+ # cryptsetup --verify-passphrase luksFormat /dev/sdc2
+
+}code
+
+Then open the luks partition in the virtual device mapper. Use any name you like. We use *{live}* here as an example:
+
+code{
+
+ # cryptsetup luksOpen /dev/sdc2 live
+
+}code
+
+The next step is filling the device with zeros before creating the filesystem:
+
+code{
+
+ # dd if=/dev/zero of=/dev/mapper/live
+
+}code
+
+Now, we are ready to create the filesystem. Notice that we are adding the label #{persistence}# so that the device is mounted as persistence store at boot time.
+
+code{
+
+ # mkfs.ext4 -L persistence /dev/mapper/live
+
+}code
+
+To continue with our setup, we need to mount the device, for example in #{/mnt}#.
+
+code{
+
+ # mount /dev/mapper/live /mnt
+
+}code
+
+And create the #{persistence.conf}# file in the root of the partition. This is, as explained before, strictly necessary. See {The persistence.conf file}#persistence-conf. 
+
+code{
+
+ # echo "/ union" > /mnt/persistence.conf
+
+}code
+
+Then unmount the mount point:
+
+code{
+
+ # umount /mnt
+
+}code
+
+And optionally, although it might be a good way of securing the data we have just added to the partition, we can close the device: 
+
+code{
+
+ # cryptsetup luksClose live
+
+}code
+
+Let's summarize the process. So far, we have created an encryption capable live system, which can be copied to a usb stick as explained in {Copying an ISO hybrid image to a USB stick}#copying-iso-hybrid-to-usb. We have also created an encrypted partition, which can be located in the same usb stick to carry it around and we have configured the encrypted partition to be used as persistence store. So now, we only need to boot the live system. At boot time, live-boot will prompt us for the passphrase and will mount the encrypted partition to be used for persistence.

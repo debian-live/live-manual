@@ -339,19 +339,20 @@ página de manual de live-boot contiene más información acerca de cómo
 utilizar estas etiquetas con los antiguos nombres que se utilizaban en
 anteriores versiones.
 
-2~ Using persistence with encryption
+2~ Utilizar persistencia con cifrado
 
-Using the persistence feature means that some sensible data might get
-exposed to risk. Especially if the persistent data is stored on a portable
-device such as a usb stick or an external hard drive. That is when
-encryption comes in handy. Even if the entire procedure might seem
-complicated because of the number of steps to be taken, it is really easy to
-handle encrypted partitions with live-boot. In order to use *{luks}*, which
-is the supported encryption type, you need to install /{cryptsetup}/ both on
-the machine you are creating the encrypted partition with and also in the
-live system you are going to use the encrypted persistent partition with.
+Utilizar la persistencia significa que algunos datos sensibles pueden estar
+expuestos a riesgo. Especialmente si los datos persistentes se almacenan en
+un dispositivo portable, como una memoria USB o un disco duro externo. Es
+entonces cuando el cifrado cobra sentido. Incluso aunque todo el
+procedimiento puede parecer complicado debido a la cantidad de pasos que hay
+que hacer, es muy fácil manejar particiones cifradas con live-boot. Para
+utilizar *{luks}*, que es el tipo de cifrado soportado, se necesita instalar
+/{cryptsetup}/ tanto en la máquina que va a crear la partición cifrada como
+en el sistema en vivo con que se va a utilizar la partición persistente
+cifrada.
 
-To install /{cryptsetup}/ on your machine:
+Para instalar /{cryptsetup}/ en nuestra máquina:
 
 code{
 
@@ -359,7 +360,8 @@ code{
 
 }code
 
-To install /{cryptsetup}/ in your live system, add it to your package-lists:
+Para instalar /{cryptsetup}/ en nuestro sistema en vivo, lo añadimos a una
+package-lists:
 
 code{
 
@@ -367,11 +369,11 @@ code{
 
 }code
 
-Once you have your live system with /{cryptsetup}/, you basically only need
-to create a new partition, encrypt it and boot with the #{persistence}# and
-#{persistence-encryption=luks}# parameters. We could have already
-anticipated this step and added the boot parameters at build time following
-the usual procedure:
+Una vez se tiene el sistema en vivo con /{cryptsetup}/, básicamente, sólo se
+necesita crear una nueva partición, cifrarla y arrancar con los parámetros
+#{persistence}# y #{persistence-encryption=luks}#. Podríamos habernos
+anticipado a este paso y añadir esos parámetros de arranque en tiempo de
+construcción, siguiendo el procedimiento habitual:
 
 code{
 
@@ -379,16 +381,17 @@ code{
 
 }code
 
-Let's go into the details for all of those who are not familiar with
-encryption. In the following example we are going to use a partition on a
-usb stick which corresponds to #{/dev/sdc2}#. Please be warned that you need
-to determine which partition is the one you are going to use in your
-specific case.
+Vamos a entrar en detalles para quien que no esté familiarizado con el
+cifrado. En el siguiente ejemplo vamos a utilizar una partición en un
+dispositivo usb que corresponde a #{/dev/sdc2}#. Tener en cuenta que es
+necesario determinar qué partición es la que se va a utilizar en cada caso
+específico.
 
-The first step is plugging in your usb stick and determine which device it
-is. The recommended method of listing devices in live-manual is using #{ls
--l /dev/disk/by-id}#. After that, create a new partition and then, encrypt
-it with a passphrase as follows:
+El primer paso es conectar la memoria usb y determinar de qué dispositivo se
+trata. El método recomendado para los dispositivos en live-manual es
+utilizando #{ls -l /dev/disk/by-id}#. Después de eso, crear una nueva
+partición y, a continuación, cifrarla con una frase de contraseña de la
+siguiente manera:
 
 code{
 
@@ -396,8 +399,9 @@ code{
 
 }code
 
-Then open the luks partition in the virtual device mapper. Use any name you
-like. We use *{live}* here as an example:
+A continuación, abrir la partición luks en el mapeador de dispositivos
+virtuales. Se puede utilizar cualquier nombre que se desee. Aquí utilizamos
+*{live}* como ejemplo:
 
 code{
 
@@ -405,8 +409,8 @@ code{
 
 }code
 
-The next step is filling the device with zeros before creating the
-filesystem:
+El siguiente paso es llenar el dispositivo con ceros antes de crear el
+sistema de ficheros:
 
 code{
 
@@ -414,9 +418,9 @@ code{
 
 }code
 
-Now, we are ready to create the filesystem. Notice that we are adding the
-label #{persistence}# so that the device is mounted as persistence store at
-boot time.
+Ahora, estamos listos para crear el sistema de ficheros. Nótese que estamos
+añadiendo la etiqueta #{persistence}# para que el dispositivo se monte como
+almacén de persistencia durante el arranque.
 
 code{
 
@@ -424,8 +428,8 @@ code{
 
 }code
 
-To continue with our setup, we need to mount the device, for example in
-#{/mnt}#.
+Para continuar con nuestra configuración, necesitamos montar el dispositivo,
+por ejemplo, en #{/mnt}#.
 
 code{
 
@@ -433,9 +437,9 @@ code{
 
 }code
 
-And create the #{persistence.conf}# file in the root of the partition. This
-is, as explained before, strictly necessary. See {The persistence.conf
-file}#persistence-conf.
+Y crear el fichero #{persistence.conf}# en la raíz de la partición. Esto es,
+como se ha explicado antes, estrictamente necesario. Ver {El fichero
+persistence.conf}#persistence-conf.
 
 code{
 
@@ -443,7 +447,7 @@ code{
 
 }code
 
-Then unmount the mount point:
+Entonces, desmontar el punto de montaje:
 
 code{
 
@@ -451,8 +455,8 @@ code{
 
 }code
 
-And optionally, although it might be a good way of securing the data we have
-just added to the partition, we can close the device:
+Y opcionalmente, aunque puede ser una buena manera de salvaguardar los datos
+que acabamos de agregar a la partición, podemos cerrar el dispositivo:
 
 code{
 
@@ -460,11 +464,13 @@ code{
 
 }code
 
-Let's summarize the process. So far, we have created an encryption capable
-live system, which can be copied to a usb stick as explained in {Copying an
-ISO hybrid image to a USB stick}#copying-iso-hybrid-to-usb. We have also
-created an encrypted partition, which can be located in the same usb stick
-to carry it around and we have configured the encrypted partition to be used
-as persistence store. So now, we only need to boot the live system. At boot
-time, live-boot will prompt us for the passphrase and will mount the
-encrypted partition to be used for persistence.
+Vamos a resumir el proceso. Hasta ahora, hemos creado un sistema vivo capaz
+de utilizar el cifrado, que se puede copiar en una memoria usb como se
+explica en {Copiar una imagen ISO híbrida en un dispositivo
+USB}#copying-iso-hybrid-to-usb. También hemos creado una partición cifrada,
+que se puede crear en la misma memoria usb para llevarla a todas partes y
+hemos configurado la partición cifrada para ser utilizada como almacén de
+persistencia. Así que ahora, sólo tenemos que arrancar el sistema en
+vivo. En el momento del arranque, live-boot nos preguntará la frase de
+contraseña y montará la partición cifrada para ser utilizada para la
+persistencia.

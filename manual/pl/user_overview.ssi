@@ -10,62 +10,63 @@ systemów live: live-build, live-boot i live-config.
 Iive-build to zbiór skryptów do budowania systemów live. Skrypty te są
 również określane jako "polecenia".
 
-The idea behind live-build is to be a framework that uses a configuration
-directory to completely automate and customize all aspects of building a
-Live image.
+Pomysłem stojącym za live-build jest bycie oprawą, która używa struktury
+katalogów jako konfiguracji, aby całkowicie zautomatyzować i dostosować
+wszystkie aspekty budowania obrazu live.
 
 Wiele pojęć jest podobnych do tych używanych do budowania pakietów Debiana z
 użyciem /{debhelper}/'a:
 
-_* The scripts have a central location for configuring their operation. In
-/{debhelper}/, this is the #{debian/}# subdirectory of a package tree. For
-example, dh_install will look, among others, for a file called
-#{debian/install}# to determine which files should exist in a particular
-binary package. In much the same way, live-build stores its configuration
-entirely under a #{config/}# subdirectory.
+_* Skrypty posiada centralną lokalizację dla konfiguracji ich działania. Dla
+/{debhelper}/'a jest to podkatalog drzewa pakietów #{debian/}#. Na przykład,
+dh_install będzie szukać, spośród innych, pliku o nazwie #{debian/install}#
+do określenia, które pliki powinny zawierać się w określonym pakiecie
+binarnym. W taki sam sposób, live-build przechowuje swoją konfigurację w
+całości w podkatalogu #{config/}#.
 
 _* Skrypty są niezależne - to znaczy, że zawsze jest bezpieczne uruchomienie
 poszczególnych poleceń.
 
-Unlike /{debhelper}/, live-build provides the tools to generate a skeleton
-configuration directory. This could be considered to be similar to tools
-such as /{dh-make}/. For more information about these tools, read on, since
-the remainder of this section discuses the four most important
-commands. Note that the preceding #{lb}# is a generic wrapper for live-build
-commands.
+W przeciwieństwie do /{debhelpera}/, live-build zapewnia narzędzia do
+generowania szkieletu katalogów konfiguracyjnych. Może to być uznane za
+podobne do narzędzi takich jak /{dh-make}/. Aby uzyskać więcej informacji na
+temat tych narzędzi, kontynuuj czytanie, ponieważ pozostała część tego
+rozdziału omawia cztery najważniejsze polecenia. Należy zauważyć, że głównym
+wrapperem dla polecenia live-build jest #{lb}#.
 
-_* *{lb init}*: Responsible for initializing a Live system configuration
-directory. See {The lb init command}#lb-init for more information.
+_* *{lb init}*: Odpowiedzialny za inicjowanie katalogu konfiguracji systemu
+live. Zobacz {polecenie lb init}#lb-init, aby uzyskać więcej informacji.
 
-_* *{lb config}*: Responsible for applying a configuration on top of an
-already initialized configuration directory. See {The lb config
-command}#lb-config for more information.
+_* *{lb config}*: Odpowiedzialny za zastosowywanie konfiguracji na szczycie
+już zainicjowanego katalogu konfiguracyjnego. Zobacz {polecenie lb
+config}#lb-config, aby uzyskać więcej informacji.
 
-_* *{lb build}*: Responsible for starting a Live system build. See {The lb
-build command}#lb-build for more information.
+_* *{lb build}*: Odpowiedzialny za rozpoczęcie kompilacji systemu
+live. Zobacz {polecenie lb build}#lb-build aby uzyskać więcej informacji.
 
 _* *{lb clean}*: Odpowiedzialny za czyszczenie kompilacji systemu
-live. Zobacz {Polecenie lb clean}#lb-clean aby uzyskać więcej informacji.
+live. Zobacz {polecenie lb clean}#lb-clean aby uzyskać więcej informacji.
 
 3~lb-init Polecenie #{lb init}#
 
-As discussed in {live-build}#live-build, the scripts that make up live-build
-read their configuration with the #{source}# command from a single directory
-named #{config/}#. As constructing this directory by hand would be
-time-consuming and error-prone, the #{lb init}# command can be used to
-create the initial skeleton configuration tree.
+Jak omówiono w {live-build}#live-build, skrypty, które składają się na
+live-build czytają swoją konfigurację przy użyciu polecenia #{source}# z
+katalogu o nazwie #{config/}#. Budowanie tego katalogu ręcznie byłoby
+czasochłonne i podatne na błędy, polecenie #{lb init}# może być używane do
+tworzenia początkowej konfiguracji drzewa katalogów.
 
-The #{lb init}# command creates the following directories inside
-#{config/}#: #{hooks/}#, #{includes/}#, several other includes
-subdirectories for each stage of the build process and
-#{package-lists/}#. The latter includes a list of several important live
-packages like live-boot, live-config and live-config-sysvinit.
+Polecenie #{lb init}# tworzy następujące katalogi wewnątrz #{config/}#:
+#{hooks/}#, #{includes/}#, kilka innych zawierających podkatalogi dla
+każdego etapu procesu budowania i #{package-lists/}#. Ten ostatni zawiera
+listę kilku ważnych pakietów live, takich jak live-boot, live-config i
+live-config-sysvinit.
 
 3~lb-config Polecenie #{lb config}#
 
-Issuing #{lb config}# without any arguments completes the #{config/}#
-subdirectory which it populates with some default settings in configuration
-files, and two skeleton trees named #{auto/}# and #{local/}#.
+Wykonanie #{lb config}# bez żadnych argumentów zakończa się utworzeniem
+podkatalogu #{config}#, w którym zapisane są niektóre domyślne ustawienia w
+plikach konfiguracyjnych, a dwa szkielety drzew o nazwie #{auto/}# i
+​​#{local/}#.
 
 code{
 
@@ -75,10 +76,7 @@ code{
 
 }code
 
-Using #{lb config}# without any arguments would be suitable for users who
-need a very basic image, or who intend to provide a more complete
-configuration via #{auto/config}# later (see {Managing a
-configuration}#managing-a-configuration for details).
+2~ Wcięcia
 
 Normalnie, pewnie będziesz chciał określić niektóre opcje. Na przykład, aby
 określić, którą dystrybucję chcesz zbudować użyj jej nazwy kodowej:

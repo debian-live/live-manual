@@ -6,22 +6,22 @@ Rozdział ten dokumentuje styl kodowania używany w systemach live.
 
 2~ Kompatybilność
 
-_* Don't use syntax or semantics that are unique to the Bash shell. For
-example, the use of array constructs.
+_* Nie wolno używać składni lub semantyki, które jest unikalne dla basha. Na
+przykład, użycie układu konstrukcji.
 
-_* Only use the POSIX subset - for example, use $(foo) over `foo`.
+_* Nie używaj podzbiorów POSIX'a - na przykład, używaj $(foo) zamiast`foo`.
 
-_* You can check your scripts with 'sh -n' and 'checkbashisms'.
+_* Możesz sprawdzić swoje skrypty używając 'sh -n' i 'checkbashisms'.
 
-_* Make sure all shell code runs with 'set -e'.
+_* Upewnij się, że cały kod powłoki działa z 'set-e'.
 
-2~ Indenting
+2~ Wcięcia
 
-_* Always use tabs over spaces.
+_* Zawsze używaj tabulatorów zamiast spacji.
 
-2~ Wrapping
+2~ Zawijanie
 
-_* Generally, lines are 80 chars at maximum.
+_* Generalnie linie mają maksymalnie 80 znaków.
 
 _* Używaj zakończeń lini "typowych dla Linuxa":
 
@@ -46,7 +46,7 @@ code{
 
 }code
 
-_* The same holds for functions:
+_* To samo dotyczy funkcji:
 
 Źle:
 
@@ -73,25 +73,27 @@ Foo ()
 
 _* Zmienne występują zawsze zapisane drukowanymi literami.
 
-_* Variables used in live-build always start with #{LB_}# prefix.
+_* Zmienne wykorzystane w live-build zawsze zaczynają się przedroskiem
+#{LB_}#.
 
-_* Internal temporary variables in live-build should start with the
-#{\_LB_}# prefix.
+_* Wewnętrzne tymczasowe zmienne w live-build należy rozpocząć od
+przedrostka #{\_LB_}#.
 
-_* Local variables start with live-build #{\_\_LB_}# prefix.
+_* Lokalne zmienne zaczynają się przedrostkiem live-build'a #{\_\_LB_}#.
 
-_* Variables in connection to a boot parameter in live-config start with
+_* Zmienne dotyczące parametrów startowych live-config zaczynają się od
 #{LIVE_}#.
 
-_* All other variables in live-config start with #{_}# prefix.
+_* Wszystkie inne zmienne w live-config zacznij przedroskiem #{_}#.
 
-_* Use braces around variables; e.g. write #{${FOO}}# instead of #{$FOO}#.
+_* Używaj nawiasów wokół zmiennych; na przykład napisz #{${FOO}}# zamiast
+#{$FOO}#.
 
-_* Always protect variables with quotes to respect potential whitespaces:
-write #{"${FOO}"}# not #{${FOO}}#.
+_* Zawsze chroń zmienne znakami cytatu do zachowania potencjalnych białych
+znaków: napisz #{"${FOO}"}#, a nie #{${FOO}}#.
 
-_* For consistency reasons, always use quotes when assigning values to
-variables:
+_ * Dla zachowania spójności, należy zawsze używać znaków cytatu podczas
+przypisywania wartości do zmiennych:
 
 Źle:
 
@@ -109,7 +111,7 @@ code{
 
 }code
 
-_* If multiple variables are used, quote the full expression:
+_* Jeśli zastosowane jest wiele zmiennych, przytocz całe wyrażenie:
 
 Źle:
 
@@ -135,15 +137,15 @@ code{
 
 2~ Różne
 
-_* Use "#{|}#" (without the surround quotes) as a separator in calls to sed,
-e.g. "#{sed -e 's|foo|bar|'}#" (without "").
+_* Używaj "#{|}#" (bez otaczających wyrażenie znaków cytatu) jako
+rozdzielacz w zapytania do sed'a, np. "#{sed -e 's|foo|bar|'}#" (bez "").
 
-_* Don't use the #{test}# command for comparisons or tests, use "#{[}#"
-"#{]}#" (without ""); e.g. "#{if [ -x /bin/foo ]; ...}#" and not "#{if test
--x /bin/foo; ...}#".
+_* Nie używaj komendy #{test}# dla porównań i testów, użyj "#{[}#" "#{]}#"
+(bez ""); np. "#{if [ -x /bin/foo ]; ...}#" a nie "#{if test -x /bin/foo;
+...}#".
 
-_* Use #{case}# wherever possible over #{test}#, as it's easier to read and
-faster in execution.
+_ * Użyj #{case}# gdzie to jest możliwe zamiast #{test}#, jest to łatwiejsze
+do odczytania i szybsze w wykonaniu.
 
-_* Use capitalized names for functions to limit messing with the users
-environment.
+_* Użyj nazw funkcji pisanych wielkimi literami, aby ograniczyć niepożądane
+działanie e środowisku użytkownika.

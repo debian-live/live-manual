@@ -34,7 +34,7 @@ code{
 
 2~tutorial-1 Samouczek 1: Domyślny obraz
 
-*{Use case:}* Create a simple first image, learning the basics of live-build.
+*{Przykład użycia:}* Stwórz pierwszy prosty obraz aby nauczyć się podstaw live-build.
 
 In this tutorial, we will build a default ISO hybrid live system image
 containing only base packages (no Xorg) and some live system support
@@ -52,7 +52,8 @@ Examine the contents of the #{config/}# directory if you wish. You will see
 stored here a skeletal configuration, ready to customize or, in this case,
 use immediately to build a default image.
 
-Now, as superuser, build the image, saving a log as you build with #{tee}#.
+A teraz jako super-użytkownik, zbuduj obraz zapisując przy tym log podczas
+budowania używając #{tee}#.
 
 code{
 
@@ -71,7 +72,7 @@ stick}#copying-iso-hybrid-to-usb, respectively.
 
 2~tutorial-2 Samouczek 2: Narzędzie przeglądarka
 
-*{Use case:}* Create a web browser utility image, learning how to apply customizations.
+*{Przykład użycia:}* Stwórz obraz z przeglądarką internetową, ucząc się jak wprowadzać modyfikacje.
 
 In this tutorial, we will create an image suitable for use as a web browser
 utility, serving as an introduction to customizing live system images.
@@ -106,7 +107,7 @@ Jeszcze raz, zweryfikuj czy obraz jest OK i przetestuj go jak to opisano w
 
 2~tutorial-3 Samouczek 3: Spersonalizowany obraz
 
-*{Use case:}* Create a project to build a personalized image, containing your favourite software to take with you on a USB stick wherever you go, and evolving in successive revisions as your needs and preferences change.
+*{Przykład użycia:}* Stwórz projekt spersonalizowanego obrazu zawierającego twoje ulubione oprogramowanie tak abyś mógł go zabrać ze sobą gdziekolwiek pójdziesz i zapisujący sukcesywnie zmiany, kiedy tego potrzebujesz oraz zmiany w konfiguracji.
 
 Since we will be changing our personalized image over a number of revisions,
 and we want to track those changes, trying things experimentally and
@@ -138,8 +139,8 @@ code{
 
 }code
 
-Perform #{lb config}# to generate the config tree, using the #{auto/config}#
-script you just created:
+Wykonaj #{lb config}# aby wygenerować drzewo konfiguracyjne, używając
+właśnie utworzonego skryptu w #{auto/config}#:
 
 code{
 
@@ -170,12 +171,14 @@ code{
 
 }code
 
-Note that unlike in the first two tutorials, we no longer have to type
-#{2>&1 | tee build.log}# as that is now included in #{auto/build}#.
+Należy zauważyć, że w przeciwieństwie do dwóch pierwszych samouczków, nie
+musimy już wpisywać #{2>&1 | tee build.log}# bo jest to obecnie zawarte w
+#{auto/build}#.
 
-Once you've tested the image (as in {Tutorial 1}#tutorial-1) and are
-satisfied it works, it's time to initialize our #{git}# repository, adding
-only the auto scripts we just created, and then make the first commit:
+Po tym jak przetestowaliśmy obraz (jak to jest w {Samouczku 1}#tutorial-1) i
+jesteśmy zadowoleni, że działa, to jest to czas, aby zainicjować nasze
+repozytorium #{git}#, dodając tylko automatyczne skrypty przed chwilą
+stworzone, a następnie dokonać pierwszych zmian:
 
 code{
 
@@ -188,13 +191,15 @@ code{
 
 3~ Druga zmiana
 
-In this revision, we're going to clean up from the first build, add the
-/{vlc}/ package to our configuration, rebuild, test and commit.
+W tej zmianie, będziemy sprzątać nasz pierwszy zbudowany obrazu, dodawać
+pakiet /{vlc}/ do naszej konfiguracji, budować ponownie, testować i
+potwierdzać zmiany.
 
-The #{lb clean}# command will clean up all generated files from the previous
-build except for the cache, which saves having to re-download packages. This
-ensures that the subsequent #{lb build}# will re-run all stages to
-regenerate the files from our new configuration.
+Polecenie #{lb clean}# oczyści wszystkie wygenerowane pliki z poprzedniej
+kompilacji z wyjątkiem pamięci podręcznej (cache), co oszczędza konieczności
+ponownego pobierania pakietów. To gwarantuje, że kolejne polecenie #{lb
+build}# ponownie uruchomić wszystkie etapy regeneracji pliki z naszej nowej
+konfiguracji.
 
 code{
 
@@ -202,8 +207,8 @@ code{
 
 }code
 
-Now append the /{vlc}/ package to our local package list in
-#{config/package-lists/my.list.chroot}#:
+Teraz dołączpakiet  /{vlc}/ do naszej lokalnej listy pakietów w
+#{config/package-list/my.list.chroot}#:
 
 code{
 
@@ -227,22 +232,24 @@ code{
 
 }code
 
-Of course, more complicated changes to the configuration are possible,
-perhaps adding files in subdirectories of #{config/}#. When you commit new
-revisions, just take care not to hand edit or commit the top-level files in
-#{config}# containing #{LB_*}# variables, as these are build products, too,
-and are always cleaned up by #{lb clean}# and re-created with #{lb config}#
-via their respective #{auto}# scripts.
+Oczywiście, możliwe są bardziej skomplikowane zmiany w konfiguracji,
+prawdopodobnie dodające pliki w podkatalogach #{config/}#. Kiedy wprowadzasz
+nowe zmiany , tylko uważaj, aby nie edytować ręcznie lub zmieniać plików
+najwyższego poziomu w #{config}# zawierających zmienną #{LB_*}#, ponieważ są
+to także efekty budowania i są zawsze sprzątane przez #{lb clean}# i
+tworzone ponownie przez #{lb config}# przez odpowiednie #{automatyczne}#
+skrypty.
 
-We've come to the end of our tutorial series. While many more kinds of
-customization are possible, even just using the few features explored in
-these simple examples, an almost infinite variety of different images can be
-created. The remaining examples in this section cover several other use
-cases drawn from the collected experiences of users of live systems.
+Doszliśmy do końca naszej serii samouczka. Chociaż możliwe jest o wiele
+więcej rodzajów personalizacji, nawet tylko za pomocą kilku funkcji
+pokazanych w tych prostych przykładach, może być stworzona niemal
+nieskończona różnorodność obrazów. Pozostałe przykłady w tym rozdziale
+obejmuje kilka innych przypadków użycia zaczerpnięte z zebranych doświadczeń
+użytkowników systemów live.
 
 2~ Kiosk-klient serwera VNC
 
-*{Use case:}* Create an image with live-build to boot directly to a VNC server.
+*{Przykład użycia:}* Stwórz obraz za pomocą live-build, który podczas uruchamiania, łączy się automatycznie z serwerem VNC.
 
 Make a build directory and create an skeletal configuration inside it,
 disabling recommends to make a minimal system. And then create two initial
@@ -266,7 +273,8 @@ As explained in {Tweaking APT to save space}#tweaking-apt-to-save-space you
 may need to re-add some recommended packages to make your image work
 properly.
 
-An easy way to list recommends is using /{apt-cache}/. For example:
+Najprostszym sposobem na wypisane listy rekomendowanych pakietów jest u
+życie /{apt-cache}/. Na przykład:
 
 code{
 
@@ -317,7 +325,7 @@ Korzystaj.
 
 2~Bazowy obraz dla nośnika USB z 128MB pamięci.
 
-*{Use case:}* Create a default image with some components removed in order to fit on a 128MB USB key with a little space left over to use as you see fit.
+*{Przykład użycia:}*  Stwórz domyślny obraz z usuniętymi niektórymi komponentami tak, aby zmieścił się on na nośniku USB z 128MB pamięci z pozostawieniem niewielkiej przestrzeni do wykorzystania według potrzeb.
 
 When optimizing an image to fit a certain media size, you need to understand
 the tradeoffs you are making between size and functionality. In this
@@ -374,17 +382,18 @@ installation of a memory tester.
 
 2~ Pulpit GNOME w lokalnym języku oraz instalator
 
-*{Use case:}* Create a GNOME desktop image, localized for Switzerland and including an installer.
+*{Przykład użycia:}* Stwórz obraz z pulpitem GNOME i lokalizacją dla Szwajcarii wraz z instalatorem.
 
-We want to make an iso-hybrid image for i386 architecture using our
-preferred desktop, in this case GNOME, containing all of the same packages
-that would be installed by the standard Debian installer for GNOME.
+Chcemy stworzyć obraz ISO-hybrydy dla architektury i386 z naszym
+preferowanym pulpitem, w tym przypadku GNOME, zawierającą wszystkie pakiety,
+które byłyby zainstalowane przez standardowy instalator Debiana dla GNOME.
 
-Our initial problem is the discovery of the names of the appropriate
-language tasks. Currently, live-build cannot help with this. While we might
-get lucky and find this by trial-and-error, there is a tool, #{grep-dctrl}#,
-which can be used to dig it out of the task descriptions in tasksel-data, so
-to prepare, make sure you have both of those things:
+Naszym początkowym problem jest odkrycie nazw odpowiednich zadań
+językowych. Obecnie, live-build nie może nam w tym pomóc. Chociaż możemy
+mieć szczęście i znaleźć to metodą prób i błędów, to jest narzędzie,
+#{grep-dctrl}#, które może być użyte do ustalenia to z opisów zadań w
+tasksel-data tak więc, aby przygotować się upewnij się, że masz obie te
+rzeczy:
 
 code{
 
@@ -412,12 +421,13 @@ code{
 
 }code
 
-At boot time we will generate the *{de_CH.UTF-8}* locale and select the
-*{ch}* keyboard layout. Now let's put the pieces together. Recalling from
-{Using metapackages}#using-metapackages that task metapackages are prefixed
-#{task-}#, we just specify these language boot parameters, then add standard
-priority packages and all our discovered task metapackages to our package
-list as follows:
+W czasie startu systemu będziemy generować lokalizację *{de_CH.UTF-8}* i
+wybierać układ klawiatury *{ch}*. Teraz poskładajmy kawałki
+razem. Przypominamy sobie  {Korzystanie z metapakietów}#using-metapackages
+że metapakiety są poprzedzone przedrostkiem #{task-}#, po prostu określimy
+te parametry rozruchowe dotyczące języka, a następnie dodamy standardowe
+pakiety priorytetowe i wszystkie wykryte metapakiety zadań do naszej listy
+pakietów w następujący sposób:
 
 code{
 
@@ -435,7 +445,7 @@ $ mkdir live-gnome-ch
 
 }code
 
-Note that we have included the debian-installer-launcher package to launch
-the installer from the live desktop, and have also specified the 486 flavour
-kernel, as it is currently necessary to make the installer and live system
-kernels match for the launcher to work properly.
+Należy pamiętać, że mamy załączony pakiet debian-installer-launcher, aby
+uruchomić instalator z pulpitu live, a także wybraną architekturę 486 jądra
+kernela, jak to jest obecnie konieczne, aby instalator i jądro systemu live
+zgadzały się aby instalator działał prawidłowo.

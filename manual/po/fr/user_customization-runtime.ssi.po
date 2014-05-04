@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 4.0~a4-1\n"
 "POT-Creation-Date: 2014-05-04 09:01+0300\n"
-"PO-Revision-Date: 2013-09-15 15:19+0100\n"
+"PO-Revision-Date: 2014-05-04 12:12+0100\n"
 "Last-Translator: Carlos Zuferri <chals@altorricon.com>\n"
 "Language-Team: none\n"
 "Language: fr\n"
@@ -885,10 +885,8 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:196
-#, fuzzy
-#| msgid "2~persistence Persistence"
 msgid "2~ Using persistence with encryption"
-msgstr "2~persistence Persistance"
+msgstr "2~ Utilisation de la persistance avec chiffrement"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:198
@@ -903,31 +901,41 @@ msgid ""
 "the machine you are creating the encrypted partition with and also in the "
 "live system you are going to use the encrypted persistent partition with."
 msgstr ""
+"Utiliser la persistance signifie que certaines données sensibles peuvent "
+"être exposées au risque. Surtout si les données persistantes sont stockées "
+"sur un dispositif portable tel qu'une clé USB ou un disque dur externe. "
+"C'est quand le chiffrement est plus pratique. Même si la procédure complète "
+"peut paraître compliquée en raison du nombre d'étapes à suivre, il est "
+"vraiment facile de manipuler des partitions chiffrées avec live-boot. Pour "
+"utiliser *{luks}*, qui est le type de chiffrement pris en charge, vous devez "
+"installer /{cryptsetup}/ tant sur la machine avec laquelle vous créez la "
+"partition chiffrée et aussi dans le système live avec lequel vous allez "
+"utiliser la partition persistante chiffrée."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:200
 msgid "To install /{cryptsetup}/ on your machine:"
-msgstr ""
+msgstr "Pour installer /{cryptsetup}/ sur votre machine:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:204
-#, fuzzy, no-wrap
-#| msgid " # apt-get install xorriso\n"
+#, no-wrap
 msgid " # apt-get install cryptsetup\n"
-msgstr " # apt-get install xorriso\n"
+msgstr " # apt-get install cryptsetup\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:208
 msgid ""
 "To install /{cryptsetup}/ in your live system, add it to your package-lists:"
 msgstr ""
+"Pour installer /{cryptsetup}/ dans votre système live, ajouter à vos listes "
+"de paquets:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:212
-#, fuzzy, no-wrap
-#| msgid " $ echo \"user-setup sudo\" > config/package-lists/recommends.list.chroot\n"
+#, no-wrap
 msgid " $ echo \"cryptsetup\" > config/package-lists/encryption.list.chroot\n"
-msgstr " $ echo \"user-setup sudo\" > config/package-lists/recommends.list.chroot\n"
+msgstr " $ echo \"cryptsetup\" > config/package-lists/encryption.list.chroot\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:216
@@ -938,13 +946,18 @@ msgid ""
 "this step and added the boot parameters at build time following the usual "
 "procedure:"
 msgstr ""
+"Une fois que vous avez votre système live avec /{cryptsetup}/, vous avez "
+"essentiellement besoin de créer une nouvelle partition, la chiffrer et "
+"démarrer avec les paramètres #{persistence}# et #{persistence-"
+"encryption=luks}#. Nous aurions pu déjà anticipée cette étape et ajoutée ces "
+"paramètres de démarrage au moment de la construction selon la procédure "
+"habituelle:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:220
-#, fuzzy, no-wrap
-#| msgid " $ lb config --bootappend-live \"boot=live components username=live-user\"\n"
+#, no-wrap
 msgid " $ lb config --bootappend-live \"boot=live components persistence persistence-encryption=luks\"\n"
-msgstr " $ lb config --bootappend-live \"boot=live components username=live-user\"\n"
+msgstr " $ lb config --bootappend-live \"boot=live components persistence persistence-encryption=luks\"\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:224
@@ -955,6 +968,11 @@ msgid ""
 "to determine which partition is the one you are going to use in your "
 "specific case."
 msgstr ""
+"Allons dans les détails pour tous ceux qui ne connaissent pas bien le "
+"chiffrement. Dans l'exemple suivant, nous allons utiliser une partition sur "
+"une clé usb qui correspond au dispositif #{/dev/sdc2}#. S'il vous plaît être "
+"averti que vous devez déterminer quelle partition est celui que vous allez "
+"utiliser dans votre cas particulier."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:226
@@ -964,12 +982,16 @@ msgid ""
 "l /dev/disk/by-id}#. After that, create a new partition and then, encrypt it "
 "with a passphrase as follows:"
 msgstr ""
+"La première étape est de brancher votre clé usb et de déterminer quel "
+"dispositif il est. La méthode recommandée pour lister les dispositifs dans "
+"live-manual est utiliser #{ls -l /dev/disk/by-id}#. Après cela, créer une "
+"nouvelle partition et la chiffrer avec un mot de passe comme suit:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:230
 #, no-wrap
 msgid " # cryptsetup --verify-passphrase luksFormat /dev/sdc2\n"
-msgstr ""
+msgstr " # cryptsetup --verify-passphrase luksFormat /dev/sdc2\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:234
@@ -977,12 +999,15 @@ msgid ""
 "Then open the luks partition in the virtual device mapper. Use any name you "
 "like. We use *{live}* here as an example:"
 msgstr ""
+"Ensuite, ouvrir la partition luks dans le mappeur de dispositifs virtuel. "
+"Utilisez n'importe quel nom que vous aimez. Nous utilisons *{live}* ici à "
+"titre d'exemple:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:238
 #, no-wrap
 msgid " # cryptsetup luksOpen /dev/sdc2 live\n"
-msgstr ""
+msgstr " # cryptsetup luksOpen /dev/sdc2 live\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:242
@@ -990,12 +1015,14 @@ msgid ""
 "The next step is filling the device with zeros before creating the "
 "filesystem:"
 msgstr ""
+"La prochaine étape est de remplir le dispositif avec des zéros avant de "
+"créer le système de fichiers:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:246
 #, no-wrap
 msgid " # dd if=/dev/zero of=/dev/mapper/live\n"
-msgstr ""
+msgstr " # dd if=/dev/zero of=/dev/mapper/live\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:250
@@ -1004,13 +1031,15 @@ msgid ""
 "label #{persistence}# so that the device is mounted as persistence store at "
 "boot time."
 msgstr ""
+"Maintenant, nous sommes prêts à créer le système de fichiers. Notez que nous "
+"ajoutons l'étiquette #{persistence}# de sorte que le dispositif est monté en "
+"tant que magasin de persistance au moment du démarrage."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:254
-#, fuzzy, no-wrap
-#| msgid " # mkfs.ext4 -L persistence /dev/sdb1\n"
+#, no-wrap
 msgid " # mkfs.ext4 -L persistence /dev/mapper/live\n"
-msgstr " # mkfs.ext4 -L persistence /dev/sdb1\n"
+msgstr " # mkfs.ext4 -L persistence /dev/mapper/live\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:258
@@ -1018,13 +1047,14 @@ msgid ""
 "To continue with our setup, we need to mount the device, for example in #{/"
 "mnt}#."
 msgstr ""
+"Pour continuer avec notre configuration, nous avons besoin de monter le "
+"dispositif, par exemple dans #{/mnt}#."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:262
-#, fuzzy, no-wrap
-#| msgid " # mount -o loop image.iso /mnt\n"
+#, no-wrap
 msgid " # mount /dev/mapper/live /mnt\n"
-msgstr " # mount -o loop image.iso /mnt\n"
+msgstr " # mount /dev/mapper/live /mnt\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:266
@@ -1033,28 +1063,26 @@ msgid ""
 "is, as explained before, strictly necessary. See {The persistence.conf file}"
 "#persistence-conf."
 msgstr ""
+"Et créer le fichier #{persistence.conf}# à la racine de la partition. Ceci "
+"est, comme expliqué précédemment, strictement nécessaire. Voir {Le fichier "
+"persistence.conf}#persistence-conf."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:270
-#, fuzzy, no-wrap
-#| msgid ""
-#| " # echo \"/usr union\" >> /mnt/persistence.conf\n"
-#| " # umount /mnt\n"
+#, no-wrap
 msgid " # echo \"/ union\" > /mnt/persistence.conf\n"
-msgstr ""
-" # echo \"/usr union\" >> /mnt/persistence.conf\n"
-" # umount /mnt\n"
+msgstr " # echo \"/ union\" > /mnt/persistence.conf\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:274
 msgid "Then unmount the mount point:"
-msgstr ""
+msgstr "Puis, démontez le point de montage:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:278
 #, no-wrap
 msgid " # umount /mnt\n"
-msgstr ""
+msgstr " # umount /mnt\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:282
@@ -1062,12 +1090,15 @@ msgid ""
 "And optionally, although it might be a good way of securing the data we have "
 "just added to the partition, we can close the device:"
 msgstr ""
+"Et éventuellement, bien qu'il pourrait être un bon moyen de sécuriser les "
+"données que nous venons d'ajouter à la partition, nous pouvons fermer le "
+"dispositif:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:286
 #, no-wrap
 msgid " # cryptsetup luksClose live\n"
-msgstr ""
+msgstr " # cryptsetup luksClose live\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:289
@@ -1081,3 +1112,12 @@ msgid ""
 "time, live-boot will prompt us for the passphrase and will mount the "
 "encrypted partition to be used for persistence."
 msgstr ""
+"Résumons la procédure. Jusqu'ici nous avons créé un système capable "
+"d'utiliser le chiffrement, qui peut être copié sur une clé usb comme "
+"expliqué dans {Copie d'une image ISO hybride sur une clé USB}#copying-iso-"
+"hybrid-to-usb. Nous avons également créé une partition chiffrée, qui peut "
+"être située dans la même clé USB pour le porter autour et nous avons "
+"configuré la partition chiffrée pour être utilisée comme magasin de "
+"persistance. Alors maintenant, nous avons seulement besoin de démarrer le "
+"système live. Au moment du démarrage, live-boot nous demandera le mot de "
+"passe pour monter la partition chiffrée à être utilisé pour la persistance."

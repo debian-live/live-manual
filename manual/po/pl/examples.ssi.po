@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 4.0~alpha12-1\n"
 "POT-Creation-Date: 2014-05-04 09:01+0300\n"
-"PO-Revision-Date: 2014-05-04 02:24+0100\n"
+"PO-Revision-Date: 2014-05-05 16:05+0100\n"
 "Last-Translator: AreYouLoco? <areyouloco@paranoici.org>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -189,6 +189,7 @@ msgstr "}code"
 msgid "1~examples Examples"
 msgstr "1~examples Przykłady"
 
+# 1. Słowo 'tutorial' będzie tłumaczone jako 'samouczek' dla zachowania spójności w całym tłumaczeniu.
 #. type: Plain text
 #: en/examples.ssi:6
 msgid ""
@@ -197,6 +198,11 @@ msgid ""
 "first look at the three tutorials in sequence, as each one teaches new "
 "techniques that will help you use and understand the remaining examples."
 msgstr ""
+"W tym rozdziale omówiono przykłady budowania dla konkretnych przypadków "
+"użycia z systemów live. Jeśli jesteś nowy w budowaniu własnych obrazów "
+"systemów live, zaleca się najpierw zapoznanie z trzema kolejnymi "
+"samouczkami, a każdy z nich nauczy Cię nowych technik, które pomogą Ci "
+"używać i rozumieć pozostałe przykłady."
 
 #. type: Plain text
 #: en/examples.ssi:8
@@ -210,6 +216,9 @@ msgid ""
 "requirements listed in {Requirements}#requirements and has live-build "
 "installed as described in {Installing live-build}#installing-live-build."
 msgstr ""
+"Aby skorzystać z tych przykładów potrzebujesz systemu, który spełnia "
+"wymagania wymienione w {wymaganiach}#requirements i ma zainstalowane live-"
+"build, jak opisano w {instalacji live-build}#installing-live-build."
 
 #. type: Plain text
 #: en/examples.ssi:12
@@ -295,8 +304,8 @@ msgstr " # lb build 2>&1 | tee build.log\n"
 #. type: Plain text
 #: en/examples.ssi:46
 msgid ""
-"Assuming all goes well, after a while, the current directory will contain #"
-"{binary.hybrid.iso}#. This ISO hybrid image can be booted directly in a "
+"Assuming all goes well, after a while, the current directory will contain "
+"#{binary.hybrid.iso}#. This ISO hybrid image can be booted directly in a "
 "virtual machine as described in {Testing an ISO image with Qemu}#testing-iso-"
 "with-qemu and {Testing an ISO image with VirtualBox}#testing-iso-with-"
 "virtualbox, or else imaged onto optical media or a USB flash device as "
@@ -463,8 +472,8 @@ msgstr " $ echo \"task-lxde-desktop iceweasel xchat\" >> config/package-lists/my
 #: en/examples.ssi:119
 msgid ""
 "First, #{--architectures i386}# ensures that on our #{amd64}# build system, "
-"we build a 32-bit version suitable for use on most machines. Second, we use #"
-"{--linux-flavours 686-pae}# because we don't anticipate using this image on "
+"we build a 32-bit version suitable for use on most machines. Second, we use "
+"#{--linux-flavours 686-pae}# because we don't anticipate using this image on "
 "much older systems. Third, we have chosen the /{lxde}/ task metapackage to "
 "give us a minimal desktop. And finally, we have added two initial favourite "
 "packages: /{iceweasel}/ and /{xchat}/."
@@ -486,12 +495,12 @@ msgstr " # lb build\n"
 #. type: Plain text
 #: en/examples.ssi:129
 msgid ""
-"Note that unlike in the first two tutorials, we no longer have to type #"
-"{2>&1 | tee build.log}# as that is now included in #{auto/build}#."
+"Note that unlike in the first two tutorials, we no longer have to type "
+"#{2>&1 | tee build.log}# as that is now included in #{auto/build}#."
 msgstr ""
 "Należy zauważyć, że w przeciwieństwie do dwóch pierwszych samouczków, nie "
-"musimy już wpisywać #{2>&1 | tee build.log}# bo jest to obecnie zawarte w #"
-"{auto/build}#."
+"musimy już wpisywać #{2>&1 | tee build.log}# bo jest to obecnie zawarte w "
+"#{auto/build}#."
 
 # 1. Słowo 'tutorial' będzie tłumaczone jako 'samouczek' dla zachowania spójności w całym tłumaczeniu.
 #. type: Plain text
@@ -598,8 +607,8 @@ msgstr " $ git commit -a -m \"Adding vlc media player.\"\n"
 msgid ""
 "Of course, more complicated changes to the configuration are possible, "
 "perhaps adding files in subdirectories of #{config/}#. When you commit new "
-"revisions, just take care not to hand edit or commit the top-level files in #"
-"{config}# containing #{LB_*}# variables, as these are build products, too, "
+"revisions, just take care not to hand edit or commit the top-level files in "
+"#{config}# containing #{LB_*}# variables, as these are build products, too, "
 "and are always cleaned up by #{lb clean}# and re-created with #{lb config}# "
 "via their respective #{auto}# scripts."
 msgstr ""
@@ -713,6 +722,10 @@ msgid ""
 "{metacity}/ and start /{xvncviewer}/, connecting to port #{5901}# on a "
 "server at #{192.168.1.2}#:"
 msgstr ""
+"Po tym, stwórz katalog #{/etc/skel}# w #{config/includes.chroot}# i ​​umieść "
+"tam własny #{.xsession}# dla domyślnego użytkownika, który będzie "
+"uruchamiał /{metacity}/ i /{xvncviewer}/, podłączając się do portu #{5901}# "
+"na serwerze w #{192.168.1.2}#:"
 
 #. type: Plain text
 #: en/examples.ssi:223
@@ -797,6 +810,10 @@ msgid ""
 "packages which are left out by the #{--apt-recommends false}# option. See "
 "{Tweaking APT to save space}#tweaking-apt-to-save-space"
 msgstr ""
+"Aby uczynić by obraz pracował prawidłowo, musimy ponownie dodać przynajmniej "
+"dwa pakiety, które zostały pominięte przez opcję #{--apt-recommends false}#. "
+"Zobacz {Podkręcanie APT w celu zaoszczędzenia miejsca}#tweaking-apt-to-save-"
+"space"
 
 #. type: Plain text
 #: en/examples.ssi:260
@@ -809,6 +826,7 @@ msgstr " $ echo \"user-setup sudo\" > config/package-lists/recommends.list.chroo
 msgid "Now, build the image in the usual way:"
 msgstr "Teraz, zbuduj obraz w typowy sposób:"
 
+# 1. Słowo 'tutorial' będzie tłumaczone jako 'samouczek' dla zachowania spójności w całym tłumaczeniu.
 #. type: Plain text
 #: en/examples.ssi:272
 msgid ""
@@ -816,12 +834,15 @@ msgid ""
 "produced a 77MB image. This compares favourably with the 177MB image "
 "produced by the default configuration in {Tutorial 1}#tutorial-1."
 msgstr ""
+"Na systemie autora w momencie pisania tego dokumentu powyższa konfiguracja "
+"wyprodukowała 77MB obraz. To korzystnie w porównaniu z obrazem 177MB "
+"wyprodukowanym przez domyślną konfigurację w {Samouczku 1}#tutorial-1."
 
 #. type: Plain text
 #: en/examples.ssi:274
 msgid ""
-"The biggest space-saver here, compared to building a default image on an #"
-"{i386}# architecture system, is to select only the #{486}# kernel flavour "
+"The biggest space-saver here, compared to building a default image on an "
+"#{i386}# architecture system, is to select only the #{486}# kernel flavour "
 "instead of the default #{-k \"486 686-pae\"}#. Leaving off APT's indices "
 "with #{--apt-indices false}# also saves a fair amount of space, the tradeoff "
 "being that you need to do an #{apt-get update}# before using /{apt}/ in the "
@@ -838,7 +859,7 @@ msgstr ""
 #: en/examples.ssi:276
 #, no-wrap
 msgid "*{Note:}* A minimal system can also be achieved using hooks, like for example the #{stripped.hook.chroot}# hook found in #{/usr/share/doc/live-build/examples/hooks}#. It may shave off additional small amounts of space and produce an image of 62MB. However, it does so by removal of documentation and other files from packages installed on the system. This violates the integrity of those packages and that, as the comment header warns, may have unforeseen consequences. That is why using a minimal /{debootstrap}/ is the recommended way of achieving this goal.\n"
-msgstr ""
+msgstr "*{Uwaga:}* System minimalny można również osiągnąć za pomocą haków, takich jak na przykład #{stripped.hook.chroot}#, znajdujący się w #{/usr/share/doc/live-build/examples/hooks}#. To może zaoszczędzić dodatkowo małe ilości przestrzeni i stworzyć 62MB obraz. Jednak robi to przez usunięcie dokumentacji i innych plików z pakietów zainstalowanych w systemie. To narusza integralność tych pakietów, a które, jak komentarz nagłówka ostrzega, mogą prowadzić do nieprzewidzianych konsekwencji. Dlatego właśnie użycie minimalnej opcji /{debootstrap}/'a jest zalecanym sposobem na osiągnięcie tego celu.\n"
 
 #. type: Plain text
 #: en/examples.ssi:278

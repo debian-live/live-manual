@@ -2,17 +2,17 @@
 
 1~examples Przykłady
 
-This chapter covers example builds for specific use cases with live
-systems. If you are new to building your own live system images, we
-recommend you first look at the three tutorials in sequence, as each one
-teaches new techniques that will help you use and understand the remaining
-examples.
+W tym rozdziale omówiono przykłady budowania dla konkretnych przypadków
+użycia z systemów live. Jeśli jesteś nowy w budowaniu własnych obrazów
+systemów live, zaleca się najpierw zapoznanie z trzema kolejnymi
+samouczkami, a każdy z nich nauczy Cię nowych technik, które pomogą Ci
+używać i rozumieć pozostałe przykłady.
 
 2~using-the-examples Używanie przykładów
 
-To use these examples you need a system to build them on that meets the
-requirements listed in {Requirements}#requirements and has live-build
-installed as described in {Installing live-build}#installing-live-build.
+Aby skorzystać z tych przykładów potrzebujesz systemu, który spełnia
+wymagania wymienione w {wymaganiach}#requirements i ma zainstalowane
+live-build, jak opisano w {instalacji live-build}#installing-live-build.
 
 Note that, for the sake of brevity, in these examples we do not specify a
 local mirror to use for the build. You can speed up downloads considerably
@@ -74,8 +74,9 @@ stick}#copying-iso-hybrid-to-usb, respectively.
 
 *{Przykład użycia:}* Stwórz obraz z przeglądarką internetową, ucząc się jak wprowadzać modyfikacje.
 
-In this tutorial, we will create an image suitable for use as a web browser
-utility, serving as an introduction to customizing live system images.
+W tym samouczku, stworzymy obraz odpowiedni do wykorzystania jako narzędzie
+przeglądarki internetowej, służący jako wstęp do dostosowywania obrazów
+systemu live.
 
 code{
 
@@ -294,10 +295,10 @@ code{
 
 }code
 
-After that, create the directory #{/etc/skel}# in #{config/includes.chroot}#
-and put a custom #{.xsession}# in it for the default user that will launch
-/{metacity}/ and start /{xvncviewer}/, connecting to port #{5901}# on a
-server at #{192.168.1.2}#:
+Po tym, stwórz katalog #{/etc/skel}# w #{config/includes.chroot}# i ​​umieść
+tam własny #{.xsession}# dla domyślnego użytkownika, który będzie uruchamiał
+/{metacity}/ i /{xvncviewer}/, podłączając się do portu #{5901}# na serwerze
+w #{192.168.1.2}#:
 
 code{
 
@@ -343,9 +344,10 @@ code{
 
 }code
 
-To make the image work properly, we must re-add, at least, two recommended
-packages which are left out by the #{--apt-recommends false}# option. See
-{Tweaking APT to save space}#tweaking-apt-to-save-space
+Aby uczynić by obraz pracował prawidłowo, musimy ponownie dodać przynajmniej
+dwa pakiety, które zostały pominięte przez opcję #{--apt-recommends
+false}#. Zobacz {Podkręcanie APT w celu zaoszczędzenia
+miejsca}#tweaking-apt-to-save-space
 
 code{
 
@@ -361,9 +363,9 @@ code{
 
 }code
 
-On the author's system at the time of writing this, the above configuration
-produced a 77MB image. This compares favourably with the 177MB image
-produced by the default configuration in {Tutorial 1}#tutorial-1.
+Na systemie autora w momencie pisania tego dokumentu powyższa konfiguracja
+wyprodukowała 77MB obraz. To korzystnie w porównaniu z obrazem 177MB
+wyprodukowanym przez domyślną konfigurację w {Samouczku 1}#tutorial-1.
 
 The biggest space-saver here, compared to building a default image on an
 #{i386}# architecture system, is to select only the #{486}# kernel flavour
@@ -378,7 +380,7 @@ automatically including firmware packages with #{--firmware-chroot false}#
 saves some space too. And finally, #{--memtest none}# prevents the
 installation of a memory tester.
 
-*{Note:}* A minimal system can also be achieved using hooks, like for example the #{stripped.hook.chroot}# hook found in #{/usr/share/doc/live-build/examples/hooks}#. It may shave off additional small amounts of space and produce an image of 62MB. However, it does so by removal of documentation and other files from packages installed on the system. This violates the integrity of those packages and that, as the comment header warns, may have unforeseen consequences. That is why using a minimal /{debootstrap}/ is the recommended way of achieving this goal.
+*{Uwaga:}* System minimalny można również osiągnąć za pomocą haków, takich jak na przykład #{stripped.hook.chroot}#, znajdujący się w #{/usr/share/doc/live-build/examples/hooks}#. To może zaoszczędzić dodatkowo małe ilości przestrzeni i stworzyć 62MB obraz. Jednak robi to przez usunięcie dokumentacji i innych plików z pakietów zainstalowanych w systemie. To narusza integralność tych pakietów, a które, jak komentarz nagłówka ostrzega, mogą prowadzić do nieprzewidzianych konsekwencji. Dlatego właśnie użycie minimalnej opcji /{debootstrap}/'a jest zalecanym sposobem na osiągnięcie tego celu.
 
 2~ Pulpit GNOME w lokalnym języku oraz instalator
 
@@ -411,7 +413,7 @@ code{
 }code
 
 Dzięki temu poleceniu dowiadujemy się, że zadanie nazywa się po prostu
-german (niemiecki). Teraz aby znaleźć podobne zadania:
+niemiecki (ang. german). Teraz, aby znaleźć podobne zadania:
 
 code{
 

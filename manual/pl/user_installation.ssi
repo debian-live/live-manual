@@ -16,8 +16,9 @@ _* /{debootstrap}/ lub /{cdebootstrap}/
 
 _* Linux 2.6 lub nowszy.
 
-Note that using Debian or a Debian-derived distribution is not required -
-live-build will run on almost any distribution with the above requirements.
+Należy pamiętać, że użycie Debiana lub dystrybucji pochodzącej od Debian nie
+jest wymagane - live-build będzie działać na prawie każdej dystrybucji
+spełniającej powyższe wymagania.
 
 2~installing-live-build Instalowanie live-build
 
@@ -29,8 +30,8 @@ _* Ze źródła
 
 _* Ze zrzutów deweloperskich
 
-If you are using Debian, the recommended way is to install live-build via
-the Debian repository.
+Jeśli używasz Debiana, zalecanym sposobem jest zainstalowanie live-build
+poprzez repozytorium Debiana.
 
 3~ Z repozytorium Debiana
 
@@ -44,9 +45,9 @@ code{
 
 3~ Ze źródła
 
-live-build is developed using the Git version control system. On Debian
-based systems, this is provided by the /{git}/ package. To check out the
-latest code, execute:
+live-build jest opracowana z wykorzystaniem systemu kontroli wersji Git. W
+systemach opartych na Debianie, jest on dostarczany przez pakiet
+/{git}/. Aby sprawdzić najnowszy kod, wykonaj:
 
 code{
 
@@ -64,8 +65,8 @@ code{
 
 }code
 
-Now install whichever of the freshly built #{.deb}# files you were
-interested in, e.g.
+Teraz zainstaluj którąkolwiek świeżo zbudowaną paczkę #{.deb}, wedle wyboru,
+np.
 
 code{
 
@@ -90,20 +91,20 @@ code{
 
 }code
 
-3~ Ze 'zrzutów deweloperskich'
+3~ Ze zrzutów deweloperskich
 
-If you do not wish to build or install live-build from source, you can use
-snapshots. These are built automatically from the latest version in Git and
-are available on http://live-systems.org/debian/.
+Jeśli nie chcesz, kompilować i zainstalować live-build ze źródła, możesz
+użyć zrzutów deweloperskich. Są to automatycznie zbudowane paczki z
+najnowszej wersji Git i są one dostępne na http://live-systems.org/debian/.
 
 2~ Instalowanie live-boot i live-config
 
-*{Note:}* You do not need to install live-boot or live-config on your system to create customized live systems. However, doing so will do no harm and is useful for reference purposes. If you only want the documentation, you may now install the /{live-boot-doc}/ and /{live-config-doc}/ packages separately.
+*{Uwaga:}* Nie musisz instalować live-boot lub live-config w systemie do tworzenia niestandardowych systemów żywych. Jednak ten sposób nie zaszkodzi i jest przydatny do celów porównawczych. Jeśli chcesz tylko przejrzeć dokumentację, możesz zainstalować pakiety /{live-boot-doc}/ i /{live-config-doc}/ oddzielnie.
 
 3~ Z repozytorium Debiana
 
-Both live-boot and live-config are available from the Debian repository as
-per {Installing live-build}#installing-live-build.
+Zarówno live-boot oraz live-config są dostępne w repozytorium Debiana, tak
+jak w {Instalacji live-build}#installing-live-build.
 
 3~ Ze źródła
 
@@ -120,21 +121,23 @@ code{
 
 }code
 
-Consult the live-boot and live-config man pages for details on customizing
-if that is your reason for building these packages from source.
+Poradź się podręcznikiem man pakietół live-boot i  live-config aby uzyskać
+szczegółowe informacje na temat dostosowywania, jeżeli to jest Twój powód do
+budowania tych pakietów ze źródeł.
 
 _* Zbuduj pliki .deb live-boot i live-config
 
-You must build either on your target distribution or in a chroot containing
-your target platform: this means if your target is ${testing} then you
-should build against ${testing}.
+Musisz budować obraz albo na dystrybucji docelowej lub w środowisku chroot
+zawierającym platformę docelowej: oznacza to, czy celem jest ${testing} to
+obraz należy budować na ${testing}.
 
-Use a personal builder such as /{pbuilder}/ or /{sbuild}/ if you need to
-build live-boot for a target distribution that differs from your build
-system. For example, for ${testing} live images, build live-boot in a
-${testing} chroot. If your target distribution happens to match your build
-system distribution, you may build directly on the build system using
-#{dpkg-buildpackage}# (provided by the /{dpkg-dev}/ package):
+Używaj osobistych konstruktorów takich jak /{pbuilder}/ lub /{sbuild}/,
+jeżeli istnieje potrzeba zbudowania live-boot na dystrybucji docelowej,
+która różni się od systemu budowania. Na przykład, dla obrazów ${testing}
+live, zbuduj live-boot w środowisku chroot ${testing}. Jeśli dystrybucja
+docelowa zgadza się z dystrybucją systemu kompilacji, można wtedy zbudować
+bezpośrednio na wbudowanym systemie, używając #{dpkg-buildpackage}#
+(dostarczanego przez pakiet /{dpkg-dev}/):
 
 code{
 
@@ -145,7 +148,7 @@ code{
 
 }code
 
-_* Użyj mających zastosowanie wygenerowanych plików .deb
+_* Use applicable generated .deb files
 
 As live-boot and live-config are installed by live-build system, installing
 the packages in the host system is not sufficient: you should treat the
@@ -168,8 +171,9 @@ code{
 
 }code
 
-3~ Ze 'zrzutów deweloperskich'
+3~ Ze zrzutów deweloperskich
 
-You can let live-build automatically use the latest snapshots of live-boot
-and live-config by configuring the package repository on live-systems.org as
-a third-party repository in your live-build configuration directory.
+Możesz pozwolić live-build automatycznie skorzystać z najnowszych zrzutów
+deweloperskich live-boot i live-live-config przez skonfigurowanie
+repozytorium pakietu live-systems.org jako repozytorium innych firm w
+katalogu konfiguracyjnym live-build.

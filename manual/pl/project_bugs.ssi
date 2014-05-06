@@ -2,15 +2,16 @@
 
 1~bugs Zgłaszanie błędów
 
-Live systems are far from being perfect, but we want to make it as close as
-possible to perfect - with your help. Do not hesitate to report a bug. It is
-better to fill a report twice than never. However, this chapter includes
-recommendations on how to file good bug reports.
+Systemy live są dalekie od doskonałości, ale chcemy, uczynić je jak
+najbliższe perfekcji - z Waszą pomocą. Nie wahaj się zgłosić błąd. Lepiej
+jest wypełnić raport dwa razy niż wcale. Ten rozdział zawiera zalecenia
+dotyczące sposobu składania raportów o błędach.
 
 Dla niecierpliwych:
 
-_* Always check first the image status updates on our homepage at
-http://live-systems.org/ for known issues.
+_* Zawsze należy sprawdzić najpierw aktualizacje statusu obrazu na naszej
+stronie internetowej http://live-systems.org/, w poszukiwaniu znanych
+problemów.
 
 _* Before submitting a bug report always try to reproduce the bug with the
 *{most recent versions}* of the branch of live-build, live-boot, live-config
@@ -29,12 +30,12 @@ a successful build may not always be possible.
 
 % FIXME:
 
-If this causes too much difficulty for you, do not build a system based on
-*{testing}* or *{unstable}*, but rather, use *{stable}*. live-build always
-defaults to the *{stable}* release.
+Jeśli budowanie systemu opartego na *{testing}* lub *{unstable}* powoduje u
+Ciebie zbyt wiele trudności, raczej wykorzystaj wydanie
+*{stable}*. live-build zawsze ustawia domyślnie wydanie *{stable}*.
 
-Currently known issues are listed under the section 'status' on our homepage
-at http://live-systems.org/.
+Obecnie znane problemy wymienione są w ramach sekcji "status" na naszej
+stronie internetowej w http://live-systems.org/.
 
 It is out of the scope of this manual to train you to correctly identify and
 fix problems in packages of the development distributions, however, there
@@ -95,8 +96,8 @@ code{
 
 }code
 
-At boot time, live-boot and live-config store their logfiles in
-#{/var/log/live/}#. Check them for error messages.
+W czasie uruchamiania live-boot i live-config przetrzymują swoje logi w
+#{/var/log/live/}#. Sprawdź je w poszukiwaniu błędów.
 
 Additionally, to rule out other errors, it is always a good idea to tar up
 your #{config/}# directory and upload it somewhere (do *{not}* send it as an
@@ -124,20 +125,21 @@ increments.
 
 2~ Wybierz odpowiedni pakiet dla którego zgłaszasz błąd
 
-If you do not know what component is responsible for the bug or if the bug
-is a general bug concerning live systems, you can fill a bug against the
-debian-live pseudo-package.
+Jeśli nie wiesz, który komponent jest odpowiedzialny za błąd, lub jeśli błąd
+jest ogólnym błędem dotyczącym systemów live, można wypełnić raport błędu
+dotyczący pseudo-pakietu debian-live.
 
-However, we would appreciate it if you try to narrow it down according to
-where the bug appears.
+Jednak będziemy wdzięczni, jeśli postarasz się zawęzić pole możliwości, w
+których może pojawiać się błąd.
 
 3~ W czasie budowania podczas ładowania początkowego (bootstrapping)
 
-live-build first bootstraps a basic Debian system with /{debootstrap}/ or
-/{cdebootstrap}/. Depending on the bootstrapping tool used and the Debian
-distribution it is bootstrapping, it may fail. If a bug appears here, check
-if the error is related to a specific Debian package (most likely), or if it
-is related to the bootstrapping tool itself.
+Początkowo live-build ładuje podstawowy system Debianu używając
+/{debootstrap}/ lub /{cdebootstrap}/. Może się to nie powieść w zależności
+od używanego narzędzia do ładowania i dystrybucji Debiana, która jest
+pobierana. Jeśli błąd pojawi się tutaj, należy sprawdzić, czy błąd jest
+związany z konkretnym pakietem Debiana (najprawdopodobniej) lub, jeśli jest
+to związane z samym narzędziem ładowania początkowego.
 
 In both cases, this is not a bug in the live system, but rather in Debian
 itself and probably we cannot fix it directly. Please report such a bug
@@ -171,8 +173,8 @@ is also very helpful.
 
 3~ W czasie gdy system jest już uruchomiony
 
-If a package was successfully installed, but fails while actually running
-the Live system, this is probably a bug in the live system. However:
+Jeśli pakiet został zainstalowany, ale nie działa gdy system live faktycznie
+działa, jest to prawdopodobnie błąd w systemie live. Jednakże:
 
 2~ Spróbuj wykonać parę kroków
 
@@ -205,6 +207,7 @@ help before submitting a bug report, please report it against the
 debian-live pseudo-package. We will then take care about it and reassign it
 where appropriate.
 
-Please note that bugs found in distributions derived from Debian (such as
-Ubuntu and others) should *{not}* be reported to the Debian BTS unless they
-can be also reproduced on a Debian system using official Debian packages.
+Należy pamiętać, że błędy znalezione w dystrybucji pochodzących od Debiana
+(takich jak Ubuntu, i inne) *{nie}* powinny być zgłaszane do BTS Debiana,
+chyba że błędy te mogą być odtworzone w Debianie przy użyciu oficjalnych
+pakietów Debiana.

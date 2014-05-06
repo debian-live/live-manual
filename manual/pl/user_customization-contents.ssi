@@ -1,15 +1,15 @@
 :B~ Customizing contents
 
-1~customizing-contents Customizing contents
+1~customizing-contents Dostosowywanie zawartości
 
-This chapter discusses fine-tuning customization of the live system contents
-beyond merely choosing which packages to include. Includes allow you to add
-or replace arbitrary files in your live system image, hooks allow you to
-execute arbitrary commands at different stages of the build and at boot
-time, and preseeding allows you to configure packages when they are
-installed by supplying answers to debconf questions.
+Ten rozdział omawia dokładną regulację dostosowywania zawartości systemu
+poza samym wybieraniem pakietów do wyboru, które będą zawarte. Uwzględnianie
+pozwala dodać lub wymienić dowolne pliki w obrazie systemu live, haki
+pozwalają na wykonanie dowolnego polecenia na różnych etapach produkcji oraz
+w czasie rozruchu a opcji preseeding pozwala skonfigurować pakiety, gdy są
+zainstalowane poprzez dostarczenie odpowiedzi na pytania debconfa.
 
-2~includes Includes
+2~includes Uwzględnianie
 
 While ideally a live system would include files entirely provided by
 unmodified packages, it is sometimes convenient to provide or modify some
@@ -28,7 +28,7 @@ more information.
 Please see {Terms}#terms for more information about the distinction between
 the "Live" and "binary" images.
 
-3~live-chroot-local-includes Live/chroot local includes
+3~live-chroot-local-includes Uwzględnianie lokalne Live/chroot
 
 Chroot local includes can be used to add or replace files in the chroot/Live
 filesystem so that they may be used in the Live system. A typical use is to
@@ -50,7 +50,7 @@ code{
 
 }code
 
-Your configuration will then have the following layout:
+Konfiguracja będzie mieć następujący układ:
 
 code{
 
@@ -67,7 +67,7 @@ code{
 Chroot local includes are installed after package installation so that files
 installed by packages are overwritten.
 
-3~binary-local-includes Binary local includes
+3~binary-local-includes Uwzględnianie lokalnych danych binarnych
 
 To include material such as documentation or videos on the medium filesystem
 so that it is accessible immediately upon insertion of the medium without
@@ -83,7 +83,7 @@ code{
 
 }code
 
-These files will now appear in the root directory of the live medium.
+Pliki te pojawią się teraz w katalogu głównym nośnika live.
 
 2~hooks Haki
 
@@ -101,7 +101,7 @@ example chroot hook scripts for various common chroot customization tasks
 provided in #{/usr/share/doc/live-build/examples/hooks}# which you can copy
 or symlink to use them in your own configuration.
 
-3~boot-time-hooks Boot-time hooks
+3~boot-time-hooks Haki podczas uruchamiania
 
 To execute commands at boot time, you can supply live-config hooks as
 explained in the "Customization" section of its man page. Examine
@@ -112,7 +112,7 @@ sequence number, either as a chroot local include in
 discussed in {Installing modified or third-party
 packages}#installing-modified-or-third-party-packages.
 
-3~ Binary local hooks
+3~ Lokalne haki binarne
 
 To run commands in the binary stage, create a hook script with a
 #{.hook.binary}# suffix containing the commands in the #{config/hooks/}#
@@ -124,7 +124,7 @@ binary hook scripts for various common binary customization tasks provided
 in #{/usr/share/doc/live-build/examples/hooks}# which you can copy or
 symlink to use them in your own configuration.
 
-2~ Preseeding Debconf questions
+2~ Wstępne ustawienie pytań Debconfa (Preseeding)
 
 Files in the #{config/preseed/}# directory suffixed with #{.cfg}# followed
 by the stage (#{.chroot}# or #{.binary}#) are considered to be debconf

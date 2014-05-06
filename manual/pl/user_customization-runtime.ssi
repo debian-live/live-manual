@@ -1,13 +1,14 @@
-:B~ Customizing run time behaviours
+:B~ Dostosowywanie zdarzeń podczas uruchamiania systemu
 
-1~customizing-run-time-behaviours Customizing run time behaviours
+1~customizing-run-time-behaviours Dostosowywanie zdarzeń podczas
+uruchamiania systemu
 
-All configuration that is done during run time is done by live-config. Here
-are some of the most common options of live-config that users are interested
-in. A full list of all possibilities can be found in the man page of
-live-config.
+Cała konfiguracja, która odbywa się w czasie pracy systemu jest wykonywana
+przez live-config. Oto niektóre z najbardziej popularnych opcji live-config,
+którymi mogą być zainteresowani użytkownicy. Pełną listę wszystkich
+możliwości można znaleźć w podręczniku man pakietu live-config.
 
-2~ Customizing the live user
+2~ Personalizacja użytkownika live
 
 One important consideration is that the live user is created by live-boot at
 boot time, not by live-build at build time. This not only influences where
@@ -34,7 +35,8 @@ It is also possible to change the default username "user" and the default
 password "live". If you want to do that for any reason, you can easily
 achieve it as follows:
 
-To change the default username you can simply specify it in your config:
+Aby zmienić domyślną nazwę użytkownika należy po prostu określić ją w
+konfiguracji:
 
 code{
 
@@ -48,9 +50,9 @@ use the "passwd" hook from #{/usr/share/doc/live-config/examples/hooks}#,
 prefix it accordingly (e.g. 2000-passwd) and add it to
 #{config/includes.chroot/lib/live/config/}#
 
-2~customizing-locale-and-language Customizing locale and language
+2~customizing-locale-and-language Ustawianie lokalizacji i języka
 
-When the live system boots, language is involved in two steps:
+Podczas uruchamiania systemu live, język jest definiowany przez dwa etapy:
 
 _* generowanie plików lokalizacji
 
@@ -67,7 +69,8 @@ code{
 
 }code
 
-Multiple locales may be specified as a comma-delimited list.
+Wiele lokalizacji może być określone w postaci listy rozdzielonej
+przecinkami.
 
 This parameter, as well as the keyboard configuration parameters indicated
 below, can also be used at the kernel command line. You can specify a locale
@@ -99,11 +102,11 @@ $ egrep -i '(^!|german.*switzerland)' /usr/share/X11/xkb/rules/base.lst
 
 }code
 
-Note that each variant lists the layout to which it applies in the
-description.
+Należy pamiętać, że każdy wariant wymienia układ, którego dotyczy w opisie.
 
-Often, only the layout needs to be configured. For example, to get the
-locale files for German and Swiss German keyboard layout in X use:
+Często tylko układ klawiatury musi być skonfigurowany. Na przykład, aby
+uzyskać listę plików lokalizacyjnych dla niemieckiego i szwajcarskiego
+niemieckiego układu klawiatury w systemie X użyj:
 
 code{
 
@@ -195,8 +198,8 @@ code{
 Zobacz również {Wykorzystanie przestrzeni pozostałej na nośniku
 USB}#using-usb-extra-space.
 
-If you already have a partition on your device, you could just change the
-label with one of the following:
+Jeśli masz już partycję na urządzeniu, można po prostu zmienić jego etykietę
+używając następującego polecenia:
 
 code{
 
@@ -204,8 +207,8 @@ code{
 
 }code
 
-Here's an example of how to create an ext4-based image file to be used for
-persistence:
+Oto przykład, jak stworzyć plik obrazu opartego na ext4 do zastosowania z
+opcją persistance:
 
 code{
 
@@ -227,8 +230,8 @@ code{
 
 }code
 
-Then, create the #{persistence.conf}# file adding content and unmount the
-image file.
+Następnie utwórz plik #{persistence.conf}# dodając zawartość i odmontowując
+plik obrazu.
 
 code{
 
@@ -237,7 +240,8 @@ code{
 
 }code
 
-Now, reboot into your live medium with the boot parameter "persistence".
+Teraz uruchom ponownie i wybierz nośnik live, a następnie uruchom dodając
+parametr startowy "persistence".
 
 3~persistence-conf Plik persistence.conf
 
@@ -310,7 +314,7 @@ It is important to remember that each of these volumes, #{private}# and
 man page contains more information about how to use these labels with legacy
 names.
 
-2~ Using persistence with encryption
+2~ Używanie opcji persistence z szyfrowaniem
 
 Using the persistence feature means that some sensible data might get
 exposed to risk. Especially if the persistent data is stored on a portable
@@ -322,7 +326,7 @@ is the supported encryption type, you need to install /{cryptsetup}/ both on
 the machine you are creating the encrypted partition with and also in the
 live system you are going to use the encrypted persistent partition with.
 
-To install /{cryptsetup}/ on your machine:
+Aby zainstalować /{cryptsetup}/ na twoim komputerze:
 
 code{
 
@@ -330,7 +334,8 @@ code{
 
 }code
 
-To install /{cryptsetup}/ in your live system, add it to your package-lists:
+Aby zainstalować /{cryptsetup}/ na twoim systemie live dodaj go do listy
+pakietów:
 
 code{
 
@@ -350,16 +355,16 @@ code{
 
 }code
 
-Let's go into the details for all of those who are not familiar with
-encryption. In the following example we are going to use a partition on a
-usb stick which corresponds to #{/dev/sdc2}#. Please be warned that you need
-to determine which partition is the one you are going to use in your
-specific case.
+przejdzmy do szczegółów dla tych wszystkich, którzy nie są zaznajomieni z
+szyfrowaniem. W poniższym przykładzie mamy zamiar użyć partycji na dysku
+USB, która odpowiada #{/dev/sdc2}#. Należy zaznaczyć, że należy ustalić,
+która partycja jest jeden tą, którą masz zamiar używać w tym konkretnym
+przypadku.
 
-The first step is plugging in your usb stick and determine which device it
-is. The recommended method of listing devices in live-manual is using #{ls
--l /dev/disk/by-id}#. After that, create a new partition and then, encrypt
-it with a passphrase as follows:
+Pierwszym krokiem jest podłączenie dysku USB i określenie, którym jest
+urządzeniem. Zalecaną metodą tworzenia listy urządzeń w live-manual jest
+#{ls -l /dev/disk/by-id}#. Następnie utworzymy nową partycję, a następnie
+zaszyfrujemy ją hasłem w następujący sposób:
 
 code{
 
@@ -367,8 +372,9 @@ code{
 
 }code
 
-Then open the luks partition in the virtual device mapper. Use any name you
-like. We use *{live}* here as an example:
+Następnie otwieramy partycję LUKS w wirtualnym elemencie odwzorowującym
+urządzenia *{/dev/mapper}*. Można tu użyć dowolnej nazww. Używamy *{live}*
+jako przykład:
 
 code{
 
@@ -376,8 +382,8 @@ code{
 
 }code
 
-The next step is filling the device with zeros before creating the
-filesystem:
+Następnym krokiem jest wypełnienie urządzenia zerami przed utworzeniem
+systemu plików:
 
 code{
 
@@ -385,9 +391,9 @@ code{
 
 }code
 
-Now, we are ready to create the filesystem. Notice that we are adding the
-label #{persistence}# so that the device is mounted as persistence store at
-boot time.
+Teraz jesteśmy gotowi do stworzenia systemu plików. Warto zauważyć, że
+dodajemy etykietę #{persistence}# tak, aby urządzenie zotało zamontowane w
+jako persistence store (magazyn persistence) w czasie startu systemu.
 
 code{
 
@@ -395,8 +401,8 @@ code{
 
 }code
 
-To continue with our setup, we need to mount the device, for example in
-#{/mnt}#.
+Aby kontynuować naszą konfigurację, musimy zamontować urządzenie, na
+przykład w #{/mnt}#.
 
 code{
 
@@ -404,9 +410,9 @@ code{
 
 }code
 
-And create the #{persistence.conf}# file in the root of the partition. This
-is, as explained before, strictly necessary. See {The persistence.conf
-file}#persistence-conf.
+I stwórz plik #{persistence.conf}# w katalogu głównym partycji. To jest, jak
+wyjaśniono wyżej, absolutnie konieczne. Zobacz {Plik
+persistence.conf}#persistence-conf.
 
 code{
 
@@ -414,7 +420,7 @@ code{
 
 }code
 
-Then unmount the mount point:
+Potem odmontuj punkt montowania:
 
 code{
 
@@ -422,8 +428,8 @@ code{
 
 }code
 
-And optionally, although it might be a good way of securing the data we have
-just added to the partition, we can close the device:
+I opcjonalnie, choć może to być dobry sposób na zabezpieczenie danych, które
+właśnie dodaliśmy do partycji, możemy zamknąć urządzenie:
 
 code{
 
@@ -431,11 +437,12 @@ code{
 
 }code
 
-Let's summarize the process. So far, we have created an encryption capable
-live system, which can be copied to a usb stick as explained in {Copying an
-ISO hybrid image to a USB stick}#copying-iso-hybrid-to-usb. We have also
-created an encrypted partition, which can be located in the same usb stick
-to carry it around and we have configured the encrypted partition to be used
-as persistence store. So now, we only need to boot the live system. At boot
-time, live-boot will prompt us for the passphrase and will mount the
-encrypted partition to be used for persistence.
+Podsumujmy proces. Do tej pory stworzyliśmy system live z możliwością
+szyfrowania, który można skopiować na nośnik usb, jak wyjaśniono w
+{kopiowaniu hybrydowego obrazu ISO na nośnik pamięci
+USB}#copying-iso-hybrid-to-usb. Stworzyliśmy również zaszyfrowaną partycję,
+która może znajdować się na tym samym nośniku usb, aby można było go nosić
+ze sobą wszędzie i mamy skonfigurowaną zaszyfrowaną partycję, stosowaną jako
+magazyn persistence. Więc teraz, musimy tylko uruchomić system live. W
+czasie startu systemu, na live-boot poprosi nas o wpisanie hasła i zamontuje
+zaszyfrowaną partycję używaną przez opcję persistence.

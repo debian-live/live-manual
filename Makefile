@@ -137,3 +137,7 @@ check:
 
 translate:
 	@./manual/bin/find-untranslated.sh
+
+spell:
+	@./manual/bin/check-spelling.sh
+

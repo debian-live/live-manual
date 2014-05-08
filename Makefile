@@ -30,7 +30,7 @@ all: build
 
 test:
 	@echo "Checking for syntax errors... [not implemented yet - FIXME]"
-	@echo "Checking for spelling errors... [not implemented yet - FIXME]"
+	@echo "To interactively check for spelling mistakes, you can run 'make spell'."
 
 	@echo "Checking the integrity of po files..."
 	for POFILE in manual/po/*/*; \

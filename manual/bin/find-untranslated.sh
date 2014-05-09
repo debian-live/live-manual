@@ -43,7 +43,7 @@ Check_untranslated_strings
 
 Find_untranslated ()
 {
-echo "Searching for 'untranslated strings'..."
+echo "Searching for 'untranslated strings' in ${LANGUAGE} ..."
 echo ""
 
 for POFILE in manual/po/"${LANGUAGE}"/*

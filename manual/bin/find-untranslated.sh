@@ -71,7 +71,7 @@ Show_strings ()
 if [ "$(Find_untranslated | awk '{ sum += $1 } END { print sum }')" -eq "0" ]
 	then
 		echo ""
-		echo "There are 0 untranslated strings in your language."
+		echo "There are 0 untranslated strings in your language: ${LANGUAGE}"
 		echo ""
 		
 		exit 0

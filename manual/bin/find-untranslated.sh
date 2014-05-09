@@ -176,8 +176,16 @@ case "$LANGUAGE" in
 		;;
 
 	a)
-		echo "[Not implemented yet]"
-		# FIXME
+        for LANGUAGE in $(ls manual/po)
+            do
+               Find_untranslated
+               if [ "$(Find_untranslated | awk '{ sum += $1 } END { print sum }')" -eq "0" ]
+                then
+                    echo ""
+                    echo "There are 0 untranslated strings in your language: ${LANGUAGE}"
+                    echo ""
+                fi
+            done
 		;;
 	
 	q)	

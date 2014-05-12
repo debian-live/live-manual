@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 4.0~alpha12-1\n"
 "POT-Creation-Date: 2014-04-26 08:21+0200\n"
-"PO-Revision-Date: 2014-05-07 00:20+0100\n"
+"PO-Revision-Date: 2014-05-12 20:47+0100\n"
 "Last-Translator: AreYouLoco? <areyouloco@paranoici.org>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -20,15 +20,8 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:2 en/user_customization-overview.ssi:2
-#, fuzzy
 msgid ":B~ Customizing contents"
-msgstr ""
-"#-#-#-#-#  user_customization-overview.ssi.po (live-manual 4.0~alpha12-1)  #-"
-"#-#-#-#\n"
-":B~ Dostosowywanie zawartośći\n"
-"#-#-#-#-#  user_customization-contents.ssi.po (live-manual 4.0~alpha12-1)  #-"
-"#-#-#-#\n"
-":B~ Dostosowywanie zawartości"
+msgstr ":B~ Dostosowywanie zawartości"
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:4
@@ -65,6 +58,20 @@ msgid ""
 "system, such as persistence, keyboard layouts, or timezone. See {Customizing "
 "locale and language}#customizing-locale-and-language, for example."
 msgstr ""
+"Opcje konfiguracji systemu live są podzielone na opcje w czasie budowania, "
+"które są stosowane w czasie kompilacji i na opcje w czasie rozruchu, które "
+"są stosowane podczas uruchamiania systemu. Opcje podczas uruchamiania są "
+"podzielone na te występujące wcześnie podczas uruchamiania, zastosowane "
+"przez live-boot, i na te, występujące później, zastosowane przez live-"
+"config. Każdy parametr rozruchu może zostać zmodyfikowany przez użytkownika "
+"poprzez ustalenie go podczas startu. Obraz może być również zbudowany z "
+"domyślnymi parametrami startowymi, dzięki czemu użytkownicy mogą normalnie "
+"tylko uruchomić bezpośrednio systemu live bez podawania żadnych parametrów, "
+"gdy wszystkie opcje domyślne są odpowiednie. W szczególności argument #{lb --"
+"bootappend-live}# składa się z wszelkich opcji wiersza poleceń domyślnych "
+"dla jądra systemu live, takich jak trwałość (ang. persistence), układ "
+"klawiatury, lub strefa czasowa. Zobacz {Dostosowywanie lokalizacji i języka}"
+"#customizing-locale-and-language, dla przykładów."
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:12
@@ -77,6 +84,14 @@ msgid ""
 "your configuration. It is safe to do so, as none of the scripts contained "
 "within them are executed unless the system is configured as a live system."
 msgstr ""
+"Opcje konfiguracyjne w czasie budowania są opisane w podręczniku man pakietu "
+"#{lb config}#. Opcje konfiguracyjne czasu rozruchu opisane są w podręczniku "
+"man pakietów live-boot i live-config. Chociaż pakiety startowe live-boot i "
+"live-config są zainstalowane w systemie live, który zbudowaliśmy, zaleca się "
+"również zainstalować je w systemie budowania dla łatwego odniesienia podczas "
+"pracy przy konfiguracji. Jest to bezpieczne, ponieważ żaden z zawartych w "
+"nich skryptów nie jest wykonywany, chyba że system jest skonfigurowany jako "
+"system live."
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:14
@@ -100,6 +115,19 @@ msgid ""
 "filesystem. After the live image is built, if enabled, the source tarball is "
 "built in the *{source}* stage."
 msgstr ""
+"Proces kompilacji jest podzielony na etapy, w każdym z nich z zastosowanymi "
+"w kolejności różnymi dostosowaniami. Pierwszym etapem do uruchomienia jest "
+"etap *{bootstrap}*. Jest to wstępna faza wypełniania katalogu chroot "
+"pakietami aby stworzyć kadłub systemu Debian. Następnym etapem jest *{chroot}"
+"*, który kończy budowę katalogu chroot, wypełniania go wszystkimi pakietami "
+"wymienionymi w konfiguracji, wraz z innymi materiałami. Najwęcej "
+"dostosowywania zawartości odbywa się w tym etapie. Ostatnim etapem "
+"przygotowania obrazu live jest etap *{binarny}* (ang. binary), który tworzy "
+"możliwy do uruchomienia obraz, używając zawartości katalogu chroot do budowy "
+"głównego systemu plików w systemie live, a tym instalatora i wszelkich "
+"innych dodatkowych materiałów na nośniku docelowym poza system plików na "
+"systemu live. Po skompilowaniu obrazu live, jeśli włączono, archiwum "
+"źródłowe tarball jest budowane podczas etapu *{źródło}* (ang. source)."
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:18
@@ -111,11 +139,18 @@ msgid ""
 "installed, packages are installed before any locally included files are "
 "copied, and hooks are run later, after all of the materials are in place."
 msgstr ""
+"W każdym z tych etapów istnieje szczególna sekwencja, w której stosuje się "
+"polecenia. Są one usytuowane w taki sposób, aby zapewnić modyfikacjom bycie "
+"ułożonym w rozsądny sposób. Na przykład, w etapie *{chroot}*, "
+"prekonfiguracja (ang. preseeding) jest stosowana, zanim zostaną "
+"zainstalowane jakiekolwiek pakiety, pakiety są instalowane zanim "
+"jakiekolwiek lokalnie zawarte pliki zostaną kopiowane, a haki są wprowadzane "
+"później, gdy wszystkie materiały są już na miejscu."
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:20
 msgid "2~ Supplement lb config with files"
-msgstr ""
+msgstr "2~ Uzupełnienie lb config plikami"
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:22
@@ -131,6 +166,16 @@ msgid ""
 "boosting the already considerable flexibility of debian-live with code of "
 "your own."
 msgstr ""
+"Mimo, że #{lb config}# tworzy konfigurację szkieletowych katalogów w "
+"config/, aby osiągnąć swoje cele, może być konieczne udostępnienie "
+"dodatkowych plików w podkatalogach config/. W zależności od tego, gdzie "
+"pliki są przechowywane w konfiguracji, mogą być kopiowane do systemu plików "
+"systemu live lub do binarnego obrazu systemu plików, lub mogą zostać "
+"zapewnione konfiguracje  w czasie budowy systemu, które byłoby kłopotliwie "
+"przekazać jako opcje wiersza polecenia. Może zawrzeć rzeczy takie jak "
+"niestandardowe listy pakietów, niestandardowa grafiką lub inny skrypt do "
+"uruchomienia zarówno w czasie kompilacji jak i w czasie startu systemu, "
+"zwiększając już znaczną elastyczność debian-live swoim własnych kodem."
 
 #. type: Plain text
 #: en/user_customization-overview.ssi:24

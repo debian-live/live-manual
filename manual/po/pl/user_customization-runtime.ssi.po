@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 4.0~alpha12-1\n"
 "POT-Creation-Date: 2014-05-07 00:28+0300\n"
-"PO-Revision-Date: 2014-05-06 16:01+0100\n"
+"PO-Revision-Date: 2014-05-12 11:42+0100\n"
 "Last-Translator: AreYouLoco? <areyouloco@paranoici.org>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -218,6 +218,12 @@ msgid ""
 "discussed in {Live/chroot local includes}#live-chroot-local-includes, but "
 "also any groups and permissions associated with the live user."
 msgstr ""
+"Jednym ważnym czynnikiem jest to, że użytkownik jest tworzony przez live-"
+"boot w czasie startu systemu, a nie live-build w czasie kompilacji. To "
+"wpływa nie tylko, na to gdzie materiały dotyczące użytkownika live są "
+"wprowadzone w kompilacji, jak to opisano w {Uwzględnianie lokalne Live/"
+"chroot}#live-chroot-local-includes, ale również na wszelkie grupyi "
+"uprawnienia związane z użytkownikiem live."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:12
@@ -227,6 +233,11 @@ msgid ""
 "live user to the #{fuse}# group, you can either add the following file in "
 "#{config/includes.chroot/etc/live/config/user-setup.conf}#:"
 msgstr ""
+"Można określić dodatkowe grupy, do których użytkownik live będzie należeć "
+"korzystając z jednej z możliwości, aby skonfigurować live-config. Na "
+"przykład, aby dodać użytkownika live do grupy #{fuse}#, można dodać "
+"następujący plik w #{config/includes.chroot/etc/live/config/user-setup.conf}"
+"#:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:16
@@ -250,6 +261,9 @@ msgid ""
 "password \"live\". If you want to do that for any reason, you can easily "
 "achieve it as follows:"
 msgstr ""
+"Możliwe jest również, aby zmienić domyślną nazwę użytkownika \"user\" i "
+"domyślne hasło \"live\". Jeśli chcesz to zrobić, z jakiegokolwiek powodu, "
+"można to łatwo osiągnąć w następujący sposób:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:24
@@ -274,13 +288,17 @@ msgid ""
 "prefix it accordingly (e.g. 2000-passwd) and add it to #{config/includes."
 "chroot/lib/live/config/}#"
 msgstr ""
+"Jednym z możliwych sposobów zmiany domyślnego hasła jest użycie "
+"odpowiedniego haka, jak opisano w {Haki podczas uruchamiania systemu}#boot-"
+"time-hooks. W tym celu można użyć haka \"passwd\" z #{/usr/share/doc/live-"
+"config/examples/hooks}#, przedrostkiem jest odpowiednio (np. 2000-passwd), "
+"należy go dodać do #{config/includes.chroot/lib/live/config/}#"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:34
 msgid "2~customizing-locale-and-language Customizing locale and language"
 msgstr "2~customizing-locale-and-language Ustawianie lokalizacji i języka"
 
-# *tłumaczenie niedokładne
 #. type: Plain text
 #: en/user_customization-runtime.ssi:36
 msgid "When the live system boots, language is involved in two steps:"
@@ -304,6 +322,10 @@ msgid ""
 "To define the locale that should be generated, use the #{locales}# parameter "
 "in the #{--bootappend-live}# option of #{lb config}#, e.g."
 msgstr ""
+"Domyślne ustawieniem lokalnym podczas budowania systemu live jest "
+"#{locales=en_US.UTF-8}#. Aby określić ustawienia regionalne, które powinny "
+"być wygenerowane, użyj parametru #{locales}# w opcji #{--bootappend-live}# "
+"polecenia #{lb config}#, np."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:46
@@ -327,6 +349,12 @@ msgid ""
 "full #{language_country.encoding}# word. A list of supported locales and the "
 "encoding for each can be found in #{/usr/share/i18n/SUPPORTED}#."
 msgstr ""
+"Parametr ten, jak również parametr konfiguracyjny klawiatury jak wskazano "
+"poniżej, może być również używany w linii poleceń jądra. Można określić "
+"ustawienia regionalne poprzez #{language_country}# (w tym przypadku używane "
+"jest kodowanie domyślne) lub pełnej nazwy z kodowaniem #{language_country."
+"encoding}#. Lista obsługiwanych lokalizacji i kodowań można znaleźć w #{/usr/"
+"share/i18n/SUPPORTED}#."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:54
@@ -397,6 +425,9 @@ msgid ""
 "parameters. For example, to set up a French system with a French-Dvorak "
 "layout (called Bepo) on a TypeMatrix EZ-Reach 2030 USB keyboard, use:"
 msgstr ""
+"Jednak dla bardzo konkretnych przypadków użycia, można dodać inne parametry. "
+"Na przykład, aby ustawić francuski system z układem klawiatury French-Dvorak "
+"(zwany Bepo) na klawiaturze USB TypeMatrix EZ-Reach 2030, użyj:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:86
@@ -578,6 +609,11 @@ msgid ""
 "located in your home directory, copy it to the root of your hard drive's "
 "filesystem and mount it in #{/mnt}# as follows:"
 msgstr ""
+"Po utworzeniu pliku obrazu, na przykład, aby sprawić by katalog #{/usr}# był "
+"prwały, ale tylko zapisywał zmiany wprowadzone w tym katalogu, a nie całą "
+"zawartość #{/usr}#, można użyć opcji \"union\". Jeśli plik obrazu znajduje "
+"się w katalogu domowym, należy skopiować go do katalogu głównego systemu "
+"plików na dysku twardym i zamontować go w #{/mnt}# w następujący sposób:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:151
@@ -629,6 +665,10 @@ msgid ""
 "file, located on the volume's filesystem root, controls which directories it "
 "makes persistent, and in which way."
 msgstr ""
+"Partycję z etykietą #{persistence}# należy skonfigurować za pomocą pliku "
+"#{persistence.conf}#, aby dowolne katalogi stały się trwałe. Ten plik, "
+"znajdujący się w głównym katalogu systemu plików partycji, kontroluje które "
+"katalogi są trwałe i w jaki sposób."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:170
@@ -638,6 +678,11 @@ msgid ""
 "most uses. Let's say we want to make our home directory and APT cache "
 "persistent in an ext4 filesystem on the /dev/sdb1 partition:"
 msgstr ""
+"To jak niestandardowe wierzchnie zamontowania są skonfigurowane jest opisane "
+"w szczegółach w podręczniku man persistence.conf(5), ale ten prosty przykład "
+"powinien być wystarczający dla większości zastosowań. Powiedzmy, że chcemy, "
+"aby nasz katalog domowy i cache APT było trwałe w pamięci podręcznej systemu "
+"plików ext4 na partycji /dev/sdb1:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:178
@@ -681,6 +726,10 @@ msgid ""
 "different use cases. For instance, using several volumes at the same time or "
 "selecting only one, among various, for very specific purposes."
 msgstr ""
+"Istnieją różne sposoby korzystania z wielu magazynów trwałości (ang. "
+"persistence) dla różnych zastosowań. Na przykład, przy używanie kilku "
+"magazynów w tym samym czasie lub wybranie tylko jednego, spośród różnych, do "
+"bardzo specyficznych zastosowań."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:188
@@ -721,6 +770,17 @@ msgid ""
 "other types, they would use the boot parameters: #{persistence}# "
 "#{persistence-label=work}#."
 msgstr ""
+"Jeśli użytkownik będzie potrzebował wiele magazynów trwałości tego samego "
+"typu dla różnych miejsc lub dla celów testowych, takich jak magazyny "
+"#{private}# i ​​#{work}# parametr startowy #{persistence-label}# użyty w "
+"połączeniu z parametrem #{persistence}# pozwoli na wiele unikatowych "
+"magazynów trwałości. Przykładem może być, jeśli użytkownik chciałby użyć "
+"partycji trwałości oznaczonej #{private}# dla prywatnych danych, takich jak "
+"zakładki w przeglądarce lub innych typów danych, to mógłby użyć parametrów "
+"startowych:#{persistence}# #{persistence-label=private}#. A do "
+"przechowywania danych związanych z pracą, takich jak dokumenty, projekty "
+"badawcze lub inne rodzaje, mógłby skorzystać z parametrów startowych: "
+"#{persistence}# #{persistence-label=work}#."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:194
@@ -730,6 +790,10 @@ msgid ""
 "man page contains more information about how to use these labels with legacy "
 "names."
 msgstr ""
+"Ważne jest, aby pamiętać, że każda z tych partycji, #{private}# i ​​#{work}#, "
+"także potrzebuje pliku #{persistence.conf}#. Podręcznik man pakietu live-"
+"boot zawiera więcej informacji o tym, jak korzystać z tych etykiet z "
+"zapisanymi nazwami."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:196
@@ -749,6 +813,16 @@ msgid ""
 "the machine you are creating the encrypted partition with and also in the "
 "live system you are going to use the encrypted persistent partition with."
 msgstr ""
+"Korzystanie z funkcji trwałości (ang. persistence) oznacza, że ​​niektóre "
+"poufne dane mogą zostać narażone na ryzyko. Zwłaszcza jeśli trwałe dane są "
+"przechowywane na urządzeniu przenośnym, takim jak pamięci USB lub zewnętrzne "
+"dyski twarde. To jest miejsce, gdzie przydatne staje się  szyfrowanie. Nawet "
+"jeśli cała procedura może wydawać się skomplikowana, ze względu na liczbę "
+"kroków, które należy podjąć, to jest bardzo łatwo obsługiwać szyfrowane "
+"partycje z live-boot. Aby móc korzystać z *{luks}*, który jest obsługiwanym "
+"typem szyfrowania, musisz zainstalować /{cryptsetup}/ zarówno na maszynie "
+"tworzenia zaszyfrowanych partycji, a także w systemie live, który będzie "
+"używał szyfrowanej trwałej partycji."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:200
@@ -784,6 +858,11 @@ msgid ""
 "anticipated this step and added the boot parameters at build time following "
 "the usual procedure:"
 msgstr ""
+"Gdy Twoj system live posiada  /{cryptsetup}/, to w zasadzie wystarczy, już "
+"tylko utworzyć nową partycję, zaszyfrować ją i uruchomić z parametrami "
+"#{persistence}# i #{persistence-encryption=luks}#. Mogliśmy już przewidzieć "
+"ten krok i dodać parametry startowe w czasie kompilacji przestrzegając "
+"następującej procedury:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:220

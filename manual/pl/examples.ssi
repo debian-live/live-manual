@@ -14,15 +14,17 @@ Aby skorzystać z tych przykładów potrzebujesz systemu, który spełnia
 wymagania wymienione w {wymaganiach}#requirements i ma zainstalowane
 live-build, jak opisano w {instalacji live-build}#installing-live-build.
 
-Note that, for the sake of brevity, in these examples we do not specify a
-local mirror to use for the build. You can speed up downloads considerably
-if you use a local mirror. You may specify the options when you use #{lb
-config}#, as described in {Distribution mirrors used at build
-time}#distribution-mirrors-build-time, or for more convenience, set the
-default for your build system in #{/etc/live/build.conf}#. Simply create
-this file and in it, set the corresponding #{LB_MIRROR_*}# variables to your
-preferred mirror. All other mirrors used in the build will be defaulted from
-these values. For example:
+Należy zauważyć, że, ze względu na zwięzłość, w tych przykładach nie
+określono lokalnego serwera używanego do kompilacji. Można znacznie
+przyspieszyć pobrań przypadku korzystania z lokalnego serwera
+lustrzanego. Można określić te opcje podczas korzystania z #{lb config}#,
+jak opisano w {Serwery lustrzane dystrybucji używane w czasie
+kompilacji}#distribution-mirrors-build-time lub dla większej wygody, ustawić
+domyślną opcję dla systemu kompilacji w #{/etc/live/build.conf}#. Wystarczy
+utworzyć ten plik, a w nim, ustawić odpowiednią zmienną  #{LB_MIRROR_*}# dla
+preferowanego serwera lustrzanego. Wszystkie inne serwery lustrzane
+stosowane podczas kompilacji, będą domyślnie ustawione od tych wartości. Na
+przykład:
 
 code{
 
@@ -36,9 +38,9 @@ code{
 
 *{Przykład użycia:}* Stwórz pierwszy prosty obraz aby nauczyć się podstaw live-build.
 
-In this tutorial, we will build a default ISO hybrid live system image
-containing only base packages (no Xorg) and some live system support
-packages, as a first exercise in using live-build.
+W tym samouczku, będziemy budować domyślny obraz live ISO-hybrid zawierający
+tylko pakiety podstawowe (bez Xorg'a) i kilka pakietów systemu live, jako
+pierwsze ćwiczenie w użyciu live-build.
 
 Nie można tego zrobić łatwiej niż tak:
 
@@ -48,9 +50,10 @@ code{
 
 }code
 
-Examine the contents of the #{config/}# directory if you wish. You will see
-stored here a skeletal configuration, ready to customize or, in this case,
-use immediately to build a default image.
+ Zbadaj zawartość katalogu #{config/}#, jeśli chcesz. Zobaczysz tam
+konfiguracje przechowywane w szkieletowych katalogach, gotowe do
+dostosowywania lub, w tym przypadku, użyte natychmiast, aby zbudować
+domyślny obraz.
 
 A teraz jako super-użytkownik, zbuduj obraz zapisując przy tym log podczas
 budowania używając #{tee}#.
@@ -61,14 +64,14 @@ code{
 
 }code
 
-Assuming all goes well, after a while, the current directory will contain
-#{binary.hybrid.iso}#. This ISO hybrid image can be booted directly in a
-virtual machine as described in {Testing an ISO image with
-Qemu}#testing-iso-with-qemu and {Testing an ISO image with
-VirtualBox}#testing-iso-with-virtualbox, or else imaged onto optical media
-or a USB flash device as described in {Burning an ISO image to a physical
-medium}#burning-iso-image and {Copying an ISO hybrid image to a USB
-stick}#copying-iso-hybrid-to-usb, respectively.
+Zakładając, że wszystko poszło dobrze, po jakimś czasie, bieżący katalog
+będzie zawierał #{binary.hybrid.iso}#. Ten hybrydowy obraz ISO można
+uruchomić bezpośrednio na maszynie wirtualnej, jak opisano w {Testowanie
+obrazu ISO z Qemu}#testing-iso-with-qemu i {Testowanie obrazu ISO z
+VirtualBox}#testing-iso-with-virtualbox, lub jeszcze odpowiednio nagrany
+obraz na nośnikach optycznych lub urządzenia flash USB, w sposób opisany w
+{Nagrywanie obrazu ISO na nośniku fizycznym}#burning-iso-image i {skopiowany
+na nośnik pamięci USB hybrydowy obraz ISO }#copying-iso-hybrid-to-usb.
 
 2~tutorial-2 Samouczek 2: Narzędzie przeglądarka
 
@@ -86,13 +89,13 @@ code{
 
 }code
 
-Our choice of LXDE for this example reflects our desire to provide a minimal
-desktop environment, since the focus of the image is the single use we have
-in mind, the web browser. We could go even further and provide a default
-configuration for the web browser in
-#{config/includes.chroot/etc/iceweasel/profile/}#, or additional support
-packages for viewing various kinds of web content, but we leave this as an
-exercise for the reader.
+Nasz wybór LXDE na tym przykładzie odzwierciedla nasze pragnienie, aby
+zapewnić minimalne środowisko pulpitu, ponieważ celem obrazu jest
+jednorazowy użytek, który mamy na myśli, czyli przeglądarka
+internetowa. Możemy pójść dalej i zapewnić domyślną konfigurację dla
+przeglądarki w #{config/includes.chroot/etc/iceweasel/profile/}#, lub
+dodatkowe pakiety wsparcia dla wyświetlania różnego rodzaju treści
+internetowych, ale pozostawiamy to jako ćwiczenie dla czytelnika.
 
 Zbuduj ponownie obraz jako super-użytkownik, zachowując log jak to opisano w
 {Samouczku 1}#tutorial-1:
@@ -110,12 +113,12 @@ Jeszcze raz, zweryfikuj czy obraz jest OK i przetestuj go jak to opisano w
 
 *{Przykład użycia:}* Stwórz projekt spersonalizowanego obrazu zawierającego twoje ulubione oprogramowanie tak abyś mógł go zabrać ze sobą gdziekolwiek pójdziesz i zapisujący sukcesywnie zmiany, kiedy tego potrzebujesz oraz zmiany w konfiguracji.
 
-Since we will be changing our personalized image over a number of revisions,
-and we want to track those changes, trying things experimentally and
-possibly reverting them if things don't work out, we will keep our
-configuration in the popular #{git}# version control system. We will also
-use the best practice of autoconfiguration via #{auto}# scripts as described
-in {Managing a configuration}#managing-a-configuration.
+Ponieważ będziemy zmieniać nasz indywidualny obraz wprowadzając wiele zmian,
+chcemy, śledzić te zmiany, próbując rzeczy eksperymentalnych i ewentualnie
+przywracając je, jeśli coś nie wyjdzie, będziemy trzymać naszą konfigurację
+w popularnym systemie kontroli wersji #{git}#. Będziemy również
+wykorzystywać najlepsze praktyki autokonfiguracji poprzez skrypty #{auto}#
+jak opisano w {Zarządzanie konfiguracją}#managing-a-configuration.
 
 3~ Pierwsza zmiana
 
@@ -157,12 +160,13 @@ code{
 
 }code
 
-First, #{--architectures i386}# ensures that on our #{amd64}# build system,
-we build a 32-bit version suitable for use on most machines. Second, we use
-#{--linux-flavours 686-pae}# because we don't anticipate using this image on
-much older systems. Third, we have chosen the /{lxde}/ task metapackage to
-give us a minimal desktop. And finally, we have added two initial favourite
-packages: /{iceweasel}/ and /{xchat}/.
+Po pierwsze, #{--architectures i386}# zapewnia, że ​​w naszym systemie
+kompilacji #{amd64}#, możemy zbudować 32-bitową wersję odpowiednią do
+stosowania na większości maszyn. Po drugie, możemy użyć #{--linux-flavours
+686-pae}# bo nie przewidujemy używania tego obrazu na dużo starszych
+systemach. Po trzecie, wybraliśmy metapakiet zadania /{lxde}/, który daje
+nam minimalny pulpit. I w końcu, dodaliśmy dwa wstępne ulubione pakiety:
+/{iceweasel}/ i /{xchat}/.
 
 A teraz, zbuduj obraz:
 
@@ -252,12 +256,12 @@ użytkowników systemów live.
 
 *{Przykład użycia:}* Stwórz obraz za pomocą live-build, który podczas uruchamiania, łączy się automatycznie z serwerem VNC.
 
-Make a build directory and create an skeletal configuration inside it,
-disabling recommends to make a minimal system. And then create two initial
-package lists: the first one generated with a script provided by live-build
-named #{Packages}# (see {Generated package lists}#generated-package-lists),
-and the second one including /{xorg}/, /{gdm3}/, /{metacity}/ and
-/{xvnc4viewer}/.
+Stwórz katalog kompilacji i stwórz wewnątrz szkielet folderów konfiguracji,
+wyłączając zalecane, aby utworzyć minimalny system. A następnie utwórz dwie
+początkowe listy pakietów: pierwszą wygenerowaną ze skryptu dostarczonego
+przez live-build o nazwie #{Pakiety}# (patrz {Wygenerowane listy
+pakietów}#generated-package-lists), a drugą uwzględniającą pakiety /{xorg}/,
+/{gdm3}/, /{metacity}/ i /{xvnc4viewer}/.
 
 code{
 
@@ -270,9 +274,9 @@ $ mkdir vnc-kiosk-client
 
 }code
 
-As explained in {Tweaking APT to save space}#tweaking-apt-to-save-space you
-may need to re-add some recommended packages to make your image work
-properly.
+Jak wyjaśniono w {Podkręcanie APT, w celu zaoszczędzenia
+miejsca}#tweaking-apt-to-save-space może trzeba ponownie dodać niektóre
+polecane pakiety do prawidłowej pracy obrazu.
 
 Najprostszym sposobem na wypisane listy rekomendowanych pakietów jest u
 życie /{apt-cache}/. Na przykład:
@@ -283,11 +287,12 @@ code{
 
 }code
 
-In this example we found out that we had to re-include several packages
-recommended by live-config and live-boot: #{user-setup}# to make autologin
-work and #{sudo}# as an essential program to shutdown the system. Besides,
-it could be handy to add #{live-tools}# to be able to copy the image to RAM
-and #{eject}# to eventually eject the live medium. So:
+W tym przykładzie okazało się, że musimy ponownie objąć kilka pakietów
+zalecanych przez live-config i live-boot: #{user-setup}# do funkcji
+autologowania i #{sudo}# jako istotnego przy zamykaniu systemu
+programu. Poza tym, może być przydatne, również dodanie #{live-tools}#, aby
+móc skopiować obraz systemu do pamięci RAM i #{eject}#, aby ewentualnie
+wysunąć nośnik live. Tak więc:
 
 code{
 
@@ -328,14 +333,14 @@ Korzystaj.
 
 *{Przykład użycia:}*  Stwórz domyślny obraz z usuniętymi niektórymi komponentami tak, aby zmieścił się on na nośniku USB z 128MB pamięci z pozostawieniem niewielkiej przestrzeni do wykorzystania według potrzeb.
 
-When optimizing an image to fit a certain media size, you need to understand
-the tradeoffs you are making between size and functionality. In this
-example, we trim only so much as to make room for additional material within
-a 128MB media size, but without doing anything to destroy the integrity of
-the packages contained within, such as the purging of locale data via the
-/{localepurge}/ package, or other such "intrusive" optimizations. Of
-particular note, we use #{--debootstrap-options}# to create a minimal system
-from scratch.
+Przy optymalizacji obrazu, aby dopasować go do określonego rozmiaru nośnika,
+musisz dokonać pewnych kompromisów między rozmiarem a funkcjonalnością. W
+tym przykładzie, przytniemy tylko tyle, aby zrobić miejsce dla dodatkowego
+materiału medialnego w rozmiarze 128MB, ale robienia czegokolwiek, co
+mogłoby zniszczyć integralność zawartych pakietów, np. czyszczenie danych
+ustawień regionalnych poprzez pakiet /{localepurge}/, lub inne tego typu
+/{inwazyjne}/ optymalizacje. Szczególnie godne uwagi, jest użycie
+#{--debootstrap-options}# by stworzyć minimalny system od podstaw.
 
 code{
 
@@ -367,18 +372,18 @@ Na systemie autora w momencie pisania tego dokumentu powyższa konfiguracja
 wyprodukowała 77MB obraz. To korzystnie w porównaniu z obrazem 177MB
 wyprodukowanym przez domyślną konfigurację w {Samouczku 1}#tutorial-1.
 
-The biggest space-saver here, compared to building a default image on an
-#{i386}# architecture system, is to select only the #{486}# kernel flavour
-instead of the default #{-k "486 686-pae"}#. Leaving off APT's indices with
-#{--apt-indices false}# also saves a fair amount of space, the tradeoff
-being that you need to do an #{apt-get update}# before using /{apt}/ in the
-live system. Dropping recommended packages with #{--apt-recommends false}#
-saves some additional space, at the expense of omitting some packages you
-might otherwise expect to be there. #{--debootstrap-options
-"--variant=minbase"}# bootstraps a minimal system from the start. Not
-automatically including firmware packages with #{--firmware-chroot false}#
-saves some space too. And finally, #{--memtest none}# prevents the
-installation of a memory tester.
+Największą oszczędność miejsca w porównaniu do budowania obrazu domyślnego w
+systemie o architekturze #{i386}#, jest wybranie typu jądra #{486}# zamiast
+domyślnego #{-k "486 686-pae"}#. Pominięcie indeksów APT #{--apt-indices
+false}# również oszczędza sporo miejsca, w zamian trzeba wykonać #{apt-get
+update}# przed używaniem /{apt}/ w systemie live. Pominięcie zalecanych
+pakietów  #{--apt-recommends false}# oszczędza trochę dodatkowego miejsca,
+kosztem pominięcia niektórych pakietów , które mogłoby się spodziewać, że
+powinny się znaleźć w obrazie. Opcja #{--debootstrap-options
+"--variant=minbase"}# ładuje minimalny system na początku. Nie automatycznie
+zawarcie pakietów firmware z #{--firmware-chroot false}# również zaoszczędzą
+sporo miejsca. I w końcu, #{--memtest none}# zapobiega instalacji testera
+pamięci.
 
 *{Uwaga:}* System minimalny można również osiągnąć za pomocą haków, takich jak na przykład #{stripped.hook.chroot}#, znajdujący się w #{/usr/share/doc/live-build/examples/hooks}#. To może zaoszczędzić dodatkowo małe ilości przestrzeni i stworzyć 62MB obraz. Jednak robi to przez usunięcie dokumentacji i innych plików z pakietów zainstalowanych w systemie. To narusza integralność tych pakietów, a które, jak komentarz nagłówka ostrzega, mogą prowadzić do nieprzewidzianych konsekwencji. Dlatego właśnie użycie minimalnej opcji /{debootstrap}/'a jest zalecanym sposobem na osiągnięcie tego celu.
 

@@ -10,15 +10,17 @@ możliwości można znaleźć w podręczniku man pakietu live-config.
 
 2~ Personalizacja użytkownika live
 
-One important consideration is that the live user is created by live-boot at
-boot time, not by live-build at build time. This not only influences where
-materials relating to the live user are introduced in your build, as
-discussed in {Live/chroot local includes}#live-chroot-local-includes, but
-also any groups and permissions associated with the live user.
+Jednym ważnym czynnikiem jest to, że użytkownik jest tworzony przez
+live-boot w czasie startu systemu, a nie live-build w czasie kompilacji. To
+wpływa nie tylko, na to gdzie materiały dotyczące użytkownika live są
+wprowadzone w kompilacji, jak to opisano w {Uwzględnianie lokalne
+Live/chroot}#live-chroot-local-includes, ale również na wszelkie grupyi
+uprawnienia związane z użytkownikiem live.
 
-You can specify additional groups that the live user will belong to by using
-any of the possibilities to configure live-config. For example, to add the
-live user to the #{fuse}# group, you can either add the following file in
+Można określić dodatkowe grupy, do których użytkownik live będzie należeć
+korzystając z jednej z możliwości, aby skonfigurować live-config. Na
+przykład, aby dodać użytkownika live do grupy #{fuse}#, można dodać
+następujący plik w
 #{config/includes.chroot/etc/live/config/user-setup.conf}#:
 
 code{
@@ -31,9 +33,9 @@ lub użyj
 #{live-config.user-default-groups=audio,cdrom,dip,floppy,video,plugdev,netdev,powerdev,scanner,bluetooth,fuse}#
 jako parametru startowego.
 
-It is also possible to change the default username "user" and the default
-password "live". If you want to do that for any reason, you can easily
-achieve it as follows:
+Możliwe jest również, aby zmienić domyślną nazwę użytkownika "user" i
+domyślne hasło "live". Jeśli chcesz to zrobić, z jakiegokolwiek powodu,
+można to łatwo osiągnąć w następujący sposób:
 
 Aby zmienić domyślną nazwę użytkownika należy po prostu określić ją w
 konfiguracji:
@@ -44,10 +46,11 @@ code{
 
 }code
 
-One possible way of changing the default password is by means of a hook as
-described in {Boot-time hooks}#boot-time-hooks. In order to do that you can
-use the "passwd" hook from #{/usr/share/doc/live-config/examples/hooks}#,
-prefix it accordingly (e.g. 2000-passwd) and add it to
+Jednym z możliwych sposobów zmiany domyślnego hasła jest użycie
+odpowiedniego haka, jak opisano w {Haki podczas uruchamiania
+systemu}#boot-time-hooks. W tym celu można użyć haka "passwd" z
+#{/usr/share/doc/live-config/examples/hooks}#, przedrostkiem jest
+odpowiednio (np. 2000-passwd), należy go dodać do
 #{config/includes.chroot/lib/live/config/}#
 
 2~customizing-locale-and-language Ustawianie lokalizacji i języka
@@ -58,10 +61,10 @@ _* generowanie plików lokalizacji
 
 _* ustawienie konfiguracji klawiatury
 
-The default locale when building a Live system is
-#{locales=en_US.UTF-8}#. To define the locale that should be generated, use
-the #{locales}# parameter in the #{--bootappend-live}# option of #{lb
-config}#, e.g.
+Domyślne ustawieniem lokalnym podczas budowania systemu live jest
+#{locales=en_US.UTF-8}#. Aby określić ustawienia regionalne, które powinny
+być wygenerowane, użyj parametru #{locales}# w opcji #{--bootappend-live}#
+polecenia #{lb config}#, np.
 
 code{
 
@@ -72,11 +75,12 @@ code{
 Wiele lokalizacji może być określone w postaci listy rozdzielonej
 przecinkami.
 
-This parameter, as well as the keyboard configuration parameters indicated
-below, can also be used at the kernel command line. You can specify a locale
-by #{language_country}# (in which case the default encoding is used) or the
-full #{language_country.encoding}# word. A list of supported locales and the
-encoding for each can be found in #{/usr/share/i18n/SUPPORTED}#.
+Parametr ten, jak również parametr konfiguracyjny klawiatury jak wskazano
+poniżej, może być również używany w linii poleceń jądra. Można określić
+ustawienia regionalne poprzez #{language_country}# (w tym przypadku używane
+jest kodowanie domyślne) lub pełnej nazwy z kodowaniem
+#{language_country.encoding}#. Lista obsługiwanych lokalizacji i kodowań
+można znaleźć w #{/usr/share/i18n/SUPPORTED}#.
 
 Both the console and X keyboard configuration are performed by
 #{live-config}# using the #{console-setup}# package. To configure them, use
@@ -114,9 +118,10 @@ code{
 
 }code
 
-However, for very specific use cases, you may wish to include other
-parameters. For example, to set up a French system with a French-Dvorak
-layout (called Bepo) on a TypeMatrix EZ-Reach 2030 USB keyboard, use:
+Jednak dla bardzo konkretnych przypadków użycia, można dodać inne
+parametry. Na przykład, aby ustawić francuski system z układem klawiatury
+French-Dvorak (zwany Bepo) na klawiaturze USB TypeMatrix EZ-Reach 2030,
+użyj:
 
 code{
 
@@ -217,11 +222,11 @@ code{
 
 }code
 
-Once the image file is created, as an example, to make #{/usr}# persistent
-but only saving the changes you make to that directory and not all the
-contents of #{/usr}#, you can use the "union" option. If the image file is
-located in your home directory, copy it to the root of your hard drive's
-filesystem and mount it in #{/mnt}# as follows:
+Po utworzeniu pliku obrazu, na przykład, aby sprawić by katalog #{/usr}# był
+prwały, ale tylko zapisywał zmiany wprowadzone w tym katalogu, a nie całą
+zawartość #{/usr}#, można użyć opcji "union". Jeśli plik obrazu znajduje się
+w katalogu domowym, należy skopiować go do katalogu głównego systemu plików
+na dysku twardym i zamontować go w #{/mnt}# w następujący sposób:
 
 code{
 
@@ -245,15 +250,16 @@ parametr startowy "persistence".
 
 3~persistence-conf Plik persistence.conf
 
-A volume with the label #{persistence}# must be configured by means of the
-#{persistence.conf}# file to make arbitrary directories persistent. That
-file, located on the volume's filesystem root, controls which directories it
-makes persistent, and in which way.
+Partycję z etykietą #{persistence}# należy skonfigurować za pomocą pliku
+#{persistence.conf}#, aby dowolne katalogi stały się trwałe. Ten plik,
+znajdujący się w głównym katalogu systemu plików partycji, kontroluje które
+katalogi są trwałe i w jaki sposób.
 
-How custom overlay mounts are configured is described in full detail in the
-persistence.conf(5) man page, but a simple example should be sufficient for
-most uses. Let's say we want to make our home directory and APT cache
-persistent in an ext4 filesystem on the /dev/sdb1 partition:
+To jak niestandardowe wierzchnie zamontowania są skonfigurowane jest opisane
+w szczegółach w podręczniku man persistence.conf(5), ale ten prosty przykład
+powinien być wystarczający dla większości zastosowań. Powiedzmy, że chcemy,
+aby nasz katalog domowy i cache APT było trwałe w pamięci podręcznej systemu
+plików ext4 na partycji /dev/sdb1:
 
 code{
 
@@ -277,9 +283,10 @@ workaround for this limitation you can add #{/ union}# to your
 
 3~ Używanie więcej niż jednego magazynu persistence
 
-There are different methods of using multiple persistence store for
-different use cases. For instance, using several volumes at the same time or
-selecting only one, among various, for very specific purposes.
+Istnieją różne sposoby korzystania z wielu magazynów trwałości
+(ang. persistence) dla różnych zastosowań. Na przykład, przy używanie kilku
+magazynów w tym samym czasie lub wybranie tylko jednego, spośród różnych, do
+bardzo specyficznych zastosowań.
 
 Several different custom overlay volumes (with their own
 #{persistence.conf}# files) can be used at the same time, but if several
@@ -298,33 +305,35 @@ first partition that will save the user's files and #{# echo "/root" >
 persistence.conf}# for the second partition which will store the superuser's
 files. Finally, use the #{persistence}# boot parameter.
 
-If a user would need multiple persistence store of the same type for
-different locations or testing, such as #{private}# and #{work}#, the boot
-parameter #{persistence-label}# used in conjunction with the boot parameter
-#{persistence}# will allow for multiple but unique persistence media. An
-example would be if a user wanted to use a persistence partition labeled
-#{private}# for personal data like browser bookmarks or other types, they
-would use the boot parameters: #{persistence}#
-#{persistence-label=private}#. And to store work related data, like
-documents, research projects or other types, they would use the boot
-parameters: #{persistence}# #{persistence-label=work}#.
+Jeśli użytkownik będzie potrzebował wiele magazynów trwałości tego samego
+typu dla różnych miejsc lub dla celów testowych, takich jak magazyny
+#{private}# i ​​#{work}# parametr startowy #{persistence-label}# użyty w
+połączeniu z parametrem #{persistence}# pozwoli na wiele unikatowych
+magazynów trwałości. Przykładem może być, jeśli użytkownik chciałby użyć
+partycji trwałości oznaczonej #{private}# dla prywatnych danych, takich jak
+zakładki w przeglądarce lub innych typów danych, to mógłby użyć parametrów
+startowych:#{persistence}# #{persistence-label=private}#. A do
+przechowywania danych związanych z pracą, takich jak dokumenty, projekty
+badawcze lub inne rodzaje, mógłby skorzystać z parametrów startowych:
+#{persistence}# #{persistence-label=work}#.
 
-It is important to remember that each of these volumes, #{private}# and
-#{work}#, also needs a #{persistence.conf}# file in its root. The live-boot
-man page contains more information about how to use these labels with legacy
-names.
+Ważne jest, aby pamiętać, że każda z tych partycji, #{private}# i
+​​#{work}#, także potrzebuje pliku #{persistence.conf}#. Podręcznik man
+pakietu live-boot zawiera więcej informacji o tym, jak korzystać z tych
+etykiet z zapisanymi nazwami.
 
 2~ Używanie opcji persistence z szyfrowaniem
 
-Using the persistence feature means that some sensible data might get
-exposed to risk. Especially if the persistent data is stored on a portable
-device such as a usb stick or an external hard drive. That is when
-encryption comes in handy. Even if the entire procedure might seem
-complicated because of the number of steps to be taken, it is really easy to
-handle encrypted partitions with live-boot. In order to use *{luks}*, which
-is the supported encryption type, you need to install /{cryptsetup}/ both on
-the machine you are creating the encrypted partition with and also in the
-live system you are going to use the encrypted persistent partition with.
+Korzystanie z funkcji trwałości (ang. persistence) oznacza, że ​​niektóre
+poufne dane mogą zostać narażone na ryzyko. Zwłaszcza jeśli trwałe dane są
+przechowywane na urządzeniu przenośnym, takim jak pamięci USB lub zewnętrzne
+dyski twarde. To jest miejsce, gdzie przydatne staje się  szyfrowanie. Nawet
+jeśli cała procedura może wydawać się skomplikowana, ze względu na liczbę
+kroków, które należy podjąć, to jest bardzo łatwo obsługiwać szyfrowane
+partycje z live-boot. Aby móc korzystać z *{luks}*, który jest obsługiwanym
+typem szyfrowania, musisz zainstalować /{cryptsetup}/ zarówno na maszynie
+tworzenia zaszyfrowanych partycji, a także w systemie live, który będzie
+używał szyfrowanej trwałej partycji.
 
 Aby zainstalować /{cryptsetup}/ na twoim komputerze:
 
@@ -343,11 +352,11 @@ code{
 
 }code
 
-Once you have your live system with /{cryptsetup}/, you basically only need
-to create a new partition, encrypt it and boot with the #{persistence}# and
-#{persistence-encryption=luks}# parameters. We could have already
-anticipated this step and added the boot parameters at build time following
-the usual procedure:
+Gdy Twoj system live posiada  /{cryptsetup}/, to w zasadzie wystarczy, już
+tylko utworzyć nową partycję, zaszyfrować ją i uruchomić z parametrami
+#{persistence}# i #{persistence-encryption=luks}#. Mogliśmy już przewidzieć
+ten krok i dodać parametry startowe w czasie kompilacji przestrzegając
+następującej procedury:
 
 code{
 

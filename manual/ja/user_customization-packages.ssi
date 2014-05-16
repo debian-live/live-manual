@@ -1,36 +1,25 @@
-:B~ Customizing package installation
+:B~ インストールするパッケージの独自化
 
-1~customizing-package-installation Customizing package installation
+1~customizing-package-installation インストールするパッケージの独自化
 
-Perhaps the most basic customization of a live system is the selection of
-packages to be included in the image. This chapter guides you through the
-various build-time options to customize live-build's installation of
-packages. The broadest choices influencing which packages are available to
-install in the image are the distribution and archive areas. To ensure
-decent download speeds, you should choose a nearby distribution mirror. You
-can also add your own repositories for backports, experimental or custom
-packages, or include packages directly as files. You can define lists of
-packages, including metapackages which will install many related packages at
-once, such as packages for a particular desktop or language. Finally, a
-number of options give some control over /{apt}/, or if you prefer,
-/{aptitude}/, at build time when packages are installed. You may find these
-handy if you use a proxy, want to disable installation of recommended
-packages to save space, or need to control which versions of packages are
-installed via APT pinning, to name a few possibilities.
+恐らく Live システムの最も基本的な独自化はイメージに収録するパッケージの選択でしょう。この章では live-build
+でのパッケージのインストールの独自化のためのビルド時の様々なオプションを見ていきます。イメージへのインストールに利用可能なパッケージに関して最も影響が大きい選択はディストリビューションとアーカイブ領域です。まともなダウンロード速度を確保するため、近いディストリビューションミラーを選択してください。backports
+や experimental
+あるいは独自のパッケージのある自身専用のリポジトリを追加することもできます。また、ファイルを直接パッケージとして収録することもできます。特定のデスクトップや言語のパッケージ等、多数の関連パッケージを同時にインストールするメタパッケージを含め、パッケージ一覧は定義できます。最後に、ビルドでパッケージをインストールするときに
+/{apt}/ や好みにより /{aptitude}/
+を制御するオプションもいくらかあります。プロキシを使っていたり、推奨パッケージのインストールを無効にして容量を節約したい、インストールするパッケージのバージョンをAPT
+ピン経由で制御する必要がある、等便利だと思う場面があるかもしれません。
 
-2~ Package sources
+2~ パッケージソース
 
-3~ Distribution, archive areas and mode
+3~ ディストリビューション、アーカイブ領域とモード
 
-The distribution you choose has the broadest impact on which packages are
-available to include in your live image. Specify the codename, which
-defaults to ${testing} for the ${testing} version of live-build. Any current
-distribution carried in the archive may be specified by its codename
-here. (See {Terms}#terms for more details.) The #{--distribution}# option
-not only influences the source of packages within the archive, but also
-instructs live-build to behave as needed to build each supported
-distribution. For example, to build against the *{unstable}* release, sid,
-specify:
+ディストリビューションの選択は Live イメージへの収録に利用できるパッケージに最も影響があります。コード名を指定してください。${testing}
+バージョンの live-build では ${testing}
+がデフォルトになっています。現在アーカイブにある任意のディストリビューションをコード名で指定できます (詳細については{条件}#terms
+参照)。#{--distribution}#
+オプションはアーカイブ内のパッケージソースに影響するだけでなく、サポートしている各ディストリビューションをビルドするのに必要な動作をするよう
+live-build に指示します。例えば*{unstable}*リリースであるsidに対してビルドする場合は:
 
 code{
 
@@ -38,10 +27,9 @@ code{
 
 }code
 
-Within the distribution archive, archive areas are major divisions of the
-archive. In Debian, these are #{main}#, #{contrib}# and #{non-free}#. Only
-#{main}# contains software that is part of the Debian distribution, hence
-that is the default. One or more values may be specified, e.g.
+のように指定します。ディストリビューションアーカイブ内で、アーカイブ領域はアーカイブを大きく分類します。Debian
+では#{main}#、#{contrib}#、#{non-free}# となっています。#{main}#に収録されるソフトウェアだけが Debian
+ディストリビューションの一部であり、したがってそれがデフォルトとなっています。複数指定することもできます。例えば
 
 code{
 
@@ -49,36 +37,30 @@ code{
 
 }code
 
-Experimental support is available for some Debian derivatives through a
-#{--mode}# option. By default, this option is set to #{debian}# only if you
-are building on a Debian or on an unknown system. If #{lb config}# is
-invoked on any of the supported derivatives, it will default to create an
-image of that derivative. If #{lb config}# is run in e.g. #{ubuntu}# mode,
-the distribution names and archive areas for the specified derivative are
-supported instead of the ones for Debian. The mode also modifies live-build
-behaviour to suit the derivatives.
+Debian 派生物によっては #{--mode}# オプションの実験的サポートが利用できるものがあります。このオプションは Debian
+または未知のシステムでビルドしている場合にのみデフォルトで #{debian}# がセットされています。サポートしている派生物のどれかで #{lb
+config}# を実行した場合のデフォルト値はその派生物のイメージを作成するための値になります。#{lb config}# を例えば
+#{ubuntu}# モードで実行すると Debian
+向けに代えて指定された派生物のディストリビューション名やアーカイブ領域がサポートされます。このモードはその派生物に合うように live-build
+の挙動も変更します。
 
-*{Note:}* The projects for whom these modes were added are primarily responsible for supporting users of these options. The ${project}, in turn, provides development support on a best-effort basis only, based on feedback from the derivative projects as we do not develop or support these derivatives ourselves.
+*{注意:}* モードを追加したプロジェクトの設定については主にそのオプションのサポートユーザの担当です。${project}は最善の努力をもって開発サポートを提供はしますが、私たちは派生物を自ら開発あるいはサポートしているわけではないため、あくまで派生物プロジェクトからのフィードバックが基になります。
 
-3~ Distribution mirrors
+3~ ディストリビューションミラー
 
-The Debian archive is replicated across a large network of mirrors around
-the world so that people in each region can choose a nearby mirror for best
-download speed. Each of the #{--mirror-*}# options governs which
-distribution mirror is used at various stages of the build. Recall from
-{Stages of the build}#stages-of-the-build that the *{bootstrap}* stage is
-when the chroot is initially populated by /{debootstrap}/ with a minimal
-system, and the *{chroot}* stage is when the chroot used to construct the
-live system's filesystem is built. Thus, the corresponding mirror switches
-are used for those stages, and later, in the *{binary}* stage, the
-#{--mirror-binary}# and #{--mirror-binary-security}# values are used,
-superseding any mirrors used in an earlier stage.
+Debian
+アーカイブは世界中の巨大なネットワークミラーにまたがって複製されているため、各地域の人が最高のダウンロード速度を求めて近いミラーを選択できます。#{--mirror-*}#
+オプションはそれぞれ、ビルドの様々な段階でどのディストリビューションミラーを利用するのかを決定します。{ビルド段階}#stages-of-the-build
+の繰り返しになりますが*{パッケージ収集}*段階は最小限のシステムで /{debootstrap}/ により最初に chroot
+を構成する段階、*{chroot}* 段階は chroot を使って Live
+システムのファイルシステムをビルドする段階です。ミラーはこの各段階ごとにそれぞれのオプションで指定するため*{バイナリ}*の段階では
+#{--mirror-binary}# や #{--mirror-binary-security}#
+の値が採用され、早い段階で使っていたミラーは置き換えられることになります。
 
-3~distribution-mirrors-build-time Distribution mirrors used at build time
+3~-distributionmirrors-build-time ビルド時に利用するディストリビューションミラー
 
-To set the distribution mirrors used at build time to point at a local
-mirror, it is sufficient to set #{--mirror-bootstrap}#,
-#{--mirror-chroot-security}# and #{--mirror-chroot-backports}# as follows.
+ビルド時に利用するディストリビューションミラーにローカルミラーを指定するには、#{--mirror-bootstrap}#、#{--mirror-chroot-security}#、#{--mirror-chroot-backports}#
+を以下のように指定するだけです。
 
 code{
 
@@ -88,20 +70,15 @@ code{
 
 }code
 
-The chroot mirror, specified by #{--mirror-chroot}#, defaults to the
-#{--mirror-bootstrap}# value.
+#{--mirror-chroot}# で指定する chroot ミラーのデフォルト値は #{--mirror-bootstrap}#
+の値になっています。
 
-3~ Distribution mirrors used at run time
+3~ 実行時に利用するディストリビューションミラー
 
-The #{--mirror-binary*}# options govern the distribution mirrors placed in
-the binary image. These may be used to install additional packages while
-running the live system. The defaults employ #{http.debian.net}#, a service
-that chooses a geographically close mirror based, among other things, on the
-user's IP family and the availability of the mirrors. This is a suitable
-choice when you cannot predict which mirror will be best for all of your
-users. Or you may specify your own values as shown in the example below. An
-image built from this configuration would only be suitable for users on a
-network where "#{mirror}#" is reachable.
+#{--mirror-binary*}# オプションはバイナリイメージ中のディストリビューションミラーの位置を決定します。このオプションは Live
+システムの実行中に追加のパッケージをインストールする際に利用できます。デフォルトは #{http.debian.net}#
+で、利用できるミラーの中から特にユーザのIPアドレスを基にして地理的に近いミラーを選択するサービスになっています。これはその Live
+システムを利用するユーザにとって最適なミラーを予測できない場合に適切な選択です。以下の例に示すように自分専用の値を指定することもできます。この設定でビルドされたイメージはその"#{ミラー}#"が到達可能なネットワークにいるユーザにとってのみ適します。
 
 code{
 
@@ -111,7 +88,7 @@ code{
 
 }code
 
-3~additional-repositories Additional repositories
+3~additional-repositories 追加リポジトリ
 
 You may add more repositories, broadening your package choices beyond what
 is available in your target distribution. These may be, for example, for

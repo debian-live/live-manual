@@ -32,12 +32,6 @@ test:
 	@echo "Checking for syntax errors... [not implemented yet - FIXME]"
 	@echo "To interactively check for spelling mistakes, you can run 'make spell'."
 
-	@echo "Checking the integrity of po files..."
-	for POFILE in manual/po/*/*; \
-	do \
-		msgfmt --check --output-file=/dev/null $${POFILE}; \
-	done
-
 tidy:
 	# Removing useless whitespaces at EOL
 	for FILE in manual/en/*.ssm manual/en/*.ssi; \

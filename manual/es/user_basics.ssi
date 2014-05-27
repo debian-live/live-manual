@@ -369,7 +369,7 @@ Crear una imagen HDD es similar a una de tipo ISO híbrida en todos los
 aspectos, con la diferencia de que hay que especificar #{-b hdd}# y de que
 el nombre de la imagen final es #{binary.img}# que no se puede copiar en
 medios ópticos. Es adecuada para el arranque desde dispositivos USB, discos
-duros USB y otros sistemas de almacenamiento portátil. Normalmente, se puede
+duros USB y otros sistemas de almacenamiento portable. Normalmente, se puede
 utilizar para este propósito una imagen ISO híbrida, pero es posible que la
 BIOS no maneje adecuadamente las imágenes híbridas, entonces es mejor
 utilizar una imagen hdd.
@@ -650,16 +650,18 @@ requiere privilegios de root.
 
 3~ Arrancar imágenes webboot
 
-While some users will prefer virtualization to test webbooting, we refer to
-real hardware here to match the following possible use case which should
-only be considered as an example.
+Aunque algunos usuarios pueden preferir la virtualización para probar el
+arranque desde internet, en este caso se utiliza hardware real para ilustrar
+el caso de uso que se explica a continuación y que debe considerarse sólo
+como un ejemplo.
 
-In order to boot a webboot image it is enough to have the components
-mentioned above in a usb stick and install syslinux as bootloader. Then boot
-from the usb stick and type #{fetch=URL/PATH/TO/FILE}# at the boot
-options. live-boot will retrieve the squashfs file and store it into
-ram. This way, it is possible to use the downloaded compressed filesystem as
-a regular live system. For example:
+Para arrancar una imagen webboot es suficiente copiar los elementos
+mencionados anteriormente en una llave usb e instalar syslinux como gestor
+de arranque. Entonces, arrancar desde la llave usb y teclear
+#{fetch=URL/RUTA/AL/FICHERO}# en las opciones de arranque. live-boot se
+encargará de descargar el archivo squashfs y almacenarlo en la memoria
+ram. De este modo, es posible utilizar el sistema de ficheros comprimido
+descargado como si fuera un sistema en vivo normal. Por ejemplo:
 
 code{
 
@@ -667,4 +669,4 @@ code{
 
 }code
 
-*{Use case:}* You have a web server in which you have stored two squashfs files, one which contains a full desktop, like for example gnome, and a rescue one. If you need a graphical environment for one machine, you can plug your usb stick in and webboot the gnome image. If you need the rescue tools included in the second type of image, perhaps for another machine, you can webboot the rescue one.
+*{Caso de uso:}* Se tiene dos archivos squashfs almacenados en un servidor web, uno que contiene un escritorio completo, como gnome, y uno de rescate. Si se necesita un entorno gráfico para una máquina, se puede insertar la llave usb y arrancar desde internet la imagen gnome. Si se necesitan las herramientas de rescate del segundo tipo de imagen, quizás para otra máquina, se puede arrancar desde internet la de rescate.

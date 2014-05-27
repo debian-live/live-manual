@@ -43,7 +43,8 @@ Check_untranslated_strings
 
 Find_untranslated ()
 {
-echo "Searching for 'untranslated strings' in ${LANGUAGE} ..."
+echo ""
+echo " * Searching for 'untranslated strings' in ${LANGUAGE} ..."
 echo ""
 
 for POFILE in manual/po/"${LANGUAGE}"/*
@@ -71,7 +72,7 @@ Show_strings ()
 if [ "$(Find_untranslated | awk '{ sum += $1 } END { print sum }')" -eq "0" ]
 	then
 		echo ""
-		echo "There are 0 untranslated strings in language: ${LANGUAGE}"
+		echo "There are 0 untranslated strings in language: ${LANGUAGE}" | grep --color ${LANGUAGE}
 		echo ""
 		
 		exit 0
@@ -182,7 +183,7 @@ case "$LANGUAGE" in
                if [ "$(Find_untranslated | awk '{ sum += $1 } END { print sum }')" -eq "0" ]
                 then
                     echo ""
-                    echo "There are 0 untranslated strings in language: ${LANGUAGE}"
+                    echo "There are 0 untranslated strings in language: ${LANGUAGE}" | grep --color ${LANGUAGE}
                     echo ""
                 fi
             done

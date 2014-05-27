@@ -648,18 +648,16 @@ un travail manuel, elle ne nécessite pas les privilèges root.
 
 3~ Démarrer images webboot
 
-Tandis que certains utilisateurs vont utiliser la virtualisation pour tester
-le webbooting, nous utilisons du matériel réel ici pour correspondre au
-possible cas d'utilisation suivant qui seulement devrait être considéré
-comme un exemple.
+While some users will prefer virtualization to test webbooting, we refer to
+real hardware here to match the following possible use case which should
+only be considered as an example.
 
-Afin de démarrer une image webboot il suffit d'avoir les éléments mentionnés
-ci-dessus dans une clé usb et installer syslinux comme chargeur de
-démarrage. Ensuite, démarrer à partir de la clé usb et taper
-#{fetch=URL/CHEMIN/DU/FICHIER}# aux options de démarrage. live-boot va
-télécharger le fichier squashfs et le stocker dans la ram. De cette façon,
-il est possible d'utiliser le système de fichiers compressé téléchargé comme
-un système live ordinaire. Par exemple:
+In order to boot a webboot image it is enough to have the components
+mentioned above in a usb stick and install syslinux as bootloader. Then boot
+from the usb stick and type #{fetch=URL/PATH/TO/FILE}# at the boot
+options. live-boot will retrieve the squashfs file and store it into
+ram. This way, it is possible to use the downloaded compressed filesystem as
+a regular live system. For example:
 
 code{
 
@@ -667,4 +665,4 @@ code{
 
 }code
 
-*{Cas d'utilisation:}* Vous avez un serveur web dans lequel vous avez stocké deux images squashfs, celle qui contient un bureau, comme par exemple gnome, et une d'un système de sauvetage. Si vous avez besoin d'un environnement graphique pour une machine, vous pouvez brancher votre clé usb et télécharger l'image qui contient gnome. Si vous avez besoin des outils de sauvetage inclus dans le deuxième type d'image, pour une autre machine, vous pouvez télécharger celle du système de sauvetage.
+*{Use case:}* You have a web server in which you have stored two squashfs files, one which contains a full desktop, like for example gnome, and a rescue one. If you need a graphical environment for one machine, you can plug your usb stick in and webboot the gnome image. If you need the rescue tools included in the second type of image, perhaps for another machine, you can webboot the rescue one.

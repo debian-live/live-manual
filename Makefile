@@ -29,7 +29,30 @@ endif
 all: build
 
 test:
-	@echo "Checking for syntax errors... [not implemented yet - FIXME]"
+	@echo -n "Checking for syntax errors "
+
+	@for SCRIPT in $(shell ls manual/bin/*.sh); \
+	do \
+		sh -n $${SCRIPT}; \
+		echo -n "."; \
+	done
+
+	@echo " done!"
+
+	@echo -n "Checking for bashisms "
+
+	@if [ -x /usr/bin/checkbashisms ]; \
+	then \
+		for SCRIPT in $(shell ls manual/bin/*.sh); \
+		do \
+			checkbashisms -f -x $${SCRIPT}; \
+			echo -n "."; \
+		done; \
+	else \
+		echo "WARNING: skipping bashism test - you need to install devscripts."; \
+	fi
+
+	@echo " done!"
 	@echo "To interactively check for spelling mistakes, you can run 'make spell'."
 
 tidy:

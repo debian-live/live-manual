@@ -8,6 +8,8 @@ live-build uses /{syslinux}/ and some of its derivatives (depending on the image
 
 In order to use a full theme, copy #{/usr/share/live/build/bootloaders}# into #{config/bootloaders}# and edit the files in there. If you do not want to bother modifying all supported bootloader configurations, only providing a local customized copy of one of the bootloaders, e.g. *{isolinux}* in #{config/bootloaders/isolinux}# is enough too, depending on your use case.
 
+When modifying one of the default themes, if you want to use a personalized background image that will be displayed together with the boot menu, add a splash.png picture of 640x480 pixels. Then, remove the splash.svg file.
+
 There are many possibilities when it comes to making changes. For instance, syslinux derivatives are configured by default with a timeout of 0 (zero) which means that they will pause indefinitely at their splash screen until you press a key.
 
 To modify the boot timeout of a default #{iso-hybrid}# image just edit a default *{isolinux.cfg}* file specifying the timeout in units of 1/10 seconds. A modified *{isolinux.cfg}* to boot after five seconds would be similar to this:
@@ -20,8 +22,6 @@ code{
  timeout 50
 
 }code
-
-If you want to use a personalized background image that will be displayed together with the boot menu, add a splash.png picture of 640x480 pixels.
 
 2~ ISO metadata
 

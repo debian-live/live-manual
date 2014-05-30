@@ -72,7 +72,7 @@ code{
 
 }code
 
-This process can take a while, depending on the speed of your computer and your network connection. When it is complete, there should be a #{binary.hybrid.iso}# image file, ready to use, in the current directory.
+This process can take a while, depending on the speed of your computer and your network connection. When it is complete, there should be a #{live-image-i386.hybrid.iso}# image file, ready to use, in the current directory.
 
 2~using-iso-hybrid Using an ISO hybrid live image
 
@@ -86,7 +86,7 @@ code{
 
  # apt-get install xorriso
 
- $ xorriso -as cdrecord -v dev=/dev/sr0 blank=as_needed binary.hybrid.iso
+ $ xorriso -as cdrecord -v dev=/dev/sr0 blank=as_needed live-image-i386.hybrid.iso
 
 }code
 
@@ -99,7 +99,7 @@ Once you are certain you have the correct device name, use the #{cp}# command to
 
 code{
 
- $ cp binary.hybrid.iso ${USBSTICK}
+ $ cp live-image-i386.hybrid.iso ${USBSTICK}
 
  $ sync
 
@@ -107,7 +107,7 @@ code{
 
 3~using-usb-extra-space Using the space left on a USB stick
 
-To use the remaining free space after copying #{binary.hybrid.iso}# to a USB stick, use a partitioning tool such as /{gparted}/ or /{parted}/ to create a new partition on the stick. The first partition will be used by the live system.
+To use the remaining free space after copying #{live-image-i386.hybrid.iso}# to a USB stick, use a partitioning tool such as /{gparted}/ or /{parted}/ to create a new partition on the stick. The first partition will be used by the live system.
 
 code{
 
@@ -125,7 +125,7 @@ code{
 
 *{Note:}* If you want to use the extra space with Windows, apparently that OS cannot normally access any partitions but the first. Some solutions to this problem have been discussed on our {mailing list}#contact, but it seems there are no easy answers.
 
-*{Remember: Every time you install a new binary.hybrid.iso on the stick, all data on the stick will be lost because the partition table is overwritten by the contents of the image, so back up your extra partition first to restore again after updating the live image.}*
+*{Remember: Every time you install a new live-image-i386.hybrid.iso on the stick, all data on the stick will be lost because the partition table is overwritten by the contents of the image, so back up your extra partition first to restore again after updating the live image.}*
 
 3~booting-live-medium Booting the live medium
 
@@ -165,7 +165,7 @@ Booting an ISO image is simple:
 
 code{
 
- $ kvm -cdrom binary.hybrid.iso
+ $ kvm -cdrom live-image-i386.hybrid.iso
 
 }code
 
@@ -183,7 +183,7 @@ code{
 
 }code
 
-Create a new virtual machine, change the storage settings to use #{binary.hybrid.iso}# as the CD/DVD device, and start the machine.
+Create a new virtual machine, change the storage settings to use #{live-image-i386.hybrid.iso}# as the CD/DVD device, and start the machine.
 
 *{Note:}* For live systems containing X.org that you want to test with /{virtualbox}/, you may wish to include the VirtualBox X.org driver package, /{virtualbox-guest-dkms}/ and /{virtualbox-guest-x11}/, in your live-build configuration. Otherwise, the resolution is limited to 800x600.
 
@@ -203,7 +203,7 @@ code{
 
 2~using-hdd-image Building and using an HDD image
 
-Building an HDD image is similar to an ISO hybrid one in all respects except you specify #{-b hdd}# and the resulting filename is #{binary.img}# which cannot be burnt to optical media. It is suitable for booting from USB sticks, USB hard drives, and various other portable storage devices. Normally, an ISO hybrid image can be used for this purpose instead, but if you have a BIOS which does not handle hybrid images properly, you need an HDD image.
+Building an HDD image is similar to an ISO hybrid one in all respects except you specify #{-b hdd}# and the resulting filename is #{live-image-i386.img}# which cannot be burnt to optical media. It is suitable for booting from USB sticks, USB hard drives, and various other portable storage devices. Normally, an ISO hybrid image can be used for this purpose instead, but if you have a BIOS which does not handle hybrid images properly, you need an HDD image.
 
 *{Note:}* if you created an ISO hybrid image with the previous example, you will need to clean up your working directory with the #{lb clean}# command (see {The lb clean command}#lb-clean):
 
@@ -229,15 +229,15 @@ code{
 
 }code
 
-When the build finishes, a #{binary.img}# file should be present in the current directory.
+When the build finishes, a #{live-image-i386.img}# file should be present in the current directory.
 
-The generated binary image contains a VFAT partition and the syslinux bootloader, ready to be directly written on a USB device. Once again, using an HDD image is just like using an ISO hybrid one on USB. Follow the instructions in {Using an ISO hybrid live image}#using-iso-hybrid, except use the filename #{binary.img}# instead of #{binary.hybrid.iso}#.
+The generated binary image contains a VFAT partition and the syslinux bootloader, ready to be directly written on a USB device. Once again, using an HDD image is just like using an ISO hybrid one on USB. Follow the instructions in {Using an ISO hybrid live image}#using-iso-hybrid, except use the filename #{live-image-i386.img}# instead of #{live-image-i386.hybrid.iso}#.
 
-Likewise, to test an HDD image with Qemu, install /{qemu}/ as described above in {Testing an ISO image with QEMU}#testing-iso-with-qemu. Then run #{kvm}# or #{qemu}#, depending on which version your host system needs, specifying #{binary.img}# as the first hard drive.
+Likewise, to test an HDD image with Qemu, install /{qemu}/ as described above in {Testing an ISO image with QEMU}#testing-iso-with-qemu. Then run #{kvm}# or #{qemu}#, depending on which version your host system needs, specifying #{live-image-i386.img}# as the first hard drive.
 
 code{
 
- $ kvm -hda binary.img
+ $ kvm -hda live-image-i386.img
 
 }code
 
@@ -275,7 +275,7 @@ code{
 
 In a network boot, the client runs a small piece of software which usually resides on the EPROM of the Ethernet card. This program sends a DHCP request to get an IP address and information about what to do next. Typically, the next step is getting a higher level bootloader via the TFTP protocol. That could be pxelinux, GRUB, or even boot directly to an operating system like Linux.
 
-For example, if you unpack the generated #{binary.netboot.tar}# archive in the #{/srv/debian-live}# directory, you'll find the filesystem image in #{live/filesystem.squashfs}# and the kernel, initrd and pxelinux bootloader in #{tftpboot/}#.
+For example, if you unpack the generated #{live-image-i386.netboot.tar}# archive in the #{/srv/debian-live}# directory, you'll find the filesystem image in #{live/filesystem.squashfs}# and the kernel, initrd and pxelinux bootloader in #{tftpboot/}#.
 
 We must now configure three services on the server to enable netbooting: the DHCP server, the TFTP server and the NFS server.
 

@@ -114,6 +114,7 @@ commit: tidy test
 	fi
 	@echo
 	@echo "live-manual is currently being translated into $(shell ls manual/po | wc -w) languages."
+	@echo "The translation of these languages is complete: $(shell manual/bin/show-complete-languages.sh)"	
 	@echo "There are $(shell manual/bin/count-untranslated-strings.sh) untranslated strings. You can run 'make translate' to find them." ; \
 
 	@echo

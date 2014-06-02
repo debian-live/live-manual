@@ -365,15 +365,16 @@ package-lists:
 
 code{
 
+ $ lb init
  $ echo "cryptsetup" > config/package-lists/encryption.list.chroot
 
 }code
 
-Una vez se tiene el sistema en vivo con /{cryptsetup}/, básicamente, sólo se
-necesita crear una nueva partición, cifrarla y arrancar con los parámetros
-#{persistence}# y #{persistence-encryption=luks}#. Podríamos habernos
-anticipado a este paso y añadir esos parámetros de arranque en tiempo de
-construcción, siguiendo el procedimiento habitual:
+Once you have your live system with /{cryptsetup}/, you basically only need
+to create a new partition, encrypt it and boot with the #{persistence}# and
+#{persistence-encryption=luks}# parameters. We could have already
+anticipated this step and added the boot parameters following the usual
+procedure:
 
 code{
 

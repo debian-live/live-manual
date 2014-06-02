@@ -133,18 +133,19 @@ code{
 
 }code
 
-Dopodiché eseguire il comando #{lb config}#, il quale creerà una gerarchia
-"config/" nella directory corrente e che verrà utilizzata da altri comandi:
+Then, run the #{lb init}# and #{lb config}# commands. This will create a
+"config/" hierarchy in the current directory for use by other commands:
 
 code{
 
+ $ lb init
  $ lb config
 
 }code
 
-Non viene passato alcun parametro a #{lb config}#, in modo da utilizzare le
-impostazioni predefinite per le varie opzioni, vedere {Il comando lb
-config}#lb-config) per maggiori dettagli.
+No parameters are passed to these commands, so defaults for all of their
+various options will be used. See {The lb init command}#lb-init and {The lb
+config command}#lb-config for more details.
 
 Ora che si ha una gerarchia "config/" si può generare l'immagine con il
 comando #{lb build}#:
@@ -155,9 +156,10 @@ code{
 
 }code
 
-Questo processo può richiedere tempo, a seconda della velocità del vostro
-computer e della connessione di rete. Una volta completato, nell'attuale
-directory ci sarà un file immagine #{binary.hybrid.iso}# pronto da usare.
+This process can take a while, depending on the speed of your computer and
+your network connection. When it is complete, there should be a
+#{live-image-i386.hybrid.iso}# image file, ready to use, in the current
+directory.
 
 2~using-iso-hybrid Utilizzare un'immagine ISO live ibrida
 
@@ -174,8 +176,7 @@ utilizzarlo da riga di comando; ad esempio:
 code{
 
  # apt-get install xorriso
-
- $ xorriso -as cdrecord -v dev=/dev/sr0 blank=as_needed binary.hybrid.iso
+ $ xorriso -as cdrecord -v dev=/dev/sr0 blank=as_needed live-image-i386.hybrid.iso
 
 }code
 
@@ -195,18 +196,17 @@ any previous contents on your stick!}*
 
 code{
 
- $ cp binary.hybrid.iso ${USBSTICK}
-
+ $ cp live-image-i386.hybrid.iso ${USBSTICK}
  $ sync
 
 }code
 
 3~using-usb-extra-space Usare lo spazio rimanente su una penna USB
 
-To use the remaining free space after copying #{binary.hybrid.iso}# to a USB
-stick, use a partitioning tool such as /{gparted}/ or /{parted}/ to create a
-new partition on the stick. The first partition will be used by the live
-system.
+To use the remaining free space after copying #{live-image-i386.hybrid.iso}#
+to a USB stick, use a partitioning tool such as /{gparted}/ or /{parted}/ to
+create a new partition on the stick. The first partition will be used by the
+live system.
 
 code{
 
@@ -226,7 +226,7 @@ code{
 
 *{Nota:}* se si desidera utilizzare lo spazio extra con Windows pare che questo sistema operativo non possa accedere a nessuna partizione eccetto la prima. Alcune soluzioni a questo problema sono state discusse sulla nostra {mailing list}#contact, ma non sembrano esserci risposte semplici.
 
-*{Ricorda: ogni volta che si installa un nuovo file binary.hybrid.iso sulla penna, tutti i dati sulla chiavetta saranno persi perché la tabella delle partizioni viene sovrascritta con i contenuti dell'immagine, per cui salvare prima la propria partizione extra in modo da ripristinarla dopo l'aggiornamento dell'immagine live.}*
+*{Remember: Every time you install a new live-image-i386.hybrid.iso on the stick, all data on the stick will be lost because the partition table is overwritten by the contents of the image, so back up your extra partition first to restore again after updating the live image.}*
 
 3~booting-live-media Avviare il supporto live
 
@@ -296,7 +296,7 @@ Avviare un'immagine ISO è semplice:
 
 code{
 
- $ kvm -cdrom binary.hybrid.iso
+ $ kvm -cdrom live-image-i386.hybrid.iso
 
 }code
 
@@ -309,14 +309,12 @@ Per provare la ISO con /{virtualbox}/:
 code{
 
  # apt-get install virtualbox virtualbox-qt virtualbox-dkms
-
  $ virtualbox
 
 }code
 
-Creare una nuova macchina virtuale, modificare le impostazione di
-archiviazione in modo da usare #{binary.hybrid.iso}# come dispositivo
-CD/DVD, e avviare la macchina.
+Create a new virtual machine, change the storage settings to use
+#{live-image-i386.hybrid.iso}# as the CD/DVD device, and start the machine.
 
 *{Nota:}* per sistemi live contenenti X.org che si vogliono provare con /{virtualbox}/, si può voler includere il pacchetto dei driver per X.org di VirtualBox, /{virtualbox-guest-dkms}/ e /{virtualbox-guest-x11}/, nella configurazione di live-build. In caso contrario la risoluzione è limitata a 800x600.
 
@@ -339,13 +337,13 @@ code{
 
 2~using-hdd-image Creare e utilizzare un'immagine HDD
 
-La creazione di un'immagine HDD è simile alla ISO ibrida sotto tutti gli
-aspetti ad eccezione della necessità di specificare l'opzione #{-b hdd}# e
-che il nome del file risultante è #{binary.img}# e non può essere
-masterizzato. È adatta per avviarsi da chiavette USB, dischi rigidi USB, e
-da svariati altri dispositivi di archiviazione portatili. In genere per
-questo scopo può essere usata un'immagine ISO ibrida, ma se si ha un BIOS
-che non supporta le immagini ibride allora occorre un'immagine HDD.
+Building an HDD image is similar to an ISO hybrid one in all respects except
+you specify #{-b hdd}# and the resulting filename is #{live-image-i386.img}#
+which cannot be burnt to optical media. It is suitable for booting from USB
+sticks, USB hard drives, and various other portable storage
+devices. Normally, an ISO hybrid image can be used for this purpose instead,
+but if you have a BIOS which does not handle hybrid images properly, you
+need an HDD image.
 
 *{Nota:}* se si è creata un'immagine ISO ibrida con gli esempi precedenti, occorre pulire la directory di lavoro con il comando #{lb clean}# (vedere {Il comando lb clean}#lb-clean):
 
@@ -372,25 +370,24 @@ code{
 
 }code
 
-Quando la costruzione è terminata dovrebbe essere presente un file
-#{binary.img}# nella directory corrente.
+When the build finishes, a #{live-image-i386.img}# file should be present in
+the current directory.
 
-L'immagine binaria generata contiene una partizione VFAT e il bootloader
-syslinux, pronti per essere scritti direttamente su un dispositivo
-USB. Ricordarsi che utilizzare un'immagine HDD è come utilizzare un'immagine
-ISO ibrida via USB, seguire le istruzioni contenute in {Utilizzare
-un'immagine live ISO ibrida}#using-iso-hybrid tenendo però conto che il nome
-del file sarà #{binary.img}# invece di #{binary.hybrid.iso}#.
+The generated binary image contains a VFAT partition and the syslinux
+bootloader, ready to be directly written on a USB device. Once again, using
+an HDD image is just like using an ISO hybrid one on USB. Follow the
+instructions in {Using an ISO hybrid live image}#using-iso-hybrid, except
+use the filename #{live-image-i386.img}# instead of
+#{live-image-i386.hybrid.iso}#.
 
-Allo stesso modo, per provare un'immagine HDD con Qemu, installare /{qemu}/
-come descritto in {Provare un'immagine ISO con QEMU}#testing-iso-with-qemu;
-quindi eseguire #{kvm}# o #{qemu}#, a seconda di quale versione è necessaria
-al sistema ospitante, specificando #{binary.img}# come disco rigido
-principale.
+Likewise, to test an HDD image with Qemu, install /{qemu}/ as described
+above in {Testing an ISO image with QEMU}#testing-iso-with-qemu. Then run
+#{kvm}# or #{qemu}#, depending on which version your host system needs,
+specifying #{live-image-i386.img}# as the first hard drive.
 
 code{
 
- $ kvm -hda binary.img
+ $ kvm -hda live-image-i386.img
 
 }code
 
@@ -449,10 +446,10 @@ di di livello superiore attraverso il protocollo TFTP. Questi potrebbe
 essere pxelinux, GRUB, o anche avviare direttamente un sistema operativo
 come Linux.
 
-For example, if you unpack the generated #{binary.netboot.tar}# archive in
-the #{/srv/debian-live}# directory, you'll find the filesystem image in
-#{live/filesystem.squashfs}# and the kernel, initrd and pxelinux bootloader
-in #{tftpboot/}#.
+For example, if you unpack the generated #{live-image-i386.netboot.tar}#
+archive in the #{/srv/debian-live}# directory, you'll find the filesystem
+image in #{live/filesystem.squashfs}# and the kernel, initrd and pxelinux
+bootloader in #{tftpboot/}#.
 
 We must now configure three services on the server to enable netbooting: the
 DHCP server, the TFTP server and the NFS server.
@@ -617,8 +614,9 @@ real hardware here to match the following possible use case which should
 only be considered as an example.
 
 In order to boot a webboot image it is enough to have the components
-mentioned above in a usb stick and install syslinux as bootloader. Then boot
-from the usb stick and type #{fetch=URL/PATH/TO/FILE}# at the boot
+mentioned above, i.e. #{vmlinuz}# and #{initrd.img}# in a usb stick inside a
+directory named #{live/}# and install syslinux as bootloader. Then boot from
+the usb stick and type #{fetch=URL/PATH/TO/FILE}# at the boot
 options. live-boot will retrieve the squashfs file and store it into
 ram. This way, it is possible to use the downloaded compressed filesystem as
 a regular live system. For example:

@@ -18,19 +18,17 @@ en un estado coherente.
 
 3~ ¿Por qué utilizar scripts auto? ¿Qué hacen?
 
-El comando #{lb config}# almacena las opciones que se le pasan en ficheros
-en el directorio #{config/*}#, junto con muchas otras opciones que figuran
-en sus valores predeterminados. Si se ejecuta #{lb config}# una vez más, no
-restablecerá ninguna opción que se estableció como por defecto en función de
-las opciones iniciales. Así, por ejemplo, si se ejecuta #{lb config}# otra
-vez con un nuevo valor para #{--distribution}#, todas las opciones que se
-establecieron como predeterminadas para la distribución anteriormente ya no
-pueden funcionar con la nueva configuración. Estos archivos tampoco estan
-destinados a ser leídos o editados. Almacenan valores para más de cien
-opciones, para que nadie sea capaz de ver las opciones que se especificó
-realmente. Y por último, si se ejecuta #{lb config}# y a continuación se
-actualiza live-build y hay alguna opción que cambió de nombre, #{config/*}#
-todavía tendrá variables con las opciones viejas que ya no son válidas.
+The #{lb config}# command stores the options you pass to it in #{config/*}#
+files along with many other options set to default values. If you run #{lb
+config}# again, it will not reset any option that was defaulted based on
+your initial options. So, for example, if you run #{lb config}# again with a
+new value for #{--binary-images}#, any dependent options that were defaulted
+for the old image type may no longer work with the new ones. Nor are these
+files intended to be read or edited. They store values for over a hundred
+options, so nobody, let alone yourself, will be able to see in these which
+options you actually specified. And finally, if you run #{lb config}#, then
+upgrade live-build and it happens to rename an option, #{config/*}# would
+still contain variables named after the old option that are no longer valid.
 
 Por todas estas razones, los scripts #{auto/*}# nos hacen la vida más
 fácil. Son simples envoltorios para los comandos #{lb config}#, #{lb build}#
@@ -54,7 +52,8 @@ continuación, copiar los ejemplos:
 
 code{
 
- $ mkdir mylive && cd mylive && lb config
+ $ mkdir mylive && cd mylive && lb init
+ $ mkdir auto
  $ cp /usr/share/doc/live-build/examples/auto/* auto/
 
 }code

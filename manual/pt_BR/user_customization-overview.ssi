@@ -23,15 +23,14 @@ de comando para o sistema live, tais como persistência, layouts de teclado,
 ou fuso horário. Veja {Personalizando local e
 linguagem}#customizing-locale-and-language, por exemplo.
 
-Opções de configuração de tempo de construção estão descritas na pagina do
-man #{lb config}#. Opções de tempo de inicialização estão descritas nas
-páginas do manual live-boot e live-config. Embora os pacotes live-boot e
-live-config estejam instalados dentro do sistema live que você está
-construindo, é recomenda que você os instale também em seu sistema de
-construção para fácil referência quando você estiver trabalhando em sua
-configuração. É seguro fazê-lo, já que nenhum dos scripts contidos dentro
-deles estão executados a menos que o sistema esteja configurado como um
-sistema live.
+Build-time configuration options are described in the #{lb init}# and the
+#{lb config}# man pages. Boot-time options are described in the man pages
+for live-boot and live-config. Although the live-boot and live-config
+packages are installed within the live system you are building, it is
+recommended that you also install them on your build system for easy
+reference when you are working on your configuration. It is safe to do so,
+as none of the scripts contained within them are executed unless the system
+is configured as a live system.
 
 2~stages-of-the-build Etapas da construção
 
@@ -58,17 +57,16 @@ copied, and hooks are run later, after all of the materials are in place.
 
 2~ Complementar lb config com arquivos
 
-Embora #{lb config}# crie uma configuração esquelética no diretório config/,
-para realizar seus objetivos, você pode precisar fornecer arquivos
-adicionais em subdiretórios do config/. Dependendo de onde os arquivos são
-armazenados na configuração, eles podem ser copiados para o sistema de
-arquivos do sistema live, ou no sistema de arquivos de imagem binária, ou
-podem fornecer configurações de tempo de execução do sistema que seria
-complicado passar como de linha de comando. Você pode incluir coisas como
-listas personalizadas de pacotes, obras de arte personalizadas, ou scripts
-para rodar em tempo de compilação ou em tempo de inicialização, aumentando a
-flexibilidade já considerável de debian-live com o código de sua
-preferência.
+Although #{lb config}# creates a skeletal configuration in the #{config/}#
+directory, to accomplish your goals, you may need to provide additional
+files in subdirectories of #{config/}#. Depending on where the files are
+stored in the configuration, they may be copied into the live system's
+filesystem or into the binary image filesystem, or may provide build-time
+configurations of the system that would be cumbersome to pass as
+command-line options. You may include things such as custom lists of
+packages, custom artwork, or hook scripts to run either at build time or at
+boot time, boosting the already considerable flexibility of debian-live with
+code of your own.
 
 2~ Tarefas de personalização
 

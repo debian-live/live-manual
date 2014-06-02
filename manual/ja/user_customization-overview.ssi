@@ -15,10 +15,14 @@ Live システムを直接ブートするようにもできます。特に、#{l
 システムのカーネルコマンドラインオプションのデフォルト値で構成されます。例については{ロケールと言語の独自化}#customizing-locale-and-language
 を見てください。
 
-ビルド時設定オプションは #{lb config}# の man ページで説明されています。ブート時オプションは live-boot と
-live-config の man ページで説明されています。live-boot 及び live-config パッケージはビルドする Live
-システム内にインストールされますが、設定作業時に参照しやすいようにビルドシステムにもインストールすることを勧めます。収録されているスクリプトはどれも、そのシステムが
-Live システムとして設定されていないと実行されないため、ビルドシステムへのインストールは安全です。
+Build-time configuration options are described in the #{lb init}# and the
+#{lb config}# man pages. Boot-time options are described in the man pages
+for live-boot and live-config. Although the live-boot and live-config
+packages are installed within the live system you are building, it is
+recommended that you also install them on your build system for easy
+reference when you are working on your configuration. It is safe to do so,
+as none of the scripts contained within them are executed unless the system
+is configured as a live system.
 
 2~stages-of-the-build ビルド段階
 
@@ -36,10 +40,16 @@ chroot ディレクトリを作成して Debian システムの骨子を構成�
 
 2~ ファイルによる lb config の補完
 
-#{lb config}# は設定の骨格を config/ ディレクトリに作成しますが、目標を実現するには config/
-サブディレクトリ以下に追加のファイルを提供する必要があるかもしれません。設定のどこにファイルを置くかにより、live
-システムのファイルシステムやバイナリイメージのファイルシステムにコピーされるか、コマンドラインオプションとして渡す方法では扱いにくいビルド時のシステム設定を提供することになります。独自のパッケージ一覧やアートワーク、あるいはビルド時またはブート時に実行するフックスクリプト等を収録し、debian-live
-は既にかなりの柔軟性がありますが、自身のコードでそれを後押しすることができます。
+Although #{lb config}# creates a skeletal configuration in the #{config/}#
+directory, to accomplish your goals, you may need to provide additional
+files in subdirectories of #{config/}#. Depending on where the files are
+stored in the configuration, they may be copied into the live system's
+filesystem or into the binary image filesystem, or may provide build-time
+configurations of the system that would be cumbersome to pass as
+command-line options. You may include things such as custom lists of
+packages, custom artwork, or hook scripts to run either at build time or at
+boot time, boosting the already considerable flexibility of debian-live with
+code of your own.
 
 2~ 独自化タスク
 

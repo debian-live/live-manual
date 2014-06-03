@@ -150,8 +150,9 @@ code{
 
 }code
 
-Then, run the #{lb init}# and #{lb config}# commands. This will create a
-"config/" hierarchy in the current directory for use by other commands:
+Aleshores, executar les ordres #{lb init}# i #{lb config}#. Això crearà una
+jerarquia «config/» en el directori actual per a ser utilitzada per altres
+ordres:
 
 code{
 
@@ -160,9 +161,9 @@ code{
 
 }code
 
-No parameters are passed to these commands, so defaults for all of their
-various options will be used. See {The lb init command}#lb-init and {The lb
-config command}#lb-config for more details.
+Aquí no es passa cap paràmetre a aquestes ordres, per tant s'utilitzaran les
+opcions per defecte. Veure {L'ordre lb init}#lb-init i {L'ordre lb
+config}#lb-config per a més detalls.
 
 Ara que la jerarquia «config/» ja existeix, crear la imatge amb l'ordre #{lb
 build}#:
@@ -173,10 +174,10 @@ code{
 
 }code
 
-This process can take a while, depending on the speed of your computer and
-your network connection. When it is complete, there should be a
-#{live-image-i386.hybrid.iso}# image file, ready to use, in the current
-directory.
+Aquest procés tardarà una mica, depenent de la velocitat del ordinador i de
+la connexió de la xarxa. Quan hagi acabat, ha d'haver un fitxer imatge
+#{live-image-i386.hybrid.iso}#, a punt per a ser utilitzat, en el directori
+actual.
 
 2~using-iso-hybrid Usar una imatge ISO híbrida en viu
 
@@ -222,10 +223,10 @@ code{
 
 3~using-usb-extra-space Utilitzar l'espai lliure en una memòria USB
 
-To use the remaining free space after copying #{live-image-i386.hybrid.iso}#
-to a USB stick, use a partitioning tool such as /{gparted}/ or /{parted}/ to
-create a new partition on the stick. The first partition will be used by the
-live system.
+Per a poder utilitzar l'espai que queda lliure després de copiar
+#{live-image-i386.hybrid.iso}# en un dispositiu USB, utilitzar una eina de
+particionament com /{gparted}/ o /{parted}/ per a crear una nova
+partició. La primera partició serà utilitzada pel sistema en viu.
 
 code{
 
@@ -245,7 +246,7 @@ code{
 
 *{Nota:}* Si es vol utilitzar l'espai addicional amb Windows, pel que sembla, aquest sistema operatiu normalment no pot accedir a altres particions més que a la primera. Algunes solucions a aquest problema han estat discutides a la nostra {llista de correu}#contact, però sembla que no hi ha respostes fàcils.
 
-*{Remember: Every time you install a new live-image-i386.hybrid.iso on the stick, all data on the stick will be lost because the partition table is overwritten by the contents of the image, so back up your extra partition first to restore again after updating the live image.}*
+*{Recordar: Cada vegada que s'instal·li una nova live-image-i386.hybrid.iso al dispositiu, es perdran totes les dades perquè la taula de particions se sobreescriu amb el contingut de la imatge, de manera que es assenyat fer una còpia de seguretat de la partició addicional per a restaurar les dades de nou després d'actualitzar la imatge en viu.}*
 
 3~booting-live-medium Arrencar el medi en viu
 
@@ -337,8 +338,9 @@ code{
 
 }code
 
-Create a new virtual machine, change the storage settings to use
-#{live-image-i386.hybrid.iso}# as the CD/DVD device, and start the machine.
+Crear una nova màquina virtual, canviar els paràmetres d'emmagatzematge per
+a utilitzar #{live-image-i386.hybrid.iso}# com  unitat de CD/DVD i arrencar
+la màquina.
 
 *{Nota:}* Per a provar sistemes vius que contenen X.org amb /{virtualbox}/, segurament es assenyat incloure el paquet del driver VirtualBox X.org, /{virtualbox-guest-dkms}/ i /{virtualbox-guest-x11}/, en la configuració de live-build. En cas contrari, la resolució es limita a 800x600.
 
@@ -362,13 +364,13 @@ code{
 
 2~using-hdd-image Construir i utilitzar una imatge HDD
 
-Building an HDD image is similar to an ISO hybrid one in all respects except
-you specify #{-b hdd}# and the resulting filename is #{live-image-i386.img}#
-which cannot be burnt to optical media. It is suitable for booting from USB
-sticks, USB hard drives, and various other portable storage
-devices. Normally, an ISO hybrid image can be used for this purpose instead,
-but if you have a BIOS which does not handle hybrid images properly, you
-need an HDD image.
+Construir una imatge HDD és similar a una ISO híbrida en tots els aspectes,
+excepte que s'especifica #{-b hdd}#, que el nom del fitxer resultant és
+#{live-image-i386.img}# i que no es pot gravar en medis òptics. És adequada
+per a arrencar des de dispositius USB, discs durs USB, i altres dispositius
+d'emmagatzematge portàtils. Normalment, una imatge ISO híbrida es pot
+utilitzar per a aquest propòsit en el seu lloc, però si el BIOS no maneja
+adequadament les imatges híbrides, cal utilitzar una imatge HDD.
 
 *{Nota:}* si s'ha creat una imatge ISO híbrida amb l'exemple anterior, s'haurà de netejar el directori de treball amb l'ordre #{lb clean}# (veure {L'ordre lb clean}#lb-clean):
 
@@ -395,20 +397,21 @@ code{
 
 }code
 
-When the build finishes, a #{live-image-i386.img}# file should be present in
-the current directory.
+Quan la construcció acabi, hauria d'haver un fitxer #{live-image-i386.img}#
+al directori actual.
 
-The generated binary image contains a VFAT partition and the syslinux
-bootloader, ready to be directly written on a USB device. Once again, using
-an HDD image is just like using an ISO hybrid one on USB. Follow the
-instructions in {Using an ISO hybrid live image}#using-iso-hybrid, except
-use the filename #{live-image-i386.img}# instead of
-#{live-image-i386.hybrid.iso}#.
+La imatge binària generada conté una partició VFAT i el carregador
+d'arrencada syslinux, llestos per a ser escrits directament a una memòria
+USB. Un cop més, donat que l'ús d'una imatge HDD és com utilitzar una imatge
+ISO híbrida en un USB, seguir les instruccions de {Usar una imatge ISO
+híbrida en viu}#using-iso-hybrid, però amb el nom de fitxer
+#{live-image-i386.img}# en lloc de #{live-image-i386.hybrid.iso}#.
 
-Likewise, to test an HDD image with Qemu, install /{qemu}/ as described
-above in {Testing an ISO image with QEMU}#testing-iso-with-qemu. Then run
-#{kvm}# or #{qemu}#, depending on which version your host system needs,
-specifying #{live-image-i386.img}# as the first hard drive.
+Igualment, per a provar una imatge HDD amb Qemu, instal·lar /{qemu}/ com
+s'ha descrit anteriorment a {Provar una imatge ISO amb
+QEMU}#testing-iso-with-qemu. A continuació, executar #{kvm}# o #{qemu}#,
+segons la versió instal·lada al sistema amfitrió, especificant
+#{live-image-i386.img}# com a primer disc dur.
 
 code{
 
@@ -470,10 +473,10 @@ continuació. Per regla general, el següent pas és aconseguir un carregador
 d'arrencada de més alt nivell a través del protocol TFTP. Podria ser GRUB,
 pxelinux o fins i tot arrencar directament a un sistema operatiu com Linux.
 
-For example, if you unpack the generated #{live-image-i386.netboot.tar}#
-archive in the #{/srv/debian-live}# directory, you'll find the filesystem
-image in #{live/filesystem.squashfs}# and the kernel, initrd and pxelinux
-bootloader in #{tftpboot/}#.
+Per exemple, si es descomprimeix el arxiu #{live-image-i386.netboot.tar}#
+generat al directori #{/srv/debian-live}#, es trobarà  la imatge del sistema
+de fitxers a #{live/filesystem.squashfs}# i el nucli, initrd i carregador
+d'arrencada pxelinux a #{tftpboot/}#.
 
 Ara hem de configurar els tres serveis al servidor per a l'arrencada en
 xarxa: el servidor DHCP, servidor TFTP i el servidor NFS.
@@ -641,13 +644,14 @@ Mentre que alguns usuaris prefereixen utilitzar la virtualització per prova
 el webbooting, en aquest cas utilitzem maquinari real perquè coincideixi amb
 el següent cas d'ús, que només ha de ser considerat com un exemple.
 
-In order to boot a webboot image it is enough to have the components
-mentioned above, i.e. #{vmlinuz}# and #{initrd.img}# in a usb stick inside a
-directory named #{live/}# and install syslinux as bootloader. Then boot from
-the usb stick and type #{fetch=URL/PATH/TO/FILE}# at the boot
-options. live-boot will retrieve the squashfs file and store it into
-ram. This way, it is possible to use the downloaded compressed filesystem as
-a regular live system. For example:
+Per a arrencar una imatge webboot és suficient tenir els components
+esmentats anteriorment, és a dir, #{vmlinuz}# i #{initrd.img}# en una
+memòria usb dins d'un directori anomenat #{live/}# i instal·lar syslinux com
+a gestor d'arrencada. Després, arrencar des de la memòria usb i escriure
+#{fetch=URL/RUTA/AL/FITXER}# a les opcions d'arrencada. live-boot
+descarregarà l'arxiu squashfs i l'emmagatzemarà en la memòria ram. D'aquesta
+manera, és possible utilitzar el sistema de fitxers comprimit descarregat
+com si fos un sistema viu normal. Per exemple:
 
 code{
 

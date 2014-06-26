@@ -96,8 +96,8 @@ code{
 
 }code
 
-Then, run the #{lb init}# and #{lb config}# commands. This will create a
-"config/" hierarchy in the current directory for use by other commands:
+それから #{lb init}# 及び #{lb config}#
+コマンドを実行します。これにより他のコマンドが利用する「config/」階層を現在のディレクトリに作成します。
 
 code{
 
@@ -106,9 +106,8 @@ code{
 
 }code
 
-No parameters are passed to these commands, so defaults for all of their
-various options will be used. See {The lb init command}#lb-init and {The lb
-config command}#lb-config for more details.
+上記のコマンドにはパラメータが渡されていないので、様々な選択肢についてそれぞれのデフォルト値が使われます。さらなる詳細については {lb init
+コマンド}#lb-init 及び {lb config コマンド}#lb-config を見てください。
 
 これで「config/」階層ができました。#{lb build}# コマンドでイメージをビルドします。
 
@@ -118,12 +117,10 @@ code{
 
 }code
 
-This process can take a while, depending on the speed of your computer and
-your network connection. When it is complete, there should be a
-#{live-image-i386.hybrid.iso}# image file, ready to use, in the current
-directory.
+コンピュータやネットワーク接続の速度により、このプロセスには少々時間がかかるかもしれません。完了すると、#{live-image-i386.hybrid.iso}#
+イメージファイルが使える状態で現在のディレクトリにできているはずです。
 
-2~using-iso-hybrid ISO hybrid live イメージの利用
+2~using-iso-hybrid ISO hybrid Live イメージの利用
 
 ISO hybrid イメージをビルド、または http://www.debian.org/CD/live/
 にあるものをダウンロードした後、通常は次にブート用メディアとして CD-R(W) や DVD-R(W) の光学メディアか USB メモリを用意します。
@@ -157,14 +154,13 @@ code{
 
 }code
 
-*{Note:}* The /{sync}/ command is useful to ensure that all the data, which is stored in memory by the kernel while copying the image, is written to the USB stick.
+*{注意:}* /{sync}/ コマンドはイメージのコピー中にカーネルによりメモリに記憶されているデータが全て USB メモリに書き込まれたことを保証するのに有用です。
 
 3~using-usb-extra-space USB メモリの空きスペースの利用
 
-After copying the #{live-image-i386.hybrid.iso}# to a USB stick, the first
-partition on the device will be filled up by the live system. To use the
-remaining free space, use a partitioning tool such as /{gparted}/ or
-/{parted}/ to create a new partition on the stick.
+#{live-image-i386.hybrid.iso}# を USB メモリにコピーすると、最初のパーティションは Live
+システムで埋められます。残った空きスペースを利用するには、/{gparted}/ や /{parted}/ といったパーティション作業ツールを使ってその
+USB メモリに新しいパーティションを作成します。
 
 code{
 
@@ -183,27 +179,27 @@ code{
 
 *{注意:}* 余った容量を Windows で使いたい場合ですが、この OS では最初のパーティション以外にアクセスすることは通常できません。この問題に対する解決策が{メーリングリスト}#contact でいくらか議論されていますが、簡単な解はないようです。
 
-*{Remember: Every time you install a new live-image-i386.hybrid.iso on the stick, all data on the stick will be lost because the partition table is overwritten by the contents of the image, so back up your extra partition first to restore again after updating the live image.}*
+*{Remember: 新しい live-image-i386.hybrid.iso を USB メモリにインストールする度に、パーティションテーブルがイメージの内容で上書きされるために USB メモリにあるデータは全て失われるので、追加パーティションをまずバックアップしてから、Live イメージの更新後に復帰させるようにしてください。}*
 
-3~booting-live-medium live メディアのブート
+3~booting-live-medium Live メディアのブート
 
-live メディア CD、DVD、USB メモリ、あるいは PXE ブートでの初回ブート時に、そのコンピュータの BIOS
+Live メディア CD、DVD、USB メモリ、あるいは PXE ブートでの初回ブート時に、そのコンピュータの BIOS
 をまず設定する必要があるかもしれません。BIOS により機能やキーの割り当てが大きく異なるため、ここではそれについて深くは触れません。BIOS
 によってはブートするデバイスのメニューをブート時に提示させるキー割り当てを提供しているものがあり、そのシステムでこれが利用できる場合は最も簡単な方法でしょう。それがない場合は
-BIOS 設定メニューに入って live システムのブートデバイスを通常のブートデバイスよりも前に配置するようにブート順を変更する必要があります。
+BIOS 設定メニューに入って Live システムのブートデバイスを通常のブートデバイスよりも前に配置するようにブート順を変更する必要があります。
 
 メディアをブートするとブートメニューが表示されているでしょう。ここで単に enter を押すと、システムはデフォルトの項目 #{Live}#
-とデフォルトのオプションを使ってブートします。ブートオプションのさらなる情報については、メニューの「ヘルプ」の項目や live システム内にある
+とデフォルトのオプションを使ってブートします。ブートオプションのさらなる情報については、メニューの「ヘルプ」の項目や Live システム内にある
 live-boot 及び live-config の man ページを見てください。
 
-#{Live}# を選択してデフォルトのデスクトップ live イメージをブートしたとして、ブートメッセージが流れた後、自動的に #{user}#
+#{Live}# を選択してデフォルトのデスクトップ Live イメージをブートしたとして、ブートメッセージが流れた後、自動的に #{user}#
 アカウントにログインし、デスクトップがすぐに使える状態で見えているはずです。{ビルド済みイメージ}#downloading-prebuilt-images
 の #{standard}# や #{rescue}# 等コンソールだけのイメージをブートした場合はコンソールで自動的に #{user}#
 アカウントにログインし、シェルプロンプトがすぐに使える状態で見えているはずです。
 
 2~using-virtual-machine 仮想マシンを利用したテスト
 
-live イメージを仮想マシン (VM) 内で実行すると開発の面で大きな時間の節約になるかもしれません。これには注意事項がないというわけではありません:
+Live イメージを仮想マシン (VM) 内で実行すると開発の面で大きな時間の節約になるかもしれません。これには注意事項がないというわけではありません:
 
 _* VM の実行にはゲストOSとホストOSの両方に十分なRAMが必要で、CPU には仮想化をハードウェアでサポートしているものを推奨します。
 
@@ -251,10 +247,10 @@ code{
 
 }code
 
-Create a new virtual machine, change the storage settings to use
-#{live-image-i386.hybrid.iso}# as the CD/DVD device, and start the machine.
+新しい仮想マシンを作成し、#{live-image-i386.hybrid.iso}# を CD/DVD
+デバイスとして利用するようにストレージ設定を変更して仮想マシンを起動します。
 
-*{注意:}* X.org を収録している live システムを /{virtualbox}/ でテストしたい場合は live-build 設定に VirtualBox X.org ドライバパッケージ /{virtualboxbox-guest-dkms}/ 及び /{virtualboxbox-guest-x11}/ を収録するとよいでしょう。収録しない場合、解像度は 800x600 に限定されます。
+*{注意:}* X.org を収録している Live システムを /{virtualbox}/ でテストしたい場合は live-build 設定に VirtualBox X.org ドライバパッケージ /{virtualboxbox-guest-dkms}/ 及び /{virtualboxbox-guest-x11}/ を収録するとよいでしょう。収録しない場合、解像度は 800x600 に限定されます。
 
 code{
 
@@ -274,13 +270,10 @@ code{
 
 2~using-hdd-image HDD イメージのビルド及び利用
 
-Building an HDD image is similar to an ISO hybrid one in all respects except
-you specify #{-b hdd}# and the resulting filename is #{live-image-i386.img}#
-which cannot be burnt to optical media. It is suitable for booting from USB
-sticks, USB hard drives, and various other portable storage
-devices. Normally, an ISO hybrid image can be used for this purpose instead,
-but if you have a BIOS which does not handle hybrid images properly, you
-need an HDD image.
+HDD イメージのビルドは全面的に ISO hybrid イメージのビルドと似ていて、#{-b hdd}# を指定することと出来上がりのファイル名が
+#{live-image-i386.img}# で光学メディアに書き込んで使うことができないという点が異なります。このイメージは USB メモリや
+USB ハードドライブ、その他様々な他のポータブルストレージデバイスからのブートに適しています。通常、この目的には ISO hybrid
+イメージを代わりに使えますが、BIOS が hybrid イメージを適切に処理できない場合は HDD イメージが必要となります。
 
 *{注意:}* 前の例で ISO hybrid イメージを作成している場合 #{lb clean}# コマンド ({lb clean コマンド}#lb-clean 参照) で作業ディレクトリをきれいにする必要があります:
 
@@ -306,20 +299,16 @@ code{
 
 }code
 
-When the build finishes, a #{live-image-i386.img}# file should be present in
-the current directory.
+ビルドが完了すると現在のディレクトリに #{live-image-i386.img}# ファイルができているはずです。
 
-The generated binary image contains a VFAT partition and the syslinux
-bootloader, ready to be directly written on a USB device. Once again, using
-an HDD image is just like using an ISO hybrid one on USB. Follow the
-instructions in {Using an ISO hybrid live image}#using-iso-hybrid, except
-use the filename #{live-image-i386.img}# instead of
-#{live-image-i386.hybrid.iso}#.
+生成されたバイナリイメージには VFAT パーティションと syslinux ブートローダが収録され、そのまま USB
+機器に書きこめます。繰り返しますが HDD イメージの使い方は USB で ISO hybrid イメージを使うのと同様です。{ISO hybrid
+Live イメージの利用}#using-iso-hybrid の指示に従ってください。#{live-image-i386.hybrid.iso}#
+に代えて #{live-image-i386.img}# をファイル名に使う点が異なります。
 
-Likewise, to test an HDD image with Qemu, install /{qemu}/ as described
-above in {Testing an ISO image with QEMU}#testing-iso-with-qemu. Then run
-#{kvm}# or #{qemu}#, depending on which version your host system needs,
-specifying #{live-image-i386.img}# as the first hard drive.
+同様に、Qemu で HDD イメージをテストするには上記の {Qemu での ISO イメージのテスト}#testing-iso-with-qemu
+で説明しているように /{qemu}/ をインストールしてください。それから #{kvm}# か #{qemu}#
+のホストシステムで必要バージョンを実行し、最初のハードドライブとして #{live-image-i386.img}# を指定します。
 
 code{
 
@@ -329,7 +318,7 @@ code{
 
 2~building-netboot-image netboot イメージのビルド
 
-以下の順でコマンドを実行すると X.org のないデフォルトの live システムを収録する基本的な netboot
+以下の順でコマンドを実行すると X.org のないデフォルトの Live システムを収録する基本的な netboot
 イメージを作成します。ネットワーク越しのブートに適しています。
 
 *{注意:}* 前に示した例からどれかを実行した場合、作業ディレクトリを #{lb clean}# コマンドできれいにする必要があります:
@@ -371,10 +360,9 @@ DHCP リクエストを送り、IP アドレスと次に行うことについて
 プロトコルを経由した高レベルブートローダの取得です。これには pxelinux や GRUB、さらには直接 Linux
 のようなオペレーティングシステムをブートすることもできます。
 
-For example, if you unpack the generated #{live-image-i386.netboot.tar}#
-archive in the #{/srv/debian-live}# directory, you'll find the filesystem
-image in #{live/filesystem.squashfs}# and the kernel, initrd and pxelinux
-bootloader in #{tftpboot/}#.
+例えば生成された #{live-image-i386.netboot.tar}# アーカイブを #{/srv/debian-live}#
+ディレクトリに展開すると、#{live/filesystem.squashfs}# にファイルシステムのイメージ、カーネルや
+initrd、pxelinux ブートローダが #{tftpboot/}# にあることがわかるでしょう。
 
 ネットワーク経由でのブートをできるようにするにはサーバ上でサービスを3つ、DHCP サーバ、TFTP サーバ、NFS サーバを設定する必要があります。
 
@@ -516,17 +504,12 @@ root 権限を必要としません。
 
 3~ ウェブブートイメージの起動
 
-While some users will prefer virtualization to test webbooting, we refer to
-real hardware here to match the following possible use case which should
-only be considered as an example.
+ユーザによってはウェブブートのテストに仮想化を好みますがここでは以下の活用事例に合わせて実際のハードウェアについて言及します。あくまで例だと思ってください。
 
-In order to boot a webboot image it is enough to have the components
-mentioned above, i.e. #{vmlinuz}# and #{initrd.img}# in a usb stick inside a
-directory named #{live/}# and install syslinux as bootloader. Then boot from
-the usb stick and type #{fetch=URL/PATH/TO/FILE}# at the boot
-options. live-boot will retrieve the squashfs file and store it into
-ram. This way, it is possible to use the downloaded compressed filesystem as
-a regular live system. For example:
+ウェブブートイメージの起動は上記で示した構成要素、つまり #{vmlinuz}# と #{initrd.img}# をUSBメモリの #{live/}#
+ディレクトリ以下に書き込み、ブートローダとして syslinux をインストールすれば十分です。そしてUSBメモリからブートしてブートオプションに
+#{fetch=URL/ファイル/への/パス}# を入力します。live-boot は squashfs
+ファイルを取得してRAMに格納します。こうして、ダウンロードした圧縮ファイルシステムを普通の Live システムとして使えるようになります。例えば:
 
 code{
 
@@ -534,4 +517,4 @@ code{
 
 }code
 
-*{Use case:}* You have a web server in which you have stored two squashfs files, one which contains a full desktop, like for example gnome, and a rescue one. If you need a graphical environment for one machine, you can plug your usb stick in and webboot the gnome image. If you need the rescue tools included in the second type of image, perhaps for another machine, you can webboot the rescue one.
+*{活用事例:}* ウェブサーバがあり、squashfs ファイルが2つ、1つは例えば gnome のようなデスクトップ環境一式を収録したものともう1つは復旧用が置かれているとします。あるマシンでグラフィカル環境が必要であればUSBメモリを差し込んで gnome 用イメージをウェブブートできます。後者のイメージに収録されている復旧用ツールが別のマシン等で必要になった場合は復旧用のイメージをウェブブートできます。

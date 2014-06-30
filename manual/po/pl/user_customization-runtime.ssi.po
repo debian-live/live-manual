@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 4.0~alpha12-1\n"
 "POT-Creation-Date: 2014-06-03 00:05+0200\n"
-"PO-Revision-Date: 2014-05-12 11:42+0100\n"
+"PO-Revision-Date: 2014-06-30 18:59+0100\n"
 "Last-Translator: AreYouLoco? <areyouloco@paranoici.org>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -473,6 +473,9 @@ msgid ""
 "media, like a cdrom, where writes and modifications do not survive reboots "
 "of the host hardware which runs it."
 msgstr ""
+"Odmianą Live CD jest preinstalowany system, który uruchamia się z nośników "
+"tylko do odczytu, takich jak cdrom, gdzie operacje zapisu i modyfikacje nie "
+"przetrwają restartów sprzętowych hosta, na którym jest uruchomiony."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:103
@@ -482,6 +485,10 @@ msgid ""
 "considered read-only and all the run-time evolutions of the system are lost "
 "at shutdown."
 msgstr ""
+"System live jest uogólnieniem tego paradygmatu, a tym samym wspiera media "
+"inne prócz płyt CD; ale dalej jako jego domyślne zachowanie, należy uważać "
+"operacje tylko do odczytu a wszekie zmiany, w czasie działania są tracone "
+"podczas zamykania systemu."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:105
@@ -503,6 +510,12 @@ msgid ""
 "systems in different ways, and all but the last one require a special boot "
 "parameter to be specified at boot time: #{persistence}#."
 msgstr ""
+"Dane przechowywane na tym ramdysku powinny być przechowywane na zapisywalnym "
+"trwałym nośniku takim jak lokalny dysk, lokalny udział sieciowy lub nawet na "
+"sesji wielosesyjnego dysku CD-RW/DVD-RW. Wszystkie te nośniki są obsługiwane "
+"w systemach live na różne sposoby i wszystkie, oprócz ostatniej wymagają "
+"specjalnego parametru startowego określonego w czasie startu systemu: "
+"#{persistence}#."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:109
@@ -543,6 +556,12 @@ msgid ""
 "the directories that you want to save in your persistence volume after a "
 "reboot. See {The persistence.conf file}#persistence-conf for more details."
 msgstr ""
+"Etykietą dla woluminu musi być #{persistence}#, ale będzie ignorowane, "
+"dopóki nie będzie zawarty w katalogu głównym plik o nazwie #{persistence."
+"conf}#, który jest używany by pełni dostosować wolumin persistence, to "
+"znaczy, że wskazuje się w nim katalogi, w których chcesz zapisać na "
+"woluminie zmiany przy restarcie. Zobacz {Plik persistence.conf}#persistence-"
+"conf, aby uzyskać więcej szczegółów."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:119
@@ -551,6 +570,9 @@ msgid ""
 "persistence. It can be, for instance, an ext4 partition on a hard disk or on "
 "a usb key created with, e.g.:"
 msgstr ""
+"Oto kilka przykładów, jak przygotować wolumin, aby mógł być on użyty z opcją "
+"persistence. Może to być, na przykład, partycja ext4 na dysku twardym lub na "
+"nośniku wymiennym stworzona przez, np.:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:123
@@ -844,16 +866,17 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:213
-#, fuzzy, no-wrap
+#, no-wrap
 #| msgid " $ echo \"cryptsetup\" > config/package-lists/encryption.list.chroot\n"
 msgid ""
 " $ lb init\n"
 " $ echo \"cryptsetup\" > config/package-lists/encryption.list.chroot\n"
-msgstr " $ echo \"cryptsetup\" > config/package-lists/encryption.list.chroot\n"
+msgstr ""
+" $ lb init\n"
+" $ echo \"cryptsetup\" > config/package-lists/encryption.list.chroot\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:217
-#, fuzzy
 #| msgid ""
 #| "Once you have your live system with /{cryptsetup}/, you basically only "
 #| "need to create a new partition, encrypt it and boot with the "
@@ -867,7 +890,7 @@ msgid ""
 "anticipated this step and added the boot parameters following the usual "
 "procedure:"
 msgstr ""
-"Gdy Twoj system live posiada  /{cryptsetup}/, to w zasadzie wystarczy, już "
+"Gdy Twoj system live posiada /{cryptsetup}/, to w zasadzie wystarczy, już "
 "tylko utworzyć nową partycję, zaszyfrować ją i uruchomić z parametrami "
 "#{persistence}# i #{persistence-encryption=luks}#. Mogliśmy już przewidzieć "
 "ten krok i dodać parametry startowe w czasie kompilacji przestrzegając "

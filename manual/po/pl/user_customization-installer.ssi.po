@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 4.0~alpha12-1\n"
 "POT-Creation-Date: 2014-04-26 08:21+0200\n"
-"PO-Revision-Date: 2014-05-08 23:09+0100\n"
+"PO-Revision-Date: 2014-07-01 16:30+0100\n"
 "Last-Translator: AreYouLoco? <areyouloco@paranoici.org>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -193,6 +193,11 @@ msgid ""
 "explicitly to the official installer for the Debian system, not anything "
 "else. It is often seen abbreviated to \"d-i\"."
 msgstr ""
+"Proszę zwrócić uwagę na uważne wykorzystanie wielkich liter, podczas "
+"odnoszenia się do \"Debian Installer\" (ang. Instalatora Debiana) w tej "
+"sekcji - kiedy jest stosowany tak, że odnosi się wyraźnie do oficjalnego "
+"instalatora dla systemu Debian, a nie cokolwiek innego, to jest często "
+"postrzegana w skrócie jako \"d-i\"."
 
 #. type: Plain text
 #: en/user_customization-installer.ssi:10
@@ -217,6 +222,10 @@ msgid ""
 "using /{debootstrap}/, from local media or some network-based network, "
 "resulting in a default Debian system being installed to the hard disk."
 msgstr ""
+"Na takich obrazach, Debian jest instalowany przez pobieranie i instalowanie "
+"pakietów .deb za pomocą /{debootstrap}/, z lokalnych mediów lub jakiegoś "
+"opartego na sieci, w wyniku czego domyślny systemu Debian jest instalowany "
+"na dysku twardym."
 
 #. type: Plain text
 #: en/user_customization-installer.ssi:18
@@ -226,6 +235,10 @@ msgid ""
 "you have a working preseeding file, live-build can automatically put it in "
 "the image and enable it for you."
 msgstr ""
+"Cały proces może być zapisany w pliku preseed i dostosowany na wiele różnych "
+"sposób, przeczytaj odpowiednie strony w instrukcji Instalatora Debiana, aby "
+"uzyskać więcej informacji. Kiedy utworzysz działający plik preseed, live-"
+"build może automatycznie umieścić go w Twoim obrazie i włączyć go dla Ciebie."
 
 #. type: Plain text
 #: en/user_customization-installer.ssi:20
@@ -242,6 +255,11 @@ msgid ""
 "filesystem image is copied to the target. This is achieved with a special "
 "udeb called live-installer."
 msgstr ""
+"Instalacja będzie przebiegać w identyczny sposób do instalacji \"normalnej\" "
+"opisanej powyżej, ale na tym samym etapie instalacji, zamiast używać /"
+"{debootstrap}/ aby pobrać i zainstalować pakiety, systemu plików obrazu live "
+"zostanie skopiowany do celu. Jest to możliwe dzięki specjalnym pakiecie udeb "
+"zwanym live-installer."
 
 #. type: Plain text
 #: en/user_customization-installer.ssi:24
@@ -257,7 +275,7 @@ msgstr ""
 #: en/user_customization-installer.ssi:26
 #, no-wrap
 msgid "*{Note:}* to support both normal and live installer entries in the bootloader of the same live medium, you must disable live-installer by preseeding #{live-installer/enable=false}#.\n"
-msgstr ""
+msgstr "*{Uwaga:}* aby zapewnić wsparcie dla wpisów zarówno normalnych i instalatora live w bootloaderze (ang. programie ładującym) na tym samym nośniku live, należy wyłączyć instalatora live przez wpis w pliku preseed #{live-installer/enable=false}#.\n"
 
 #. type: Plain text
 #: en/user_customization-installer.ssi:28
@@ -274,6 +292,12 @@ msgid ""
 "live system must match the kernel #{d-i}# uses for the specified "
 "architecture. For example:"
 msgstr ""
+"Należy pamiętać, że domyślnie, live-build nie obejmuje obrazów Instalatora "
+"Debiana w obrazach, musi to być sprecyzowane przez #{lb config}#. Również "
+"należy również pamiętać, że aby działał \"Desktop Installer\" (ang. "
+"instalator uruchamiany z poziomu pulpitu) to jądro systemu live musi być "
+"zgodne z jądrem wykorzystywanym przez #{d-i}# dla określonej architektury. "
+"Na przykład:"
 
 #. type: Plain text
 #: en/user_customization-installer.ssi:36
@@ -305,6 +329,15 @@ msgid ""
 "configuration in a #{preseed.cfg}# file included in #{config/includes."
 "installer/}#. For example, to preseed setting the locale to #{en_US}#:"
 msgstr ""
+"Jak opisano w Podręczniku Instalatora Debiana, Załącznik B na http://www."
+"debian.org/releases/stable/i386/apb.html, \"Plik preseed dostarcza sposób, "
+"aby ustawić odpowiedzi na pytania zadawane w trakcie procesu instalacji, bez "
+"konieczności ręcznego wprowadzania odpowiedzi, podczas instalacji. Pozwala "
+"to w pełni zautomatyzować większość rodzajów instalacji, a nawet oferuje "
+"kilka funkcji niedostępnych w zwykłych instalacjach.\" Takie dostosowanie "
+"jest najlepiej osiągane używając live-build poprzez umieszczenie "
+"konfiguracji w pliku #{preseed.cfg}# zawartym w #{config/includes.installer/}"
+"#. Na przykład, aby ustawić lokalizację na #{en_US}#:"
 
 #. type: Plain text
 #: en/user_customization-installer.ssi:47
@@ -331,3 +364,9 @@ msgid ""
 "fashion to {Live/chroot local includes}#live-chroot-local-includes, by "
 "placing the material in #{config/includes.installer/}#."
 msgstr ""
+"Do celów doświadczalnych lub debugowania, możesz zechcieć dołączyć lokalnie "
+"zbudowany element #{di}# w paczce udeb. Należy umieścić je w #{config/"
+"packages.binary/}#, aby włączyć je do obrazu. Również dodatkowe lub zamienne "
+"pliki i katalogi mogą być zawarte w initrd instalatora, w sposób podobny do "
+"{Uwzględnianie lokalne live/chroot}#live-chroot-local-includes, poprzez "
+"umieszczenie materiałów w #{config/includes.installer/}#."

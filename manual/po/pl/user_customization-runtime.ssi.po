@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 4.0~alpha12-1\n"
 "POT-Creation-Date: 2014-06-03 00:05+0200\n"
-"PO-Revision-Date: 2014-06-30 18:59+0100\n"
+"PO-Revision-Date: 2014-07-01 15:46+0100\n"
 "Last-Translator: AreYouLoco? <areyouloco@paranoici.org>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -366,6 +366,13 @@ msgid ""
 "and variants for a given language, try searching for the English name of the "
 "language and/or the country where the language is spoken, e.g:"
 msgstr ""
+"Zarówno konfiguracja konsoli i klawiatury X wykonywana jest przez #{live-"
+"config}# przy pomocy pakietu #{console-setup}#. Aby je skonfigurować, ustaw "
+"parametry startowe #{keyboard-layouts}#, #{keyboard-variants}#, #{keyboard-"
+"options}# i #{keyboard-model}# przez opcję #{--bootappend-live}#. Prawidłowe "
+"wartośći opcje można znaleźć w #{/usr/share/X11/xkb/rules/base.lst}#. Aby "
+"znaleźć układy i warianty klawiatury dla danego języka, spróbuj wyszukać "
+"nazwę w języku angielskim i/lub kraj, gdzie mówi się danym językiem, np.:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:67
@@ -425,8 +432,9 @@ msgid ""
 "layout (called Bepo) on a TypeMatrix EZ-Reach 2030 USB keyboard, use:"
 msgstr ""
 "Jednak dla bardzo konkretnych przypadków użycia, można dodać inne parametry. "
-"Na przykład, aby ustawić francuski system z układem klawiatury French-Dvorak "
-"(zwany Bepo) na klawiaturze USB TypeMatrix EZ-Reach 2030, użyj:"
+"Na przykład, aby ustawić francusko języczny system z układem klawiatury "
+"French-Dvorak (zwany Bepo) na klawiaturze typu USB TypeMatrix EZ-Reach 2030, "
+"użyj:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:86
@@ -450,6 +458,15 @@ msgid ""
 "#{-variant}# option). Empty values are allowed; e.g. to define two layouts, "
 "the default being US QWERTY and the other being US Dvorak, use:"
 msgstr ""
+"Wiele wartości oddzielonych przecinkami może być przypisane do każdego z "
+"parametrów #{keyboard-*}#, z wyjątkiem #{keyboard-model}#, który przyjmuje "
+"tylko jedną wartość. Proszę przejrzeć podręcznik man #{keyboard(5)}# aby "
+"uzyskać więcej szczegółów i przykładów zmiennych #{XKBMODEL}#, #{XKBLAYOUT}"
+"#, #{XKBVARIANT}# i #{XKBOPTIONS}#. Jeśli podano wiele #{keyboard-variants}# "
+"(ang warianty klawiatury), będą one dopasowane jeden do drugiego przez "
+"wartość #{keyboard-layouts}# (patrz opcja #{setxkbmap(1)}# #{-variant}#). "
+"Puste wartości są dozwolone; na przykład aby zdefiniować dwa układy, "
+"domyślny US QWERTY oraz drugi US Dvorak, zastosuj:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:95
@@ -500,6 +517,13 @@ msgid ""
 "directories are written on writable media, typically a ram disk (tmpfs) and "
 "ram disks' data do not survive reboots."
 msgstr ""
+"'Persistence' (ang. trwałość) to wspólna nazwa dla różnych rodzajów "
+"rozwiązań dla zapisania niektórych lub wszystkich danych między restartami "
+"podczas używania i wprowadzania zmian do systemu. Aby zrozumieć, jak to "
+"działa to przydatna była by wiedza, że nawet wtedy, gdy system jest "
+"uruchamiany i działa z nośnika tylko do odczytu, to modyfikacje plików i "
+"katalogów są zapisywane na zapisywalnych nośnikach, typowo dysk RAM (tmpfs) "
+"a dane w pamięci RAM nie przetrwają restartu."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:107
@@ -517,6 +541,8 @@ msgstr ""
 "specjalnego parametru startowego określonego w czasie startu systemu: "
 "#{persistence}#."
 
+# 'persistence' bedzie tlumaczone jako 'trwałość'
+# 'persistence voklume' jako 'wolumin trwałości'
 #. type: Plain text
 #: en/user_customization-runtime.ssi:109
 msgid ""
@@ -526,6 +552,12 @@ msgid ""
 "persistence volumes to use by specifying certain boot parameters described "
 "in the live-boot(7) man page. A persistence volume is any of the following:"
 msgstr ""
+"Jeśli ustawiony jest parametr startowy #{persistence}# (a #{nopersistence}# "
+"nie jest ustawiony), lokalne nośniki (np. dyski twarde, napędy USB) będą "
+"przeszukane w celu znalezienia woluminów trwałości podczas startu systemu. "
+"Możliwe jest ograniczenie, jakiego typu woluminy trwałości będą wykorzystane "
+"przez określenie pewnych parametrów startowych opisanych w podręczniku man "
+"live-boot(7). Wolumin trwałości może być każdym z wymienionych:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:111
@@ -721,6 +753,8 @@ msgstr ""
 " # echo \"/var/cache/apt\" >> /mnt/persistence.conf\n"
 " # umount /mnt\n"
 
+# 'persistence' bedzie tlumaczone jako 'trwałość'
+# 'persistence voklume' jako 'wolumin trwałości'
 #. type: Plain text
 #: en/user_customization-runtime.ssi:182
 msgid ""
@@ -734,6 +768,16 @@ msgid ""
 "can add #{/ union}# to your #{persistence.conf}# file to achieve full "
 "persistence."
 msgstr ""
+"Następnie uruchamiamy ponownie komputer. Podczas pierwszego uruchomienia "
+"zawartość #{/home}# i #{/var/cache/apt}# zostanie skopiowana do woluminu "
+"trwałości i od tej pory wszystkie zmiany w tych katalogach będą "
+"przechowywane na tym woluminie. Należy pamiętać, że wszelkie ścieżki "
+"wymienione w pliku #{persistence.conf}# nie mogą zawierać spacji lub "
+"specjalnych komponentów ścieżki: #{.}# i #{..}# . Ponadto, ani #{/lib}#, #{/"
+"lib/live}# (lub którykolwiek z jego podkatalogów) ani #{/}# nie może zostać "
+"utrwalony za pomocą własnych punktów montowania. Jako obejście tego "
+"ograniczenia można dodać #{/ union}# do pliku #{persistence.conf}# w celu "
+"osiągnięcia pełnej trwałości."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:184
@@ -764,6 +808,17 @@ msgid ""
 "conf}# file. See the persistence.conf(5) man page for how to handle that "
 "case if you really need it (hint: you usually don't)."
 msgstr ""
+"Kilka różnych niestandardowych woluminów-nakładek (z własnymi plikami "
+"#{persistence.conf}#) może być używane w tym samym czasie, ale jeżeli kilka "
+"woluminów tworzy ten sam katalog trwałym, będzie używany tylko jeden z nich. "
+"Jeśli jakieś dwa punty montowania są \"zagnieżdżone\" (np. jeden jest "
+"podkatalogiem drugiego) to katalog parent (ang. rodzic) zostanie zamontowany "
+"przed katalogiem child (ang. dziecko) tak że jeden punkt montowania nie "
+"będzie ukryty przed innym. Zagnieżdżone niestandardowe woluminy są "
+"problematyczne, jeżeli są wymienione w tym samym pliku #{persistence.conf}#. "
+"Zobacz podręcznik man persistence.conf(5), jak radzić sobie z tym "
+"przypadkiem, jeśli naprawdę potrzebujesz (Wskazówka: zazwyczaj nie "
+"potrzebujesz)."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:190
@@ -776,6 +831,14 @@ msgid ""
 "persistence.conf}# for the second partition which will store the superuser's "
 "files. Finally, use the #{persistence}# boot parameter."
 msgstr ""
+"Jednym z możliwych przypadków użycia: Jeśli chcesz przechowywać dane "
+"użytkownika np. #{/home}# i dane superużytkownika tj. #{/root}# na różnych "
+"partycjach, utwórz dwie partycje z etykietą #{persistence}# i dodaj plik "
+"#{persistence.conf} na każdą z nich, tak #{# echo \"/home\" > persistence."
+"conf}# na pierwszej partycji, przez co będzą zapisywane pliki użytkownika i "
+"#{# echo \"/root\" > persistence.conf}# na drugiej partycji, która będzie "
+"przechowywać pliki superużytkownika. Wreszcie, należy użyć parametru "
+"startowego #{persistence}#."
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:192

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 4.0~alpha12-1\n"
 "POT-Creation-Date: 2014-04-26 08:21+0200\n"
-"PO-Revision-Date: 2014-07-01 17:55+0100\n"
+"PO-Revision-Date: 2014-07-01 21:19+0100\n"
 "Last-Translator: AreYouLoco? <areyouloco@paranoici.org>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -164,6 +164,8 @@ msgstr "code{"
 msgid "}code"
 msgstr "}code"
 
+# #-#-#-#-#  user_customization-overview.ssi.po (live-manual 4.0~alpha12-1)  #-#-#-#-#
+# 'customizing contents' jako 'dostosowywanie zawartości'
 #. type: Plain text
 #: en/user_customization-contents.ssi:2 en/user_customization-overview.ssi:2
 msgid ":B~ Customizing contents"
@@ -232,7 +234,7 @@ msgid ""
 "binary image. Please see {Binary local includes}#binary-local-includes for "
 "more information."
 msgstr ""
-"_* Lokalnych uwzględnianie danych binarnych: Pozwoli Ci dodać lub zastąpić "
+"_* Lokalne uwzględnianie danych binarnych: Pozwoli Ci dodać lub zastąpić "
 "pliki w obrazie binarnym. Zobacz {Lokalnych uwzględnianie danych binarnych}"
 "#binary-local-includes, aby uzyskać więcej informacji."
 
@@ -246,12 +248,13 @@ msgstr ""
 "Proszę zobaczyć {Definicje}#terms aby uzyskać więcej informacji na temat "
 "różnicy między obrazami \"binarnymi\" a obrazami \"live\"."
 
-# 'live/chroot local includes' bedzie tlumaczone jako 'Lokalne uwzględnianie chroot/live'
+# 'live/chroot local includes' bedzie tlumaczone jako 'Lokalnie uwzględniane w chroot/live'
 #. type: Plain text
 #: en/user_customization-contents.ssi:18
 msgid "3~live-chroot-local-includes Live/chroot local includes"
-msgstr "3~live-chroot-local-includes Lokalne uwzględnianie chroot/live"
+msgstr "3~live-chroot-local-includes Lokalnie uwzględniane w chroot/live"
 
+# 'live/chroot local includes' bedzie tlumaczone jako 'Lokalnie uwzględniane w chroot/live'
 #. type: Plain text
 #: en/user_customization-contents.ssi:20
 msgid ""
@@ -263,6 +266,14 @@ msgid ""
 "see {Live/chroot local hooks}#live-chroot-local-hooks if processing is "
 "needed."
 msgstr ""
+"Lokalnie uwzględnione w chroot mogą być używane, aby dodać lub zastąpić "
+"pliki w systemie plików chroot/live, tak aby mogły być one użyte w systemie "
+"live. Typowym zastosowaniem jest dostarczenie szkieletowego katalogu "
+"użytkownika (#{/etc/skel}#) używanego przez system live do tworzenia "
+"katalogu domowego użytkownika live. Innym jest dostarczanie plików "
+"konfiguracyjnych, które mogą być po prostu dodane lub podmienione w obrazie "
+"bez przetwarzania; zobacz {Lokalne haki chroot/live}#live-chroot-local-"
+"hooks, czy potrzebne jest przetwarzanie."
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:22
@@ -272,6 +283,9 @@ msgid ""
 "live system. For example, to add a file #{/var/www/index.html}# in the live "
 "system, use:"
 msgstr ""
+"Aby dołączyć pliki, po prostu dodaj je do katalogu #{config/includes.chroot}"
+"#. Ten katalog odnosi się do katalogu root #{/}# systemu live. Na przykład, "
+"aby dodać plik #{/var/www/index.html}# do systemu live, użyj:"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:27
@@ -308,18 +322,21 @@ msgstr ""
 "     |           `-- index.html\n"
 "    [...]\n"
 
+# 'live/chroot local includes' bedzie tlumaczone jako 'Lokalnie uwzględniane w chroot/live'
 #. type: Plain text
 #: en/user_customization-contents.ssi:45
 msgid ""
 "Chroot local includes are installed after package installation so that files "
 "installed by packages are overwritten."
 msgstr ""
+"Lokalnie uwzględnione w chroot są instalowane po instalacji pakietów, tak że "
+"pliki zainstalowane przez pakiety są zastępowane."
 
-# 'binary local includes' bedzie tlumaczone jako 'Lokalne uwzględnianie danych binarnych'
+# 'binary local includes' bedzie tlumaczone jako 'Lokalnie uwzględniane dane binarne'
 #. type: Plain text
 #: en/user_customization-contents.ssi:47
 msgid "3~binary-local-includes Binary local includes"
-msgstr "3~binary-local-includes Lokalnych uwzględnianie danych binarnych"
+msgstr "3~binary-local-includes Lokalnie uwzględniane dane binarne"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:49
@@ -332,6 +349,14 @@ msgid ""
 "by an HTML index page. Simply copy the material to #{config/includes.binary/}"
 "# as follows:"
 msgstr ""
+"Aby zawierać materiały takie jak filmy lub dokumentacja na systemie plików "
+"nośnika tak, aby były one dostępne od razu po włożeniu nośnika bez "
+"uruchamiania systemu live, możesz użyć lokalnego uwzględniania danych "
+"binarnych. Działa to w podobny sposób do lokalnego uwzględniania w chroot/"
+"live. Załóżmy na przykład, że pliki #{~/video_demo.*}# to filmy "
+"demonstacyjne systemu live opisanego przez i dowiązane przez stronę indeksu "
+"HTML. Wystarczy skopiować materiał z #{config/includes.binary/}# w "
+"następujący sposób:"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:53
@@ -375,6 +400,15 @@ msgid ""
 "usr/share/doc/live-build/examples/hooks}# which you can copy or symlink to "
 "use them in your own configuration."
 msgstr ""
+"Aby uruchomić komendy na etapie chroot, należy utworzyć skrypt hak z "
+"przyrostkiem #{.hook.chroot}# zawierającym polecenia w katalogu #{config/"
+"hooks/}#. Hak będzie działać w chroot po resztę konfiguracji chroot "
+"zastosowano, więc pamiętaj, aby zapewnić, że konfiguracja zawiera wszystkie "
+"pakiety i pliki do Twoich potrzeb haka w celu uruchomienia. Zobacz "
+"przykładowe skrypty hak chroot dla różnych zadań dostosowywania wspólnej "
+"chroot przewidzianych w # {/ usr / share / doc / live-build / przykłady / "
+"haki} #, który można skopiować lub linku do korzystania z nich w swoim "
+"własnym konfiguracji."
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:67
@@ -392,6 +426,15 @@ msgid ""
 "live/config/}#, or as a custom package as discussed in {Installing modified "
 "or third-party packages}#installing-modified-or-third-party-packages."
 msgstr ""
+"Aby wykonać polecenia przy starcie systemu, możesz dostarczyć haki live-"
+"config, jak wyjaśniono w jego podręczniku man w sekcji \"Customization"
+"\" (ang. dostosowywanie). Przeanalizuj własne haki live-config dostarczone w "
+"#{/lib/live/config/}#, zwracając uwagę na numery sekwencji. Następnie dodaj "
+"swój własne hak z odpowiednim prefiksem numeru sekwencji, albo jako lokalnie "
+"uwzględnione w chroot w #{config/includes.chroot/lib/live/config/}#, lub w "
+"postaci niestandardowego pakietu omówione w {Instalowanie zmodyfikowanych "
+"pakietów lub pakietów innych firm}#installing-modified-or-third-party-"
+"packages."
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:71
@@ -411,6 +454,16 @@ msgid ""
 "share/doc/live-build/examples/hooks}# which you can copy or symlink to use "
 "them in your own configuration."
 msgstr ""
+"Aby uruchomić komendy na etapie binarnym, należy utworzyć skrypt hak z "
+"przyrostkiem #{.hook.binary}# zawierającym polecenia w katalogu #{config/"
+"hooks/}#. Hak będzie uruchomiony po wszystkich innych binarnych poleceniach, "
+"ale przed binary_checksums; ostatnim poleceniem. Polecenia haka nie działają "
+"w środowisku chroot, więc należy zadbać, aby nie modyfikować żadnych plików "
+"poza drzewem kompilacji albo może to uszkodzić system kompilacji! Zobacz "
+"przykładowe skrypty binarne dla różnych typowych binarnych zadań "
+"dostosowywania przewidzianych w #{/usr/share/doc/live-build/examples/hooks}"
+"#, które można skopiować lub utworzyć dowiązanie symboliczne aby skorzystać "
+"z nich w swojej własnej konfiguracji."
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:75

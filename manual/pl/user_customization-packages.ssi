@@ -138,8 +138,8 @@ directory.
 
 Jeżeli takie pliki istnieją to zostaną wybrane automatycznie.
 
-You should also put the GPG key used to sign the repository into
-#{config/archives/your-repository.key.{binary,chroot}}# files.
+Należy również umieścić klucz GPG używany do podpisywania repozytorium w
+#{config/archives/twój-klucz-repozytorium.key{binary,chroot}}#.
 
 Should you need custom APT pinning, such APT preferences snippets can be
 placed in #{config/archives/your-repository.pref.{binary,chroot}}# files and
@@ -278,9 +278,9 @@ code{
 
 }code
 
-You may test for any one of a number of values, e.g. to install
-/{memtest86+}/ if either #{--architectures i386}# or #{--architectures
-amd64}# is specified:
+Można przetestować dowolny szereg wartości, na przykład zainstalować
+/{memtest86+}/, jeżeli ustalono #{--architectures i386}# lub
+#{--architectures amd64}#:
 
 code{
 
@@ -302,11 +302,11 @@ code{
 
 }code
 
-Zagnieżdżanie instrukcji warunkowych nie jest obsługiwane.
+Zagnieżdżanie instrukcji warunkowych jest nie obsługiwane.
 
 % FIXME:
 
-3~ usuwanie pakietu podczas instalacji
+3~ Usuwanie pakietu podczas instalacji
 
 You can list packages in files with #{.list.chroot_live}# and
 #{.list.chroot_install}# suffixes inside the #{config/package-lists}#
@@ -447,8 +447,8 @@ directory will be automatically installed into the live system during build
 Packages *{must}* be named in the prescribed way. One simple way to do this
 is to use #{dpkg-name}#.
 
-Using #{packages.chroot}# for installation of custom packages has
-disadvantages:
+Korzystanie z #{packages.chroot}# do instalacji niestandardowych pakietów ma
+wady:
 
 _* Nie jest możliwe użycie bezpiecznego APT.
 
@@ -499,11 +499,11 @@ to #{lb config}#. Choose the method implementing the preferred behaviour for
 package installation, the notable difference being how missing packages are
 handled.
 
-_* #{apt}#: With this method, if a missing package is specified, the package
-installation will fail. This is the default setting.
+_* #{apt}#: Używając tej metody, jeśli zaznaczono brakujący pakiet,
+instalacja pakietu zakończy się niepowodzeniem. To jest domyślne ustawienie.
 
-_* #{aptitude}#: With this method, if a missing package is specified, the
-package installation will succeed.
+_* #{aptitude}#: Używając tej metody, jeśli zaznaczono brakujący pakiet,
+instalacja pakietu zakończy się powodzeniem.
 
 3~ Używanie serwera proxy z APT
 

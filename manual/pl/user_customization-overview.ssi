@@ -5,7 +5,7 @@
 Ten rozdział zawiera przegląd różnych sposobów, w jaki można dostosować
 system live.
 
-2~ Czas kompilacji w porównaniu do konfiguracji czasu rozruchu
+2~ Konfiguracja podczas kompilacji vs. podczas uruchamiania systemu
 
 Opcje konfiguracji systemu live są podzielone na opcje w czasie budowania,
 które są stosowane w czasie kompilacji i na opcje w czasie rozruchu, które
@@ -23,14 +23,14 @@ poleceń domyślnych dla jądra systemu live, takich jak trwałość
 {Dostosowywanie lokalizacji i języka}#customizing-locale-and-language, dla
 przykładów.
 
-Build-time configuration options are described in the #{lb init}# and the
-#{lb config}# man pages. Boot-time options are described in the man pages
-for live-boot and live-config. Although the live-boot and live-config
-packages are installed within the live system you are building, it is
-recommended that you also install them on your build system for easy
-reference when you are working on your configuration. It is safe to do so,
-as none of the scripts contained within them are executed unless the system
-is configured as a live system.
+Opcje konfiguracyjne w czasie budowania są opisane w podręczniku man
+pakietów #{lb init}# i #{lb config}#. Opcje konfiguracyjne czasu rozruchu
+opisane są w podręczniku man pakietów live-boot i live-config. Chociaż
+pakiety startowe live-boot i live-config są zainstalowane w systemie live,
+który zbudowaliśmy, zaleca się również zainstalować je w systemie budowania
+dla łatwego odniesienia podczas pracy przy konfiguracji. Jest to bezpieczne,
+ponieważ żaden z zawartych w nich skryptów nie będzie wykonywany, chyba że
+system zostanie skonfigurowany jako system live.
 
 2~stages-of-the-build Etapy kompilacji
 
@@ -46,7 +46,7 @@ możliwy do uruchomienia obraz, używając zawartości katalogu chroot do budowy
 głównego systemu plików w systemie live, a tym instalatora i wszelkich
 innych dodatkowych materiałów na nośniku docelowym poza system plików na
 systemu live. Po skompilowaniu obrazu live, jeśli włączono, archiwum
-źródłowe tarball jest budowane podczas etapu *{źródło}* (ang. source).
+źródłowe tarball jest budowane podczas etapu *{source}* (ang. źródło).
 
 W każdym z tych etapów istnieje szczególna sekwencja, w której stosuje się
 polecenia. Są one usytuowane w taki sposób, aby zapewnić modyfikacjom bycie
@@ -58,22 +58,22 @@ później, gdy wszystkie materiały są już na miejscu.
 
 2~ Uzupełnienie lb config plikami
 
-Although #{lb config}# creates a skeletal configuration in the #{config/}#
-directory, to accomplish your goals, you may need to provide additional
-files in subdirectories of #{config/}#. Depending on where the files are
-stored in the configuration, they may be copied into the live system's
-filesystem or into the binary image filesystem, or may provide build-time
-configurations of the system that would be cumbersome to pass as
-command-line options. You may include things such as custom lists of
-packages, custom artwork, or hook scripts to run either at build time or at
-boot time, boosting the already considerable flexibility of debian-live with
-code of your own.
+Mimo, że #{lb config}# tworzy konfigurację katalogów w #{config/}#, aby
+osiągnąć swoje cele, może być konieczne udostępnienie dodatkowych plików w
+podkatalogach #{config/}#. W zależności od tego, gdzie pliki są
+przechowywane w konfiguracji, mogą być skopiowane do systemu plików systemu
+live lub do binarnego obrazu systemu plików, lub mogą zostać zapewnione
+konfiguracje w czasie budowy systemu, które byłoby kłopotliwie do
+przekazania jako opcje wiersza polecenia. Można zawrzeć rzeczy takie jak
+niestandardowe listy pakietów, niestandardowa grafika lub inny skrypt do
+uruchomienia zarówno w czasie kompilacji jak i w czasie startu systemu,
+zwiększając już znaczną elastyczność debian-live swoim własnych kodem.
 
 2~ Zadania dostosowywania
 
 Kolejne rozdziały są podzielone na rodzaje zadań dostosowywania, który
 użytkownicy zazwyczaj wykonują: {Dostosowywanie instalacji
 pakietu}#customizing-package-installation, {Dostosowywanie
-treści}}#customizing-contents i {Dostosowywanie ustawień regionalnych i
+zawartości}#customizing-contents i {Dostosowywanie ustawień regionalnych i
 języka}#customizing-locale-and-language obejmują tylko niektóre z rzeczy,
 które możesz zrobić.

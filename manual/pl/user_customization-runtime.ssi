@@ -82,14 +82,14 @@ jest kodowanie domyślne) lub pełnej nazwy z kodowaniem
 #{language_country.encoding}#. Lista obsługiwanych lokalizacji i kodowań
 można znaleźć w #{/usr/share/i18n/SUPPORTED}#.
 
-Both the console and X keyboard configuration are performed by
-#{live-config}# using the #{console-setup}# package. To configure them, use
-the #{keyboard-layouts}#, #{keyboard-variants}#, #{keyboard-options}# and
-#{keyboard-model}# boot parameters via the #{--bootappend-live}#
-option. Valid options for these can be found in
-#{/usr/share/X11/xkb/rules/base.lst}#. To find layouts and variants for a
-given language, try searching for the English name of the language and/or
-the country where the language is spoken, e.g:
+Zarówno konfiguracja konsoli i klawiatury X wykonywana jest przez
+#{live-config}# przy pomocy pakietu #{console-setup}#. Aby je skonfigurować,
+ustaw parametry startowe #{keyboard-layouts}#, #{keyboard-variants}#,
+#{keyboard-options}# i #{keyboard-model}# przez opcję
+#{--bootappend-live}#. Prawidłowe wartośći opcje można znaleźć w
+#{/usr/share/X11/xkb/rules/base.lst}#. Aby znaleźć układy i warianty
+klawiatury dla danego języka, spróbuj wyszukać nazwę w języku angielskim
+i/lub kraj, gdzie mówi się danym językiem, np.:
 
 code{
 
@@ -119,9 +119,9 @@ code{
 }code
 
 Jednak dla bardzo konkretnych przypadków użycia, można dodać inne
-parametry. Na przykład, aby ustawić francuski system z układem klawiatury
-French-Dvorak (zwany Bepo) na klawiaturze USB TypeMatrix EZ-Reach 2030,
-użyj:
+parametry. Na przykład, aby ustawić francusko języczny system z układem
+klawiatury French-Dvorak (zwany Bepo) na klawiaturze typu USB TypeMatrix
+EZ-Reach 2030, użyj:
 
 code{
 
@@ -130,15 +130,15 @@ code{
 
 }code
 
-Multiple values may be specified as comma-delimited lists for each of the
-#{keyboard-*}# options, with the exception of #{keyboard-model}#, which
-accepts only one value. Please see the #{keyboard(5)}# man page for details
-and examples of #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# and
-#{XKBOPTIONS}# variables. If multiple #{keyboard-variants}# values are
-given, they will be matched one-to-one with #{keyboard-layouts}# values (see
-#{setxkbmap(1)}# #{-variant}# option). Empty values are allowed; e.g. to
-define two layouts, the default being US QWERTY and the other being US
-Dvorak, use:
+Wiele wartości oddzielonych przecinkami może być przypisane do każdego z
+parametrów #{keyboard-*}#, z wyjątkiem #{keyboard-model}#, który przyjmuje
+tylko jedną wartość. Proszę przejrzeć podręcznik man #{keyboard(5)}# aby
+uzyskać więcej szczegółów i przykładów zmiennych #{XKBMODEL}#,
+#{XKBLAYOUT}#, #{XKBVARIANT}# i #{XKBOPTIONS}#. Jeśli podano wiele
+#{keyboard-variants}# (ang warianty klawiatury), będą one dopasowane jeden
+do drugiego przez wartość #{keyboard-layouts}# (patrz opcja #{setxkbmap(1)}#
+#{-variant}#). Puste wartości są dozwolone; na przykład aby zdefiniować dwa
+układy, domyślny US QWERTY oraz drugi US Dvorak, zastosuj:
 
 code{
 
@@ -149,33 +149,37 @@ code{
 
 2~persistence Persistence
 
-A live cd paradigm is a pre-installed system which runs from read-only
-media, like a cdrom, where writes and modifications do not survive reboots
-of the host hardware which runs it.
+Odmianą Live CD jest preinstalowany system, który uruchamia się z nośników
+tylko do odczytu, takich jak cdrom, gdzie operacje zapisu i modyfikacje nie
+przetrwają restartów sprzętowych hosta, na którym jest uruchomiony.
 
-A live system is a generalization of this paradigm and thus supports other
-media in addition to CDs; but still, in its default behaviour, it should be
-considered read-only and all the run-time evolutions of the system are lost
-at shutdown.
+System live jest uogólnieniem tego paradygmatu, a tym samym wspiera media
+inne prócz płyt CD; ale dalej jako jego domyślne zachowanie, należy uważać
+operacje tylko do odczytu a wszekie zmiany, w czasie działania są tracone
+podczas zamykania systemu.
 
-'Persistence' is a common name for different kinds of solutions for saving
-across reboots some, or all, of this run-time evolution of the system. To
-understand how it works it would be handy to know that even if the system is
-booted and run from read-only media, modifications to the files and
-directories are written on writable media, typically a ram disk (tmpfs) and
-ram disks' data do not survive reboots.
+'Persistence' (ang. trwałość) to wspólna nazwa dla różnych rodzajów
+rozwiązań dla zapisania niektórych lub wszystkich danych między restartami
+podczas używania i wprowadzania zmian do systemu. Aby zrozumieć, jak to
+działa to przydatna była by wiedza, że nawet wtedy, gdy system jest
+uruchamiany i działa z nośnika tylko do odczytu, to modyfikacje plików i
+katalogów są zapisywane na zapisywalnych nośnikach, typowo dysk RAM (tmpfs)
+a dane w pamięci RAM nie przetrwają restartu.
 
-The data stored on this ramdisk should be saved on a writable persistent
-medium like local storage media, a network share or even a session of a
-multisession (re)writable CD/DVD. All these media are supported in live
-systems in different ways, and all but the last one require a special boot
-parameter to be specified at boot time: #{persistence}#.
+Dane przechowywane na tym ramdysku powinny być przechowywane na zapisywalnym
+trwałym nośniku takim jak lokalny dysk, lokalny udział sieciowy lub nawet na
+sesji wielosesyjnego dysku CD-RW/DVD-RW. Wszystkie te nośniki są obsługiwane
+w systemach live na różne sposoby i wszystkie, oprócz ostatniej wymagają
+specjalnego parametru startowego określonego w czasie startu systemu:
+#{persistence}#.
 
-If the boot parameter #{persistence}# is set (and #{nopersistence}# is not
-set), local storage media (e.g. hard disks, USB drives) will be probed for
-persistence volumes during boot. It is possible to restrict which types of
-persistence volumes to use by specifying certain boot parameters described
-in the live-boot(7) man page. A persistence volume is any of the following:
+Jeśli ustawiony jest parametr startowy #{persistence}# (a #{nopersistence}#
+nie jest ustawiony), lokalne nośniki (np. dyski twarde, napędy USB) będą
+przeszukane w celu znalezienia woluminów trwałości podczas startu
+systemu. Możliwe jest ograniczenie, jakiego typu woluminy trwałości będą
+wykorzystane przez określenie pewnych parametrów startowych opisanych w
+podręczniku man live-boot(7). Wolumin trwałości może być każdym z
+wymienionych:
 
 _* partycja, identyfikowana po nazwie GPT.
 
@@ -184,15 +188,16 @@ _* system plików, identyfikowany po etykiecie.
 _* plik obrazu zlokalizowany na każdym obsługiwanym systemie plików (nawet
 na partycji NTFS innego systemu), identyfikowany po nazwie pliku.
 
-The volume label for overlays must be #{persistence}# but it will be ignored
-unless it contains in its root a file named #{persistence.conf}# which is
-used to fully customize the volume's persistence, this is to say, specifying
-the directories that you want to save in your persistence volume after a
-reboot. See {The persistence.conf file}#persistence-conf for more details.
+Etykietą dla woluminu musi być #{persistence}#, ale będzie ignorowane,
+dopóki nie będzie zawarty w katalogu głównym plik o nazwie
+#{persistence.conf}#, który jest używany by pełni dostosować wolumin
+persistence, to znaczy, że wskazuje się w nim katalogi, w których chcesz
+zapisać na woluminie zmiany przy restarcie. Zobacz {Plik
+persistence.conf}#persistence-conf, aby uzyskać więcej szczegółów.
 
-Here are some examples of how to prepare a volume to be used for
-persistence. It can be, for instance, an ext4 partition on a hard disk or on
-a usb key created with, e.g.:
+Oto kilka przykładów, jak przygotować wolumin, aby mógł być on użyty z opcją
+persistence. Może to być, na przykład, partycja ext4 na dysku twardym lub na
+nośniku wymiennym stworzona przez, np.:
 
 code{
 
@@ -271,15 +276,16 @@ code{
 
 }code
 
-Then we reboot. During the first boot the contents of #{/home}# and
-#{/var/cache/apt}# will be copied into the persistence volume, and from then
-on all changes to these directories will live in the persistence
-volume. Please note that any paths listed in the #{persistence.conf}# file
-cannot contain white spaces or the special #{.}# and #{..}# path
-components. Also, neither #{/lib}#, #{/lib/live}# (or any of their
-sub-directories) nor #{/}# can be made persistent using custom mounts. As a
-workaround for this limitation you can add #{/ union}# to your
-#{persistence.conf}# file to achieve full persistence.
+Następnie uruchamiamy ponownie komputer. Podczas pierwszego uruchomienia
+zawartość #{/home}# i #{/var/cache/apt}# zostanie skopiowana do woluminu
+trwałości i od tej pory wszystkie zmiany w tych katalogach będą
+przechowywane na tym woluminie. Należy pamiętać, że wszelkie ścieżki
+wymienione w pliku #{persistence.conf}# nie mogą zawierać spacji lub
+specjalnych komponentów ścieżki: #{.}# i #{..}# . Ponadto, ani #{/lib}#,
+#{/lib/live}# (lub którykolwiek z jego podkatalogów) ani #{/}# nie może
+zostać utrwalony za pomocą własnych punktów montowania. Jako obejście tego
+ograniczenia można dodać #{/ union}# do pliku #{persistence.conf}# w celu
+osiągnięcia pełnej trwałości.
 
 3~ Używanie więcej niż jednego magazynu persistence
 
@@ -288,22 +294,26 @@ Istnieją różne sposoby korzystania z wielu magazynów trwałości
 magazynów w tym samym czasie lub wybranie tylko jednego, spośród różnych, do
 bardzo specyficznych zastosowań.
 
-Several different custom overlay volumes (with their own
-#{persistence.conf}# files) can be used at the same time, but if several
-volumes make the same directory persistent, only one of them will be
-used. If any two mounts are "nested" (i.e. one is a sub-directory of the
-other) the parent will be mounted before the child so no mount will be
-hidden by the other. Nested custom mounts are problematic if they are listed
-in the same #{persistence.conf}# file. See the persistence.conf(5) man page
-for how to handle that case if you really need it (hint: you usually don't).
+Kilka różnych niestandardowych woluminów-nakładek (z własnymi plikami
+#{persistence.conf}#) może być używane w tym samym czasie, ale jeżeli kilka
+woluminów tworzy ten sam katalog trwałym, będzie używany tylko jeden z
+nich. Jeśli jakieś dwa punty montowania są "zagnieżdżone" (np. jeden jest
+podkatalogiem drugiego) to katalog parent (ang. rodzic) zostanie zamontowany
+przed katalogiem child (ang. dziecko) tak że jeden punkt montowania nie
+będzie ukryty przed innym. Zagnieżdżone niestandardowe woluminy są
+problematyczne, jeżeli są wymienione w tym samym pliku
+#{persistence.conf}#. Zobacz podręcznik man persistence.conf(5), jak radzić
+sobie z tym przypadkiem, jeśli naprawdę potrzebujesz (Wskazówka: zazwyczaj
+nie potrzebujesz).
 
-One possible use case: If you wish to store the user data i.e. #{/home}# and
-the superuser data i.e. #{/root}# in different partitions, create two
-partitions with the #{persistence}# label and add a #{persistence.conf}#
-file in each one like this, #{# echo "/home" > persistence.conf}# for the
-first partition that will save the user's files and #{# echo "/root" >
-persistence.conf}# for the second partition which will store the superuser's
-files. Finally, use the #{persistence}# boot parameter.
+Jednym z możliwych przypadków użycia: Jeśli chcesz przechowywać dane
+użytkownika np. #{/home}# i dane superużytkownika tj. #{/root}# na różnych
+partycjach, utwórz dwie partycje z etykietą #{persistence}# i dodaj plik
+#{persistence.conf} na każdą z nich, tak #{# echo "/home" >
+persistence.conf}# na pierwszej partycji, przez co będzą zapisywane pliki
+użytkownika i #{# echo "/root" > persistence.conf}# na drugiej partycji,
+która będzie przechowywać pliki superużytkownika. Wreszcie, należy użyć
+parametru startowego #{persistence}#.
 
 Jeśli użytkownik będzie potrzebował wiele magazynów trwałości tego samego
 typu dla różnych miejsc lub dla celów testowych, takich jak magazyny
@@ -353,11 +363,11 @@ code{
 
 }code
 
-Once you have your live system with /{cryptsetup}/, you basically only need
-to create a new partition, encrypt it and boot with the #{persistence}# and
-#{persistence-encryption=luks}# parameters. We could have already
-anticipated this step and added the boot parameters following the usual
-procedure:
+Gdy Twoj system live posiada /{cryptsetup}/, to w zasadzie wystarczy, już
+tylko utworzyć nową partycję, zaszyfrować ją i uruchomić z parametrami
+#{persistence}# i #{persistence-encryption=luks}#. Mogliśmy już przewidzieć
+ten krok i dodać parametry startowe w czasie kompilacji przestrzegając
+następującej procedury:
 
 code{
 

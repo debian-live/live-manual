@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
 "POT-Creation-Date: 2014-06-03 00:05+0200\n"
-"PO-Revision-Date: 2013-03-11 05:50+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2014-06-03 07:05+0900\n"
+"Last-Translator: victory <victory.deb@gmail.com>\n"
+"Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -179,12 +179,12 @@ msgstr "}code"
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:2
 msgid ":B~ Managing a configuration"
-msgstr ""
+msgstr ":B~ 設定の管理"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:4
 msgid "1~managing-a-configuration Managing a configuration"
-msgstr ""
+msgstr "1~managing-a-configuration 設定の管理"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:6
@@ -193,11 +193,14 @@ msgid ""
 "creation, through successive revisions and successive releases of both the "
 "live-build software and the live image itself."
 msgstr ""
+"この章では live-build ソフトウェアと Live イメージ自体の両方について、最初の"
+"作成から継続的な改訂、継続的なリリースを通して Live 設定を管理する方法を説明"
+"します。"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:8
 msgid "2~ Dealing with configuration changes"
-msgstr ""
+msgstr "2~ 設定変更への対応"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:10
@@ -208,11 +211,16 @@ msgid ""
 "satisfied. To support these changes, you will need auto scripts which ensure "
 "your configuration is kept in a consistent state."
 msgstr ""
+"Live 設定が最初の試行で全て上手くいくのはまれです。一度だけビルドするのならコ"
+"マンドラインから #{lb config}# オプションを渡すだけで済むかもしれませんが、満"
+"足のいくまでオプションを改訂してビルドを繰り返す方が標準的です。そうした変更"
+"を支援するには設定を確実に一貫した状態に保つ自動化スクリプトが必要となるで"
+"しょう。"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:12
 msgid "3~ Why use auto scripts? What do they do?"
-msgstr ""
+msgstr "3~ 自動化スクリプトを使う理由は? それは何をするもの?"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:14
@@ -229,6 +237,17 @@ msgid ""
 "upgrade live-build and it happens to rename an option, #{config/*}# would "
 "still contain variables named after the old option that are no longer valid."
 msgstr ""
+"#{lb config}# コマンドに渡されたオプションはされている他の多数のオプションと"
+"共にデフォルト値として #{config/*}# ファイルに保管されます。その後に #{lb "
+"config}# を実行した場合最初のオプションを基にしてデフォルトのオプションはリ"
+"セットされません。そのため、例えば #{--binary-images}# に新しい値を指定して再"
+"び #{lb config}# を実行した場合以前指定していた種類のイメージに依存しているオ"
+"プションのデフォルト値は新しく指定した種類のイメージでは使えなくなるかもしれ"
+"ません。そのファイルが読み取りや変更の対象からも外れているかもしれません。こ"
+"れを使うと100以上のオプションの値を保管するため、実際に指定されたオプションを"
+"誰でも確認できます。最後に、#{lb config}# を実行した後に live-build をアップ"
+"グレードして、オプションの名前が変更されていた場合、#{config/*}# には古いオプ"
+"ションが有効ではなくなった後に名付けられた変数も収録されます。"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:16
@@ -246,11 +265,21 @@ msgid ""
 "need to change when you upgrade live-build after reading the updated "
 "documentation."
 msgstr ""
+"以上に挙げた理由により #{auto/*}# スクリプトにより楽が出来るようになります。"
+"このスクリプト群は #{lb config}# や #{lb build}#、#{lb clean}# コマンドの単純"
+"なラッパーで、設定の管理を支援するように設計されています。#{auto/config}# ス"
+"クリプトは #{lb config}# コマンドと希望したオプションを全て保管し、#{auto/"
+"clean}# スクリプトは設定用変数値を収録するファイルを削除し、#{auto/build}# ス"
+"クリプトは各ビルドの #{build.log}# を維持します。このスクリプト群はそれぞれ対"
+"応する #{lb}# コマンドの実行時に自動的に実行されます。このスクリプト群を利用"
+"することで設定が見やすくなり、改訂を越えて内部的に一貫した状態が維持されま"
+"す。また、更新された文書を読んだ後に live-build をアップグレードすれば変更の"
+"必要があるオプションを識別、修正するのははるかに容易になるでしょう。"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:18
 msgid "3~ Use example auto scripts"
-msgstr ""
+msgstr "3~ 自動化スクリプトの使用例"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:20
@@ -259,27 +288,27 @@ msgid ""
 "copy and edit. Start a new, default configuration, then copy the examples "
 "into it:"
 msgstr ""
+"便宜のため live-build には例の自動化シェルスクリプトが付属していてコピーして"
+"編集できるようになっています。デフォルトの設定を新しく作成してから例をコピー"
+"しましょう:"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:26
-#, fuzzy, no-wrap
-#| msgid ""
-#| " $ mkdir -p tutorial3/auto\n"
-#| " $ cp /usr/share/doc/live-build/examples/auto/* tutorial3/auto/\n"
-#| " $ cd tutorial3\n"
+#, no-wrap
 msgid ""
 " $ mkdir mylive && cd mylive && lb init\n"
 " $ mkdir auto\n"
 " $ cp /usr/share/doc/live-build/examples/auto/* auto/\n"
 msgstr ""
-" $ mkdir -p tutorial3/auto\n"
-" $ cp /usr/share/doc/live-build/examples/auto/* tutorial3/auto/\n"
-" $ cd tutorial3\n"
+" $ mkdir mylive && cd mylive && lb init\n"
+" $ mkdir auto\n"
+" $ cp /usr/share/doc/live-build/examples/auto/* auto/\n"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:30
 msgid "Edit #{auto/config}#, adding any options as you see fit. For instance:"
 msgstr ""
+"#{auto/config}# を編集して、希望に合わせてオプションを追加します。例えば:"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:41
@@ -294,6 +323,14 @@ msgid ""
 "     --mirror-binary http://ftp.ch.debian.org/debian/ \\\n"
 "     \"${@}\"\n"
 msgstr ""
+" #!/bin/sh\n"
+" lb config noauto \\\n"
+"     --architectures i386 \\\n"
+"     --linux-flavours 686-pae \\\n"
+"     --binary-images hdd \\\n"
+"     --mirror-bootstrap http://ftp.ch.debian.org/debian/ \\\n"
+"     --mirror-binary http://ftp.ch.debian.org/debian/ \\\n"
+"     \"${@}\"\n"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:45
@@ -305,17 +342,23 @@ msgid ""
 "along with any other build products. And finally, when you use #{lb build}#, "
 "a log of the build will be written by #{auto/build}# in #{build.log}#."
 msgstr ""
+"これで、#{lb config}# を使うたびに #{auto/config}# がそのオプションを基にして"
+"設定をリセットします。オプションを変更したいときには #{lb config}# に渡すので"
+"はなくこのファイルに書かれているものを編集します。#{lb clean}# を使うと "
+"#{auto/clean}# は #{config/*}# ファイルを、ビルドした他のものとあわせて削除し"
+"ます。最後に、#{lb build}# を使うとビルド時のログは #{auto/build}# により "
+"#{build.log}# に書かれます。"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:47
 #, no-wrap
 msgid "*{Note:}* A special #{noauto}# parameter is used here to suppress another call to #{auto/config}#, thereby preventing infinite recursion. Make sure you don't accidentally remove it when making edits. Also, take care to ensure when you split the #{lb config}# command across multiple lines for readability, as shown in the example above, that you don't forget the backslash (\\) at the end of each line that continues to the next.\n"
-msgstr ""
+msgstr "*{注意:}* ここで特別な #{noauto}# パラメータを使い、#{auto/config}# を別に呼び出すことのないようにして無限再帰を回避しています。編集時に不注意で削除することのないようにしてください。また、読みやすくするために上記の例で示したように #{lb config}# コマンドを複数行に分割する場合は次の行に続く各行末のバックスラッシュ (\\) を忘れることのないようにしてください。\n"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:49
 msgid "2~clone-configuration-via-git Clone a configuration published via Git"
-msgstr ""
+msgstr "2~clone-configuration-via-git Git経由で公開されている設定の複製"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:51
@@ -327,6 +370,12 @@ msgid ""
 "#{Packages}#. This repository contains the configurations for the live "
 "systems {prebuilt images}#downloading-prebuilt-images."
 msgstr ""
+"#{lb config --config}# オプションを使って Live システムの設定を収録している"
+"Gitリポジトリを複製します。${project}により保守されている設定を基にしたい場合"
+"は http://live-systems.org/gitweb/ の #{Packages}# カテゴリーの #{live-"
+"images}# という名前のリポジトリに目を通してみてください。このリポジトリには "
+"Live システムの {ビルド済みイメージ}#downloading-prebuilt-images 用の設定を収"
+"録しています。"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:53
@@ -334,6 +383,8 @@ msgid ""
 "For example, to build a rescue image, use the #{live-images}# repository as "
 "follows:"
 msgstr ""
+"例えばレスキュー用のイメージをビルドするには #{live-images}# リポジトリを使っ"
+"て"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:59
@@ -343,6 +394,9 @@ msgid ""
 " $ lb config --config git://live-systems.org/git/live-images.git\n"
 " $ cd images/rescue\n"
 msgstr ""
+" $ mkdir live-images && cd live-images\n"
+" $ lb config --config git://live-systems.org/git/live-images.git\n"
+" $ cd images/rescue\n"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:63
@@ -351,6 +405,9 @@ msgid ""
 "suit your needs. For example, the unofficial non-free prebuilt images are "
 "made by simply adding #{--archive-areas \"main contrib non-free\"}#."
 msgstr ""
+"のようにし、必要に応じて #{auto/config}# やその他 #{config}# ツリーにあるもの"
+"を必要なだけ編集します。例えば非公式の non-free ビルド済みイメージは単純に "
+"#{--archive-areas \"main contrib non-free\"}# を追加することで作成されます。"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:65
@@ -358,6 +415,8 @@ msgid ""
 "You may optionally define a shortcut in your Git configuration by adding the "
 "following to your #{${HOME}/.gitconfig}#:"
 msgstr ""
+"オプションとしてGit設定でショートカットを定義することもできます。#{${HOME}/."
+"gitconfig}# に"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:70
@@ -366,6 +425,8 @@ msgid ""
 " [url \"git://live-systems.org/git/\"]\n"
 "         insteadOf = lso:\n"
 msgstr ""
+" [url \"git://live-systems.org/git/\"]\n"
+"         insteadOf = lso:\n"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:74
@@ -374,13 +435,16 @@ msgid ""
 "a #{live-systems.org}# git repository. If you also drop the optional #{.git}"
 "# suffix, starting a new image using this configuration is as easy as:"
 msgstr ""
+"を追加すると #{live-systems.org}# にあるgitリポジトリのアドレスを指定する必要"
+"があるところで #{lso:}# を使えるようになります。さらにオプションで末尾の #{."
+"git}# も省くと、この設定を使って新しいイメージの作成を始めるのはこれだけ簡単"
+"になります:"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:78
-#, fuzzy, no-wrap
-#| msgid " $ lb config --apt-recommends false\n"
+#, no-wrap
 msgid " $ lb config --config lso:live-images\n"
-msgstr " $ lb config --apt-recommends false\n"
+msgstr " $ lb config --config lso:live-images\n"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:82
@@ -390,6 +454,9 @@ msgid ""
 "have finished with the first one, change to another directory and again and "
 "optionally, make any changes to suit your needs."
 msgstr ""
+"#{live-images}# リポジトリ全体を複製すると数種類のイメージの設定を取得しま"
+"す。最初のイメージが出来上がってから異なるイメージをビルドしたい場合は別の"
+"ディレクトリに移動して繰り返し、必要に応じて変更を加えてください。"
 
 #. type: Plain text
 #: en/user_managing_a_configuration.ssi:83
@@ -397,3 +464,5 @@ msgid ""
 "In any case, remember that every time you will have to build the image as "
 "superuser: #{lb build}#"
 msgstr ""
+"どの場合も、イメージのビルド #{lb build}# は毎回スーパーユーザで行う必要があ"
+"ることを覚えておいてください。"

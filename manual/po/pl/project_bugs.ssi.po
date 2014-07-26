@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 4.0~alpha12-1\n"
 "POT-Creation-Date: 2014-05-04 09:01+0300\n"
-"PO-Revision-Date: 2014-07-01 23:15+0100\n"
+"PO-Revision-Date: 2014-07-26 18:11+0100\n"
 "Last-Translator: AreYouLoco? <areyouloco@paranoici.org>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -263,6 +263,9 @@ msgid ""
 "targets, when you specify either of them as the target system distribution, "
 "a successful build may not always be possible."
 msgstr ""
+"Ponieważ Debian *{testing} * i Debian *{unstable}* dystrybucjami ruchomymi, "
+"w przypadku określenia jednej z nich jako dystrybucji systemu docelowego, "
+"kompilowanie nie zawsze zakończy się sukcesem."
 
 #. type: Plain text
 #: en/project_bugs.ssi:20 en/user_customization-packages.ssi:182
@@ -300,6 +303,14 @@ msgid ""
 "either, revert to *{testing}* and pin the newer version of the failing "
 "package from *{unstable}* (see {APT pinning}#apt-pinning for details)."
 msgstr ""
+"To jest poza zakresem tej instrukcji, aby szkolić się poprawnie "
+"identyfikować i naprawiać problemy pakietów z dystrybucji rozwojowych, "
+"jednak istnieją dwie rzeczy, których zawsze można spróbować: Jeśli "
+"kompilowanie nie powiedzie się, gdy docelową dystrybucją jest *{testing}*, "
+"to spróbuj z *{unstable}*. Jeśli *{unstable}* również nie działa, to "
+"przywróć do dystrybucji *{testing}* i przypnij nowszą wersję wadliwego "
+"pakietu z wersji  *{unstable}* (patrz {Przypinanie APT}#apt-pinning aby "
+"uzyskać szczegóły)."
 
 #. type: Plain text
 #: en/project_bugs.ssi:28
@@ -347,6 +358,10 @@ msgid ""
 "reproduce it. Please use your common sense and provide any other relevant "
 "information if you think that it might help in solving the problem."
 msgstr ""
+"Proszę dostarczyć wystarczającą ilość informacji z raportem. Obejmujące co "
+"najmniej, dokładną wersję live-build, gdzie napotkano błąd i kroki, jak go "
+"odtworzyć. Proszę użyć zdrowego rozsądku i przedstawić wszelkie inne istotne "
+"informacje, jeśli uważasz, że może to pomóc w rozwiązaniu problemu."
 
 #. type: Plain text
 #: en/project_bugs.ssi:40
@@ -440,6 +455,13 @@ msgid ""
 "(i.e. lists files in subdirectories of #{config/}# but does not include "
 "them)."
 msgstr ""
+"Dodatkowo, aby wykluczyć inne błędy, zawsze dobrym pomysłem jest, aby "
+"spakować do archiwum tar swój katalog #{config/}# i przesłać go gdzieś "
+"(*{nie}* należy wysłać go jako załącznik do listy), tak aby można spróbować "
+"odtworzyć napotkane błędy. Jeśli sprawia to trudność (np. ze względu na "
+"rozmiar) można użyć wyjścia z polecenia #{lb config --dump}#, które tworzy "
+"podsumowanie drzewa konfiguracyjnego (czyli np. listę plików w podkatalogach "
+"#{config/}#, ale bez załączania ich)."
 
 #. type: Plain text
 #: en/project_bugs.ssi:74
@@ -448,6 +470,9 @@ msgid ""
 "settings, e.g. run your live-build commands with a leading #{LC_ALL=C}# or "
 "#{LC_ALL=en_US}#."
 msgstr ""
+"Pamiętaj, aby wysłać wszystkie dzienniki i logi, które zostały wyprodukowane "
+"z ustawień regionalnych angielskich, np. uruchom polecenia live-build ze "
+"zmiennymi #{LC_ALL=C}# lub #{LC_ALL=en_US}#."
 
 #. type: Plain text
 #: en/project_bugs.ssi:76
@@ -467,6 +492,16 @@ msgid ""
 "you are including too much in each change set and should develop in smaller "
 "increments."
 msgstr ""
+"Jeśli to możliwe, należy wyizolować przypadek do najmniejszej zmiany, które "
+"generuje błąd. Nie zawsze jest łatwo to zrobić, więc jeśli nie możesz dodać "
+"takiej informacji do raportu, nie martw się. Jednakże, jeśli użytkownik "
+"dobrze planuje swój cykl rozwoju, przy użyciu małych zestawów zmian na "
+"iterację, można być w stanie wyizolować problem poprzez budowę prostszej "
+"konfiguracji \"bazy\", która blisko pasuje do rzeczywistej konfiguracji oraz "
+"tylko uszkodzony zestaw zmian do niej dodany. Jeśli masz trudności z "
+"sortowaniem, które z Twoich zmian wygenerowały błąd, może to znaczyć, że "
+"uwzględniono za dużo w każdym zestawie zmian i powinno się raczej kształcić "
+"w mniejszych krokach."
 
 # 1. Zwrot 'reporting bugs' będzie tłumaczony jako 'zgłaszanie błędów' dla zachowania spójności w całym tłumaczeniu.
 #. type: Plain text
@@ -518,6 +553,7 @@ msgstr ""
 "związany z konkretnym pakietem Debiana (najprawdopodobniej) lub, jeśli jest "
 "to związane z samym narzędziem ładowania początkowego."
 
+# "report [...] bug against [...]" będzie tłuamczone jako "zgłosić [...] błąd jako dotyczący [...]"
 #. type: Plain text
 #: en/project_bugs.ssi:90
 msgid ""
@@ -525,6 +561,10 @@ msgid ""
 "itself and probably we cannot fix it directly. Please report such a bug "
 "against the bootstrapping tool or the failing package."
 msgstr ""
+"W obu przypadkach nie jest to błąd w systemie live, ale w samym Debianie i "
+"prawdopodobnie nie możemy naprawić go bezpośrednio. Proszę zgłosić taki błąd "
+"jako dotyczący narzędzia ładowania początkowego (ang. bootstraping tool) lub "
+"uszkodzonego pakietu."
 
 #. type: Plain text
 #: en/project_bugs.ssi:92
@@ -539,7 +579,12 @@ msgid ""
 "can fail. If a bug appears here, check if the error is also reproducible on "
 "a normal system."
 msgstr ""
+"live-build instaluje dodatkowe pakiety z archiwum Debiana i w zależności od "
+"używanej dystrybucji Debian i codziennego stanu archiwum, może się to nie "
+"powieść. Jeśli błąd pojawi się w tym miejscu, należy sprawdzić, czy błąd "
+"jest powtarzalny w normalnym systemie."
 
+# "report [...] bug against [...]" będzie tłuamczone jako "zgłosić [...] błąd jako dotyczący [...]"
 #. type: Plain text
 #: en/project_bugs.ssi:96
 msgid ""
@@ -548,7 +593,12 @@ msgid ""
 "{debootstrap}/ separately from the Live system build or running #{lb "
 "bootstrap --debug}# will give you more information."
 msgstr ""
+"Jeśli jest to przypadek, gdzie błąd nie występuje w systemie live, ale w "
+"Debianie - zgłoś go jako dotyczący wadliwego pakietu. Uruchomienie /"
+"{debootstrap}/ niezależnie od samej kompilacji systemu live lub uruchomianie "
+"#{lb bootstrap - debug}# daje więcej informacji."
 
+# mirror - tłumaczone jako - serwer lustrzany
 #. type: Plain text
 #: en/project_bugs.ssi:98
 msgid ""
@@ -556,6 +606,10 @@ msgid ""
 "experiencing a problem, please always reproduce it first by bootstrapping "
 "from an official mirror."
 msgstr ""
+"Ponadto, w przypadku korzystania z lokalnego serwera lustrzanego i/lub "
+"jakichkolwiek serwerów proxy i doświadczania problemów prosimy zawsze "
+"najpierw spróbować odtworzyć czyności z użyciem oficjalnego serwera "
+"lustrzanego."
 
 #. type: Plain text
 #: en/project_bugs.ssi:100
@@ -572,6 +626,13 @@ msgid ""
 "technology of any kind, please always run it on real hardware before "
 "reporting a bug. Providing a screenshot of the failure is also very helpful."
 msgstr ""
+"Jeśli obraz nie uruchamia się, należy zgłosić go do listy wraz z "
+"informacjami wymaganymi w {Zbierz potrzebne informacje}#collect-information. "
+"Nie zapomnij wspomnieć, jak/kiedy dokładnie obraz nie zadziałał, czy był "
+"użyty za pomocą wirtualizacji lub rzeczywistego sprzętu. Jeśli korzystasz z "
+"technologii wirtualizacji w jakiejkolwiek formie, proszę zawsze uruchomić go "
+"na prawdziwym sprzęcie przed zgłoszeniem błędu. Zapewnienie zrzutu ekranu "
+"awarii jest również bardzo pomocne."
 
 #. type: Plain text
 #: en/project_bugs.ssi:104
@@ -628,6 +689,9 @@ msgid ""
 "boot, live-config and live-tools to see whether something similar has "
 "already been reported."
 msgstr ""
+"Ponadto, należy sprawdzić aktualne wykazy błędów dla live-build, live-boot, "
+"live-config i live-tools, aby zobaczyć, czy coś podobnego nie zostało już "
+"zgłoszone."
 
 #. type: Plain text
 #: en/project_bugs.ssi:116
@@ -647,6 +711,7 @@ msgstr ""
 "debian.org/. Możesz też przesłać błędy używając polecenia #{reportbug} z "
 "pakietu o tej samej nazwie."
 
+# "report [...] bug against [...]" będzie tłuamczone jako "zgłosić [...] błąd jako dotyczący [...]"
 #. type: Plain text
 #: en/project_bugs.ssi:120
 msgid ""
@@ -657,6 +722,13 @@ msgid ""
 "live pseudo-package. We will then take care about it and reassign it where "
 "appropriate."
 msgstr ""
+"Ogólnie rzecz biorąc, należy zgłaszać błędy podczas kompilacji: jako "
+"dotyczące pakietu live-build, błędy podczas uruchamiania: live-boot oraz "
+"błędy w czasie działania systemu live: jako dotyczące live-config. Jeśli nie "
+"jesteś pewien, który pakiet będzie odpowiedni lub potrzebujesz więcej "
+"pomocy, przed złożeniem zgłoszenia błędu, zgłoś raport dotyczący pseudo-"
+"pakietu debian-live. Zajmiemy się wtedy nim i przypiszemy do odpowiedniego "
+"pakietu."
 
 #. type: Plain text
 #: en/project_bugs.ssi:121

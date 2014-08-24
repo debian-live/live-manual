@@ -29,14 +29,31 @@ endif
 all: build
 
 test:
-	@echo "Checking for syntax errors... [not implemented yet - FIXME]"
-	@echo "Checking for spelling errors... [not implemented yet - FIXME]"
+	@echo -n "Checking for syntax errors "
 
-	@echo "Checking the integrity of po files..."
-	for POFILE in manual/po/*/*; \
+	@for SCRIPT in $(shell ls manual/bin/*.sh); \
 	do \
-		msgfmt --check --output-file=/dev/null $${POFILE}; \
+		sh -n $${SCRIPT}; \
+		echo -n "."; \
 	done
+
+	@echo " done!"
+
+	@echo -n "Checking for bashisms "
+
+	@if [ -x /usr/bin/checkbashisms ]; \
+	then \
+		for SCRIPT in $(shell ls manual/bin/*.sh); \
+		do \
+			checkbashisms -f -x $${SCRIPT}; \
+			echo -n "."; \
+		done; \
+	else \
+		echo "WARNING: skipping bashism test - you need to install devscripts."; \
+	fi
+
+	@echo " done!"
+	@echo "To interactively check for spelling mistakes, you can run 'make spell'."
 
 tidy:
 	# Removing useless whitespaces at EOL
@@ -90,14 +107,16 @@ autobuild: build
 commit: tidy test
 	$(MAKE) -C manual rebuild
 
+	@echo
+	@echo "live-manual is currently being translated into $(shell ls manual/po | wc -w) languages."
+	@echo "The translation of these languages is complete: $(shell manual/bin/show-complete-languages.sh)"
+	@echo "There are $(shell manual/bin/count-untranslated-strings.sh) untranslated strings. You can run 'make translate'."
+	
 	@if grep -qs fuzzy manual/po/*/*; \
 	then \
-		echo "" ; \
-		echo "There are $(shell grep -w 'fuzzy' manual/po/*/* | wc -l) fuzzy strings. You can run 'make fixfuzzy' to fix them." ; \
+		echo "There are $(shell grep -w 'fuzzy' manual/po/*/* | wc -l) fuzzy strings. You can run 'make fixfuzzy'." ; \
 	fi
-	@echo
-	@echo "There are $(shell manual/bin/count-untranslated-strings.sh) untranslated strings. You can run 'make translate' to find them." ; \
-
+	
 	@echo
 	@echo "You may now proceed...please do:"
 	@echo
@@ -137,3 +156,6 @@ check:
 
 translate:
 	@./manual/bin/find-untranslated.sh
+
+spell:
+	@./manual/bin/check-spelling.sh

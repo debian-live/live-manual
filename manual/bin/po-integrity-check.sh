@@ -43,7 +43,7 @@ case "$LANGUAGE" in
 	en)	echo "Nothing to be done, really!"
 		;;
 
-	ca|de|es|fr|it|ja|pt_BR|ro)	
+	ca|de|es|fr|it|ja|pl|pt_BR|ro)	
 		Integrity_check				
 		;;
 

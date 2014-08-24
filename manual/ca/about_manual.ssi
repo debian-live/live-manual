@@ -58,8 +58,10 @@ _* *{Sistema viu}*: Un sistema operatiu que pot arrencar sense necessitat
 d'instal·lació en un disc dur. Els sistemes vius no alteren el sistema
 operatiu local(s) o els fitxer(s) ja instal·lats al disc dur de l'ordinador
 a menys que així se'ls ho indiqui. Els sistemes vius normalment s'inician
-des de dispositius, com ara CD, DVD o memòries USB. Alguns també poden
-arrencar des de la xarxa.
+des de dispositius, com ara CDs, DVDs o memòries USB. Alguns també poden
+arrencar des de la xarxa (amb les imatges netboot, veure {Construir una
+imatge netboot}#building-netboot-image), o mitjançant internet (amb el
+parametre #{fetch=URL}#, veure {Webbooting}#webbooting).
 
 _* *{Medi en viu}*: A diferència de sistema en viu, el medi en viu es
 refereix al CD, DVD o memòria USB on es copia el fitxer binari produït per
@@ -70,10 +72,6 @@ arrencar en xarxa.
 
 _* *{${project}}*: El projecte que manté, entre altres, els paquets
 live-boot, live-build, live-config, live-tools i live-manual. 
-
-_* *{Sistema viu}*: Un sistema viu que es pot arrencar des d'un CD, DVD,
-memòries USB, o la xarxa (utilitzant imatges netboot) i a través d'Internet
-(mitjançant el paràmetre d'arrencada #{fetch=URL}#).
 
 _* *{Sistema amfitrió}*: L'entorn utilitzat per a crear el sistema en viu.
 
@@ -107,7 +105,7 @@ diferentes instàncies d'un entorn GNU/Linux a la vegada en un sol sistema
 sense reiniciar.
 
 _* *{Imatge binaria}*: Un fitxer que conté el sistema en viu, com ara
-binary.iso o binary.img.
+live-image-i386.hybrid.iso o live-image-i386.img.
 
 _* *{Distribució objectiu}*: La distribució en què es basa el sistema en
 viu. Que pot diferir de la distribució del sistema amfitrió.
@@ -195,7 +193,7 @@ estalviar una quantitat considerable de temps, per exemple:
 
 code{
 
-  $ make build PROOF=1
+ $ make build PROOF=1
 
 }code
 

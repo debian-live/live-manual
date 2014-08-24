@@ -22,9 +22,9 @@ L'ordre #{lb config}# emmagatzema les opcions que se li passen als fitxers
 de #{config/*}#, juntament amb moltes altres opcions que estan establertes
 als valors per defecte. Si s'executa un cop més, #{lb config}# no es
 restablirà cap de les opcios dependents basades en les opcions
-inicials. Així, per exemple, si s'executa #{lb config}# de nou amb un nou
-valor per a #{--distribution}#, totes les opcions que en depenen que es van
-omplir per a la distribució per defecte ja no poden funcionar amb la
+inicials. Així, per exemple, si s'executa de nou #{lb config}# amb un nou
+valor per a #{--binary-images}#, totes les opcions que en depenen que es van
+omplir per al tipus de imatge per defecte ja no poden funcionar amb la
 nova. Aquests fitxers no estan destinats a ser llegits o
 editats. S'emmagatzemen els valors de més de cent opcions, i ningú pot veure
 les opcions que s'han especificat realment. I finalment, si s'executa #{lb
@@ -54,7 +54,8 @@ els exemples:
 
 code{
 
- $ mkdir mylive && cd mylive && lb config
+ $ mkdir mylive && cd mylive && lb init
+ $ mkdir auto
  $ cp /usr/share/doc/live-build/examples/auto/* auto/
 
 }code
@@ -115,17 +116,17 @@ el següent a #{${HOME}/.gitconfig}#:
 code{
 
  [url "git://live-systems.org/git/"]
-         insteadOf = ldn:
+         insteadOf = lso:
 
 }code
 
-Això permet utilitzar #{ldn:}# en qualsevol lloc on cal especificar la
+Això permet utilitzar #{lso:}# en qualsevol lloc on cal especificar la
 direcció d'un repositori git. També es pot omitir el sufix #{.git}#, i així,
 començar una nova imatge amb aquesta configuració és tan fàcil com:
 
 code{
 
- $ lb config --config ldn:live-images
+ $ lb config --config lso:live-images
 
 }code
 

@@ -8,13 +8,18 @@ imágenes más utilizadas. El tipo de imagen más versátil, #{iso-hybrid}#, se
 puede utilizar en una máquina virtual, en medios ópticos u otros
 dispositivos de almacenamiento USB. En ciertos casos especiales, como se
 explica más adelante, las imágenes #{hdd}#, pueden ser las más adecuadas. El
-capítulo termina con instrucciones para crear y utilizar una imagen de tipo
-#{netboot}#, que es un poco más complicado debido a la configuración
+capítulo incluye instrucciones detalladas para crear y utilizar una imagen
+de tipo #{netboot}#, que es un poco más complicado debido a la configuración
 necesaria en el servidor. Es un tema ligeramente avanzado para cualquier
 persona que no esté familiarizada con el arranque en red, pero se incluye
 aquí porque una vez que se realiza toda la configuración, es una forma muy
 conveniente para probar y desplegar imágenes de arranque en red local sin la
 molestia de tratar con los dispositivos de almacenamiento de la imagen.
+
+La sección termina con una rápida introducción al {arranque desde
+internet}#webbooting, que es, quizás, la manera más rápida de utilizar
+diferentes imágenes para diferentes propósitos, cambiando de una a otra
+según las necesidades, utilizando internet como medio.
 
 A lo largo de todo el capítulo se hace a menudo referencia al nombre de las
 imágenes producidas por defecto por live-build. Si se {descarga una imagen
@@ -144,18 +149,20 @@ code{
 
 }code
 
-Entonces, se ejecuta el comando #{lb config}#. Esto creará una jerarquía
-«config/» en el directorio actual que será usada por otros comandos:
+Entonces, ejecutar los comandos #{lb init}# y #{lb config}#. Esto creará una
+jerarquía «config/» en el directorio actual que será usada por otros
+comandos:
 
 code{
 
+ $ lb init
  $ lb config
 
 }code
 
-Al no pasar ningún parámetro a #{lb config}#, se indica que se quiere
-utilizar todas las opciones por defecto. Ver{El comando lb config}#lb-config
-para más detalles.
+Al no pasar ningún parámetro a estos comandos, se utilizarán todas las
+opciones por defecto. Ver {El comando lb init}#lb-init y {El comando lb
+config}#lb-config para más detalles.
 
 Ahora que existe un jerarquía «config/», se puede crear la imagen con el
 comando #{lb build}#:
@@ -168,7 +175,8 @@ code{
 
 Este proceso puede llevar un tiempo, dependiendo de la velocidad del
 ordenador y de la conexión de red. Cuando haya terminado, debería haber un
-fichero #{binary.hybrid.iso}# listo para ser usado en el directorio actual.
+fichero #{live-image-i386.hybrid.iso}# listo para ser usado en el directorio
+actual.
 
 2~using-iso-hybrid Usar una imagen ISO híbrida
 
@@ -185,8 +193,7 @@ desde el intérprete de comandos para grabar la imagen. Por ejemplo:
 code{
 
  # apt-get install xorriso
-
- $ xorriso -as cdrecord -v dev=/dev/sr0 blank=as_needed binary.hybrid.iso
+ $ xorriso -as cdrecord -v dev=/dev/sr0 blank=as_needed live-image-i386.hybrid.iso
 
 }code
 
@@ -209,18 +216,20 @@ definitiva cualquier contenido previo en la llave!}*
 
 code{
 
- $ cp binary.hybrid.iso ${USBSTICK}
-
+ $ cp live-image-i386.hybrid.iso ${USBSTICK}
  $ sync
 
 }code
 
+*{Nota:}*  El comando /{sync}/ se utiliza para asegurarse de que todos los datos, que el kernel almacena en la memoria mientras se copia la imagen, se escriben en la llave USB.
+
 3~using-usb-extra-space Usar el espacio libre en el dispositivo USB
 
-Si se desea usar el espacio libre después de haber instalado la imagen
-#{binary.hybrid.iso}# en una llave USB, se puede usar un programa de
+Después de copiar la #{live-image-i386.hybrid.iso}# en una llave USB, la
+primera partición del dispositivo será utilizada por el sistema en vivo. Si
+se desea utilizar el espacio libre, se puede utilizar un programa de
 particionado como /{gparted}/ o /{parted}/ para crear una partición nueva en
-el dispositivo. La primera partición será usada por el sistema en vivo.
+la llave. 
 
 code{
 
@@ -240,7 +249,7 @@ code{
 
 *{Nota:}* Si se desea usar el espacio extra con Windows, segun parece, ese sistema operativo no puede acceder normalmente a otra partición más que a la primera. Se han comentado algunas soluciones a este problema en nuestra {lista de correo}#contact pero según parece no hay una solución fácil.
 
-*{Recordar: Cada vez que se instale una nueva binary.hybrid.iso en el dispositivo, todos los datos del dispositivo se perderán debido a que la tabla de particiones se sobrescribe con el contenido de la imagen, así pues, realizar primero una copia de seguridad de la partición para poder restaurarla trás actualizar la imagen en vivo.}*
+*{Recordar: Cada vez que se instale una nueva live-image-i386.hybrid.iso en el dispositivo, todos los datos del dispositivo se perderán debido a que la tabla de particiones se sobrescribe con el contenido de la imagen, así pues, realizar primero una copia de seguridad de la partición para poder restaurarla trás actualizar la imagen en vivo.}*
 
 3~booting-live-medium Arrancar el medio en vivo
 
@@ -316,7 +325,7 @@ Arrancar una imagen ISO es sencillo:
 
 code{
 
- $ kvm -cdrom binary.hybrid.iso
+ $ kvm -cdrom live-image-i386.hybrid.iso
 
 }code
 
@@ -329,14 +338,13 @@ Para probar una imagen ISO con /{virtualbox}/:
 code{
 
  # apt-get install virtualbox virtualbox-qt virtualbox-dkms
-
  $ virtualbox
 
 }code
 
 Crear una nueva máquina virtual, cambiar la configuración de almacenamiento
-para utilizar #{binary.hybrid.iso}# como dispositivo CD/DVD y arrancar la
-máquina.
+para utilizar #{live-image-i386.hybrid.iso}# como dispositivo CD/DVD y
+arrancar la máquina.
 
 *{Nota:}* Para probar los sistemas en vivo con soporte X.org en /{virtualbox}/, se puede incluir el paquete del driver de VirtualBox X.org, /{virtualbox-guest-dkms}/ y /{virtualbox-guest-x11}/, en la configuración de live-build. De lo contrario, la resolución se limita a 800x600.
 
@@ -362,12 +370,12 @@ code{
 
 Crear una imagen HDD es similar a una de tipo ISO híbrida en todos los
 aspectos, con la diferencia de que hay que especificar #{-b hdd}# y de que
-el nombre de la imagen final es #{binary.img}# que no se puede copiar en
-medios ópticos. Es adecuada para el arranque desde dispositivos USB, discos
-duros USB y otros sistemas de almacenamiento portátil. Normalmente, se puede
-utilizar para este propósito una imagen ISO híbrida, pero es posible que la
-BIOS no maneje adecuadamente las imágenes híbridas, entonces es mejor
-utilizar una imagen hdd.
+el nombre de la imagen final es #{live-image-i386.img}# que no se puede
+copiar en medios ópticos. Es adecuada para el arranque desde dispositivos
+USB, discos duros USB y otros sistemas de almacenamiento
+portable. Normalmente, se puede utilizar para este propósito una imagen ISO
+híbrida, pero es posible que la BIOS no maneje adecuadamente las imágenes
+híbridas, entonces es mejor utilizar una imagen hdd.
 
 *{Nota:}* si se ha creado una imagen ISO híbrida con el ejemplo anterior, se tendrá que limpiar el directorio de trabajo con el comando #{lb clean}# (ver {El comando lb clean}#lb-clean):
 
@@ -395,24 +403,24 @@ code{
 }code
 
 Cuando termine el proceso de creación, debe haber un fichero llamado
-#{binary.img}# en el directorio actual .
+#{live-image-i386.img}# en el directorio actual .
 
 La imagen binaria generada contiene una partición VFAT y el gestor de
 arranque syslinux, lista para ser copiada directamente en un dispositivo
 USB. De nuevo, dado que utilizar una imagen HDD es igual a usar una imagen
 ISO híbrida en un USB, seguir las instrucciones de {Usar una imagen ISO
-híbrida}#using-iso-hybrid con la diferencia de usar el nombre #{binary.img}#
-en lugar de #{binary.hybrid.iso}#.
+híbrida}#using-iso-hybrid con la diferencia del nombre,
+#{live-image-i386.img}# en lugar de #{live-image-i386.hybrid.iso}#.
 
 Del mismo modo, para probar una imagen HDD con Qemu, instalar /{qemu}/ como
 se describe más arriba en {Probar una imágen ISO con
 QEMU}#testing-iso-with-qemu. A continuación, ejecutar #{kvm}# o #{qemu}#,
 según qué versión necesita el sistema anfitrión y especificando
-#{binary.img}# como primer disco duro.
+#{live-image-i386.img}# como primer disco duro.
 
 code{
 
- $ kvm -hda binary.img
+ $ kvm -hda live-image-i386.img
 
 }code
 
@@ -473,10 +481,10 @@ conseguir un gestor de arranque de alto nivel a través del protocolo
 TFTP. Este gestor podría ser PXELINUX, GRUB, o incluso arrancar directamente
 un sistema operativo como Linux.
 
-Por ejemplo, si se descomprime el archivo generado #{binary.netboot.tar}# en
-el directorio #{/srv/debian-live}#, se verá la imagen del sistema de
-ficheros en #{live/filesystem.squashfs}# y el kernel, initrd y el gestor de
-arranque pxelinux en #{tftpboot/}#.
+Por ejemplo, si se descomprime el archivo generado
+#{live-image-i386.netboot.tar}# en el directorio #{/srv/debian-live}#, se
+verá la imagen del sistema de ficheros en #{live/filesystem.squashfs}# y el
+kernel, initrd y el gestor de arranque pxelinux en #{tftpboot/}#.
 
 Ahora se debe configurar tres servicios en el servidor para el arranque en
 red: el servidor DHCP, el servidor TFTP y el servidor NFS.
@@ -599,3 +607,70 @@ code{
 Obtener o crear un #{grub-floppy-netboot}#.
 
 Lanzar #{qemu}# con "#{-net nic,vlan=0 -net tap,vlan=0,ifname=tun0}#"
+
+2~webbooting Arrancar desde internet
+
+Arrancar desde internet, o Webbooting, es una manera muy adecuada de
+descargar y arrancar sistemas en vivo utilizando internet como medio, ya que
+hay muy pocos requisitos para arrancar desde internet utilizando
+webbooting. Por un lado, se necesita un medio en vivo con un gestor de
+arranque, un disco ram inicial y un kernel. Por otro lado, un servidor web
+para almacenar los ficheros squashfs que contienen el sistema de ficheros.
+
+3~ Conseguir los ficheros para arrancar desde internet
+
+Como de costumbre, se puede construir las imágenes uno mismo o utilizar
+alguna de las imágenes prefabricadas, disponibles en la página web del
+proyecto http://live-systems.org/. Utilizar las imágenes prefabricadas es
+muy práctico para hacer pruebas hasta que se está seguro de cuales son las
+necesidades reales. Si ya se ha construido una imagen, los ficheros
+necesarios para el arranque desde internet se encuentran en el directorio
+#{binary/live/}#. Los ficheros se llaman #{vmlinuz}#, #{initrd.img}# y
+#{filesystem.squashfs}#.
+
+También es posible extraer los ficheros de una imagen iso ya existente. Para
+ello, hay que montar la imagen de la siguiente manera:
+
+code{
+
+ # mount -o loop image.iso /mnt
+
+}code
+
+Los ficheros se encuentran en el directorio #{live/}#. En este caso
+concreto, sería #{/mnt/live/}#. Este método tiene la desventaja de que es
+necesario ser root para poder montar la imagen. Sin embargo, tiene la
+ventaja de que es fácil hacerlo con un script y por lo tanto, fácil de
+automatizar.
+
+Pero, sin duda alguna, la forma más fácil de extraer los ficheros de una
+imagen iso y subirlos al servidor web al mismo tiempo, es utilizando el
+midnight commander o /{mc}/. Si se tiene el paquete /{genisoimage}/
+instalado, este administrador de ficheros de dos paneles permite examinar el
+contenido de un archivo iso en un panel y subir los ficheros a través de ftp
+en el otro panel. A pesar de que este método requiere un trabajo manual, no
+requiere privilegios de root.
+
+3~ Arrancar imágenes webboot
+
+Aunque algunos usuarios pueden preferir la virtualización para probar el
+arranque desde internet, en este caso se utiliza hardware real para ilustrar
+el caso de uso que se explica a continuación y que debe considerarse sólo
+como un ejemplo.
+
+Para arrancar una imagen webboot es suficiente copiar los elementos
+mencionados anteriormente, es decir, #{vmlinuz}# y #{initrd.img}# en una
+llave usb dentro de un directorio llamado #{live/}# e instalar syslinux como
+gestor de arranque. Entonces, arrancar desde la llave usb y teclear
+#{fetch=URL/RUTA/AL/FICHERO}# en las opciones de arranque. live-boot se
+encargará de descargar el archivo squashfs y almacenarlo en la memoria
+ram. De este modo, es posible utilizar el sistema de ficheros comprimido
+descargado como si fuera un sistema en vivo normal. Por ejemplo:
+
+code{
+
+ append boot=live components fetch=http://192.168.2.50/images/webboot/filesystem.squashfs
+
+}code
+
+*{Caso de uso:}* Se tiene dos archivos squashfs almacenados en un servidor web, uno que contiene un escritorio completo, como gnome, y uno de rescate. Si se necesita un entorno gráfico para una máquina, se puede insertar la llave usb y arrancar desde internet la imagen gnome. Si se necesitan las herramientas de rescate del segundo tipo de imagen, quizás para otra máquina, se puede arrancar desde internet la de rescate.

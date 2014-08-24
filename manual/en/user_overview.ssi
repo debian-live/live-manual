@@ -12,7 +12,7 @@ The idea behind live-build is to be a framework that uses a configuration direct
 
 Many concepts are similar to those used to build Debian packages with /{debhelper}/:
 
-_* The scripts have a central location for configuring their operation. In /{debhelper}/, this is the #{debian/}# subdirectory of a package tree. For example, dh_install will look, amongst others, for a file called #{debian/install}# to determine which files should exist in a particular binary package. In much the same way, live-build stores its configuration entirely under a #{config/}# subdirectory.
+_* The scripts have a central location for configuring their operation. In /{debhelper}/, this is the #{debian/}# subdirectory of a package tree. For example, dh_install will look, among others, for a file called #{debian/install}# to determine which files should exist in a particular binary package. In much the same way, live-build stores its configuration entirely under a #{config/}# subdirectory.
 
 _* The scripts are independent - that is to say, it is always safe to run each command.
 
@@ -39,18 +39,18 @@ Issuing #{lb config}# without any arguments completes the #{config/}# subdirecto
 code{
 
  $ lb config
- [2014-04-25 17:14:34] lb config 
+ [2014-04-25 17:14:34] lb config
  P: Updating config tree for a debian/wheezy/i386 system
 
 }code
 
 Using #{lb config}# without any arguments would be suitable for users who need a very basic image, or who intend to provide a more complete configuration via #{auto/config}# later (see {Managing a configuration}#managing-a-configuration for details).
 
-Normally, you will want to specify some options. For example, to specify which distribution you want to build using its codename:
+Normally, you will want to specify some options. For example, to specify which package manager to use while building the image:
 
 code{
 
- $ lb config --distribution sid
+ $ lb config --apt aptitude
 
 }code
 

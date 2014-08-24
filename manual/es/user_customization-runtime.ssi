@@ -338,3 +338,140 @@ Es importante recordar que cada uno de estos volúmenes, #{private}# y
 página de manual de live-boot contiene más información acerca de cómo
 utilizar estas etiquetas con los antiguos nombres que se utilizaban en
 anteriores versiones.
+
+2~ Utilizar persistencia con cifrado
+
+Utilizar la persistencia significa que algunos datos sensibles pueden estar
+expuestos a riesgo. Especialmente si los datos persistentes se almacenan en
+un dispositivo portable, como una memoria USB o un disco duro externo. Es
+entonces cuando el cifrado cobra sentido. Incluso aunque todo el
+procedimiento puede parecer complicado debido a la cantidad de pasos que hay
+que hacer, es muy fácil manejar particiones cifradas con live-boot. Para
+utilizar *{luks}*, que es el tipo de cifrado soportado, se necesita instalar
+/{cryptsetup}/ tanto en la máquina que va a crear la partición cifrada como
+en el sistema en vivo con que se va a utilizar la partición persistente
+cifrada.
+
+Para instalar /{cryptsetup}/ en nuestra máquina:
+
+code{
+
+ # apt-get install cryptsetup
+
+}code
+
+Para instalar /{cryptsetup}/ en nuestro sistema en vivo, lo añadimos a una
+package-lists:
+
+code{
+
+ $ lb init
+ $ echo "cryptsetup" > config/package-lists/encryption.list.chroot
+
+}code
+
+Una vez se tiene el sistema en vivo con /{cryptsetup}/, básicamente, sólo se
+necesita crear una nueva partición, cifrarla y arrancar con los parámetros
+#{persistence}# y #{persistence-encryption=luks}#. Podríamos habernos
+anticipado a este paso y haber añadido esos parámetros de arranque siguiendo
+el procedimiento habitual:
+
+code{
+
+ $ lb config --bootappend-live "boot=live components persistence persistence-encryption=luks"
+
+}code
+
+Vamos a entrar en detalles para quien que no esté familiarizado con el
+cifrado. En el siguiente ejemplo vamos a utilizar una partición en un
+dispositivo usb que corresponde a #{/dev/sdc2}#. Tener en cuenta que es
+necesario determinar qué partición es la que se va a utilizar en cada caso
+específico.
+
+El primer paso es conectar la memoria usb y determinar de qué dispositivo se
+trata. El método recomendado para los dispositivos en live-manual es
+utilizando #{ls -l /dev/disk/by-id}#. Después de eso, crear una nueva
+partición y, a continuación, cifrarla con una frase de contraseña de la
+siguiente manera:
+
+code{
+
+ # cryptsetup --verify-passphrase luksFormat /dev/sdc2
+
+}code
+
+A continuación, abrir la partición luks en el mapeador de dispositivos
+virtuales. Se puede utilizar cualquier nombre que se desee. Aquí utilizamos
+*{live}* como ejemplo:
+
+code{
+
+ # cryptsetup luksOpen /dev/sdc2 live
+
+}code
+
+El siguiente paso es llenar el dispositivo con ceros antes de crear el
+sistema de ficheros:
+
+code{
+
+ # dd if=/dev/zero of=/dev/mapper/live
+
+}code
+
+Ahora, estamos listos para crear el sistema de ficheros. Nótese que estamos
+añadiendo la etiqueta #{persistence}# para que el dispositivo se monte como
+almacén de persistencia durante el arranque.
+
+code{
+
+ # mkfs.ext4 -L persistence /dev/mapper/live
+
+}code
+
+Para continuar con nuestra configuración, necesitamos montar el dispositivo,
+por ejemplo, en #{/mnt}#.
+
+code{
+
+ # mount /dev/mapper/live /mnt
+
+}code
+
+Y crear el fichero #{persistence.conf}# en la raíz de la partición. Esto es,
+como se ha explicado antes, estrictamente necesario. Ver {El fichero
+persistence.conf}#persistence-conf.
+
+code{
+
+ # echo "/ union" > /mnt/persistence.conf
+
+}code
+
+Entonces, desmontar el punto de montaje:
+
+code{
+
+ # umount /mnt
+
+}code
+
+Y opcionalmente, aunque puede ser una buena manera de salvaguardar los datos
+que acabamos de agregar a la partición, podemos cerrar el dispositivo:
+
+code{
+
+ # cryptsetup luksClose live
+
+}code
+
+Vamos a resumir el proceso. Hasta ahora, hemos creado un sistema vivo capaz
+de utilizar el cifrado, que se puede copiar en una memoria usb como se
+explica en {Copiar una imagen ISO híbrida en un dispositivo
+USB}#copying-iso-hybrid-to-usb. También hemos creado una partición cifrada,
+que se puede crear en la misma memoria usb para llevarla a todas partes y
+hemos configurado la partición cifrada para ser utilizada como almacén de
+persistencia. Así que ahora, sólo tenemos que arrancar el sistema en
+vivo. En el momento del arranque, live-boot nos preguntará la frase de
+contraseña y montará la partición cifrada para ser utilizada para la
+persistencia.

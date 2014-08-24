@@ -21,14 +21,14 @@ del kernel predefinite in un sistema live, come persistenza dei dati, layout
 di tastiera o fuso orario. Per gli esempi si veda {Personalizzare
 localizzazione e lingua}#customizing-locale-and-language.
 
-Le opzioni di configurazione in fase di compilazione sono descritte nel
-manuale di #{lb config}#, mentre quelle in fase di avvio nel manuale di
-live-boot e live-config. Sebbene i pacchetti live-boot e live-config siano
-installati nel sistema live che si sta costruendo si raccomanda, per un
-comodo riferimento quando si lavora alla propria configurazione, di
-installarli anche sul sistema che lo crea. Fare ciò risulta sicuro in quanto
-nessuno degli script contenuti viene eseguito, a meno che il sistema sia
-configurato come sistema live.
+Build-time configuration options are described in the #{lb init}# and the
+#{lb config}# man pages. Boot-time options are described in the man pages
+for live-boot and live-config. Although the live-boot and live-config
+packages are installed within the live system you are building, it is
+recommended that you also install them on your build system for easy
+reference when you are working on your configuration. It is safe to do so,
+as none of the scripts contained within them are executed unless the system
+is configured as a live system.
 
 2~stages-of-the-build Fasi della creazione
 
@@ -57,17 +57,16 @@ posto.
 
 2~ Integrare la configurazione di lb con dei file
 
-Anche se #{lb config}# crea una configurazione scheletrica nella directory
-config/, per realizzare i propri obiettivi potrebbe essere necessario
-fornire dei file aggiuntivi nelle sottodirectory. A seconda di dove vengono
-memorizzati i file nella configurazione, possono essere copiati nel file
-system del sistema live o nel file system dell'immagine binaria, o fornire
-configurazioni per la creazione del sistema che sarebbe scomodo passare come
-opzioni da riga di comando. Si possono includere cose come elenchi
-personalizzati dei pacchetti, grafica personalizzata o script hook da
-eseguire sia al momento della compilazione che in fase di avvio;
-incrementando quindi la notevole flessibilità di debian-live con il proprio
-codice.
+Although #{lb config}# creates a skeletal configuration in the #{config/}#
+directory, to accomplish your goals, you may need to provide additional
+files in subdirectories of #{config/}#. Depending on where the files are
+stored in the configuration, they may be copied into the live system's
+filesystem or into the binary image filesystem, or may provide build-time
+configurations of the system that would be cumbersome to pass as
+command-line options. You may include things such as custom lists of
+packages, custom artwork, or hook scripts to run either at build time or at
+boot time, boosting the already considerable flexibility of debian-live with
+code of your own.
 
 2~ Personalizzazione dei compiti
 

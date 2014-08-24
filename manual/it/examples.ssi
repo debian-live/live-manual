@@ -62,8 +62,8 @@ code{
 }code
 
 Assuming all goes well, after a while, the current directory will contain
-#{binary.hybrid.iso}#. This ISO hybrid image can be booted directly in a
-virtual machine as described in {Testing an ISO image with
+#{live-image-i386.hybrid.iso}#. This ISO hybrid image can be booted directly
+in a virtual machine as described in {Testing an ISO image with
 Qemu}#testing-iso-with-qemu and {Testing an ISO image with
 VirtualBox}#testing-iso-with-virtualbox, or else imaged onto optical media
 or a USB flash device as described in {Burning an ISO image to a physical
@@ -81,7 +81,9 @@ code{
 
  $ mkdir tutorial2
  $ cd tutorial2
+ $ lb init
  $ echo "task-lxde-desktop iceweasel" >> config/package-lists/my.list.chroot
+ $ lb config
 
 }code
 
@@ -140,11 +142,12 @@ code{
 
 }code
 
-Eseguire #{lb config}# per generare l'albero di configurazione utilizzando
-lo script #{auto/config}# appena creato:
+Perform #{lb init}# and #{lb config}# to generate the config tree, using the
+#{auto/config}# script you just created:
 
 code{
 
+ $ lb init
  $ lb config
 
 }code

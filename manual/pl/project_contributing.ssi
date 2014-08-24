@@ -1,0 +1,119 @@
+:B~ Wnoszenie wkładu do tego projektu
+
+1~contributing-to-project Wnoszenie wkładu do tego projektu
+
+Wnosząc swój wkład należy jasno określić posiadacza jego praw autorskich i
+zawrzeć wszelkie stosowane oświadczenie licencjonowania. Należy pamiętać, że
+aby zmiany były zaakceptowane, wkład musi być licencjonowany na tej samej
+licencji co reszta dokumentów, a mianowicie, GPL w wersji 3 lub nowszej.
+
+Wkład do projektu, taki jak tłumaczenia i poprawki, są bardzo mile
+widziane. Każdy może bezpośrednio zaangażować się w repozytoriach, jednak
+prosimy wysłać większe zmiany do listy mailingowej, aby omówić je w
+pierwszej kolejności. Patrz rozdział {kontakt}#contact aby uzyskać więcej
+informacji.
+
+${projekt} używa Git jako systemu kontroli wersji i zarządzania kodem
+źródłowym. Jak wyjaśniono w {repozytorium Git}#git-repositories są dwie
+główne gałęzie rozwoju: *{debian}* i *{debian-next}*. Każdy może wprowadzić
+zmiany do gałęzi *{debian-next}* w repozytoriach ive-boot, live-build,
+live-config, live-images, live-manual i live-tools.
+
+Jednakże istnieją pewne restrykcje. Serwer odrzuci:
+
+_* Non fast-forward pushes.
+
+_* Zmiany wymagające scalenia.
+
+_* Dodawanie lub usuwanie tagów lub gałęzi rozwojowych.
+
+Nawet jeżeli wszystkie zmiany mogą być później zweryfikowane, prosimy abyś
+używał zdrowego rozsądku i tworzył dobre zmiany opisane dobrym komentarzem.
+
+_* Pisz komentarze do zmian, które składają się z pełnych, sensownych zdań w
+języku angielskim, począwszy od dużej litery, a kończących się
+kropką. Zwykle te komentarze zaczynają się od
+"Fixing/Adding/Removing/Correcting/Translating/...".
+("Naprawianie/Dodawanie/Usuwanie/Korygowanie/Tłumaczenie/ itd. ... ".)
+
+_* Pisz dobre komenarze do zmian. Pierwsza linia musi być dokładne
+podsumowanie treści popełnić, która zostanie uwzględniona w liście zmian
+(ang. changelog). Jeśli musisz zrobić kilka wyjaśnień, napisz je niżej
+pozostawiając pusty wiersz po pierwszej lini, a następnie kolejny pusty
+wiersz po każdym akapicie. Linie każdego akapitu nie powinny przekraczać 80
+znaków.
+
+_ * Wysyłaj zmiany osobno. To znaczy; nie mieszaj niepowiązanych ze sobą
+rzeczy w tej samej zmianie. Dodać osobną zmianę dla każdej rzeczy, którą
+zmieniasz.
+
+2~ Wprowadzanie zmian
+
+W celu wysłania zmian do repozytoriów, należy wykonać następującą
+procedurę. Tutaj używamy live-manual jako przykładu, więc zastąp go nazwą
+repozytorium, z którym chcesz pracować. Aby uzyskać szczegółowe informacje
+na temat edycji podręcznika live-manual zobacz: {Współtworzenie tego
+dokumentu}#how-to-contribute.
+
+_* Pobierz publiczny klucz do wprowadzania zmian:
+
+code{
+
+ $ mkdir -p ~/.ssh/keys
+ $ wget http://live-systems.org/other/keys/git@live-systems.org -O ~/.ssh/keys/git@live-systems.org
+ $ wget http://live-systems.org/other/keys/git@live-systems.org.pub -O ~/.ssh/keys/git@live-systems.org.pub
+ $ chmod 0600 ~/.ssh/keys/git@live-systems.org*
+
+}code
+
+_* Dodaj następującą sekcję do twojej konfiguracji klienta openssh:
+
+code{
+
+$ cat >> ~/.ssh/config << EOF
+ Host live-systems.org
+     Hostname live-systems.org
+     User git
+     IdentitiesOnly yes
+     IdentityFile ~/.ssh/keys/git@live-systems.org
+ EOF
+
+}code
+
+_* Sprawdź i sklonuj kopię live-manual przez through ssh:
+
+code{
+
+ $ git clone git@live-systems.org:/live-manual.git
+ $ cd live-manual && git checkout debian-next
+
+}code
+
+_* Upewnij się, że masz ustawionego autora i adres email w konfiguracji Git:
+
+code{
+
+  $ git config user.name "John Doe"
+  $ git config user.email john@example.org
+
+}code
+
+*{Ważne:}* Pamiętaj, że powinno się wprowadzać wszelkie zmiany wyłącznie w gałęzi *{debian-next}*.
+
+_* Wprowadź zmiany. W tym przykładzie będzie najpierw napisać nowy dział
+dotyczący stosowania plastrów, a następnie przygotować się do popełnienia
+dodawanie plików i pisanie popełnienia wiadomość tak:
+
+code{
+
+ $ git commit -a -m "Adding a section on applying patches."
+
+}code
+
+_* Wyślij poprawki na serwer:
+
+code{
+
+ $ git push
+
+}code

@@ -43,7 +43,8 @@ Check_untranslated_strings
 
 Find_untranslated ()
 {
-echo "Searching for 'untranslated strings'..."
+echo ""
+echo " * Searching for 'untranslated strings' in ${LANGUAGE} ..."
 echo ""
 
 for POFILE in manual/po/"${LANGUAGE}"/*
@@ -71,7 +72,7 @@ Show_strings ()
 if [ "$(Find_untranslated | awk '{ sum += $1 } END { print sum }')" -eq "0" ]
 	then
 		echo ""
-		echo "There are 0 untranslated strings in your language."
+		echo "There are 0 untranslated strings in language: ${LANGUAGE}" | grep --color ${LANGUAGE}
 		echo ""
 		
 		exit 0
@@ -165,7 +166,7 @@ echo "Type: $(ls -C manual/po) ['a' to see all]['q' to quit]"
 read LANGUAGE 
 case "$LANGUAGE" in
 
-	ca|de|es|fr|it|ja|pt_BR|ro)
+	ca|de|es|fr|it|ja|pl|pt_BR|ro)
 		Find_untranslated
 		Show_strings
 		;;
@@ -176,8 +177,16 @@ case "$LANGUAGE" in
 		;;
 
 	a)
-		echo "[Not implemented yet]"
-		# FIXME
+        for LANGUAGE in $(ls manual/po)
+            do
+               Find_untranslated
+               if [ "$(Find_untranslated | awk '{ sum += $1 } END { print sum }')" -eq "0" ]
+                then
+                    echo ""
+                    echo "There are 0 untranslated strings in language: ${LANGUAGE}" | grep --color ${LANGUAGE}
+                    echo ""
+                fi
+            done
 		;;
 	
 	q)	

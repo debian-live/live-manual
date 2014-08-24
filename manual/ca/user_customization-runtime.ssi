@@ -333,3 +333,136 @@ de recerca o d'un altre tipus, utilitzaria els paràmetres d'arrencada:
 necessiten tenir un fitxer #{persistence.conf}# en la seva arrel. La pàgina
 de manual de live-boot conté més informació sobre com utilitzar aquestes
 etiquetes amb els noms més antics.
+
+2~ Persistència amb xifratge
+
+Utilitzar la persistència vol dir que algunes dades sensibles poden quedar
+exposades a risc. Especialment si les dades persistents s'emmagatzemen en un
+dispositiu portàtil com una memòria USB o un disc dur extern. És llavors
+quan el xifrat entra en joc. Fins i tot si el procediment pot semblar
+complicat a causa de la quantitat de passos que s'han de fer, és molt fàcil
+manejar particions xifrades amb live-boot. Per a utilitzar *{luks}*, que és
+el tipus de xifrat compatible, es necessita instal·lar /{cryptsetup}/ tant
+en la màquina que crearà la partició xifrada com en el sistema en viu amb
+que es va a utilitzar la partició persistent xifrada.
+
+Per a instal·lar /{cryptsetup}/ a la nostra màquina:
+
+code{
+
+ # apt-get install cryptsetup
+
+}code
+
+Per a instal·lar /{cryptsetup}/ en el sistema viu, afegir-lo a una
+package-lists:
+
+code{
+
+ $ lb init
+ $ echo "cryptsetup" > config/package-lists/encryption.list.chroot
+
+}code
+
+Una cop tinguem el nostre sistema en viu amb /{cryptsetup}/, bàsicament,
+només hem de crear una nova partició, xifrar-la i arrencar amb els
+paràmetres #{persistence}# i #{persistence-encryption=luks}#. Podríem haver
+anticipat aquest pas i afegit els paràmetres d'arrencada seguint el
+procediment habitual:
+
+code{
+
+ $ lb config --bootappend-live "boot=live components persistence persistence-encryption=luks"
+
+}code
+
+Anem a entrar en els detalls per a tothom que no està familiaritzat amb el
+xifrat. En el següent exemple utilitzarem una partició en un dispositiu USB
+que correspon a #{/dev/sdc2}#. Tenir en compte que cal determinar quina
+partició és la que es va a utilitzar en cada cas específic.
+
+El primer pas és connectar la memòria usb i determinar de quin dispositiu es
+tracta. La manera més recomanable per a llistar dispositius és utilitzar
+#{ls -l /dev/disk/by-id}#. Després d'això, crear una nova partició i, a
+continuació, xifrar-la amb una frase de contrasenya de la següent manera:
+
+code{
+
+ # cryptsetup --verify-passphrase luksFormat /dev/sdc2
+
+}code
+
+A continuació, obrir la partició luks al mapeador de dispositius
+virtuals. Es pot utilitzar qualsevol nom que es desitgi. Aquí utilitzem
+*{live}* com a exemple:
+
+code{
+
+ # cryptsetup luksOpen /dev/sdc2 live
+
+}code
+
+El següent pas és omplir el dispositiu amb zeros abans de crear el sistema
+de fitxers:
+
+code{
+
+ # dd if=/dev/zero of=/dev/mapper/live
+
+}code
+
+Ara, estem preparats per a crear el sistema de fitxers. Noteu que estem
+afegint l'etiqueta #{persistence}# perquè el dispositiu es munti com a
+magatzem de persistència durant l'arrencada.
+
+code{
+
+ # mkfs.ext4 -L persistence /dev/mapper/live
+
+}code
+
+Per continuar amb la nostra configuració, necessitem muntar el dispositiu,
+per exemple, a #{/mnt}#.
+
+code{
+
+ # mount /dev/mapper/live /mnt
+
+}code
+
+I crear el fitxer #{persistence.conf}# a l'arrel de la partició. Això és,
+com s'ha explicat abans, estrictament necessari. Veure {El fitxer
+persistence.conf}#persistence-conf.
+
+code{
+
+ # echo "/ union" > /mnt/persistence.conf
+
+}code
+
+Desmuntar el punt de muntatge:
+
+code{
+
+ # umount /mnt
+
+}code
+
+I opcionalment, encara que podria ser una bona manera de protegir les dades
+que acabem d'agregar a la partició, podem tancar el dispositiu:
+
+code{
+
+ # cryptsetup luksClose live
+
+}code
+
+Anem a resumir el procés. Fins ara, hem creat un sistema viu capaç de
+manejar xifratge, que es pot copiar a una memòria USB com s'explica a
+{Copiar una imatge ISO híbrida en un dispositiu
+USB}#copying-iso-hybrid-to-usb. També hem creat una partició xifrada, que es
+pot situar en la mateixa memòria USB per portar a tot arreu i hem configurat
+la partició xifrada per ser utilitzada com a magatzem de persistència. Així
+que ara, només hem de arrencar el sistema en viu. En el moment d'arrencar,
+live-boot ens preguntarà la frase de contrasenya i muntarà la partició
+xifrada per a ser utilitzada per a la persistència.

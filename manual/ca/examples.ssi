@@ -65,12 +65,12 @@ code{
 }code
 
 Suposant que tot va bé, després d'una estona, el directori actual contindrà
-una #{binary.hybrid.iso}#. Aquesta imatge ISO híbrida es pot arrencar en una
-màquina virtual tal com s'explica a {Provar una imatge ISO amb
-Qemu}#testing-iso-with-qemu i {Provar una imatge ISO amb
+una #{live-image-i386.hybrid.iso}#. Aquesta imatge ISO híbrida es pot
+arrencar en una màquina virtual tal com s'explica a {Provar una imatge ISO
+amb Qemu}#testing-iso-with-qemu i {Provar una imatge ISO amb
 VirtualBox}#testing-iso-with-virtualbox, o bé copiada a un dispositiu USB
 com es descriu a {Gravar una imatge ISO en un medi físic}#burning-iso-image
-i {Còpiar una imatge ISO híbrida en un dispositiu
+i {Copiar una imatge ISO híbrida en un dispositiu
 USB}#copying-iso-hybrid-to-usb, respectivament.
 
 2~tutorial-2 Tutorial 2: Una utilitat de navegador web
@@ -85,7 +85,9 @@ code{
 
  $ mkdir tutorial2
  $ cd tutorial2
+ $ lb init
  $ echo "task-lxde-desktop iceweasel" >> config/package-lists/my.list.chroot
+ $ lb config
 
 }code
 
@@ -144,11 +146,12 @@ code{
 
 }code
 
-Executar #{lb config}# per a crear l'arbre de configuració, utilitzant el
-script #{auto/config}# que s'acaba de crear:
+Executar #{lb init}# i #{lb config}# per a crear l'arbre de configuració,
+utilitzant el script #{auto/config}# que s'acaba de crear:
 
 code{
 
+ $ lb init
  $ lb config
 
 }code

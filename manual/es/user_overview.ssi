@@ -28,19 +28,21 @@ su configuración bajo un subdirectorio #{config/}#.
 _* Los scripts son independientes - es decir, siempre es seguro ejecutar
 cada comando.
 
-Unlike /{debhelper}/, live-build provides the tools to generate a skeleton
-configuration directory. This could be considered to be similar to tools
-such as /{dh-make}/. For more information about these tools, read on, since
-the remainder of this section discuses the four most important
-commands. Note that the preceding #{lb}# is a generic wrapper for live-build
-commands.
+A diferencia de /{debhelper}/, live-build contiene las herramientas para
+crear un directorio de configuración en esqueleto. Esto podría ser
+considerado como similar a herramientas tales como /{dh-make}/. Para obtener
+más información acerca de estas herramientas, seguir leyendo, ya que el
+resto de esta sección trata sobre los cuatro comandos más importantes. En
+interesante notar que están precedidos por #{lb}# que es una función
+genérica para todos los comandos de live-build.
 
-_* *{lb init}*: Responsible for initializing a Live system configuration
-directory. See {The lb init command}#lb-init for more information.
+_* *{lb init}*: Responsable de inicializar un directorio de configuración
+para la creación de un sistema en vivo. Ver {El comando lb init}#lb-init
+para más información.
 
-_* *{lb config}*: Responsible for applying a configuration on top of an
-already initialized configuration directory. See {The lb config
-command}#lb-config for more information.
+_* *{lb config}*: Responsable de aplicar una configuración sobre un
+directorio de configuración ya inicializado para la creación de un sistema
+en vivo. Ver {El comando lb config}#lb-config para más información.
 
 _* *{lb build}*: Responsable de iniciar la creación de un sistema en
 vivo. Ver {El comando lb build}#lb-build para más información.
@@ -49,46 +51,49 @@ _* *{lb clean}*: Responsable de la eliminación de partes de la creación de
 un sistema en vivo. Ver {El comando lb clean}#lb-clean para  más
 información.
 
-3~lb-init The #{lb init}# command
+3~lb-init El comando #{lb init}#
 
-As discussed in {live-build}#live-build, the scripts that make up live-build
-read their configuration with the #{source}# command from a single directory
-named #{config/}#. As constructing this directory by hand would be
-time-consuming and error-prone, the #{lb init}# command can be used to
-create the initial skeleton configuration tree.
+Como se comentó en {live-build}#live-build, los scripts que componen
+live-build obtienen su configuración gracias al comando #{source}# desde un
+único directorio llamado #{config/}#. Como la creación de este directorio a
+mano sería largo y propenso a errores, se puede utilizar el comando #{lb
+init}# para crear el esqueleto de directorios de configuración inicial.
 
-The #{lb init}# command creates the following directories inside
-#{config/}#: #{hooks/}#, #{includes/}#, several other includes
-subdirectories for each stage of the build process and
-#{package-lists/}#. The latter includes a list of several important live
-packages like live-boot, live-config and live-config-sysvinit.
+El comando #{lb init}# crea los siguientes directorios dentro de
+#{config/}#: #{hooks/}#, #{includes/}#, varios subdirectorios de includes
+para cada diferente etapa del proceso de construcción y
+#{package-lists/}#. Este último incluye una lista de varios paquetes de gran
+importancia para el funcionamiento de un sistema en vivo, live-boot,
+live-config y live-config-sysvinit.
 
 3~lb-config El comando #{lb config}#
 
-Issuing #{lb config}# without any arguments completes the #{config/}#
-subdirectory which it populates with some default settings in configuration
-files, and two skeleton trees named #{auto/}# and #{local/}#.
+Ejecutar #{lb config}# sin argumentos completa el subdirectorio #{config/}#
+que se completa con algunas opciones por defecto en ficheros de
+configuración y dos árboles de subdirectorios en forma de esqueleto llamados
+#{auto/}# y #{local/}#. 
 
 code{
 
  $ lb config
- [2014-04-25 17:14:34] lb config 
+ [2014-04-25 17:14:34] lb config
  P: Updating config tree for a debian/wheezy/i386 system
 
 }code
 
-Using #{lb config}# without any arguments would be suitable for users who
-need a very basic image, or who intend to provide a more complete
-configuration via #{auto/config}# later (see {Managing a
-configuration}#managing-a-configuration for details).
+Utilizar #{lb config}# sin ningún argumento sería conveniente para los
+usuarios que necesitan una imagen muy básica, o que tienen intención de
+proporcionar,  más adelante, una configuración más completa a través de
+#{auto/config}# (ver {Gestionar una configuración}#managing-a-configuration
+para más detalles).
 
 Normalmente, se tendrá que especificar algunas opciones. Por ejemplo, para
-especificar la distribución que se desea construir utilizando su nombre en
-clave:
+especificar que gestor de paquetes se desea utilizar durante la construcción
+de la imagen:
 
 code{
 
- $ lb config --distribution sid
+ $ lb config --apt aptitude
 
 }code
 

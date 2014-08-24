@@ -1,0 +1,142 @@
+:B~ Dostosowywanie zawartości
+
+1~customizing-contents Dostosowywanie zawartości
+
+Ten rozdział omawia dokładną regulację dostosowywania zawartości systemu
+poza samym wybieraniem pakietów do wyboru, które będą zawarte. Uwzględnianie
+pozwala dodać lub wymienić dowolne pliki w obrazie systemu live, haki
+pozwalają na wykonanie dowolnego polecenia na różnych etapach produkcji oraz
+w czasie rozruchu a opcji preseeding pozwala skonfigurować pakiety, gdy są
+zainstalowane poprzez dostarczenie odpowiedzi na pytania debconfa.
+
+2~includes Uwzględnianie
+
+Chociaż najlepiej byłoby gdyby system live zawierał się wyłącznie z plików
+dostarczonych przez całkowicie niemodyfikowane pakiety, to czasami
+wygodniejszym jest, dostarczenie lub zmodyfikowanie pewnych treści za pomocą
+plików. Korzystając z uwzględniania, można dodać (lub wymienić) dowolne
+pliki w systemie obrazu live. live-build dostarcza dwa takie mechanizmy
+wykorzystania:
+
+_* Lokalne uwzględnianie chroot: Pozwoli Ci dodać lub zastąpić pliki w
+systemie plików chroot/live. Zobacz {Lokalne uwzględnianie
+chroot/live}#live-chroot-local-includes, aby uzyskać więcej informacji.
+
+_* Lokalne uwzględnianie danych binarnych: Pozwoli Ci dodać lub zastąpić
+pliki w obrazie binarnym. Zobacz {Lokalnych uwzględnianie danych
+binarnych}#binary-local-includes, aby uzyskać więcej informacji.
+
+Proszę zobaczyć {Definicje}#terms aby uzyskać więcej informacji na temat
+różnicy między obrazami "binarnymi" a obrazami "live".
+
+3~live-chroot-local-includes Lokalnie uwzględniane w chroot/live
+
+Lokalnie uwzględnione w chroot mogą być używane, aby dodać lub zastąpić
+pliki w systemie plików chroot/live, tak aby mogły być one użyte w systemie
+live. Typowym zastosowaniem jest dostarczenie szkieletowego katalogu
+użytkownika (#{/etc/skel}#) używanego przez system live do tworzenia
+katalogu domowego użytkownika live. Innym jest dostarczanie plików
+konfiguracyjnych, które mogą być po prostu dodane lub podmienione w obrazie
+bez przetwarzania; zobacz {Lokalne haki
+chroot/live}#live-chroot-local-hooks, czy potrzebne jest przetwarzanie.
+
+Aby dołączyć pliki, po prostu dodaj je do katalogu
+#{config/includes.chroot}#. Ten katalog odnosi się do katalogu root #{/}#
+systemu live. Na przykład, aby dodać plik #{/var/www/index.html}# do systemu
+live, użyj:
+
+code{
+
+ $ mkdir -p config/includes.chroot/var/www
+ $ cp /path/to/my/index.html config/includes.chroot/var/www
+
+}code
+
+Konfiguracja będzie mieć następujący układ:
+
+code{
+
+- config
+    [...]
+     |-- includes.chroot
+     |   `-- var
+     |       `-- www
+     |           `-- index.html
+    [...]
+
+}code
+
+Lokalnie uwzględnione w chroot są instalowane po instalacji pakietów, tak że
+pliki zainstalowane przez pakiety są zastępowane.
+
+3~binary-local-includes Lokalnie uwzględniane dane binarne
+
+Aby zawierać materiały takie jak filmy lub dokumentacja na systemie plików
+nośnika tak, aby były one dostępne od razu po włożeniu nośnika bez
+uruchamiania systemu live, możesz użyć lokalnego uwzględniania danych
+binarnych. Działa to w podobny sposób do lokalnego uwzględniania w
+chroot/live. Załóżmy na przykład, że pliki #{~/video_demo.*}# to filmy
+demonstacyjne systemu live opisanego przez i dowiązane przez stronę indeksu
+HTML. Wystarczy skopiować materiał z #{config/includes.binary/}# w
+następujący sposób:
+
+code{
+
+ $ cp ~/video_demo.* config/includes.binary/
+
+}code
+
+Pliki te pojawią się teraz w katalogu głównym nośnika live.
+
+2~hooks Haki
+
+Haki pozwalają poleceniom aby były wykonywane w etapach chroot i binarnym
+kompilacji w celu dostosowania obrazu.
+
+3~live-chroot-local-hooks Lokalne haki chroot/live
+
+Aby uruchomić komendy na etapie chroot, należy utworzyć skrypt hak z
+przyrostkiem #{.hook.chroot}# zawierającym polecenia w katalogu
+#{config/hooks/}#. Hak będzie działać w chroot po resztę konfiguracji chroot
+zastosowano, więc pamiętaj, aby zapewnić, że konfiguracja zawiera wszystkie
+pakiety i pliki do Twoich potrzeb haka w celu uruchomienia. Zobacz
+przykładowe skrypty hak chroot dla różnych zadań dostosowywania wspólnej
+chroot przewidzianych w # {/ usr / share / doc / live-build / przykłady /
+haki} #, który można skopiować lub linku do korzystania z nich w swoim
+własnym konfiguracji.
+
+3~boot-time-hooks Haki podczas uruchamiania
+
+Aby wykonać polecenia przy starcie systemu, możesz dostarczyć haki
+live-config, jak wyjaśniono w jego podręczniku man w sekcji "Customization"
+(ang. dostosowywanie). Przeanalizuj własne haki live-config dostarczone w
+#{/lib/live/config/}#, zwracając uwagę na numery sekwencji. Następnie dodaj
+swój własne hak z odpowiednim prefiksem numeru sekwencji, albo jako lokalnie
+uwzględnione w chroot w #{config/includes.chroot/lib/live/config/}#, lub w
+postaci niestandardowego pakietu omówione w {Instalowanie zmodyfikowanych
+pakietów lub pakietów innych
+firm}#installing-modified-or-third-party-packages.
+
+3~ Lokalne haki binarne
+
+Aby uruchomić komendy na etapie binarnym, należy utworzyć skrypt hak z
+przyrostkiem #{.hook.binary}# zawierającym polecenia w katalogu
+#{config/hooks/}#. Hak będzie uruchomiony po wszystkich innych binarnych
+poleceniach, ale przed binary_checksums; ostatnim poleceniem. Polecenia haka
+nie działają w środowisku chroot, więc należy zadbać, aby nie modyfikować
+żadnych plików poza drzewem kompilacji albo może to uszkodzić system
+kompilacji! Zobacz przykładowe skrypty binarne dla różnych typowych
+binarnych zadań dostosowywania przewidzianych w
+#{/usr/share/doc/live-build/examples/hooks}#, które można skopiować lub
+utworzyć dowiązanie symboliczne aby skorzystać z nich w swojej własnej
+konfiguracji.
+
+2~ Wstępne ustawienie pytań Debconfa (Preseeding)
+
+Pliki w katalogu #{config/preseed/}# z rozszerzeniem #{.cfg}# w następującym
+etapie (#{.chroot}# lub #{.binary}#) są brane pod uwagę jako pliki preseed
+debconfa i są instalowane za pomocą live-build przez
+#{debconf-set-selections}# podczas odpowiedniego etapu.
+
+Aby uzyskać więcej informacji o debconf, proszę przeczytaj #{debconf(7)}# z
+pakietu /{debconf}/.

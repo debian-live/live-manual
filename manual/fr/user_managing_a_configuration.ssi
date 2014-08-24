@@ -23,15 +23,15 @@ les fichiers dans #{config/*}# avec beaucoup d'autres options aux valeurs
 par défaut. Si vous exécutez #{lb config}# à nouveau, il ne réinitialisera
 pas l'option qui a été mise par défaut en fonction de vos options
 initiales. Ainsi, par exemple, si vous exécutez #{lb config}# à nouveau avec
-une nouvelle valeur pour #{--distribution}#, toutes les options qui ont été
-mises à leur valeur par défaut pour l'ancienne distribution ne peuvent plus
-fonctionner avec la nouvelle distribution. Ces fichiers ne sont pas destinés
-à être lus ou modifiés. Ils enregistrent des valeurs pour plus d'une
-centaine d'options, donc personne (y-compris vous) ne pourra voir dans ces
-options lesquelles vous avez réellement indiquées. Finalement, si vous
-lancez #{lb config}#, puis mettez live-build à niveau et que celui-ci
-renomme une option, #{config/*}# contiendra toujours des variables nommées
-en fonction de l'ancienne option et qui ne seront plus valides.
+une nouvelle valeur pour #{--binary-images}#, toutes les options qui ont été
+mises à leur valeur par défaut pour l'ancienne type d'image ne peuvent plus
+fonctionner avec la nouvelle option. Ces fichiers ne sont pas destinés à
+être lus ou modifiés. Ils enregistrent des valeurs pour plus d'une centaine
+d'options, donc personne (y-compris vous) ne pourra voir dans ces options
+lesquelles vous avez réellement indiquées. Finalement, si vous lancez #{lb
+config}#, puis mettez live-build à niveau et que celui-ci renomme une
+option, #{config/*}# contiendra toujours des variables nommées en fonction
+de l'ancienne option et qui ne seront plus valides.
 
 Pour toutes ces raisons, les scripts #{auto/*}# vous rendront la vie plus
 facile. Ils sont de simples emballages pour les commandes #{lb config}#,
@@ -55,7 +55,8 @@ configuration par défaut, puis copiez les exemples:
 
 code{
 
- $ mkdir mylive && cd mylive && lb config
+ $ mkdir mylive && cd mylive && lb init
+ $ mkdir auto
  $ cp /usr/share/doc/live-build/examples/auto/* auto/
 
 }code
@@ -117,18 +118,18 @@ en ajoutant la ligne suivante à votre #{${HOME}/.gitconfig}#:
 code{
 
  [url "git://live-systems.org/git/"]
-         insteadOf = ldn:
+         insteadOf = lso:
 
 }code
 
-Cela vous permet d'utiliser #{ldn:}# quand vous voulez indiquer l'adresse
+Cela vous permet d'utiliser #{lso:}# quand vous voulez indiquer l'adresse
 d'un dépôt #{live-systems.org}#. Si vous supprimez le suffixe optionnel
 #{.git}#, commencer une nouvelle image en utilisant cette configuration est
 aussi simple que:
 
 code{
 
- $ lb config --config ldn:live-images
+ $ lb config --config lso:live-images
 
 }code
 

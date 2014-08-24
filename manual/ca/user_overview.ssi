@@ -27,19 +27,19 @@ la seva configuració per complet sota un subdirectori #{config/}#.
 _* Els scripts són independents - és a dir, sempre és segur executar cada
 ordre.
 
-Unlike /{debhelper}/, live-build provides the tools to generate a skeleton
-configuration directory. This could be considered to be similar to tools
-such as /{dh-make}/. For more information about these tools, read on, since
-the remainder of this section discuses the four most important
-commands. Note that the preceding #{lb}# is a generic wrapper for live-build
-commands.
+A diferència de /{debhelper}/, live-build proporciona les eines per a
+generar un directori de configuració en esquelet. Això podria ser considerat
+similar a eines com ara /{dh-make}/. Per a més informació sobre aquestes
+eines, seguiu llegint, ja que la resta d'aquesta secció discuteix les quatre
+ordres més importants. Tenir en compte que van precedices de #{lb}# que és
+una funció genèrica per a les ordres de live-build.
 
-_* *{lb init}*: Responsible for initializing a Live system configuration
-directory. See {The lb init command}#lb-init for more information.
+_* *{lb init}*: Responsable d'inicialitzar un directori de configuració per
+al sistema en viu. Consultar {L'ordre lb init}#lb-init per a més informació.
 
-_* *{lb config}*: Responsible for applying a configuration on top of an
-already initialized configuration directory. See {The lb config
-command}#lb-config for more information.
+_* *{lb config}*: Responsable d'aplicar una configuració damunt d'un
+directori de configuració ja inicialitzat per al sistema en viu. Consultar
+{L'ordre lb config}#lb-config per a més informació.
 
 _* *{lb build}*: Responsable d'iniciar la creació d'un sistema en
 viu. Consultar {L'ordre lb build}#lb-build per a més informació.
@@ -47,46 +47,48 @@ viu. Consultar {L'ordre lb build}#lb-build per a més informació.
 _* *{lb clean}*: Responsable d'eliminar parts de la construcció d'un sistema
 viu. Consultar {L'ordre lb clean}#lb-clean per a més informació.
 
-3~lb-init The #{lb init}# command
+3~lb-init L'ordre #{lb init}#
 
-As discussed in {live-build}#live-build, the scripts that make up live-build
-read their configuration with the #{source}# command from a single directory
-named #{config/}#. As constructing this directory by hand would be
-time-consuming and error-prone, the #{lb init}# command can be used to
-create the initial skeleton configuration tree.
+Com s'ha dit a {live-build}#live-build, les seqüències d'ordres que formen
+part de live-build llegeixen la seva configuració amb l'ordre #{source}#
+d'un únic directori anomenat #{config/}#. Com la construcció d'aquest
+directori a mà, seria molt costós i propens a errors, es pot utilitzar
+l'ordre #{lb init}# per a crear l'arbre inicial de configuració en esquelet.
 
-The #{lb init}# command creates the following directories inside
-#{config/}#: #{hooks/}#, #{includes/}#, several other includes
-subdirectories for each stage of the build process and
-#{package-lists/}#. The latter includes a list of several important live
-packages like live-boot, live-config and live-config-sysvinit.
+L'ordre #{lb init}# crea els següents directoris dins #{config/}#:
+#{hooks/}#, #{includes/}#, altres subdirectoris de includes per a cada etapa
+del process de construcció i #{package-lists/}#. Aquest últim inclou una
+llista de diversos paquets importants per a un sistema en viu com live-boot,
+live-config and live-config-sysvinit.
 
 3~lb-config L'ordre #{lb config}#
 
-Issuing #{lb config}# without any arguments completes the #{config/}#
-subdirectory which it populates with some default settings in configuration
-files, and two skeleton trees named #{auto/}# and #{local/}#.
+Executar #{lb config}# sense arguments completa el subdirectori #{config/}#
+que s'omple amb alguns paràmetres per defecte en fitxers de configuració, i
+dos arbres de subdirectoris en esquelet que s'anomenen #{auto/}# i
+#{local/}#.
 
 code{
 
  $ lb config
- [2014-04-25 17:14:34] lb config 
+ [2014-04-25 17:14:34] lb config
  P: Updating config tree for a debian/wheezy/i386 system
 
 }code
 
-Using #{lb config}# without any arguments would be suitable for users who
-need a very basic image, or who intend to provide a more complete
-configuration via #{auto/config}# later (see {Managing a
-configuration}#managing-a-configuration for details).
+Utilitzar #{lb config}# sense cap tipus d'arguments seria convenient per als
+usuaris que necessiten una imatge molt bàsica, o que tinguin la intenció de
+proporcionar una configuració més completa més tard mitjançant
+#{auto/config}# (Veure {Gestió d'una configuració}#managing-a-configuration
+per a més detalls).
 
 Normalment, s'haurà d'especificar algunes opcions. Per exemple, per a
-especificar quina distribució es vol construir mitjançant el seu nom en
-clau:
+especificar quin gestor de paquets utilitzar durant la construcció de la
+imatge:
 
 code{
 
- $ lb config --distribution sid
+ $ lb config --apt aptitude
 
 }code
 

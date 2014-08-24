@@ -62,8 +62,11 @@ operativo que se puede arrancar sin instalación previa en el disco duro. Un
 sistema en vivo no altera ningún sistema operativo previamente instalado ni
 ningún fichero existente en el disco duro de la máquina a menos que se le
 instruya para hacerlo. Los sistemas en vivo son arrancados típicamente desde
-medios extraíbles como CD, DVD o llaves USB. Algunos pueden también arrancar
-desde la red local.
+medios extraíbles como CDs, DVDs o llaves USB. Algunos pueden también
+arrancar desde la red local (utilizando imágenes tipo netboot, ver {Creación
+de una imagen de arranque en red}#building-netboot-image), o incluso desde
+internet utilizando el parámetro de arranque #{fetch=URL}#, ver {Arrancar
+desde internet}#webbooting).
 
 _* *{Medio en vivo}*: A diferencia de sistema en vivo, el medio en vivo se
 refiere al CD, DVD o memoria USB donde se copia el fichero binario producido
@@ -74,10 +77,6 @@ como la ubicación de los ficheros de arranque de red.
 
 _* *{${project}}*: Es un proyecto que mantiene, entre otros, los paquetes
 live-boot, live-build, live-config, live-tools y live-manual.
-
-_* *{Sistema en vivo}*: Es un sistema que puede arrancar desde medios
-extraíbles como CD, DVD o llaves USB, desde red local (mediante imágenes
-netboot) o desde Internet (utilizando la opción de arranque #{fetch=URL}#).
 
 _* *{Sistema huésped}*: Es el conjunto de herramientas y equipo utilizado
 para crear el sistema en vivo.
@@ -112,8 +111,9 @@ _* *{chroot}*: El programa /{chroot}/, #{chroot(8)}#, permite ejecutar
 diferentes instancias de un entorno GNU/Linux en un solo sistema de manera
 simultánea sin necesidad de reiniciar el sistema.
 
-_* *{Imagen binaria}*: Es un fichero binario que contiene el sistema en
-vivo. Su nombre puede ser binary.iso o binary.img dependiendo de su formato.
+_* *{Imagen binaria}*: Es un fichero que contiene el sistema en vivo. Su
+nombre puede ser, por ejemplo, live-image-i386.hybrid.iso o
+live-image-i386.img dependiendo de su formato.
 
 _* *{Distribución objetivo}*: Es la versión de la distribución Debian en la
 cual estará basado el sistema en vivo que puede diferir de la versión de la
@@ -205,7 +205,7 @@ ejemplo.
 
 code{
 
-  $ make build PROOF=1
+ $ make build PROOF=1
 
 }code
 

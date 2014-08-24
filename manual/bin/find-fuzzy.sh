@@ -67,7 +67,7 @@ case "$ANSWER" in
 		echo "Translation English-English not implemented yet!"
 		;;
 
-	ca|de|es|fr|it|ja|pt_BR|ro)
+	ca|de|es|fr|it|ja|pl|pt_BR|ro)
 		Find_fuzzy
 		;;
 

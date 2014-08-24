@@ -13,20 +13,21 @@ _* Zawsze należy sprawdzić najpierw aktualizacje statusu obrazu na naszej
 stronie internetowej http://live-systems.org/, w poszukiwaniu znanych
 problemów.
 
-_* Before submitting a bug report always try to reproduce the bug with the
-*{most recent versions}* of the branch of live-build, live-boot, live-config
-and live-tools that you're using (like the newest 4.x version of live-build
-if you're using live-build 4).
+_* Przed wysłaniem raportu o błędzie zawsze spróbuj odtworzyć problem z
+*{najnowszą wersją}* gałęzi live-build, live-boot, live-config i live-tools,
+których używasz (jak najnowsza wersja 4.x live-build, jeśli używasz
+live-build 4).
 
-_* Try to give *{as specific information as possible}* about the bug. This
-includes (at least) the version of live-build, live-boot, live-config, and
-live-tools used and the distribution of the live system you are building.
+_* Spróbuj podać *{jak najwięcej specyficznych informacji, jak to tylko
+możliwe}* o błędzie. Obejmuje to (co najmniej) wersję używanych live-build,
+live-boot, live-config i live-tools oraz dystrybucję systemu live którą
+kompilujesz.
 
 2~ Znane problemy
 
-Since Debian *{testing}* and Debian *{unstable}* distributions are moving
-targets, when you specify either of them as the target system distribution,
-a successful build may not always be possible.
+Ponieważ Debian *{testing} * i Debian *{unstable}* dystrybucjami ruchomymi,
+w przypadku określenia jednej z nich jako dystrybucji systemu docelowego,
+kompilowanie nie zawsze zakończy się sukcesem.
 
 % FIXME:
 
@@ -37,31 +38,34 @@ Ciebie zbyt wiele trudności, raczej wykorzystaj wydanie
 Obecnie znane problemy wymienione są w ramach sekcji "status" na naszej
 stronie internetowej w http://live-systems.org/.
 
-It is out of the scope of this manual to train you to correctly identify and
-fix problems in packages of the development distributions, however, there
-are two things you can always try: If a build fails when the target
-distribution is *{testing}*, try *{unstable}*. If *{unstable}* does not work
-either, revert to *{testing}* and pin the newer version of the failing
-package from *{unstable}* (see {APT pinning}#apt-pinning for details).
+To jest poza zakresem tej instrukcji, aby szkolić się poprawnie
+identyfikować i naprawiać problemy pakietów z dystrybucji rozwojowych,
+jednak istnieją dwie rzeczy, których zawsze można spróbować: Jeśli
+kompilowanie nie powiedzie się, gdy docelową dystrybucją jest *{testing}*,
+to spróbuj z *{unstable}*. Jeśli *{unstable}* również nie działa, to
+przywróć do dystrybucji *{testing}* i przypnij nowszą wersję wadliwego
+pakietu z wersji  *{unstable}* (patrz {Przypinanie APT}#apt-pinning aby
+uzyskać szczegóły).
 
 2~ Przebuduj od zera
 
-To ensure that a particular bug is not caused by an uncleanly built system,
-please always rebuild the whole live system from scratch to see if the bug
-is reproducible.
+Aby upewnić się, że dany błąd nie jest spowodowany nie w pełni wyczyszczonym
+budowanym systemem, proszę zawsze odbudować cały system live od podstaw, aby
+sprawdzić, czy błąd jest powtarzalny.
 
 2~ Używaj aktualnych pakietów
 
-Using outdated packages can cause significant problems when trying to
-reproduce (and ultimately fix) your problem. Make sure your build system is
-up-to-date and any packages included in your image are up-to-date as well.
+Używanie przestarzałych pakietów może powodować poważne problemy podczas
+próby odtworzenia (i ostatecznego rozwiązania) problemu. Upewnij się, że
+system na którym kompilujesz jest aktualny i wszelkie pakiety zawarte w
+obrazie również.
 
 2~collect-information Zbierz potrzebne informacje
 
-Please provide enough information with your report. Include, at least, the
-exact version of live-build where the bug is encountered and the steps to
-reproduce it. Please use your common sense and provide any other relevant
-information if you think that it might help in solving the problem.
+Proszę dostarczyć wystarczającą ilość informacji z raportem. Obejmujące co
+najmniej, dokładną wersję live-build, gdzie napotkano błąd i kroki, jak go
+odtworzyć. Proszę użyć zdrowego rozsądku i przedstawić wszelkie inne istotne
+informacje, jeśli uważasz, że może to pomóc w rozwiązaniu problemu.
 
 Aby w pełni wykorzystać Twój raport o błędzie, będziemy potrzebować
 przynajmniej następujących informacji:
@@ -86,9 +90,10 @@ _* Wersja live-config na systemie live
 
 _* Wersja live-tools na systemie live
 
-You can generate a log of the build process by using the #{tee}# command. We
-recommend doing this automatically with an #{auto/build}# script (see
-{Managing a configuration}#managing-a-configuration for details).
+Można wygenerować log procesu kompilacji przy użyciu polecenia
+#{tee}#. Polecamy robić to automatycznie przy użyciu skryptu #{auto/build}#
+(patrz {Zarządzanie konfiguracją}#managing-a-configuration w celu uzyskania
+szczegółów).
 
 code{
 
@@ -99,29 +104,30 @@ code{
 W czasie uruchamiania live-boot i live-config przetrzymują swoje logi w
 #{/var/log/live/}#. Sprawdź je w poszukiwaniu błędów.
 
-Additionally, to rule out other errors, it is always a good idea to tar up
-your #{config/}# directory and upload it somewhere (do *{not}* send it as an
-attachment to the mailing list), so that we can try to reproduce the errors
-you encountered. If this is difficult (e.g. due to size) you can use the
-output of #{lb config --dump}# which produces a summary of your config tree
-(i.e. lists files in subdirectories of #{config/}# but does not include
-them).
+Dodatkowo, aby wykluczyć inne błędy, zawsze dobrym pomysłem jest, aby
+spakować do archiwum tar swój katalog #{config/}# i przesłać go gdzieś
+(*{nie}* należy wysłać go jako załącznik do listy), tak aby można spróbować
+odtworzyć napotkane błędy. Jeśli sprawia to trudność (np. ze względu na
+rozmiar) można użyć wyjścia z polecenia #{lb config --dump}#, które tworzy
+podsumowanie drzewa konfiguracyjnego (czyli np. listę plików w podkatalogach
+#{config/}#, ale bez załączania ich).
 
-Remember to send in any logs that were produced with English locale
-settings, e.g. run your live-build commands with a leading #{LC_ALL=C}# or
-#{LC_ALL=en_US}#.
+Pamiętaj, aby wysłać wszystkie dzienniki i logi, które zostały wyprodukowane
+z ustawień regionalnych angielskich, np. uruchom polecenia live-build ze
+zmiennymi #{LC_ALL=C}# lub #{LC_ALL=en_US}#.
 
 2~ Wyizoluj prawdopodobną wadę, jeśli to możliwe
 
-If possible, isolate the failing case to the smallest possible change that
-breaks. It is not always easy to do this so if you cannot manage it for your
-report, do not worry. However, if you plan your development cycle well,
-using small enough change sets per iteration, you may be able to isolate the
-problem by constructing a simpler 'base' configuration that closely matches
-your actual configuration plus just the broken change set added to it. If
-you have a hard time sorting out which of your changes broke, it may be that
-you are including too much in each change set and should develop in smaller
-increments.
+Jeśli to możliwe, należy wyizolować przypadek do najmniejszej zmiany, które
+generuje błąd. Nie zawsze jest łatwo to zrobić, więc jeśli nie możesz dodać
+takiej informacji do raportu, nie martw się. Jednakże, jeśli użytkownik
+dobrze planuje swój cykl rozwoju, przy użyciu małych zestawów zmian na
+iterację, można być w stanie wyizolować problem poprzez budowę prostszej
+konfiguracji "bazy", która blisko pasuje do rzeczywistej konfiguracji oraz
+tylko uszkodzony zestaw zmian do niej dodany. Jeśli masz trudności z
+sortowaniem, które z Twoich zmian wygenerowały błąd, może to znaczyć, że
+uwzględniono za dużo w każdym zestawie zmian i powinno się raczej kształcić
+w mniejszych krokach.
 
 2~ Wybierz odpowiedni pakiet dla którego zgłaszasz błąd
 
@@ -141,35 +147,37 @@ pobierana. Jeśli błąd pojawi się tutaj, należy sprawdzić, czy błąd jest
 związany z konkretnym pakietem Debiana (najprawdopodobniej) lub, jeśli jest
 to związane z samym narzędziem ładowania początkowego.
 
-In both cases, this is not a bug in the live system, but rather in Debian
-itself and probably we cannot fix it directly. Please report such a bug
-against the bootstrapping tool or the failing package.
+W obu przypadkach nie jest to błąd w systemie live, ale w samym Debianie i
+prawdopodobnie nie możemy naprawić go bezpośrednio. Proszę zgłosić taki błąd
+jako dotyczący narzędzia ładowania początkowego (ang. bootstraping tool) lub
+uszkodzonego pakietu.
 
 3~ W czasie budowania podczas instalacji pakietów
 
-live-build installs additional packages from the Debian archive and
-depending on the Debian distribution used and the daily archive state, it
-can fail. If a bug appears here, check if the error is also reproducible on
-a normal system.
+live-build instaluje dodatkowe pakiety z archiwum Debiana i w zależności od
+używanej dystrybucji Debian i codziennego stanu archiwum, może się to nie
+powieść. Jeśli błąd pojawi się w tym miejscu, należy sprawdzić, czy błąd
+jest powtarzalny w normalnym systemie.
 
-If this is the case, this is not a bug in the live system, but rather in
-Debian - please report it against the failing package. Running
-/{debootstrap}/ separately from the Live system build or running #{lb
-bootstrap --debug}# will give you more information.
+Jeśli jest to przypadek, gdzie błąd nie występuje w systemie live, ale w
+Debianie - zgłoś go jako dotyczący wadliwego pakietu. Uruchomienie
+/{debootstrap}/ niezależnie od samej kompilacji systemu live lub
+uruchomianie #{lb bootstrap - debug}# daje więcej informacji.
 
-Also, if you are using a local mirror and/or any sort of proxy and you are
-experiencing a problem, please always reproduce it first by bootstrapping
-from an official mirror.
+Ponadto, w przypadku korzystania z lokalnego serwera lustrzanego i/lub
+jakichkolwiek serwerów proxy i doświadczania problemów prosimy zawsze
+najpierw spróbować odtworzyć czyności z użyciem oficjalnego serwera
+lustrzanego.
 
 3~ W czasie uruchamiania
 
-If your image does not boot, please report it to the mailing list together
-with the information requested in {Collect
-information}#collect-information. Do not forget to mention, how/when the
-image failed exactly, whether using virtualization or real hardware. If you
-are using a virtualization technology of any kind, please always run it on
-real hardware before reporting a bug. Providing a screenshot of the failure
-is also very helpful.
+Jeśli obraz nie uruchamia się, należy zgłosić go do listy wraz z
+informacjami wymaganymi w {Zbierz potrzebne
+informacje}#collect-information. Nie zapomnij wspomnieć, jak/kiedy dokładnie
+obraz nie zadziałał, czy był użyty za pomocą wirtualizacji lub rzeczywistego
+sprzętu. Jeśli korzystasz z technologii wirtualizacji w jakiejkolwiek
+formie, proszę zawsze uruchomić go na prawdziwym sprzęcie przed zgłoszeniem
+błędu. Zapewnienie zrzutu ekranu awarii jest również bardzo pomocne.
 
 3~ W czasie gdy system jest już uruchomiony
 
@@ -184,28 +192,29 @@ jesteś jedyną osobą, która zmaga się ze szczególnym problem. Zawsze jest
 szansa, że został on już omówiony w innym miejscu i zaproponowano już
 możliwe rozwiązanie, obejście lub patch.
 
-You should pay particular attention to the live systems mailing list, as
-well as the homepage, as these are likely to contain the most up-to-date
-information. If such information exists, always include the references to it
-in your bug report.
+Należy zwrócić szczególną uwagę na listę mailingową systemów live, jak
+również strona główna, ponieważ zawierają one prawdopodobnie najbardziej
+aktualne informacje. Jeśli takowa informacja istnieje, zawsze należy zawrzeć
+odniesienie do niej w swoim raporcie o błędzie.
 
-In addition, you should check the current bug lists for live-build,
-live-boot, live-config and live-tools to see whether something similar has
-already been reported.
+Ponadto, należy sprawdzić aktualne wykazy błędów dla live-build, live-boot,
+live-config i live-tools, aby zobaczyć, czy coś podobnego nie zostało już
+zgłoszone.
 
 2~ Gdzie zgłaszać błędy
 
-The ${project} keeps track of all bugs in the Bug Tracking System (BTS). For
-information on how to use the system, please see
-http://bugs.debian.org/. You can also submit the bugs by using the
-#{reportbug}# command from the package with the same name.
+${project} śledzi wszystkie błędy w systemie śledzenia błędów (BTS). Aby
+uzyskać informacje na temat korzystania z tego systemu, zobacz
+http://bugs.debian.org/. Możesz też przesłać błędy używając polecenia
+#{reportbug} z pakietu o tej samej nazwie.
 
-In general, you should report build time errors against the live-build
-package, boot time errors against live-boot, and run time errors against
-live-config. If you are unsure of which package is appropriate or need more
-help before submitting a bug report, please report it against the
-debian-live pseudo-package. We will then take care about it and reassign it
-where appropriate.
+Ogólnie rzecz biorąc, należy zgłaszać błędy podczas kompilacji: jako
+dotyczące pakietu live-build, błędy podczas uruchamiania: live-boot oraz
+błędy w czasie działania systemu live: jako dotyczące live-config. Jeśli nie
+jesteś pewien, który pakiet będzie odpowiedni lub potrzebujesz więcej
+pomocy, przed złożeniem zgłoszenia błędu, zgłoś raport dotyczący
+pseudo-pakietu debian-live. Zajmiemy się wtedy nim i przypiszemy do
+odpowiedniego pakietu.
 
 Należy pamiętać, że błędy znalezione w dystrybucji pochodzących od Debiana
 (takich jak Ubuntu, i inne) *{nie}* powinny być zgłaszane do BTS Debiana,

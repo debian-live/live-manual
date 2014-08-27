@@ -18,21 +18,17 @@ _* The scripts are independent - that is to say, it is always safe to run each c
 
 Unlike /{debhelper}/, live-build provides the tools to generate a skeleton configuration directory. This could be considered to be similar to tools such as /{dh-make}/. For more information about these tools, read on, since the remainder of this section discuses the four most important commands. Note that the preceding #{lb}# is a generic wrapper for live-build commands.
 
-_* *{lb init}*: Responsible for initializing a Live system configuration directory. See {The lb init command}#lb-init for more information.
-
-_* *{lb config}*: Responsible for applying a configuration on top of an already initialized configuration directory. See {The lb config command}#lb-config for more information.
+_* *{lb config}*: Responsible for initializing and configuring a Live system configuration directory. See {The lb config command}#lb-init for more information.
 
 _* *{lb build}*: Responsible for starting a Live system build. See {The lb build command}#lb-build for more information.
 
 _* *{lb clean}*: Responsible for removing parts of a Live system build. See {The lb clean command}#lb-clean for more information.
 
-3~lb-init The #{lb init}# command
-
-As discussed in {live-build}#live-build, the scripts that make up live-build read their configuration with the #{source}# command from a single directory named #{config/}#. As constructing this directory by hand would be time-consuming and error-prone, the #{lb init}# command can be used to create the initial skeleton configuration tree.
-
-The #{lb init}# command creates the following directories inside #{config/}#: #{hooks/}#, #{includes/}#, several other includes subdirectories for each stage of the build process and #{package-lists/}#. The latter includes a list of several important live packages like live-boot, live-config and live-config-sysvinit.
-
 3~lb-config The #{lb config}# command
+
+As discussed in {live-build}#live-build, the scripts that make up live-build read their configuration with the #{source}# command from a single directory named #{config/}#. As constructing this directory by hand would be time-consuming and error-prone, the #{lb config}# command can be used to create the initial skeleton configuration tree.
+
+The #{lb config}# command creates the following directories inside #{config/}#: #{hooks/}#, #{includes/}#, several other includes subdirectories for each stage of the build process and #{package-lists/}#. The latter includes a list of several important live packages like live-boot, live-config and live-config-sysvinit.
 
 Issuing #{lb config}# without any arguments completes the #{config/}# subdirectory which it populates with some default settings in configuration files, and two skeleton trees named #{auto/}# and #{local/}#.
 

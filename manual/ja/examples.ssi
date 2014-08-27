@@ -36,7 +36,7 @@ code{
 
 code{
 
- $ mkdir tutorial1 ; cd tutorial1 ; lb init ; lb config
+ $ mkdir tutorial1 ; cd tutorial1 ; lb config
 
 }code
 
@@ -68,7 +68,7 @@ code{
 
  $ mkdir tutorial2
  $ cd tutorial2
- $ lb init
+ $ lb config
  $ echo "task-lxde-desktop iceweasel" >> config/package-lists/my.list.chroot
  $ lb config
 
@@ -119,11 +119,11 @@ code{
 
 }code
 
-#{lb init}# と #{lb config}# を実行して設定ツリーを生成し、生成された #{auto/config}# スクリプトを使います:
+Perform #{lb config}# to generate the config tree, using the #{auto/config}#
+script you just created:
 
 code{
 
- $ lb init
  $ lb config
 
 }code
@@ -224,7 +224,6 @@ code{
 
  $ mkdir vnc-kiosk-client
  $ cd vnc-kiosk-client
- $ lb init
  $ lb config -a i386 -k 686-pae --apt-recommends false
  $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
  $ echo "xorg gdm3 metacity xvnc4viewer" > config/package-lists/my.list.chroot
@@ -292,7 +291,6 @@ code{
 
 code{
 
- $ lb init
  $ lb config -k 486 --apt-indices false --apt-recommends false --debootstrap-options "--variant=minbase" --firmware-chroot false --memtest none
 
 }code
@@ -375,7 +373,6 @@ code{
 
  $ mkdir live-gnome-ch
  $ cd live-gnome-ch
- $ lb init
  $ lb config \
      -a i386 \
      -k 486 \

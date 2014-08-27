@@ -46,7 +46,7 @@ Nie można tego zrobić łatwiej niż tak:
 
 code{
 
- $ mkdir samouczek1 ; cd samouczek1 ; lb init ; lb config
+ $ mkdir tutorial1 ; cd tutorial1 ; lb config
 
 }code
 
@@ -83,9 +83,9 @@ systemu live.
 
 code{
 
- $ mkdir samouczek2
- $ cd samouczek2
- $ lb init
+ $ mkdir tutorial2
+ $ cd tutorial2
+ $ lb config
  $ echo "task-lxde-desktop iceweasel" >> config/package-lists/my.list.chroot
  $ lb config
 
@@ -145,12 +145,11 @@ code{
 
 }code
 
-Wykonaj #{lb init}# i #{lb config}#, aby wygenerować drzewo konfiguracyjne,
-używając właśnie utworzonego skryptu w #{auto/config}#:
+Perform #{lb config}# to generate the config tree, using the #{auto/config}#
+script you just created:
 
 code{
 
- $ lb init
  $ lb config
 
 }code
@@ -268,9 +267,8 @@ pakietów}#generated-package-lists), a drugą uwzględniającą pakiety /{xorg}/
 
 code{
 
-$ mkdir vnc-kiosk-client
+ $ mkdir vnc-kiosk-client
  $ cd vnc-kiosk-client
- $ lb init
  $ lb config -a i386 -k 686-pae --apt-recommends false
  $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
  $ echo "xorg gdm3 metacity xvnc4viewer" > config/package-lists/my.list.chroot
@@ -347,7 +345,6 @@ ustawień regionalnych poprzez pakiet /{localepurge}/, lub inne tego typu
 
 code{
 
- $ lb init
  $ lb config -k 486 --apt-indices false --apt-recommends false --debootstrap-options "--variant=minbase" --firmware-chroot false --memtest none
 
 }code
@@ -441,9 +438,8 @@ pakietów w następujący sposób:
 
 code{
 
-$ mkdir live-gnome-ch
+ $ mkdir live-gnome-ch
  $ cd live-gnome-ch
- $ lb init
  $ lb config \
      -a i386 \
      -k 486 \

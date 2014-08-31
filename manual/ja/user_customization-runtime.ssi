@@ -1,24 +1,19 @@
-:B~ Customizing run time behaviours
+:B~ 実行時の挙動の独自化
 
-1~customizing-run-time-behaviours Customizing run time behaviours
+1~customizing-run-time-behaviours 実行時の挙動の独自化
 
-All configuration that is done during run time is done by live-config. Here
-are some of the most common options of live-config that users are interested
-in. A full list of all possibilities can be found in the man page of
-live-config.
+実行時に行われる設定は全て live-config により行われます。ユーザが関心を持つであろう live-config
+の最も一般的なオプションから一部を説明します。オプションの全容は live-config の man ページにあります。
 
-2~ Customizing the live user
+2~ live ユーザの独自化
 
-One important consideration is that the live user is created by live-boot at
-boot time, not by live-build at build time. This not only influences where
-materials relating to the live user are introduced in your build, as
-discussed in {Live/chroot local includes}#live-chroot-local-includes, but
-also any groups and permissions associated with the live user.
+重要な検討事項が1つあり、live ユーザはブート時に live-boot により作成され、ビルド時に live-build
+により作成されるのではないということです。この影響は {Live/chroot
+ローカルインクルード}#live-chroot-local-includes で説明しているように、ビルドで live
+ユーザに関連する内容が導入されるところだけにはとどまらず、live ユーザに関連するグループや権限にも影響します。
 
-You can specify additional groups that the live user will belong to by using
-any of the possibilities to configure live-config. For example, to add the
-live user to the #{fuse}# group, you can either add the following file in
-#{config/includes.chroot/etc/live/config/user-setup.conf}#:
+live-config を設定できる複数の方法で live ユーザの所属する追加のグループを指定できます。例えば live ユーザを #{fuse}#
+グループに追加するには #{config/includes.chroot/etc/live/config/user-setup.conf}# ファイルに
 
 code{
 
@@ -26,15 +21,13 @@ code{
 
 }code
 
-or use
+を追加するかブートパラメータとして
 #{live-config.user-default-groups=audio,cdrom,dip,floppy,video,plugdev,netdev,powerdev,scanner,bluetooth,fuse}#
-as a boot parameter.
+と指定します。
 
-It is also possible to change the default username "user" and the default
-password "live". If you want to do that for any reason, you can easily
-achieve it as follows:
+デフォルトのユーザ名「user」やデフォルトのパスワード「live」を変更することもできます。何らかの理由で変更したい場合は以下のようにして簡単に変更できます:
 
-To change the default username you can simply specify it in your config:
+デフォルトのユーザ名を変更するには単に設定で指定します:
 
 code{
 
@@ -42,24 +35,20 @@ code{
 
 }code
 
-One possible way of changing the default password is by means of a hook as
-described in {Boot-time hooks}#boot-time-hooks. In order to do that you can
-use the "passwd" hook from #{/usr/share/doc/live-config/examples/hooks}#,
-prefix it accordingly (e.g. 2000-passwd) and add it to
-#{config/includes.chroot/lib/live/config/}#
+デフォルトのパスワードを変更できる1つの方法は{ブート時フック}#boot-time-hooks で説明しているフックを使います。そのためには
+#{/usr/share/doc/live-config/examples/hooks}# から「passwd」を使い、適当な名前 (例えば
+2000-passwd) で保存してそれを #{config/includes.chroot/lib/live/config/}# に追加します。
 
-2~customizing-locale-and-language Customizing locale and language
+2~customizing-locale-and-language ロケールと言語の独自化
 
-When the live system boots, language is involved in two steps:
+Live システムがブートする際、2つの段階で言語が関わってきます:
 
-_* the locale generation
+_* ロケール生成
 
-_* setting the keyboard configuration
+_* キーボードの設定
 
-The default locale when building a Live system is
-#{locales=en_US.UTF-8}#. To define the locale that should be generated, use
-the #{locales}# parameter in the #{--bootappend-live}# option of #{lb
-config}#, e.g.
+Live システムをビルドする際のデフォルトのロケールは #{locales=en_US.UTF-8}# となっています。生成したいロケールの定義には
+#{lb config}# の #{--bootappend-live}# オプションで #{locales}# パラメータを指定します。例えば
 
 code{
 
@@ -67,22 +56,18 @@ code{
 
 }code
 
-Multiple locales may be specified as a comma-delimited list.
+ロケールをコンマで区切って複数指定することもできます。
 
-This parameter, as well as the keyboard configuration parameters indicated
-below, can also be used at the kernel command line. You can specify a locale
-by #{language_country}# (in which case the default encoding is used) or the
-full #{language_country.encoding}# word. A list of supported locales and the
-encoding for each can be found in #{/usr/share/i18n/SUPPORTED}#.
+このパラメータも以下に示すキーボード設定用パラメータと同様にカーネルコマンドラインで指定できます。ロケールは #{言語_国}#
+(デフォルトのエンコーディングを使う場合) または完全な #{言語_国.エンコーディング}#
+の形式で指定できます。サポートしているロケールやそれぞれで利用されるエンコーディングの一覧は #{/usr/share/i18n/SUPPORTED}#
+にあります。
 
-Both the console and X keyboard configuration are performed by
-#{live-config}# using the #{console-setup}# package. To configure them, use
-the #{keyboard-layouts}#, #{keyboard-variants}#, #{keyboard-options}# and
-#{keyboard-model}# boot parameters via the #{--bootappend-live}#
-option. Valid options for these can be found in
-#{/usr/share/X11/xkb/rules/base.lst}#. To find layouts and variants for a
-given language, try searching for the English name of the language and/or
-the country where the language is spoken, e.g:
+コンソールとXキーボードの設定はどちらも #{live-config}# により #{console-setup}#
+パッケージを使って行われます。設定には #{--bootappend-live}# オプション経由で
+#{keyboard-layouts}#、#{keyboard-variants}#、#{keyboard-options}#、#{keyboard-model}#
+ブートパラメータを利用します。それぞれの有効なオプションは #{/usr/share/X11/xkb/rules/base.lst}#
+にあります。ある言語向けのレイアウトや配列を見つけるには、その言語の英語名やその言語が話されている国を検索してみてください。例:
 
 code{
 
@@ -99,11 +84,9 @@ $ egrep -i '(^!|german.*switzerland)' /usr/share/X11/xkb/rules/base.lst
 
 }code
 
-Note that each variant lists the layout to which it applies in the
-description.
+それぞれの配列の説明に、適合するレイアウトが示されていることに注意してください。
 
-Often, only the layout needs to be configured. For example, to get the
-locale files for German and Swiss German keyboard layout in X use:
+レイアウトだけを設定する必要があることはよくあります。例えばXで利用するドイツ語のロケールファイル及びスイスのドイツ語のキーボードレイアウトを利用する場合:
 
 code{
 
@@ -111,9 +94,8 @@ code{
 
 }code
 
-However, for very specific use cases, you may wish to include other
-parameters. For example, to set up a French system with a French-Dvorak
-layout (called Bepo) on a TypeMatrix EZ-Reach 2030 USB keyboard, use:
+非常に具体的な事例ですが他のパラメータを同時に指定することもできます。例えばフランス語のシステムを用意して TypeMatrix EZ-Reach
+2030 USB キーボードで (Bepo と呼ばれる) フランス語用の Dvorak 配置を使う場合:
 
 code{
 
@@ -122,15 +104,13 @@ code{
 
 }code
 
-Multiple values may be specified as comma-delimited lists for each of the
-#{keyboard-*}# options, with the exception of #{keyboard-model}#, which
-accepts only one value. Please see the #{keyboard(5)}# man page for details
-and examples of #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# and
-#{XKBOPTIONS}# variables. If multiple #{keyboard-variants}# values are
-given, they will be matched one-to-one with #{keyboard-layouts}# values (see
-#{setxkbmap(1)}# #{-variant}# option). Empty values are allowed; e.g. to
-define two layouts, the default being US QWERTY and the other being US
-Dvorak, use:
+値を1つだけ受け付ける #{keyboard-model}# は例外ですが、他の #{keyboard-*}#
+オプションではそれぞれに値をコンマで区切って複数指定することもできます。#{XKBMODEL}# や
+#{XKBLAYOUT}#、#{XKBVARIANT}#、#{XKBOPTIONS}# 変数の詳細や例については #{keyboard(5)}# man
+ページを見てください。#{keyboard-variants}# に複数の値を指定した場合、1つずつ #{keyboard-layouts}# の値
+(#{setxkbmap(1)}# の #{-variant}# オプション参照)
+との照合が行われます。空白の値も使えます。例えばデフォルトとして米国向けの QWERTY、それとは別に米国向けの
+Dvorak、の2つの配列を指定する場合:
 
 code{
 
@@ -139,16 +119,13 @@ code{
 
 }code
 
-2~persistence Persistence
+2~persistence 保持機能
 
-A live cd paradigm is a pre-installed system which runs from read-only
-media, like a cdrom, where writes and modifications do not survive reboots
-of the host hardware which runs it.
+典型的なライブCDというものは CD-ROM
+等の読み取り専用メディアから起動するインストール済みシステムで、書き込みや変更は起動したホストハードウェアの再起動により消え去ります。
 
-A live system is a generalization of this paradigm and thus supports other
-media in addition to CDs; but still, in its default behaviour, it should be
-considered read-only and all the run-time evolutions of the system are lost
-at shutdown.
+Live
+システムはそれを一般化したものであり、CD以外のメディアもサポートしますが、デフォルトの挙動としては読み取り専用であり、そのシステムで実行時に行ったことは全てシャットダウンにより失われるものだと考えるべきです。
 
 'Persistence' is a common name for different kinds of solutions for saving
 across reboots some, or all, of this run-time evolution of the system. To
@@ -192,7 +169,7 @@ code{
 
 }code
 
-See also {Using the space left on a USB stick}#using-usb-extra-space.
+{USBメモリの空きスペースの利用}#using-usb-extra-space も見てください。
 
 If you already have a partition on your device, you could just change the
 label with one of the following:
@@ -238,7 +215,7 @@ code{
 
 Now, reboot into your live medium with the boot parameter "persistence".
 
-3~persistence-conf The persistence.conf file
+3~persistence-conf persistence.conf ファイル
 
 A volume with the label #{persistence}# must be configured by means of the
 #{persistence.conf}# file to make arbitrary directories persistent. That
@@ -414,7 +391,7 @@ code{
 
 }code
 
-Then unmount the mount point:
+それからマウントポイントのマウントを解除します:
 
 code{
 

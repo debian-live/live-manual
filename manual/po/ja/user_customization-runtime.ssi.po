@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
 "POT-Creation-Date: 2014-08-27 21:41+0200\n"
-"PO-Revision-Date: 2013-09-20 22:12+0200\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2014-08-28 04:41+0900\n"
+"Last-Translator: victory <victory.deb@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -179,12 +179,12 @@ msgstr "}code"
 #. type: Plain text
 #: en/user_customization-runtime.ssi:2
 msgid ":B~ Customizing run time behaviours"
-msgstr ""
+msgstr ":B~ 実行時の挙動の独自化"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:4
 msgid "1~customizing-run-time-behaviours Customizing run time behaviours"
-msgstr ""
+msgstr "1~customizing-run-time-behaviours 実行時の挙動の独自化"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:6
@@ -194,11 +194,14 @@ msgid ""
 "in. A full list of all possibilities can be found in the man page of live-"
 "config."
 msgstr ""
+"実行時に行われる設定は全て live-config により行われます。ユーザが関心を持つで"
+"あろう live-config の最も一般的なオプションから一部を説明します。オプションの"
+"全容は live-config の man ページにあります。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:8
 msgid "2~ Customizing the live user"
-msgstr ""
+msgstr "2~ live ユーザの独自化"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:10
@@ -209,6 +212,11 @@ msgid ""
 "discussed in {Live/chroot local includes}#live-chroot-local-includes, but "
 "also any groups and permissions associated with the live user."
 msgstr ""
+"重要な検討事項が1つあり、live ユーザはブート時に live-boot により作成され、ビ"
+"ルド時に live-build により作成されるのではないということです。この影響は "
+"{Live/chroot ローカルインクルード}#live-chroot-local-includes で説明している"
+"ように、ビルドで live ユーザに関連する内容が導入されるところだけにはとどまら"
+"ず、live ユーザに関連するグループや権限にも影響します。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:12
@@ -218,12 +226,15 @@ msgid ""
 "live user to the #{fuse}# group, you can either add the following file in "
 "#{config/includes.chroot/etc/live/config/user-setup.conf}#:"
 msgstr ""
+"live-config を設定できる複数の方法で live ユーザの所属する追加のグループを指"
+"定できます。例えば live ユーザを #{fuse}# グループに追加するには #{config/"
+"includes.chroot/etc/live/config/user-setup.conf}# ファイルに"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:16
 #, no-wrap
 msgid " LIVE_USER_DEFAULT_GROUPS=\"audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse\"\n"
-msgstr ""
+msgstr " LIVE_USER_DEFAULT_GROUPS=\"audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse\"\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:20
@@ -231,6 +242,9 @@ msgid ""
 "or use #{live-config.user-default-groups=audio,cdrom,dip,floppy,video,"
 "plugdev,netdev,powerdev,scanner,bluetooth,fuse}# as a boot parameter."
 msgstr ""
+"を追加するかブートパラメータとして #{live-config.user-default-groups=audio,"
+"cdrom,dip,floppy,video,plugdev,netdev,powerdev,scanner,bluetooth,fuse}# と指"
+"定します。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:22
@@ -239,18 +253,20 @@ msgid ""
 "password \"live\". If you want to do that for any reason, you can easily "
 "achieve it as follows:"
 msgstr ""
+"デフォルトのユーザ名「user」やデフォルトのパスワード「live」を変更することも"
+"できます。何らかの理由で変更したい場合は以下のようにして簡単に変更できます:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:24
 msgid ""
 "To change the default username you can simply specify it in your config:"
-msgstr ""
+msgstr "デフォルトのユーザ名を変更するには単に設定で指定します:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:28
 #, no-wrap
 msgid " $ lb config --bootappend-live \"boot=live components username=live-user\"\n"
-msgstr ""
+msgstr " $ lb config --bootappend-live \"boot=live components username=live-user\"\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:32
@@ -261,26 +277,31 @@ msgid ""
 "prefix it accordingly (e.g. 2000-passwd) and add it to #{config/includes."
 "chroot/lib/live/config/}#"
 msgstr ""
+"デフォルトのパスワードを変更できる1つの方法は{ブート時フック}#boot-time-"
+"hooks で説明しているフックを使います。そのためには #{/usr/share/doc/live-"
+"config/examples/hooks}# から「passwd」を使い、適当な名前 (例えば 2000-"
+"passwd) で保存してそれを #{config/includes.chroot/lib/live/config/}# に追加し"
+"ます。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:34
 msgid "2~customizing-locale-and-language Customizing locale and language"
-msgstr ""
+msgstr "2~customizing-locale-and-language ロケールと言語の独自化"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:36
 msgid "When the live system boots, language is involved in two steps:"
-msgstr ""
+msgstr "Live システムがブートする際、2つの段階で言語が関わってきます:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:38
 msgid "_* the locale generation"
-msgstr ""
+msgstr "_* ロケール生成"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:40
 msgid "_* setting the keyboard configuration"
-msgstr ""
+msgstr "_* キーボードの設定"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:42
@@ -289,17 +310,21 @@ msgid ""
 "To define the locale that should be generated, use the #{locales}# parameter "
 "in the #{--bootappend-live}# option of #{lb config}#, e.g."
 msgstr ""
+"Live システムをビルドする際のデフォルトのロケールは #{locales=en_US.UTF-8}# "
+"となっています。生成したいロケールの定義には #{lb config}# の #{--bootappend-"
+"live}# オプションで #{locales}# パラメータを指定します。例えば"
+
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:46
 #, no-wrap
 msgid " $ lb config --bootappend-live \"boot=live components locales=de_CH.UTF-8\"\n"
-msgstr ""
+msgstr " $ lb config --bootappend-live \"boot=live components locales=de_CH.UTF-8\"\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:50
 msgid "Multiple locales may be specified as a comma-delimited list."
-msgstr ""
+msgstr "ロケールをコンマで区切って複数指定することもできます。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:52
@@ -310,6 +335,11 @@ msgid ""
 "full #{language_country.encoding}# word. A list of supported locales and the "
 "encoding for each can be found in #{/usr/share/i18n/SUPPORTED}#."
 msgstr ""
+"このパラメータも以下に示すキーボード設定用パラメータと同様にカーネルコマンド"
+"ラインで指定できます。ロケールは #{言語_国}# (デフォルトのエンコーディングを"
+"使う場合) または完全な #{言語_国.エンコーディング}# の形式で指定できます。サ"
+"ポートしているロケールやそれぞれで利用されるエンコーディングの一覧は #{/usr/"
+"share/i18n/SUPPORTED}# にあります。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:54
@@ -322,6 +352,13 @@ msgid ""
 "and variants for a given language, try searching for the English name of the "
 "language and/or the country where the language is spoken, e.g:"
 msgstr ""
+"コンソールとXキーボードの設定はどちらも #{live-config}# により #{console-"
+"setup}# パッケージを使って行われます。設定には #{--bootappend-live}# オプショ"
+"ン経由で #{keyboard-layouts}#、#{keyboard-variants}#、#{keyboard-options}#、"
+"#{keyboard-model}# ブートパラメータを利用します。それぞれの有効なオプション"
+"は #{/usr/share/X11/xkb/rules/base.lst}# にあります。ある言語向けのレイアウト"
+"や配列を見つけるには、その言語の英語名やその言語が話されている国を検索してみ"
+"てください。例:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:67
@@ -338,6 +375,16 @@ msgid ""
 "   de_mac          ch: German (Switzerland, Macintosh)\n"
 " ! option\n"
 msgstr ""
+"$ egrep -i '(^!|german.*switzerland)' /usr/share/X11/xkb/rules/base.lst\n"
+" ! model\n"
+" ! layout\n"
+"   ch              German (Switzerland)\n"
+" ! variant\n"
+"   legacy          ch: German (Switzerland, legacy)\n"
+"   de_nodeadkeys   ch: German (Switzerland, eliminate dead keys)\n"
+"   de_sundeadkeys  ch: German (Switzerland, Sun dead keys)\n"
+"   de_mac          ch: German (Switzerland, Macintosh)\n"
+" ! option\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:71
@@ -345,6 +392,8 @@ msgid ""
 "Note that each variant lists the layout to which it applies in the "
 "description."
 msgstr ""
+"それぞれの配列の説明に、適合するレイアウトが示されていることに注意してくださ"
+"い。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:73
@@ -352,12 +401,14 @@ msgid ""
 "Often, only the layout needs to be configured. For example, to get the "
 "locale files for German and Swiss German keyboard layout in X use:"
 msgstr ""
+"レイアウトだけを設定する必要があることはよくあります。例えばXで利用するドイツ"
+"語のロケールファイル及びスイスのドイツ語のキーボードレイアウトを利用する場合:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:77
 #, no-wrap
 msgid " $ lb config --bootappend-live \"boot=live components locales=de_CH.UTF-8 keyboard-layouts=ch\"\n"
-msgstr ""
+msgstr " $ lb config --bootappend-live \"boot=live components locales=de_CH.UTF-8 keyboard-layouts=ch\"\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:81
@@ -366,6 +417,9 @@ msgid ""
 "parameters. For example, to set up a French system with a French-Dvorak "
 "layout (called Bepo) on a TypeMatrix EZ-Reach 2030 USB keyboard, use:"
 msgstr ""
+"非常に具体的な事例ですが他のパラメータを同時に指定することもできます。例えば"
+"フランス語のシステムを用意して TypeMatrix EZ-Reach 2030 USB キーボードで "
+"(Bepo と呼ばれる) フランス語用の Dvorak 配置を使う場合:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:86
@@ -374,6 +428,8 @@ msgid ""
 " $ lb config --bootappend-live \\\n"
 "     \"boot=live components locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variants=bepo keyboard-model=tm2030usb\"\n"
 msgstr ""
+" $ lb config --bootappend-live \\\n"
+"     \"boot=live components locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variants=bepo keyboard-model=tm2030usb\"\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:90
@@ -387,6 +443,14 @@ msgid ""
 "#{-variant}# option). Empty values are allowed; e.g. to define two layouts, "
 "the default being US QWERTY and the other being US Dvorak, use:"
 msgstr ""
+"値を1つだけ受け付ける #{keyboard-model}# は例外ですが、他の #{keyboard-*}# オ"
+"プションではそれぞれに値をコンマで区切って複数指定することもできます。"
+"#{XKBMODEL}# や #{XKBLAYOUT}#、#{XKBVARIANT}#、#{XKBOPTIONS}# 変数の詳細や例"
+"については #{keyboard(5)}# man ページを見てください。#{keyboard-variants}# に"
+"複数の値を指定した場合、1つずつ #{keyboard-layouts}# の値 (#{setxkbmap(1)}# "
+"の #{-variant}# オプション参照) との照合が行われます。空白の値も使えます。例"
+"えばデフォルトとして米国向けの QWERTY、それとは別に米国向けの Dvorak、の2つの"
+"配列を指定する場合:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:95
@@ -395,11 +459,13 @@ msgid ""
 " $ lb config --bootappend-live \\\n"
 "     \"boot=live components keyboard-layouts=us,us keyboard-variants=,dvorak\"\n"
 msgstr ""
+" $ lb config --bootappend-live \\\n"
+"     \"boot=live components keyboard-layouts=us,us keyboard-variants=,dvorak\"\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:99
 msgid "2~persistence Persistence"
-msgstr ""
+msgstr "2~persistence 保持機能"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:101
@@ -408,6 +474,9 @@ msgid ""
 "media, like a cdrom, where writes and modifications do not survive reboots "
 "of the host hardware which runs it."
 msgstr ""
+"典型的なライブCDというものは CD-ROM 等の読み取り専用メディアから起動するイン"
+"ストール済みシステムで、書き込みや変更は起動したホストハードウェアの再起動に"
+"より消え去ります。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:103
@@ -417,6 +486,9 @@ msgid ""
 "considered read-only and all the run-time evolutions of the system are lost "
 "at shutdown."
 msgstr ""
+"Live システムはそれを一般化したものであり、CD以外のメディアもサポートします"
+"が、デフォルトの挙動としては読み取り専用であり、そのシステムで実行時に行った"
+"ことは全てシャットダウンにより失われるものだと考えるべきです。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:105
@@ -488,12 +560,12 @@ msgstr ""
 #: en/user_customization-runtime.ssi:123
 #, no-wrap
 msgid " # mkfs.ext4 -L persistence /dev/sdb1\n"
-msgstr ""
+msgstr " # mkfs.ext4 -L persistence /dev/sdb1\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:127
 msgid "See also {Using the space left on a USB stick}#using-usb-extra-space."
-msgstr ""
+msgstr "{USBメモリの空きスペースの利用}#using-usb-extra-space も見てください。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:129
@@ -506,7 +578,7 @@ msgstr ""
 #: en/user_customization-runtime.ssi:133
 #, no-wrap
 msgid " # tune2fs -L persistence /dev/sdb1 # for ext2,3,4 filesystems\n"
-msgstr ""
+msgstr " # tune2fs -L persistence /dev/sdb1 # for ext2,3,4 filesystems\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:137
@@ -522,6 +594,8 @@ msgid ""
 " $ dd if=/dev/null of=persistence bs=1 count=0 seek=1G # for a 1GB sized image file\n"
 " $ /sbin/mkfs.ext4 -F persistence\n"
 msgstr ""
+" $ dd if=/dev/null of=persistence bs=1 count=0 seek=1G # for a 1GB sized image file\n"
+" $ /sbin/mkfs.ext4 -F persistence\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:146
@@ -540,6 +614,8 @@ msgid ""
 " # cp persistence /\n"
 " # mount -t ext4 /persistence /mnt\n"
 msgstr ""
+" # cp persistence /\n"
+" # mount -t ext4 /persistence /mnt\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:155
@@ -555,6 +631,8 @@ msgid ""
 " # echo \"/usr union\" >> /mnt/persistence.conf\n"
 " # umount /mnt\n"
 msgstr ""
+" # echo \"/usr union\" >> /mnt/persistence.conf\n"
+" # umount /mnt\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:164
@@ -565,7 +643,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_customization-runtime.ssi:166
 msgid "3~persistence-conf The persistence.conf file"
-msgstr ""
+msgstr "3~persistence-conf persistence.conf ファイル"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:168
@@ -595,6 +673,11 @@ msgid ""
 " # echo \"/var/cache/apt\" >> /mnt/persistence.conf\n"
 " # umount /mnt\n"
 msgstr ""
+" # mkfs.ext4 -L persistence /dev/sdb1\n"
+" # mount -t ext4 /dev/sdb1 /mnt\n"
+" # echo \"/home\" >> /mnt/persistence.conf\n"
+" # echo \"/var/cache/apt\" >> /mnt/persistence.conf\n"
+" # umount /mnt\n"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:182
@@ -808,8 +891,7 @@ msgstr ""
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:263
-#, fuzzy, no-wrap
-#| msgid " # mount -o loop image.iso /mnt\n"
+#, no-wrap
 msgid " # mount /dev/mapper/live /mnt\n"
 msgstr " # mount /dev/mapper/live /mnt\n"
 
@@ -830,7 +912,7 @@ msgstr " # echo \"/ union\" > /mnt/persistence.conf\n"
 #. type: Plain text
 #: en/user_customization-runtime.ssi:275
 msgid "Then unmount the mount point:"
-msgstr ""
+msgstr "それからマウントポイントのマウントを解除します:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:279

@@ -218,6 +218,8 @@ msgstr ""
 "ように、ビルドで live ユーザに関連する内容が導入されるところだけにはとどまら"
 "ず、live ユーザに関連するグループや権限にも影響します。"
 
+# Translator's NOTE: last half: "を追加するか"
+# Translator's NOTE: is divided, placed on: "or use #{live-config. ..."
 #. type: Plain text
 #: en/user_customization-runtime.ssi:12
 msgid ""
@@ -236,6 +238,8 @@ msgstr ""
 msgid " LIVE_USER_DEFAULT_GROUPS=\"audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse\"\n"
 msgstr " LIVE_USER_DEFAULT_GROUPS=\"audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse\"\n"
 
+# Translator's NOTE: first half: "を追加するか"
+# Translator's NOTE: is divided from: "You can specify ..."
 #. type: Plain text
 #: en/user_customization-runtime.ssi:20
 msgid ""
@@ -499,6 +503,12 @@ msgid ""
 "directories are written on writable media, typically a ram disk (tmpfs) and "
 "ram disks' data do not survive reboots."
 msgstr ""
+"「保持機能」というのは、実行時にシステムに行ったことの一部あるいは全てを保存"
+"し、リブート後に引き継ぐための様々な策の共通の呼び名です。それが機能する仕組"
+"みを理解するためには、読み取り専用メディアからブート、実行している場合でも"
+"ファイルやディレクトリへの変更が書き込み可能メディア、標準的にはRAMディスク "
+"(tmpfs) に書かれ、RAMディスクのデータはリブート後には残らないのだ、ということ"
+"を知っておくと良いでしょう。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:107
@@ -509,6 +519,11 @@ msgid ""
 "systems in different ways, and all but the last one require a special boot "
 "parameter to be specified at boot time: #{persistence}#."
 msgstr ""
+"このRAMディスクに保存されるデータは、ローカルストレージメディアやネットワーク"
+"共有、あるいはマルチセッションで (再)書き込み可能な CD/DVD のセッション等の書"
+"き込み可能な保持用メディアに保存する必要があります。こういったメディアは "
+"Live システムで様々な方法でサポートされています。また、特別なブートパラメー"
+"タ #{persistence}# をブート時に指定する必要があるということも重要です。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:109
@@ -519,16 +534,22 @@ msgid ""
 "persistence volumes to use by specifying certain boot parameters described "
 "in the live-boot(7) man page. A persistence volume is any of the following:"
 msgstr ""
+"ブートパラメータ #{persistence}# がセットされている (と同時に "
+"#{nopersistence}# がセットされていない) 場合、保持用ボリューム用のローカルス"
+"トレージメディア (例えばハードディスクやUSBドライブ) がブート中に調査されま"
+"す。live-boot(7) man ページで説明している特定のブートパラメータを指定すること"
+"により、利用する保持用ボリュームの種類を制限できます。保持用ボリュームは以下"
+"のどれかになります:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:111
 msgid "_* a partition, identified by its GPT name."
-msgstr ""
+msgstr "_* GPT名により識別されるパーティション"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:113
 msgid "_* a filesystem, identified by its filesystem label."
-msgstr ""
+msgstr "_* ファイルシステムラベルにより識別されるファイルシステム"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:115
@@ -536,6 +557,8 @@ msgid ""
 "_* an image file located on the root of any readable filesystem (even an "
 "NTFS partition of a foreign OS), identified by its filename."
 msgstr ""
+"_* 読み取り可能な任意のファイルシステム (異質のOSの NTFS パーティションも利用"
+"可) の最上位に置かれている、ファイル名により識別されるイメージファイル"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:117
@@ -546,7 +569,15 @@ msgid ""
 "the directories that you want to save in your persistence volume after a "
 "reboot. See {The persistence.conf file}#persistence-conf for more details."
 msgstr ""
+"オーバーレイ用のボリュームラベルは #{persistence}# でないといけません。さらに"
+"その最上位に、ボリュームの保持を完全に制御するのに利用する #{persistence."
+"conf}# というファイルが置かれていない限り無視されます。これは言うに及ばず、リ"
+"ブート後に保持用ボリュームに保存する対象となるディレクトリを指定します。さら"
+"なる詳細については {persistence.conf ファイル}#persistence-conf を見てくださ"
+"い。"
 
+# Translator's NOTE: last half: "により作成した ext4 パーティションを利用できます。"
+# Translator's NOTE: is divided, placed on: "See also ..."
 #. type: Plain text
 #: en/user_customization-runtime.ssi:119
 msgid ""
@@ -554,6 +585,8 @@ msgid ""
 "persistence. It can be, for instance, an ext4 partition on a hard disk or on "
 "a usb key created with, e.g.:"
 msgstr ""
+"保持用に利用するボリュームを用意する方法についていくつか例を示します。これは"
+"例えばハードディスクやUSBメモリに例えば"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:123
@@ -561,10 +594,14 @@ msgstr ""
 msgid " # mkfs.ext4 -L persistence /dev/sdb1\n"
 msgstr " # mkfs.ext4 -L persistence /dev/sdb1\n"
 
+# Translator's NOTE: first half: "により作成した ext4 パーティションを利用できます。"
+# Translator's NOTE: is divided from: "Here are some ..."
 #. type: Plain text
 #: en/user_customization-runtime.ssi:127
 msgid "See also {Using the space left on a USB stick}#using-usb-extra-space."
-msgstr "{USBメモリの空きスペースの利用}#using-usb-extra-space も見てください。"
+msgstr ""
+"により作成した ext4 パーティションを利用できます。{USBメモリの空きスペースの"
+"利用}#using-usb-extra-space も見てください。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:129
@@ -572,6 +609,8 @@ msgid ""
 "If you already have a partition on your device, you could just change the "
 "label with one of the following:"
 msgstr ""
+"デバイスに既存のパーティションがある場合は以下に示すどれかによりラベルを変更"
+"するだけで準備は終わりです:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:133
@@ -584,7 +623,7 @@ msgstr " # tune2fs -L persistence /dev/sdb1 # for ext2,3,4 filesystems\n"
 msgid ""
 "Here's an example of how to create an ext4-based image file to be used for "
 "persistence:"
-msgstr ""
+msgstr "保持用に利用する ext4 ベースのイメージファイルの作成例:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:142
@@ -605,6 +644,11 @@ msgid ""
 "located in your home directory, copy it to the root of your hard drive's "
 "filesystem and mount it in #{/mnt}# as follows:"
 msgstr ""
+"イメージファイル作成後、例えば #{/usr}# を保持させる場合に、保存するのはディ"
+"レクトリに対する変更だけで、#{/usr}# の内容を丸ごと保存したいわけではない、と"
+"いう場合、「union」オプションを利用できます。イメージファイルがホームディレク"
+"トリに置かれている場合はハードドライブのファイルシステム最上位にコピーして "
+"#{/mnt}# にマウントします:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:151
@@ -622,6 +666,8 @@ msgid ""
 "Then, create the #{persistence.conf}# file adding content and unmount the "
 "image file."
 msgstr ""
+"それから、内容を追加する #{persistence.conf}# ファイルを作成してイメージファ"
+"イルのマウントを解除します。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:160
@@ -638,6 +684,7 @@ msgstr ""
 msgid ""
 "Now, reboot into your live medium with the boot parameter \"persistence\"."
 msgstr ""
+"ブートパラメータ「persistence」を指定して Live メディアでリブートします。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:166
@@ -652,6 +699,10 @@ msgid ""
 "file, located on the volume's filesystem root, controls which directories it "
 "makes persistent, and in which way."
 msgstr ""
+"#{persistence}# のラベルを付けられたボリュームは #{persistence.conf}# ファイ"
+"ルを使って、任意のディレクトリを保持するように設定します。ボリュームのファイ"
+"ルシステム最上位に置かれているこのファイルは保持するディレクトリや方法を制御"
+"します。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:170
@@ -661,6 +712,10 @@ msgid ""
 "most uses. Let's say we want to make our home directory and APT cache "
 "persistent in an ext4 filesystem on the /dev/sdb1 partition:"
 msgstr ""
+"独自のオーバーレイマウントの設定方法は persistence.conf(5) man ページで詳細に"
+"説明されていますが、ほとんどの場合簡単な例で十分なはずです。/dev/sdb1 パー"
+"ティションの ext4 ファイルシステムにホームディレクトリとAPTキャッシュを保持さ"
+"せる場合:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:178
@@ -691,11 +746,19 @@ msgid ""
 "can add #{/ union}# to your #{persistence.conf}# file to achieve full "
 "persistence."
 msgstr ""
+"それからリブートします。最初のブート中に #{/home}# と #{/var/cache/apt}# の内"
+"容が保持用ボリュームにコピーされ、以後のこのディレクトリへの変更は全て保持用"
+"ボリュームに残ります。#{persistence.conf}# ファイルに列挙するパスには空白文字"
+"や特別なパス構成要素 #{.}# and #{..}# を含めることは一切できないことに注意し"
+"てください。また、#{/lib}# や #{/lib/live}# (はそのサブディレクトリを含め"
+"て)、#{/}# は独自マウントを使って保持させることができません。この制約の回避策"
+"として、#{persistence.conf}# ファイルに #{/ union}# を追加すると完全な保持を"
+"実現できます。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:184
 msgid "3~ Using more than one persistence store"
-msgstr ""
+msgstr "3~ 保持先を複数使いたい場合"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:186
@@ -704,6 +767,8 @@ msgid ""
 "different use cases. For instance, using several volumes at the same time or "
 "selecting only one, among various, for very specific purposes."
 msgstr ""
+"複数の保存先を使う方法は複数あります。目的の明確な例として、複数のボリューム"
+"を同時に使う場合と1つだけを選択して使う場合を取り上げます。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:188
@@ -717,6 +782,16 @@ msgid ""
 "conf}# file. See the persistence.conf(5) man page for how to handle that "
 "case if you really need it (hint: you usually don't)."
 msgstr ""
+"異なる (個別の #{persistence.conf}# ファイルを利用する) 独自オーバーレイボ"
+"リュームを複数同時に利用できますが、同一のディレクトリを保持させる設定のボ"
+"リュームが複数ある場合はその中から1つだけが利用されます。ある2つのマウントが"
+"「入り組んでいる」(つまり他にマウントしたディレクトリ以下のサブディレクトリと"
+"してマウントする) ような場合には子孫側ディレクトリよりも前に親側ディレクトリ"
+"がマウントされるため、他のマウントにより見えなくなるマウントは発生しません。"
+"入り組んでいる独自マウントが同一の #{persistence.conf}# ファイルで指定されて"
+"いる場合は問題があります。そういった状況が実際に必要な場合の処理方法について"
+"は persistence.conf(5) man ページを見てください (ヒント: 通常は必要ありませ"
+"ん)。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:190
@@ -729,6 +804,13 @@ msgid ""
 "persistence.conf}# for the second partition which will store the superuser's "
 "files. Finally, use the #{persistence}# boot parameter."
 msgstr ""
+"ありそうな事例: ユーザデータ、つまり #{/home}# とスーパーユーザのデータ、つま"
+"り #{/root}# を異なるパーティションに保存するため #{persistence}# ラベルの付"
+"いたパーティションを2つ作成し、それぞれに #{persistence.conf}# ファイルを1つ"
+"はユーザのファイルを保存する最初のパーティション向けに #{# echo \"/home\" > "
+"persistence.conf}#、もう1つはスーパーユーザのファイルを保存する2つ目のパー"
+"ティション向けに #{# echo \"/root\" > persistence.conf}# として作成します。最"
+"後に、ブートパラメータとして #{persistence}# を使います。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:192
@@ -744,6 +826,14 @@ msgid ""
 "other types, they would use the boot parameters: #{persistence}# "
 "#{persistence-label=work}#."
 msgstr ""
+"別の位置やテストのために例えば #{private}# と #{work}# のようにして同一の種類"
+"で複数の保持先が必要な場合、ブートパラメータ #{persistence}# と合わせてブート"
+"パラメータ #{persistence-label}# を使うと、複数でそれぞれ一意となる保持用メ"
+"ディアを使えるようになります。例として、ブラウザのブックマークその他の個人用"
+"データ用に #{private}# のラベルを付けられた保持用パーティションを使いたい場"
+"合、ブートパラメータとして #{persistence}# #{persistence-label=private}# を使"
+"います。そして文書や研究プロジェクトその他の仕事関係のデータ用にはブートパラ"
+"メータとして #{persistence}# #{persistence-label=work}# を使います。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:194
@@ -753,11 +843,15 @@ msgid ""
 "man page contains more information about how to use these labels with legacy "
 "names."
 msgstr ""
+"各ボリューム #{private}# 及び #{work}# にはそれぞれ最上位に #{persistence."
+"conf}# ファイルが必要だということは重要ですので覚えておいてください。古い名前"
+"でこういったラベルを使う方法についてさらなる情報が live-boot man ページにあり"
+"ます。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:196
 msgid "2~ Using persistence with encryption"
-msgstr ""
+msgstr "2~ 暗号化した保持先の利用"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:198
@@ -772,11 +866,19 @@ msgid ""
 "the machine you are creating the encrypted partition with and also in the "
 "live system you are going to use the encrypted persistent partition with."
 msgstr ""
+"保持機能を使うことには重要なデータが漏洩する危険がいくらか存在します。特に保"
+"持するデータがUSBメモリや外付ハードドライブ等のポータブル機器に保存される場合"
+"は。そういった場合には暗号化が便利です。手順が多いために全体として複雑に見え"
+"るかもしれませんが、live-boot で暗号化したパーティションを扱うのは実際には簡"
+"単です。サポートしている *{luks}* という種類の暗号化を利用するためには、暗号"
+"化したパーティションを作成する側と暗号化した保持用パーティションを利用する "
+"Live システムの両方のマシンに /{cryptsetup}/ をインストールする必要がありま"
+"す。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:200
 msgid "To install /{cryptsetup}/ on your machine:"
-msgstr ""
+msgstr "マシンへの /{cryptsetup}/ のインストール:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:204
@@ -789,6 +891,8 @@ msgstr " # apt-get install cryptsetup\n"
 msgid ""
 "To install /{cryptsetup}/ in your live system, add it to your package-lists:"
 msgstr ""
+"Live システムに /{cryptsetup}/ をインストールするには、パッケージ一覧に追加し"
+"ます:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:213
@@ -809,6 +913,10 @@ msgid ""
 "anticipated this step and added the boot parameters following the usual "
 "procedure:"
 msgstr ""
+"/{cryptsetup}/ を備えた Live システムが出来たら、基本的に必要なのは新しいパー"
+"ティションを作成して暗号化し、#{persistence}# と #{persistence-"
+"encryption=luks}# パラメータを指定してブートするだけです。既にこの段階を予測"
+"し、通常の手順に沿ったブートパラメータを追加してあります:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:221
@@ -825,6 +933,10 @@ msgid ""
 "to determine which partition is the one you are going to use in your "
 "specific case."
 msgstr ""
+"暗号化についてよく理解していない人たちのために詳細を見て行きましょう。以下の"
+"例では #{/dev/sdc2}# に対応するUSBメモリ上のパーティションを利用します。自分"
+"で使う際にはどのパーティションになるのか判断する必要があることに注意してくだ"
+"さい。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:227
@@ -834,6 +946,10 @@ msgid ""
 "l /dev/disk/by-id}#. After that, create a new partition and then, encrypt it "
 "with a passphrase as follows:"
 msgstr ""
+"最初の段階はUSBメモリを接続してそれがどのデバイスになるのか判断することです。"
+"live-manual で推奨するデバイス一覧方法では #{ls -l /dev/disk/by-id}# を使いま"
+"す。それから新しいパーティションを作成、さらにパスフレーズを使って暗号化しま"
+"す:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:231
@@ -847,6 +963,8 @@ msgid ""
 "Then open the luks partition in the virtual device mapper. Use any name you "
 "like. We use *{live}* here as an example:"
 msgstr ""
+"仮想デバイスマッパーから luks パーティションを開きます。好きな名前を使ってく"
+"ださい。ここでは例として *{live}* を使います:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:239
@@ -860,6 +978,7 @@ msgid ""
 "The next step is filling the device with zeros before creating the "
 "filesystem:"
 msgstr ""
+"次の段階はファイルシステムを作成する前にデバイスをゼロで埋めることです:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:247
@@ -874,6 +993,9 @@ msgid ""
 "label #{persistence}# so that the device is mounted as persistence store at "
 "boot time."
 msgstr ""
+"これでファイルシステムを作成する準備ができました。ラベル #{persistence}# の指"
+"定を追加しているためこのデバイスはブート時に保持用としてマウントされるという"
+"ことに注意してください。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:255
@@ -887,6 +1009,8 @@ msgid ""
 "To continue with our setup, we need to mount the device, for example in #{/"
 "mnt}#."
 msgstr ""
+"準備を続けるにはデバイスをマウントする必要があります。例として #{/mnt}# にマ"
+"ウントします。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:263
@@ -901,6 +1025,9 @@ msgid ""
 "is, as explained before, strictly necessary. See {The persistence.conf file}"
 "#persistence-conf."
 msgstr ""
+"そしてパーティション最上位に #{persistence.conf}# ファイルを作成します。これ"
+"は前に説明したように必ず必要です。{persistence.conf ファイル}#persistence-"
+"conf を見てください。"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:271
@@ -925,6 +1052,8 @@ msgid ""
 "And optionally, although it might be a good way of securing the data we have "
 "just added to the partition, we can close the device:"
 msgstr ""
+"オプションですがパーティションに追加したばかりのデータを安全にしておくと良い"
+"でしょう。デバイスを閉じます:"
 
 #. type: Plain text
 #: en/user_customization-runtime.ssi:287
@@ -944,3 +1073,10 @@ msgid ""
 "time, live-boot will prompt us for the passphrase and will mount the "
 "encrypted partition to be used for persistence."
 msgstr ""
+"手順をまとめます。これまでに、暗号化を有効化した Live システムを作成しまし"
+"た。これは {ISO hybrid イメージのUSBメモリへのコピー}#copying-iso-hybrid-to-"
+"usb で説明しているようにUSBメモリにコピーできます。暗号化したパーティションも"
+"作成しました。これは同一のUSBメモリに置いて持ち運べます。保持先として利用する"
+"暗号化パーティションを設定しました。あと必要なのは Live システムをブートする"
+"だけです。ブート時に live-boot は保持用として利用する暗号化したパーティション"
+"のパスフレーズを質問し、マウントします。"

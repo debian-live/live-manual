@@ -127,41 +127,32 @@ code{
 Live
 システムはそれを一般化したものであり、CD以外のメディアもサポートしますが、デフォルトの挙動としては読み取り専用であり、そのシステムで実行時に行ったことは全てシャットダウンにより失われるものだと考えるべきです。
 
-'Persistence' is a common name for different kinds of solutions for saving
-across reboots some, or all, of this run-time evolution of the system. To
-understand how it works it would be handy to know that even if the system is
-booted and run from read-only media, modifications to the files and
-directories are written on writable media, typically a ram disk (tmpfs) and
-ram disks' data do not survive reboots.
+「保持機能」というのは、実行時にシステムに行ったことの一部あるいは全てを保存し、リブート後に引き継ぐための様々な策の共通の呼び名です。それが機能する仕組みを理解するためには、読み取り専用メディアからブート、実行している場合でもファイルやディレクトリへの変更が書き込み可能メディア、標準的にはRAMディスク
+(tmpfs) に書かれ、RAMディスクのデータはリブート後には残らないのだ、ということを知っておくと良いでしょう。
 
-The data stored on this ramdisk should be saved on a writable persistent
-medium like local storage media, a network share or even a session of a
-multisession (re)writable CD/DVD. All these media are supported in live
-systems in different ways, and all but the last one require a special boot
-parameter to be specified at boot time: #{persistence}#.
+このRAMディスクに保存されるデータは、ローカルストレージメディアやネットワーク共有、あるいはマルチセッションで (再)書き込み可能な CD/DVD
+のセッション等の書き込み可能な保持用メディアに保存する必要があります。こういったメディアは Live
+システムで様々な方法でサポートされています。また、特別なブートパラメータ #{persistence}#
+をブート時に指定する必要があるということも重要です。
 
-If the boot parameter #{persistence}# is set (and #{nopersistence}# is not
-set), local storage media (e.g. hard disks, USB drives) will be probed for
-persistence volumes during boot. It is possible to restrict which types of
-persistence volumes to use by specifying certain boot parameters described
-in the live-boot(7) man page. A persistence volume is any of the following:
+ブートパラメータ #{persistence}# がセットされている (と同時に #{nopersistence}# がセットされていない)
+場合、保持用ボリューム用のローカルストレージメディア (例えばハードディスクやUSBドライブ) がブート中に調査されます。live-boot(7)
+man
+ページで説明している特定のブートパラメータを指定することにより、利用する保持用ボリュームの種類を制限できます。保持用ボリュームは以下のどれかになります:
 
-_* a partition, identified by its GPT name.
+_* GPT名により識別されるパーティション
 
-_* a filesystem, identified by its filesystem label.
+_* ファイルシステムラベルにより識別されるファイルシステム
 
-_* an image file located on the root of any readable filesystem (even an
-NTFS partition of a foreign OS), identified by its filename.
+_* 読み取り可能な任意のファイルシステム (異質のOSの NTFS パーティションも利用可)
+の最上位に置かれている、ファイル名により識別されるイメージファイル
 
-The volume label for overlays must be #{persistence}# but it will be ignored
-unless it contains in its root a file named #{persistence.conf}# which is
-used to fully customize the volume's persistence, this is to say, specifying
-the directories that you want to save in your persistence volume after a
-reboot. See {The persistence.conf file}#persistence-conf for more details.
+オーバーレイ用のボリュームラベルは #{persistence}# でないといけません。さらにその最上位に、ボリュームの保持を完全に制御するのに利用する
+#{persistence.conf}#
+というファイルが置かれていない限り無視されます。これは言うに及ばず、リブート後に保持用ボリュームに保存する対象となるディレクトリを指定します。さらなる詳細については
+{persistence.conf ファイル}#persistence-conf を見てください。
 
-Here are some examples of how to prepare a volume to be used for
-persistence. It can be, for instance, an ext4 partition on a hard disk or on
-a usb key created with, e.g.:
+保持用に利用するボリュームを用意する方法についていくつか例を示します。これは例えばハードディスクやUSBメモリに例えば
 
 code{
 
@@ -169,10 +160,10 @@ code{
 
 }code
 
-{USBメモリの空きスペースの利用}#using-usb-extra-space も見てください。
+により作成した ext4 パーティションを利用できます。{USBメモリの空きスペースの利用}#using-usb-extra-space
+も見てください。
 
-If you already have a partition on your device, you could just change the
-label with one of the following:
+デバイスに既存のパーティションがある場合は以下に示すどれかによりラベルを変更するだけで準備は終わりです:
 
 code{
 
@@ -180,8 +171,7 @@ code{
 
 }code
 
-Here's an example of how to create an ext4-based image file to be used for
-persistence:
+保持用に利用する ext4 ベースのイメージファイルの作成例:
 
 code{
 
@@ -190,11 +180,9 @@ code{
 
 }code
 
-Once the image file is created, as an example, to make #{/usr}# persistent
-but only saving the changes you make to that directory and not all the
-contents of #{/usr}#, you can use the "union" option. If the image file is
-located in your home directory, copy it to the root of your hard drive's
-filesystem and mount it in #{/mnt}# as follows:
+イメージファイル作成後、例えば #{/usr}# を保持させる場合に、保存するのはディレクトリに対する変更だけで、#{/usr}#
+の内容を丸ごと保存したいわけではない、という場合、「union」オプションを利用できます。イメージファイルがホームディレクトリに置かれている場合はハードドライブのファイルシステム最上位にコピーして
+#{/mnt}# にマウントします:
 
 code{
 
@@ -203,8 +191,7 @@ code{
 
 }code
 
-Then, create the #{persistence.conf}# file adding content and unmount the
-image file.
+それから、内容を追加する #{persistence.conf}# ファイルを作成してイメージファイルのマウントを解除します。
 
 code{
 
@@ -213,19 +200,16 @@ code{
 
 }code
 
-Now, reboot into your live medium with the boot parameter "persistence".
+ブートパラメータ「persistence」を指定して Live メディアでリブートします。
 
 3~persistence-conf persistence.conf ファイル
 
-A volume with the label #{persistence}# must be configured by means of the
-#{persistence.conf}# file to make arbitrary directories persistent. That
-file, located on the volume's filesystem root, controls which directories it
-makes persistent, and in which way.
+#{persistence}# のラベルを付けられたボリュームは #{persistence.conf}#
+ファイルを使って、任意のディレクトリを保持するように設定します。ボリュームのファイルシステム最上位に置かれているこのファイルは保持するディレクトリや方法を制御します。
 
-How custom overlay mounts are configured is described in full detail in the
-persistence.conf(5) man page, but a simple example should be sufficient for
-most uses. Let's say we want to make our home directory and APT cache
-persistent in an ext4 filesystem on the /dev/sdb1 partition:
+独自のオーバーレイマウントの設定方法は persistence.conf(5) man
+ページで詳細に説明されていますが、ほとんどの場合簡単な例で十分なはずです。/dev/sdb1 パーティションの ext4
+ファイルシステムにホームディレクトリとAPTキャッシュを保持させる場合:
 
 code{
 
@@ -237,68 +221,48 @@ code{
 
 }code
 
-Then we reboot. During the first boot the contents of #{/home}# and
-#{/var/cache/apt}# will be copied into the persistence volume, and from then
-on all changes to these directories will live in the persistence
-volume. Please note that any paths listed in the #{persistence.conf}# file
-cannot contain white spaces or the special #{.}# and #{..}# path
-components. Also, neither #{/lib}#, #{/lib/live}# (or any of their
-sub-directories) nor #{/}# can be made persistent using custom mounts. As a
-workaround for this limitation you can add #{/ union}# to your
-#{persistence.conf}# file to achieve full persistence.
+それからリブートします。最初のブート中に #{/home}# と #{/var/cache/apt}#
+の内容が保持用ボリュームにコピーされ、以後のこのディレクトリへの変更は全て保持用ボリュームに残ります。#{persistence.conf}#
+ファイルに列挙するパスには空白文字や特別なパス構成要素 #{.}# and #{..}#
+を含めることは一切できないことに注意してください。また、#{/lib}# や #{/lib/live}# (はそのサブディレクトリを含めて)、#{/}#
+は独自マウントを使って保持させることができません。この制約の回避策として、#{persistence.conf}# ファイルに #{/ union}#
+を追加すると完全な保持を実現できます。
 
-3~ Using more than one persistence store
+3~ 保持先を複数使いたい場合
 
-There are different methods of using multiple persistence store for
-different use cases. For instance, using several volumes at the same time or
-selecting only one, among various, for very specific purposes.
+複数の保存先を使う方法は複数あります。目的の明確な例として、複数のボリュームを同時に使う場合と1つだけを選択して使う場合を取り上げます。
 
-Several different custom overlay volumes (with their own
-#{persistence.conf}# files) can be used at the same time, but if several
-volumes make the same directory persistent, only one of them will be
-used. If any two mounts are "nested" (i.e. one is a sub-directory of the
-other) the parent will be mounted before the child so no mount will be
-hidden by the other. Nested custom mounts are problematic if they are listed
-in the same #{persistence.conf}# file. See the persistence.conf(5) man page
-for how to handle that case if you really need it (hint: you usually don't).
+異なる (個別の #{persistence.conf}# ファイルを利用する)
+独自オーバーレイボリュームを複数同時に利用できますが、同一のディレクトリを保持させる設定のボリュームが複数ある場合はその中から1つだけが利用されます。ある2つのマウントが「入り組んでいる」(つまり他にマウントしたディレクトリ以下のサブディレクトリとしてマウントする)
+ような場合には子孫側ディレクトリよりも前に親側ディレクトリがマウントされるため、他のマウントにより見えなくなるマウントは発生しません。入り組んでいる独自マウントが同一の
+#{persistence.conf}# ファイルで指定されている場合は問題があります。そういった状況が実際に必要な場合の処理方法については
+persistence.conf(5) man ページを見てください (ヒント: 通常は必要ありません)。
 
-One possible use case: If you wish to store the user data i.e. #{/home}# and
-the superuser data i.e. #{/root}# in different partitions, create two
-partitions with the #{persistence}# label and add a #{persistence.conf}#
-file in each one like this, #{# echo "/home" > persistence.conf}# for the
-first partition that will save the user's files and #{# echo "/root" >
-persistence.conf}# for the second partition which will store the superuser's
-files. Finally, use the #{persistence}# boot parameter.
+ありそうな事例: ユーザデータ、つまり #{/home}# とスーパーユーザのデータ、つまり #{/root}# を異なるパーティションに保存するため
+#{persistence}# ラベルの付いたパーティションを2つ作成し、それぞれに #{persistence.conf}#
+ファイルを1つはユーザのファイルを保存する最初のパーティション向けに #{# echo "/home" >
+persistence.conf}#、もう1つはスーパーユーザのファイルを保存する2つ目のパーティション向けに #{# echo "/root" >
+persistence.conf}# として作成します。最後に、ブートパラメータとして #{persistence}# を使います。
 
-If a user would need multiple persistence store of the same type for
-different locations or testing, such as #{private}# and #{work}#, the boot
-parameter #{persistence-label}# used in conjunction with the boot parameter
-#{persistence}# will allow for multiple but unique persistence media. An
-example would be if a user wanted to use a persistence partition labeled
-#{private}# for personal data like browser bookmarks or other types, they
-would use the boot parameters: #{persistence}#
-#{persistence-label=private}#. And to store work related data, like
-documents, research projects or other types, they would use the boot
-parameters: #{persistence}# #{persistence-label=work}#.
+別の位置やテストのために例えば #{private}# と #{work}# のようにして同一の種類で複数の保持先が必要な場合、ブートパラメータ
+#{persistence}# と合わせてブートパラメータ #{persistence-label}#
+を使うと、複数でそれぞれ一意となる保持用メディアを使えるようになります。例として、ブラウザのブックマークその他の個人用データ用に #{private}#
+のラベルを付けられた保持用パーティションを使いたい場合、ブートパラメータとして #{persistence}#
+#{persistence-label=private}# を使います。そして文書や研究プロジェクトその他の仕事関係のデータ用にはブートパラメータとして
+#{persistence}# #{persistence-label=work}# を使います。
 
-It is important to remember that each of these volumes, #{private}# and
-#{work}#, also needs a #{persistence.conf}# file in its root. The live-boot
-man page contains more information about how to use these labels with legacy
-names.
+各ボリューム #{private}# 及び #{work}# にはそれぞれ最上位に #{persistence.conf}#
+ファイルが必要だということは重要ですので覚えておいてください。古い名前でこういったラベルを使う方法についてさらなる情報が live-boot man
+ページにあります。
 
-2~ Using persistence with encryption
+2~ 暗号化した保持先の利用
 
-Using the persistence feature means that some sensible data might get
-exposed to risk. Especially if the persistent data is stored on a portable
-device such as a usb stick or an external hard drive. That is when
-encryption comes in handy. Even if the entire procedure might seem
-complicated because of the number of steps to be taken, it is really easy to
-handle encrypted partitions with live-boot. In order to use *{luks}*, which
-is the supported encryption type, you need to install /{cryptsetup}/ both on
-the machine you are creating the encrypted partition with and also in the
-live system you are going to use the encrypted persistent partition with.
+保持機能を使うことには重要なデータが漏洩する危険がいくらか存在します。特に保持するデータがUSBメモリや外付ハードドライブ等のポータブル機器に保存される場合は。そういった場合には暗号化が便利です。手順が多いために全体として複雑に見えるかもしれませんが、live-boot
+で暗号化したパーティションを扱うのは実際には簡単です。サポートしている *{luks}*
+という種類の暗号化を利用するためには、暗号化したパーティションを作成する側と暗号化した保持用パーティションを利用する Live システムの両方のマシンに
+/{cryptsetup}/ をインストールする必要があります。
 
-To install /{cryptsetup}/ on your machine:
+マシンへの /{cryptsetup}/ のインストール:
 
 code{
 
@@ -306,7 +270,7 @@ code{
 
 }code
 
-To install /{cryptsetup}/ in your live system, add it to your package-lists:
+Live システムに /{cryptsetup}/ をインストールするには、パッケージ一覧に追加します:
 
 code{
 
@@ -315,11 +279,10 @@ code{
 
 }code
 
-Once you have your live system with /{cryptsetup}/, you basically only need
-to create a new partition, encrypt it and boot with the #{persistence}# and
-#{persistence-encryption=luks}# parameters. We could have already
-anticipated this step and added the boot parameters following the usual
-procedure:
+/{cryptsetup}/ を備えた Live
+システムが出来たら、基本的に必要なのは新しいパーティションを作成して暗号化し、#{persistence}# と
+#{persistence-encryption=luks}#
+パラメータを指定してブートするだけです。既にこの段階を予測し、通常の手順に沿ったブートパラメータを追加してあります:
 
 code{
 
@@ -327,16 +290,11 @@ code{
 
 }code
 
-Let's go into the details for all of those who are not familiar with
-encryption. In the following example we are going to use a partition on a
-usb stick which corresponds to #{/dev/sdc2}#. Please be warned that you need
-to determine which partition is the one you are going to use in your
-specific case.
+暗号化についてよく理解していない人たちのために詳細を見て行きましょう。以下の例では #{/dev/sdc2}#
+に対応するUSBメモリ上のパーティションを利用します。自分で使う際にはどのパーティションになるのか判断する必要があることに注意してください。
 
-The first step is plugging in your usb stick and determine which device it
-is. The recommended method of listing devices in live-manual is using #{ls
--l /dev/disk/by-id}#. After that, create a new partition and then, encrypt
-it with a passphrase as follows:
+最初の段階はUSBメモリを接続してそれがどのデバイスになるのか判断することです。live-manual で推奨するデバイス一覧方法では #{ls -l
+/dev/disk/by-id}# を使います。それから新しいパーティションを作成、さらにパスフレーズを使って暗号化します:
 
 code{
 
@@ -344,8 +302,7 @@ code{
 
 }code
 
-Then open the luks partition in the virtual device mapper. Use any name you
-like. We use *{live}* here as an example:
+仮想デバイスマッパーから luks パーティションを開きます。好きな名前を使ってください。ここでは例として *{live}* を使います:
 
 code{
 
@@ -353,8 +310,7 @@ code{
 
 }code
 
-The next step is filling the device with zeros before creating the
-filesystem:
+次の段階はファイルシステムを作成する前にデバイスをゼロで埋めることです:
 
 code{
 
@@ -362,9 +318,8 @@ code{
 
 }code
 
-Now, we are ready to create the filesystem. Notice that we are adding the
-label #{persistence}# so that the device is mounted as persistence store at
-boot time.
+これでファイルシステムを作成する準備ができました。ラベル #{persistence}#
+の指定を追加しているためこのデバイスはブート時に保持用としてマウントされるということに注意してください。
 
 code{
 
@@ -372,8 +327,7 @@ code{
 
 }code
 
-To continue with our setup, we need to mount the device, for example in
-#{/mnt}#.
+準備を続けるにはデバイスをマウントする必要があります。例として #{/mnt}# にマウントします。
 
 code{
 
@@ -381,9 +335,9 @@ code{
 
 }code
 
-And create the #{persistence.conf}# file in the root of the partition. This
-is, as explained before, strictly necessary. See {The persistence.conf
-file}#persistence-conf.
+そしてパーティション最上位に #{persistence.conf}#
+ファイルを作成します。これは前に説明したように必ず必要です。{persistence.conf ファイル}#persistence-conf
+を見てください。
 
 code{
 
@@ -399,8 +353,7 @@ code{
 
 }code
 
-And optionally, although it might be a good way of securing the data we have
-just added to the partition, we can close the device:
+オプションですがパーティションに追加したばかりのデータを安全にしておくと良いでしょう。デバイスを閉じます:
 
 code{
 
@@ -408,11 +361,8 @@ code{
 
 }code
 
-Let's summarize the process. So far, we have created an encryption capable
-live system, which can be copied to a usb stick as explained in {Copying an
-ISO hybrid image to a USB stick}#copying-iso-hybrid-to-usb. We have also
-created an encrypted partition, which can be located in the same usb stick
-to carry it around and we have configured the encrypted partition to be used
-as persistence store. So now, we only need to boot the live system. At boot
-time, live-boot will prompt us for the passphrase and will mount the
-encrypted partition to be used for persistence.
+手順をまとめます。これまでに、暗号化を有効化した Live システムを作成しました。これは {ISO hybrid
+イメージのUSBメモリへのコピー}#copying-iso-hybrid-to-usb
+で説明しているようにUSBメモリにコピーできます。暗号化したパーティションも作成しました。これは同一のUSBメモリに置いて持ち運べます。保持先として利用する暗号化パーティションを設定しました。あと必要なのは
+Live システムをブートするだけです。ブート時に live-boot
+は保持用として利用する暗号化したパーティションのパスフレーズを質問し、マウントします。

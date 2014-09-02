@@ -24,3 +24,5 @@ File.open(output_file,"w") do |o|
 	end
 	o.puts doc.to_html
 end
+
+File.delete(input_file) unless debug > 0

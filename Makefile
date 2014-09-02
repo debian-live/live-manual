@@ -85,7 +85,6 @@ build: clean
 			    for FILE in ../build/manual/html/*.$${LANGUAGE}.html ../build/manual/html/live-manual/*.$${LANGUAGE}.html; \
 			    do \
 				    bin/fix-sisu-html.rb $${FILE} $(DEBUG); \
-				    ([ $(DEBUG) -gt 0 ] || rm -f $${FILE}~); \
 			    done; \
 			fi ; \
 		done; \

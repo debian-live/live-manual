@@ -13,6 +13,7 @@
 #  path:         'sisu_working'
 #  public:       '_sisu/image'
 #  #all:           'image'
+
 #% presentation/web directory, main path and subdirectories (most subdirectories are created automatically based on markup directory name)
 webserv:
   url_root:     'http://live-systems.org' #without dir stub
@@ -20,89 +21,12 @@ webserv:
 #  images:       '_sisu/image'
 #  man:          'man'
 #  cgi:          '/usr/lib/cgi-bin'
-#  feed:         'feed'
-#  sqlite:       'sisu/sqlite'
-#  webrick_url:  true
-#show_output_on: 'filesystem' #for -v and -u url information, alternatives: 'filesystem','webserver','remote_webserver','local:8111','localhost','localhost:8080','webrick','path'
-#show_output_on: 'local:8111'
-#webserv_cgi:
-#  host:         localhost
-#  base_path:    ~
-#  port:         '8081'
-#  user:         ~
 
 show_output_on: 'filesystem_url'
-#texinfo display output
-#texinfo:
-#  stub:         'texinfo'
-
-##% processing directories, main path and subdirectories (appended to $HOME), using defaults set in sysenv
-#processing:
-#  path:         '~'
-#  dir:         '.sisu_processing~'
-#  metaverse:    'metaverse'
-#  tune:         'tune'
-#  latex:        'tex'
-#  texinfo:      'texinfo'
-#  concord_max:  400000
-
-#% flag - set (non-default) processing flag shortcuts -1, -2 etc. (here adding colour and verbosity as default)
-flag:
-  color:        true                        # making colour default -c is toggle, and will now toggle colour off
-# default:      '-NQdhewpotbxXyYv'            # includes verbose; -m would in any event be run by default
-# i:            '-NQdhewpoty'                 # -m run by default
-# ii:           '-NQdhewpotbxXy'              # -m run by default
-# iii:          '-NQdhewpotbxXyY'             # -m run by default
-# iv:           '-NQhewpotbxXYDy  --update'  # -m run by default
-# v:            '-NQhewpotbxXYDyv --update'  # includes verbose; -m run by default
 
 #% papersize, (LaTeX/pdf) available values: A4, US_letter, book_b5, book_a5, US_legal
 default:
   papersize:    'a4,letter'
-  #language:      'en'
-  #texpdf_font:       'Liberation Sans' # 'Liberation Sans' 'Liberation Serif'
-  #texpdf_font_mono:  'Liberation Mono' #'Inconsolata'
-  #text_wrap:    78
-  #emphasis:     'bold' #make *{emphasis}* 'bold', 'italics' or 'underscore', default if not configured is 'bold'
-  #digest:       'sha' #sha is sha256, default is md5
-  #multilingual:  false
-  #language_file: 2
-#% markup, make *{emphasis}* 'bold' or 'italics', default if not configured is 'bold'
-
-#% settings used by ssh scp
-#remote:
-#  -
-#    user:         '[usrname]'
-#    host:         '[remote.hostname]'
-#    path:         '.' #no trailing slash eg 'sisu/www'
-#  -
-#    user:         '[usrname]'
-#    host:         '[remote.hostname]'
-#    path:         '.' #no trailing slash eg 'sisu/www'
-
-#% webrick information
-#webrick:
-#  port:         '8081'
-
-#% sql database info, postgresql and sqlite
-#db:
-#  share_source: false # boolean, default is false
-#  postgresql:
-#    port:       # '[port (default is 5432)]'
-#    host:       # '[if not localhost, provide host tcp/ip address or domain name]''
-#    user:       # '[(if different from user) provide username]'
-#    password:   # '[password if required]'
-#  sqlite:
-#    path:       ~ # './sisu_sqlite.db'
-#    port:       "**"
-
-#html:
-#  quick_ref:         true #default false
-#  seg_title_banner:  true #default false
-#odt:
-#  ocn:               true
-#plaintext:
-#  ocn:               true
 
 #% output_dir_structure_by: language (language_and_filetype); filetype; or filename (original v1 & v2)
 output_dir_structure_by: filetype
@@ -135,12 +59,16 @@ program_set:
 #  info_viewer:         'pinfo -f'
 #  man:                 'man' #'groff -man -Tascii' # 'nroff -man'
 
+#% search form
 search:
   sisu:
     flag:            true
-#    action:          http://localhost:8081/cgi-bin/sisu_pgsql.cgi
     action:          http://live-systems.org/manual/git/search.cgi
-    db:              sisu
-    title:           manual
-#promo:               sisu_search_libre, sisu_icon, sisu, open_society, fsf, ruby
-#omit: minitoc
+    db:              manual
+    title:           Live Manual Search Form
+
+#omit:
+#  html_navigation: true
+#  links_to_manifest: true
+
+#omit_list: html_navigation manifest_links

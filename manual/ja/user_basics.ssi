@@ -298,10 +298,11 @@ code{
 
 ビルドが完了すると現在のディレクトリに #{live-image-i386.img}# ファイルができているはずです。
 
-生成されたバイナリイメージには VFAT パーティションと syslinux ブートローダが収録され、そのままUSB機器に書きこめます。繰り返しますが
-HDD イメージの使い方はUSBで ISO hybrid イメージを使うのと同様です。{ISO hybrid Live
-イメージの利用}#using-iso-hybrid の指示に従ってください。#{live-image-i386.hybrid.iso}# に代えて
-#{live-image-i386.img}# をファイル名に使う点が異なります。
+生成されたバイナリイメージには VFAT パーティションと syslinux
+ブートローダが収録され、そのままUSB機器に書きこめます。繰り返しますがHDDイメージの使い方はUSBで ISO hybrid
+イメージを使うのと同様です。{ISO hybrid Live イメージの利用}#using-iso-hybrid
+の指示に従ってください。#{live-image-i386.hybrid.iso}# に代えて #{live-image-i386.img}#
+をファイル名に使う点が異なります。
 
 同様に、Qemu でHDDイメージをテストするには上記の {Qemu でのISOイメージのテスト}#testing-iso-with-qemu
 で説明しているように /{qemu}/ をインストールしてください。それから #{kvm}# か #{qemu}#
@@ -352,8 +353,8 @@ code{
 
 }code
 
-ネットワーク経由のブートでは、クライアントは通常 Ethernet カードの EPROM にある小さなソフトウェアを実行します。このプログラムは
-DHCP リクエストを送り、IPアドレスと次に行うことについての情報を取得します。次の段階は通常、TFTP
+ネットワーク経由のブートでは、クライアントは通常イーサネットカードの EPROM にある小さなソフトウェアを実行します。このプログラムは DHCP
+リクエストを送り、IPアドレスと次に行うことについての情報を取得します。次の段階は通常、TFTP
 プロトコルを経由した高レベルブートローダの取得です。これには pxelinux や GRUB、さらには直接 Linux
 のようなオペレーティングシステムをブートすることもできます。
 
@@ -477,12 +478,10 @@ squashfs ファイルを置くウェブサーバです。
 
 3~ ウェブブートファイルの取得
 
-As usual, you can build the images yourself or use the prebuilt files, which
-are available on the project's homepage at http://live-systems.org/. Using
-prebuilt images would be handy for doing initial testing until one can fine
-tune their own needs. If you have built a live image you will find the files
-needed for webbooting in the build directory under #{binary/live/}#. The
-files are called #{vmlinuz}#, #{initrd.img}# and #{filesystem.squashfs}#.
+いつものように、イメージを自分でビルドすることも、プロジェクトのホームページ http://live-systems.org/
+から取得できるビルド済みファイルを利用することも可能です。自身の必要に応じて微調整ができるまでの初期テストにはビルド済みイメージの利用が手軽でしょう。Live
+イメージのビルド後ならウェブブートに必要なファイルは #{binary/live/}# 下のビルドディレクトリで見つけられるでしょう。ファイルは
+#{vmlinuz}#、#{initrd.img}#、#{filesystem.squashfs}# と呼ばれます。
 
 必要なファイルを既に存在するISOイメージから抽出することも可能です。そのためには以下のようにしてそのイメージをループバックマウントします:
 

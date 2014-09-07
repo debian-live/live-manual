@@ -105,7 +105,9 @@ autobuild: build
 
 commit: tidy test
 	$(MAKE) -C manual rebuild
+	$(MAKE) info
 
+info:
 	@echo
 	@echo "live-manual is currently being translated into $(shell ls manual/po | wc -w) languages."
 	@echo "The translation of these languages is complete: $(shell manual/bin/show-complete-languages.sh)"

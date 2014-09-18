@@ -80,13 +80,6 @@ build: clean
 		do \
 			cd $(CURDIR)/manual; \
 			sisu-$${FORMAT} --no-manifest --verbose $${LANGUAGE}/live-manual.ssm; \
-			if [ "$${FORMAT}" = "html" ] ; \
-			then \
-			    for FILE in ../build/manual/html/*.$${LANGUAGE}.html ../build/manual/html/live-manual/*.$${LANGUAGE}.html; \
-			    do \
-				    bin/fix-sisu-html.rb $${FILE} $(DEBUG); \
-			    done; \
-			fi ; \
 		done; \
 	done; \
 

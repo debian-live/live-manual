@@ -34,9 +34,9 @@ eines, seguiu llegint, ja que la resta d'aquesta secció discuteix les quatre
 ordres més importants. Tenir en compte que van precedices de #{lb}# que és
 una funció genèrica per a les ordres de live-build.
 
-_* *{lb config}*: Responsible for initializing and configuring a Live system
-configuration directory. See {The lb config command}#lb-init for more
-information.
+_* *{lb config}*: Responsable d'inicialitzar un directori de configuració
+per al sistema en viu. Consultar {L'ordre lb config}#lb-config per a més
+informació.
 
 _* *{lb build}*: Responsable d'iniciar la creació d'un sistema en
 viu. Consultar {L'ordre lb build}#lb-build per a més informació.
@@ -46,22 +46,16 @@ viu. Consultar {L'ordre lb clean}#lb-clean per a més informació.
 
 3~lb-config L'ordre #{lb config}#
 
-As discussed in {live-build}#live-build, the scripts that make up live-build
-read their configuration with the #{source}# command from a single directory
-named #{config/}#. As constructing this directory by hand would be
-time-consuming and error-prone, the #{lb config}# command can be used to
-create the initial skeleton configuration tree.
+Com s'ha dit a {live-build}#live-build, les seqüències d'ordres que formen
+part de live-build llegeixen la seva configuració amb l'ordre #{source}#
+d'un únic directori anomenat #{config/}#. Com la construcció d'aquest
+directori a mà, seria molt costós i propens a errors, es pot utilitzar
+l'ordre #{lb config}# per a crear l'arbre inicial de configuració en
+esquelet.
 
-The #{lb config}# command creates the following directories inside
-#{config/}#: #{hooks/}#, #{includes/}#, several other includes
-subdirectories for each stage of the build process and
-#{package-lists/}#. The latter includes a list of several important live
-packages like live-boot, live-config and live-config-sysvinit.
-
-Executar #{lb config}# sense arguments completa el subdirectori #{config/}#
-que s'omple amb alguns paràmetres per defecte en fitxers de configuració, i
-dos arbres de subdirectoris en esquelet que s'anomenen #{auto/}# i
-#{local/}#.
+Executar #{lb config}# sense arguments crea el subdirectori #{config/}# que
+s'omple amb alguns paràmetres per defecte en fitxers de configuració, i dos
+arbres de subdirectoris en esquelet que s'anomenen #{auto/}# i #{local/}#.
 
 code{
 

@@ -34,9 +34,8 @@ temat tych narzędzi, kontynuuj czytanie, ponieważ pozostała część tego
 rozdziału omawia cztery najważniejsze polecenia. Należy zauważyć, że głównym
 wrapperem dla polecenia live-build jest #{lb}#.
 
-_* *{lb config}*: Responsible for initializing and configuring a Live system
-configuration directory. See {The lb config command}#lb-init for more
-information.
+_* *{lb config}*: Responsible for initializing a Live system configuration
+directory. See {The lb config command}#lb-config for more information.
 
 _* *{lb build}*: Odpowiedzialny za rozpoczęcie kompilacji systemu
 live. Zobacz {polecenie lb build}#lb-build aby uzyskać więcej informacji.
@@ -46,22 +45,15 @@ live. Zobacz {polecenie lb clean}#lb-clean aby uzyskać więcej informacji.
 
 3~lb-config Polecenie #{lb config}#
 
-As discussed in {live-build}#live-build, the scripts that make up live-build
-read their configuration with the #{source}# command from a single directory
-named #{config/}#. As constructing this directory by hand would be
-time-consuming and error-prone, the #{lb config}# command can be used to
-create the initial skeleton configuration tree.
+Jak omówiono w {live-build}#live-build, skrypty, które składają się na
+live-build czytają swoją konfigurację przy użyciu polecenia #{source}# z
+katalogu o nazwie #{config/}#. Budowanie tego katalogu ręcznie byłoby
+czasochłonne i podatne na błędy, polecenie #{lb config}# może być używane do
+tworzenia początkowej konfiguracji drzewa katalogów.
 
-The #{lb config}# command creates the following directories inside
-#{config/}#: #{hooks/}#, #{includes/}#, several other includes
-subdirectories for each stage of the build process and
-#{package-lists/}#. The latter includes a list of several important live
-packages like live-boot, live-config and live-config-sysvinit.
-
-Wykonanie #{lb config}# bez żadnych argumentów zakończa się utworzeniem
-podkatalogu #{config}#, w którym zapisane są niektóre domyślne ustawienia w
-plikach konfiguracyjnych, a dwa szkielety drzew o nazwie #{auto/}# i
-​​#{local/}#.
+Issuing #{lb config}# without any arguments creates the #{config/}#
+subdirectory which is populated with some default settings in configuration
+files, and two skeleton trees named #{auto/}# and #{local/}#.
 
 code{
 

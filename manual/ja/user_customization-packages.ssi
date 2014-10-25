@@ -7,8 +7,7 @@
 や experimental
 あるいは独自のパッケージのある自身専用のリポジトリを追加することもできます。また、ファイルを直接パッケージとして収録することもできます。特定のデスクトップや言語のパッケージ等、多数の関連パッケージを同時にインストールするメタパッケージを含め、パッケージ一覧は定義できます。最後に、ビルドでパッケージをインストールするときに
 /{apt}/ や好みにより /{aptitude}/
-を制御するオプションもいくらかあります。プロキシを使っていたり、推奨パッケージのインストールを無効にして容量を節約したい、インストールするパッケージのバージョンをAPT
-ピン経由で制御する必要がある、等便利だと思う場面があるかもしれません。
+を制御するオプションもいくらかあります。プロキシを使っていたり、推奨パッケージのインストールを無効にして容量を節約したい、インストールするパッケージのバージョンをAPTのピン経由で制御する必要がある、等便利だと思う場面があるかもしれません。
 
 2~ パッケージソース
 
@@ -57,7 +56,7 @@ Debian
 #{--mirror-binary}# や #{--mirror-binary-security}#
 の値が採用され、早い段階で使っていたミラーは置き換えられることになります。
 
-3~-distributionmirrors-build-time ビルド時に利用するディストリビューションミラー
+3~distribution-mirrors-build-time ビルド時に利用するディストリビューションミラー
 
 ビルド時に利用するディストリビューションミラーにローカルミラーを指定するには、#{--mirror-bootstrap}#、#{--mirror-chroot-security}#、#{--mirror-chroot-backports}#
 を以下のように指定するだけです。
@@ -90,17 +89,15 @@ code{
 
 3~additional-repositories 追加リポジトリ
 
-You may add more repositories, broadening your package choices beyond what
-is available in your target distribution. These may be, for example, for
-backports, experimental or custom packages. To configure additional
-repositories, create #{config/archives/your-repository.list.chroot}#, and/or
-#{config/archives/your-repository.list.binary}# files. As with the
-#{--mirror-*}# options, these govern the repositories used in the *{chroot}*
-stage when building the image, and in the *{binary}* stage, i.e. for use
-when running the live system.
+リポジトリをさらに追加して、利用できるパッケージ選択の幅を対象ディストリビューション以外にも広げられます。それにより、例えば backports や
+experimental、そして独自のパッケージを利用できます。追加のリポジトリを設定するには
+#{config/archives/your-repository.list.chroot}# や
+#{config/archives/your-repository.list.binary}# ファイルを作成します。#{--mirror-*}#
+オプションにより、イメージのビルドの *{chroot}* 段階や*{バイナリ}*段階、つまり Live
+システムの実行時に利用するリポジトリを決定できます。
 
-For example, #{config/archives/live.list.chroot}# allows you to install
-packages from the debian-live snapshot repository at live system build time.
+例えば #{config/archives/live.list.chroot}# により Live システムのビルド時に debian-live
+スナップショットリポジトリからパッケージをインストールできます。
 
 code{
 
@@ -108,43 +105,35 @@ code{
 
 }code
 
-If you add the same line to #{config/archives/live.list.binary}#, the
-repository will be added to your live system's #{/etc/apt/sources.list.d/}#
-directory.
+同一の行を #{config/archives/live.list.binary}# に追加すると、Live システムの
+#{/etc/apt/sources.list.d/}# ディレクトリにそのリポジトリが追加されます。
 
-If such files exist, they will be picked up automatically.
+こういったファイルが存在すれば自動的に処理されます。
 
-You should also put the GPG key used to sign the repository into
-#{config/archives/your-repository.key.{binary,chroot}}# files.
+リポジトリの署名に利用されたGPG鍵を #{config/archives/your-repository.key.{binary,chroot}}#
+ファイルに置くこともできます。
 
-Should you need custom APT pinning, such APT preferences snippets can be
-placed in #{config/archives/your-repository.pref.{binary,chroot}}# files and
-will be automatically added to your live system's
-#{/etc/apt/preferences.d/}# directory.
+APTのピン止めが独自に必要な場合、APT設定行等を
+#{config/archives/your-repository.pref.{binary,chroot}}# ファイルに配置すれば自動的に Live
+システムの #{/etc/apt/preferences.d/}# ディレクトリに追加されます。
 
-2~choosing-packages-to-install Choosing packages to install
+2~choosing-packages-to-install インストールするパッケージの選択
 
-There are a number of ways to choose which packages live-build will install
-in your image, covering a variety of different needs. You can simply name
-individual packages to install in a package list. You can also use
-metapackages in those lists, or select them using package control file
-fields. And finally, you may place package files in your #{config/}# tree,
-which is well suited to testing of new or experimental packages before they
-are available from a repository.
+イメージに live-build
+がインストールするパッケージを選択する方法はいくつかあり、異なる様々な要求に対応します。インストールする個々のパッケージをパッケージ一覧で指定できます。その一覧でメタパッケージを利用あるいはパッケージ制御
+ファイル fields を使って選択できます。
+そして最後に、パッケージファイルを #{config/}# ツリーに置く方法があります。
+この方法は、新しいあるいは試験的なパッケージをリポジトリから利用できるようになる前にテストするのに非常に適しています。
 
-3~package-lists Package lists
+3~package-lists パッケージ一覧
 
-Package lists are a powerful way of expressing which packages should be
-installed. The list syntax supports conditional sections which makes it easy
-to build lists and adapt them for use in multiple configurations. Package
-names may also be injected into the list using shell helpers at build time.
+パッケージ一覧はインストールするパッケージを明確にする強力な方法です。一覧の構文では条件付けをサポートし、一覧の生成や複数の設定への適合を容易にしています。ビルド時にシェルヘルパーを使って一覧にパッケージ名を差し込むこともできます。
 
-*{Note:}* The behaviour of live-build when specifying a package that does not exist is determined by your choice of APT utility. See {Choosing apt or aptitude}#choosing-apt-or-aptitude for more details.
+*{注意:}* 存在しないパッケージが指定されたときの live-build の挙動はAPTユーティリティの選択により決定されます。さらなる詳細については {apt と aptitude の選択}#choosing-apt-or-aptitude を見てください。
 
-3~using-metapackages Using metapackages
+3~using-metapackages メタパッケージの利用
 
-The simplest way to populate your package list is to use a task metapackage
-maintained by your distribution. For example:
+パッケージ一覧を指示するもっとも簡単な方法は利用するディストリビューションで保守されているタスクのメタパッケージの利用です。例えば:
 
 code{
 
@@ -153,18 +142,12 @@ code{
 
 }code
 
-This supercedes the older predefined list method supported in #{live-build}#
-2.x. Unlike predefined lists, task metapackages are not specific to the Live
-System project. Instead, they are maintained by specialist working groups
-within the distribution and therefore reflect the consensus of each group
-about which packages best serve the needs of the intended users. They also
-cover a much broader range of use cases than the predefined lists they
-replace.
+#{live-build}# 2.x
+でサポートされていた、一覧を事前定義する古い方法はこれで置き換えられました。一覧の事前定義とは異なり、タスクのメタパッケージは Live
+システムプロジェクト特有のものではありません。タスクのメタパッケージはディストリビューション内の専門の作業グループにより保守されているため、要求したユーザに対して提供する最善のパッケージについて、各グループでの合意を反映したものとなっています。また、一覧を事前定義する置き換えられた方法よりはるかに幅広い事例にも対応できます。
 
-All task metapackages are prefixed #{task-}#, so a quick way to determine
-which are available (though it may contain a handful of false hits that
-match the name but aren't metapackages) is to match on the package name
-with:
+タスクのメタパッケージには全て先頭が #{task-}# から始まるため、利用できるものを簡単に判別する方法があります
+(名前が該当しても実際にはメタパッケージではないものもほんの一部とはいえありますが)。パッケージ名を前方一致で検索します:
 
 code{
 
@@ -172,12 +155,10 @@ code{
 
 }code
 
-In addition to these, you will find other metapackages with various
-purposes. Some are subsets of broader task packages, like #{gnome-core}#,
-while others are individual specialized parts of a Debian Pure Blend, such
-as the #{education-*}# metapackages. To list all metapackages in the
-archive, install the #{debtags}# package and list all packages with the
-#{role::metapackage}# tag as follows:
+以上に加え、他に様々な目的を持ったメタパッケージを見つけられるでしょう。#{gnome-core}#
+のように他のもっと範囲の広いタスクパッケージの一部を構成するものや、#{education-*}# メタパッケージのように Debian Pure
+Blend の中のある個々の専門分野に特化したものもあります。アーカイブにある全メタパッケージを列挙するには、#{debtags}#
+パッケージをインストールして #{role::metapackage}# タグの付けられたパッケージを全て列挙させます:
 
 code{
 
@@ -185,46 +166,35 @@ code{
 
 }code
 
-3~ Local package lists
+3~ ローカルパッケージ一覧
 
-Whether you list metapackages, individual packages, or a combination of
-both, all local package lists are stored in #{config/package-lists/}#. Since
-more than one list can be used, this lends itself well to modular
-designs. For example, you may decide to devote one list to a particular
-choice of desktop, another to a collection of related packages that might as
-easily be used on top of a different desktop. This allows you to experiment
-with different combinations of sets of packages with a minimum of fuss,
-sharing common lists between different live image projects.
+列挙したものがメタパッケージであれ、個々のパッケージであれ、両方の組み合わせであれ、ローカルパッケージ一覧は全て
+#{config/package-lists/}#
+に保存されます。この一覧は複数利用できるため、うまい具合にこの一覧自体を組み込める設計になっています。例えばある一覧は特定のデスクトップ選択時向け、別の一覧は異なるデスクトップでも簡単に使えるような関連パッケージ群を、というようにできます。これにより、パッケージ群の異なる組み合わせを最小限の手間で試したり、あるいは異なる
+Live イメージプロジェクトで一覧を共有する、といったことが可能になります。
 
-Package lists that exist in this directory need to have a #{.list}# suffix
-in order to be processed, and then an additional stage suffix, #{.chroot}#
-or #{.binary}# to indicate which stage the list is for.
+このディレクトリに存在するパッケージ一覧は、処理対象とするためには後ろに #{.list}#
+を付ける必要があり、さらにその一覧をどの段階の対象とするのか示すためには #{.chroot}# や #{.binary}# をその後に追加します。
 
-*{Note:}* If you don't specify the stage suffix, the list will be used for both stages. Normally, you want to specify #{.list.chroot}# so that the packages will only be installed in the live filesystem and not have an extra copy of the #{.deb}# placed on the medium.
+*{注意:}* 対象とする段階の指定を追加しない場合、その一覧は両方の段階で利用されます。通常指定するのは #{.list.chroot}# で、この場合そのパッケージは Live ファイルシステムにのみインストールされ、メディア上に #{.deb}# の余計なコピーは置かれません。
 
-3~ Local binary package lists
+3~ ローカルバイナリパッケージ一覧
 
-To make a binary stage list, place a file suffixed with #{.list.binary}# in
-#{config/package-lists/}#. These packages are not installed in the live
-filesystem, but are included on the live medium under #{pool/}#. You would
-typically use such a list with one of the non-live installer variants. As
-mentioned above, if you want this list to be the same as your chroot stage
-list, simply use the #{.list}# suffix by itself.
+バイナリ段階の一覧を作成する場合はファイルの末尾を #{.list.binary}# にして #{config/package-lists/}#
+に置きます。それにより指定したパッケージは Live ファイルシステムにはインストールされず、Live メディアの #{pool/}#
+以下に収録されます。Live ではないインストーラでこういった一覧を標準的に利用しているものもあります。バイナリ段階で chroot
+段階と同一の一覧を利用したい場合は上述したように末尾を #{.list}# とします。
 
-3~generated-package-lists Generated package lists
+3~generated-package-lists 生成されたパッケージ一覧
 
-It sometimes happens that the best way to compose a list is to generate it
-with a script. Any line starting with an exclamation point indicates a
-command to be executed within the chroot when the image is built. For
-example, one might include the line #{! grep-aptavail -n -sPackage
--FPriority standard | sort}# in a package list to produce a sorted list of
-available packages with #{Priority: standard}#.
+一覧の構成はスクリプトで生成するのが最善の方法だということもあります。感嘆符から始まる行は全て、そのコマンドがイメージのビルド後に chroot
+内で実行されることを示します。例えばパッケージ一覧に #{! grep-aptavail -n -sPackage -FPriority
+standard | sort}# という行を書いておけば、#{Priority: standard}#
+で利用可能なパッケージをソートした一覧を生成できます。
 
-In fact, selecting packages with the #{grep-aptavail}# command (from the
-#{dctrl-tools}# package) is so useful that #{live-build}# provides a
-#{Packages}# helper script as a convenience. This script takes two
-arguments: #{field}# and #{pattern}#. Thus, you can create a list with the
-following contents:
+実際、パッケージの選択に #{grep-aptavail}# コマンド (#{dctrl-tools}# パッケージに収録)
+はとても有用なので、#{live-build}# では便宜のため #{Packages}#
+補助スクリプトを提供しています。このスクリプトは引数を#{フィールド}#と#{パターン}#の2つ取ります。一覧を作成する例:
 
 code{
 
@@ -233,17 +203,14 @@ code{
 
 }code
 
-3~ Using conditionals inside package lists
+3~ 条件付き内部パッケージ一覧の利用
 
-Any of the live-build configuration variables stored in #{config/*}# (minus
-the #{LB_}# prefix) may be used in conditional statements in package
-lists. Generally, this means any #{lb config}# option uppercased and with
-dashes changed to underscores. But in practice, it is only the ones that
-influence package selection that make sense, such as #{DISTRIBUTION}#,
-#{ARCHITECTURES}# or #{ARCHIVE_AREAS}#.
+#{config/*}# (#{LB_}# が先頭に付くものは除く) に保存された live-build
+の設定変数はどれもパッケージ一覧の条件文で利用できます。一般には #{lb config}#
+オプションを大文字に、ダッシュ文字をアンダースコアに変更したものになります。しかし実際に意味があるのは、パッケージ選択に関わるもの、例えば
+#{DISTRIBUTION}# や #{ARCHITECTURES}#、#{ARCHIVE_AREAS}# だけです。
 
-For example, to install #{ia32-libs}# if the #{--architectures amd64}# is
-specified:
+例えば #{--architectures amd64}# が指定された場合に #{ia32-libs}# をインストールする場合:
 
 code{
 
@@ -253,9 +220,8 @@ code{
 
 }code
 
-You may test for any one of a number of values, e.g. to install
-/{memtest86+}/ if either #{--architectures i386}# or #{--architectures
-amd64}# is specified:
+任意の1つを条件の値とすることもできます。#{--architectures i386}# または #{--architectures amd64}#
+のどちらかが指定された場合に /{memtest86+}/ をインストールする場合の例:
 
 code{
 
@@ -265,9 +231,8 @@ code{
 
 }code
 
-You may also test against variables that may contain more than one value,
-e.g. to install /{vrms}/ if either #{contrib}# or #{non-free}# is specified
-via #{--archive-areas}#:
+値を複数指定できる変数を条件にすることもできます。#{--archive-areas}# で #{contrib}# または #{non-free}#
+のどちらかが指定されている場合に /{vrms}/ をインストールする場合の例:
 
 code{
 
@@ -277,46 +242,36 @@ code{
 
 }code
 
-The nesting of conditionals is not supported.
+入り組んだ条件分岐はサポートしていません。
 
 % FIXME:
 
-3~ Removing packages at install time
+3~ インストール時のパッケージの削除
 
-You can list packages in files with #{.list.chroot_live}# and
-#{.list.chroot_install}# suffixes inside the #{config/package-lists}#
-directory. If both a live and an install list exist, the packages in the
-#{.list.chroot_live}# list are removed with a hook after the installation
-(if the user uses the installer). The packages in the
-#{.list.chroot_install}# list are present both in the live system and in the
-installed system. This is a special tweak for the installer and may be
-useful if you have #{--debian-installer live}# set in your config, and wish
-to remove live system-specific packages at install time.
+#{config/package-lists}# ディレクトリの末尾が #{.list.chroot_live}# や
+#{.list.chroot_install}# のファイルにパッケージを列挙できます。Live
+用とインストール用の両方の一覧が存在する場合、#{.list.chroot_live}# に列挙されているパッケージは
+(ユーザがインストーラを利用している場合) インストール後にフックにより削除されます。#{.list.chroot_install}#
+に列挙されているパッケージは Live システムとインストールされたシステムの両方に存在することになります。これはインストーラ向けの特別な調整で、設定で
+#{--debian-installer live}# をセットしている場合や Live
+システム特有のパッケージをインストール時には削除したい場合に有用かもしれません。
 
-3~desktop-and-language-tasks Desktop and language tasks
+3~desktop-and-language-tasks デスクトップ及び言語タスク
 
-Desktop and language tasks are special cases that need some extra planning
-and configuration. Live images are different from Debian Installer images in
-this respect. In the Debian Installer, if the medium was prepared for a
-particular desktop environment flavour, the corresponding task will be
-automatically installed. Thus, there are internal #{gnome-desktop}#,
-#{kde-desktop}#, #{lxde-desktop}# and #{xfce-desktop}# tasks, none of which
-are offered in #{tasksel}#'s menu. Likewise, there are no menu entries for
-tasks for languages, but the user's language choice during the install
-influences the selection of corresponding language tasks.
+デスクトップと言語のタスクは特別で、計画性や設定が追加で必要となります。Live イメージが Debian
+インストーライメージとは異なる点です。Debian
+インストーラでは、特定のデスクトップ環境向けに用意されたメディアでは対応するタスクは自動的にインストールされます。内部に
+#{gnome-desktop}# や #{kde-desktop}#、#{lxde-desktop}#、#{xfce-desktop}#
+タスクがあり、#{tasksel}#
+のメニューにはどれも出てきません。同様に言語向けタスクのメニュー項目はありませんが、インストール中にユーザが選択した言語が対応する言語タスクの選択に影響します。
 
-When developing a desktop live image, the image typically boots directly to
-a working desktop, the choices of both desktop and default language having
-been made at build time, not at run time as in the case of the Debian
-Installer. That's not to say that a live image couldn't be built to support
-multiple desktops or multiple languages and offer the user a choice, but
-that is not live-build's default behaviour.
+デスクトップ向け Live イメージ開発時には、イメージは通常動作するデスクトップを直接ブートし、デスクトップやデフォルト言語はどちらも Debian
+インストーラの場合のように実行時に選択するのではなくビルド時に決められています。これは Live
+イメージでデスクトップや言語を複数サポートしてユーザに選択の機会を与えるようにできないわけではなく、それが live-build
+のデフォルトの挙動ではないというだけです。
 
-Because there is no provision made automatically for language tasks, which
-include such things as language-specific fonts and input-method packages, if
-you want them, you need to specify them in your configuration. For example,
-a GNOME desktop image containing support for German might include these task
-metapackages:
+言語特有のフォントや入力メソッドにどのパッケージを収録するのか、といった規定は言語タスクにはないので、特定のパッケージを収録したい場合は設定で指定する必要があります。ドイツ語サポートを収録した
+GNOME デスクトップイメージの場合に収録するタスクのメタパッケージの例:
 
 code{
 
@@ -326,27 +281,22 @@ code{
 
 }code
 
-3~kernel-flavour-and-version Kernel flavour and version
+3~kernel-flavour-and-version カーネルのフレーバー (種類) とバージョン
 
-One or more kernel flavours will be included in your image by default,
-depending on the architecture. You can choose different flavours via the
-#{--linux-flavours}# option. Each flavour is suffixed to the default stub
-#{linux-image}# to form each metapackage name which in turn depends on an
-exact kernel package to be included in your image.
+アーキテクチャによっては、イメージに複数のカーネルをデフォルトで収録することができます。フレーバーは #{--linux-flavours}#
+オプションで選択できます。各フレーバーはデフォルトの短い #{linux-image}#
+に、イメージに収録される実際のカーネルパッケージに依存する各メタパッケージの名前を付加した形式になります。
 
-Thus by default, an #{amd64}# architecture image will include the
-#{linux-image-amd64}# flavour metapackage, and an #{i386}# architecture
-image will include the #{linux-image-486}# and #{linux-image-686-pae}#
-metapackages. At time of writing, these packages depend on
-#{linux-image-3.2.0-4-amd64}#, #{linux-image-3.2.0-4-486}# and
-#{linux-image-3.2.0-4-686-pae}#, respectively.
+そうして、デフォルトで #{amd64}# アーキテクチャのイメージは #{linux-image-amd64}#
+のメタパッケージを収録し、#{i386}# アーキテクチャのイメージは #{linux-image-486}# と
+#{linux-image-686-pae}# メタパッケージを収録します。これを書いている時点ではそれぞれ
+#{linux-image-3.2.0-4-amd64}#、#{linux-image-3.2.0-4-486}#、#{linux-image-3.2.0-4-686-pae}#
+に依存しています。
 
-When more than one kernel package version is available in your configured
-archives, you can specify a different kernel package name stub with the
-#{--linux-packages}# option. For example, supposing you are building an
-#{amd64}# architecture image and add the experimental archive for testing
-purposes so you can install the #{linux-image-3.7-trunk-amd64}# kernel. You
-would configure that image as follows:
+設定したアーカイブで複数バージョンのカーネルパッケージが利用できる場合、#{--linux-packages}#
+オプションでカーネルパッケージ名の前半部を指定できます。例えば #{amd64}# アーキテクチャのイメージをビルドする際にテスト用に
+experimental アーカイブを追加すると #{linux-image-3.7-trunk-amd64}#
+カーネルをインストールできます。そのイメージの設定例:
 
 code{
 
@@ -355,136 +305,101 @@ code{
 
 }code
 
-3~custom-kernels Custom kernels
+3~custom-kernels 独自のカーネル
 
-You can build and include your own custom kernels, so long as they are
-integrated within the Debian package management system. The live-build
-system does not support kernels not built as #{.deb}# packages.
+Debian パッケージ管理システムに組み入れられていれば、独自のカーネルを自分でビルド、収録できます。live-build システムは
+#{.deb}# パッケージでビルドされていないカーネルはサポートしていません。
 
-The proper and recommended way to deploy your own kernel packages is to
-follow the instructions in the #{kernel-handbook}#. Remember to modify the
-ABI and flavour suffixes appropriately, then include a complete build of the
-#{linux}# and matching #{linux-latest}# packages in your repository.
+自身のカーネルパッケージを配置するための適切で推奨する方法は #{kernel-handbook}#
+の指示に従うことです。パッケージ名のABIとフレーバーの部分を忘れずに適切に変更し、リポジトリに #{linux}# の完全なビルドとそれに該当する
+#{linux-latest}# パッケージを収録してください。
 
-If you opt to build the kernel packages without the matching metapackages,
-you need to specify an appropriate #{--linux-packages}# stub as discussed in
-{Kernel flavour and version}#kernel-flavour-and-version. As we explain in
-{Installing modified or third-party
-packages}#installing-modified-or-third-party-packages, it is best if you
-include your custom kernel packages in your own repository, though the
-alternatives discussed in that section work as well.
+該当するメタパッケージ無しでカーネルパッケージをビルドしたい場合は、{カーネルのフレーバー (種類)
+とバージョン}#kernel-flavour-and-version で説明しているように #{--linux-packages}#
+でパッケージ名の適切な前半部を指定する必要があります。{変更したあるいはサードパーティ製パッケージのインストール}#installing-modified-or-third-party-packages
+で説明しているように、自身のリポジトリに独自のカーネルパッケージを収録する場合はそのようにするのが最善ですが、別の方法についても説明しています。
 
-It is beyond the scope of this document to give advice on how to customize
-your kernel. However, you must at least ensure your configuration satisfies
-these minimum requirements:
+カーネルを独自化する方法はこの文書の対象範囲ではありません。とはいえ、設定が最低限満たさないといけない要件があります:
 
-_* Use an initial ramdisk.
+_* 初期RAMディスクを利用する。
 
-_* Include the union filesystem module (i.e. usually #{aufs}#).
+_* 結合ファイルシステムモジュール (つまり通常は #{aufs}#) を収録する。
 
-_* Include any other filesystem modules required by your configuration
-(i.e. usually #{squashfs}#).
+_* 自分の設定で必要とする他のファイルシステムモジュール (つまり通常は #{squashfs}#) があればそれを収録する。
 
-2~installing-modified-or-third-party-packages Installing modified or
-third-party packages
+2~installing-modified-or-third-party-packages 変更したあるいはサードパーティ製パッケージのインストール
 
-While it is against the philosophy of a live system, it may sometimes be
-necessary to build a live system with modified versions of packages that are
-in the Debian repository. This may be to modify or support additional
-features, languages and branding, or even to remove elements of existing
-packages that are undesirable. Similarly, "third-party" packages may be used
-to add bespoke and/or proprietary functionality.
+Live システムの哲学には反しますが、Debian リポジトリにあるバージョンのパッケージを改変して Live
+システムをビルドする必要に迫られることもあります。それは機能や言語、商標を変更あるいは追加するものであったり、既存のパッケージから望ましくない要素を削除するものであるかもしれません。同様に求める機能や独自開発の機能を追加するのに「サードパーティ製」パッケージを利用できます。
 
-This section does not cover advice regarding building or maintaining
-modified packages. Joachim Breitner's 'How to fork privately' method from
+この節では変更したパッケージのビルドや保守については対象としていません。Joachim Breitner さんの
 http://www.joachim-breitner.de/blog/archives/282-How-to-fork-privately.html
-may be of interest, however. The creation of bespoke packages is covered in
-the Debian New Maintainers' Guide at http://www.debian.org/doc/maint-guide/
-and elsewhere.
+にある「How to fork privately」に書かれている方法が該当するのかもしれませんが。求める機能を収録したパッケージの作成については
+https://www.debian.org/doc/maint-guide/ にある Debian 新メンテナーガイドその他で説明されています。
 
-There are two ways of installing modified custom packages:
+変更した独自のパッケージをインストールする方法は2つあります:
 
 _* #{packages.chroot}#
 
-_* Using a custom APT repository
+_* 独自APTリポジトリの利用
 
-Using #{packages.chroot}# is simpler to achieve and useful for "one-off"
-customizations but has a number of drawbacks, while using a custom APT
-repository is more time-consuming to set up.
+#{packages.chroot}#
+を使う方法はより簡単に出来て「一度限りの」独自化には有用ですが欠点がいくつかあります。一方独自のAPTリポジトリを使う方法はその準備に時間がかかりまます。
 
-3~ Using #{packages.chroot}# to install custom packages
+3~ #{packages.chroot}# を利用した独自のパッケージのインストール
 
-To install a custom package, simply copy it to the
-#{config/packages.chroot/}# directory. Packages that are inside this
-directory will be automatically installed into the live system during build
-- you do not need to specify them elsewhere.
+独自化したパッケージをインストールするには、単に#{config/packages.chroot/}#
+ディレクトリにコピーします。このディレクトリ内に置かれたパッケージはビルドの際に Live システムに自動的にインストールされます -
+他のどこかを指定する必要はありません。
 
-Packages *{must}* be named in the prescribed way. One simple way to do this
-is to use #{dpkg-name}#.
+パッケージ名は規定の命名規則に従わ*{ないといけません}*。それを簡単に行う方法は #{dpkg-name}# の利用です。
 
-Using #{packages.chroot}# for installation of custom packages has
-disadvantages:
+#{packages.chroot}# を利用した独自のパッケージのインストールには欠点があります:
 
-_* It is not possible to use secure APT.
+_* secure APT を利用することができません。
 
-_* You must install all appropriate packages in the
-#{config/packages.chroot/}# directory.
+_* #{config/packages.chroot/}# ディレクトリに適切なパッケージを全てインストールしないといけません。
 
-_* It does not lend itself to storing live system configurations in revision
-control.
+_* Live システムの設定をリビジョン管理するには適しません。
 
-3~ Using an APT repository to install custom packages
+3~ APTリポジトリを利用した独自パッケージのインストール
 
-Unlike using #{packages.chroot}#, when using a custom APT repository you
-must ensure that you specify the packages elsewhere. See {Choosing packages
-to install}#choosing-packages-to-install for details.
+#{packages.chroot}#
+を使う場合とは異なり、独自のAPTリポジトリを使う場合は他のどこかでパッケージを指定する必要があります。詳細については{インストールするパッケージの選択}#choosing-packages-to-install
+を見てください。
 
-While it may seem unnecessary effort to create an APT repository to install
-custom packages, the infrastructure can be easily re-used at a later date to
-offer updates of the modified packages.
+独自のパッケージをインストールするためにAPTリポジトリを作成するのは不要な手間だと思うかもしれませんが、その基盤は変更したパッケージを後で更新する際に簡単に再利用できます。
 
-3~ Custom packages and APT
+3~ 独自パッケージとAPT
 
-live-build uses APT to install all packages into the live system so will
-therefore inherit behaviours from this program. One relevant example is that
-(assuming a default configuration) given a package available in two
-different repositories with different version numbers, APT will elect to
-install the package with the higher version number.
+live-build は Live
+システムへのパッケージのインストールに全てAPTを利用するため、そのプログラムの挙動を引き継ぎます。関連する一例としては
+(デフォルト設定だと仮定して)、異なる2つのリポジトリでバージョン番号の異なるあるパッケージが利用可能な場合に、APTはバージョン番号の大きい方のパッケージをインストールに選択します。
 
-Because of this, you may wish to increment the version number in your custom
-packages' #{debian/changelog}# files to ensure that your modified version is
-installed over one in the official Debian repositories. This may also be
-achieved by altering the live system's APT pinning preferences - see {APT
-pinning}#apt-pinning for more information.
+そのため、独自パッケージの #{debian/changeLog}# ファイルでバージョン番号を増加させ、公式の Debian
+リポジトリにあるものよりも変更したバージョンが確実にインストールされるようにすると良いでしょう。Live
+システムのAPTのピン設定を改変する方法もあります - さらなる情報については、{APTのピン止め}#apt-pinning を見てください。
 
-2~ Configuring APT at build time
+2~ ビルド時のAPT設定
 
-You can configure APT through a number of options applied only at build
-time. (APT configuration used in the running live system may be configured
-in the normal way for live system contents, that is, by including the
-appropriate configurations through #{config/includes.chroot/}#.) For a
-complete list, look for options starting with #{apt}# in the #{lb_config}#
-man page.
+ビルド時だけに適用されるオプションを使ってAPTを設定できます (実行中の Live システムで利用されるAPTの設定は Live
+システムの内容による通常の、#{config/includes.chroot/}# で適切な設定を収録する)
+方法により設定できます。オプションの全容については #{lb_config}# man ページの #{apt}# で始まるオプションを見てください。
 
-3~choosing-apt-or-aptitude Choosing apt or aptitude
+3~choosing-apt-or-aptitude apt と aptitude の選択
 
-You can elect to use either /{apt}/ or /{aptitude}/ when installing packages
-at build time. Which utility is used is governed by the #{--apt}# argument
-to #{lb config}#. Choose the method implementing the preferred behaviour for
-package installation, the notable difference being how missing packages are
-handled.
+ビルド時にパッケージをインストールする際に /{apt}/ と /{aptitude}/ のどちらを利用するのか選択できます。利用するユーティリティは
+#{lb config}# の #{--apt}#
+引数で決定します。パッケージが欠けている場合の処理方法に顕著な違いがあることに着目し、パッケージのインストール時に望ましい挙動を実装している方を選択してください。
 
-_* #{apt}#: With this method, if a missing package is specified, the package
-installation will fail. This is the default setting.
+_* #{apt}#: この方法では、欠けているパッケージが指定された場合にそのパッケージのインストールは失敗します。これはデフォルトの設定です。
 
-_* #{aptitude}#: With this method, if a missing package is specified, the
-package installation will succeed.
+_* #{aptitude}#: この方法では、欠けているパッケージが指定された場合にそのパッケージのインストールは成功します。
 
-3~ Using a proxy with APT
+3~ APTでのプロキシの利用
 
-One commonly required APT configuration is to deal with building an image
-behind a proxy. You may specify your APT proxy with the #{--apt-ftp-proxy}#
-or #{--apt-http-proxy}# options as needed, e.g.
+よく要求されるAPTの設定として、プロキシの内側でのイメージのビルドへの対応があります。必要に応じて、#{--apt-ftp-proxy}# や
+#{--apt-http-proxy}# オプションによりAPTプロキシを指定できます。例:
 
 code{
 
@@ -492,14 +407,11 @@ code{
 
 }code
 
-3~tweaking-apt-to-save-space Tweaking APT to save space
+3~tweaking-apt-to-save-space APTの調整による容量節約
 
-You may find yourself needing to save some space on the image medium, in
-which case one or the other or both of the following options may be of
-interest.
+イメージのメディアの容量をいくらか節約する必要があるかもしれません。その場合は以下に挙げるオプションを利用するといいかもしれません。
 
-If you don't want to include APT indices in the image, you can omit those
-with:
+APTの索引をイメージに収録したくない場合は除外できます:
 
 code{
 
@@ -507,15 +419,12 @@ code{
 
 }code
 
-This will not influence the entries in #{/etc/apt/sources.list}#, but merely
-whether #{/var/lib/apt}# contains the indices files or not. The tradeoff is
-that APT needs those indices in order to operate in the live system, so
-before performing #{apt-cache search}# or #{apt-get install}#, for instance,
-the user must #{apt-get update}# first to create those indices.
+これは #{/etc/apt/sources.list}# 内の項目には影響せず、単に #{/var/lib/apt}#
+に索引ファイルを収録するかどうかだけに影響します。その代わりに、Live システムでAPTを操作するためにはこの索引が必要なので、#{apt-cache
+search}# や #{apt-get install}# を実行する前にユーザは例えば #{apt-get update}#
+をまず実行して索引を作成しないといけません。
 
-If you find the installation of recommended packages bloats your image too
-much, provided you are prepared to deal with the consequences discussed
-below, you may disable that default option of APT with:
+推奨パッケージのインストールによりイメージが肥大化しているような場合、以下で説明している影響を踏まえた上でAPTのデフォルトオプションを無効にできます:
 
 code{
 
@@ -523,40 +432,29 @@ code{
 
 }code
 
-The most important consequence of turning off recommends is that
-#{live-boot}# and #{live-config}# themselves recommend some packages that
-provide important functionality used by most Live configurations, such as
-#{user-setup}# which #{live-config}# recommends and is used to create the
-live user. In all but the most exceptional circumstances you need to add
-back at least some of these recommends to your package lists or else your
-image will not work as expected, if at all. Look at the recommended packages
-for each of the #{live-*}# packages included in your build and if you are
-not certain you can omit them, add them back into your package lists.
+推奨パッケージを無効にした場合の最も重要な影響は、#{live-boot}# や #{live-config}# 自体が、ほとんどの Live
+設定に利用している重要な機能を提供する一部のパッケージを推奨していることで、例えば #{live-config}# が推奨し、Live
+ユーザの作成に利用している #{user-setup}#
+があります。ほぼ例外なく、パッケージ一覧に追加しないといけないパッケージが推奨パッケージの中にいくらかあります。追加しない場合は、イメージが期待通りに動作しないということになります。
+ビルドに収録されている各 #{live-*}#
+パッケージの推奨パッケージを確認し、省略できると確信できない場合はパッケージ一覧に当該パッケージを追加するようにしてください。
 
-The more general consequence is that if you don't install recommended
-packages for any given package, that is, "packages that would be found
-together with this one in all but unusual installations" (Debian Policy
-Manual, section 7.2), some packages that users of your Live system actually
-need may be omitted. Therefore, we suggest you review the difference turning
-off recommends makes to your packages list (see the #{binary.packages}# file
-generated by #{lb build}#) and re-include in your list any missing packages
-that you still want installed. Alternatively, if you find you only want a
-small number of recommended packages left out, leave recommends enabled and
-set a negative APT pin priority on selected packages to prevent them from
-being installed, as explained in {APT pinning}#apt-pinning.
+あるパッケージの推奨パッケージをインストールしないことによるもっと一般的な影響は「異常なインストール状態でなければあるパッケージとともにあるはずの」(Debian
+ポリシーマニュアル7.2節) Live
+システムのユーザが実際に必要とする一部のパッケージが省略されているかもしれないということです。したがって、推奨パッケージのインストールを無効にした場合とのパッケージ一覧
+(#{lb build}# により生成される #{binary.packages}# ファイル参照)
+の違いを確認して、欠けているパッケージの中にインストールしたいものがあれば一覧に収録することを推奨しています。推奨パッケージからほんの一部を除外したい場合は、推奨パッケージのインストールは有効なままにしておき、{APTのピン止め}#apt-pinning
+で説明しているようにAPTのピン機能で、選択したパッケージについて負の優先度をセットしてインストールされないようにする方法があります。
 
-3~ Passing options to apt or aptitude
+3~ apt や aptitude へのオプションの受け渡し
 
-If there is not a #{lb config}# option to alter APT's behaviour in the way
-you need, use #{--apt-options}# or #{--aptitude-options}# to pass any
-options through to your configured APT tool. See the man pages for #{apt}#
-and #{aptitude}# for details. Note that both options have default values
-that you will need to retain in addition to any overrides you may
-provide. So, for example, suppose you have included something from
-#{snapshot.debian.org}# for testing purposes and want to specify
-#{Acquire::Check-Valid-Until=false}# to make APT happy with the stale
-#{Release}# file, you would do so as per the following example, appending
-the new option after the default value #{--yes}#:
+障害となるAPTの挙動を変更するための #{lb config}# オプションがない場合、#{--apt-options}# や
+#{--aptitude-options}# により任意のオプションを選択したAPTツールに渡せます。詳細については #{apt}# や
+#{aptitude}# の man
+ページを見てください。どちらのオプションにも、優先設定に加えて保持しておく必要のあるデフォルト値があることに注意してください。そのため、例えば
+#{snapshot.debian.org}# からテスト用に何か取得する場合に
+#{Acquire::Check-Valid-Until=false}# を指定するとAPTは古いままの #{Release}#
+ファイルを使い続けます。以下の例のように、デフォルト値 #{--yes}# の後に新しいオプションを付加します:
 
 code{
 
@@ -564,31 +462,25 @@ code{
 
 }code
 
-Please check the man pages to fully understand these options and when to use
-them. This is an example only and should not be construed as advice to
-configure your image this way. This option would not be appropriate for,
-say, a final release of a live image.
+このオプションを利用する場合は man
+ページを確認して完全に理解するようにしてください。これはあくまで例であり、イメージをこの方法で設定するようにという助言だと解釈することのないようにしてください。このオプションは例えば
+Live イメージの最終的なリリースには適しません。
 
-For more complicated APT configurations involving #{apt.conf}# options you
-might want to create a #{config/apt/apt.conf}# file instead. See also the
-other #{apt-*}# options for a few convenient shortcuts for frequently needed
-options.
+#{apt.conf}# のオプションを利用するようなもっと複雑なAPT設定には代わりに #{config/apt/apt.conf}#
+ファイルを作成すると良いでしょう。少数ですが、よく必要とされるオプションへの有用なショートカットがあります。他の #{apt-*}#
+オプションについても参照してください。
 
-3~apt-pinning APT pinning
+3~apt-pinning APTのピン止め
 
-For background, please first read the #{apt_preferences(5)}# man page. APT
-pinning can be configured either for build time, or else for run time. For
-the former, create #{config/archives/*.pref}#,
-#{config/archives/*.pref.chroot}#, and #{config/apt/preferences}#. For the
-latter, create #{config/includes.chroot/etc/apt/preferences}#.
+背景として、#{apt_preferences(5)}# man
+ページをまず読んでください。APTのピン機能はビルド時用と実行時用に設定できます。前者については
+#{config/archives/*.pref}#、#{config/archives/*.pref.chroot}#、#{config/apt/preferences}#
+を、後者については #{config/includes.chroot/etc/apt/preferences}# を作成してください。
 
-Let's say you are building a ${testing} live system but need all the live
-packages that end up in the binary image to be installed from sid at build
-time. You need to add sid to your APT sources and pin the live packages from
-it higher, but all other packages from it lower, than the default
-priority. Thus, only the packages you want are installed from sid at build
-time and all others are taken from the target system distribution,
-${testing}. The following will accomplish this:
+${testing} の Live システムをビルドするとしましょう。その場合に必要な Live パッケージは全て、ビルド時にバイナリイメージを sid
+からインストールする必要があります。APTソースに sid を追加して、ピン機能で sid の Live
+パッケージには高い優先度をセットし、他のパッケージには全てデフォルトよりも低い優先度をセットする必要があります。そうするとビルド時に望むパッケージだけを
+sid からインストールし、他は全て対象システムのディストリビューションである ${testing} から取得します。以下によりその動作になります:
 
 code{
 
@@ -605,15 +497,12 @@ code{
 
 }code
 
-Negative pin priorities will prevent a package from being installed, as in
-the case where you do not want a package that is recommended by another
-package. Suppose you are building an LXDE image using #{task-lxde-desktop}#
-in #{config/package-lists/desktop.list.chroot}#, but don't want the user
-prompted to store wifi passwords in the keyring. This metapackage depends on
-/{lxde-core}/, which recommends /{gksu}/, which in turn recommends
-/{gnome-keyring}/. So you want to omit the recommended /{gnome-keyring}/
-package. This can be done by adding the following stanza to
-#{config/apt/preferences}#:
+別のパッケージにより推奨されたパッケージを望まない場合に、ピン機能で優先度に負の値をセットすることによりそのパッケージをインストールしないようにできます。#{config/package-lists/desktop.list.chroot}#
+で #{task-lxde-desktop}# を使って LXDE イメージをビルドしていて、wifi
+パスワードをキーリングに保存するかユーザに聞かないようにしたいと仮定しましょう。このメタパッケージは /{lxde-core}/
+に依存し、/{lxde-core}/ は /{gksu}/ を推奨し、/{gksu}/ は /{gnome-keyring}/
+を推奨しています。そこで、推奨された /{gnome-keyring}/
+パッケージを除外したい場合、#{config/apt/preferences}# に以下を追加することで除外できます:
 
 code{
 

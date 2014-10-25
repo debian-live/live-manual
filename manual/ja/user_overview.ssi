@@ -1,66 +1,48 @@
-:B~ Overview of tools
+:B~ ツールの概要
 
-1~overview-of-tools Overview of tools
+1~overview-of-tools ツールの概要
 
-This chapter contains an overview of the three main tools used in building
-live systems: live-build, live-boot and live-config.
+この章では Live システムのビルドに使う3つの主要ツール live-build、live-boot、live-config の概要をまとめています。
 
-2~live-build The live-build package
+2~live-build live-build パッケージ
 
-live-build is a collection of scripts to build live systems. These scripts
-are also referred to as "commands".
+live-build は Live システムをビルドするためのスクリプト集です。収録されているスクリプトは「コマンド」としても言及されています。
 
-The idea behind live-build is to be a framework that uses a configuration
-directory to completely automate and customize all aspects of building a
-Live image.
+live-build の背景となる考え方は、設定ディレクトリを使って Live
+イメージのビルドに関するあらゆる面を完全に自動化、独自化するフレームワークにしようということです。
 
-Many concepts are similar to those used to build Debian packages with
-/{debhelper}/:
+その多くの概念は /{debhelper}/ で Debian パッケージをビルドするのと同様です:
 
-_* The scripts have a central location for configuring their operation. In
-/{debhelper}/, this is the #{debian/}# subdirectory of a package tree. For
-example, dh_install will look, among others, for a file called
-#{debian/install}# to determine which files should exist in a particular
-binary package. In much the same way, live-build stores its configuration
-entirely under a #{config/}# subdirectory.
+_* スクリプトには操作を制御するために中心となる位置があります。/{debhelper}/ ではパッケージツリーの #{debian/}#
+サブディレクトリがこれにあたります。例えば dh_install は、他にもありますが、#{debian/install}#
+というファイルを探して特定のバイナリパッケージに収録すべきファイルを判断します。ほぼ同様に live-build は設定全体を #{config/}#
+サブディレクトリ以下に保管します。
 
-_* The scripts are independent - that is to say, it is always safe to run
-each command.
+_* スクリプトは独立しています - つまり、各コマンドの実行は常に安全です。
 
-Unlike /{debhelper}/, live-build provides the tools to generate a skeleton
-configuration directory. This could be considered to be similar to tools
-such as /{dh-make}/. For more information about these tools, read on, since
-the remainder of this section discuses the four most important
-commands. Note that the preceding #{lb}# is a generic wrapper for live-build
-commands.
+/{debhelper}/ とは異なり、live-build は設定ディレクトリの骨格を生成するツールを提供しています。これは /{dh-make}/
+等のツールに似ていると言っても良いでしょう。こういったツールのさらなる情報については、この節の残りで最も重要な4つのコマンドについて触れているので続きを読んでください。各コマンドで先行している
+#{lb}# は live-build コマンドのラッパーであることに注意してください。
 
-_* *{lb config}*: Responsible for initializing and configuring a Live system
-configuration directory. See {The lb config command}#lb-init for more
-information.
+_* *{lb config}*: Live システム設定ディレクトリの初期化を担当します。さらなる情報については {lb config
+コマンド}#lb-config を見てください。
 
-_* *{lb build}*: Responsible for starting a Live system build. See {The lb
-build command}#lb-build for more information.
+_* *{lb build}*: Live システムのビルドの開始を担当します。さらなる情報については {lb build}#lb-build
+を見てください。
 
-_* *{lb clean}*: Responsible for removing parts of a Live system build. See
-{The lb clean command}#lb-clean for more information.
+_* *{lb clean}*: Live システムでビルドされた部分の掃除を担当します。さらなる情報については {lb clean
+コマンド}#lb-clean を見てください。
 
-3~lb-config The #{lb config}# command
+3~lb-config #{lb config}# コマンド
 
-As discussed in {live-build}#live-build, the scripts that make up live-build
-read their configuration with the #{source}# command from a single directory
-named #{config/}#. As constructing this directory by hand would be
-time-consuming and error-prone, the #{lb config}# command can be used to
-create the initial skeleton configuration tree.
+{live-build}#live-build で説明しているように、live-build を構成するスクリプトは #{config/}#
+という名の単一のディレクトリから #{source}#
+コマンドで指定された設定を読み込みます。このディレクトリを手作業により構成するのは時間がかかる上に誤りの元となりやすいため、#{lb config}#
+コマンドを使って初期設定ツリーの骨格を作成できるようになっています。
 
-The #{lb config}# command creates the following directories inside
-#{config/}#: #{hooks/}#, #{includes/}#, several other includes
-subdirectories for each stage of the build process and
-#{package-lists/}#. The latter includes a list of several important live
-packages like live-boot, live-config and live-config-sysvinit.
-
-Issuing #{lb config}# without any arguments completes the #{config/}#
-subdirectory which it populates with some default settings in configuration
-files, and two skeleton trees named #{auto/}# and #{local/}#.
+引数を付けずに #{lb config}# を実行すると #{config/}#
+サブディレクトリを作成してデフォルト設定がいくらか指定された設定ファイルを配置し、#{auto/}# 及び #{local/}#
+という骨格となる2つのツリーを作成します。
 
 code{
 
@@ -70,13 +52,10 @@ code{
 
 }code
 
-Using #{lb config}# without any arguments would be suitable for users who
-need a very basic image, or who intend to provide a more complete
-configuration via #{auto/config}# later (see {Managing a
-configuration}#managing-a-configuration for details).
+とても基本的なイメージを必要とするユーザや後で #{auto/config}# を使ってもっと全面的な設定を行おうと考えている場合は #{lb
+config}# を引数無しで使うのが適切でしょう (詳細は{設定管理}#managing-a-configuration 参照)。
 
-Normally, you will want to specify some options. For example, to specify
-which package manager to use while building the image:
+通常はオプションをいくらか指定します。例えばイメージのビルド時に利用するパッケージマネージャーを指定する場合:
 
 code{
 
@@ -84,7 +63,7 @@ code{
 
 }code
 
-It is possible to specify many options, such as:
+多数のオプションを指定することもできます:
 
 code{
 
@@ -92,45 +71,37 @@ code{
 
 }code
 
-A full list of options is available in the #{lb_config}# man page.
+利用可能なオプションの全容は #{lb_config}# man ページにあります。
 
-3~lb-build The #{lb build}# command
+3~lb-build #{lb build}# コマンド
 
-The #{lb build}# command reads in your configuration from the #{config/}#
-directory. It then runs the lower level commands needed to build your Live
-system.
+#{lb build}# コマンドは #{config/}# ディレクトリから設定を読み込みます。それから Live
+システムのビルドに必要な低レベルコマンドを実行します。
 
-3~lb-clean The #{lb clean}# command
+3~lb-clean #{lb clean}# コマンド
 
-It is the job of the #{lb clean}# command to remove various parts of a build
-so subsequent builds can start from a clean state. By default, #{chroot}#,
-#{binary}# and #{source}# stages are cleaned, but the cache is left
-intact. Also, individual stages can be cleaned. For example, if you have
-made changes that only affect the binary stage, use #{lb clean --binary}#
-prior to building a new binary. If your changes invalidate the bootstrap
-and/or package caches, e.g. changes to #{--mode}#, #{--architecture}#, or
-#{--bootstrap}#, you must use #{lb clean --purge}#. See the #{lb_clean}# man
-page for a full list of options.
+ビルドによる様々な生成物を削除するのは #{lb clean}#
+コマンドの役目で、それによりその後のビルドがきれいな状態から始められるようになります。デフォルトで
+#{chroot}#、#{バイナリ}#、#{ソース}#の段階が対象となりますが、キャッシュはそのまま残されます。また、個々の段階を個別に掃除することもできます。例えばバイナリ段階にのみ影響のある変更を加えた場合は新しいバイナリをビルドする前に
+#{lb clean --binary}# を実行します。変更がパッケージ収集やパッケージのキャッシュを無効化するようなもの、例えば
+#{--mode}# や #{--architecture}#、#{--bootstrap}# を変更した場合は #{lb clean
+--purge}# を実行しないといけません。オプションの全容については #{lb_clean}# man ページを見てください。
 
-2~live-boot The live-boot package
+2~live-boot live-boot パッケージ
 
-live-boot is a collection of scripts providing hooks for the
-/{initramfs-tools}/, used to generate an initramfs capable of booting live
-systems, such as those created by live-build. This includes the live system
-ISOs, netboot tarballs, and USB stick images.
+live-boot は live-build 等により作成される Live システムのブート時に利用する initramfs の生成に利用する
+/{initramfs-tools}/ のフックを提供するスクリプト集です。Live
+システムのISOやネットワーク経由のブートに利用するtarアーカイブ、USBメモリ向けイメージも対象です。
 
-At boot time it will look for read-only media containing a #{/live/}#
-directory where a root filesystem (often a compressed filesystem image like
-squashfs) is stored. If found, it will create a writable environment, using
-aufs, for Debian like systems to boot from.
+ブート時にはルートファイルシステム (squashfs のような圧縮ファイルシステムのイメージであることが多い) が保存されている #{/live/}#
+ディレクトリを収録する読み取り専用メディアを探します。見つかった場合は Debian 類似システムでそのメディアからブートできるように、aufs
+を使って書き込み可能な環境を作成します。
 
-More information on initial ramfs in Debian can be found in the Debian Linux
-Kernel Handbook at http://kernel-handbook.alioth.debian.org/ in the chapter
-on initramfs.
+Debian の初期RAMファイルシステムについてのさらなる情報は http://kernel-handbook.alioth.debian.org/
+にある Debian Linux カーネルハンドブックの initramfs の章にあります。
 
-2~live-config The live-config package
+2~live-config live-config パッケージ
 
-live-config consists of the scripts that run at boot time after live-boot to
-configure the live system automatically. It handles such tasks as setting
-the hostname, locales and timezone, creating the live user, inhibiting cron
-jobs and performing autologin of the live user.
+live-config はブート時に live-boot の後に実行して Live
+システムを自動的に設定するためのスクリプト集で構成されています。ホスト名やロケール、タイムゾーンの設定や live ユーザの作成、cron
+ジョブの抑制、live ユーザの自動ログイン等のタスクを処理します。

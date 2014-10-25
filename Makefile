@@ -80,14 +80,6 @@ build: clean
 		do \
 			cd $(CURDIR)/manual; \
 			sisu-$${FORMAT} --no-manifest --verbose $${LANGUAGE}/live-manual.ssm; \
-			if [ "$${FORMAT}" = "html" ] ; \
-			then \
-			    for FILE in ../build/manual/html/*.$${LANGUAGE}.html ../build/manual/html/live-manual/*.$${LANGUAGE}.html; \
-			    do \
-				    bin/fix-sisu-html.rb $${FILE}; \
-				    ([ $(DEBUG) -gt 0 ] || rm -f $${FILE}~); \
-			    done; \
-			fi ; \
 		done; \
 	done; \
 
@@ -106,7 +98,9 @@ autobuild: build
 
 commit: tidy test
 	$(MAKE) -C manual rebuild
+	$(MAKE) info
 
+info:
 	@echo
 	@echo "live-manual is currently being translated into $(shell ls manual/po | wc -w) languages."
 	@echo "The translation of these languages is complete: $(shell manual/bin/show-complete-languages.sh)"

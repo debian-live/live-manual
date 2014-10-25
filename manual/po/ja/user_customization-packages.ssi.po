@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual VERSION\n"
-"POT-Creation-Date: 2014-08-27 21:41+0200\n"
+"POT-Creation-Date: 2014-09-01 03:37+0900\n"
 "PO-Revision-Date: 2014-05-04 15:01+0900\n"
 "Last-Translator: victory <victory.deb@gmail.com>\n"
 "Language-Team: none\n"
@@ -89,8 +89,8 @@ msgstr ""
 #: en/user_managing_a_configuration.ssi:32
 #: en/user_managing_a_configuration.ssi:55
 #: en/user_managing_a_configuration.ssi:67
-#: en/user_managing_a_configuration.ssi:76 en/user_overview.ssi:36
-#: en/user_overview.ssi:48 en/user_overview.ssi:56
+#: en/user_managing_a_configuration.ssi:76 en/user_overview.ssi:34
+#: en/user_overview.ssi:46 en/user_overview.ssi:54
 msgid "code{"
 msgstr "code{"
 
@@ -170,8 +170,8 @@ msgstr "code{"
 #: en/user_managing_a_configuration.ssi:43
 #: en/user_managing_a_configuration.ssi:61
 #: en/user_managing_a_configuration.ssi:72
-#: en/user_managing_a_configuration.ssi:80 en/user_overview.ssi:42
-#: en/user_overview.ssi:52 en/user_overview.ssi:60
+#: en/user_managing_a_configuration.ssi:80 en/user_overview.ssi:40
+#: en/user_overview.ssi:50 en/user_overview.ssi:58
 msgid "}code"
 msgstr "}code"
 
@@ -221,7 +221,7 @@ msgstr ""
 "一覧は定義できます。最後に、ビルドでパッケージをインストールするときに /"
 "{apt}/ や好みにより /{aptitude}/ を制御するオプションもいくらかあります。プロ"
 "キシを使っていたり、推奨パッケージのインストールを無効にして容量を節約した"
-"い、インストールするパッケージのバージョンをAPT ピン経由で制御する必要があ"
+"い、インストールするパッケージのバージョンをAPTのピン経由で制御する必要があ"
 "る、等便利だと思う場面があるかもしれません。"
 
 #. type: Plain text
@@ -344,7 +344,7 @@ msgstr ""
 msgid ""
 "3~distribution-mirrors-build-time Distribution mirrors used at build time"
 msgstr ""
-"3~-distributionmirrors-build-time ビルド時に利用するディストリビューションミ"
+"3~distribution-mirrors-build-time ビルド時に利用するディストリビューションミ"
 "ラー"
 
 #. type: Plain text
@@ -435,6 +435,13 @@ msgid ""
 "stage when building the image, and in the *{binary}* stage, i.e. for use "
 "when running the live system."
 msgstr ""
+"リポジトリをさらに追加して、利用できるパッケージ選択の幅を対象ディストリ"
+"ビューション以外にも広げられます。それにより、例えば backports や "
+"experimental、そして独自のパッケージを利用できます。追加のリポジトリを設定す"
+"るには #{config/archives/your-repository.list.chroot}# や #{config/archives/"
+"your-repository.list.binary}# ファイルを作成します。#{--mirror-*}# オプション"
+"により、イメージのビルドの *{chroot}* 段階や*{バイナリ}*段階、つまり Live シ"
+"ステムの実行時に利用するリポジトリを決定できます。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:66
@@ -442,6 +449,8 @@ msgid ""
 "For example, #{config/archives/live.list.chroot}# allows you to install "
 "packages from the debian-live snapshot repository at live system build time."
 msgstr ""
+"例えば #{config/archives/live.list.chroot}# により Live システムのビルド時に "
+"debian-live スナップショットリポジトリからパッケージをインストールできます。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:70
@@ -456,11 +465,13 @@ msgid ""
 "repository will be added to your live system's #{/etc/apt/sources.list.d/}# "
 "directory."
 msgstr ""
+"同一の行を #{config/archives/live.list.binary}# に追加すると、Live システム"
+"の #{/etc/apt/sources.list.d/}# ディレクトリにそのリポジトリが追加されます。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:76
 msgid "If such files exist, they will be picked up automatically."
-msgstr ""
+msgstr "こういったファイルが存在すれば自動的に処理されます。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:78
@@ -468,6 +479,8 @@ msgid ""
 "You should also put the GPG key used to sign the repository into #{config/"
 "archives/your-repository.key.{binary,chroot}}# files."
 msgstr ""
+"リポジトリの署名に利用されたGPG鍵を #{config/archives/your-repository.key."
+"{binary,chroot}}# ファイルに置くこともできます。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:80
@@ -477,12 +490,17 @@ msgid ""
 "will be automatically added to your live system's #{/etc/apt/preferences.d/}"
 "# directory."
 msgstr ""
+"APTのピン止めが独自に必要な場合、APT設定行等を #{config/archives/your-"
+"repository.pref.{binary,chroot}}# ファイルに配置すれば自動的に Live システム"
+"の #{/etc/apt/preferences.d/}# ディレクトリに追加されます。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:82
 msgid "2~choosing-packages-to-install Choosing packages to install"
-msgstr ""
+msgstr "2~choosing-packages-to-install インストールするパッケージの選択"
 
+# Translator's NOTE:  fields 
+# fuzzy
 #. type: Plain text
 #: en/user_customization-packages.ssi:84
 msgid ""
@@ -494,11 +512,18 @@ msgid ""
 "which is well suited to testing of new or experimental packages before they "
 "are available from a repository."
 msgstr ""
+"イメージに live-build がインストールするパッケージを選択する方法はいくつかあ"
+"り、異なる様々な要求に対応します。インストールする個々のパッケージをパッケー"
+"ジ一覧で指定できます。その一覧でメタパッケージを利用あるいはパッケージ制御  "
+"ファイル fields を使って選択できます。                                      "
+"そして最後に、パッケージファイルを #{config/}# ツリーに置く方法があります。 "
+"この方法は、新しいあるいは試験的なパッケージをリポジトリから利用できるように"
+"なる前にテストするのに非常に適しています。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:86
 msgid "3~package-lists Package lists"
-msgstr ""
+msgstr "3~package-lists パッケージ一覧"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:88
@@ -508,17 +533,21 @@ msgid ""
 "to build lists and adapt them for use in multiple configurations. Package "
 "names may also be injected into the list using shell helpers at build time."
 msgstr ""
+"パッケージ一覧はインストールするパッケージを明確にする強力な方法です。一覧の"
+"構文では条件付けをサポートし、一覧の生成や複数の設定への適合を容易にしていま"
+"す。ビルド時にシェルヘルパーを使って一覧にパッケージ名を差し込むこともできま"
+"す。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:90
 #, no-wrap
 msgid "*{Note:}* The behaviour of live-build when specifying a package that does not exist is determined by your choice of APT utility. See {Choosing apt or aptitude}#choosing-apt-or-aptitude for more details.\n"
-msgstr ""
+msgstr "*{注意:}* 存在しないパッケージが指定されたときの live-build の挙動はAPTユーティリティの選択により決定されます。さらなる詳細については {apt と aptitude の選択}#choosing-apt-or-aptitude を見てください。\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:92
 msgid "3~using-metapackages Using metapackages"
-msgstr ""
+msgstr "3~using-metapackages メタパッケージの利用"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:94
@@ -526,18 +555,17 @@ msgid ""
 "The simplest way to populate your package list is to use a task metapackage "
 "maintained by your distribution. For example:"
 msgstr ""
+"パッケージ一覧を指示するもっとも簡単な方法は利用するディストリビューションで"
+"保守されているタスクのメタパッケージの利用です。例えば:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:99
-#, fuzzy, no-wrap
-#| msgid ""
-#| " $ lb init\n"
-#| " $ echo task-gnome-desktop > config/package-lists/desktop.list.chroot\n"
+#, no-wrap
 msgid ""
 " $ lb config\n"
 " $ echo task-gnome-desktop > config/package-lists/desktop.list.chroot\n"
 msgstr ""
-" $ lb init\n"
+" $ lb config\n"
 " $ echo task-gnome-desktop > config/package-lists/desktop.list.chroot\n"
 
 #. type: Plain text
@@ -551,6 +579,13 @@ msgid ""
 "cover a much broader range of use cases than the predefined lists they "
 "replace."
 msgstr ""
+"#{live-build}# 2.x でサポートされていた、一覧を事前定義する古い方法はこれで置"
+"き換えられました。一覧の事前定義とは異なり、タスクのメタパッケージは Live シ"
+"ステムプロジェクト特有のものではありません。タスクのメタパッケージはディスト"
+"リビューション内の専門の作業グループにより保守されているため、要求したユーザ"
+"に対して提供する最善のパッケージについて、各グループでの合意を反映したものと"
+"なっています。また、一覧を事前定義する置き換えられた方法よりはるかに幅広い事"
+"例にも対応できます。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:105
@@ -559,6 +594,9 @@ msgid ""
 "which are available (though it may contain a handful of false hits that "
 "match the name but aren't metapackages) is to match on the package name with:"
 msgstr ""
+"タスクのメタパッケージには全て先頭が #{task-}# から始まるため、利用できるもの"
+"を簡単に判別する方法があります (名前が該当しても実際にはメタパッケージではな"
+"いものもほんの一部とはいえありますが)。パッケージ名を前方一致で検索します:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:109
@@ -576,6 +614,12 @@ msgid ""
 "archive, install the #{debtags}# package and list all packages with the "
 "#{role::metapackage}# tag as follows:"
 msgstr ""
+"以上に加え、他に様々な目的を持ったメタパッケージを見つけられるでしょう。"
+"#{gnome-core}# のように他のもっと範囲の広いタスクパッケージの一部を構成するも"
+"のや、#{education-*}# メタパッケージのように Debian Pure Blend の中のある個々"
+"の専門分野に特化したものもあります。アーカイブにある全メタパッケージを列挙す"
+"るには、#{debtags}# パッケージをインストールして #{role::metapackage}# タグの"
+"付けられたパッケージを全て列挙させます:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:117
@@ -586,7 +630,7 @@ msgstr " $ debtags search role::metapackage\n"
 #. type: Plain text
 #: en/user_customization-packages.ssi:121
 msgid "3~ Local package lists"
-msgstr ""
+msgstr "3~ ローカルパッケージ一覧"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:123
@@ -600,6 +644,14 @@ msgid ""
 "different combinations of sets of packages with a minimum of fuss, sharing "
 "common lists between different live image projects."
 msgstr ""
+"列挙したものがメタパッケージであれ、個々のパッケージであれ、両方の組み合わせ"
+"であれ、ローカルパッケージ一覧は全て #{config/package-lists/}# に保存されま"
+"す。この一覧は複数利用できるため、うまい具合にこの一覧自体を組み込める設計に"
+"なっています。例えばある一覧は特定のデスクトップ選択時向け、別の一覧は異なる"
+"デスクトップでも簡単に使えるような関連パッケージ群を、というようにできます。"
+"これにより、パッケージ群の異なる組み合わせを最小限の手間で試したり、あるいは"
+"異なる Live イメージプロジェクトで一覧を共有する、といったことが可能になりま"
+"す。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:125
@@ -608,17 +660,20 @@ msgid ""
 "in order to be processed, and then an additional stage suffix, #{.chroot}# "
 "or #{.binary}# to indicate which stage the list is for."
 msgstr ""
+"このディレクトリに存在するパッケージ一覧は、処理対象とするためには後ろに #{."
+"list}# を付ける必要があり、さらにその一覧をどの段階の対象とするのか示すために"
+"は #{.chroot}# や #{.binary}# をその後に追加します。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:127
 #, no-wrap
 msgid "*{Note:}* If you don't specify the stage suffix, the list will be used for both stages. Normally, you want to specify #{.list.chroot}# so that the packages will only be installed in the live filesystem and not have an extra copy of the #{.deb}# placed on the medium.\n"
-msgstr ""
+msgstr "*{注意:}* 対象とする段階の指定を追加しない場合、その一覧は両方の段階で利用されます。通常指定するのは #{.list.chroot}# で、この場合そのパッケージは Live ファイルシステムにのみインストールされ、メディア上に #{.deb}# の余計なコピーは置かれません。\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:129
 msgid "3~ Local binary package lists"
-msgstr ""
+msgstr "3~ ローカルバイナリパッケージ一覧"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:131
@@ -630,11 +685,17 @@ msgid ""
 "mentioned above, if you want this list to be the same as your chroot stage "
 "list, simply use the #{.list}# suffix by itself."
 msgstr ""
+"バイナリ段階の一覧を作成する場合はファイルの末尾を #{.list.binary}# にして "
+"#{config/package-lists/}# に置きます。それにより指定したパッケージは Live "
+"ファイルシステムにはインストールされず、Live メディアの #{pool/}# 以下に収録"
+"されます。Live ではないインストーラでこういった一覧を標準的に利用しているもの"
+"もあります。バイナリ段階で chroot 段階と同一の一覧を利用したい場合は上述した"
+"ように末尾を #{.list}# とします。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:133
 msgid "3~generated-package-lists Generated package lists"
-msgstr ""
+msgstr "3~generated-package-lists 生成されたパッケージ一覧"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:135
@@ -646,6 +707,11 @@ msgid ""
 "FPriority standard | sort}# in a package list to produce a sorted list of "
 "available packages with #{Priority: standard}#."
 msgstr ""
+"一覧の構成はスクリプトで生成するのが最善の方法だということもあります。感嘆符"
+"から始まる行は全て、そのコマンドがイメージのビルド後に chroot 内で実行される"
+"ことを示します。例えばパッケージ一覧に #{! grep-aptavail -n -sPackage -"
+"FPriority standard | sort}# という行を書いておけば、#{Priority: standard}# で"
+"利用可能なパッケージをソートした一覧を生成できます。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:137
@@ -656,24 +722,25 @@ msgid ""
 "arguments: #{field}# and #{pattern}#. Thus, you can create a list with the "
 "following contents:"
 msgstr ""
+"実際、パッケージの選択に #{grep-aptavail}# コマンド (#{dctrl-tools}# パッケー"
+"ジに収録) はとても有用なので、#{live-build}# では便宜のため #{Packages}# 補助"
+"スクリプトを提供しています。このスクリプトは引数を#{フィールド}#と#{パターン}"
+"#の2つ取ります。一覧を作成する例:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:142
-#, fuzzy, no-wrap
-#| msgid ""
-#| " $ lb init\n"
-#| " $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot\n"
+#, no-wrap
 msgid ""
 " $ lb config\n"
 " $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot\n"
 msgstr ""
-" $ lb init\n"
+" $ lb config\n"
 " $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:146
 msgid "3~ Using conditionals inside package lists"
-msgstr ""
+msgstr "3~ 条件付き内部パッケージ一覧の利用"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:148
@@ -685,6 +752,11 @@ msgid ""
 "package selection that make sense, such as #{DISTRIBUTION}#, #{ARCHITECTURES}"
 "# or #{ARCHIVE_AREAS}#."
 msgstr ""
+"#{config/*}# (#{LB_}# が先頭に付くものは除く) に保存された live-build の設定"
+"変数はどれもパッケージ一覧の条件文で利用できます。一般には #{lb config}# オプ"
+"ションを大文字に、ダッシュ文字をアンダースコアに変更したものになります。しか"
+"し実際に意味があるのは、パッケージ選択に関わるもの、例えば #{DISTRIBUTION}# "
+"や #{ARCHITECTURES}#、#{ARCHIVE_AREAS}# だけです。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:150
@@ -692,6 +764,8 @@ msgid ""
 "For example, to install #{ia32-libs}# if the #{--architectures amd64}# is "
 "specified:"
 msgstr ""
+"例えば #{--architectures amd64}# が指定された場合に #{ia32-libs}# をインス"
+"トールする場合:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:156
@@ -712,6 +786,9 @@ msgid ""
 "{memtest86+}/ if either #{--architectures i386}# or #{--architectures amd64}"
 "# is specified:"
 msgstr ""
+"任意の1つを条件の値とすることもできます。#{--architectures i386}# または #{--"
+"architectures amd64}# のどちらかが指定された場合に /{memtest86+}/ をインス"
+"トールする場合の例:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:166
@@ -732,6 +809,9 @@ msgid ""
 "g. to install /{vrms}/ if either #{contrib}# or #{non-free}# is specified "
 "via #{--archive-areas}#:"
 msgstr ""
+"値を複数指定できる変数を条件にすることもできます。#{--archive-areas}# で "
+"#{contrib}# または #{non-free}# のどちらかが指定されている場合に /{vrms}/ を"
+"インストールする場合の例:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:176
@@ -748,12 +828,12 @@ msgstr ""
 #. type: Plain text
 #: en/user_customization-packages.ssi:180
 msgid "The nesting of conditionals is not supported."
-msgstr ""
+msgstr "入り組んだ条件分岐はサポートしていません。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:184
 msgid "3~ Removing packages at install time"
-msgstr ""
+msgstr "3~ インストール時のパッケージの削除"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:186
@@ -768,11 +848,20 @@ msgid ""
 "installer live}# set in your config, and wish to remove live system-specific "
 "packages at install time."
 msgstr ""
+"#{config/package-lists}# ディレクトリの末尾が #{.list.chroot_live}# や #{."
+"list.chroot_install}# のファイルにパッケージを列挙できます。Live 用とインス"
+"トール用の両方の一覧が存在する場合、#{.list.chroot_live}# に列挙されている"
+"パッケージは (ユーザがインストーラを利用している場合) インストール後にフック"
+"により削除されます。#{.list.chroot_install}# に列挙されているパッケージは "
+"Live システムとインストールされたシステムの両方に存在することになります。これ"
+"はインストーラ向けの特別な調整で、設定で #{--debian-installer live}# をセット"
+"している場合や Live システム特有のパッケージをインストール時には削除したい場"
+"合に有用かもしれません。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:188
 msgid "3~desktop-and-language-tasks Desktop and language tasks"
-msgstr ""
+msgstr "3~desktop-and-language-tasks デスクトップ及び言語タスク"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:190
@@ -787,6 +876,13 @@ msgid ""
 "for languages, but the user's language choice during the install influences "
 "the selection of corresponding language tasks."
 msgstr ""
+"デスクトップと言語のタスクは特別で、計画性や設定が追加で必要となります。Live "
+"イメージが Debian インストーライメージとは異なる点です。Debian インストーラで"
+"は、特定のデスクトップ環境向けに用意されたメディアでは対応するタスクは自動的"
+"にインストールされます。内部に #{gnome-desktop}# や #{kde-desktop}#、#{lxde-"
+"desktop}#、#{xfce-desktop}# タスクがあり、#{tasksel}# のメニューにはどれも出"
+"てきません。同様に言語向けタスクのメニュー項目はありませんが、インストール中"
+"にユーザが選択した言語が対応する言語タスクの選択に影響します。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:192
@@ -798,6 +894,12 @@ msgid ""
 "multiple desktops or multiple languages and offer the user a choice, but "
 "that is not live-build's default behaviour."
 msgstr ""
+"デスクトップ向け Live イメージ開発時には、イメージは通常動作するデスクトップ"
+"を直接ブートし、デスクトップやデフォルト言語はどちらも Debian インストーラの"
+"場合のように実行時に選択するのではなくビルド時に決められています。これは "
+"Live イメージでデスクトップや言語を複数サポートしてユーザに選択の機会を与える"
+"ようにできないわけではなく、それが live-build のデフォルトの挙動ではないとい"
+"うだけです。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:194
@@ -808,27 +910,27 @@ msgid ""
 "a GNOME desktop image containing support for German might include these task "
 "metapackages:"
 msgstr ""
+"言語特有のフォントや入力メソッドにどのパッケージを収録するのか、といった規定"
+"は言語タスクにはないので、特定のパッケージを収録したい場合は設定で指定する必"
+"要があります。ドイツ語サポートを収録した GNOME デスクトップイメージの場合に収"
+"録するタスクのメタパッケージの例:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:200
-#, fuzzy, no-wrap
-#| msgid ""
-#| " $ lb init\n"
-#| " $ echo \"task-gnome-desktop task-laptop\" >> config/package-lists/my.list.chroot\n"
-#| " $ echo \"task-german task-german-desktop task-german-gnome-desktop\" >> config/package-lists/my.list.chroot\n"
+#, no-wrap
 msgid ""
 " $ lb config\n"
 " $ echo \"task-gnome-desktop task-laptop\" >> config/package-lists/my.list.chroot\n"
 " $ echo \"task-german task-german-desktop task-german-gnome-desktop\" >> config/package-lists/my.list.chroot\n"
 msgstr ""
-" $ lb init\n"
+" $ lb config\n"
 " $ echo \"task-gnome-desktop task-laptop\" >> config/package-lists/my.list.chroot\n"
 " $ echo \"task-german task-german-desktop task-german-gnome-desktop\" >> config/package-lists/my.list.chroot\n"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:204
 msgid "3~kernel-flavour-and-version Kernel flavour and version"
-msgstr ""
+msgstr "3~kernel-flavour-and-version カーネルのフレーバー (種類) とバージョン"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:206
@@ -839,6 +941,10 @@ msgid ""
 "#{linux-image}# to form each metapackage name which in turn depends on an "
 "exact kernel package to be included in your image."
 msgstr ""
+"アーキテクチャによっては、イメージに複数のカーネルをデフォルトで収録すること"
+"ができます。フレーバーは #{--linux-flavours}# オプションで選択できます。各フ"
+"レーバーはデフォルトの短い #{linux-image}# に、イメージに収録される実際のカー"
+"ネルパッケージに依存する各メタパッケージの名前を付加した形式になります。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:208
@@ -850,6 +956,11 @@ msgid ""
 "#{linux-image-3.2.0-4-486}# and #{linux-image-3.2.0-4-686-pae}#, "
 "respectively."
 msgstr ""
+"そうして、デフォルトで #{amd64}# アーキテクチャのイメージは #{linux-image-"
+"amd64}# のメタパッケージを収録し、#{i386}# アーキテクチャのイメージは "
+"#{linux-image-486}# と #{linux-image-686-pae}# メタパッケージを収録します。こ"
+"れを書いている時点ではそれぞれ #{linux-image-3.2.0-4-amd64}#、#{linux-"
+"image-3.2.0-4-486}#、#{linux-image-3.2.0-4-686-pae}# に依存しています。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:210
@@ -861,6 +972,11 @@ msgid ""
 "so you can install the #{linux-image-3.7-trunk-amd64}# kernel. You would "
 "configure that image as follows:"
 msgstr ""
+"設定したアーカイブで複数バージョンのカーネルパッケージが利用できる場合、#{--"
+"linux-packages}# オプションでカーネルパッケージ名の前半部を指定できます。例え"
+"ば #{amd64}# アーキテクチャのイメージをビルドする際にテスト用に experimental "
+"アーカイブを追加すると #{linux-image-3.7-trunk-amd64}# カーネルをインストール"
+"できます。そのイメージの設定例:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:215
@@ -875,7 +991,7 @@ msgstr ""
 #. type: Plain text
 #: en/user_customization-packages.ssi:219
 msgid "3~custom-kernels Custom kernels"
-msgstr ""
+msgstr "3~custom-kernels 独自のカーネル"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:221
@@ -884,6 +1000,9 @@ msgid ""
 "integrated within the Debian package management system. The live-build "
 "system does not support kernels not built as #{.deb}# packages."
 msgstr ""
+"Debian パッケージ管理システムに組み入れられていれば、独自のカーネルを自分でビ"
+"ルド、収録できます。live-build システムは #{.deb}# パッケージでビルドされてい"
+"ないカーネルはサポートしていません。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:223
@@ -893,6 +1012,10 @@ msgid ""
 "ABI and flavour suffixes appropriately, then include a complete build of the "
 "#{linux}# and matching #{linux-latest}# packages in your repository."
 msgstr ""
+"自身のカーネルパッケージを配置するための適切で推奨する方法は #{kernel-"
+"handbook}# の指示に従うことです。パッケージ名のABIとフレーバーの部分を忘れず"
+"に適切に変更し、リポジトリに #{linux}# の完全なビルドとそれに該当する "
+"#{linux-latest}# パッケージを収録してください。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:225
@@ -905,6 +1028,13 @@ msgid ""
 "your own repository, though the alternatives discussed in that section work "
 "as well."
 msgstr ""
+"該当するメタパッケージ無しでカーネルパッケージをビルドしたい場合は、{カーネル"
+"のフレーバー (種類) とバージョン}#kernel-flavour-and-version で説明しているよ"
+"うに #{--linux-packages}# でパッケージ名の適切な前半部を指定する必要がありま"
+"す。{変更したあるいはサードパーティ製パッケージのインストール}#installing-"
+"modified-or-third-party-packages で説明しているように、自身のリポジトリに独自"
+"のカーネルパッケージを収録する場合はそのようにするのが最善ですが、別の方法に"
+"ついても説明しています。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:227
@@ -913,16 +1043,18 @@ msgid ""
 "your kernel. However, you must at least ensure your configuration satisfies "
 "these minimum requirements:"
 msgstr ""
+"カーネルを独自化する方法はこの文書の対象範囲ではありません。とはいえ、設定が"
+"最低限満たさないといけない要件があります:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:229
 msgid "_* Use an initial ramdisk."
-msgstr ""
+msgstr "_* 初期RAMディスクを利用する。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:231
 msgid "_* Include the union filesystem module (i.e. usually #{aufs}#)."
-msgstr ""
+msgstr "_* 結合ファイルシステムモジュール (つまり通常は #{aufs}#) を収録する。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:233
@@ -930,6 +1062,8 @@ msgid ""
 "_* Include any other filesystem modules required by your configuration (i.e. "
 "usually #{squashfs}#)."
 msgstr ""
+"_* 自分の設定で必要とする他のファイルシステムモジュール (つまり通常は "
+"#{squashfs}#) があればそれを収録する。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:235
@@ -937,6 +1071,8 @@ msgid ""
 "2~installing-modified-or-third-party-packages Installing modified or third-"
 "party packages"
 msgstr ""
+"2~installing-modified-or-third-party-packages 変更したあるいはサードパーティ"
+"製パッケージのインストール"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:237
@@ -948,6 +1084,11 @@ msgid ""
 "packages that are undesirable. Similarly, \"third-party\" packages may be "
 "used to add bespoke and/or proprietary functionality."
 msgstr ""
+"Live システムの哲学には反しますが、Debian リポジトリにあるバージョンのパッ"
+"ケージを改変して Live システムをビルドする必要に迫られることもあります。それ"
+"は機能や言語、商標を変更あるいは追加するものであったり、既存のパッケージから"
+"望ましくない要素を削除するものであるかもしれません。同様に求める機能や独自開"
+"発の機能を追加するのに「サードパーティ製」パッケージを利用できます。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:239
@@ -956,24 +1097,30 @@ msgid ""
 "modified packages. Joachim Breitner's 'How to fork privately' method from "
 "http://www.joachim-breitner.de/blog/archives/282-How-to-fork-privately.html "
 "may be of interest, however. The creation of bespoke packages is covered in "
-"the Debian New Maintainers' Guide at http://www.debian.org/doc/maint-guide/ "
+"the Debian New Maintainers' Guide at https://www.debian.org/doc/maint-guide/ "
 "and elsewhere."
 msgstr ""
+"この節では変更したパッケージのビルドや保守については対象としていません。"
+"Joachim Breitner さんの http://www.joachim-breitner.de/blog/archives/282-How-"
+"to-fork-privately.html にある「How to fork privately」に書かれている方法が該"
+"当するのかもしれませんが。求める機能を収録したパッケージの作成については "
+"https://www.debian.org/doc/maint-guide/ にある Debian 新メンテナーガイドその"
+"他で説明されています。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:241
 msgid "There are two ways of installing modified custom packages:"
-msgstr ""
+msgstr "変更した独自のパッケージをインストールする方法は2つあります:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:243
 msgid "_* #{packages.chroot}#"
-msgstr ""
+msgstr "_* #{packages.chroot}#"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:245
 msgid "_* Using a custom APT repository"
-msgstr ""
+msgstr "_* 独自APTリポジトリの利用"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:247
@@ -982,11 +1129,14 @@ msgid ""
 "customizations but has a number of drawbacks, while using a custom APT "
 "repository is more time-consuming to set up."
 msgstr ""
+"#{packages.chroot}# を使う方法はより簡単に出来て「一度限りの」独自化には有用"
+"ですが欠点がいくつかあります。一方独自のAPTリポジトリを使う方法はその準備に時"
+"間がかかりまます。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:249
 msgid "3~ Using #{packages.chroot}# to install custom packages"
-msgstr ""
+msgstr "3~ #{packages.chroot}# を利用した独自のパッケージのインストール"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:251
@@ -996,6 +1146,10 @@ msgid ""
 "installed into the live system during build - you do not need to specify "
 "them elsewhere."
 msgstr ""
+"独自化したパッケージをインストールするには、単に#{config/packages.chroot/}# "
+"ディレクトリにコピーします。このディレクトリ内に置かれたパッケージはビルドの"
+"際に Live システムに自動的にインストールされます - 他のどこかを指定する必要は"
+"ありません。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:253
@@ -1003,6 +1157,8 @@ msgid ""
 "Packages *{must}* be named in the prescribed way. One simple way to do this "
 "is to use #{dpkg-name}#."
 msgstr ""
+"パッケージ名は規定の命名規則に従わ*{ないといけません}*。それを簡単に行う方法"
+"は #{dpkg-name}# の利用です。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:255
@@ -1010,11 +1166,13 @@ msgid ""
 "Using #{packages.chroot}# for installation of custom packages has "
 "disadvantages:"
 msgstr ""
+"#{packages.chroot}# を利用した独自のパッケージのインストールには欠点がありま"
+"す:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:257
 msgid "_* It is not possible to use secure APT."
-msgstr ""
+msgstr "_* secure APT を利用することができません。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:259
@@ -1022,18 +1180,20 @@ msgid ""
 "_* You must install all appropriate packages in the #{config/packages."
 "chroot/}# directory."
 msgstr ""
+"_* #{config/packages.chroot/}# ディレクトリに適切なパッケージを全てインストー"
+"ルしないといけません。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:261
 msgid ""
 "_* It does not lend itself to storing live system configurations in revision "
 "control."
-msgstr ""
+msgstr "_* Live システムの設定をリビジョン管理するには適しません。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:263
 msgid "3~ Using an APT repository to install custom packages"
-msgstr ""
+msgstr "3~ APTリポジトリを利用した独自パッケージのインストール"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:265
@@ -1042,6 +1202,9 @@ msgid ""
 "must ensure that you specify the packages elsewhere. See {Choosing packages "
 "to install}#choosing-packages-to-install for details."
 msgstr ""
+"#{packages.chroot}# を使う場合とは異なり、独自のAPTリポジトリを使う場合は他の"
+"どこかでパッケージを指定する必要があります。詳細については{インストールする"
+"パッケージの選択}#choosing-packages-to-install を見てください。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:267
@@ -1050,11 +1213,14 @@ msgid ""
 "custom packages, the infrastructure can be easily re-used at a later date to "
 "offer updates of the modified packages."
 msgstr ""
+"独自のパッケージをインストールするためにAPTリポジトリを作成するのは不要な手間"
+"だと思うかもしれませんが、その基盤は変更したパッケージを後で更新する際に簡単"
+"に再利用できます。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:269
 msgid "3~ Custom packages and APT"
-msgstr ""
+msgstr "3~ 独自パッケージとAPT"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:271
@@ -1065,6 +1231,11 @@ msgid ""
 "different repositories with different version numbers, APT will elect to "
 "install the package with the higher version number."
 msgstr ""
+"live-build は Live システムへのパッケージのインストールに全てAPTを利用するた"
+"め、そのプログラムの挙動を引き継ぎます。関連する一例としては (デフォルト設定"
+"だと仮定して)、異なる2つのリポジトリでバージョン番号の異なるあるパッケージが"
+"利用可能な場合に、APTはバージョン番号の大きい方のパッケージをインストールに選"
+"択します。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:273
@@ -1075,11 +1246,16 @@ msgid ""
 "achieved by altering the live system's APT pinning preferences - see {APT "
 "pinning}#apt-pinning for more information."
 msgstr ""
+"そのため、独自パッケージの #{debian/changeLog}# ファイルでバージョン番号を増"
+"加させ、公式の Debian リポジトリにあるものよりも変更したバージョンが確実にイ"
+"ンストールされるようにすると良いでしょう。Live システムのAPTのピン設定を改変"
+"する方法もあります - さらなる情報については、{APTのピン止め}#apt-pinning を見"
+"てください。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:275
 msgid "2~ Configuring APT at build time"
-msgstr ""
+msgstr "2~ ビルド時のAPT設定"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:277
@@ -1091,11 +1267,16 @@ msgid ""
 "complete list, look for options starting with #{apt}# in the #{lb_config}# "
 "man page."
 msgstr ""
+"ビルド時だけに適用されるオプションを使ってAPTを設定できます (実行中の Live シ"
+"ステムで利用されるAPTの設定は Live システムの内容による通常の、#{config/"
+"includes.chroot/}# で適切な設定を収録する) 方法により設定できます。オプション"
+"の全容については #{lb_config}# man ページの #{apt}# で始まるオプションを見て"
+"ください。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:279
 msgid "3~choosing-apt-or-aptitude Choosing apt or aptitude"
-msgstr ""
+msgstr "3~choosing-apt-or-aptitude apt と aptitude の選択"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:281
@@ -1106,6 +1287,11 @@ msgid ""
 "package installation, the notable difference being how missing packages are "
 "handled."
 msgstr ""
+"ビルド時にパッケージをインストールする際に /{apt}/ と /{aptitude}/ のどちらを"
+"利用するのか選択できます。利用するユーティリティは #{lb config}# の #{--apt}"
+"# 引数で決定します。パッケージが欠けている場合の処理方法に顕著な違いがあるこ"
+"とに着目し、パッケージのインストール時に望ましい挙動を実装している方を選択し"
+"てください。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:283
@@ -1113,18 +1299,23 @@ msgid ""
 "_* #{apt}#: With this method, if a missing package is specified, the package "
 "installation will fail. This is the default setting."
 msgstr ""
+"_* #{apt}#: この方法では、欠けているパッケージが指定された場合にそのパッケー"
+"ジのインストールは失敗します。これはデフォルトの設定です。"
 
+# Translator's NOTE: 20140830 no idea what succeed is!
 #. type: Plain text
 #: en/user_customization-packages.ssi:285
 msgid ""
 "_* #{aptitude}#: With this method, if a missing package is specified, the "
 "package installation will succeed."
 msgstr ""
+"_* #{aptitude}#: この方法では、欠けているパッケージが指定された場合にそのパッ"
+"ケージのインストールは成功します。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:287
 msgid "3~ Using a proxy with APT"
-msgstr ""
+msgstr "3~ APTでのプロキシの利用"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:289
@@ -1133,6 +1324,9 @@ msgid ""
 "behind a proxy. You may specify your APT proxy with the #{--apt-ftp-proxy}# "
 "or #{--apt-http-proxy}# options as needed, e.g."
 msgstr ""
+"よく要求されるAPTの設定として、プロキシの内側でのイメージのビルドへの対応があ"
+"ります。必要に応じて、#{--apt-ftp-proxy}# や #{--apt-http-proxy}# オプション"
+"によりAPTプロキシを指定できます。例:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:293
@@ -1143,7 +1337,7 @@ msgstr " $ lb config --apt-http-proxy http://proxy/\n"
 #. type: Plain text
 #: en/user_customization-packages.ssi:297
 msgid "3~tweaking-apt-to-save-space Tweaking APT to save space"
-msgstr ""
+msgstr "3~tweaking-apt-to-save-space APTの調整による容量節約"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:299
@@ -1152,13 +1346,15 @@ msgid ""
 "which case one or the other or both of the following options may be of "
 "interest."
 msgstr ""
+"イメージのメディアの容量をいくらか節約する必要があるかもしれません。その場合"
+"は以下に挙げるオプションを利用するといいかもしれません。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:301
 msgid ""
 "If you don't want to include APT indices in the image, you can omit those "
 "with:"
-msgstr ""
+msgstr "APTの索引をイメージに収録したくない場合は除外できます:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:305
@@ -1175,6 +1371,11 @@ msgid ""
 "before performing #{apt-cache search}# or #{apt-get install}#, for instance, "
 "the user must #{apt-get update}# first to create those indices."
 msgstr ""
+"これは #{/etc/apt/sources.list}# 内の項目には影響せず、単に #{/var/lib/apt}# "
+"に索引ファイルを収録するかどうかだけに影響します。その代わりに、Live システム"
+"でAPTを操作するためにはこの索引が必要なので、#{apt-cache search}# や #{apt-"
+"get install}# を実行する前にユーザは例えば #{apt-get update}# をまず実行して"
+"索引を作成しないといけません。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:311
@@ -1183,6 +1384,8 @@ msgid ""
 "much, provided you are prepared to deal with the consequences discussed "
 "below, you may disable that default option of APT with:"
 msgstr ""
+"推奨パッケージのインストールによりイメージが肥大化しているような場合、以下で"
+"説明している影響を踏まえた上でAPTのデフォルトオプションを無効にできます:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:315
@@ -1190,6 +1393,8 @@ msgstr ""
 msgid " $ lb config --apt-recommends false\n"
 msgstr " $ lb config --apt-recommends false\n"
 
+# Translator's NOTE: 20140830 asking what if at all actually means
+# fuzzy
 #. type: Plain text
 #: en/user_customization-packages.ssi:319
 msgid ""
@@ -1203,6 +1408,15 @@ msgid ""
 "of the #{live-*}# packages included in your build and if you are not certain "
 "you can omit them, add them back into your package lists."
 msgstr ""
+"推奨パッケージを無効にした場合の最も重要な影響は、#{live-boot}# や #{live-"
+"config}# 自体が、ほとんどの Live 設定に利用している重要な機能を提供する一部の"
+"パッケージを推奨していることで、例えば #{live-config}# が推奨し、Live ユーザ"
+"の作成に利用している #{user-setup}# があります。ほぼ例外なく、パッケージ一覧"
+"に追加しないといけないパッケージが推奨パッケージの中にいくらかあります。追加"
+"しない場合は、イメージが期待通りに動作しないということになります。          "
+"ビルドに収録されている各 #{live-*}# パッケージの推奨パッケージを確認し、省略"
+"できると確信できない場合はパッケージ一覧に当該パッケージを追加するようにして"
+"ください。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:321
@@ -1219,11 +1433,22 @@ msgid ""
 "set a negative APT pin priority on selected packages to prevent them from "
 "being installed, as explained in {APT pinning}#apt-pinning."
 msgstr ""
+"あるパッケージの推奨パッケージをインストールしないことによるもっと一般的な影"
+"響は「異常なインストール状態でなければあるパッケージとともにあるはずの」"
+"(Debian ポリシーマニュアル7.2節) Live システムのユーザが実際に必要とする一部"
+"のパッケージが省略されているかもしれないということです。したがって、推奨パッ"
+"ケージのインストールを無効にした場合とのパッケージ一覧 (#{lb build}# により生"
+"成される #{binary.packages}# ファイル参照) の違いを確認して、欠けているパッ"
+"ケージの中にインストールしたいものがあれば一覧に収録することを推奨していま"
+"す。推奨パッケージからほんの一部を除外したい場合は、推奨パッケージのインス"
+"トールは有効なままにしておき、{APTのピン止め}#apt-pinning で説明しているよう"
+"にAPTのピン機能で、選択したパッケージについて負の優先度をセットしてインストー"
+"ルされないようにする方法があります。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:323
 msgid "3~ Passing options to apt or aptitude"
-msgstr ""
+msgstr "3~ apt や aptitude へのオプションの受け渡し"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:325
@@ -1239,6 +1464,14 @@ msgid ""
 "do so as per the following example, appending the new option after the "
 "default value #{--yes}#:"
 msgstr ""
+"障害となるAPTの挙動を変更するための #{lb config}# オプションがない場合、#{--"
+"apt-options}# や #{--aptitude-options}# により任意のオプションを選択したAPT"
+"ツールに渡せます。詳細については #{apt}# や #{aptitude}# の man ページを見て"
+"ください。どちらのオプションにも、優先設定に加えて保持しておく必要のあるデ"
+"フォルト値があることに注意してください。そのため、例えば #{snapshot.debian."
+"org}# からテスト用に何か取得する場合に #{Acquire::Check-Valid-Until=false}# "
+"を指定するとAPTは古いままの #{Release}# ファイルを使い続けます。以下の例のよ"
+"うに、デフォルト値 #{--yes}# の後に新しいオプションを付加します:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:329
@@ -1254,6 +1487,10 @@ msgid ""
 "configure your image this way. This option would not be appropriate for, "
 "say, a final release of a live image."
 msgstr ""
+"このオプションを利用する場合は man ページを確認して完全に理解するようにしてく"
+"ださい。これはあくまで例であり、イメージをこの方法で設定するようにという助言"
+"だと解釈することのないようにしてください。このオプションは例えば Live イメー"
+"ジの最終的なリリースには適しません。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:335
@@ -1263,11 +1500,15 @@ msgid ""
 "other #{apt-*}# options for a few convenient shortcuts for frequently needed "
 "options."
 msgstr ""
+"#{apt.conf}# のオプションを利用するようなもっと複雑なAPT設定には代わりに "
+"#{config/apt/apt.conf}# ファイルを作成すると良いでしょう。少数ですが、よく必"
+"要とされるオプションへの有用なショートカットがあります。他の #{apt-*}# オプ"
+"ションについても参照してください。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:337
 msgid "3~apt-pinning APT pinning"
-msgstr ""
+msgstr "3~apt-pinning APTのピン止め"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:339
@@ -1278,6 +1519,11 @@ msgid ""
 "chroot}#, and #{config/apt/preferences}#. For the latter, create #{config/"
 "includes.chroot/etc/apt/preferences}#."
 msgstr ""
+"背景として、#{apt_preferences(5)}# man ページをまず読んでください。APTのピン"
+"機能はビルド時用と実行時用に設定できます。前者については #{config/archives/*."
+"pref}#、#{config/archives/*.pref.chroot}#、#{config/apt/preferences}# を、後"
+"者については #{config/includes.chroot/etc/apt/preferences}# を作成してくださ"
+"い。"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:341
@@ -1290,6 +1536,13 @@ msgid ""
 "all others are taken from the target system distribution, ${testing}. The "
 "following will accomplish this:"
 msgstr ""
+"${testing} の Live システムをビルドするとしましょう。その場合に必要な Live "
+"パッケージは全て、ビルド時にバイナリイメージを sid からインストールする必要が"
+"あります。APTソースに sid を追加して、ピン機能で sid の Live パッケージには高"
+"い優先度をセットし、他のパッケージには全てデフォルトよりも低い優先度をセット"
+"する必要があります。そうするとビルド時に望むパッケージだけを sid からインス"
+"トールし、他は全て対象システムのディストリビューションである ${testing} から"
+"取得します。以下によりその動作になります:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:349
@@ -1334,6 +1587,15 @@ msgid ""
 "package. This can be done by adding the following stanza to #{config/apt/"
 "preferences}#:"
 msgstr ""
+"別のパッケージにより推奨されたパッケージを望まない場合に、ピン機能で優先度に"
+"負の値をセットすることによりそのパッケージをインストールしないようにできま"
+"す。#{config/package-lists/desktop.list.chroot}# で #{task-lxde-desktop}# を"
+"使って LXDE イメージをビルドしていて、wifi パスワードをキーリングに保存するか"
+"ユーザに聞かないようにしたいと仮定しましょう。このメタパッケージは /{lxde-"
+"core}/ に依存し、/{lxde-core}/ は /{gksu}/ を推奨し、/{gksu}/ は /{gnome-"
+"keyring}/ を推奨しています。そこで、推奨された /{gnome-keyring}/ パッケージを"
+"除外したい場合、#{config/apt/preferences}# に以下を追加することで除外できま"
+"す:"
 
 #. type: Plain text
 #: en/user_customization-packages.ssi:364

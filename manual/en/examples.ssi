@@ -248,7 +248,7 @@ When optimizing an image to fit a certain media size, you need to understand the
 
 code{
 
- $ lb config -k 486 --apt-indices false --apt-recommends false --debootstrap-options "--variant=minbase" --firmware-chroot false --memtest none
+ $ lb config --apt-indices false --apt-recommends false --debootstrap-options "--variant=minbase" --firmware-chroot false --memtest none
 
 }code
 
@@ -270,7 +270,7 @@ code{
 
 On the author's system at the time of writing this, the above configuration produced a 77MB image. This compares favourably with the 177MB image produced by the default configuration in {Tutorial 1}#tutorial-1.
 
-The biggest space-saver here, compared to building a default image on an #{i386}# architecture system, is to select only the #{486}# kernel flavour instead of the default #{-k "486 686-pae"}#. Leaving off APT's indices with #{--apt-indices false}# also saves a fair amount of space, the tradeoff being that you need to do an #{apt-get update}# before using /{apt}/ in the live system. Dropping recommended packages with #{--apt-recommends false}# saves some additional space, at the expense of omitting some packages you might otherwise expect to be there. #{--debootstrap-options "--variant=minbase"}# bootstraps a minimal system from the start. Not automatically including firmware packages with #{--firmware-chroot false}# saves some space too. And finally, #{--memtest none}# prevents the installation of a memory tester.
+Leaving off APT's indices with #{--apt-indices false}# saves a fair amount of space, the tradeoff being that you need to do an #{apt-get update}# before using /{apt}/ in the live system. Dropping recommended packages with #{--apt-recommends false}# saves some additional space, at the expense of omitting some packages you might otherwise expect to be there. #{--debootstrap-options "--variant=minbase"}# bootstraps a minimal system from the start. Not automatically including firmware packages with #{--firmware-chroot false}# saves some space too. And finally, #{--memtest none}# prevents the installation of a memory tester.
 
 *{Note:}* A minimal system can also be achieved using hooks, like for example the #{stripped.hook.chroot}# hook found in #{/usr/share/doc/live-build/examples/hooks}#. It may shave off additional small amounts of space and produce an image of 62MB. However, it does so by removal of documentation and other files from packages installed on the system. This violates the integrity of those packages and that, as the comment header warns, may have unforeseen consequences. That is why using a minimal /{debootstrap}/ is the recommended way of achieving this goal.
 
@@ -315,7 +315,6 @@ code{
  $ cd live-gnome-ch
  $ lb config \
      -a i386 \
-     -k 486 \
      --bootappend-live "boot=live components locales=de_CH.UTF-8 keyboard-layouts=ch" \
      --debian-installer live
  $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
@@ -324,4 +323,4 @@ code{
 
 }code
 
-Note that we have included the debian-installer-launcher package to launch the installer from the live desktop, and have also specified the 486 flavour kernel, as it is currently necessary to make the installer and live system kernels match for the launcher to work properly.
+Note that we have included the /{debian-installer-launcher}/ package to launch the installer from the live desktop. The #{486}# kernel flavour, which is currently necessary for the launcher to work properly, will be included by default.

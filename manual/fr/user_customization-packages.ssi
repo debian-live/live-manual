@@ -386,24 +386,20 @@ l'option #{--linux-flavours}#. Chaque type est suffixé à partir de
 #{linux-image}# pour former le nom de chaque métapaquet qui dépend à son
 tour d'un paquet noyau exact à inclure dans votre image.
 
-Ainsi, par défaut, une image pour l'architecture #{amd64}# comprendra le
-métapaquet #{linux-image-amd64}#, et une image pour l'architecture #{i386}#
-comprendra les métapaquets #{linux-image-486}# et
-#{linux-image-686-pae}#. Au moment de la rédaction, ces paquets dépendent de
-#{linux-image-3.2.0-4-amd64}#, #{linux-image-3.2.0-4-486}# et
-#{linux-image-3.2.0-4-686-pae}#, respectivement.
+Thus by default, an #{amd64}# architecture image will include the
+#{linux-image-amd64}# flavour metapackage, and an #{i386}# architecture
+image will include the #{linux-image-486}# metapackage.
 
-Lorsque plus d'une version du paquet du noyau est disponible dans vos
-archives configurées, vous pouvez indiquer un nom du paquet du noyau
-différent avec l'option #{--linux-packages}#. Par exemple, supposons que
-vous construisiez une image pour l'architecture #{amd64}# et ajoutiez
-l'archive expérimentale pour faire des test afin que vous puissiez installer
-le noyau #{linux-image-3.7-trunk-amd64}#. Vous devez configurer cette image
-comme suit:
+When more than one kernel package version is available in your configured
+archives, you can specify a different kernel package name stub with the
+#{--linux-packages}# option. For example, supposing you are building an
+#{amd64}# architecture image and add the experimental archive for testing
+purposes so you can install the #{linux-image-3.18.0-trunk-amd64}#
+kernel. You would configure that image as follows:
 
 code{
 
- $ lb config --linux-packages linux-image-3.7-trunk
+ $ lb config --linux-packages linux-image-3.18.0-trunk
  $ echo "deb http://ftp.debian.org/debian/ experimental main" > config/archives/experimental.list.chroot
 
 }code

@@ -345,7 +345,7 @@ optimitzacions "intrusives". De particular interès, utilitzem
 
 code{
 
- $ lb config -k 486 --apt-indices false --apt-recommends false --debootstrap-options "--variant=minbase" --firmware-chroot false --memtest none
+ $ lb config --apt-indices false --apt-recommends false --debootstrap-options "--variant=minbase" --firmware-chroot false --memtest none
 
 }code
 
@@ -373,19 +373,15 @@ anterior produeix una imatge de 77MB. Això es compara favorablement amb la
 imatge de 177MB produïda per la configuració per defecte del {Tutorial
 1}#tutorial-1.
 
-El estalvi d'espai més gran aquí, en comparació amb la construcció d'una
-imatge  per defecte en un sistema d'arquitectura #{i386}#, és seleccionar
-només la variant del nucli #{486}# en comptes del predeterminat #{-k "486
-686-pae"}#. Deixar els índexs d'APT amb #{--apt-indices false}# també permet
-estalviar una bona quantitat d'espai, el desavantatge és que es necessita
-fer #{apt-get update}# abans d'utilitzar apt en el sistema en viu. Deixar
-els paquets recomanats amb #{--apt-recommends false}# estalvia una mica
-d'espai addicional, a costa d'ometre alguns paquets que d'una altra manera
-es podria esperar que hi fossin. #{--debootstrap-options
-"--variant=minbase"}# preinstal·la un sistema mínim des del principi. Al no
-incloure automàticament paquets de firmware amb #{--firmware-chroot false}#
-també es guanya una mica d'espai. I finalment, #{--memtest none}# impedeix
-la instal·lació d'un comprovador de memòria.
+Leaving off APT's indices with #{--apt-indices false}# saves a fair amount
+of space, the tradeoff being that you need to do an #{apt-get update}#
+before using /{apt}/ in the live system. Dropping recommended packages with
+#{--apt-recommends false}# saves some additional space, at the expense of
+omitting some packages you might otherwise expect to be
+there. #{--debootstrap-options "--variant=minbase"}# bootstraps a minimal
+system from the start. Not automatically including firmware packages with
+#{--firmware-chroot false}# saves some space too. And finally, #{--memtest
+none}# prevents the installation of a memory tester.
 
 *{Nota:}* Un sistema mínim es pot aconseguir també fent servir un script ganxo, com ara el #{stripped.hook.chroot}# de #{/usr/share/doc/live-build/examples/hooks}#. Es pot guanyar petites quantitats addicionals d'espai i produir una imatge de 62MB. No obstant, el script ganxo aconsegueix això eliminant documentació i altres fitxers dels paquets instal·lats al sistema. Això viola la integritat dels paquets i com és comenta a l'encapçalament del script, pot tenir conseqüències imprevistes. És per això que l'ús d'un /{debootstrap}/ mínim és el mètode recomanat per a aconseguir aquest objectiu.
 
@@ -444,7 +440,6 @@ code{
  $ cd live-gnome-ch
  $ lb config \
      -a i386 \
-     -k 486 \
      --bootappend-live "boot=live components locales=de_CH.UTF-8 keyboard-layouts=ch" \
      --debian-installer live
  $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
@@ -453,7 +448,7 @@ code{
 
 }code
 
-Tenir en compte que s'ha inclòs el paquet debian-installer-launcher per a
-llançar l'instal·lador des de l'escriptori en viu, i també s'especifica el
-nucli 486, ja que actualment és necessari que l'instal·lador i el nucli del
-sistema viu coincideixin perquè el llançador funcioni correctament.
+Note that we have included the /{debian-installer-launcher}/ package to
+launch the installer from the live desktop. The #{486}# kernel flavour,
+which is currently necessary for the launcher to work properly, will be
+included by default.

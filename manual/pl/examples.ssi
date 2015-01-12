@@ -345,7 +345,7 @@ ustawień regionalnych poprzez pakiet /{localepurge}/, lub inne tego typu
 
 code{
 
- $ lb config -k 486 --apt-indices false --apt-recommends false --debootstrap-options "--variant=minbase" --firmware-chroot false --memtest none
+ $ lb config --apt-indices false --apt-recommends false --debootstrap-options "--variant=minbase" --firmware-chroot false --memtest none
 
 }code
 
@@ -372,18 +372,15 @@ Na systemie autora w momencie pisania tego dokumentu powyższa konfiguracja
 wyprodukowała 77MB obraz. To korzystnie w porównaniu z obrazem 177MB
 wyprodukowanym przez domyślną konfigurację w {Samouczku 1}#tutorial-1.
 
-Największą oszczędność miejsca w porównaniu do budowania obrazu domyślnego w
-systemie o architekturze #{i386}#, jest wybranie typu jądra #{486}# zamiast
-domyślnego #{-k "486 686-pae"}#. Pominięcie indeksów APT #{--apt-indices
-false}# również oszczędza sporo miejsca, w zamian trzeba wykonać #{apt-get
-update}# przed używaniem /{apt}/ w systemie live. Pominięcie zalecanych
-pakietów  #{--apt-recommends false}# oszczędza trochę dodatkowego miejsca,
-kosztem pominięcia niektórych pakietów , które mogłoby się spodziewać, że
-powinny się znaleźć w obrazie. Opcja #{--debootstrap-options
-"--variant=minbase"}# ładuje minimalny system na początku. Nie automatycznie
-zawarcie pakietów firmware z #{--firmware-chroot false}# również zaoszczędzą
-sporo miejsca. I w końcu, #{--memtest none}# zapobiega instalacji testera
-pamięci.
+Leaving off APT's indices with #{--apt-indices false}# saves a fair amount
+of space, the tradeoff being that you need to do an #{apt-get update}#
+before using /{apt}/ in the live system. Dropping recommended packages with
+#{--apt-recommends false}# saves some additional space, at the expense of
+omitting some packages you might otherwise expect to be
+there. #{--debootstrap-options "--variant=minbase"}# bootstraps a minimal
+system from the start. Not automatically including firmware packages with
+#{--firmware-chroot false}# saves some space too. And finally, #{--memtest
+none}# prevents the installation of a memory tester.
 
 *{Uwaga:}* System minimalny można również osiągnąć za pomocą haków, takich jak na przykład #{stripped.hook.chroot}#, znajdujący się w #{/usr/share/doc/live-build/examples/hooks}#. To może zaoszczędzić dodatkowo małe ilości przestrzeni i stworzyć 62MB obraz. Jednak robi to przez usunięcie dokumentacji i innych plików z pakietów zainstalowanych w systemie. To narusza integralność tych pakietów, a które, jak komentarz nagłówka ostrzega, mogą prowadzić do nieprzewidzianych konsekwencji. Dlatego właśnie użycie minimalnej opcji /{debootstrap}/'a jest zalecanym sposobem na osiągnięcie tego celu.
 
@@ -442,7 +439,6 @@ code{
  $ cd live-gnome-ch
  $ lb config \
      -a i386 \
-     -k 486 \
      --bootappend-live "boot=live components locales=de_CH.UTF-8 keyboard-layouts=ch" \
      --debian-installer live
  $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
@@ -451,7 +447,7 @@ code{
 
 }code
 
-Należy pamiętać, że mamy załączony pakiet debian-installer-launcher, aby
-uruchomić instalator z pulpitu live, a także wybraną architekturę 486 jądra
-kernela, jak to jest obecnie konieczne, aby instalator i jądro systemu live
-zgadzały się aby instalator działał prawidłowo.
+Note that we have included the /{debian-installer-launcher}/ package to
+launch the installer from the live desktop. The #{486}# kernel flavour,
+which is currently necessary for the launcher to work properly, will be
+included by default.

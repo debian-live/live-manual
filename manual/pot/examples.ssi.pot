@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: live-manual 4.0.2-1\n"
-"POT-Creation-Date: 2014-12-10 10:14+0100\n"
+"POT-Creation-Date: 2015-01-12 16:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -115,7 +115,7 @@ msgstr ""
 #: en/examples.ssi:208 en/examples.ssi:216 en/examples.ssi:232
 #: en/examples.ssi:240 en/examples.ssi:254 en/examples.ssi:262
 #: en/examples.ssi:270 en/examples.ssi:290 en/examples.ssi:299
-#: en/examples.ssi:309 en/examples.ssi:326 en/project_bugs.ssi:66
+#: en/examples.ssi:309 en/examples.ssi:325 en/project_bugs.ssi:66
 #: en/project_coding-style.ssi:36 en/project_coding-style.ssi:47
 #: en/project_coding-style.ssi:59 en/project_coding-style.ssi:70
 #: en/project_coding-style.ssi:98 en/project_coding-style.ssi:106
@@ -698,7 +698,7 @@ msgstr ""
 #. type: Plain text
 #: en/examples.ssi:252
 #, no-wrap
-msgid " $ lb config -k 486 --apt-indices false --apt-recommends false --debootstrap-options \"--variant=minbase\" --firmware-chroot false --memtest none\n"
+msgid " $ lb config --apt-indices false --apt-recommends false --debootstrap-options \"--variant=minbase\" --firmware-chroot false --memtest none\n"
 msgstr ""
 
 #. type: Plain text
@@ -731,18 +731,15 @@ msgstr ""
 #. type: Plain text
 #: en/examples.ssi:274
 msgid ""
-"The biggest space-saver here, compared to building a default image on an "
-"#{i386}# architecture system, is to select only the #{486}# kernel flavour "
-"instead of the default #{-k \"486 686-pae\"}#. Leaving off APT's indices "
-"with #{--apt-indices false}# also saves a fair amount of space, the tradeoff "
-"being that you need to do an #{apt-get update}# before using /{apt}/ in the "
-"live system. Dropping recommended packages with #{--apt-recommends false}# "
-"saves some additional space, at the expense of omitting some packages you "
-"might otherwise expect to be there. #{--debootstrap-options \"--"
-"variant=minbase\"}# bootstraps a minimal system from the start. Not "
-"automatically including firmware packages with #{--firmware-chroot false}# "
-"saves some space too. And finally, #{--memtest none}# prevents the "
-"installation of a memory tester."
+"Leaving off APT's indices with #{--apt-indices false}# saves a fair amount "
+"of space, the tradeoff being that you need to do an #{apt-get update}# "
+"before using /{apt}/ in the live system. Dropping recommended packages with "
+"#{--apt-recommends false}# saves some additional space, at the expense of "
+"omitting some packages you might otherwise expect to be there. #{--"
+"debootstrap-options \"--variant=minbase\"}# bootstraps a minimal system from "
+"the start. Not automatically including firmware packages with #{--firmware-"
+"chroot false}# saves some space too. And finally, #{--memtest none}# "
+"prevents the installation of a memory tester."
 msgstr ""
 
 #. type: Plain text
@@ -827,14 +824,13 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/examples.ssi:324
+#: en/examples.ssi:323
 #, no-wrap
 msgid ""
 " $ mkdir live-gnome-ch\n"
 " $ cd live-gnome-ch\n"
 " $ lb config \\\n"
 "     -a i386 \\\n"
-"     -k 486 \\\n"
 "     --bootappend-live \"boot=live components locales=de_CH.UTF-8 keyboard-layouts=ch\" \\\n"
 "     --debian-installer live\n"
 " $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot\n"
@@ -843,10 +839,10 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: en/examples.ssi:327
+#: en/examples.ssi:326
 msgid ""
-"Note that we have included the debian-installer-launcher package to launch "
-"the installer from the live desktop, and have also specified the 486 flavour "
-"kernel, as it is currently necessary to make the installer and live system "
-"kernels match for the launcher to work properly."
+"Note that we have included the /{debian-installer-launcher}/ package to "
+"launch the installer from the live desktop. The #{486}# kernel flavour, "
+"which is currently necessary for the launcher to work properly, will be "
+"included by default."
 msgstr ""

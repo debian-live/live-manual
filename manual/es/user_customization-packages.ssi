@@ -394,24 +394,20 @@ predeterminada #{linux-image}# para formar el nombre de cada metapaquete que
 a su vez depende del paquete del kernel exacto que debe incluirse en la
 imagen.
 
-Así, por defecto, una imagen de arquitectura #{amd64}# incluirá el
-metapaquete #{linux-image-amd64}# y una imagen de arquitectura #{i386}#
-incluirá los metapaquetes #{linux-image-486}# y #{linux-image-686-pae}#. En
-el momento de escribir esto, los paquetes dependen, respectivamente, de
-#{linux-image-3.2.0-4-amd64}#, #{linux-image-3.2.0-4-486}# y
-#{linux-image-3.2.0-4-686-pae}#
+Thus by default, an #{amd64}# architecture image will include the
+#{linux-image-amd64}# flavour metapackage, and an #{i386}# architecture
+image will include the #{linux-image-486}# metapackage.
 
-Cuando hay más de una versión del paquete del kernel disponible en los
-archivos configurados, se puede especificar el nombre de un paquete del
-kernel diferente con la opción #{--linux-packages}#. Por ejemplo, suponer
-que se está construyendo una image de arquitectura #{amd64}# y se quiere
-añadir el archivo experimental a fin de realizar pruebas para que se pueda
-instalar el kernel #{linux-image-3.7-trunk-amd64}#. Se podría configurar la
-imagen de la siguiente manera:
+When more than one kernel package version is available in your configured
+archives, you can specify a different kernel package name stub with the
+#{--linux-packages}# option. For example, supposing you are building an
+#{amd64}# architecture image and add the experimental archive for testing
+purposes so you can install the #{linux-image-3.18.0-trunk-amd64}#
+kernel. You would configure that image as follows:
 
 code{
 
- $ lb config --linux-packages linux-image-3.7-trunk
+ $ lb config --linux-packages linux-image-3.18.0-trunk
  $ echo "deb http://ftp.debian.org/debian/ experimental main" > config/archives/experimental.list.chroot
 
 }code

@@ -315,15 +315,12 @@ code{
 これを書いている時点の著者のシステムでは、上記の設定により 77MB のイメージができました。これを{チュートリアル 1}#tutorial-1
 のデフォルト設定で作成された 177MB のイメージと都合良く比較してみましょう。
 
-Leaving off APT's indices with #{--apt-indices false}# saves a fair amount
-of space, the tradeoff being that you need to do an #{apt-get update}#
-before using /{apt}/ in the live system. Dropping recommended packages with
-#{--apt-recommends false}# saves some additional space, at the expense of
-omitting some packages you might otherwise expect to be
-there. #{--debootstrap-options "--variant=minbase"}# bootstraps a minimal
-system from the start. Not automatically including firmware packages with
-#{--firmware-chroot false}# saves some space too. And finally, #{--memtest
-none}# prevents the installation of a memory tester.
+#{--apt-indices false}# によりAPTの索引を省くことでかなりの容量を節約していますが、その代わりに Live システムで
+/{apt}/ を使う前に #{apt-get update}# を実行する必要があります。#{--apt-recommends false}#
+により推奨パッケージを除外することで、本来あるはずのパッケージをいくらか除外する代わりにいくらか追加で容量を節約します。#{--debootstrap-options
+"--variant=minbase"}# で最初から最小限のシステムを構成します。#{--firmware-chroot false}#
+でファームウェアパッケージを自動的に収録しないようにすることでもさらに容量をいくらか節約します。そして最後に、#{--memtest none}#
+によりメモリテスターのインストールを抑制します。
 
 *{注意:}* 最小限のシステムの構成はフックを使って、例えば #{/usr/share/doc/live-build/examples/hooks}# にある #{stripped.hook.chroot}# でも実現できます。これは容量をさらに少し減らし、62MB のイメージを生成します。しかしこれはその実現のために、システムにインストールしたパッケージから文書その他のファイルを削除しています。これはそうしたパッケージの完全性を破壊し、ヘッダで警告しているように思わぬ結果をもたらすかもしれません。それが、この目標のために推奨するのが最小限の /{debootstrap}/ を利用する方法になっている理由です。
 
@@ -382,7 +379,6 @@ code{
 
 }code
 
-Note that we have included the /{debian-installer-launcher}/ package to
-launch the installer from the live desktop. The #{486}# kernel flavour,
-which is currently necessary for the launcher to work properly, will be
-included by default.
+のようになります。インストーラを Live デスクトップから立ち上げるために /{debian-installer-launcher}/
+パッケージを収録していることに注意してください。さらに、インストーラを立ち上げる機能が適切に動作するために現在必要な #{486}#
+用のカーネルがデフォルトで収録されます。

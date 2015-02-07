@@ -118,11 +118,13 @@ APTのピン止めが独自に必要な場合、APT設定行等を
 
 2~choosing-packages-to-install インストールするパッケージの選択
 
-イメージに live-build
-がインストールするパッケージを選択する方法はいくつかあり、異なる様々な要求に対応します。インストールする個々のパッケージをパッケージ一覧で指定できます。その一覧でメタパッケージを利用あるいはパッケージ制御
-ファイル fields を使って選択できます。
-そして最後に、パッケージファイルを #{config/}# ツリーに置く方法があります。
-この方法は、新しいあるいは試験的なパッケージをリポジトリから利用できるようになる前にテストするのに非常に適しています。
+There are a number of ways to choose which packages live-build will install
+in your image, covering a variety of different needs. You can simply name
+individual packages to install in a package list. You can also use
+metapackages in those lists, or select them using package control file
+fields. And finally, you may place package files in your #{config/}# tree,
+which is well suited to testing of new or experimental packages before they
+are available from a repository.
 
 3~package-lists パッケージ一覧
 
@@ -286,9 +288,8 @@ code{
 オプションで選択できます。各フレーバーはデフォルトの短い #{linux-image}#
 に、イメージに収録される実際のカーネルパッケージに依存する各メタパッケージの名前を付加した形式になります。
 
-Thus by default, an #{amd64}# architecture image will include the
-#{linux-image-amd64}# flavour metapackage, and an #{i386}# architecture
-image will include the #{linux-image-586}# metapackage.
+そうして、デフォルトで #{amd64}# アーキテクチャのイメージは #{linux-image-amd64}#
+のメタパッケージを収録し、#{i386}# アーキテクチャのイメージは #{linux-image-586}# メタパッケージを収録します。
 
 設定したアーカイブで複数バージョンのカーネルパッケージが利用できる場合、#{--linux-packages}#
 オプションでカーネルパッケージ名の前半部を指定できます。例えば #{amd64}# アーキテクチャのイメージをビルドする際にテスト用に
@@ -430,11 +431,10 @@ code{
 }code
 
 推奨パッケージを無効にした場合の最も重要な影響は、#{live-boot}# や #{live-config}# 自体が、ほとんどの Live
-設定に利用している重要な機能を提供する一部のパッケージを推奨していることで、例えば #{live-config}# が推奨し、Live
+設定に利用している重要な機能を提供する一部のパッケージを推奨していることによるもので、例えば #{live-config}# が推奨し、Live
 ユーザの作成に利用している #{user-setup}#
-があります。ほぼ例外なく、パッケージ一覧に追加しないといけないパッケージが推奨パッケージの中にいくらかあります。追加しない場合は、イメージが期待通りに動作しないということになります。
-ビルドに収録されている各 #{live-*}#
-パッケージの推奨パッケージを確認し、省略できると確信できない場合はパッケージ一覧に当該パッケージを追加するようにしてください。
+があります。ほぼ例外なく、パッケージ一覧に追加しないといけないパッケージが推奨パッケージの中にいくらかあります。追加しない場合は、イメージが期待通りに動作しないということになります。ビルドに収録されている各
+#{live-*}# パッケージの推奨パッケージを確認し、省略できると確信できない場合はパッケージ一覧に当該パッケージを追加するようにしてください。
 
 あるパッケージの推奨パッケージをインストールしないことによるもっと一般的な影響は「異常なインストール状態でなければあるパッケージとともにあるはずの」(Debian
 ポリシーマニュアル7.2節) Live

@@ -311,8 +311,9 @@ code{
 
 }code
 
-これを書いている時点の著者のシステムでは、上記の設定により 77MB のイメージができました。これを{チュートリアル 1}#tutorial-1
-のデフォルト設定で作成された 177MB のイメージと都合良く比較してみましょう。
+On the author's system at the time of writing this, the above configuration
+produced a 110MB image. This compares favourably with the 192MB image
+produced by the default configuration in {Tutorial 1}#tutorial-1.
 
 #{--apt-indices false}# によりAPTの索引を省くことでかなりの容量を節約していますが、その代わりに Live システムで
 /{apt}/ を使う前に #{apt-get update}# を実行する必要があります。#{--apt-recommends false}#
@@ -321,7 +322,7 @@ code{
 でファームウェアパッケージを自動的に収録しないようにすることでもさらに容量をいくらか節約します。そして最後に、#{--memtest none}#
 によりメモリテスターのインストールを抑制します。
 
-*{注意:}* 最小限のシステムの構成はフックを使って、例えば #{/usr/share/doc/live-build/examples/hooks}# にある #{stripped.hook.chroot}# でも実現できます。これは容量をさらに少し減らし、62MB のイメージを生成します。しかしこれはその実現のために、システムにインストールしたパッケージから文書その他のファイルを削除しています。これはそうしたパッケージの完全性を破壊し、ヘッダで警告しているように思わぬ結果をもたらすかもしれません。それが、この目標のために推奨するのが最小限の /{debootstrap}/ を利用する方法になっている理由です。
+*{Note:}* A minimal system can also be achieved using hooks, like for example the #{stripped.hook.chroot}# hook found in #{/usr/share/doc/live-build/examples/hooks}#. It may shave off additional small amounts of space and produce an image of 91MB. However, it does so by removal of documentation and other files from packages installed on the system. This violates the integrity of those packages and that, as the comment header warns, may have unforeseen consequences. That is why using a minimal /{debootstrap}/ is the recommended way of achieving this goal.
 
 2~ 地域化した GNOME デスクトップとインストーラ
 
@@ -378,6 +379,7 @@ code{
 
 }code
 
-のようになります。インストーラを Live デスクトップから立ち上げるために /{debian-installer-launcher}/
-パッケージを収録していることに注意してください。さらに、インストーラを立ち上げる機能が適切に動作するために現在必要な #{486}#
-用のカーネルがデフォルトで収録されます。
+Note that we have included the /{debian-installer-launcher}/ package to
+launch the installer from the live desktop. The #{586}# kernel flavour,
+which is currently necessary for the launcher to work properly, will be
+included by default.

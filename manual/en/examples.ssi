@@ -267,11 +267,11 @@ code{
 
 }code
 
-On the author's system at the time of writing this, the above configuration produced a 77MB image. This compares favourably with the 177MB image produced by the default configuration in {Tutorial 1}#tutorial-1.
+On the author's system at the time of writing this, the above configuration produced a 110MB image. This compares favourably with the 192MB image produced by the default configuration in {Tutorial 1}#tutorial-1.
 
 Leaving off APT's indices with #{--apt-indices false}# saves a fair amount of space, the tradeoff being that you need to do an #{apt-get update}# before using /{apt}/ in the live system. Dropping recommended packages with #{--apt-recommends false}# saves some additional space, at the expense of omitting some packages you might otherwise expect to be there. #{--debootstrap-options "--variant=minbase"}# bootstraps a minimal system from the start. Not automatically including firmware packages with #{--firmware-chroot false}# saves some space too. And finally, #{--memtest none}# prevents the installation of a memory tester.
 
-*{Note:}* A minimal system can also be achieved using hooks, like for example the #{stripped.hook.chroot}# hook found in #{/usr/share/doc/live-build/examples/hooks}#. It may shave off additional small amounts of space and produce an image of 62MB. However, it does so by removal of documentation and other files from packages installed on the system. This violates the integrity of those packages and that, as the comment header warns, may have unforeseen consequences. That is why using a minimal /{debootstrap}/ is the recommended way of achieving this goal.
+*{Note:}* A minimal system can also be achieved using hooks, like for example the #{stripped.hook.chroot}# hook found in #{/usr/share/doc/live-build/examples/hooks}#. It may shave off additional small amounts of space and produce an image of 91MB. However, it does so by removal of documentation and other files from packages installed on the system. This violates the integrity of those packages and that, as the comment header warns, may have unforeseen consequences. That is why using a minimal /{debootstrap}/ is the recommended way of achieving this goal.
 
 2~ A localized GNOME desktop and installer
 

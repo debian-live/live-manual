@@ -1,0 +1,201 @@
+# Polish translations for live-manual
+# Copyright (C) 2014 AreYouLoco? <areyouloco@paranoici.org>
+# This file is distributed under the same license as the live-manual package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: live-manual 4.0~alpha13-1\n"
+"POT-Creation-Date: 2014-10-25 15:07+0200\n"
+"PO-Revision-Date: 2014-11-08 20:03+0100\n"
+"Last-Translator: AreYouLoco? <areyouloco@paranoici.org>\n"
+"Language-Team: none\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.5.4\n"
+
+# #-#-#-#-#  user_customization-overview.ssi.po (live-manual 4.0~alpha13-1)  #-#-#-#-#
+# 'customizing contents' jako 'dostosowywanie zawartości'
+#. type: Plain text
+#: en/user_customization-contents.ssi:2 en/user_customization-overview.ssi:2
+msgid ":B~ Customizing contents"
+msgstr ":B~ Dostosowywanie zawartości"
+
+#. type: Plain text
+#: en/user_customization-overview.ssi:4
+msgid "1~customization-overview Customization overview"
+msgstr "1~customization-overview Opis dostosowywania"
+
+#. type: Plain text
+#: en/user_customization-overview.ssi:6
+msgid ""
+"This chapter gives an overview of the various ways in which you may "
+"customize a live system."
+msgstr ""
+"Ten rozdział zawiera przegląd różnych sposobów, w jaki można dostosować "
+"system live."
+
+#. type: Plain text
+#: en/user_customization-overview.ssi:8
+msgid "2~ Build time vs. boot time configuration"
+msgstr "2~ Konfiguracja podczas kompilacji vs. podczas uruchamiania systemu"
+
+#. type: Plain text
+#: en/user_customization-overview.ssi:10
+msgid ""
+"Live system configuration options are divided into build-time options which "
+"are options that are applied at build time and boot-time options which are "
+"applied at boot time. Boot-time options are further divided into those "
+"occurring early in the boot, applied by the live-boot package, and those "
+"that happen later in the boot, applied by live-config. Any boot-time option "
+"may be modified by the user by specifying it at the boot prompt. The image "
+"may also be built with default boot parameters so users can normally just "
+"boot directly to the live system without specifying any options when all of "
+"the defaults are suitable. In particular, the argument to #{lb --bootappend-"
+"live}# consists of any default kernel command line options for the Live "
+"system, such as persistence, keyboard layouts, or timezone. See {Customizing "
+"locale and language}#customizing-locale-and-language, for example."
+msgstr ""
+"Opcje konfiguracji systemu live są podzielone na opcje w czasie budowania, "
+"które są stosowane w czasie kompilacji i na opcje w czasie rozruchu, które "
+"są stosowane podczas uruchamiania systemu. Opcje podczas uruchamiania są "
+"podzielone na te występujące wcześnie podczas uruchamiania, zastosowane "
+"przez live-boot, i na te, występujące później, zastosowane przez live-"
+"config. Każdy parametr rozruchu może zostać zmodyfikowany przez użytkownika "
+"poprzez ustalenie go podczas startu. Obraz może być również zbudowany z "
+"domyślnymi parametrami startowymi, dzięki czemu użytkownicy mogą normalnie "
+"tylko uruchomić bezpośrednio systemu live bez podawania żadnych parametrów, "
+"gdy wszystkie opcje domyślne są odpowiednie. W szczególności argument #{lb --"
+"bootappend-live}# składa się z wszelkich opcji wiersza poleceń domyślnych "
+"dla jądra systemu live, takich jak trwałość (ang. persistence), układ "
+"klawiatury, lub strefa czasowa. Zobacz {Dostosowywanie lokalizacji i języka}"
+"#customizing-locale-and-language, dla przykładów."
+
+# 'in the ##### man page' jako 'w podreczniku man na stronie #####'
+#. type: Plain text
+#: en/user_customization-overview.ssi:12
+msgid ""
+"Build-time configuration options are described in the #{lb config}# man "
+"page. Boot-time options are described in the man pages for live-boot and "
+"live-config. Although the live-boot and live-config packages are installed "
+"within the live system you are building, it is recommended that you also "
+"install them on your build system for easy reference when you are working on "
+"your configuration. It is safe to do so, as none of the scripts contained "
+"within them are executed unless the system is configured as a live system."
+msgstr ""
+"Opcje konfiguracyjne w czasie budowania są opisane w podręczniku man na "
+"stronie #{lb config}#. Opcje konfiguracyjne w czasie rozruchu opisane są w "
+"podręczniku man na stronach live-boot i live-config. Chociaż pakiety "
+"startowe live-boot i live-config są zainstalowane w systemie live, który "
+"budujesz, zaleca się również zainstalować je w systemie budowania dla "
+"łatwego odniesienia podczas Twojej pracy przy konfiguracji. Jest to "
+"bezpieczne, ponieważ żaden z zawartych w nich skryptów nie będzie "
+"wykonywany, chyba że system zostanie skonfigurowany jako system live."
+
+#. type: Plain text
+#: en/user_customization-overview.ssi:14
+msgid "2~stages-of-the-build Stages of the build"
+msgstr "2~stages-of-the-build Etapy kompilacji"
+
+#. type: Plain text
+#: en/user_customization-overview.ssi:16
+msgid ""
+"The build process is divided into stages, with various customizations "
+"applied in sequence in each. The first stage to run is the *{bootstrap}* "
+"stage. This is the initial phase of populating the chroot directory with "
+"packages to make a barebones Debian system. This is followed by the *{chroot}"
+"* stage, which completes the construction of chroot directory, populating it "
+"with all of the packages listed in the configuration, along with any other "
+"materials. Most customization of content occurs in this stage. The final "
+"stage of preparing the live image is the *{binary}* stage, which builds a "
+"bootable image, using the contents of the chroot directory to construct the "
+"root filesystem for the Live system, and including the installer and any "
+"other additional material on the target medium outside of the Live system's "
+"filesystem. After the live image is built, if enabled, the source tarball is "
+"built in the *{source}* stage."
+msgstr ""
+"Proces kompilacji jest podzielony na etapy, w każdym z nich z zastosowanymi "
+"w kolejności różnymi dostosowaniami. Pierwszym etapem do uruchomienia jest "
+"etap *{bootstrap}*. Jest to wstępna faza wypełniania katalogu chroot "
+"pakietami aby stworzyć kadłub systemu Debian. Następnym etapem jest *{chroot}"
+"*, który kończy budowę katalogu chroot, wypełniania go wszystkimi pakietami "
+"wymienionymi w konfiguracji, wraz z innymi materiałami. Najwęcej "
+"dostosowywania zawartości odbywa się w tym etapie. Ostatnim etapem "
+"przygotowania obrazu live jest etap *{binarny}* (ang. binary), który tworzy "
+"możliwy do uruchomienia obraz, używając zawartości katalogu chroot do budowy "
+"głównego systemu plików w systemie live, a tym instalatora i wszelkich "
+"innych dodatkowych materiałów na nośniku docelowym poza system plików na "
+"systemu live. Po skompilowaniu obrazu live, jeśli włączono, archiwum "
+"źródłowe tarball jest budowane podczas etapu *{source}* (ang. źródło)."
+
+#. type: Plain text
+#: en/user_customization-overview.ssi:18
+msgid ""
+"Within each of these stages, there is a particular sequence in which "
+"commands are applied. These are arranged in such a way as to ensure "
+"customizations can be layered in a reasonable fashion. For example, within "
+"the *{chroot}* stage, preseeds are applied before any packages are "
+"installed, packages are installed before any locally included files are "
+"copied, and hooks are run later, after all of the materials are in place."
+msgstr ""
+"W każdym z tych etapów istnieje szczególna sekwencja, w której stosuje się "
+"polecenia. Są one usytuowane w taki sposób, aby zapewnić modyfikacjom bycie "
+"ułożonym w rozsądny sposób. Na przykład, w etapie *{chroot}*, "
+"prekonfiguracja (ang. preseeding) jest stosowana, zanim zostaną "
+"zainstalowane jakiekolwiek pakiety, pakiety są instalowane zanim "
+"jakiekolwiek lokalnie zawarte pliki zostaną kopiowane, a haki są wprowadzane "
+"później, gdy wszystkie materiały są już na miejscu."
+
+#. type: Plain text
+#: en/user_customization-overview.ssi:20
+msgid "2~ Supplement lb config with files"
+msgstr "2~ Uzupełnienie lb config plikami"
+
+#. type: Plain text
+#: en/user_customization-overview.ssi:22
+msgid ""
+"Although #{lb config}# creates a skeletal configuration in the #{config/}# "
+"directory, to accomplish your goals, you may need to provide additional "
+"files in subdirectories of #{config/}#. Depending on where the files are "
+"stored in the configuration, they may be copied into the live system's "
+"filesystem or into the binary image filesystem, or may provide build-time "
+"configurations of the system that would be cumbersome to pass as command-"
+"line options. You may include things such as custom lists of packages, "
+"custom artwork, or hook scripts to run either at build time or at boot time, "
+"boosting the already considerable flexibility of debian-live with code of "
+"your own."
+msgstr ""
+"Mimo, że #{lb config}# tworzy konfigurację katalogów w #{config/}#, aby "
+"osiągnąć swoje cele, może być konieczne udostępnienie dodatkowych plików w "
+"podkatalogach #{config/}#. W zależności od tego, gdzie pliki są "
+"przechowywane w konfiguracji, mogą być skopiowane do systemu plików systemu "
+"live lub do binarnego obrazu systemu plików, lub mogą zostać zapewnione "
+"konfiguracje w czasie budowy systemu, które byłoby kłopotliwie do "
+"przekazania jako opcje wiersza polecenia. Można zawrzeć rzeczy takie jak "
+"niestandardowe listy pakietów, niestandardowa grafika lub inny skrypt do "
+"uruchomienia zarówno w czasie kompilacji jak i w czasie startu systemu, "
+"zwiększając już znaczną elastyczność debian-live swoim własnych kodem."
+
+#. type: Plain text
+#: en/user_customization-overview.ssi:24
+msgid "2~ Customization tasks"
+msgstr "2~ Zadania dostosowywania"
+
+# 'customizing contents' jako 'dostosowywanie zawartości'
+#. type: Plain text
+#: en/user_customization-overview.ssi:25
+msgid ""
+"The following chapters are organized by the kinds of customization task "
+"users typically perform: {Customizing package installation}#customizing-"
+"package-installation, {Customizing contents}#customizing-contents and "
+"{Customizing locale and language}#customizing-locale-and-language cover just "
+"a few of the things you might want to do."
+msgstr ""
+"Kolejne rozdziały są podzielone na rodzaje zadań dostosowywania, który "
+"użytkownicy zazwyczaj wykonują: {Dostosowywanie instalacji pakietu}"
+"#customizing-package-installation, {Dostosowywanie zawartości}#customizing-"
+"contents i {Dostosowywanie ustawień regionalnych i języka}#customizing-"
+"locale-and-language obejmują tylko niektóre z rzeczy, które możesz zrobić."

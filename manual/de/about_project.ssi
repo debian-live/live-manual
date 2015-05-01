@@ -1,0 +1,102 @@
+:B~ About the ${project}
+
+1~about-project About the ${project}
+
+2~ Motivation
+
+3~ What is wrong with current live systems
+
+When ${project} was initiated, there were already several Debian based live
+systems available and they are doing a great job. From the Debian
+perspective most of them have one or more of the following disadvantages:
+
+_* They are not Debian projects and therefore lack support from within
+Debian.
+
+_* They mix different distributions, e.g. *{testing}* and *{unstable}*.
+
+_* They support i386 only.
+
+_* They modify the behaviour and/or appearance of packages by stripping them
+down to save space.
+
+_* They include packages from outside of the Debian archive.
+
+_* They ship custom kernels with additional patches that are not part of
+Debian.
+
+_* They are large and slow due to their sheer size and thus not suitable for
+rescue issues.
+
+_* They are not available in different flavours, e.g. CDs, DVDs, USB-stick
+and netboot images.
+
+3~ Why create our own live system?
+
+Debian is the Universal Operating System: Debian has a live system to show
+around and to accurately represent the Debian system with the following main
+advantages:
+
+_* It is a subproject of Debian.
+
+_* It reflects the (current) state of one distribution.
+
+_* It runs on as many architectures as possible.
+
+_* It consists of unchanged Debian packages only.
+
+_* It does not contain any packages that are not in the Debian archive.
+
+_* It uses an unaltered Debian kernel with no additional patches.
+
+2~ Philosophy
+
+3~ Only unchanged packages from Debian "main"
+
+We will only use packages from the Debian repository in the "main"
+section. The non-free section is not part of Debian and therefore cannot be
+used for official live system images.
+
+We will not change any packages. Whenever we need to change something, we
+will do that in coordination with its package maintainer in Debian.
+
+As an exception, our own packages such as live-boot, live-build or
+live-config may temporarily be used from our own repository for development
+reasons (e.g. to create development snapshots). They will be uploaded to
+Debian on a regular basis.
+
+3~ No package configuration of the live system
+
+In this phase we will not ship or install sample or alternative
+configurations. All packages are used in their default configuration as they
+are after a regular installation of Debian.
+
+Whenever we need a different default configuration, we will do that in
+coordination with its package maintainer in Debian.
+
+A system for configuring packages is provided using debconf allowing custom
+configured packages to be installed in your custom produced live system
+images, but for the {prebuilt live images}#downloading-prebuilt-images we
+choose to leave packages in their default configuration, unless absolutely
+necessary in order to work in the live environment. Wherever possible, we
+prefer to adapt packages within the Debian archive to work better in a live
+system versus making changes to the live toolchain or {prebuilt image
+configurations}#clone-configuration-via-git. For more information, please
+see {Customization overview}#customization-overview.
+
+2~contact Contact
+
+_* *{Mailing list}*: The primary contact for the project is the mailing list
+at https://lists.debian.org/debian-live/. You can email the list directly by
+addressing your mail to debian-live@lists.debian.org. The list archives are
+available at https://lists.debian.org/debian-live/.
+
+_* *{IRC}*: A number of users and developers are present in the #debian-live
+channel on irc.debian.org (OFTC). When asking a question on IRC, please be
+patient for an answer. If no answer is forthcoming, please email the mailing
+list.
+
+_* *{BTS}*: The {Debian Bug Tracking System}https://www.debian.org/Bugs/
+(BTS) contains details of bugs reported by users and developers. Each bug is
+given a number, and is kept on file until it is marked as having been dealt
+with. For more information, please see {Reporting bugs}#bugs.

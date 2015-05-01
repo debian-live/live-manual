@@ -1,0 +1,151 @@
+:B~ Lo stile nello scrivere codice
+
+1~coding-style Lo stile nello scrivere codice
+
+This chapter documents the coding style used in live systems.
+
+2~ Compatibilità
+
+_* Non usare sintassi o semantiche mirate alla shell Bash. Ad esempio l'uso
+di costrutti array.
+
+_* Utilizzare solo il sottoinsieme POSIX - ad esempio, usare $(foo) invece
+di `foo`.
+
+_* È possibile verificare i propri script con "sh -n" e "checkbashisms".
+
+Assicurarsi che tutto il codice giri con 'set -e'.
+
+2~ Rientri
+
+_* Usare sempre i tab piuttosto che gli spazi.
+
+2~ Ritorno a capo
+
+_* Generalmente le righe sono composte da un massimo di 80 caratteri.
+
+_* Utilizzare lo "stile Linux" per le interruzioni di riga:
+
+Sbagliato:
+
+code{
+
+ if foo; then
+         bar
+ fi
+
+}code
+
+Corretto:
+
+code{
+
+ if foo
+ then
+         bar
+ fi
+
+}code
+
+_* Lo stesso vale per le funzioni:
+
+Sbagliato:
+
+code{
+
+ Foo () {
+         bar
+ }
+
+}code
+
+Corretto:
+
+code{
+
+ Foo ()
+ {
+         bar
+ }
+
+}code
+
+2~ Variabili
+
+_* Le variabili vanno sempre scritte in maiuscolo.
+
+_* Le variabili usate in live-build iniziano sempre con il prefisso #{LB_}#.
+
+_* Le variabili interne temporanee in live-build dovrebbero iniziare con il
+prefisso #{\_LB_}#.
+
+_* Le variabili locali iniziano con il prefisso live-build #{\_\_LB_}#.
+
+_* Le variabili in live-config relative ai parametri di avvio iniziano con
+#{LIVE_}#.
+
+_* Tutte le altre variabili in live-config iniziano con il prefisso #{_}#.
+
+_* Intorno alle variabili utilizzare le graffe; ad esempio scrivere
+#{${FOO}}# invece di #{$FOO}#.
+
+_* Proteggere sempre le variabili con le virgolette per rispettare
+potenziali spaziature: scrivere #{"${FOO}"}# e non #{${FOO}}#.
+
+_* Per coerenza usare sempre le virgolette quando si assegnano valori alle
+variabili:
+
+Sbagliato:
+
+code{
+
+ FOO=bar
+
+}code
+
+Corretto:
+
+code{
+
+ FOO="bar"
+
+}code
+
+_* Utilizzando variabili multiple, quotare l'intera espressione:
+
+Sbagliato:
+
+code{
+
+ if [ -f "${FOO}"/foo/"${BAR}"/bar ]
+ then
+         foobar
+ fi
+
+}code
+
+Corretto:
+
+code{
+
+ if [ -f "${FOO}/foo/${BAR}/bar" ]
+ then
+         foobar
+ fi
+
+}code
+
+2~ Varie
+
+_* Per le chiamate a sed utilizzare "#{|}#" (senza virgolette intorno) come
+separatore, ad esempio "#{sed -e 's|foo|bar|'}#" (senza "").
+
+_* Non utilizzare il comando #{test}# per prove o confronti, usare "#{[}#"
+"#{]}#" (senza ""); ad esempio "#{if [ -x /bin/foo ]; ...}#" e non "#{if
+test -x /bin/foo; ...}#".
+
+_* Ove possibile utilizzare #{case}# invece di #{test}#, essendo più facile
+da leggere e più veloce in esecuzione.
+
+_* Per le funzioni utilizzare nomi che iniziano con la maiuscola per
+limitare i problemi con le variabili d'ambiente dell'utente.

@@ -1,0 +1,64 @@
+:B~ Dostosowywanie obrazu binarnego
+
+1~customizing-binary Dostosowywanie obrazu binarnego
+
+2~ Programy ładujące (ang. Bootloadery)
+
+live-build używa /{syslinux}/ i niektórych jego pochodnych (w zależności od
+typu obrazu) w domyślnym programie ładującym (ang. bootloader). Można je
+łatwo dostosować do własnych potrzeb.
+
+W celu wykorzystania pełnego motywu, skopiuj
+#{/usr/share/live/build/bootloaders}# do #{config/bootloaders}# i ​​edytuj
+tam te pliki. Jeśli nie chcesz się martwić modyfikacją wszystkich
+obsługiwanych konfiguracji programu ładującego (ang. bootloader), tylko
+zapewnienie lokalnego zmodyfikowaną kopię jednego z typu programów, np. *
+{isolinux} * w # {config / programy ładujące / isolinux} # wystarczy też, w
+zależności od przypadku użycia.
+
+Podczas modyfikacji jednego z domyślnych motywów, jeśli chcesz korzystać z
+indywidualnego obrazu tła, który będzie wyświetlany razem z menu startowym,
+dodaj obraz splash.png 640x480 pikseli. Następnie usuń plik splash.svg.
+
+Istnieje wiele możliwości, jeśli chodzi o wprowadzanie zmian. Na przykład,
+pochodne syslinux mają domyślnie skonfigurowany limit czasowy (ang. timeout)
+na 0 (zero), co oznacza, że wstrzymają się one na czas nieokreślony na w ich
+ekranie powitalnym aż do naciśnięcia klawisza.
+
+Aby zmienić limit czasowy podczas rozruchu w domyślnym obrazie
+#{iso-hybrid}#  wystarczy zmienić domyślny plik  *{isolinux.cfg}* określając
+limit czasu (ang. timeout) w jednostkach 1/10 sekundy. Zmodyfikowany
+*{isolinux.cfg}* uruchamiający rozruch po pięciu sekundach byłby podobny do
+tego:
+
+code{
+
+ include menu.cfg
+ default vesamenu.c32
+ prompt 0
+ timeout 50
+
+}code
+
+2~ Metadane ISO
+
+Podczas tworzenia binarnego obrazu ISO9660, można korzystać z następujących
+opcji, aby dodać różne metadane tekstowe do obrazu. To może pomóc w
+identyfikacji wersji lub konfiguracji obrazu bez uruchamiania go.
+
+_* #{LB_ISO_APPLICATION/--iso-application NAZWA}#: Pole to powinno opisywać
+zastosowanie obrazu. Maksymalna długość tego pola wynosi 128 znaków.
+
+_* #{LB_ISO_PREPARER/--iso-preparer NAME}#: Pole to powinno opisywać
+przygotowującego obraz, zwykle z kilkoma danymi kontaktowymi. Domyślną
+wartością tej opcji jest używana wersja live-build, które może później pomóc
+przy debugowaniu. Maksymalna długość tego pola wynosi 128 znaków.
+
+_* #{LB_ISO_PUBLISHER/--iso-publisher NAME}#: Pole to powinno opisywać
+wydawcę obrazu, zwykle z kilkoma danymi kontaktowymi. Maksymalna długość
+tego pola wynosi 128 znaków.
+
+_* #{LB_ISO_VOLUME/--iso-volume NAME}#: Pole to powinno opisywać ID woluminu
+obrazu. Jest używane jako etykieta widoczna dla użytkownika na niektórych
+platformach, takich jak Windows i Apple Mac OS. Długość maksymalna dla tego
+pola to 32 znaków.

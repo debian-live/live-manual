@@ -1,0 +1,632 @@
+:B~ Nozioni di base
+
+1~the-basics Nozioni di base
+
+This chapter contains a brief overview of the build process and instructions
+for using the three most commonly used image types. The most versatile image
+type, #{iso-hybrid}#, may be used on a virtual machine, optical medium or
+USB portable storage device. In certain special cases, as explained later,
+the #{hdd}# type may be more suitable. The chapter includes detailed
+instructions for building and using a #{netboot}# type image, which is a bit
+more involved due to the setup required on the server. This is an slightly
+advanced topic for anyone who is not already familiar with netbooting, but
+it is included here because once the setup is done, it is a very convenient
+way to test and deploy images for booting on the local network without the
+hassle of dealing with image media.
+
+The section finishes with a quick introduction to {webbooting}#webbooting
+which is, perhaps, the easiest way of using different images for different
+purposes, switching from one to the other as needed using the internet as a
+means.
+
+In tutto il capitolo faremo spesso riferimento ai nomi dei file predefiniti
+creati da live-build. Se invece si {scarica un'immagine
+precompilata}#downloading-prebuilt-images, i nomi possono variare.
+
+2~what-is-live Cos'è un sistema live?
+
+Per sistema live generalmente si intende un sistema operativo che può essere
+avviato da un supporto rimovibile, come un CD-ROM o una chiavetta USB oppure
+da una rete, pronto per l'uso senza alcuna installazione su hard disk con
+una configurazione automatica fatta durante l'esecuzione (vedere
+{Glossario}#terms).
+
+With live systems, it's an operating system, built for one of the supported
+architectures (currently amd64 and i386). It is made from the following
+parts:
+
+_* *{Immagine del kernel Linux}*, comunemente chiamata #{vmlinuz*}#
+
+_* *{Initial RAM disk image (initrd)}*: un disco RAM creato per il boot di
+Linux, contenente i moduli potenzialmente necessari per montare l'immagine
+di sistema e alcuni script per farlo.
+
+_* *{System image}*: The operating system's filesystem image. Usually, a
+SquashFS compressed filesystem is used to minimize the live system image
+size. Note that it is read-only. So, during boot the live system will use a
+RAM disk and 'union' mechanism to enable writing files within the running
+system. However, all modifications will be lost upon shutdown unless
+optional persistence is used (see {Persistence}#persistence).
+
+_* *{Bootloader}*: una piccola porzione di codice predisposto per l'avvio
+dal supporto scelto, che presenta un prompt o un menu per la selezione di
+opzioni/configurazioni. Carica il kernel Linux ed il suo initrd da eseguire
+con un filesystem associato. Possono essere usate diverse soluzioni, in base
+al supporto di destinazione ed al formato del filesystem contenenti le
+componenti precedentemente citate: isolinux per il boot da CD o DVD nel
+formato ISO9660, syslinux per supporti HDD o USB che si avviano da una
+partizione VFAT, extlinux per le partizioni ext/2/3/4 e btrfs, pxelinux per
+il netboot PXE, GRUB per partizioni ext2/3/4, ecc.
+
+È possibile usare live-build per creare l'immagine di sistema secondo le
+proprie specifiche, scegliere un kernel Linux, il suo initrd ed un
+bootloader per avviarli, tutto in un unico formato che dipende dal mezzo
+(immagini ISO9660, immagine disco, ecc.)
+
+2~downloading-prebuilt-images Scaricare immagini precompilate
+
+Nonostante l'obiettivo di questo manuale è di sviluppare e creare le proprie
+immagini live si potrebbe semplicemente voler provare una di quelle
+precompilate, sia come introduzione al loro uso o per costruirne una
+propria. Queste immagini sono create utilizzando il nostro {repository git
+live-imagesy}#clone-configuration-via-git e i rilasci ufficiali di stable
+pubblicati all'indirizzo https://www.debian.org/CD/live/. In aggiunta,
+all'indirizzo http://live-systems.org/cdimage/release/ sono disponibili le
+versioni vecchie e future e le immagini non ufficiali contenenti firmware e
+driver non-free.
+
+2~using-web-builder Utilizzare il web builder per le immagini live
+
+As a service to the community, we run a web-based live image builder service
+at http://live-systems.org/build/. This site is maintained on a best effort
+basis. That is, although we strive to keep it up-to-date and operational at
+all times, and do issue notices for significant operational outages, we
+cannot guarantee 100% availability or fast image building, and the service
+may occasionally have issues that take some time to resolve. If you have
+problems or questions about the service, please {contact us}#contact,
+providing us with the link to your build.
+
+3~ Utilizzo del web builder e raccomandazioni
+
+The web interface currently makes no provision to prevent the use of invalid
+combinations of options, and in particular, where changing an option would
+normally (i.e. using live-build directly) change defaults of other options
+listed in the web form, the web builder does not change these defaults. Most
+notably, if you change #{--architectures}# from the default #{i386}# to
+#{amd64}#, you must change the corresponding option #{--linux-flavours}#
+from the default #{586}# to #{amd64}#. See the #{lb_config}# man page for
+the version of live-build installed on the web builder for more details. The
+version number of live-build is listed at the bottom of the web builder
+page.
+
+Le tempistiche fornite dal web builder sono solo una stima approssimata e
+possono non riflettere quanto realmente ci vorrà per compilare, né vengono
+aggiornate una volta apparse. Vi preghiamo di essere pazienti e di non
+aggiornare la pagina dopo aver commissionato la compilazione in quanto
+invierà la richiesta per una nuova operazione con gli stessi parametri. Se,
+dopo aver aspettato a sufficienza e verificato che l'email non sia finita
+nello spam, non ricevete alcuna notifica allora {contattateci}#contact.
+
+Il web builder ha un limite di tipologie di immagini creabili, mantenendosi
+semplice e efficiente da utilizzare e manutenere. Le personalizzazioni non
+sono fornite dall'interfaccia web, il resto di questo manuale sipega come
+creare le proprie immagini tramite live-build.
+
+2~building-iso-hybrid Primi passi: creare un'immagine ISO ibrida
+
+Indipendentemente dal tipo di immagine, per crearne una è necessario
+eseguire ogni volta la stessa procedura. Come primo esempio si creerà una
+directory di lavoro, vi si entrerà e si eseguirà la seguente sequenza di
+comandi di live-build per creare un'immagine ISO ibrida di base contenente
+un sistema live predefinito senza X.org. È adatta per essere masterizzata su
+CD o DVD e anche per essere copiata su una penna USB.
+
+Il nome della directory di lavoro è arbitrario ma guardando gli esempi usati
+da live-manual è una buona idea utilizzare un nome che aiuta a identificare
+in qualsiasi directory l'immagine su cui si sta lavorando, in particolar
+modo se si stanno sperimentando tipi di di immagine differenti. In questo
+caso stiamo creando un sistema predefinito quindi chiamiamolo ad esempio
+live-default.
+
+code{
+
+ $ mkdir live-default && cd live-default
+
+}code
+
+Then, run the #{lb config}# command. This will create a "config/" hierarchy
+in the current directory for use by other commands:
+
+code{
+
+ $ lb config
+
+}code
+
+No parameters are passed to these commands, so defaults for all of their
+various options will be used. See {The lb config command}#lb-config for more
+details.
+
+Ora che si ha una gerarchia "config/" si può generare l'immagine con il
+comando #{lb build}#:
+
+code{
+
+ # lb build
+
+}code
+
+This process can take a while, depending on the speed of your computer and
+your network connection. When it is complete, there should be a
+#{live-image-i386.hybrid.iso}# image file, ready to use, in the current
+directory.
+
+*{Note:}* If you are building on an amd64 system the name of the resulting image will be #{live-image-amd64.hybrid.iso}#. Keep in mind this naming convention throughout the manual.
+
+2~using-iso-hybrid Utilizzare un'immagine ISO live ibrida
+
+Dopo aver costruito o scaricato un'immagine ISO ibrida, ottenibile
+all'indirizzo https://www.debian.org/CD/live/, il passo successivo è
+preparare il supporto per l'avvio, che sia esso un CD-R(W), un DVD-R(W) o
+una penna USB.
+
+3~burning-iso-image Masterizzare un'immagine ISO su un supporto fisico
+
+Masterizzare un'immagine ISO è semplice, basta installare /{xorriso}/ e
+utilizzarlo da riga di comando; ad esempio:
+
+code{
+
+ # apt-get install xorriso
+ $ xorriso -as cdrecord -v dev=/dev/sr0 blank=as_needed live-image-i386.hybrid.iso
+
+}code
+
+3~copying-iso-hybrid-to-usb Copiare un'immagine ISO ibrida su una penna USB
+
+ISO images prepared with #{xorriso}#, can be simply copied to a USB stick
+with the #{cp}# program or an equivalent. Plug in a USB stick with a size
+large enough for your image file and determine which device it is, which we
+hereafter refer to as #{${USBSTICK}}#. This is the device file of your key,
+such as #{/dev/sdb}#, not a partition, such as #{/dev/sdb1}#! You can find
+the right device name by looking in #{dmesg}#'s output after plugging in the
+stick, or better yet, #{ls -l /dev/disk/by-id}#.
+
+Once you are certain you have the correct device name, use the #{cp}#
+command to copy the image to the stick.  *{This will definitely overwrite
+any previous contents on your stick!}*
+
+code{
+
+ $ cp live-image-i386.hybrid.iso ${USBSTICK}
+ $ sync
+
+}code
+
+*{Note:}* The /{sync}/ command is useful to ensure that all the data, which is stored in memory by the kernel while copying the image, is written to the USB stick.
+
+3~using-usb-extra-space Usare lo spazio rimanente su una penna USB
+
+After copying the #{live-image-i386.hybrid.iso}# to a USB stick, the first
+partition on the device will be filled up by the live system. To use the
+remaining free space, use a partitioning tool such as /{gparted}/ or
+/{parted}/ to create a new partition on the stick.
+
+code{
+
+ # gparted ${USBSTICK}
+
+}code
+
+Dopo aver creato la partizione, dove #{${PARTITION}}# è il nome della
+partizione, ad esempio #{/dev/sdb2}#, si deve creare su di essa un
+filesystem. Una scelta possibile potrebbe essere ext4.
+
+code{
+
+ # mkfs.ext4 ${PARTITION}
+
+}code
+
+*{Nota:}* se si desidera utilizzare lo spazio extra con Windows pare che questo sistema operativo non possa accedere a nessuna partizione eccetto la prima. Alcune soluzioni a questo problema sono state discusse sulla nostra {mailing list}#contact, ma non sembrano esserci risposte semplici.
+
+*{Remember: Every time you install a new live-image-i386.hybrid.iso on the stick, all data on the stick will be lost because the partition table is overwritten by the contents of the image, so back up your extra partition first to restore again after updating the live image.}*
+
+3~booting-live-media Avviare il supporto live
+
+La prima volta che si avvia il supporto live, CD, DVD, penna USB o PXE, può
+essere necessario impostare il BIOS del computer, ma giacché questi variano
+parecchio in opzioni e scorciatoie, non siamo in grado di
+descriverli. Alcuni BIOS offrono un menu per selezionare il device in fase
+di boot, in caso sia disponibile nel vostro sistema è il modo più
+semplice. Altrimenti è necessario accedere alla sua configurazione e
+modificare l'ordine di avvio per posizionare la periferica di boot del
+sistema live prima di quella usuale.
+
+Avviando il supporto si otterrà un menu, premendo il tasto enter il sistema
+partirà utilizzando la voce #{Live}# e le opzioni predefinite. Per ulteriori
+informazioni sulle opzioni di boot, si veda la voce "help" nel menu e le
+pagine di manuale di live-boot e live-config all'interno del sistema.
+
+Assuming you've selected #{Live}# and booted a default desktop live image,
+after the boot messages scroll by, you should be automatically logged into
+the #{user}# account and see a desktop, ready to use. If you have booted a
+console-only image, such as a #{standard}# flavour {prebuilt
+image}#downloading-prebuilt-images, you should be automatically logged in on
+the console to the #{user}# account and see a shell prompt, ready to use.
+
+2~using-virtual-machine Utilizzare una macchina virtuale per le prove
+
+Per lo sviluppo delle immagini live, può essere un notevole risparmio di
+tempo eseguirle in una macchina virtuale (VM). Non senza qualche
+raccomandazione:
+
+_* Eseguire una VM richiede un quantitativo sufficiente di RAM sia per il
+sistema ospitato che per quello ospitante; è consigliato un processore che
+gestisca la virtualizzazione a livello hardware.
+
+_* Ci sono alcune limitazioni inerenti, quali uno scarso rendimento video e
+una scelta limitata di hardware emulato.
+
+_* Quando si sviluppa per un hardware specifico non vi è alcun sostituto
+migliore del proprio hardware.
+
+_* Occasionalmente possono esserci dei bug relativi al solo utilizzo di una
+VM. Nel dubbio si provi l'immagine direttamente sul proprio hardware.
+
+A condizione che si possa lavorare entro questi vincoli, cercare il software
+disponibile per la virtualizzazione e scegliere quello adatto alle proprie
+necessità.
+
+3~testing-iso-with-qemu Provare un'immagine ISO con QEMU
+
+Il programma più versatile in Debian è QEMU. Se il processore gestisce la
+virtualizzazione hardware utilizzare il pacchetto /{qemu-kvm}/; la
+descrizione elenca brevemente i requisiti.
+
+Per prima cosa installare /{qemu-kvm}/ o altrimenti /{qemu}/, nel qual caso
+il nome del programma nei successivi sarà #{qemu}# invece di #{kvm}#. Il
+pacchetto /{qemu-utils}/ è inoltre utile per creare immagini di dischi
+virtuali con #{qemu-img}#.
+
+code{
+
+ # apt-get install qemu-kvm qemu-utils
+
+}code
+
+Avviare un'immagine ISO è semplice:
+
+code{
+
+ $ kvm -cdrom live-image-i386.hybrid.iso
+
+}code
+
+Per maggiori dettagli si vedano le pagine di manuale.
+
+3~testing-iso-with-virtualbox Testing an ISO image with VirtualBox
+
+Per provare la ISO con /{virtualbox}/:
+
+code{
+
+ # apt-get install virtualbox virtualbox-qt virtualbox-dkms
+ $ virtualbox
+
+}code
+
+Create a new virtual machine, change the storage settings to use
+#{live-image-i386.hybrid.iso}# as the CD/DVD device, and start the machine.
+
+*{Nota:}* per sistemi live contenenti X.org che si vogliono provare con /{virtualbox}/, si può voler includere il pacchetto dei driver per X.org di VirtualBox, /{virtualbox-guest-dkms}/ e /{virtualbox-guest-x11}/, nella configurazione di live-build. In caso contrario la risoluzione è limitata a 800x600.
+
+code{
+
+ $ echo "virtualbox-guest-dkms virtualbox-guest-x11" >> config/package-lists/my.list.chroot
+
+}code
+
+Per far funzionare il pacchetto dkms vanno anche installati gli header per
+il kernel utilizzato nell'immagine. Anziché indicare manualmente il
+pacchetto /{linux-headers}/ adeguato nell'elenco dei pacchetti creato prima,
+la selezione può essere fatta automaticamente da live-build.
+
+code{
+
+  $ lb config --linux-packages "linux-image linux-headers"
+
+}code
+
+2~using-hdd-image Creare e utilizzare un'immagine HDD
+
+Building an HDD image is similar to an ISO hybrid one in all respects except
+you specify #{-b hdd}# and the resulting filename is #{live-image-i386.img}#
+which cannot be burnt to optical media. It is suitable for booting from USB
+sticks, USB hard drives, and various other portable storage
+devices. Normally, an ISO hybrid image can be used for this purpose instead,
+but if you have a BIOS which does not handle hybrid images properly, you
+need an HDD image.
+
+*{Nota:}* se si è creata un'immagine ISO ibrida con gli esempi precedenti, occorre pulire la directory di lavoro con il comando #{lb clean}# (vedere {Il comando lb clean}#lb-clean):
+
+code{
+
+ # lb clean --binary
+
+}code
+
+Eseguire il comando #{lb config}# come prima, questa volta specificando però
+il tipo di immagine HDD:
+
+code{
+
+ $ lb config -b hdd
+
+}code
+
+Creare ora l'immagine con il comando #{lb build}#:
+
+code{
+
+ # lb build
+
+}code
+
+When the build finishes, a #{live-image-i386.img}# file should be present in
+the current directory.
+
+The generated binary image contains a VFAT partition and the syslinux
+bootloader, ready to be directly written on a USB device. Once again, using
+an HDD image is just like using an ISO hybrid one on USB. Follow the
+instructions in {Using an ISO hybrid live image}#using-iso-hybrid, except
+use the filename #{live-image-i386.img}# instead of
+#{live-image-i386.hybrid.iso}#.
+
+Likewise, to test an HDD image with Qemu, install /{qemu}/ as described
+above in {Testing an ISO image with QEMU}#testing-iso-with-qemu. Then run
+#{kvm}# or #{qemu}#, depending on which version your host system needs,
+specifying #{live-image-i386.img}# as the first hard drive.
+
+code{
+
+ $ kvm -hda live-image-i386.img
+
+}code
+
+2~building-netboot-image Creare un'immagine netboot
+
+La seguente sequenza di comandi creerà un'immagine netboot di base
+contenente un sistema live predefinito senza X.org. È adatta per il boot
+tramite rete.
+
+*{Nota:}* se qualcuno tra gli esempi precedenti è stato seguito, bisogna pulire la directory di lavoro con il comando #{lb clean}#:
+
+code{
+
+ # lb clean
+
+}code
+
+In this specific case, a #{lb clean --binary}# would not be enough to clean
+up the necessary stages. The cause for this is that in netboot setups, a
+different initramfs configuration needs to be used which live-build performs
+automatically when building netboot images. Since the initramfs creation
+belongs to the chroot stage, switching to netboot in an existing build
+directory means to rebuild the chroot stage too. Therefore, #{lb clean}#
+(which will remove the chroot stage, too) needs to be used.
+
+Per configurare l'immagine per l'avvio da rete, eseguire il comando #{lb
+config}# come segue:
+
+code{
+
+ $ lb config -b netboot --net-root-path "/srv/debian-live" --net-root-server "192.168.0.2"
+
+}code
+
+Diversamente dalle immagini ISO e HDD, il boot via rete non fornisce
+un'immagine del filesytem al client, perciò i file devono essere forniti via
+NFS. Con lb config si possono scegliere filesystem di rete diefferenti. Le
+opzioni #{--net-root-path}# e #{--net-root-server}# specificano,
+rispettivamente, il percorso e il server del server NFS dove l'immagine del
+filesystem sarà situata all'avvio. Accertarsi che questi siano impostati su
+valori adeguati alla propria rete.
+
+Creare ora l'immagine con il comando #{lb build}#:
+
+code{
+
+ # lb build
+
+}code
+
+In un avvio tramite rete, il client esegue una piccola parte di software che
+normalmente risiede sulla EPROM della scheda Ethernet. Questo programma
+invia una richiesta DHCP per ottenere un indirizzo IP e le informazioni su
+cosa fare in seguito. In genere il passo successivo è ottenere un bootloader
+di di livello superiore attraverso il protocollo TFTP. Questi potrebbe
+essere pxelinux, GRUB, o anche avviare direttamente un sistema operativo
+come Linux.
+
+For example, if you unpack the generated #{live-image-i386.netboot.tar}#
+archive in the #{/srv/debian-live}# directory, you'll find the filesystem
+image in #{live/filesystem.squashfs}# and the kernel, initrd and pxelinux
+bootloader in #{tftpboot/}#.
+
+We must now configure three services on the server to enable netbooting: the
+DHCP server, the TFTP server and the NFS server.
+
+3~ Server DHCP
+
+Si deve configurare il server DHCP della rete per essere sicuri di fornire
+un indirizzo IP al sistema client che si avvia tramite rete, e notificare la
+posizione del bootloader PXE.
+
+Ecco un esempio, scritto per un server DHCP ISC #{isc-dhcp-server}# nel file
+di configurazione #{/etc/dhcp/dhcpd.conf}#:
+
+code{
+
+ # /etc/dhcp/dhcpd.conf - configuration file for isc-dhcp-server
+
+ ddns-update-style none;
+
+ option domain-name "example.org";
+ option domain-name-servers ns1.example.org, ns2.example.org;
+
+ default-lease-time 600;
+ max-lease-time 7200;
+
+ log-facility local7;
+
+ subnet 192.168.0.0 netmask 255.255.255.0 {
+   range 192.168.0.1 192.168.0.254;
+   filename "pxelinux.0";
+   next-server 192.168.0.2;
+   option subnet-mask 255.255.255.0;
+   option broadcast-address 192.168.0.255;
+   option routers 192.168.0.1;
+}
+
+}code
+
+3~ Server TFTP
+
+Fornisce al sistema il kernel e il ramdisk iniziale in fase di esecuzione.
+
+Si installi il pacchetto /{tftpd-hpa}/, che mette a disposizione tutti i
+file contenuti in una directory root, di solito #{/srv/tftp}#. Affinché si
+possa disporre dei file contenuti in #{/srv/debian-live/tftpboot}#, eseguire
+il seguente comando come utente root:
+
+code{
+
+ # dpkg-reconfigure -plow tftpd-hpa
+
+}code
+
+e inserire la nuova directory del server tftp quando richiesto.
+
+3~ Server NFS
+
+Una volta che il computer ospite ha scaricato e avviato un kernel Linux e
+caricato il suo initrd, cercherà di montare l'immagine del filesystem Live
+tramite un server NFS.
+
+Bisogna installare il pacchetto /{nfs-kernel-server}/.
+
+Quindi, rendere disponibile l'immagine del filesystem via NFS aggiungendo
+una riga come la seguente in #{/etc/exports}#:
+
+code{
+
+ /srv/debian-live *(ro,async,no_root_squash,no_subtree_check)
+
+}code
+
+e comunicare il nuovo export al server NFS con il seguente comando:
+
+code{
+
+ # exportfs -rv
+
+}code
+
+Configurare questi tre servizi può essere un po' problematico, serve un
+attimo di pazienza per farli funzionare assieme. Per ulteriori informazioni
+vedere il wiki syslinux http://www.syslinux.org/wiki/index.php/PXELINUX o il
+manuale del Debian Installer alla sezione per l'avvio TFTP da rete
+http://d-i.alioth.debian.org/manual/en.i386/ch04s05.html. Ciò può essere
+d'aiuto, considerato che il procedimento è molto simile.
+
+3~ Come provare una netboot
+
+La creazione di immagini netboot è resa semplice da live-build, ma provare
+le immagini su una macchina reale può essere davvero dispendioso in termini
+di tempo.
+
+Per semplificarsi il vita si può usare la virtualizzazione.
+
+3~ Qemu
+
+_* Installare /{qemu}/, /{bridge-utils}/, /{sudo}/.
+
+Modificare #{/etc/qemu-ifup}#:
+
+code{
+
+ #!/bin/sh
+ sudo -p "Password for $0:" /sbin/ifconfig $1 172.20.0.1
+ echo "Executing /etc/qemu-ifup"
+ echo "Bringing up $1 for bridged mode..."
+ sudo /sbin/ifconfig $1 0.0.0.0 promisc up
+ echo "Adding $1 to br0..."
+ sudo /usr/sbin/brctl addif br0 $1
+ sleep 2
+
+}code
+
+Procurarsi o compilare #{grub-floppy-netboot}#.
+
+Lanciare #{qemu}# con "#{-net nic,vlan=0 -net tap,vlan=0,ifname=tun0}#"
+
+2~webbooting Webbooting
+
+Webbooting is a convenient way of retrieving and booting live systems using
+the internet as a means. The requirements for webbooting are very few. On
+the one hand, you need a medium with a bootloader, an initial ramdisk and a
+kernel. On the other hand, a web server to store the squashfs files which
+contain the filesystem.
+
+3~ Getting the webboot files
+
+As usual, you can build the images yourself or use the prebuilt files, which
+are available on the project's homepage at http://live-systems.org/. Using
+prebuilt images would be handy for doing initial testing until one can fine
+tune their own needs. If you have built a live image you will find the files
+needed for webbooting in the build directory under #{binary/live/}#. The
+files are called #{vmlinuz}#, #{initrd.img}# and #{filesystem.squashfs}#.
+
+It is also possible to extract those files from an already existing iso
+image. In order to achieve that, loopback mount the image as follows:
+
+code{
+
+ # mount -o loop image.iso /mnt
+
+}code
+
+The files are to be found under the #{live/}# directory. In this specific
+case, it would be #{/mnt/live/}#. This method has the disadvantage that you
+need to be root to be able to mount the image. However, it has the advantage
+that it is easily scriptable and thus, easily automatized.
+
+But undoubtedly, the easiest way of extracting the files from an iso image
+and uploading it to the web server at the same time, is using the midnight
+commander or /{mc}/. If you have the /{genisoimage}/ package installed, the
+two-pane file manager allows you to browse the contents of an iso file in
+one pane and upload the files via ftp in the other pane. Even though this
+method requires manual work, it does not require root privileges.
+
+3~ Booting webboot images
+
+While some users will prefer virtualization to test webbooting, we refer to
+real hardware here to match the following possible use case which should
+only be considered as an example.
+
+In order to boot a webboot image it is enough to have the components
+mentioned above, i.e. #{vmlinuz}# and #{initrd.img}# in a usb stick inside a
+directory named #{live/}# and install syslinux as bootloader. Then boot from
+the usb stick and type #{fetch=URL/PATH/TO/FILE}# at the boot
+options. live-boot will retrieve the squashfs file and store it into
+ram. This way, it is possible to use the downloaded compressed filesystem as
+a regular live system. For example:
+
+code{
+
+ append boot=live components fetch=http://192.168.2.50/images/webboot/filesystem.squashfs
+
+}code
+
+*{Use case:}* You have a web server in which you have stored two squashfs files, one which contains a full desktop, like for example gnome, and a standard one. If you need a graphical environment for one machine, you can plug your usb stick in and webboot the gnome image. If you need one of the tools included in the second type of image, perhaps for another machine, you can webboot the standard one.

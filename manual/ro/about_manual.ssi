@@ -1,0 +1,268 @@
+:B~ Despre acest manual
+
+1~about-manual Despre acest manual
+
+This manual serves as a single access point to all documentation related to
+the ${project} and in particular applies to the software produced by the
+project for the Debian 9.0 "${stable}" release. An up-to-date version can
+always be found at http://live-systems.org/
+
+While live-manual is primarily focused on helping you build a live system
+and not on end-user topics, an end user may find some useful information in
+these sections: {The Basics}#the-basics covers downloading prebuilt images
+and preparing images to be booted from media or the network, either using
+the web builder or running live-build directly on your system. {Customizing
+run time behaviours}#customizing-run-time-behaviours describes some options
+that may be specified at the boot prompt, such as selecting a keyboard
+layout and locale, and using persistence.
+
+Anumite comenzi din text trebuie sa fie executate ca 'super_utilizator',
+privilegiu care poate fi obtinut fie prin comanda #{su}#, sau
+#{sudo}#. Pentru a distinge intre acesti utilizatori se vor folosi #{$}#
+respectiv #{#}# . Aceste simboluri nu fac parte din comenzi.
+
+2~ For the impatient
+
+While we believe that everything in this manual is important to at least
+some of our users, we realize it is a lot of material to cover and that you
+may wish to experience early success using the software before delving into
+the details. Therefore, we suggest reading in the following order.
+
+First, read this chapter, {About this manual}#about-manual, from the
+beginning and ending with the {Terms}#terms section. Next, skip to the three
+tutorials at the front of the {Examples}#examples section designed to teach
+you image building and customization basics. Read {Using the
+examples}#using-the-examples first, followed by {Tutorial 1: A default
+image}#tutorial-1, {Tutorial 2: A web browser utility}#tutorial-2 and
+finally {Tutorial 3: A personalized image}#tutorial-3. By the end of these
+tutorials, you will have a taste of what can be done with live systems.
+
+We encourage you to return to more in-depth study of the manual, perhaps
+next reading {The basics}#the-basics, skimming or skipping {Building a
+netboot image}#building-netboot-image, and finishing by reading the
+{Customization overview}#customization-overview and the chapters that follow
+it. By this point, we hope you are thoroughly excited by what can be done
+with live systems and motivated to read the rest of the manual,
+cover-to-cover.
+
+2~terms Termeni
+
+_* *{Live system}*: An operating system that can boot without installation
+to a hard drive. Live systems do not alter local operating system(s) or
+file(s) already installed on the computer hard drive unless instructed to do
+so. Live systems are typically booted from media such as CDs, DVDs or USB
+sticks. Some may also boot over the network (via netboot images, see
+{Building a netboot image}#building-netboot-image), and over the Internet
+(via the boot parameter #{fetch=URL}#, see {Webbooting}#webbooting).
+
+_* *{Live medium}*: As distinct from live system, the live medium refers to
+the CD, DVD or USB stick where the binary produced by live-build and used to
+boot the live system is written. More broadly, the term also refers to any
+place where this binary resides for the purposes of booting the live system,
+such as the location for the network boot files.
+
+_* *{${project}}*: The project which maintains, among others, the live-boot,
+live-build, live-config, live-tools and live-manual packages.
+
+_* *{Host system}*: Mediul folosit pentru crearea sistemului live pe un
+sistem dat.
+
+_* *{Target system}*: Mediul folosit pentru rularea sistemului live.
+
+_* *{live-boot}*: O coloctie se scripte folosite la pornirea sistemului
+live.
+
+_* *{live-build}*: A collection of scripts used to build customized live
+systems.
+
+_* *{live-config}*: O colectie de scripte folosite la configurarea sitemului
+live in timpul procesului de pornire.
+
+_* *{live-tools}*: A collection of additional scripts used to perform useful
+tasks within a running live system.
+
+_* *{live-manual}*: Acest document face parte din pachetul numit
+live-manual.
+
+_* *{Debian Installer (d-i)}*: Sistemul de instalare oficial pentru
+distributia Debian.
+
+_* *{Boot parameters}*: Parameti care pot fi adaugati la promptul
+bootloader-ului care sa infuenteze kernelul sau live-config.
+
+_* *{chroot}*: Programul /{chroot}/, #{chroot(8)}#, permite rularea a
+diferite instante din mediul GNU/Linux pe un singur sistem si in simultan
+fara a necesita o repornire a sistemului.
+
+_* *{Binary image}*: A file containing the live system, such as
+live-image-i386.hybrid.iso or live-image-i386.img.
+
+_* *{Target distribution}*: Dea pe care se bazeaza sistemul live. Aceasta
+distributie poate fi diferita de cea a sistemului gazda.
+
+_* *{stable/testing/unstable}*: The *{stable}* distribution, currently
+codenamed ${stable}, contains the latest officially released distribution of
+Debian. The *{testing}* distribution, temporarily codenamed ${testing}, is
+the staging area for the next *{stable}* release. A major advantage of using
+this distribution is that it has more recent versions of software relative
+to the *{stable}* release. The *{unstable}* distribution, permanently
+codenamed sid, is where active development of Debian occurs. Generally, this
+distribution is run by developers and those who like to live on the
+edge. Throughout the manual, we tend to use codenames for the releases, such
+as ${testing} or sid, as that is what is supported by the tools themselves.
+
+2~ Autori
+
+Lista autorilor (in ordine alfabetica):
+
+_* Ben Armstrong
+
+_* Brendan Sleight
+
+_* Carlos Zuferri
+
+_* Chris Lamb
+
+_* Daniel Baumann
+
+_* Franklin Piat
+
+_* Jonas Stein
+
+_* Kai Hendry
+
+_* Marco Amadori
+
+_* Mathieu Geli
+
+_* Matthias Kirschner
+
+_* Richard Nelson
+
+_* Trent W. Buck
+
+2~how-to-contribute Cum se poate contribui la acest document
+
+This manual is intended as a community project and all proposals for
+improvements and contributions are extremely welcome. Please see the section
+{Contributing to the project}#contributing-to-project for detailed
+information on how to fetch the commit key and make good commits.
+
+3~applying-changes Applying changes
+
+In order to make changes to the English manual you have to edit the right
+files in #{manual/en/}# but prior to the submission of your contribution,
+please preview your work. To preview the live-manual, ensure the packages
+needed for building it are installed by executing:
+
+code{
+
+ # apt-get install make po4a ruby ruby-nokogiri sisu-complete
+
+}code
+
+Pute-ti crea live-manual de la nivelul de sus al directorului Git checkout
+al dvs, prin executatea:
+
+code{
+
+ $ make build
+
+}code
+
+Since it takes a while to build the manual in all supported languages,
+authors may find it convenient to use one of the fast proofing shortcuts
+when reviewing the new documentation they have added to the English
+manual. Using #{PROOF=1}# builds live-manual in html format, but without the
+segmented html files, and using #{PROOF=2}# builds live-manual in pdf
+format, but only the A4 and letter portraits. That is why using either of
+the #{PROOF=}# possibilities can save up a considerable amount of time, e.g:
+
+code{
+
+ $ make build PROOF=1
+
+}code
+
+When proofing one of the translations it is possible to build only one
+language by executing, e.g:
+
+code{
+
+ $ make build LANGUAGES=de
+
+}code
+
+It is also possible to build by document type, e.g:
+
+code{
+
+ $ make build FORMATS=pdf
+
+}code
+
+Or combine both, e.g:
+
+code{
+
+ $ make build LANGUAGES=de FORMATS=html
+
+}code
+
+After revising your work and making sure that everything is fine, do not use
+#{make commit}# unless you are updating translations in the commit, and in
+that case, do not mix changes to the English manual and translations in the
+same commit, but use separate commits for each. See the
+{Translation}#translation section for more details.
+
+3~translation Translation
+
+In order to translate live-manual, follow these steps depending on whether
+you are starting a translation from scratch or continue working on an
+already existing one:
+
+_* Start a new translation from scratch
+
+_2* Translate the *{about_manual.ssi.pot}*, *{about_project.ssi.pot}* and
+*{index.html.in.pot}* files in #{manual/pot/}# to your language with your
+favourite editor (such as /{poedit}/) and send the translated #{.po}# files
+to the mailing list to check their integrity. live-manual's integrity check
+not only ensures that the #{.po}# files are 100% translated but it also
+detects possible errors.
+
+_2* Once checked, to enable a new language in the autobuild it is enough to
+add the initial translated files to #{manual/po/${LANGUAGE}/}# and run
+#{make commit}#. And then, edit #{manual/_sisu/home/index.html}# adding the
+name of the language and its name in English between brackets.
+
+_* Continue with an already started translation
+
+_2* If your target language has already been added, you can randomly
+continue translating the remaining .po files in #{manual/po/${LANGUAGE}/}#
+using your favourite editor (such as /{poedit}/).
+
+_2* Do not forget that you need to run #{make commit}# to ensure that the
+translated manuals are updated from the .po files and then you can review
+your changes launching #{make build}# before #{git add .}#, #{git commit -m
+"Translating..."}# and #{git push}#. Remember that since #{make build}# can
+take a considerable amount of time, you can proofread languages individually
+as explained in {Applying changes}#applying-changes
+
+After running #{make commit}# you will see some text scroll by. These are
+basically informative messages about the processing status and also some
+hints about what can be done in order to improve live-manual. Unless you see
+a fatal error, you usually can proceed and submit your contribution.
+
+live-manual comes with two utilities that can greatly help translators to
+find untranslated and changed strings. The first one is "make translate". It
+launches an script that tells you in detail how many untranslated strings
+there are in each .po file. The second one, the "make fixfuzzy" target, only
+acts upon changed strings but it helps you to find and fix them one by one.
+
+Keep in mind that even though these utilities might be really helpful to do
+translation work on the command line, the use of an specialized tool like
+/{poedit}/ is the recommended way to do the task. It is also a good idea to
+read the Debian localization (l10n) documentation and, specifically to
+live-manual, the {Guidelines for translators}#guidelines-translators.
+
+*{Note:}* You can use #{make clean}# to clean your git tree before pushing. This step is not compulsory thanks to the .gitignore file but it is a good practice to avoid committing files involuntarily.

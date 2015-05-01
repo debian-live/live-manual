@@ -1,0 +1,452 @@
+:B~ Przykłady
+
+1~examples Przykłady
+
+W tym rozdziale omówiono przykłady budowania dla konkretnych przypadków
+użycia z systemów live. Jeśli jesteś nowy w budowaniu własnych obrazów
+systemów live, zaleca się najpierw zapoznanie z trzema kolejnymi
+samouczkami, a każdy z nich nauczy Cię nowych technik, które pomogą Ci
+używać i rozumieć pozostałe przykłady.
+
+2~using-the-examples Używanie przykładów
+
+Aby skorzystać z tych przykładów potrzebujesz systemu, który spełnia
+wymagania wymienione w {wymaganiach}#requirements i ma zainstalowane
+live-build, jak opisano w {instalacji live-build}#installing-live-build.
+
+Należy zauważyć, że, ze względu na zwięzłość, w tych przykładach nie
+określono lokalnego serwera używanego do kompilacji. Można znacznie
+przyspieszyć pobrań przypadku korzystania z lokalnego serwera
+lustrzanego. Można określić te opcje podczas korzystania z #{lb config}#,
+jak opisano w {Serwery lustrzane dystrybucji używane w czasie
+kompilacji}#distribution-mirrors-build-time lub dla większej wygody, ustawić
+domyślną opcję dla systemu kompilacji w #{/etc/live/build.conf}#. Wystarczy
+utworzyć ten plik, a w nim, ustawić odpowiednią zmienną  #{LB_MIRROR_*}# dla
+preferowanego serwera lustrzanego. Wszystkie inne serwery lustrzane
+stosowane podczas kompilacji, będą domyślnie ustawione od tych wartości. Na
+przykład:
+
+code{
+
+ LB_MIRROR_BOOTSTRAP="http://mirror/debian/"
+ LB_MIRROR_CHROOT_SECURITY="http://mirror/debian-security/"
+ LB_MIRROR_CHROOT_BACKPORTS="http://mirror/debian-backports/"
+
+}code
+
+2~tutorial-1 Samouczek 1: Domyślny obraz
+
+*{Przykład użycia:}* Stwórz pierwszy prosty obraz aby nauczyć się podstaw live-build.
+
+W tym samouczku, będziemy budować domyślny obraz live ISO-hybrid zawierający
+tylko pakiety podstawowe (bez Xorg'a) i kilka pakietów systemu live, jako
+pierwsze ćwiczenie w użyciu live-build.
+
+Nie można tego zrobić łatwiej niż tak:
+
+code{
+
+ $ mkdir samouczek1 ; cd samouczek1 ; lb config
+
+}code
+
+ Zbadaj zawartość katalogu #{config/}#, jeśli chcesz. Zobaczysz tam
+konfiguracje przechowywane w szkieletowych katalogach, gotowe do
+dostosowywania lub, w tym przypadku, użyte natychmiast, aby zbudować
+domyślny obraz.
+
+A teraz jako super-użytkownik, zbuduj obraz zapisując przy tym log podczas
+budowania używając #{tee}#.
+
+code{
+
+ # lb build 2>&1 | tee build.log
+
+}code
+
+Zakładając, że wszystko poszło dobrze, po jakimś czasie, bieżący katalog
+będzie zawierał #{live-image-i386.hybrid.iso}#. Ten hybrydowy obraz ISO
+można uruchomić bezpośrednio na maszynie wirtualnej, jak opisano w
+{Testowanie obrazu ISO z Qemu}#testing-iso-with-qemu i {Testowanie obrazu
+ISO z VirtualBox}#testing-iso-with-virtualbox, lub jeszcze odpowiednio
+nagrany obraz na nośnikach optycznych lub urządzenia flash USB, w sposób
+opisany w {Nagrywanie obrazu ISO na nośniku fizycznym}#burning-iso-image i
+{Kopiowanie hybrydowego obrazu ISO na nośnik USB}#copying-iso-hybrid-to-usb.
+
+2~tutorial-2 Samouczek 2: Narzędzie przeglądarka
+
+*{Przykład użycia:}* Stwórz obraz z przeglądarką internetową, ucząc się jak wprowadzać modyfikacje.
+
+W tym samouczku, stworzymy obraz odpowiedni do wykorzystania jako narzędzie
+przeglądarki internetowej, służący jako wstęp do dostosowywania obrazów
+systemu live.
+
+code{
+
+ $ mkdir tutorial2
+ $ cd tutorial2
+ $ lb config
+ $ echo "task-lxde-desktop iceweasel" >> config/package-lists/my.list.chroot
+
+}code
+
+Nasz wybór LXDE na tym przykładzie odzwierciedla nasze pragnienie, aby
+zapewnić minimalne środowisko pulpitu, ponieważ celem obrazu jest
+jednorazowy użytek, który mamy na myśli, czyli przeglądarka
+internetowa. Możemy pójść dalej i zapewnić domyślną konfigurację dla
+przeglądarki w #{config/includes.chroot/etc/iceweasel/profile/}#, lub
+dodatkowe pakiety wsparcia dla wyświetlania różnego rodzaju treści
+internetowych, ale pozostawiamy to jako ćwiczenie dla czytelnika.
+
+Zbuduj ponownie obraz jako super-użytkownik, zachowując log jak to opisano w
+{Samouczku 1}#tutorial-1:
+
+code{
+
+ # lb build 2>&1 | tee build.log
+
+}code
+
+Jeszcze raz, zweryfikuj czy obraz jest OK i przetestuj go jak to opisano w
+{Samouczku 1}#tutorial-1.
+
+2~tutorial-3 Samouczek 3: Spersonalizowany obraz
+
+*{Przykład użycia:}* Stwórz projekt spersonalizowanego obrazu zawierającego twoje ulubione oprogramowanie tak abyś mógł go zabrać ze sobą gdziekolwiek pójdziesz i zapisujący sukcesywnie zmiany, kiedy tego potrzebujesz oraz zmiany w konfiguracji.
+
+Ponieważ będziemy zmieniać nasz indywidualny obraz wprowadzając wiele zmian,
+chcemy, śledzić te zmiany, próbując rzeczy eksperymentalnych i ewentualnie
+przywracając je, jeśli coś nie wyjdzie, będziemy trzymać naszą konfigurację
+w popularnym systemie kontroli wersji #{git}#. Będziemy również
+wykorzystywać najlepsze praktyki autokonfiguracji poprzez skrypty #{auto}#
+jak opisano w {Zarządzanie konfiguracją}#managing-a-configuration.
+
+3~ Pierwsza zmiana
+
+code{
+
+ $ mkdir -p samouczek3/auto
+ $ cp /usr/share/doc/live-build/examples/auto/* samouczek3/auto/
+ $ cd samouczek3
+
+}code
+
+Edtuj #{auto/config}# tak, aby zawierał:
+
+code{
+
+ #!/bin/sh
+
+ lb config noauto \
+     --architectures i386 \
+     --linux-flavours 686-pae \
+     "${@}"
+
+}code
+
+Wykonaj #{lb config}#, aby wygenerować drzewo konfiguracyjne, używając
+właśnie utworzonego skryptu w #{auto/config}#:
+
+code{
+
+ $ lb config
+
+}code
+
+Teraz uzupełnij swoją lokalną listę pakietów:
+
+code{
+
+ $ echo "task-lxde-desktop iceweasel xchat" >> config/package-lists/my.list.chroot
+
+}code
+
+Po pierwsze, #{--architectures i386}# zapewnia, że ​​w naszym systemie
+kompilacji #{amd64}#, możemy zbudować 32-bitową wersję odpowiednią do
+stosowania na większości maszyn. Po drugie, możemy użyć #{--linux-flavours
+686-pae}# bo nie przewidujemy używania tego obrazu na dużo starszych
+systemach. Po trzecie, wybraliśmy metapakiet zadania /{lxde}/, który daje
+nam minimalny pulpit. I w końcu, dodaliśmy dwa wstępne ulubione pakiety:
+/{iceweasel}/ i /{xchat}/.
+
+A teraz, zbuduj obraz:
+
+code{
+
+ # lb build
+
+}code
+
+Należy zauważyć, że w przeciwieństwie do dwóch pierwszych samouczków, nie
+musimy już wpisywać #{2>&1 | tee build.log}# bo jest to obecnie zawarte w
+#{auto/build}#.
+
+Po tym jak przetestowaliśmy obraz (jak to jest w {Samouczku 1}#tutorial-1) i
+jesteśmy zadowoleni, że działa, to jest to czas, aby zainicjować nasze
+repozytorium #{git}#, dodając tylko automatyczne skrypty przed chwilą
+stworzone, a następnie dokonać pierwszych zmian:
+
+code{
+
+ $ git init
+ $ cp /usr/share/doc/live-build/examples/gitignore .gitignore
+ $ git add .
+ $ git commit -m "Initial import."
+
+}code
+
+3~ Druga zmiana
+
+W tej zmianie, będziemy sprzątać nasz pierwszy zbudowany obrazu, dodawać
+pakiet /{vlc}/ do naszej konfiguracji, budować ponownie, testować i
+potwierdzać zmiany.
+
+Polecenie #{lb clean}# oczyści wszystkie wygenerowane pliki z poprzedniej
+kompilacji z wyjątkiem pamięci podręcznej (cache), co oszczędza konieczności
+ponownego pobierania pakietów. To gwarantuje, że kolejne polecenie #{lb
+build}# ponownie uruchomić wszystkie etapy regeneracji pliki z naszej nowej
+konfiguracji.
+
+code{
+
+ # lb clean
+
+}code
+
+Teraz dołączpakiet  /{vlc}/ do naszej lokalnej listy pakietów w
+#{config/package-list/my.list.chroot}#:
+
+code{
+
+ $ echo vlc >> config/package-lists/my.list.chroot
+
+}code
+
+Zbuduj ponownie:
+
+code{
+
+# lb build
+
+}code
+
+Przetestuj i jeżeli jesteś usatysfakcjonowany wprowadź następną zmianę:
+
+code{
+
+ $ git commit -a -m "Adding vlc media player."
+
+}code
+
+Oczywiście, możliwe są bardziej skomplikowane zmiany w konfiguracji,
+prawdopodobnie dodające pliki w podkatalogach #{config/}#. Kiedy wprowadzasz
+nowe zmiany , tylko uważaj, aby nie edytować ręcznie lub zmieniać plików
+najwyższego poziomu w #{config}# zawierających zmienną #{LB_*}#, ponieważ są
+to także efekty budowania i są zawsze sprzątane przez #{lb clean}# i
+tworzone ponownie przez #{lb config}# przez odpowiednie #{automatyczne}#
+skrypty.
+
+Doszliśmy do końca naszej serii samouczka. Chociaż możliwe jest o wiele
+więcej rodzajów personalizacji, nawet tylko za pomocą kilku funkcji
+pokazanych w tych prostych przykładach, może być stworzona niemal
+nieskończona różnorodność obrazów. Pozostałe przykłady w tym rozdziale
+obejmuje kilka innych przypadków użycia zaczerpnięte z zebranych doświadczeń
+użytkowników systemów live.
+
+2~ Kiosk-klient serwera VNC
+
+*{Przykład użycia:}* Stwórz obraz za pomocą live-build, który podczas uruchamiania, łączy się automatycznie z serwerem VNC.
+
+Stwórz katalog kompilacji i stwórz wewnątrz szkielet folderów konfiguracji,
+wyłączając zalecane, aby utworzyć minimalny system. A następnie utwórz dwie
+początkowe listy pakietów: pierwszą wygenerowaną ze skryptu dostarczonego
+przez live-build o nazwie #{Pakiety}# (patrz {Wygenerowane listy
+pakietów}#generated-package-lists), a drugą uwzględniającą pakiety /{xorg}/,
+/{gdm3}/, /{metacity}/ i /{xvnc4viewer}/.
+
+code{
+
+ $ mkdir vnc-kiosk-client
+ $ cd vnc-kiosk-client
+ $ lb config -a i386 -k 686-pae --apt-recommends false
+ $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
+ $ echo "xorg gdm3 metacity xvnc4viewer" > config/package-lists/my.list.chroot
+
+}code
+
+Jak wyjaśniono w {Podkręcanie APT, w celu zaoszczędzenia
+miejsca}#tweaking-apt-to-save-space może trzeba ponownie dodać niektóre
+polecane pakiety do prawidłowej pracy obrazu.
+
+Najprostszym sposobem na wypisane listy rekomendowanych pakietów jest u
+życie /{apt-cache}/. Na przykład:
+
+code{
+
+ $ apt-cache depends live-config live-boot
+
+}code
+
+W tym przykładzie okazało się, że musimy ponownie objąć kilka pakietów
+zalecanych przez live-config i live-boot: #{user-setup}# do funkcji
+autologowania i #{sudo}# jako istotnego przy zamykaniu systemu
+programu. Poza tym, może być przydatne, również dodanie #{live-tools}#, aby
+móc skopiować obraz systemu do pamięci RAM i #{eject}#, aby ewentualnie
+wysunąć nośnik live. Tak więc:
+
+code{
+
+ $ echo "live-tools user-setup sudo eject" > config/package-lists/recommends.list.chroot
+
+}code
+
+Po tym, stwórz katalog #{/etc/skel}# w #{config/includes.chroot}# i ​​umieść
+tam własny #{.xsession}# dla domyślnego użytkownika, który będzie uruchamiał
+/{metacity}/ i /{xvncviewer}/, podłączając się do portu #{5901}# na serwerze
+w #{192.168.1.2}#:
+
+code{
+
+ $ mkdir -p config/includes.chroot/etc/skel
+ $ cat > config/includes.chroot/etc/skel/.xsession << EOF
+ #!/bin/sh
+
+ /usr/bin/metacity &
+ /usr/bin/xvncviewer 192.168.1.2:1
+
+ exit
+ EOF
+
+}code
+
+Zbuduj obraz:
+
+code{
+
+ # lb build
+
+}code
+
+Korzystaj.
+
+2~ Bazowy obraz dla nośnika USB z 128MB pamięci.
+
+*{Przykład użycia:}*  Stwórz domyślny obraz z usuniętymi niektórymi komponentami tak, aby zmieścił się on na nośniku USB z 128MB pamięci z pozostawieniem niewielkiej przestrzeni do wykorzystania według potrzeb.
+
+Przy optymalizacji obrazu, aby dopasować go do określonego rozmiaru nośnika,
+musisz dokonać pewnych kompromisów między rozmiarem a funkcjonalnością. W
+tym przykładzie, przytniemy tylko tyle, aby zrobić miejsce dla dodatkowego
+materiału medialnego w rozmiarze 128MB, ale robienia czegokolwiek, co
+mogłoby zniszczyć integralność zawartych pakietów, np. czyszczenie danych
+ustawień regionalnych poprzez pakiet /{localepurge}/, lub inne tego typu
+/{inwazyjne}/ optymalizacje. Szczególnie godne uwagi, jest użycie
+#{--debootstrap-options}# by stworzyć minimalny system od podstaw.
+
+code{
+
+ $ lb config --apt-indices false --apt-recommends false --debootstrap-options "--variant=minbase" --firmware-chroot false --memtest none
+
+}code
+
+Aby uczynić by obraz pracował prawidłowo, musimy ponownie dodać przynajmniej
+dwa pakiety, które zostały pominięte przez opcję #{--apt-recommends
+false}#. Zobacz {Podkręcanie APT w celu zaoszczędzenia
+miejsca}#tweaking-apt-to-save-space
+
+code{
+
+ $ echo "user-setup sudo" > config/package-lists/recommends.list.chroot
+
+}code
+
+Teraz, zbuduj obraz w typowy sposób:
+
+code{
+
+ # lb build 2>&1 | tee build.log
+
+}code
+
+On the author's system at the time of writing this, the above configuration
+produced a 110MB image. This compares favourably with the 192MB image
+produced by the default configuration in {Tutorial 1}#tutorial-1.
+
+Leaving off APT's indices with #{--apt-indices false}# saves a fair amount
+of space, the tradeoff being that you need to do an #{apt-get update}#
+before using /{apt}/ in the live system. Dropping recommended packages with
+#{--apt-recommends false}# saves some additional space, at the expense of
+omitting some packages you might otherwise expect to be
+there. #{--debootstrap-options "--variant=minbase"}# bootstraps a minimal
+system from the start. Not automatically including firmware packages with
+#{--firmware-chroot false}# saves some space too. And finally, #{--memtest
+none}# prevents the installation of a memory tester.
+
+*{Note:}* A minimal system can also be achieved using hooks, like for example the #{stripped.hook.chroot}# hook found in #{/usr/share/doc/live-build/examples/hooks}#. It may shave off additional small amounts of space and produce an image of 91MB. However, it does so by removal of documentation and other files from packages installed on the system. This violates the integrity of those packages and that, as the comment header warns, may have unforeseen consequences. That is why using a minimal /{debootstrap}/ is the recommended way of achieving this goal.
+
+2~ Pulpit GNOME w lokalnym języku oraz instalator
+
+*{Przykład użycia:}* Stwórz obraz z pulpitem GNOME i lokalizacją dla Szwajcarii wraz z instalatorem.
+
+Chcemy stworzyć obraz ISO-hybrydy dla architektury i386 z naszym
+preferowanym pulpitem, w tym przypadku GNOME, zawierającą wszystkie pakiety,
+które byłyby zainstalowane przez standardowy instalator Debiana dla GNOME.
+
+Naszym początkowym problem jest odkrycie nazw odpowiednich zadań
+językowych. Obecnie, live-build nie może nam w tym pomóc. Chociaż możemy
+mieć szczęście i znaleźć to metodą prób i błędów, to jest narzędzie,
+#{grep-dctrl}#, które może być użyte do ustalenia to z opisów zadań w
+tasksel-data tak więc, aby przygotować się upewnij się, że masz obie te
+rzeczy:
+
+code{
+
+ # apt-get install dctrl-tools tasksel-data
+
+}code
+
+Teraz możemy rozpocząć wyszukiwanie odpowiedniego zadania. najpierw:
+
+code{
+
+ $ grep-dctrl -FTest-lang de /usr/share/tasksel/descs/debian-tasks.desc -sTask
+ Task: german
+
+}code
+
+Dzięki temu poleceniu dowiadujemy się, że zadanie nazywa się po prostu
+niemiecki (ang. german). Teraz, aby znaleźć podobne zadania:
+
+code{
+
+ $ grep-dctrl -FEnhances german /usr/share/tasksel/descs/debian-tasks.desc -sTask
+ Task: german-desktop
+ Task: german-kde-desktop
+
+}code
+
+W czasie startu systemu będziemy generować lokalizację *{de_CH.UTF-8}* i
+wybierać układ klawiatury *{ch}*. Teraz poskładajmy kawałki
+razem. Przypominamy sobie  {Korzystanie z metapakietów}#using-metapackages
+że metapakiety są poprzedzone przedrostkiem #{task-}#, po prostu określimy
+te parametry rozruchowe dotyczące języka, a następnie dodamy standardowe
+pakiety priorytetowe i wszystkie wykryte metapakiety zadań do naszej listy
+pakietów w następujący sposób:
+
+code{
+
+ $ mkdir live-gnome-ch
+ $ cd live-gnome-ch
+ $ lb config \
+     -a i386 \
+     --bootappend-live "boot=live components locales=de_CH.UTF-8 keyboard-layouts=ch" \
+     --debian-installer live
+ $ echo '! Packages Priority standard' > config/package-lists/standard.list.chroot
+ $ echo task-gnome-desktop task-german task-german-desktop >> config/package-lists/desktop.list.chroot
+ $ echo debian-installer-launcher >> config/package-lists/installer.list.chroot
+
+}code
+
+Note that we have included the /{debian-installer-launcher}/ package to
+launch the installer from the live desktop. The #{586}# kernel flavour,
+which is currently necessary for the launcher to work properly, will be
+included by default.

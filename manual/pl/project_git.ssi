@@ -1,0 +1,88 @@
+:B~ Repozytorium Git
+
+1~git-repositories Repozytorium Git
+
+Lista wszystkich dostępnych repozytoriów dla ${project} można znaleźć na
+stronie http://live-systems.org/gitweb/. Adres URL projektu git ma postać:
+#{protocol://live-systems.org/git/repository}#. Tak więc, w celu sklonowania
+live-manual, uruchom:
+
+code{
+
+ $ git clone git://live-systems.org/git/live-manual.git
+
+}code
+
+Lub
+
+code{
+
+ $ git clone https://live-systems.org/git/live-manual.git
+
+}code
+
+Lub
+
+code{
+
+ $ git clone http://live-systems.org/git/live-manual.git
+
+}code
+
+Adres do sklonowania z uprawnieniami zapisu ma postać:
+#{git@live-systems.org:/repository}#.
+
+A zatem jeszcze raz, aby sklonować live-manual po ssh wpisz:
+
+code{
+
+ $ git clone git@live-systems.org:live-manual.git
+
+}code
+
+Drzewo git składa się z wielu różnych gałęzi. Gałęzie, które szczególnie
+wymagają poświęcenia uwagi to *{debian}* i *{debian-next}*, ponieważ
+zawierają one rzeczywistą pracy, które ostatecznie będzie znajdować się w
+każdej nowej wersji.
+
+Po sklonowaniu każdego z istniejących repozytoriów, będziesz w gałęzi
+*{debian}*. To jest właściwe, aby móc przyjrzeć się stanowi najnowszej
+wersji projektu, ale przed rozpoczęciem pracy ważne jest, aby przejść do
+gałęzi *{debian-next}*. Aby to zrobić:
+
+code{
+
+ $ git checkout debian-next
+
+}code
+
+Gałąź *{debian-next}*, która nie zawsze porusza się do przodu, gdzie
+wszystkie zmiany są najpierw wprowadzane przed połączeniem w gałęzi
+*{debian}*. Aby dokonać analogii, to jest jak poligon doświadczalny. Jeśli
+pracujesz w tej branży i potrzebujesz wykonać polecenie pull (wyciągnąć),
+będzie trzeba użyć #{git pull --rebase}#, tak aby lokalne modyfikacje
+zostały zachowane przy wyciąganiu z serwera, a następnie Twoje zmiany
+zostaną wprowadzone na szczycie wszystkich innych.
+
+2~ Obsługa wielu repozytoriów
+
+Jeśli masz zamiar sklonować kilka repozytoriów systemów live i chcesz
+przejść do gałęzi *{debian-next}* od razu aby sprawdzić najnowszy kod,
+napisać poprawkę lub przyczynić się z tłumaczeniem powinieneś wiedzieć, że
+serwer git zapewnia #{mrconfig}#. Plik,który ułatwia obsługę wielu
+repozytoriów. Aby z niego korzystać musisz zainstalować pakiet /{mr}/ a po
+tym, uruchomić:
+
+code{
+
+ $  mr bootstrap http://live-systems.org/other/mr/mrconfig
+
+}code
+
+Ta komenda automatycznie sklonuje i sprawdzi do gałęzi *{debian-next}*
+repozytorium rozwojowego pakietów Debiana wytworzonych w ramach
+projektu. Należą do nich, między innymi, repozytorium live-images, który
+zawiera konfiguracje, używane do gotowych obrazów, które projekt publikuje
+do ogólnego użytku. Aby uzyskać więcej informacji na temat korzystania z
+tego repozytorium, zobacz {Klonowanie konfiguracji opublikowanej przez
+Git}#clone-configuration-via-git

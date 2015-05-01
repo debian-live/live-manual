@@ -1,0 +1,101 @@
+:B~ Procedury
+
+1~procedures Procedury
+
+Rozdział ten dokumentuje procedury dla ${project} dla różnych zadań, które
+wymagają współpracy z innymi zespołami w Debianie.
+
+2~ Główne wydanie
+
+Wydawanie nowej stabilnej wersji głównej Debiana zawiera wiele różnych
+zespołów pracujących razem, aby tak się stało. W pewnym momencie, na zespół
+live dochodzi do pewnego momentu i buduje obrazy systemów live. Wymagania,
+aby to zrobić to:
+
+_* Serwer lustrzany zawierający wydane wersje dla Debiana i archiwum
+debian-bezpieczeństwa, które mogą uzyskać dostęp buildd debian-live.
+
+_* Nazwy obrazu muszą być znane (np. debian-live-WERSJA-ARCH-FLAVOUR.iso).
+
+_* Dane z debian-cd muszą zostać zsynchronizowane (listy wykluczające udeb).
+
+_* Obrazy są budowane i przechowywane na cdimage.debian.org.
+
+2~ Wydanie Docelowe
+
+_* Ponownie potrzebujemy zaktualizowanych serwerów lustrzanych Debiana i
+debian-security.
+
+_* Obrazy są budowane i przechowywane na cdimage.debian.org.
+
+_* Wyślij wiadomość z obwieszczeniem.
+
+3~ Ostatnie Wydanie Docelowe Debiana
+
+Pamiętaj, aby dostosować zarówno chroot i serwery lustrzane z pakietami
+binarnymi przy budowie ostatniego zestawu obrazów dla wydania Debiana po to
+został przeniesione z ftp.debian.org do archive.debian.org. W ten sposób
+stare prekompilowane obrazy live będą wciąż użyteczne bez modyfikacji
+dokonanych przez użytkownika.
+
+3~ Szablon obwieszczenia dla wydania docelowego
+
+ Email z obwieszczeniem dla wydania docelowego może być wygenerowany przy
+użyciu poniższego szablonu i następującego polecenia:
+
+code{
+
+ $ sed \
+     -e 's|@MAJOR@|9.0|g' \
+     -e 's|@MINOR@|9.0.1|g' \
+     -e 's|@CODENAME@|stretch|g' \
+     -e 's|@ANNOUNCE@|2017/msgXXXXX.html|g'
+
+}code
+
+ Proszę dokładnie sprawdzić wiadomość przed wysłaniem i przekazać ją innym,
+aby dokonali korekt.
+
+code{
+
+ Updated Live @MAJOR@: @MINOR@ released
+
+ The Live Systems Project is pleased to announce the @MINOR@ update of the
+ Live images for the stable distribution Debian @MAJOR@ (codename "@CODENAME@").
+
+ The images are available for download at:
+
+   <http://live-systems.org/cdimage/release/current/>
+
+ and later at:
+
+   <http://cdimage.debian.org/cdimage/release/current-live/>
+
+ This update includes the changes of the Debian @MINOR@ release:
+
+   <https://lists.debian.org/debian-announce/@ANNOUNCE@>
+
+ Additionally it includes the following Live-specific changes:
+
+  * [WPISZ TUTAJ SPECYFICZNĄ DLA LIVE ZMIANĘ]
+  * [WPISZ TUTAJ SPECYFICZNĄ DLA LIVE ZMIANĘ]
+  * [POWAŻNIEJSZE PROBLEMY MOGĄ WYMAGAĆ SWOJEJ OSOBNEJ SEKCJI]
+
+ About Live Systems
+ ------------------
+ The Live Systems Project produces the tools used to build official
+ live systems and the official live images themselves for Debian.
+
+ About Debian
+ ------------
+ The Debian Project is an association of Free Software developers who
+ volunteer their time and effort in order to produce the completely free
+ operating system Debian.
+
+ Contact Information
+ -------------------
+ For further information, please visit the Live Systems web pages at
+ <http://live-systems.org/>, or contact the Live Systems team at
+ <debian-live@lists.debian.org>.
+
+}code

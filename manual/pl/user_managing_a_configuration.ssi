@@ -1,0 +1,142 @@
+:B~ Zarządzanie konfiguracją
+
+1~managing-a-configuration Zarządzanie konfiguracją
+
+Ten rozdział wyjaśnia, jak zarządzać konfiguracją live od początku jej
+tworzenia, przez kolejne zmiany i kolejne wersje oprogramowania live-build i
+obrazu live.
+
+2~ Radzenie sobie ze zmianami konfiguracji
+
+Konfiguracje live rzadko są idealne na przy pierwszej próbie. Powinno się
+dodać opcje #{lb config}# z linii poleceń do wykonania pojedynczej
+kompilacji, ale bardziej typowe jest sprawdzać te opcje i kompilować
+ponownie aż do uzyskania satysfakcji. Aby poradzić sobie z tymi zmianami,
+potrzeba automatycznych skryptów, które zapewnią, że konfiguracja
+przechowywana jest w stanie spójnym.
+
+3~ Czemu używać automatycznych skryptów? Co one robią?
+
+Polecenie #{lb config}# zapisuje opcje, które są wprowadzane do plików w
+#{config}/*# oraz wielu innym opcją przypisuje wartości domyślne. Jeśli
+uruchomisz  #{lb config}# ponownie, nie skasuje to żadnych opcji, która
+została zapisana na podstawie początkowych opcji. Tak więc, na przykład,
+jeśli by uruchomić #{lb config}# ponownie z nową wartością dla
+#{--binary-images}#, wszelkie opcje zależne, które zostały przypisane jako
+domyślne dla poprzedniej dystrybucji mogą już nie współgrać z nowym
+ustawieniem. Pliki te nie są przeznaczone do odczytu lub edycji. Przechowują
+one wartości dla ponad stu opcji, więc nikt, nie mówiąc już o robieniu tego
+w pojedynkę, nie będzie mógł zobaczyć, które z tych opcji są faktycznie
+przypisane. I wreszcie, po uruchomieniu #{lb config}#, a następnie
+uaktualnieniu live-build a zdarza się, że zmieniają się nazwy opcji,
+#{config/*}# nadal będzie zawierać zmienne nazwane po staremu, które nie są
+już aktualne.
+
+Z tych wszystkich powodów, skrypty #{auto/*}# czynią Twoje życie
+łatwiejszym. Są proste wrappery do poleceń #{lb config}#, #{lb build}# i
+#{lb clean}#, które są zaprojektowane, aby pomóc w zarządzaniu
+konfiguracją. Skrypt #{auto/config}# przechowuje toje polecenie #{lb
+config}# ze wszystkimi pożądanymi opcjami, skrypt #{auto/clean}# usuwa pliki
+zawierające wartości zmiennych konfiguracyjnych a skrypt #{auto/build}#
+zachowuje log #{build.log}# każdej kompilacji. Każdy z tych scenariuszy jest
+uruchamiany automatycznie przy każdym uruchomieniu odpowiedniego polecenia
+#{lb}#. Korzystając z tych skryptów, konfiguracja jest bardziej czytelna i
+jest przechowywana  w sposoób wewnętrznie spójny z jednej wersji do
+następnej. Ponadto, będzie o wiele łatwiej zidentyfikować opcje, które
+należy zmienić po uaktualnieniu live-build i po przeczytaniu dokumentacji
+aktualizacji.
+
+3~ Użyj przykładowych automatycznych skryptów
+
+Dla Twojej wygody, live-build jest dostarczany z przykładowymi skryptami
+powłoki do automatycznego kopiowania i edycji. Rozpocznij nową, domyślną
+konfigurację, a następnie skopiuj do niej przykłady:
+
+code{
+
+ $ mkdir mójlive && cd mójlive && lb config
+ $ mkdir auto
+ $ cp /usr/share/doc/live-build/examples/auto/* auto/
+
+}code
+
+Edytuj #{auto/config}#, dodając wszelkie opcje, jakie uważasz. Przykładowo:
+
+code{
+
+#!/bin/sh
+ lb config noauto \
+     --architectures i386 \
+     --linux-flavours 686-pae \
+     --binary-images hdd \
+     --mirror-bootstrap http://ftp.ch.debian.org/debian/ \
+     --mirror-binary http://ftp.ch.debian.org/debian/ \
+     "${@}"
+
+}code
+
+Teraz, za każdym razem kiedy korzystasz z #{lb config}#,  #{auto/config}#
+skasuje konfigurację w oparciu o te opcje. Gdy chcesz wprowadzić zmiany do
+nich, należy edytować opcje w tym pliku zamiast przekazywać je do #{lb
+config}#. Podczas korzystania z #{lb clean}#, #{auto/clean}# oczyści pliki w
+#{config/*}# wraz z innymi produktami kompilacji. I wreszcie, kiedy używasz
+#{lb build}#, log kompilacji zostanie zapisany przez #{auto/build}# w
+#{build.log}#.
+
+*{Uwaga:}* Specjalnny parametr #{noauto}# jest użyty tutaj, aby powstrzymać kolejne zapytania do #{auto/config}#, zapobiegając w ten sposób nieskończonej rekurencji. Upewnij się, że przypadkowo nie został usunięty podczas dokonywania zmiany. Również należy zadbać o to aby podczas  dzielenia polecenia #{lb config}# na wiele lini dla czytelności, jak pokazano w powyższym przykładzie, nie zapomnisz odwrotnego ukośnika (\) na końcu każdej linii, która kontynuuje polecenie w następnej linijce.
+
+2~clone-configuration-via-git Klonowanie konfiguracji opublikowanej przez
+Git
+
+Użyj opcji #{lb config --config}# aby sklonować repozytorium Git, który
+zawiera konfigurację systemu live. Jeśli chcesz oprzeć swoją konfigurację na
+jednej dostarczanej przez ${project}, odwiedź
+http://live-systems.org/gitweb/ i szukaj repozytorium o nazwie
+#{live-images}# (obrazy live) w kategorii #{Packages}# (pakiety). To
+repozytorium zawiera konfiguracje dla {prekompilowanych
+obrazów}#downloading-prebuilt-images systemów live.
+
+For example, to build a standard image, use the #{live-images}# repository
+as follows:
+
+code{
+
+ $ mkdir live-images && cd live-images
+ $ lb config --config git://live-systems.org/git/live-images.git
+ $ cd images/standard
+
+}code
+
+Edytuj #{auto/config}# i ​​wszelkie inne rzeczy, których wymagasz do
+własnych potrzeb w drzewie katalogów #{config}#. Na przykład, nie
+nieoficjalne prekompilowane obrazy tworzy się dodając po prostu
+#{--archive-areas "main contrib non-free"}#.
+
+Opcjonalnie można zdefiniować skrót w konfiguracji Git przez dodanie
+następujących opcji do #{${HOME}/.gitconfig}#:
+
+code{
+
+ [url "git://live-systems.org/git/"]
+         insteadOf = lso:
+
+}code
+
+Dzięki temu można skorzystać z #{lso:}# wszędzie, gdzie trzeba podać adres
+repozytorium git #{live-systems.org}#. Jeśli również opuścisz opcjonalny
+przyrostek #{.git}#, rozpoczynając nowy obraz przy użyciu tej konfiguracji
+jest to tak proste:
+
+code{
+
+ $ lb config --config lso:live-images
+
+}code
+
+Klonowanie całego repozytorium #{live-images}# (obrazów live) sciąga
+konfigurację używaną dla kilku różnych obrazów. Jeśli masz ochotę na budowę
+innego obrazu po zakończeniu pracy z pierwszym, przejdź do innego katalogu i
+ponownie w miarę potrzeb dokonaj zmian.
+
+W każdym przypadku należy pamiętać, że za każdym razem trzeba będzie budować
+obraz jako super-użytkownik: #{lb build}#

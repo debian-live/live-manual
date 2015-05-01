@@ -1,0 +1,65 @@
+:B~ Personalizzare l'immagine binaria
+
+1~customizing-binary Personalizzare l'immagine binaria
+
+2~ Bootloader
+
+live-build usa /{syslinux}/ e alcuni dei suoi derivati (a seconda del tipo
+di immagine) come bootloader predefiniti. Si possono facilmente
+personalizzare per soddisfare le proprie esigenze.
+
+Per utilizzare un tema completo, copiare
+#{/usr/share/live/build/bootloaders}# in #{config/bootloaders}# e modificare
+i file. Se non si vogliono modificare tutte le configurazioni dei bootloader
+supportati è sufficiente fornire la copia locale di uno di essi, ad esempio
+*{isolinux}* in #{config/bootloaders/isolinux}# può bastare, dipende dalle
+esigenze.
+
+When modifying one of the default themes, if you want to use a personalized
+background image that will be displayed together with the boot menu, add a
+splash.png picture of 640x480 pixels. Then, remove the splash.svg file.
+
+Quando si tratta di fare modifiche ci sono varie possibilità. Per esempio i
+derivati di syslinux sono configurati con un timeout impostato a 0 (zero) in
+modo predefinito, significa che resteranno in pausa al loro splash screen
+fino a quando non si preme un tasto.
+
+Per modificare il timeout di avvio di un'immagine #{iso-hybrid}# modificare
+un file *{isolinux.cfg}* predefinito specificando il timeout in unità di
+1/10 di secondo. Un file *{isolinux.cfg}* modificato per effettuare il boot
+dopo cinque secondi sarebbe simile a questo:
+
+code{
+
+ include menu.cfg
+ default vesamenu.c32
+ prompt 0
+ timeout 50
+
+}code
+
+2~ Metadati ISO
+
+Quando si crea un'immagine binaria ISO9660, si possono usare le seguenti
+opzioni per aggiungere vari metadati testuali. Questo può aiutare a
+identificare facilmente la versione o la configurazione di un'immagine senza
+avviarla.
+
+_* #{LB_ISO_APPLICATION/--iso-application NAME}#: descrive l'applicazione
+che sarà nell'immagine. La lunghezza massima per questo campo è di 128
+caratteri.
+
+* #{LB_ISO_PREPARER/--iso-preparer NAME}#: descrive il costruttore
+dell'mmagine, solitamente con alcuni dettagli per
+contattarlo. L'impostazione predefinita è la versione di live-build che si
+sta usando, il quale potrà essere utile in seguito per il debugging. La
+lunghezza massima per questo campo è di 128 caratteri.
+
+_* #{LB_ISO_PUBLISHER/--iso-publisher NAME}#: descrive l'editore
+dell'immagine, solitamente con qualche dettaglio per contattarlo. La
+lunghezza massima lunghezza per questo campo è di 128 caratteri.
+
+_* #{LB_ISO_VOLUME/--iso-volume NAME}#: specifica l'ID del volume
+dell'immagine. Questa è utilizzata come etichetta visibile all'utente su
+alcune piattaforme, come Windows e Apple Mac OS. La lunghezza massima per
+questo campo è di 128 caratteri.

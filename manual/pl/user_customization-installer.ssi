@@ -1,0 +1,90 @@
+:B~ Dostosowywanie Instalatora Debiana
+
+1~customizing-installer Dostosowywanie Instalatora Debiana
+
+Obrazy systemów live mogą być zintegrowane z Instalatorem Debiana. Istnieje
+wiele różnych typów instalacji, różniących się tym, co jest załączone w
+obrazie i jak działa instalator.
+
+Proszę zwrócić uwagę na uważne wykorzystanie wielkich liter, podczas
+odnoszenia się do "Debian Installer" (ang. Instalatora Debiana) w tej sekcji
+- kiedy jest stosowany tak, że odnosi się wyraźnie do oficjalnego
+instalatora dla systemu Debian, a nie cokolwiek innego, to jest często
+postrzegana w skrócie jako "d-i".
+
+2~ Typy Instalatora Debiana
+
+Trzy główne rodzaje instalatora to:
+
+*{Instalator Debiana "Normal"}*: To jest normalny obraz systemu live z oddzielnym jądrem i initrd, który (gdy wybrany z odpowiedniego menu programu ładującego) uruchamia do standardowej instancji Instalatora Debiana, tak jakby pobrano obraz płyty Debiana i uruchomiło się go. Obrazy zawierające system typu live i inny niezależny instalator są często określane jako "połączone obrazy" (ang. combined images).
+
+Na takich obrazach, Debian jest instalowany przez pobieranie i instalowanie
+pakietów .deb za pomocą /{debootstrap}/, z lokalnych mediów lub jakiegoś
+opartego na sieci, w wyniku czego domyślny systemu Debian jest instalowany
+na dysku twardym.
+
+Cały proces może być zapisany w pliku preseed i dostosowany na wiele różnych
+sposób, przeczytaj odpowiednie strony w instrukcji Instalatora Debiana, aby
+uzyskać więcej informacji. Kiedy utworzysz działający plik preseed,
+live-build może automatycznie umieścić go w Twoim obrazie i włączyć go dla
+Ciebie.
+
+*{Instalator Debiana "Live"}*: To jest obraz systemu live z oddzielnym jądrem i initrd, który (gdy wybrany z odpowiedniego menu programu ładującego) uruchamia do instancji Instalatora Debiana.
+
+Instalacja będzie przebiegać w identyczny sposób do instalacji "normalnej"
+opisanej powyżej, ale na tym samym etapie instalacji, zamiast używać
+/{debootstrap}/ aby pobrać i zainstalować pakiety, systemu plików obrazu
+live zostanie skopiowany do celu. Jest to możliwe dzięki specjalnym pakiecie
+udeb zwanym live-installer.
+
+Po tym etapie, Instalator Debiana kontynuuje normalnie, instalując i
+konfigurując elementy, takie jak programy ładujące i lokalnych użytkowników,
+itp.
+
+*{Uwaga:}* aby zapewnić wsparcie dla wpisów zarówno normalnych i instalatora live w bootloaderze (ang. programie ładującym) na tym samym nośniku live, należy wyłączyć instalatora live przez wpis w pliku preseed #{live-installer/enable=false}#.
+
+*{Instalator Debiana "Desktop"}*: Niezależnie od wybranego rodzaju Instalatora Debiana, #{di}# może zostać uruchomiony z pulpitu, klikając na jego ikonę. Jest bardziej przyjazny użytkownikowi w niektórych sytuacjach. W celu skorzystania z tej opcji, pakiet debian-installer-launcher musi zostać uwzględniony.
+
+Należy pamiętać, że domyślnie, live-build nie obejmuje obrazów Instalatora
+Debiana w obrazach, musi to być sprecyzowane przez #{lb config}#. Również
+należy również pamiętać, że aby działał "Desktop Installer" (ang. instalator
+uruchamiany z poziomu pulpitu) to jądro systemu live musi być zgodne z
+jądrem wykorzystywanym przez #{d-i}# dla określonej architektury. Na
+przykład:
+
+code{
+
+ $ lb config --architectures i386 --linux-flavours 586 \
+         --debian-installer live
+ $ echo debian-installer-launcher >> config/package-lists/my.list.chroot
+
+}code
+
+2~ Dostosowywanie Instalatora Debiana przez preseeding
+
+Jak opisano w Podręczniku Instalatora Debiana, Załącznik B na
+https://www.debian.org/releases/stable/i386/apb.html, "Plik preseed
+dostarcza sposób, aby ustawić odpowiedzi na pytania zadawane w trakcie
+procesu instalacji, bez konieczności ręcznego wprowadzania odpowiedzi,
+podczas instalacji. Pozwala to w pełni zautomatyzować większość rodzajów
+instalacji, a nawet oferuje kilka funkcji niedostępnych w zwykłych
+instalacjach." Takie dostosowanie jest najlepiej osiągane używając
+live-build poprzez umieszczenie konfiguracji w pliku #{preseed.cfg}#
+zawartym w #{config/includes.installer/}#. Na przykład, aby ustawić
+lokalizację na #{en_US}#:
+
+code{
+
+ $ echo "d-i debian-installer/locale string en_US" \
+         >> config/includes.installer/preseed.cfg
+
+}code
+
+2~ Dostosowywanie zawartości Instalatora Debiana
+
+Do celów doświadczalnych lub debugowania, możesz zechcieć dołączyć lokalnie
+zbudowany element #{di}# w paczce udeb. Należy umieścić je w
+#{config/packages.binary/}#, aby włączyć je do obrazu. Również dodatkowe lub
+zamienne pliki i katalogi mogą być zawarte w initrd instalatora, w sposób
+podobny do {Uwzględnianie lokalne live/chroot}#live-chroot-local-includes,
+poprzez umieszczenie materiałów w #{config/includes.installer/}#.

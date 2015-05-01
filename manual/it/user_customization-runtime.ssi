@@ -1,0 +1,452 @@
+:B~ Personalizzare i comportamenti durante l'esecuzione
+
+1~customizing-run-time-behaviours Personalizzare i comportamenti durante
+l'esecuzione
+
+Tutte le configurazioni durante l'esecuzione sono eseguite da
+live-config. Vengono qui presentate alcune delle opzioni di live-config più
+comuni alle quali gli utenti sono interessati; una lista completa può essere
+trovata nel suo manuale.
+
+2~ Personalizzare l'utente live
+
+Un'importante considerazione è che l'utente live viene creato all'avvio da
+live-boot e non da live-build durante la compilazione. Questo non solo
+influenza dove viene introdotto il materiale relativo all'utente nella
+creazione, come discusso in {Live/chroot include
+locali}#live-chroot-local-includes, ma anche ogni gruppo e permesso
+associato all'utente live.
+
+È possibile specificare gruppi aggiuntivi ai quali l'utente live apparterrà
+utilizzando una delle possibilità di configurazione di live-config. Ad
+esempio, per aggiungere l'utente al gruppo #{fuse}#, è possibile sia
+inserire in #{config/includes.chroot/etc/live/config/user-setup.conf}#
+quanto segue:
+
+code{
+
+ LIVE_USER_DEFAULT_GROUPS="audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse"
+
+}code
+
+o utilizzare
+#{live-config.user-default-groups=audio,cdrom,dip,floppy,video,plugdev,netdev,powerdev,scanner,bluetooth,fuse}#
+come parametro di boot.
+
+È inoltre possibile modificare facilmente il nome utente "user" e la
+password "live" predefiniti.
+
+Per cambiare il nome utente specificare quanto segue nella configurazione:
+
+code{
+
+ $ lb config --bootappend-live "boot=live components username=live-user"
+
+}code
+
+Un modo per cambiare la password è tramite un hook come descritto in {Hook
+in fase di avvio}#boot-time-hooks. Si può usare l'hook "passwd" da
+#{/usr/share/doc/live-config/examples/hooks}#, anteponendolo di conseguenza
+(ad esempio, 2000-passwd) e aggiungerlo al file
+#{config/includes.chroot/lib/live/config/}#
+
+2~customizing-locale-and-language Personalizzare la localizzazione e la
+lingua
+
+Quando il sistema live si avvia, la lingua è inserita in due fasi:
+
+_* generazione della localizzazione
+
+impostare la configurazione della tastiera
+
+Quando si crea un sistema live la localizzazione predefinita è
+#{locales=en_US.UTF-8}#. Per definire quale generare, si usi il parametro
+#{locales}# nell'opzione #{--bootappend-live}# di #{lb config}#:
+
+code{
+
+ $ lb config --bootappend-live "boot=live components locales=de_CH.UTF-8"
+
+}code
+
+Possono essere specificate più lingue separate da una virgola.
+
+Questo parametro, così come quelli della tastiera indicati più avanti, può
+essere usato anche dalla riga di comando del kernel specificando una lingua
+con #{language_country}# (nel qual caso verrà usata la codifica predefinita)
+o l'intera stringa #{language_country.encoding}#. In
+#{/usr/share/i18n/SUPPORTED}# è possibile trovare un elenco delle lingue
+supportate e la codifica per ognuna di esse.
+
+Sia la configurazione della tastiera in console sia di X sono eseguite da
+#{live-config}# con il pacchetto #{console-setup}#. Per fare ciò usare i
+parametri #{keyboard-layouts}#, #{keyboard-variants}#, #{keyboard-options}#
+e #{keyboard-model}# tramite l'opzione #{--bootappend-live}#. Le opzioni
+valide si trovano in #{/usr/share/X11/xkb/rules/base.lst}#. Per ottenere i
+layout e le varianti di una data lingua, provare a cercare il loro nome
+inglese o il paese in cui è usata, esempio:
+
+code{
+
+$ egrep -i '(^!|german.*switzerland)' /usr/share/X11/xkb/rules/base.lst
+ ! model
+ ! layout
+   ch              German (Switzerland)
+ ! variant
+   legacy          ch: German (Switzerland, legacy)
+   de_nodeadkeys   ch: German (Switzerland, eliminate dead keys)
+   de_sundeadkeys  ch: German (Switzerland, Sun dead keys)
+   de_mac          ch: German (Switzerland, Macintosh)
+ ! option
+
+}code
+
+Notare che ogni variante mostra nella descrizione il layout alla quale viene
+applicata.
+
+Spesso c'è bisogno di configurare solo il layout. Ad esempio per ottenere i
+file di localizzazione per il layout di tastiera tedesco e svizzero-tedesco
+in X:
+
+code{
+
+ $ lb config --bootappend-live "boot=live components locales=de_CH.UTF-8 keyboard-layouts=ch"
+
+}code
+
+Tuttavia per casi molto particolari si vorrà includere altri parametri. Ad
+esempio per configurare un sistema in francese con un layout Dvorak
+(chiamato Bepo) su una tastiera USB TypeMatrix EZ-Reach 2030:
+
+code{
+
+ $ lb config --bootappend-live \
+     "boot=live components locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variants=bepo keyboard-model=tm2030usb"
+
+}code
+
+Per ogni opzione #{keyboard-*}# si possono specificare più valori separati
+da una virgola, con l'eccezione di #{keyboard-model}# che ne accetta uno
+solo. Consultare la pagina di manuale di #{keyboard(5)}# per dettagli ed
+esempi delle variabili #{XKBMODEL}#, #{XKBLAYOUT}#, #{XKBVARIANT}# e
+#{XKBOPTIONS}#. Se vengono forniti più valori per #{keyboard-variants}#,
+questi verranno combinati uno ad uno con quelli di #{keyboard-layouts}#
+(vedere l'opzione #{-variant}# in #{setxkbmap(1)}# ). Sono permessi valori
+vuoti, ad esempio per definire due layout, US QWERTY come predefinito e US
+Dvorak, usare:
+
+code{
+
+ $ lb config --bootappend-live \
+     "boot=live components keyboard-layouts=us,us keyboard-variants=,dvorak"
+
+}code
+
+2~persistence Persistenza
+
+Uno dei paradigmi di un cd live è un sistema preinstallato eseguito da un
+supporto in sola lettura, come un cdrom, dove le modifiche non sopravvivono
+ai riavvii dell'hardware della macchina ospitante.
+
+Un sistema live è una generalizzazione di questo paradigma e di conseguenza
+oltre ai CD gestisce altri supporti; ma comunque, nel suo comportamento
+predefinito, deve essere considerato in sola lettura e tutte i cambiamenti
+fatti durante l'esecuzione del sistema verranno persi allo spegnimento.
+
+Persistenza è il nome comune per differenti tipi di soluzioni per salvare
+alcune o tutte queste modifiche con i riavii. Per capire come funziona
+potrebbe essere utile sapere che sebbene il sistema venga avviato ed
+eseguito da un dispositivo in sola lettura, le modifiche a file e directory
+vengono scritte su uno scrivibile, tipicamente un ram disk (tmpfs) e i dati
+sui ram disk non sopravvivono ai riavvii.
+
+I dati immagazzinati su questo ramdisk andrebbero salvati un supporto
+scrivibile persistente come un supporto di memorizzazione locale, una
+condivisione di rete o anche una sessione di un CD/DVD riscrivibile
+multisessione. Tutti questi supporti sono gestiti in modi differenti e tutti
+tranne l'ultimo richiedono un parametro d'avvio speciale da specificare
+all'avvio: #{persistence}#.
+
+Se il parametro di boot #{persistence}# è impostato (e non lo è
+#{nopersistence}#), i supporti di memorizzazione locali (hard disk,
+dispositivi USB) saranno rilevati come volumi persistenti durante l'avvio. È
+possibile selezionare quali tipi utilizzare specificando certi parametri di
+avvio descritti nella manpage di live-boot(7). Un volume persistente è uno
+dei seguenti:
+
+_* una partizione, identificata dal suo nome GPT (GUID Partition Table).
+
+_* un filesystem, identificato dalla sua label.
+
+_* un file immagine situato nella directory radice di un qualsiasi
+filesystem leggibile (anche una partizione NTFS di un sistema estraneo),
+identificato dal nome del file.
+
+La label del volume per le stratificazioni deve essere #{persistence}# ma
+verrà ignorata a meno che non sia presente nella directory radice un file
+chiamato #{persistence.conf}# che viene usato per personalizzare la
+persistenza del volume, in altre parole, specificare le directory che si
+vogliono salvare dopo un riavvio. Per maggiori dettagli vedere {Il file
+persistence.conf}#persistence-conf.
+
+Ecco alcuni esempi per preparare un volume da utilizzare per la
+persistenza. Può ad esempio essere una partizione ext4 su un hard disk o una
+penna USB creata con:
+
+code{
+
+ # mkfs.ext4 -L persistence /dev/sdb1
+
+}code
+
+Vedere anche {Usare lo spazio rimanente su una penna
+USB}#using-usb-extra-space.
+
+Se si possiede già una partizione sul dispositivo basta solo cambiare
+l'etichetta con una delle seguenti:
+
+code{
+
+ # tune2fs -L persistence /dev/sdb1 # per filesystem ext2,3,4
+
+}code
+
+Un esempio di come creare un file immagine ext4 da utilizzare per la
+persistenza:
+
+code{
+
+ $ dd if=/dev/null of=persistence bs=1 count=0 seek=1G # for a 1GB sized image file
+ $ /sbin/mkfs.ext4 -F persistence
+
+}code
+
+Una volta che il file immagine è stato creato, ad esempio per rendere
+#{/usr}# persistente salvando solo le modifiche fatte a quella directory e
+non tutto il contenuto di #{/usr}#, si può usare l'opzione "union". Se
+l'immagine è situata nella propria home copiarla nella radice del filesystem
+sul disco e montarla in #{/mnt}# come segue:
+
+code{
+
+ # cp persistence /
+ # mount -t ext4 /persistence /mnt
+
+}code
+
+Creare quindi il file #{persistence.conf}# aggiungendovi il contenuto e
+smontare il file immagine.
+
+code{
+
+ # echo "/usr union" >> /mnt/persistence.conf
+ # umount /mnt
+
+}code
+
+Ora riavviare il dispositivo live con il parametro d'avvio "persistence".
+
+3~persistence-conf Il file persistence.conf
+
+Un volume con la label #{persistence}# deve essere configurato mediante il
+file #{persistence.conf}# per creare directory persistenti arbitrarie. Tale
+file, situato nella directory radice del filesystem del volume, controlla
+quali rendere persistenti e in che modo.
+
+Nella manpage di persistence.conf(5) è descritto dettagliatamente come è
+configurato il mount degli strati personalizzati, ma un semplice esempio
+dovrebbe essere sufficiente per la maggior parte degli usi. Supponendo di
+voler creare la directory home e quella della cache di APT in modo
+persistente in un filesystem ext4 sulla partizione /dev/sdb1:
+
+code{
+
+ # mkfs.ext4 -L persistence /dev/sdb1
+ # mount -t ext4 /dev/sdb1 /mnt
+ # echo "/home" >> /mnt/persistence.conf
+ # echo "/var/cache/apt" >> /mnt/persistence.conf
+ # umount /mnt
+
+}code
+
+Quindi riavviare. Durante il primo avvio il contenuto di #{/home}# e
+#{/var/cache/apt}# saranno copiati nel volume persistente e da allora tutte
+le modifiche a queste directory risiederanno in modo persistente sul
+volume. C'è da considerare che tutti i path elencati nel file
+#{persistence.conf}# non possono contenere spazi o i caratteri speciali
+#{.}# e #{..}#, inoltre né #{/lib}#, #{/lib/live}# (o una delle sue
+sottodirectory) né #{/}# può essere resa persistente tramite i mount
+personalizzati. Come workaround a questa limitazione è possibile aggiungere
+#{/ union}# al file #{persistence.conf}# file per ottenere la persistenza
+completa.
+
+3~ Utilizzare più di un'archiviazione persistente
+
+Ci sono tre metodi differenti di utilizzare persistenze multiple per
+differenti casi d'uso. Ad esempio l'utilizzo di svariati volumi
+contemporaneamente o selezionandone uno solo per scopi molto specifici.
+
+Possono essere utilizzati svariati volumi di stratificazione personalizzati
+(con i rispettivi file #{persistence.conf}#) allo stesso tempo ma se questi
+creano la stessa directory persistente, ne verrà usata solo una. Se due
+directory montate sono "nidificate" (una è la sottodirectory dell'altra), la
+superiore sarà montata per prima, per cui nessuna operazione di mount verrà
+sovrastata dall'altra. I mount nidificati personalizzati sono problematici
+se sono elencati nello stesso file #{persistence.conf}#. Se si ha davvero la
+necessità (in genere non si dovrebbe averla), consultare la manpage di
+persistence.conf(5) per sapere come gestire questo caso.
+
+One possible use case: If you wish to store the user data i.e. #{/home}# and
+the superuser data i.e. #{/root}# in different partitions, create two
+partitions with the #{persistence}# label and add a #{persistence.conf}#
+file in each one like this, #{# echo "/home" > persistence.conf}# for the
+first partition that will save the user's files and #{# echo "/root" >
+persistence.conf}# for the second partition which will store the superuser's
+files. Finally, use the #{persistence}# boot parameter.
+
+Se un utente avesse bisogno di spazi di archiviazione multipli dello stesso
+tipo per posizioni differenti o per test, come #{privato}# e #{lavoro}#, il
+parametro d'avvio #{persistence-label}# usato in congiunzione con
+#{persistent}# permetterà supporti persistenti multipli ma univoci. Un
+esempio potrebbe essere un utente che vuole usare una partizione etichettata
+come #{privato}# per dati personali come i preferiti del browser o di altro
+tipo, questi userà i parametri d'avvio #{persistence}#
+#{persistence-label=privato}#. E per archiviare dati inerenti il lavoro,
+come documenti, ricerche e altro, verranno usati i parametri d'avvio
+#{persistence}# #{persistence-label=lavoro}#.
+
+È importante ricordare che ognuno di questi volumi, #{privato}# e
+#{lavoro}#, necessitano anche di un file #{persistence.conf}# nella propria
+radice. Il manuale di live-boot contiene altre informazioni su come
+utilizzare queste etichette con nomi usati in versioni precedenti.
+
+3~ Using persistence with encryption
+
+Using the persistence feature means that some sensible data might get
+exposed to risk. Especially if the persistent data is stored on a portable
+device such as a usb stick or an external hard drive. That is when
+encryption comes in handy. Even if the entire procedure might seem
+complicated because of the number of steps to be taken, it is really easy to
+handle encrypted partitions with live-boot. In order to use *{luks}*, which
+is the supported encryption type, you need to install /{cryptsetup}/ both on
+the machine you are creating the encrypted partition with and also in the
+live system you are going to use the encrypted persistent partition with.
+
+To install /{cryptsetup}/ on your machine:
+
+code{
+
+ # apt-get install cryptsetup
+
+}code
+
+To install /{cryptsetup}/ in your live system, add it to your package-lists:
+
+code{
+
+ $ lb config
+ $ echo "cryptsetup" > config/package-lists/encryption.list.chroot
+
+}code
+
+Once you have your live system with /{cryptsetup}/, you basically only need
+to create a new partition, encrypt it and boot with the #{persistence}# and
+#{persistence-encryption=luks}# parameters. We could have already
+anticipated this step and added the boot parameters following the usual
+procedure:
+
+code{
+
+ $ lb config --bootappend-live "boot=live components persistence persistence-encryption=luks"
+
+}code
+
+Let's go into the details for all of those who are not familiar with
+encryption. In the following example we are going to use a partition on a
+usb stick which corresponds to #{/dev/sdc2}#. Please be warned that you need
+to determine which partition is the one you are going to use in your
+specific case.
+
+The first step is plugging in your usb stick and determine which device it
+is. The recommended method of listing devices in live-manual is using #{ls
+-l /dev/disk/by-id}#. After that, create a new partition and then, encrypt
+it with a passphrase as follows:
+
+code{
+
+ # cryptsetup --verify-passphrase luksFormat /dev/sdc2
+
+}code
+
+Then open the luks partition in the virtual device mapper. Use any name you
+like. We use *{live}* here as an example:
+
+code{
+
+ # cryptsetup luksOpen /dev/sdc2 live
+
+}code
+
+The next step is filling the device with zeros before creating the
+filesystem:
+
+code{
+
+ # dd if=/dev/zero of=/dev/mapper/live
+
+}code
+
+Now, we are ready to create the filesystem. Notice that we are adding the
+label #{persistence}# so that the device is mounted as persistence store at
+boot time.
+
+code{
+
+ # mkfs.ext4 -L persistence /dev/mapper/live
+
+}code
+
+To continue with our setup, we need to mount the device, for example in
+#{/mnt}#.
+
+code{
+
+ # mount /dev/mapper/live /mnt
+
+}code
+
+And create the #{persistence.conf}# file in the root of the partition. This
+is, as explained before, strictly necessary. See {The persistence.conf
+file}#persistence-conf.
+
+code{
+
+ # echo "/ union" > /mnt/persistence.conf
+
+}code
+
+Then unmount the mount point:
+
+code{
+
+ # umount /mnt
+
+}code
+
+And optionally, although it might be a good way of securing the data we have
+just added to the partition, we can close the device:
+
+code{
+
+ # cryptsetup luksClose live
+
+}code
+
+Let's summarize the process. So far, we have created an encryption capable
+live system, which can be copied to a usb stick as explained in {Copying an
+ISO hybrid image to a USB stick}#copying-iso-hybrid-to-usb. We have also
+created an encrypted partition, which can be located in the same usb stick
+to carry it around and we have configured the encrypted partition to be used
+as persistence store. So now, we only need to boot the live system. At boot
+time, live-boot will prompt us for the passphrase and will mount the
+encrypted partition to be used for persistence.

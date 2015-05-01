@@ -1,0 +1,79 @@
+:B~ Dostosowywanie zawartości
+
+1~customization-overview Opis dostosowywania
+
+Ten rozdział zawiera przegląd różnych sposobów, w jaki można dostosować
+system live.
+
+2~ Konfiguracja podczas kompilacji vs. podczas uruchamiania systemu
+
+Opcje konfiguracji systemu live są podzielone na opcje w czasie budowania,
+które są stosowane w czasie kompilacji i na opcje w czasie rozruchu, które
+są stosowane podczas uruchamiania systemu. Opcje podczas uruchamiania są
+podzielone na te występujące wcześnie podczas uruchamiania, zastosowane
+przez live-boot, i na te, występujące później, zastosowane przez
+live-config. Każdy parametr rozruchu może zostać zmodyfikowany przez
+użytkownika poprzez ustalenie go podczas startu. Obraz może być również
+zbudowany z domyślnymi parametrami startowymi, dzięki czemu użytkownicy mogą
+normalnie tylko uruchomić bezpośrednio systemu live bez podawania żadnych
+parametrów, gdy wszystkie opcje domyślne są odpowiednie. W szczególności
+argument #{lb --bootappend-live}# składa się z wszelkich opcji wiersza
+poleceń domyślnych dla jądra systemu live, takich jak trwałość
+(ang. persistence), układ klawiatury, lub strefa czasowa. Zobacz
+{Dostosowywanie lokalizacji i języka}#customizing-locale-and-language, dla
+przykładów.
+
+Opcje konfiguracyjne w czasie budowania są opisane w podręczniku man na
+stronie #{lb config}#. Opcje konfiguracyjne w czasie rozruchu opisane są w
+podręczniku man na stronach live-boot i live-config. Chociaż pakiety
+startowe live-boot i live-config są zainstalowane w systemie live, który
+budujesz, zaleca się również zainstalować je w systemie budowania dla
+łatwego odniesienia podczas Twojej pracy przy konfiguracji. Jest to
+bezpieczne, ponieważ żaden z zawartych w nich skryptów nie będzie
+wykonywany, chyba że system zostanie skonfigurowany jako system live.
+
+2~stages-of-the-build Etapy kompilacji
+
+Proces kompilacji jest podzielony na etapy, w każdym z nich z zastosowanymi
+w kolejności różnymi dostosowaniami. Pierwszym etapem do uruchomienia jest
+etap *{bootstrap}*. Jest to wstępna faza wypełniania katalogu chroot
+pakietami aby stworzyć kadłub systemu Debian. Następnym etapem jest
+*{chroot}*, który kończy budowę katalogu chroot, wypełniania go wszystkimi
+pakietami wymienionymi w konfiguracji, wraz z innymi materiałami. Najwęcej
+dostosowywania zawartości odbywa się w tym etapie. Ostatnim etapem
+przygotowania obrazu live jest etap *{binarny}* (ang. binary), który tworzy
+możliwy do uruchomienia obraz, używając zawartości katalogu chroot do budowy
+głównego systemu plików w systemie live, a tym instalatora i wszelkich
+innych dodatkowych materiałów na nośniku docelowym poza system plików na
+systemu live. Po skompilowaniu obrazu live, jeśli włączono, archiwum
+źródłowe tarball jest budowane podczas etapu *{source}* (ang. źródło).
+
+W każdym z tych etapów istnieje szczególna sekwencja, w której stosuje się
+polecenia. Są one usytuowane w taki sposób, aby zapewnić modyfikacjom bycie
+ułożonym w rozsądny sposób. Na przykład, w etapie *{chroot}*,
+prekonfiguracja (ang. preseeding) jest stosowana, zanim zostaną
+zainstalowane jakiekolwiek pakiety, pakiety są instalowane zanim
+jakiekolwiek lokalnie zawarte pliki zostaną kopiowane, a haki są wprowadzane
+później, gdy wszystkie materiały są już na miejscu.
+
+2~ Uzupełnienie lb config plikami
+
+Mimo, że #{lb config}# tworzy konfigurację katalogów w #{config/}#, aby
+osiągnąć swoje cele, może być konieczne udostępnienie dodatkowych plików w
+podkatalogach #{config/}#. W zależności od tego, gdzie pliki są
+przechowywane w konfiguracji, mogą być skopiowane do systemu plików systemu
+live lub do binarnego obrazu systemu plików, lub mogą zostać zapewnione
+konfiguracje w czasie budowy systemu, które byłoby kłopotliwie do
+przekazania jako opcje wiersza polecenia. Można zawrzeć rzeczy takie jak
+niestandardowe listy pakietów, niestandardowa grafika lub inny skrypt do
+uruchomienia zarówno w czasie kompilacji jak i w czasie startu systemu,
+zwiększając już znaczną elastyczność debian-live swoim własnych kodem.
+
+2~ Zadania dostosowywania
+
+Kolejne rozdziały są podzielone na rodzaje zadań dostosowywania, który
+użytkownicy zazwyczaj wykonują: {Dostosowywanie instalacji
+pakietu}#customizing-package-installation, {Dostosowywanie
+zawartości}#customizing-contents i {Dostosowywanie ustawień regionalnych i
+języka}#customizing-locale-and-language obejmują tylko niektóre z rzeczy,
+które możesz zrobić.

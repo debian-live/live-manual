@@ -1,0 +1,271 @@
+:B~ A proposito di questo manuale
+
+1~about-manual A proposito di questo manuale
+
+This manual serves as a single access point to all documentation related to
+the ${project} and in particular applies to the software produced by the
+project for the Debian 9.0 "${stable}" release. An up-to-date version can
+always be found at http://live-systems.org/
+
+While live-manual is primarily focused on helping you build a live system
+and not on end-user topics, an end user may find some useful information in
+these sections: {The Basics}#the-basics covers downloading prebuilt images
+and preparing images to be booted from media or the network, either using
+the web builder or running live-build directly on your system. {Customizing
+run time behaviours}#customizing-run-time-behaviours describes some options
+that may be specified at the boot prompt, such as selecting a keyboard
+layout and locale, and using persistence.
+
+Alcuni dei comandi menzionati nel testo devono essere eseguiti con i
+privilegi di super-utente che possono essere ottenuti diventando utente root
+tramite #{su}# oppure usando #{sudo}#. Per distinguere i comandi che possono
+essere eseguiti come utente normale da quelli che necessitano dei privilegi
+di super-utente, i comandi sono preceduti rispettivamente da #{$}# o
+#{#}#. Questi simboli non fanno parte del comando.
+
+2~ Per gli impazienti
+
+Sebbene crediamo che ogni cosa in questo manuale sia importante almeno per
+alcuni dei nostri utenti, ci rendiamo conto che c'è tanto materiale da
+trattare e che si potrebbe voler provare il software prima di entrare nei
+dettagli; pertanto suggeriamo di leggerlo nel seguente ordine.
+
+First, read this chapter, {About this manual}#about-manual, from the
+beginning and ending with the {Terms}#terms section. Next, skip to the three
+tutorials at the front of the {Examples}#examples section designed to teach
+you image building and customization basics. Read {Using the
+examples}#using-the-examples first, followed by {Tutorial 1: A default
+image}#tutorial-1, {Tutorial 2: A web browser utility}#tutorial-2 and
+finally {Tutorial 3: A personalized image}#tutorial-3. By the end of these
+tutorials, you will have a taste of what can be done with live systems.
+
+We encourage you to return to more in-depth study of the manual, perhaps
+next reading {The basics}#the-basics, skimming or skipping {Building a
+netboot image}#building-netboot-image, and finishing by reading the
+{Customization overview}#customization-overview and the chapters that follow
+it. By this point, we hope you are thoroughly excited by what can be done
+with live systems and motivated to read the rest of the manual,
+cover-to-cover.
+
+2~terms Glossario
+
+_* *{Live system}*: An operating system that can boot without installation
+to a hard drive. Live systems do not alter local operating system(s) or
+file(s) already installed on the computer hard drive unless instructed to do
+so. Live systems are typically booted from media such as CDs, DVDs or USB
+sticks. Some may also boot over the network (via netboot images, see
+{Building a netboot image}#building-netboot-image), and over the Internet
+(via the boot parameter #{fetch=URL}#, see {Webbooting}#webbooting).
+
+_* *{Supporto Live}*: diversamente dal sistmea live, si riferisce a CD, DVD
+o penna USB dove viene scritto il binario prodotto da live-build e usato per
+l'avvio del sistema live. Più in generale, il termine si riferisce anche a
+qualsiasi posto in cui risiede il binario allo scopo di avviare il sistema,
+come il percorso per i file di avvio da rete.
+
+_* *{${project}}*: The project which maintains, among others, the live-boot,
+live-build, live-config, live-tools and live-manual packages.
+
+_* *{Sistema host}*: l'ambiente utilizzato per creare il sistema live.
+
+_* *{Sistema di destinazione}*: l'ambiente usato per eseguire il sistema
+live.
+
+_* *{live-boot}*: una raccolta di script usati per avviare sistemi live.
+
+_* *{live-build}*: A collection of scripts used to build customized live
+systems.
+
+_* *{live-config}*: una raccolta di script usati per configurare un sistema
+live durante il processo di avvio.
+
+_* *{live-tools}*: una raccolta di script aggiuntivi usati per eseguire
+utili compiti in un sistema live avviato.
+
+_* *{live-manual}*: questo documento è inserito nel pacchetto chiamato
+live-manual.
+
+_* *{Debian Installer (d-i)}*: il sistema d'installazione ufficiale per la
+distribuzione Debian.
+
+_* *{Boot parameters}*: parametri che possono essere immessi nel prompt del
+boot loader per modificare il comportamento del kernel o di live-config.
+
+_* *{chroot}*: il programma /{chroot}/, #{chroot(8)}#, rende possibile
+eseguire diverse istanze dell'ambiente GNU/Linux su un singolo sistema
+simultaneamente senza riavviare.
+
+_* *{Binary image}*: A file containing the live system, such as
+live-image-i386.hybrid.iso or live-image-i386.img.
+
+_* *{Distribuzione di destinazione}*: la distribuzione su cui sarà basato il
+sistema live. Può differire dalla distribuzione presente sul proprio
+computer.
+
+_* *{stable/testing/unstable}*: The *{stable}* distribution, currently
+codenamed ${stable}, contains the latest officially released distribution of
+Debian. The *{testing}* distribution, temporarily codenamed ${testing}, is
+the staging area for the next *{stable}* release. A major advantage of using
+this distribution is that it has more recent versions of software relative
+to the *{stable}* release. The *{unstable}* distribution, permanently
+codenamed sid, is where active development of Debian occurs. Generally, this
+distribution is run by developers and those who like to live on the
+edge. Throughout the manual, we tend to use codenames for the releases, such
+as ${testing} or sid, as that is what is supported by the tools themselves.
+
+2~ Autori
+
+Lista degli autori (in ordine alfabetico):
+
+_* Ben Armstrong
+
+_* Brendan Sleight
+
+_* Carlos Zuferri
+
+_* Chris Lamb
+
+_* Daniel Baumann
+
+_* Franklin Piat
+
+_* Jonas Stein
+
+_* Kai Hendry
+
+_* Marco Amadori
+
+_* Mathieu Geli
+
+_* Matthias Kirschner
+
+_* Richard Nelson
+
+_* Trent W. Buck
+
+2~how-to-contribute Contribuire a questo documento
+
+Questo manuale è pensato come un progetto comunitario e ogni suggerimento e
+contributo è benvenuto. Si veda {Contribuire al
+progetto}#contributing-to-project per informazioni dettagliate su come
+prelevare la chiave SSH ed eseguire buoni commit.
+
+3~applying-changes Applying changes
+
+Per apportare modifiche alla versione inglese del manuale è necessario
+modificare i file giusti in #{manual/en/}#, ma prima di sottoporre il
+proprio contributo si prega di visionare l'anteprima del proprio lavoro. Per
+ottenere l'anteprima di live-manual, assicurarsi di avere installato i
+pacchetti necessari per la sua compilazione eseguendo:
+
+code{
+
+ # apt-get install make po4a ruby ruby-nokogiri sisu-complete
+
+}code
+
+Si può compilare il live-manual dalla directory superiore del checkout di
+Git eseguendo:
+
+code{
+
+ $ make build
+
+}code
+
+Since it takes a while to build the manual in all supported languages,
+authors may find it convenient to use one of the fast proofing shortcuts
+when reviewing the new documentation they have added to the English
+manual. Using #{PROOF=1}# builds live-manual in html format, but without the
+segmented html files, and using #{PROOF=2}# builds live-manual in pdf
+format, but only the A4 and letter portraits. That is why using either of
+the #{PROOF=}# possibilities can save up a considerable amount of time, e.g:
+
+code{
+
+ $ make build PROOF=1
+
+}code
+
+When proofing one of the translations it is possible to build only one
+language by executing, e.g:
+
+code{
+
+ $ make build LANGUAGES=de
+
+}code
+
+È inoltre possibile compilare in base al tipo di documento, esempio:
+
+code{
+
+ $ make build FORMATS=pdf
+
+}code
+
+O entrambi:
+
+code{
+
+ $ make build LANGUAGES=de FORMATS=html
+
+}code
+
+Dopo aver revisionato il proprio lavoro e assicurato che tutto funzioni, non
+usare #{make commit}# a meno che nel commit non si stiano aggiornando delle
+traduzioni, in tal caso non mescolare nello stesso le modifiche al manuale
+inglese e le traduzioni ma eseguire un commit per ognuna. Per maggiori
+dettagli vedere la sezione {Traduzione}#translation.
+
+3~translation Traduzione
+
+In order to translate live-manual, follow these steps depending on whether
+you are starting a translation from scratch or continue working on an
+already existing one:
+
+_* Start a new translation from scratch
+
+_2* Translate the *{about_manual.ssi.pot}*, *{about_project.ssi.pot}* and
+*{index.html.in.pot}* files in #{manual/pot/}# to your language with your
+favourite editor (such as /{poedit}/) and send the translated #{.po}# files
+to the mailing list to check their integrity. live-manual's integrity check
+not only ensures that the #{.po}# files are 100% translated but it also
+detects possible errors.
+
+_2* Once checked, to enable a new language in the autobuild it is enough to
+add the initial translated files to #{manual/po/${LANGUAGE}/}# and run
+#{make commit}#. And then, edit #{manual/_sisu/home/index.html}# adding the
+name of the language and its name in English between brackets.
+
+_* Continue with an already started translation
+
+_2* If your target language has already been added, you can randomly
+continue translating the remaining .po files in #{manual/po/${LANGUAGE}/}#
+using your favourite editor (such as /{poedit}/).
+
+_2* Do not forget that you need to run #{make commit}# to ensure that the
+translated manuals are updated from the .po files and then you can review
+your changes launching #{make build}# before #{git add .}#, #{git commit -m
+"Translating..."}# and #{git push}#. Remember that since #{make build}# can
+take a considerable amount of time, you can proofread languages individually
+as explained in {Applying changes}#applying-changes
+
+Dopo aver eseguito #{make commit}# si vedrà del testo scorrere. Questi sono
+messaggi informativi sullo stato del processo e alcuni suggerimenti su cosa
+si può fare per migliorare live-manual. A meno che non si ottenga un errore
+fatale si può procedere e inviare il proprio contributo.
+
+live-manual comes with two utilities that can greatly help translators to
+find untranslated and changed strings. The first one is "make translate". It
+launches an script that tells you in detail how many untranslated strings
+there are in each .po file. The second one, the "make fixfuzzy" target, only
+acts upon changed strings but it helps you to find and fix them one by one.
+
+È da considerare che nonostante queste utilità possono davvero risultare
+utili per tradurre dalla riga di comando, si raccomanda l'uso di uno
+strumento specifico come /{poedit}/. È inoltre una buona idea leggere la
+documentazione sulla localizzazione in Debian (l10n) e, specifiche per
+live-manual, le {Linee guida per i traduttori}#guidelines-translators.
+
+*{Nota:}* si può usare #{make clean}# per pulire l'albero del repository git locale prima del push. Grazie al file .gitignore questo passo non è obbligatorio ma è una buona abitudine che evita di fare involontariamente il commit di certi file.

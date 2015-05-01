@@ -1,0 +1,151 @@
+:B~ Styl Kodowania
+
+1~coding-style Styl Kodowania
+
+Rozdział ten dokumentuje styl kodowania używany w systemach live.
+
+2~ Kompatybilność
+
+_* Nie wolno używać składni lub semantyki, które jest unikalne dla basha. Na
+przykład, użycie układu konstrukcji.
+
+_* Nie używaj podzbiorów POSIX'a - na przykład, używaj $(foo) zamiast`foo`.
+
+_* Możesz sprawdzić swoje skrypty używając 'sh -n' i 'checkbashisms'.
+
+_* Upewnij się, że cały kod powłoki działa z 'set-e'.
+
+2~ Wcięcia
+
+_* Zawsze używaj tabulatorów zamiast spacji.
+
+2~ Zawijanie
+
+_* Generalnie linie mają maksymalnie 80 znaków.
+
+_* Używaj zakończeń lini "typowych dla Linuxa":
+
+Źle:
+
+code{
+
+ if foo; then
+         bar
+ fi
+
+}code
+
+Dobrze:
+
+code{
+
+ if foo
+ then
+         bar
+ fi
+
+}code
+
+_* To samo dotyczy funkcji:
+
+Źle:
+
+code{
+
+ Foo () {
+         bar
+ }
+
+}code
+
+Dobrze:
+
+code{
+
+Foo ()
+ {
+         bar
+ }
+
+}code
+
+2~ Zmienne
+
+_* Zmienne występują zawsze zapisane drukowanymi literami.
+
+_* Zmienne wykorzystane w live-build zawsze zaczynają się przedroskiem
+#{LB_}#.
+
+_* Wewnętrzne tymczasowe zmienne w live-build należy rozpocząć od
+przedrostka #{\_LB_}#.
+
+_* Lokalne zmienne zaczynają się przedrostkiem live-build'a #{\_\_LB_}#.
+
+_* Zmienne dotyczące parametrów startowych live-config zaczynają się od
+#{LIVE_}#.
+
+_* Wszystkie inne zmienne w live-config zacznij przedroskiem #{_}#.
+
+_* Używaj nawiasów wokół zmiennych; na przykład napisz #{${FOO}}# zamiast
+#{$FOO}#.
+
+_* Zawsze chroń zmienne znakami cytatu do zachowania potencjalnych białych
+znaków: napisz #{"${FOO}"}#, a nie #{${FOO}}#.
+
+_ * Dla zachowania spójności, należy zawsze używać znaków cytatu podczas
+przypisywania wartości do zmiennych:
+
+Źle:
+
+code{
+
+ FOO=bar
+
+}code
+
+Dobrze:
+
+code{
+
+ FOO="bar"
+
+}code
+
+_* Jeśli zastosowane jest wiele zmiennych, przytocz całe wyrażenie:
+
+Źle:
+
+code{
+
+ if [ -f "${FOO}"/foo/"${BAR}"/bar ]
+ then
+         foobar
+ fi
+
+}code
+
+Dobrze:
+
+code{
+
+ if [ -f "${FOO}/foo/${BAR}/bar" ]
+ then
+         foobar
+ fi
+
+}code
+
+2~ Różne
+
+_* Używaj "#{|}#" (bez otaczających wyrażenie znaków cytatu) jako
+rozdzielacz w zapytania do sed'a, np. "#{sed -e 's|foo|bar|'}#" (bez "").
+
+_* Nie używaj komendy #{test}# dla porównań i testów, użyj "#{[}#" "#{]}#"
+(bez ""); np. "#{if [ -x /bin/foo ]; ...}#" a nie "#{if test -x /bin/foo;
+...}#".
+
+_ * Użyj #{case}# gdzie to jest możliwe zamiast #{test}#, jest to łatwiejsze
+do odczytania i szybsze w wykonaniu.
+
+_* Użyj nazw funkcji pisanych wielkimi literami, aby ograniczyć niepożądane
+działanie e środowisku użytkownika.

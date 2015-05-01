@@ -1,0 +1,149 @@
+:B~ Coding Style
+
+1~coding-style Coding Style
+
+This chapter documents the coding style used in live systems.
+
+2~ Compatibility
+
+_* Don't use syntax or semantics that are unique to the Bash shell. For
+example, the use of array constructs.
+
+_* Only use the POSIX subset - for example, use $(foo) over `foo`.
+
+_* You can check your scripts with 'sh -n' and 'checkbashisms'.
+
+_* Make sure all shell code runs with 'set -e'.
+
+2~ Indenting
+
+_* Always use tabs over spaces.
+
+2~ Wrapping
+
+_* Generally, lines are 80 chars at maximum.
+
+_* Use the "Linux style" of line breaks:
+
+Bad:
+
+code{
+
+ if foo; then
+         bar
+ fi
+
+}code
+
+Good:
+
+code{
+
+ if foo
+ then
+         bar
+ fi
+
+}code
+
+_* The same holds for functions:
+
+Bad:
+
+code{
+
+ Foo () {
+         bar
+ }
+
+}code
+
+Good:
+
+code{
+
+ Foo ()
+ {
+         bar
+ }
+
+}code
+
+2~ Variables
+
+_* Variables are always in capital letters.
+
+_* Variables used in live-build always start with #{LB_}# prefix.
+
+_* Internal temporary variables in live-build should start with the
+#{\_LB_}# prefix.
+
+_* Local variables start with live-build #{\_\_LB_}# prefix.
+
+_* Variables in connection to a boot parameter in live-config start with
+#{LIVE_}#.
+
+_* All other variables in live-config start with #{_}# prefix.
+
+_* Use braces around variables; e.g. write #{${FOO}}# instead of #{$FOO}#.
+
+_* Always protect variables with quotes to respect potential whitespaces:
+write #{"${FOO}"}# not #{${FOO}}#.
+
+_* For consistency reasons, always use quotes when assigning values to
+variables:
+
+Bad:
+
+code{
+
+ FOO=bar
+
+}code
+
+Good:
+
+code{
+
+ FOO="bar"
+
+}code
+
+_* If multiple variables are used, quote the full expression:
+
+Bad:
+
+code{
+
+ if [ -f "${FOO}"/foo/"${BAR}"/bar ]
+ then
+         foobar
+ fi
+
+}code
+
+Good:
+
+code{
+
+ if [ -f "${FOO}/foo/${BAR}/bar" ]
+ then
+         foobar
+ fi
+
+}code
+
+2~ Miscellaneous
+
+_* Use "#{|}#" (without the surround quotes) as a separator in calls to sed,
+e.g. "#{sed -e 's|foo|bar|'}#" (without "").
+
+_* Don't use the #{test}# command for comparisons or tests, use "#{[}#"
+"#{]}#" (without ""); e.g. "#{if [ -x /bin/foo ]; ...}#" and not "#{if test
+-x /bin/foo; ...}#".
+
+_* Use #{case}# wherever possible over #{test}#, as it's easier to read and
+faster in execution.
+
+_* Use capitalized names for functions to limit messing with the users
+environment.

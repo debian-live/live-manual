@@ -1,0 +1,117 @@
+:B~ Contribuire al progetto
+
+1~contributing-to-project Contribuire al progetto
+
+When submitting a contribution, please clearly identify its copyright holder
+and include any applicable licensing statement. Note that to be accepted,
+the contribution must be licensed under the same license as the rest of the
+documents, namely, GPL version 3 or later.
+
+I contributi al progetto, come traduzioni e patch, sono estremamente
+benvenuti. Chiunque può eseguire il commit direttamente sul repository;
+tuttavia chiediamo di inviare le modifiche più corpose in mailing list, per
+poterne prima discutere. Per maggiori informazioni vedere la sezione
+{Contatti}#contact.
+
+The ${project} uses Git as version control system and source code
+management. As explained in {Git repositories}#git-repositories there are
+two main development branches: *{debian}* and *{debian-next}*. Everybody can
+commit to the debian-next branches of the live-boot, live-build,
+live-config, live-images, live-manual and live-tools repositories.
+
+Tuttavia ci sono alcune restrizioni. Il server rifiuta:
+
+_* push non fast-forward,
+
+_* commit merge,
+
+_* aggiunta o rimozione di tag e branch.
+
+Anche se tutti i commit possono essere corretti, chiediamo di usare il buon
+senso ed eseguire buoni commit con dei buoni messaggi.
+
+_* Si scrivano messaggi costituiti da frasi in inglese esaurienti e utili,
+inizianti con una lettera maiuscola e terminanti con un punto. Solitamente
+cominceranno con la forma
+"Fixing/Adding/Removing/Correcting/Translating/...". 
+
+_* Scrivere buoni messaggi nei commmit. La prima riga deve contenere un
+sunto accurato del contenuto del commit in quanto verrà incluso nel
+changelog. Se si necessita di aggiungere ulteriori spiegazioni, scriverle
+sotto lasciando una riga vuota dopo la prima e quindi un'altra vuota dopo
+ogni paragrafo. Le righe non devono superare gli 80 caratteri.
+
+_* Eseguire commit atomici, ovvero non mescolare cose non inerenti tra loro
+nello stesso commit ma farne uno per ogni modifica apportata.
+
+2~ Applicare le modifiche
+
+Per eseguire il push ai repository è necessario seguire la seguente
+procedura. Verrà usato live-manual come esempio per cui rimpiazzalo con il
+nome del repository su cui si vuole lavorare. Per informazioni dettagliare
+su come modificare live-manual si veda {Contribuire a questo
+documento}#how-to-contribute.
+
+_* Prelevare la chiave pubblica:
+
+code{
+
+ $ mkdir -p ~/.ssh/keys
+ $ wget http://live-systems.org/other/keys/git@live-systems.org -O ~/.ssh/keys/git@live-systems.org
+ $ wget http://live-systems.org/other/keys/git@live-systems.org.pub -O ~/.ssh/keys/git@live-systems.org.pub
+ $ chmod 0600 ~/.ssh/keys/git@live-systems.org*
+
+}code
+
+_* Aggiungere la seguente sezione alla propria configurazione di
+openssh-client:
+
+code{
+
+ $ cat >> ~/.ssh/config << EOF
+ Host live-systems.org
+     Hostname live-systems.org
+     User git
+     IdentitiesOnly yes
+     IdentityFile ~/.ssh/keys/git@live-systems.org
+ EOF
+
+}code
+
+_* Scaricare tramite ssh un clone del manuale:
+
+code{
+
+ $ git clone git@live-systems.org:/live-manual.git
+ $ cd live-manual && git checkout debian-next
+
+}code
+
+_* Assicurarsi di avere impostato autore e indirizzo email:
+
+code{
+
+  $ git config user.name "John Doe"
+  $ git config user.email john@example.org
+
+}code
+
+*{Importante:}* Notare che tutte le modifiche vanno eseguite sul ramo *{debian-next}*.
+
+_* Apportare le modifiche. In questo esempio si scrive prima una nuova
+sezione che si occupa di applicare patch e quindi prepararla al commit
+aggiungendo i file e scrivendo il messaggio in questo modo:
+
+code{
+
+ $ git commit -a -m "Adding a section on applying patches."
+
+}code
+
+_* Inviare il commit al server:
+
+code{
+
+ $ git push
+
+}code

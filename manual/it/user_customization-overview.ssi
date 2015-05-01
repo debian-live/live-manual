@@ -1,0 +1,77 @@
+B~ Personalizzazione dei contenuti
+
+1~customization-overview Panoramica sulla personalizzazione
+
+This chapter gives an overview of the various ways in which you may
+customize a live system.
+
+2~ Configurazione in fase di compilazione e di avvio
+
+La configurazione del sistema live è divisa in opzioni applicate in fase di
+compilazione e al momento dell'avvio. Le opzioni di compilazione sono
+ulteriormente divise in quelle che si verificano prima dell'avvio, applicate
+dal pacchetto live-boot, e quelle dopo l'avvio, applicate da
+live-config. Qualsiasi opzione in fase di avvio può essere modificata
+dall'utente specificandola al prompt di avvio. L'immagine può inoltre essere
+costruita con i parametri di avvio predefiniti in modo che quando tutti i
+valori predefiniti sono adatti gli utenti possano avviare direttamente il
+sistema senza specificare alcuna opzione. In particolare, l'argomento di
+#{lb --bootappend-live}# è costituito da tutte le opzioni da riga di comando
+del kernel predefinite in un sistema live, come persistenza dei dati, layout
+di tastiera o fuso orario. Per gli esempi si veda {Personalizzare
+localizzazione e lingua}#customizing-locale-and-language.
+
+Build-time configuration options are described in the #{lb config}# man
+page. Boot-time options are described in the man pages for live-boot and
+live-config. Although the live-boot and live-config packages are installed
+within the live system you are building, it is recommended that you also
+install them on your build system for easy reference when you are working on
+your configuration. It is safe to do so, as none of the scripts contained
+within them are executed unless the system is configured as a live system.
+
+2~stages-of-the-build Fasi della creazione
+
+Il processo di creazione è diviso in due fasi, con varie personalizzazioni
+applicate in sequenza a ciascuna di esse. La prima consiste nell'*{avvio}*,
+questa è la fase iniziale di popolamento della directory di chroot con i
+pacchetti atti a creare un sistema Debian di base. Viene quindi seguita
+dalla fase *{chroot}* che completa la costruzione della directory chroot e
+la popola con tutti i pacchetti elencati nella configurazione insieme a
+qualsiasi altro materiale; la maggior parte della personalizzazione dei
+contenuti avviene in questa tappa. La parte finale della preparazione
+dell'immagine è la fase *{binaria}* che genera un'immagine avviabile
+utilizzando i contenuti della directory chroot per costruire il file system
+pricipale per il sistema live, includere l'installatore e ogni altro
+materiale aggiuntivo sul supporto di destinazione al di fuori del file
+system del sistema live. Una volta che l'immagine è pronta viene creato, se
+abilitato, l'archivio dei sorgenti nella fase *{sorgenti}*.
+
+All'interno di ciascuna di queste fasi c'è una sequenza particolare in cui
+vengono applicati i comandi, sono organizzati in modo da assicurare che le
+personalizzazioni siano ragionevolmente stratificate. Ad esempio, nella fase
+*{chroot}* i preseed vengono applicati prima che qualsiasi pacchetto sia
+installato, i pacchetti vengono installati prima che qualsiasi file incluso
+localmente venga copiato e gli hook eseguiti dopo che tutto il materiale è a
+posto.
+
+2~ Integrare la configurazione di lb con dei file
+
+Although #{lb config}# creates a skeletal configuration in the #{config/}#
+directory, to accomplish your goals, you may need to provide additional
+files in subdirectories of #{config/}#. Depending on where the files are
+stored in the configuration, they may be copied into the live system's
+filesystem or into the binary image filesystem, or may provide build-time
+configurations of the system that would be cumbersome to pass as
+command-line options. You may include things such as custom lists of
+packages, custom artwork, or hook scripts to run either at build time or at
+boot time, boosting the already considerable flexibility of debian-live with
+code of your own.
+
+2~ Personalizzazione dei compiti
+
+I capitoli seguenti sono costituiti dai tipi di compito personalizzato che
+gli utenti eseguono solitamente: {personalizzare l'installazione dei
+pacchetti}#customizing-package-installation, {personalizzare i
+contenuti}#customizing-contents e {personalizzare localizzazione e
+lingua}#customizing-locale-and-language coprono solo alcune delle cose che
+si potrebbero desiderare.

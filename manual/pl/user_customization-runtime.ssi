@@ -1,0 +1,468 @@
+:B~ Dostosowywanie zdarzeń podczas uruchamiania systemu
+
+1~customizing-run-time-behaviours Dostosowywanie zdarzeń podczas
+uruchamiania systemu
+
+Cała konfiguracja, która odbywa się w czasie pracy systemu jest wykonywana
+przez live-config. Oto niektóre z najbardziej popularnych opcji live-config,
+którymi mogą być zainteresowani użytkownicy. Pełną listę wszystkich
+możliwości można znaleźć w podręczniku man pakietu live-config.
+
+2~ Personalizacja użytkownika live
+
+Jednym ważnym czynnikiem jest to, że użytkownik jest tworzony przez
+live-boot w czasie startu systemu, a nie live-build w czasie kompilacji. To
+wpływa nie tylko, na to gdzie materiały dotyczące użytkownika live są
+wprowadzone w kompilacji, jak to opisano w {Uwzględnianie lokalne
+Live/chroot}#live-chroot-local-includes, ale również na wszelkie grupyi
+uprawnienia związane z użytkownikiem live.
+
+Można określić dodatkowe grupy, do których użytkownik live będzie należeć
+korzystając z jednej z możliwości, aby skonfigurować live-config. Na
+przykład, aby dodać użytkownika live do grupy #{fuse}#, można dodać
+następujący plik w
+#{config/includes.chroot/etc/live/config/user-setup.conf}#:
+
+code{
+
+ LIVE_USER_DEFAULT_GROUPS="audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth fuse"
+
+}code
+
+lub użyj
+#{live-config.user-default-groups=audio,cdrom,dip,floppy,video,plugdev,netdev,powerdev,scanner,bluetooth,fuse}#
+jako parametru startowego.
+
+Możliwe jest również, aby zmienić domyślną nazwę użytkownika "user" i
+domyślne hasło "live". Jeśli chcesz to zrobić, z jakiegokolwiek powodu,
+można to łatwo osiągnąć w następujący sposób:
+
+Aby zmienić domyślną nazwę użytkownika należy po prostu określić ją w
+konfiguracji:
+
+code{
+
+ $ lb config --bootappend-live "boot=live components username=live-user"
+
+}code
+
+Jednym z możliwych sposobów zmiany domyślnego hasła jest użycie
+odpowiedniego haka, jak opisano w {Haki podczas uruchamiania
+systemu}#boot-time-hooks. W tym celu można użyć haka "passwd" z
+#{/usr/share/doc/live-config/examples/hooks}#, przedrostkiem jest
+odpowiednio (np. 2000-passwd), należy go dodać do
+#{config/includes.chroot/lib/live/config/}#
+
+2~customizing-locale-and-language Ustawianie lokalizacji i języka
+
+Podczas uruchamiania systemu live, język jest definiowany przez dwa etapy:
+
+_* generowanie plików lokalizacji
+
+_* ustawienie konfiguracji klawiatury
+
+Domyślne ustawieniem lokalnym podczas budowania systemu live jest
+#{locales=en_US.UTF-8}#. Aby określić ustawienia regionalne, które powinny
+być wygenerowane, użyj parametru #{locales}# w opcji #{--bootappend-live}#
+polecenia #{lb config}#, np.
+
+code{
+
+ $ lb config --bootappend-live "boot=live components locales=de_CH.UTF-8"
+
+}code
+
+Wiele lokalizacji może być określone w postaci listy rozdzielonej
+przecinkami.
+
+Parametr ten, jak również parametr konfiguracyjny klawiatury jak wskazano
+poniżej, może być również używany w linii poleceń jądra. Można określić
+ustawienia regionalne poprzez #{language_country}# (w tym przypadku używane
+jest kodowanie domyślne) lub pełnej nazwy z kodowaniem
+#{language_country.encoding}#. Lista obsługiwanych lokalizacji i kodowań
+można znaleźć w #{/usr/share/i18n/SUPPORTED}#.
+
+Zarówno konfiguracja konsoli i klawiatury X wykonywana jest przez
+#{live-config}# przy pomocy pakietu #{console-setup}#. Aby je skonfigurować,
+ustaw parametry startowe #{keyboard-layouts}#, #{keyboard-variants}#,
+#{keyboard-options}# i #{keyboard-model}# przez opcję
+#{--bootappend-live}#. Prawidłowe wartośći opcje można znaleźć w
+#{/usr/share/X11/xkb/rules/base.lst}#. Aby znaleźć układy i warianty
+klawiatury dla danego języka, spróbuj wyszukać nazwę w języku angielskim
+i/lub kraj, gdzie mówi się danym językiem, np.:
+
+code{
+
+$ egrep -i '(^!|german.*switzerland)' /usr/share/X11/xkb/rules/base.lst
+ ! model
+ ! layout
+   ch              German (Switzerland)
+ ! variant
+   legacy          ch: German (Switzerland, legacy)
+   de_nodeadkeys   ch: German (Switzerland, eliminate dead keys)
+   de_sundeadkeys  ch: German (Switzerland, Sun dead keys)
+   de_mac          ch: German (Switzerland, Macintosh)
+ ! option
+
+}code
+
+Należy pamiętać, że każdy wariant wymienia układ, którego dotyczy w opisie.
+
+Często tylko układ klawiatury musi być skonfigurowany. Na przykład, aby
+uzyskać listę plików lokalizacyjnych dla niemieckiego i szwajcarskiego
+niemieckiego układu klawiatury w systemie X użyj:
+
+code{
+
+ $ lb config --bootappend-live "boot=live components locales=de_CH.UTF-8 keyboard-layouts=ch"
+
+}code
+
+Jednak dla bardzo konkretnych przypadków użycia, można dodać inne
+parametry. Na przykład, aby ustawić francusko języczny system z układem
+klawiatury French-Dvorak (zwany Bepo) na klawiaturze typu USB TypeMatrix
+EZ-Reach 2030, użyj:
+
+code{
+
+ $ lb config --bootappend-live \
+     "boot=live components locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variants=bepo keyboard-model=tm2030usb"
+
+}code
+
+Wiele wartości oddzielonych przecinkami może być przypisane do każdego z
+parametrów #{keyboard-*}#, z wyjątkiem #{keyboard-model}#, który przyjmuje
+tylko jedną wartość. Proszę przejrzeć podręcznik man #{keyboard(5)}# aby
+uzyskać więcej szczegółów i przykładów zmiennych #{XKBMODEL}#,
+#{XKBLAYOUT}#, #{XKBVARIANT}# i #{XKBOPTIONS}#. Jeśli podano wiele
+#{keyboard-variants}# (ang warianty klawiatury), będą one dopasowane jeden
+do drugiego przez wartość #{keyboard-layouts}# (patrz opcja #{setxkbmap(1)}#
+#{-variant}#). Puste wartości są dozwolone; na przykład aby zdefiniować dwa
+układy, domyślny US QWERTY oraz drugi US Dvorak, zastosuj:
+
+code{
+
+ $ lb config --bootappend-live \
+     "boot=live components keyboard-layouts=us,us keyboard-variants=,dvorak"
+
+}code
+
+2~persistence Persistence
+
+Odmianą Live CD jest preinstalowany system, który uruchamia się z nośników
+tylko do odczytu, takich jak cdrom, gdzie operacje zapisu i modyfikacje nie
+przetrwają restartów sprzętowych hosta, na którym jest uruchomiony.
+
+System live jest uogólnieniem tego paradygmatu, a tym samym wspiera media
+inne prócz płyt CD; ale dalej jako jego domyślne zachowanie, należy uważać
+operacje tylko do odczytu a wszekie zmiany, w czasie działania są tracone
+podczas zamykania systemu.
+
+'Persistence' (ang. trwałość) to wspólna nazwa dla różnych rodzajów
+rozwiązań dla zapisania niektórych lub wszystkich danych między restartami
+podczas używania i wprowadzania zmian do systemu. Aby zrozumieć, jak to
+działa to przydatna była by wiedza, że nawet wtedy, gdy system jest
+uruchamiany i działa z nośnika tylko do odczytu, to modyfikacje plików i
+katalogów są zapisywane na zapisywalnych nośnikach, typowo dysk RAM (tmpfs)
+a dane w pamięci RAM nie przetrwają restartu.
+
+Dane przechowywane na tym ramdysku powinny być przechowywane na zapisywalnym
+trwałym nośniku takim jak lokalny dysk, lokalny udział sieciowy lub nawet na
+sesji wielosesyjnego dysku CD-RW/DVD-RW. Wszystkie te nośniki są obsługiwane
+w systemach live na różne sposoby i wszystkie, oprócz ostatniej wymagają
+specjalnego parametru startowego określonego w czasie startu systemu:
+#{persistence}#.
+
+Jeśli ustawiony jest parametr startowy #{persistence}# (a #{nopersistence}#
+nie jest ustawiony), lokalne nośniki (np. dyski twarde, napędy USB) będą
+przeszukane w celu znalezienia woluminów trwałości podczas startu
+systemu. Możliwe jest ograniczenie, jakiego typu woluminy trwałości będą
+wykorzystane przez określenie pewnych parametrów startowych opisanych w
+podręczniku man live-boot(7). Wolumin trwałości może być każdym z
+wymienionych:
+
+_* partycja, identyfikowana po nazwie GPT.
+
+_* system plików, identyfikowany po etykiecie.
+
+_* plik obrazu zlokalizowany na każdym obsługiwanym systemie plików (nawet
+na partycji NTFS innego systemu), identyfikowany po nazwie pliku.
+
+Etykietą dla woluminu musi być #{persistence}#, ale będzie ignorowane,
+dopóki nie będzie zawarty w katalogu głównym plik o nazwie
+#{persistence.conf}#, który jest używany by pełni dostosować wolumin
+persistence, to znaczy, że wskazuje się w nim katalogi, w których chcesz
+zapisać na woluminie zmiany przy restarcie. Zobacz {Plik
+persistence.conf}#persistence-conf, aby uzyskać więcej szczegółów.
+
+Oto kilka przykładów, jak przygotować wolumin, aby mógł być on użyty z opcją
+persistence. Może to być, na przykład, partycja ext4 na dysku twardym lub na
+nośniku wymiennym stworzona przez, np.:
+
+code{
+
+ # mkfs.ext4 -L persistence /dev/sdb1
+
+}code
+
+Zobacz również {Wykorzystanie przestrzeni pozostałej na nośniku
+USB}#using-usb-extra-space.
+
+Jeśli masz już partycję na urządzeniu, można po prostu zmienić jego etykietę
+używając następującego polecenia:
+
+code{
+
+ # tune2fs -L persistence /dev/sdb1 # for ext2,3,4 filesystems
+
+}code
+
+Oto przykład, jak stworzyć plik obrazu opartego na ext4 do zastosowania z
+opcją persistance:
+
+code{
+
+ $ dd if=/dev/null of=persistence bs=1 count=0 seek=1G # for a 1GB sized image file
+ $ /sbin/mkfs.ext4 -F persistence
+
+}code
+
+Po utworzeniu pliku obrazu, na przykład, aby sprawić by katalog #{/usr}# był
+prwały, ale tylko zapisywał zmiany wprowadzone w tym katalogu, a nie całą
+zawartość #{/usr}#, można użyć opcji "union". Jeśli plik obrazu znajduje się
+w katalogu domowym, należy skopiować go do katalogu głównego systemu plików
+na dysku twardym i zamontować go w #{/mnt}# w następujący sposób:
+
+code{
+
+ # cp persistence /
+ # mount -t ext4 /persistence /mnt
+
+}code
+
+Następnie utwórz plik #{persistence.conf}# dodając zawartość i odmontowując
+plik obrazu.
+
+code{
+
+ # echo "/usr union" >> /mnt/persistence.conf
+ # umount /mnt
+
+}code
+
+Teraz uruchom ponownie i wybierz nośnik live, a następnie uruchom dodając
+parametr startowy "persistence".
+
+3~persistence-conf Plik persistence.conf
+
+Partycję z etykietą #{persistence}# należy skonfigurować za pomocą pliku
+#{persistence.conf}#, aby dowolne katalogi stały się trwałe. Ten plik,
+znajdujący się w głównym katalogu systemu plików partycji, kontroluje które
+katalogi są trwałe i w jaki sposób.
+
+To jak niestandardowe wierzchnie zamontowania są skonfigurowane jest opisane
+w szczegółach w podręczniku man persistence.conf(5), ale ten prosty przykład
+powinien być wystarczający dla większości zastosowań. Powiedzmy, że chcemy,
+aby nasz katalog domowy i cache APT było trwałe w pamięci podręcznej systemu
+plików ext4 na partycji /dev/sdb1:
+
+code{
+
+# mkfs.ext4 -L persistence /dev/sdb1
+ # mount -t ext4 /dev/sdb1 /mnt
+ # echo "/home" >> /mnt/persistence.conf
+ # echo "/var/cache/apt" >> /mnt/persistence.conf
+ # umount /mnt
+
+}code
+
+Następnie uruchamiamy ponownie komputer. Podczas pierwszego uruchomienia
+zawartość #{/home}# i #{/var/cache/apt}# zostanie skopiowana do woluminu
+trwałości i od tej pory wszystkie zmiany w tych katalogach będą
+przechowywane na tym woluminie. Należy pamiętać, że wszelkie ścieżki
+wymienione w pliku #{persistence.conf}# nie mogą zawierać spacji lub
+specjalnych komponentów ścieżki: #{.}# i #{..}# . Ponadto, ani #{/lib}#,
+#{/lib/live}# (lub którykolwiek z jego podkatalogów) ani #{/}# nie może
+zostać utrwalony za pomocą własnych punktów montowania. Jako obejście tego
+ograniczenia można dodać #{/ union}# do pliku #{persistence.conf}# w celu
+osiągnięcia pełnej trwałości.
+
+3~ Używanie więcej niż jednego magazynu persistence
+
+Istnieją różne sposoby korzystania z wielu magazynów trwałości
+(ang. persistence) dla różnych zastosowań. Na przykład, przy używanie kilku
+magazynów w tym samym czasie lub wybranie tylko jednego, spośród różnych, do
+bardzo specyficznych zastosowań.
+
+Kilka różnych niestandardowych woluminów-nakładek (z własnymi plikami
+#{persistence.conf}#) może być używane w tym samym czasie, ale jeżeli kilka
+woluminów tworzy ten sam katalog trwałym, będzie używany tylko jeden z
+nich. Jeśli jakieś dwa punty montowania są "zagnieżdżone" (np. jeden jest
+podkatalogiem drugiego) to katalog parent (ang. rodzic) zostanie zamontowany
+przed katalogiem child (ang. dziecko) tak że jeden punkt montowania nie
+będzie ukryty przed innym. Zagnieżdżone niestandardowe woluminy są
+problematyczne, jeżeli są wymienione w tym samym pliku
+#{persistence.conf}#. Zobacz podręcznik man persistence.conf(5), jak radzić
+sobie z tym przypadkiem, jeśli naprawdę potrzebujesz (Wskazówka: zazwyczaj
+nie potrzebujesz).
+
+Jednym z możliwych przypadków użycia: Jeśli chcesz przechowywać dane
+użytkownika np. #{/home}# i dane superużytkownika tj. #{/root}# na różnych
+partycjach, utwórz dwie partycje z etykietą #{persistence}# i dodaj plik
+#{persistence.conf} na każdą z nich, tak #{# echo "/home" >
+persistence.conf}# na pierwszej partycji, przez co będzą zapisywane pliki
+użytkownika i #{# echo "/root" > persistence.conf}# na drugiej partycji,
+która będzie przechowywać pliki superużytkownika. Wreszcie, należy użyć
+parametru startowego #{persistence}#.
+
+Jeśli użytkownik będzie potrzebował wiele magazynów trwałości tego samego
+typu dla różnych miejsc lub dla celów testowych, takich jak magazyny
+#{private}# i ​​#{work}# parametr startowy #{persistence-label}# użyty w
+połączeniu z parametrem #{persistence}# pozwoli na wiele unikatowych
+magazynów trwałości. Przykładem może być, jeśli użytkownik chciałby użyć
+partycji trwałości oznaczonej #{private}# dla prywatnych danych, takich jak
+zakładki w przeglądarce lub innych typów danych, to mógłby użyć parametrów
+startowych:#{persistence}# #{persistence-label=private}#. A do
+przechowywania danych związanych z pracą, takich jak dokumenty, projekty
+badawcze lub inne rodzaje, mógłby skorzystać z parametrów startowych:
+#{persistence}# #{persistence-label=work}#.
+
+Ważne jest, aby pamiętać, że każda z tych partycji, #{private}# i
+​​#{work}#, także potrzebuje pliku #{persistence.conf}#. Podręcznik man
+pakietu live-boot zawiera więcej informacji o tym, jak korzystać z tych
+etykiet z zapisanymi nazwami.
+
+3~ Using persistence with encryption
+
+Korzystanie z funkcji trwałości (ang. persistence) oznacza, że ​​niektóre
+poufne dane mogą zostać narażone na ryzyko. Zwłaszcza jeśli trwałe dane są
+przechowywane na urządzeniu przenośnym, takim jak pamięci USB lub zewnętrzne
+dyski twarde. To jest miejsce, gdzie przydatne staje się  szyfrowanie. Nawet
+jeśli cała procedura może wydawać się skomplikowana, ze względu na liczbę
+kroków, które należy podjąć, to jest bardzo łatwo obsługiwać szyfrowane
+partycje z live-boot. Aby móc korzystać z *{luks}*, który jest obsługiwanym
+typem szyfrowania, musisz zainstalować /{cryptsetup}/ zarówno na maszynie
+tworzenia zaszyfrowanych partycji, a także w systemie live, który będzie
+używał szyfrowanej trwałej partycji.
+
+Aby zainstalować /{cryptsetup}/ na twoim komputerze:
+
+code{
+
+ # apt-get install cryptsetup
+
+}code
+
+Aby zainstalować /{cryptsetup}/ na twoim systemie live dodaj go do listy
+pakietów:
+
+code{
+
+ $ lb config
+ $ echo "cryptsetup" > config/package-lists/encryption.list.chroot
+
+}code
+
+Gdy Twoj system live posiada /{cryptsetup}/, to w zasadzie wystarczy, już
+tylko utworzyć nową partycję, zaszyfrować ją i uruchomić z parametrami
+#{persistence}# i #{persistence-encryption=luks}#. Mogliśmy już przewidzieć
+ten krok i dodać parametry startowe w czasie kompilacji przestrzegając
+następującej procedury:
+
+code{
+
+ $ lb config --bootappend-live "boot=live components persistence persistence-encryption=luks"
+
+}code
+
+przejdzmy do szczegółów dla tych wszystkich, którzy nie są zaznajomieni z
+szyfrowaniem. W poniższym przykładzie mamy zamiar użyć partycji na dysku
+USB, która odpowiada #{/dev/sdc2}#. Należy zaznaczyć, że należy ustalić,
+która partycja jest jeden tą, którą masz zamiar używać w tym konkretnym
+przypadku.
+
+Pierwszym krokiem jest podłączenie dysku USB i określenie, którym jest
+urządzeniem. Zalecaną metodą tworzenia listy urządzeń w live-manual jest
+#{ls -l /dev/disk/by-id}#. Następnie utworzymy nową partycję, a następnie
+zaszyfrujemy ją hasłem w następujący sposób:
+
+code{
+
+ # cryptsetup --verify-passphrase luksFormat /dev/sdc2
+
+}code
+
+Następnie otwieramy partycję LUKS w wirtualnym elemencie odwzorowującym
+urządzenia *{/dev/mapper}*. Można tu użyć dowolnej nazww. Używamy *{live}*
+jako przykład:
+
+code{
+
+ # cryptsetup luksOpen /dev/sdc2 live
+
+}code
+
+Następnym krokiem jest wypełnienie urządzenia zerami przed utworzeniem
+systemu plików:
+
+code{
+
+ # dd if=/dev/zero of=/dev/mapper/live
+
+}code
+
+Teraz jesteśmy gotowi do stworzenia systemu plików. Warto zauważyć, że
+dodajemy etykietę #{persistence}# tak, aby urządzenie zotało zamontowane w
+jako persistence store (magazyn persistence) w czasie startu systemu.
+
+code{
+
+ # mkfs.ext4 -L persistence /dev/mapper/live
+
+}code
+
+Aby kontynuować naszą konfigurację, musimy zamontować urządzenie, na
+przykład w #{/mnt}#.
+
+code{
+
+ # mount /dev/mapper/live /mnt
+
+}code
+
+I stwórz plik #{persistence.conf}# w katalogu głównym partycji. To jest, jak
+wyjaśniono wyżej, absolutnie konieczne. Zobacz {Plik
+persistence.conf}#persistence-conf.
+
+code{
+
+ # echo "/ union" > /mnt/persistence.conf
+
+}code
+
+Potem odmontuj punkt montowania:
+
+code{
+
+ # umount /mnt
+
+}code
+
+I opcjonalnie, choć może to być dobry sposób na zabezpieczenie danych, które
+właśnie dodaliśmy do partycji, możemy zamknąć urządzenie:
+
+code{
+
+ # cryptsetup luksClose live
+
+}code
+
+Podsumujmy proces. Do tej pory stworzyliśmy system live z możliwością
+szyfrowania, który można skopiować na nośnik usb, jak wyjaśniono w
+{kopiowaniu hybrydowego obrazu ISO na nośnik pamięci
+USB}#copying-iso-hybrid-to-usb. Stworzyliśmy również zaszyfrowaną partycję,
+która może znajdować się na tym samym nośniku usb, aby można było go nosić
+ze sobą wszędzie i mamy skonfigurowaną zaszyfrowaną partycję, stosowaną jako
+magazyn persistence. Więc teraz, musimy tylko uruchomić system live. W
+czasie startu systemu, na live-boot poprosi nas o wpisanie hasła i zamontuje
+zaszyfrowaną partycję używaną przez opcję persistence.

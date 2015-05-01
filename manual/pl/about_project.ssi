@@ -1,0 +1,105 @@
+:B~ O ${project}
+
+1~about-project O ${project}
+
+2~ Motywacja
+
+3~ Co jest nie tak w moim dotychczasowym systemie live?
+
+Gdy ${project} został zainicjowany, było już dostępnych kilka systemów live
+opartych na Debianie i które teraz świetnie się spisują. Z punktu widzenia
+Debian większość z nich ma jednak jedną lub więcej z następujących wad:
+
+_* Nie są to projekty Debian i dlatego nie posiadają także wsparcia ze
+strony Debian.
+
+_* Mieszają rózne dystrybucje, np.: *{testing}* i *{unstable}*.
+
+_* Wspierają tylko i386.
+
+_* Modyfikują zachowanie i/lub wygląd pakietów przez obcinanie ich w celu
+zaoszczędzenia miejsca.
+
+_* Zawierają pakiety z poza archiwum Debian.
+
+_ * Są dostarczane z jądrem systemu zawierającym dodatkowe łaty, które nie
+są częścią Debian.
+
+_* Są duże i powolne a ze względu na swoją zwykłą wielkość, a zatem nie
+nadają się do zagadnień odzyskiwania.
+
+_* Nie są one dostępne na różnych nośnikach, np. CD, DVD, USB-stick czy
+obrazy netboot.
+
+3~ Czemu tworzyć nasz własny system live?
+
+Debian to Uniwersalny system operacyjny: Debian będzie posiadał system live
+do przetestowania i dokładnego zaprezentowania systemu Debian z
+następującymi głównymi zaletami:
+
+_* Będzie pod-projektem Debian.
+
+_* Będzie odzwierciedlał stan aktualnej dystrybucji.
+
+_* Będzie wspierał tak wiele architektur jak to tylko możliwe.
+
+_* Będzie się składał tylko z niezmienionych pakietów Debian.
+
+_* Nie będzie zawierał żadnych pakietów, które nie są w archiwum Debian.
+
+_* Będzie korzystał z niezmienionego jądro Debian bez dodatkowych poprawek.
+
+2~ Filozofia
+
+3~ Tylko niezmienione pakiety z działu Debian "main"
+
+Będziemy używać tylko pakietów z repozytorium Debian w sekcji "main". Sekcja
+"non-free" nie jest częścią Debian, a zatem nie może być używana do
+budowania oficjalnych obrazów systemu live.
+
+Nie będziemy zmieniać żadnych pakietów. Zawsze, gdy będziemy musieli coś
+zmienić, zrobimy to w porozumieniu z opiekunem tego pakietu w Debianie.
+
+W drodze wyjątku, nasze własne pakiety, takie jak live-boot, live-build lub
+live-config mogą być zastosowane tymczasowo z własnego repozytorium z
+przyczyn rozwojowych (np. do tworzenia zrzutów rozwojowych). Zostaną one
+przesłane do Debian na bieżąco.
+
+3~ Bez konfiguracji pakietów systemu live
+
+ Na tym etapie nie będziemy dostarczać lub też instalować przykładowych lub
+alternatywnych konfiguracji pakietów. Wszystkie pakiety będą użyte w u ich
+podstawowych konfiguracjach takich jakie są po normalnej instalacji Debian.
+
+Za każdym razem, gdy potrzebujemy innej domyślnej konfiguracji, zrobimy to w
+porozumieniu z opiekunem pakietu w Debianie.
+
+System do konfigurowania pakietów jest dostarczony przez użycie debconf'a;
+umożliwiając instalację niestandardowo skonfigurowanych pakietów w Twoim
+niestandardowo stworzonym obrazie systemu live. A dla {prekompilowanych
+obrazów live}#downloading-prebuilt-images zdecydowaliśmy, aby pozostawić
+pakiety w swojej domyślnej konfiguracji, chyba że będzie to absolutnie
+niezbędne do pracy w środowisku live. Wszędzie tam, gdzie to możliwe, wolimy
+dostosowywać pakiety w archiwum Debian, aby lepiej pracowały w systemie live
+w porównaniu do dokonywania zmian w live toolchain lub {konfiguracji obrazu
+prekompilownego} # klonuj-konfiguracja-przez-git. Aby uzyskać więcej
+informacji, zobacz {Omówienie dostosowywania}#customization-overview.
+
+2~contact Kontakt
+
+_* *{Lista Mailingowa}*: Podstawowym kontaktem do projektu jest lista
+mailingowa na https://lists.debian.org/debian-live/. Możesz napisać do listy
+bezpośrednio przez zadresowanie poczty do
+debian-live@lists.debian.org. Archiwa listy dostępne są na
+https://lists.debian.org/debian-live/.
+
+_* *{IRC}*: Wielu użytkowników i deweloperów jest obecnych na kanale
+#debian-live na irc.debian.org (OFTC). Kiedy zadajesz pytanie na IRC,
+prosimy o cierpliwie czekać na odpowiedź. W przypadku, gdy odpowiedz nie
+pojawi się, napisz na listę mailingową.
+
+_* *{BTS}*: {Debian Bug Tracking System} https://www.debian.org/Bugs/ (BTS)
+zawiera informacje o błędach zgłoszonych przez użytkowników i
+deweloperów. Każdy błąd ma przypisany swój numer i jest przechowywany,
+dopóki nie zostaje on oznaczony jako rozwiązany. Aby uzyskać więcej
+informacji, zobacz {Zgłaszanie błędów}#bugs.

@@ -1,0 +1,99 @@
+:B~ Projektabläufe
+
+1~procedures Procedures
+
+This chapter documents the procedures within the ${project} for various
+tasks that need cooperation with other teams in Debian.
+
+2~ Major Releases
+
+Releasing a new stable major version of Debian includes a lot of different
+teams working together to make it happen. At some point, the Live team comes
+in and builds live system images. The requirements to do this are:
+
+_* A mirror containing the released versions for the debian and
+debian-security archives which the debian-live buildd can access.
+
+_* The names of the image need to be known
+(e.g. debian-live-VERSION-ARCH-FLAVOUR.iso).
+
+_* The data from debian-cd needs to be synced (udeb exclude lists).
+
+_* Images are built and mirrored on cdimage.debian.org.
+
+2~ Point Releases
+
+_* Again, we need updated mirrors of debian and debian-security.
+
+_* Images are built and mirrored on cdimage.debian.org.
+
+_* Send announcement mail.
+
+3~ Last Point Release of a Debian Release
+
+Remember to adjust both chroot and binary mirrors when building the last set
+of images for a Debian release after it has been moved away from
+ftp.debian.org to archive.debian.org. That way, old prebuilt live images are
+still useful without user modifications.
+
+3~ Point release announcement template
+
+An announcement mail for point releases can be generated using the template
+below and the following command:
+
+code{
+
+ $ sed \
+     -e 's|@MAJOR@|9.0|g' \
+     -e 's|@MINOR@|9.0.1|g' \
+     -e 's|@CODENAME@|stretch|g' \
+     -e 's|@ANNOUNCE@|2017/msgXXXXX.html|g'
+
+}code
+
+Please check the mail carefully before sending and pass it to others for
+proof-reading.
+
+code{
+
+ Updated Live @MAJOR@: @MINOR@ released
+
+ The Live Systems Project is pleased to announce the @MINOR@ update of the
+ Live images for the stable distribution Debian @MAJOR@ (codename "@CODENAME@").
+
+ The images are available for download at:
+
+   <http://live-systems.org/cdimage/release/current/>
+
+ and later at:
+
+   <http://cdimage.debian.org/cdimage/release/current-live/>
+
+ This update includes the changes of the Debian @MINOR@ release:
+
+   <https://lists.debian.org/debian-announce/@ANNOUNCE@>
+
+ Additionally it includes the following Live-specific changes:
+
+  * [INSERT LIVE-SPECIFIC CHANGE HERE]
+  * [INSERT LIVE-SPECIFIC CHANGE HERE]
+  * [LARGER ISSUES MAY DESERVE THEIR OWN SECTION]
+
+ About Live Systems
+ ------------------
+ The Live Systems Project produces the tools used to build official
+ live systems and the official live images themselves for Debian.
+
+ About Debian
+ ------------
+ The Debian Project is an association of Free Software developers who
+ volunteer their time and effort in order to produce the completely free
+ operating system Debian.
+
+ Contact Information
+ -------------------
+ For further information, please visit the Live Systems web pages at
+ <http://live-systems.org/>, or contact the Live Systems team at
+ <debian-live@lists.debian.org>.
+
+}code

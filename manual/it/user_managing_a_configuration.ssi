@@ -1,0 +1,137 @@
+:B~ Gestire una configurazione
+
+1~managing-a-configuration Gestire una configurazione
+
+Questo capitolo spiega come gestire una configurazione per una live sin
+dalla creazione iniziale, attraverso le successive revisioni e rilasci sia
+del software live-build che della stessa immagine.
+
+2~ Gestire i cambiamenti di configurazione
+
+Le configurazioni live sono di rado perfette al primo tentativo. Può andar
+bene passare le opzioni di #{lb config}# a riga di comando per eseguire una
+compilazione ma è tipico rivedere queste opzioni e compilare finché non si è
+soddisfatti. Per gestire le modifiche c'è bisogno di script automatici che
+assicurano che la propria configurazione sia coerente.
+
+3~ Perché utilizzare gli script automatici? Cosa fanno?
+
+The #{lb config}# command stores the options you pass to it in #{config/*}#
+files along with many other options set to default values. If you run #{lb
+config}# again, it will not reset any option that was defaulted based on
+your initial options. So, for example, if you run #{lb config}# again with a
+new value for #{--binary-images}#, any dependent options that were defaulted
+for the old image type may no longer work with the new ones. Nor are these
+files intended to be read or edited. They store values for over a hundred
+options, so nobody, let alone yourself, will be able to see in these which
+options you actually specified. And finally, if you run #{lb config}#, then
+upgrade live-build and it happens to rename an option, #{config/*}# would
+still contain variables named after the old option that are no longer valid.
+
+Per queste ragioni gli script nella directory #{auto/*}# faciliteranno il
+lavoro; sono semplici wrapper ai comandi #{lb config}#, #{lb build}# e #{lb
+clean}# designati per aiutare a gestire la configurazione. Gli script in
+#{auto/config}# memorizzano i comandi di #{lb config}# con le opzioni
+desiderate, quelli in #{auto/clean}# rimuovono i file contenenti i valori
+delle variabili di configurazione, mentre gli script in #{auto/build}#
+tengono un #{build.log}# di ogni compilazione. Ognuno di questi script viene
+eseguito automaticamente ogni qualvolta si esegue il comando #{lb}#
+corrispondente; utilizzandoli la vostra configurazione sarà più semplice da
+leggere e verrà mantenuta coerente da una revisione all'altra. Inoltre sarà
+molto più facile identificare e sistemare le opzioni che necessitano di
+modifiche quando si aggiorna live-build dopo aver letto la documentazione
+aggiornata.
+
+3~ Esempi d'uso di script automatici
+
+Per comodità live-build è fornito di esempi di script automatici da copiare
+e modificare. Inizializzare una nuova configurazione predefinita quindi
+copiare gli esempi in essa:
+
+code{
+
+ $ mkdir mylive && cd mylive && lb config
+ $ mkdir auto
+ $ cp /usr/share/doc/live-build/examples/auto/* auto/
+
+}code
+
+Modificare #{auto/config}# aggiungendo qualsiasi opzione vi serva, esempio:
+
+code{
+
+ #!/bin/sh
+ lb config noauto \
+     --architectures i386 \
+     --linux-flavours 686-pae \
+     --binary-images hdd \
+     --mirror-bootstrap http://ftp.ch.debian.org/debian/ \
+     --mirror-binary http://ftp.ch.debian.org/debian/ \
+     "${@}"
+
+}code
+
+Ogni volta che verrà usato #{lb config}#, #{auto/config}# ripristinerà la
+configurazione in base a queste opzioni; quando si vogliono apportare
+modifiche basterà modificare le opzioni in questo file invece di passarle a
+#{lb config}#. Utilizzando #{lb clean}#, #{auto/clean}# pulirà i file in
+#{config/*}# insieme a qualsiasi altro creato dalla compilazione. Infine,
+quando si usa #{lb build}#, verrà scritto da #{auto/build}# un file di log
+della compilazione in #{build.log}#.
+
+*{Nota:}* il parametro speciale #{noauto}# viene qui usato per impedire un'ulteriore chiamata di #{auto/config}#, impedendo quindi infinite chiamate ricorsive; assicurarsi di non rimuoverlo facendo modifiche. Quando si dividono comandi lunghi di #{lb config}# su più righe per agevolarne la leggibilità, non dimenticare il backslash (\) alla fine di ogni riga che continua sulla successiva, come mostrato poc'anzi nell'esempio di script.
+
+2~clone-configuration-via-git Clonare una configurazione pubblicata tramite
+Git.
+
+Use the #{lb config --config}# option to clone a Git repository that
+contains a live system configuration. If you would like to base your
+configuration on one maintained by the ${project}, look at
+http://live-systems.org/gitweb/ for the repository named #{live-images}# in
+the category #{Packages}#. This repository contains the configurations for
+the live systems {prebuilt images}#downloading-prebuilt-images.
+
+For example, to build a standard image, use the #{live-images}# repository
+as follows:
+
+code{
+
+ $ mkdir live-images && cd live-images
+ $ lb config --config git://live-systems.org/git/live-images.git
+ $ cd images/standard
+
+}code
+
+Modificare #{auto/config}# e qualsiasi altro file presente in #{config}#
+necessario alle proprie esigenze. Ad esempio, le immagini non-free
+precompilate non ufficiali sono create semplicemente aggiungendo
+#{--archive-areas "main contrib non-free"}#.
+
+È possibile definire una scorciatoia nella configurazione di Git aggiungendo
+quanto segue al file #{${HOME}/.gitconfig}#:
+
+code{
+
+ [url "git://live-systems.org/git/"]
+         insteadOf = lso:
+
+}code
+
+This enables you to use #{lso:}# anywhere you need to specify the address of
+a #{live-systems.org}# git repository. If you also drop the optional
+#{.git}# suffix, starting a new image using this configuration is as easy
+as:
+
+code{
+
+ $ lb config --config lso:live-images
+
+}code
+
+Clonando l'intero repository #{live-images}# si ottengono configurazioni
+usate per svariate immagini. Se dopo aver terminato la prima si vuole creare
+un'immagine differente, basterà cambiare directory e opzionalmente fare di
+nuovo le modifiche necessarie alle proprie esigenze.
+
+In ogni caso ricordarsi che ogni volta si dovrà creare l'immagine come
+utente root: #{lb build}#

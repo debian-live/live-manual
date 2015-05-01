@@ -1,0 +1,77 @@
+:B~ Personalizando conteúdo
+
+1~customization-overview Visão geral sobre personalização
+
+This chapter gives an overview of the various ways in which you may
+customize a live system.
+
+2~ Configuração de tempo de construção X  tempo de inicialização
+
+As opções de configuração do sistema Live são divididas em opções de tempo
+de compilação que são as opções aplicadas em tempo de compilação e opções de
+tempo de inicialização que são aplicadas em tempo de inicialização. Opções
+de inicialização são divididas naquelas que ocorrem em início do
+inicialização, aplicadas pelo pacote live-boot e aquelas que acontecem no
+final da inicialização, aplicadas pelo live-config. Qualquer opção de
+inicialização pode ser modificada pelo usuário, especificando a no prompt de
+inicialização. A imagem também pode ser construída com os parâmetros de
+inicialização padrão para que os usuários possam normalmente apenas
+inicializar diretamente pelo sistema live, sem especificar quaisquer opções
+quando todos os padrões são adequados. Em particular, o argumento para #{lb
+--bootappend-live}# consiste de quaisquer opções padrão de kernel de linha
+de comando para o sistema live, tais como persistência, layouts de teclado,
+ou fuso horário. Veja {Personalizando local e
+linguagem}#customizing-locale-and-language, por exemplo.
+
+Build-time configuration options are described in the #{lb config}# man
+page. Boot-time options are described in the man pages for live-boot and
+live-config. Although the live-boot and live-config packages are installed
+within the live system you are building, it is recommended that you also
+install them on your build system for easy reference when you are working on
+your configuration. It is safe to do so, as none of the scripts contained
+within them are executed unless the system is configured as a live system.
+
+2~stages-of-the-build Etapas da construção
+
+The build process is divided into stages, with various customizations
+applied in sequence in each. The first stage to run is the *{bootstrap}*
+stage. This is the initial phase of populating the chroot directory with
+packages to make a barebones Debian system. This is followed by the
+*{chroot}* stage, which completes the construction of chroot directory,
+populating it with all of the packages listed in the configuration, along
+with any other materials. Most customization of content occurs in this
+stage. The final stage of preparing the live image is the *{binary}* stage,
+which builds a bootable image, using the contents of the chroot directory to
+construct the root filesystem for the Live system, and including the
+installer and any other additional material on the target medium outside of
+the Live system's filesystem. After the live image is built, if enabled, the
+source tarball is built in the *{source}* stage.
+
+Within each of these stages, there is a particular sequence in which
+commands are applied. These are arranged in such a way as to ensure
+customizations can be layered in a reasonable fashion. For example, within
+the *{chroot}* stage, preseeds are applied before any packages are
+installed, packages are installed before any locally included files are
+copied, and hooks are run later, after all of the materials are in place.
+
+2~ Complementar lb config com arquivos
+
+Although #{lb config}# creates a skeletal configuration in the #{config/}#
+directory, to accomplish your goals, you may need to provide additional
+files in subdirectories of #{config/}#. Depending on where the files are
+stored in the configuration, they may be copied into the live system's
+filesystem or into the binary image filesystem, or may provide build-time
+configurations of the system that would be cumbersome to pass as
+command-line options. You may include things such as custom lists of
+packages, custom artwork, or hook scripts to run either at build time or at
+boot time, boosting the already considerable flexibility of debian-live with
+code of your own.
+
+2~ Tarefas de personalização
+
+Os capítulos seguintes são organizados pelos tipos de personalização de
+tarefas que os usuários normalmente executam: {Personalizar a instalação de
+pacote}#customizing-package-installation, {Personalizar
+conteúdos}#customizing-package-installation, e {Personalizar localizade e
+linguagem}#customizing-locale-and-language cobrem apenas algumas das coisas
+que você pode querer fazer.

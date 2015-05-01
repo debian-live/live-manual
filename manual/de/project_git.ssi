@@ -1,0 +1,87 @@
+:B~ Git repositories
+
+1~git-repositories Git repositories
+
+The list of all the available repositories of the ${project} can be found at
+http://live-systems.org/gitweb/. The project's git URLs have the form:
+#{protocol://live-systems.org/git/repository}#. Thus, in order to clone
+live-manual read-only, launch:
+
+code{
+
+ $ git clone git://live-systems.org/git/live-manual.git
+
+}code
+
+Or,
+
+code{
+
+ $ git clone https://live-systems.org/git/live-manual.git
+
+}code
+
+Or,
+
+code{
+
+ $ git clone http://live-systems.org/git/live-manual.git
+
+}code
+
+The cloning addresses with write permission have the form:
+#{git@live-systems.org:/repository}#.
+
+So, again, to clone live-manual over ssh you must type:
+
+code{
+
+ $ git clone git@live-systems.org:live-manual.git
+
+}code
+
+The git tree is made up of several different branches. The *{debian}* and
+the *{debian-next}* branches are particularly noteworthy because they
+contain the actual work that will eventually be included in each new
+release.
+
+After cloning any of the existing repositories, you will be on the
+*{debian}* branch. This is appropriate to take a look at the state of the
+project's latest release but before starting work it is crucial to switch to
+the *{debian-next}* branch. To do so:
+
+code{
+
+ $ git checkout debian-next
+
+}code
+
+The *{debian-next}* branch, which is not always fast-forward, is where all
+the changes are committed first before being merged into the *{debian}*
+branch. To make an analogy, it is like a testing ground. If you are working
+on this branch and need to pull, you will have to do a #{git pull --rebase}#
+so that your local modifications are staged while pulling from the server
+and then your changes will be put on top of it all.
+
+2~ Handling multiple repositories
+
+If you intend to clone several of the live systems repositories and want to
+switch to the *{debian-next}* branch right away to check the latest code,
+write a patch or contribute with a translation you ought to know that the
+git server provides a #{mrconfig}# file to ease the handling of multiple
+repositories. In order to use it you need to install the /{mr}/ package and
+after that, launch:
+
+code{
+
+ $  mr bootstrap http://live-systems.org/other/mr/mrconfig
+
+}code
+
+This command will automatically clone and checkout to the *{debian-next}*
+branch the development repositories of the Debian packages produced by the
+project. These include, among others, the live-images repository, which
+contains the configurations used for the prebuilt images that the project
+publishes for general use. For more information on how to use this
+repository, see {Clone a configuration published via
+Git}#clone-configuration-via-git

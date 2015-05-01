@@ -1,0 +1,132 @@
+:B~ Przegląd narzędzi
+
+1~overview-of-tools Przegląd narzędzi
+
+Ten rozdział zawiera przegląd trzech głównych narzędzi stosowanych w budowie
+systemów live: live-build, live-boot i live-config.
+
+2~live-build Pakiet live-build
+
+Iive-build to zbiór skryptów do budowania systemów live. Skrypty te są
+również określane jako "polecenia".
+
+Pomysłem stojącym za live-build jest bycie oprawą, która używa struktury
+katalogów jako konfiguracji, aby całkowicie zautomatyzować i dostosować
+wszystkie aspekty budowania obrazu live.
+
+Wiele pojęć jest podobnych do tych używanych do budowania pakietów Debiana z
+użyciem /{debhelper}/'a:
+
+_* Skrypty posiada centralną lokalizację dla konfiguracji ich działania. Dla
+/{debhelper}/'a jest to podkatalog drzewa pakietów #{debian/}#. Na przykład,
+dh_install będzie szukać, spośród innych, pliku o nazwie #{debian/install}#
+do określenia, które pliki powinny zawierać się w określonym pakiecie
+binarnym. W taki sam sposób, live-build przechowuje swoją konfigurację w
+całości w podkatalogu #{config/}#.
+
+_* Skrypty są niezależne - to znaczy, że zawsze jest bezpieczne uruchomienie
+poszczególnych poleceń.
+
+W przeciwieństwie do /{debhelpera}/, live-build zapewnia narzędzia do
+generowania szkieletu katalogów konfiguracyjnych. Może to być uznane za
+podobne do narzędzi takich jak /{dh-make}/. Aby uzyskać więcej informacji na
+temat tych narzędzi, kontynuuj czytanie, ponieważ pozostała część tego
+rozdziału omawia cztery najważniejsze polecenia. Należy zauważyć, że głównym
+wrapperem dla polecenia live-build jest #{lb}#.
+
+_* *{lb config}*: Odpowiedzialny za inicjowanie katalogu konfiguracji
+systemu live. Zobacz {Polecenie lb config}#lb-config, aby uzyskać więcej
+informacji.
+
+_* *{lb build}*: Odpowiedzialny za rozpoczęcie kompilacji systemu
+live. Zobacz {polecenie lb build}#lb-build aby uzyskać więcej informacji.
+
+_* *{lb clean}*: Odpowiedzialny za czyszczenie kompilacji systemu
+live. Zobacz {polecenie lb clean}#lb-clean aby uzyskać więcej informacji.
+
+3~lb-config Polecenie #{lb config}#
+
+Jak omówiono w {live-build}#live-build, skrypty, które składają się na
+live-build czytają swoją konfigurację przy użyciu polecenia #{source}# z
+katalogu o nazwie #{config/}#. Budowanie tego katalogu ręcznie byłoby
+czasochłonne i podatne na błędy, polecenie #{lb config}# może być używane do
+tworzenia początkowej konfiguracji drzewa katalogów.
+
+Wykonanie #{lb config}# bez żadnych argumentów tworzy podkatalog #{config}#,
+w którym zapisane są niektóre domyślne ustawienia, w plikach
+konfiguracyjnych, oraz dwa szkielety drzew o nazwach #{auto/}# i
+​​#{local/}#.
+
+code{
+
+ $ lb config
+ [2015-01-06 19:25:58] lb config
+ P: Creating config tree for a debian/stretch/i386 system
+ P: Symlinking hooks...
+
+}code
+
+2~ Wcięcia
+
+Normalnie, pewnie będziesz chciał określić niektóre opcje. Na przykład, aby
+określić, jakiego menadżera pakierów chcesz użyć podczas budowania obrazu:
+
+code{
+
+ $ lb config --apt aptitude
+
+}code
+
+Jest możliwe ustalenie wielu opcji, takich jak:
+
+code{
+
+ $ lb config --binary-images netboot --bootappend-live "boot=live components hostname=live-host username=live-user" ...
+
+}code
+
+Pełna lista opcji dostępna jest w podręczniku man pakietu #{lb_config}#.
+
+3~lb-build Polecenie #{lb build}#
+
+Polecenie #{lb build}# czyta konfigurację z katalogu #{config/}#. A
+następnie uruchamia polecenia niższego poziomu potrzebne do budowy Twojego
+systemu live.
+
+3~lb-clean Polecenie #{lb clean}#
+
+Zadaniem polecenia #{lb clean}#, jest to aby usunąć różne części kompilacji
+tak aby można było zacząć od czystego stanu. Domyślnie etapy #{chroot}#,
+#{binary}# and #{source}# są sprzątane, ale cache pozostaje
+nienaruszone. Ponadto, tylko poszczególne etapy mogą być oczyszcane. Na
+przykład, jeśli zostały wprowadzone zmiany, które wpływają tylko na etap
+binarny, należy użyć #{lb clean --binary}# przed budowaniem nowych plików
+binarnych. Jeśli zmiany unieważniają proces bootstrap i/lub zmieniają cache
+pakietów, np. po zmianie opcji #{--mode}#, #{--architecture}#, lub
+#{--bootstrap}#, trzeba użyć  #{lb clean --purge}#. Zobacz podręcznik man
+pakietu #{lb_clean}# aby uzyskać listę wszystkich opcji.
+
+2~live-boot Pakiet live-boot
+
+live-boot to zbiór skryptów zapewniających haki do /{initramfs-tools}/,
+wykorzystywane do wytwarzania plików initramfs, które są w stanie uruchomić
+system live, takich jak te stworzone przez live-build. Obejmuje to obrazy
+ISO systemów live, archiwa netboot i obrazów dysku USB.
+
+W czasie rozruchu będzie szukać nośników tylko do odczytu zawierających
+katalog #{/live/}#, gdzie jest przechowywany system plików (często
+skompresowany obraz systemu plików jak SquashFS). Jeśli znajdzie takowy,
+stworzy zapisywalne środowisko, stosując aufs, dla systemów takich jak
+Debian, aby z niego wystartować.
+
+Więcej informacji na temat początkowych plików ramfs w Debianie można
+znaleźć w Podręczniku Debiana Linux Kernel na
+http://kernel-handbook.alioth.debian.org/ w rozdziale initramfs.
+
+2~live-config Pakiet live-config
+
+live-config zawiera skrypty, które są uruchamiane przy starcie systemu live
+po live-boot, tak aby automatycznie skonfigurować system live. Obsługuje on
+takie zadania jak ustawienie nazwy hosta, lokalizacji i strefy czasowej,
+tworzenie użytkownika live, zatrzymywanie zadań crona i autologowanie
+użytkownika live.

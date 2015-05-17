@@ -38,7 +38,7 @@ ls manual/en | cat --number
 Select_files ()
 {
 echo ""
-echo "Choose a number ['a' to see all] or ['q' to quit]:"
+echo "Choose a number ['a' to see all] ['c' for changelog] or ['q' to quit]:"
 
 read NUMBER
 
@@ -57,7 +57,13 @@ case "$NUMBER" in
 				Check_file
 			done
 		;;
-
+    
+	c) 
+		echo "Checking spelling in debian/changelog"
+		sleep 2
+		aspell --check "debian/changelog" --dont-backup --lang="en"
+		;;
+        
 	q)	
 		exit 0 
 		;;

@@ -33,6 +33,7 @@ aspell --check "manual/en/${FILE}" --dont-backup --lang="en"
 List_files ()
 {
 ls manual/en | cat --number
+printf "\tdebian/changelog"
 }
 
 Select_files ()

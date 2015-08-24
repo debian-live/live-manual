@@ -31,14 +31,12 @@ różnicy między obrazami "binarnymi" a obrazami "live".
 
 3~live-chroot-local-includes Lokalnie uwzględniane w chroot/live
 
-Lokalnie uwzględnione w chroot mogą być używane, aby dodać lub zastąpić
-pliki w systemie plików chroot/live, tak aby mogły być one użyte w systemie
-live. Typowym zastosowaniem jest dostarczenie szkieletowego katalogu
-użytkownika (#{/etc/skel}#) używanego przez system live do tworzenia
-katalogu domowego użytkownika live. Innym jest dostarczanie plików
-konfiguracyjnych, które mogą być po prostu dodane lub podmienione w obrazie
-bez przetwarzania; zobacz {Lokalne haki
-chroot/live}#live-chroot-local-hooks, czy potrzebne jest przetwarzanie.
+Chroot local includes can be used to add or replace files in the chroot/Live
+filesystem so that they may be used in the Live system. A typical use is to
+populate the skeleton user directory (#{/etc/skel}#) used by the Live system
+to create the live user's home directory. Another is to supply configuration
+files that can be simply added or replaced in the image without processing;
+see {Chroot local hooks}#chroot-local-hooks if processing is needed.
 
 Aby dołączyć pliki, po prostu dodaj je do katalogu
 #{config/includes.chroot}#. Ten katalog odnosi się do katalogu root #{/}#
@@ -90,20 +88,40 @@ Pliki te pojawią się teraz w katalogu głównym nośnika live.
 
 2~hooks Haki
 
-Haki pozwalają poleceniom aby były wykonywane w etapach chroot i binarnym
-kompilacji w celu dostosowania obrazu.
+Hooks allow commands to be run in the chroot and binary stages of the build
+in order to customize the image. Depending on whether you are building a
+live image or a regular system image you have to place your hooks in
+#{config/hooks/live}# or #{config/hooks/normal}# respectively. These are
+frequently referred to as local hooks because they are executed inside the
+build environment.
 
-3~live-chroot-local-hooks Lokalne haki chroot/live
+There are also boot-time hooks that allow you to run commands once the image
+has already been built, during the boot process.
 
-Aby uruchomić komendy na etapie chroot, należy utworzyć skrypt hak z
-przyrostkiem #{.hook.chroot}# zawierającym polecenia w katalogu
-#{config/hooks/}#. Hak będzie działać w chroot po resztę konfiguracji chroot
-zastosowano, więc pamiętaj, aby zapewnić, że konfiguracja zawiera wszystkie
-pakiety i pliki do Twoich potrzeb haka w celu uruchomienia. Zobacz
-przykładowe skrypty hak chroot dla różnych zadań dostosowywania wspólnej
-chroot przewidzianych w # {/ usr / share / doc / live-build / przykłady /
-haki} #, który można skopiować lub linku do korzystania z nich w swoim
-własnym konfiguracji.
+3~chroot-local-hooks Chroot local hooks
+
+To run commands in the chroot stage, create a hook script with a
+#{.hook.chroot}# suffix containing the commands either in the
+#{config/hooks/live}# or #{config/hooks/normal}# directories. The hook will
+run in the chroot after the rest of your chroot configuration has been
+applied, so remember to ensure your configuration includes all packages and
+files your hook needs in order to run. See the example chroot hook scripts
+for various common chroot customization tasks provided in
+#{/usr/share/doc/live-build/examples/hooks}# which you can copy or symlink
+to use them in your own configuration.
+
+3~ Lokalne haki binarne
+
+To run commands in the binary stage, create a hook script with a
+#{.hook.binary}# suffix containing the commands either in the
+#{config/hooks/live}# or #{config/hooks/normal}# directories. The hook will
+run after all other binary commands are run, but before binary_checksums,
+the very last binary command. The commands in your hook do not run in the
+chroot, so take care not to modify any files outside of the build tree, or
+you may damage your build system! See the example binary hook scripts for
+various common binary customization tasks provided in
+#{/usr/share/doc/live-build/examples/hooks}# which you can copy or symlink
+to use them in your own configuration.
 
 3~boot-time-hooks Haki podczas uruchamiania
 
@@ -116,20 +134,6 @@ uwzględnione w chroot w #{config/includes.chroot/lib/live/config/}#, lub w
 postaci niestandardowego pakietu omówione w {Instalowanie zmodyfikowanych
 pakietów lub pakietów innych
 firm}#installing-modified-or-third-party-packages.
-
-3~ Lokalne haki binarne
-
-Aby uruchomić komendy na etapie binarnym, należy utworzyć skrypt hak z
-przyrostkiem #{.hook.binary}# zawierającym polecenia w katalogu
-#{config/hooks/}#. Hak będzie uruchomiony po wszystkich innych binarnych
-poleceniach, ale przed binary_checksums; ostatnim poleceniem. Polecenia haka
-nie działają w środowisku chroot, więc należy zadbać, aby nie modyfikować
-żadnych plików poza drzewem kompilacji albo może to uszkodzić system
-kompilacji! Zobacz przykładowe skrypty binarne dla różnych typowych
-binarnych zadań dostosowywania przewidzianych w
-#{/usr/share/doc/live-build/examples/hooks}#, które można skopiować lub
-utworzyć dowiązanie symboliczne aby skorzystać z nich w swojej własnej
-konfiguracji.
 
 2~ Wstępne ustawienie pytań Debconfa (Preseeding)
 

@@ -260,15 +260,6 @@ msgstr "3~live-chroot-local-includes Live/chroot ローカルインクルード"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:20
-#, fuzzy
-#| msgid ""
-#| "Chroot local includes can be used to add or replace files in the chroot/"
-#| "Live filesystem so that they may be used in the Live system. A typical "
-#| "use is to populate the skeleton user directory (#{/etc/skel}#) used by "
-#| "the Live system to create the live user's home directory. Another is to "
-#| "supply configuration files that can be simply added or replaced in the "
-#| "image without processing; see {Live/chroot local hooks}#live-chroot-local-"
-#| "hooks if processing is needed."
 msgid ""
 "Chroot local includes can be used to add or replace files in the chroot/Live "
 "filesystem so that they may be used in the Live system. A typical use is to "
@@ -282,8 +273,8 @@ msgstr ""
 "い方として Live システムで利用するユーザディレクトリ (#{/etc/skel}#) の骨格を"
 "構成させ、live ユーザのホームディレクトリを作成するということがあります。別の"
 "使い方としては設定ファイルを提供し、そのまま加工せずイメージ中に追加または置"
-"換するということがあります。加工が必要な場合は {Live/chroot ローカルフック}"
-"#live-chroot-local-hooks を見てください。"
+"換するということがあります。加工が必要な場合は {chroot ローカルフック}"
+"#chroot-local-hooks を見てください。"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:22
@@ -390,6 +381,11 @@ msgid ""
 "frequently referred to as local hooks because they are executed inside the "
 "build environment."
 msgstr ""
+"フックを利用すると、ビルドの chroot 及びバイナリの段階でコマンドを実行し、イ"
+"メージを独自化できます。ビルドするのが Live イメージなのか普通のシステムのイ"
+"メージなのかにより、フックはそれぞれ #{config/hooks/live}# または #{config/"
+"hooks/normal}# に場所/置かないといけません。この2つはビルド環境内で実行される"
+"ため、ローカルフックとよく呼ばれます。"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:63
@@ -397,26 +393,16 @@ msgid ""
 "There are also boot-time hooks that allow you to run commands once the image "
 "has already been built, during the boot process."
 msgstr ""
+"ブート時のフックもあり、イメージのビルド完了後のブートの過程でコマンドを実行"
+"できます。"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:65
-#, fuzzy
-#| msgid "3~live-chroot-local-hooks Live/chroot local hooks"
 msgid "3~chroot-local-hooks Chroot local hooks"
-msgstr "3~live-chroot-local-hooks Live/chroot ローカルフック"
+msgstr "3~chroot-local-hooks chroot ローカルフック"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:67
-#, fuzzy
-#| msgid ""
-#| "To run commands in the chroot stage, create a hook script with a #{.hook."
-#| "chroot}# suffix containing the commands in the #{config/hooks/}# "
-#| "directory. The hook will run in the chroot after the rest of your chroot "
-#| "configuration has been applied, so remember to ensure your configuration "
-#| "includes all packages and files your hook needs in order to run. See the "
-#| "example chroot hook scripts for various common chroot customization tasks "
-#| "provided in #{/usr/share/doc/live-build/examples/hooks}# which you can "
-#| "copy or symlink to use them in your own configuration."
 msgid ""
 "To run commands in the chroot stage, create a hook script with a #{.hook."
 "chroot}# suffix containing the commands either in the #{config/hooks/live}# "
@@ -428,13 +414,13 @@ msgid ""
 "which you can copy or symlink to use them in your own configuration."
 msgstr ""
 "chroot の段階でコマンドを実行するにはファイル名末尾が #{.hook.chroot}# でコマ"
-"ンドを収録するフックスクリプトを #{config/hooks/}# ディレクトリに作成します。"
-"フックは残りの chroot 設定の適用後に chroot 内で実行されるため、フックの実行"
-"に必要なパッケージやファイルを全て確実に設定に収録することを忘れないようにし"
-"てください。代表的な chroot の様々な独自化タスクについて #{/usr/share/doc/"
-"live-build/examples/hooks}#  で提供されている chroot フックスクリプトの例を確"
-"認してください。この例からコピーやシンボリックリンクを作成して自分の設定で使"
-"えます。"
+"ンドを収録するフックスクリプトを #{config/hooks/live}# または #{config/hooks/"
+"normal}# ディレクトリに作成します。フックは残りの chroot 設定の適用後に "
+"chroot 内で実行されるため、フックの実行に必要なパッケージやファイルを全て確実"
+"に設定に収録することを忘れないようにしてください。代表的な chroot の様々な独"
+"自化タスクについて #{/usr/share/doc/live-build/examples/hooks}#  で提供されて"
+"いる chroot フックスクリプトの例を確認してください。この例からコピーやシンボ"
+"リックリンクを作成して自分の設定で使えます。"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:69
@@ -443,17 +429,6 @@ msgstr "3~ バイナリローカルフック"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:71
-#, fuzzy
-#| msgid ""
-#| "To run commands in the binary stage, create a hook script with a #{.hook."
-#| "binary}# suffix containing the commands in the #{config/hooks/}# "
-#| "directory. The hook will run after all other binary commands are run, but "
-#| "before binary_checksums, the very last binary command. The commands in "
-#| "your hook do not run in the chroot, so take care to not modify any files "
-#| "outside of the build tree, or you may damage your build system! See the "
-#| "example binary hook scripts for various common binary customization tasks "
-#| "provided in #{/usr/share/doc/live-build/examples/hooks}# which you can "
-#| "copy or symlink to use them in your own configuration."
 msgid ""
 "To run commands in the binary stage, create a hook script with a #{.hook."
 "binary}# suffix containing the commands either in the #{config/hooks/live}# "
@@ -466,14 +441,15 @@ msgid ""
 "which you can copy or symlink to use them in your own configuration."
 msgstr ""
 "バイナリ段階でコマンドを実行するには、コマンドを収録するフックスクリプトを、"
-"末尾に #{.hook.binary}# を付けて #{config/hooks/}# ディレクトリに作成します。"
-"このフックは他の binary_checksums を除いたバイナリコマンドを全て実行した後"
-"の、バイナリコマンドのほぼ最後に実行されます。フック内のコマンドは chroot 内"
-"で実行されるのではないため、ビルドツリー外のファイルを変更することのないよう"
-"に注意してください。変更するとビルドシステムが機能しなくなるかもしれません! "
-"代表的なバイナリ独自化タスクについて #{/usr/share/doc/live-build/examples/"
-"hooks}# で提供されているバイナリフックスクリプトの例を確認してください。この"
-"例からコピーやシンボリックリンクを作成して自分の設定で使えます。"
+"末尾に #{.hook.binary}# を付けて #{config/hooks/live}# または #{config/hooks/"
+"normal}# ディレクトリに作成します。このフックは他の binary_checksums を除いた"
+"バイナリコマンドを全て実行した後の、バイナリコマンドのほぼ最後に実行されま"
+"す。フック内のコマンドは chroot 内で実行されるのではないため、ビルドツリー外"
+"のファイルを変更することのないように注意してください。変更するとビルドシステ"
+"ムが機能しなくなるかもしれません! 代表的なバイナリ独自化タスクについて #{/"
+"usr/share/doc/live-build/examples/hooks}# で提供されているバイナリフックスク"
+"リプトの例を確認してください。この例からコピーやシンボリックリンクを作成して"
+"自分の設定で使えます。"
 
 #. type: Plain text
 #: en/user_customization-contents.ssi:73

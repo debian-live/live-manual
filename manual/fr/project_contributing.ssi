@@ -20,7 +20,7 @@ existe deux branches de développement principales: *{debian}* et
 debian-next des dépôts live-boot, live-build, live-config, live-images,
 live-manual et live-tools.
 
-Cependant, il y a certaines restrictions. Le serveur rejette:
+Cependant, il y a certaines restrictions. Le serveur rejette :
 
 _* Push non fast-forward.
 
@@ -55,7 +55,7 @@ par le nom du dépôt dans lequel vous souhaitez travailler. Pour plus
 d'informations sur la façon de modifier live-manual, consultez {Contribuer à
 ce document}#how-to-contribute.
 
-_* Téléchargez la clé publique:
+_* Téléchargez la clé publique :
 
 code{
 
@@ -66,7 +66,7 @@ code{
 
 }code
 
-_* Ajoutez la section suivante à votre configuration openssh-client:
+_* Ajoutez la section suivante à votre configuration openssh-client :
 
 code{
 
@@ -80,7 +80,7 @@ code{
 
 }code
 
-_* Clonez live-manual avec ssh:
+_* Clonez live-manual avec ssh :
 
 code{
 
@@ -89,7 +89,7 @@ code{
 
 }code
 
-_* Assurez-vous d'avoir renseignés les champs d'auteur et d'email dans Git:
+_* Assurez-vous d'avoir renseigné les champs d'auteur et d'email dans Git :
 
 code{
 
@@ -102,7 +102,7 @@ code{
 
 _* Effectuez vos modifications. Dans cet exemple, vous devriez commencer par
 écrire une nouvelle section traitant l'application des correctifs et ensuite
-préparer l'ajout des fichiers et écrire le message de livraison comme ceci:
+préparer l'ajout des fichiers et écrire le message de livraison comme ceci :
 
 code{
 
@@ -110,7 +110,7 @@ code{
 
 }code
 
-_* Envoyez votre commit au serveur:
+_* Envoyez votre commit au serveur :
 
 code{
 
@@ -118,34 +118,36 @@ code{
 
 }code
 
-2~translation-of-manpages Translation of man pages
+2~traduction-des-pages-de-manuel Traduction des pages de manuel
 
-You can also contribute to the project working on the translation of the man
-pages for the different live-* packages that the project maintains. The
-procedure is different depending on whether you are starting a translation
-from scratch or continue working on an already existing one:
+Vous pouvez également contribuer au projet en travaillant à la traduction
+des pages man pour les différents paquets live-* que le projet maintient. La
+procédure est différente suivant que vous démarriez une nouvelle traduction
+ou que vous continuiez à travailler sur une traduction déjà existante :
 
-_* Working on an already existing translation
+_* Continuer avec une traduction déjà commencée
 
-If you want to maintain the translation of an already existing language you
-have to make your changes to your #{manpages/po/${LANGUAGE}/*.po}# file or
-files and then run #{make rebuild}# from inside the #{manpages/}#
-directory. This will update the actual man pages in
-#{manpages/${LANGUAGE}/*}#
+Si vous voulez maintenir la traduction d'une langue déjà existante, vous
+devez effectuer vos modifications dans le ou les fichier(s)
+#{manpages/po/${LANGUAGE}/*.po}# puis, lancer la commande #{make rebuild}#
+depuis le répertoire #{manpages/}#. Ceci mettra à jour les pages de manuel
+dans #{manpages/${LANGUAGE}/*}#
 
-_* Starting a new translation from scratch
+_* Commencer une nouvelle traduction à partir de zéro
 
-In order to add a new translation of any of the project's man pages you have
-to follow a similar procedure. It could be summarized as follows:
+Pour ajouter une nouvelle traduction de l'une des pages de manuel du projet,
+il vous faut suivre une procédure similaire. Elle peut être résumée comme
+suit :
 
-_2* Open the #{manpages/pot/}# file or files in your favourite editor, such
-as /{poedit}/, and save it as a .po file in
-#{manpages/po/${LANGUAGE}/}#. (You will have to create your #{${LANGUAGE}/}#
-directory).
+_2* Ouvrez le ou les fichiers(s) #{manpages/pot/}# dans votre éditeur
+favori, comme /{poedit}/, et sauvegardez-le en tant que fichier dans
+#{manpages/po/${LANGUAGE}/}#. (Vous devrez créer votre répertoire
+#{${LANGUAGE}/}#).
 
-_2* Run #{make rebuild}# from inside the #{manpages/}# directory to create
-the #{manpages/${LANGUAGE}/}# files which will contain the actual man pages.
+_2* Lancez #{make rebuild}# depuis l'intérieur du répertoire #{manpages/}#
+pour créer les fichiers #{manpages/${LANGUAGE}/}# contenant les pages de
+manuel.
 
-Remember that you will have to add all the directories and files, then make
-the commit and finally push to the git server.
+Souvenez-vous que vous devrez ajouter tous les répertoires et les fichiers,
+puis faire le commit, et finalement, poussez sur le serveur git.
 

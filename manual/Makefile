@@ -40,7 +40,7 @@ build: check po4a.cfg
 		exit 1; \
 	fi
 
-	po4a --keep 0 --package-name live-manual --package-version $(shell cat ../VERSION) $(PO4A_FLAGS) po4a.cfg
+	po4a --copyright-holder "Live Systems Project" --keep 0 --package-name live-manual --package-version $(shell cat ../VERSION) $(PO4A_FLAGS) po4a.cfg
 
 clean:
 	rm -f po/*/*.po~
